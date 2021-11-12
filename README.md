@@ -1,5 +1,7 @@
 # unigine-2.14-editor-plugin-python3scripting
 
+IN-PROGRESS...
+
 Pluging for scripting by python3 in Unigine Editor https://unigine.com/get-unigine/
 
 * License of plugin: MIT
