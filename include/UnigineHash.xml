@@ -1,0 +1,140 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.Hash class.is_need_realloc">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.shrink">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.do_append(Key)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.rehash(Counter)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.begin">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.end">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.keys">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.remove(ConstIterator)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.space">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.do_append(Key)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.erase(ConstIterator)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.erase(Iterator)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.round_up(Counter)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.swap(Hash{Key,Data,HashType,Counter})">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.do_append(HashType,Key)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.rehash_data(Counter)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.empty">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.contains(Key)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.clear">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.do_remove(HashType,Key)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.getKeys(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.reserve(Counter)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.erase(Key)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.do_find(Key)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.realloc">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.remove(Key)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.remove(Iterator)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.destroy">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.size">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.end">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.begin">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.find(Key)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Hash class.find(Key)">
+			<summary>
+			</summary>  
+		</member>
+	</members>
+</doc>

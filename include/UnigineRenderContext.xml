@@ -1,0 +1,127 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.RenderContext.createContext(void,int,int)">
+			<summary>
+			Creates a new rendering context.
+			</summary> 
+			<param name="handle"> Window handle. </param>
+			<param name="width"> Canvas width. </param>
+			<param name="height"> Canvas height. </param> 
+			<returns>1 if rendering context is created successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.isCreated const">
+			<summary>
+			Returns a value indicating if rendering context is created.
+			</summary>  
+			<returns>1 if rendering context is created successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.destroyContext">
+			<summary>
+			Destroys the rendering context.
+			</summary>  
+			<returns>1 if the rendering context is destroyed successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.getContextAPI const">
+			<summary>
+			Returns the graphics API of the rendering context.
+			</summary>  
+			<returns>One of the following values:API_OPENGLAPI_DIRECT3D11</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.getContextName const">
+			<summary>
+			Returns the name of the graphics API of the rendering context.
+			</summary>  
+			<returns>One of the following values:opengldirect3d11</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.getD3D11Context const">
+			<summary>
+			Returns a pointer to the existing ID3D11DeviceContext interface.
+			</summary>  
+			<returns>ID3D11DeviceContext interface pointer.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.getD3D11DepthStencil const">
+			<summary>
+			Returns a pointer to the depth stencil texture.
+			</summary>  
+			<returns>Depth stencil texture pointer.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.getD3D11DepthStencilView const">
+			<summary>
+			Returns a pointer to the existing ID3D11DepthStencilView interface.
+			</summary>  
+			<returns>ID3D11DepthStencilView interface pointer.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.getD3D11Device const">
+			<summary>
+			Returns a pointer to the existing ID3D11Device interface.
+			</summary>  
+			<returns>ID3D11Device interface pointer.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.getD3D11RenderTarget const">
+			<summary>
+			Returns a pointer to the render target texture.
+			</summary>  
+			<returns>Render target texture pointer.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.getD3D11RenderTargetView const">
+			<summary>
+			Returns a pointer to the existing ID3D11RenderTargetView interface.
+			</summary>  
+			<returns>ID3D11RenderTargetView interface pointer.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.getD3D11SwapChain const">
+			<summary>
+			Returns a pointer to the existing IDXGISwapChain interface.
+			</summary>  
+			<returns>IDXGISwapChain interface pointer.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.getHandle">
+			<summary>
+			Returns a window handle.
+			</summary>  
+			<returns>Window handle.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.getGLContext const">
+			<summary>
+			Returns a pointer to the OpenGL context.
+			</summary>  
+			<returns>OpenGL context pointer.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.resizeWindow(int,int)">
+			<summary>
+			Resizes the window.
+			</summary> 
+			<param name="width"> New window width. </param>
+			<param name="height"> New window height. </param> 
+			<returns>1 if the window is resized successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.renderWindow">
+			<summary>
+			Renders the window.
+			</summary>  
+			<returns>1 if the window is rendered successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.swapWindow">
+			<summary>
+			Swaps the window.
+			</summary>  
+			<returns>1 if the window is swapped successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.isReady const">
+			<summary>
+			Returns a value indicating if the rendering context is ready.
+			</summary>  
+			<returns>1 if the rendering context is ready; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.RenderContext.createVisual">
+			<summary>
+			Creates a visual context.
+			</summary>  
+			<returns>Pointer to the created visual context.</returns>
+		</member>
+	</members>
+</doc>

@@ -1,0 +1,71 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.Checksum.CRC32(void,int,int)">
+			<summary>
+			Calculates a 32-bit CRC checksum.
+			</summary> 
+			<param name="data"> Input data pointer. </param>
+			<param name="size"> Input data size, in bytes. </param>
+			<param name="big_endian"> Byte ordering flag. 1 if a big-endian order is used; 0 if a little-endian order is used. </param> 
+			<returns>32-bit CRC checksum.</returns>
+		</member>
+		<member name="M:Unigine.Checksum.MD5(unsignedint,void,int,int)">
+			<summary>
+			Calculates a 128-bit MD5 checksum.
+			</summary> 
+			<param name="value"> 128-bit MD5 checksum (array of 4 unsigned int elements). </param>
+			<param name="data"> Input data pointer. </param>
+			<param name="size"> Input data size, in bytes. </param>
+			<param name="big_endian"> Byte ordering flag. 1 if a big-endian order is used; 0 if a little-endian order is used. </param> 
+		</member>
+		<member name="M:Unigine.Checksum.MD5(void,int,int)">
+			<summary>
+			Calculates a 32-bit MD5 checksum.
+			</summary> 
+			<param name="data"> Input data pointer. </param>
+			<param name="size"> Input data size, in bytes. </param>
+			<param name="big_endian"> Byte ordering flag. 1 if a big-endian order is used; 0 if a little-endian order is used. </param> 
+			<returns>32-bit MD5 checksum.</returns>
+		</member>
+		<member name="M:Unigine.Checksum.SHA1(unsignedint,void,int,int)">
+			<summary>
+			Calculates a 160-bit SHA1 checksum.
+			</summary> 
+			<param name="value"> 160-bit SHA1 checksum (array of 5 unsigned int elements). </param>
+			<param name="data"> Input data pointer. </param>
+			<param name="size"> Input data size, in bytes. </param>
+			<param name="big_endian"> Byte ordering flag. 1 if a big-endian order is used; 0 if a little-endian order is used. </param> 
+		</member>
+		<member name="M:Unigine.Checksum.SHA1(void,int,int)">
+			<summary>
+			Calculates a 32-bit SHA1 checksum.
+			</summary> 
+			<param name="data"> Input data pointer. </param>
+			<param name="size"> Input data size, in bytes. </param>
+			<param name="big_endian"> Byte ordering flag. 1 if a big-endian order is used; 0 if a little-endian order is used. </param> 
+			<returns>32-bit SHA1 checksum.</returns>
+		</member>
+		<member name="M:Unigine.Checksum.SHA256(unsignedint,void,int,int)">
+			<summary>
+			Calculates a 256-bit SHA256 checksum.
+			</summary> 
+			<param name="value"> 256-bit SHA256 checksum (array of 8 unsigned int elements). </param>
+			<param name="data"> Input data pointer. </param>
+			<param name="size"> Input data size, in bytes. </param>
+			<param name="big_endian"> Byte ordering flag. 1 if a big-endian order is used; 0 if a little-endian order is used. </param> 
+		</member>
+		<member name="M:Unigine.Checksum.SHA256(void,int,int)">
+			<summary>
+			Calculates a 32-bit SHA256 checksum.
+			</summary> 
+			<param name="data"> Input data pointer. </param>
+			<param name="size"> Input data size, in bytes. </param>
+			<param name="big_endian"> Byte ordering flag. 1 if a big-endian order is used; 0 if a little-endian order is used. </param> 
+			<returns>32-bit SHA256 checksum.</returns>
+		</member>
+	</members>
+</doc>

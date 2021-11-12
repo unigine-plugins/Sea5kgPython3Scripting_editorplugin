@@ -1,0 +1,1058 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.Shader.#ctor">
+			<summary>
+			Default shader constructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shader.#ctor(char)">
+			<summary>
+			Shader constructor. Loads all existing shaders with given name.
+			</summary> 
+			<param name="name"> Shader name. </param> 
+		</member>
+		<member name="M:Unigine.Shader.#ctor(char,char)">
+			<summary>
+			Shader constructor. Loads all existing shaders with given name.
+			</summary> 
+			<param name="name"> Shader name. </param>
+			<param name="defines"> Shader defines. </param> 
+		</member>
+		<member name="M:Unigine.Shader.#ctor(char,char,char)">
+			<summary>
+			Shader constructor. Loads only vertex and fragment shaders with given names.
+			</summary> 
+			<param name="vertex"> Vertex shader name or source. </param>
+			<param name="fragment"> Fragment shader name or source. </param>
+			<param name="defines"> Shader defines. </param> 
+		</member>
+		<member name="M:Unigine.Shader.getD3D11ComputeShader const">
+			<summary>
+			Returns Direct3D11 compute shader.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shader.getD3D11ControlShader const">
+			<summary>
+			Returns Direct3D11 control shader.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shader.getD3D11EvaluateShader const">
+			<summary>
+			Returns Direct3D11 evaluate shader.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shader.getD3D11FragmentShader const">
+			<summary>
+			Returns Direct3D11 fragment shader.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shader.getD3D11GeometryShader const">
+			<summary>
+			Returns Direct3D11 geometry shader.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shader.getD3D11VertexShader const">
+			<summary>
+			Returns Direct3D11 vertex shader.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shader.getGLProgramID const">
+			<summary>
+			Returns OpenGL program identifier.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shader.bind const">
+			<summary>
+			Binds shader.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shader.clear const">
+			<summary>
+			Clears shader.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shader.compile const">
+			<summary>
+			Compiles shader.
+			</summary>  
+			<returns>1 if the shader compiled successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Shader.destroy const">
+			<summary>
+			Destroys shader.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shader.findParameter(int)">
+			<summary>
+			Finds shader parameter.
+			</summary> 
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param> 
+			<returns>Parameter identifier, if found; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.Shader.findParameter(char)">
+			<summary>
+			Finds shader parameter.
+			</summary> 
+			<param name="name"> Fast identifier. </param> 
+			<returns>Parameter identifier, if found; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.Shader.findParameter(char,int)">
+			<summary>
+			Finds shader parameter.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param> 
+			<returns>Parameter identifier, if found; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.Shader.flushParameters const">
+			<summary>
+			Flushes shader parameters.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shader.loadCompute(char,char) const">
+			<summary>
+			Loads compute shader.
+			</summary> 
+			<param name="name"> Compute shader name or source. </param>
+			<param name="defines"> Shader defines. </param> 
+			<returns>1 if the compute shader was loaded successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Shader.loadControl(char,char) const">
+			<summary>
+			Loads control shader.
+			</summary> 
+			<param name="name"> Control shader name or source. </param>
+			<param name="defines"> Shader defines. </param> 
+			<returns>1 if the control shader was loaded successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Shader.loadEvaluate(char,char) const">
+			<summary>
+			Loads evaluate shader.
+			</summary> 
+			<param name="name"> Evaluate shader name or source. </param>
+			<param name="defines"> Shader defines. </param> 
+			<returns>1 if the evaluate shader was loaded successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Shader.loadFragment(char,char) const">
+			<summary>
+			Loads fragment shader.
+			</summary> 
+			<param name="name"> Fragment shader name or source. </param>
+			<param name="defines"> Shader defines. </param> 
+			<returns>1 if the fragment shader was loaded successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Shader.loadGeometry(char,char) const">
+			<summary>
+			Loads geometry shader.
+			</summary> 
+			<param name="name"> Geometry shader name or source. </param>
+			<param name="defines"> Shader defines. </param> 
+			<returns>1 if the geometry shader was loaded successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Shader.loadVertex(char,char) const">
+			<summary>
+			Loads vertex shader.
+			</summary> 
+			<param name="name"> Vertex shader name or source. </param>
+			<param name="defines"> Shader defines. </param> 
+			<returns>1 if the vertex shader was loaded successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Shader.unbind const">
+			<summary>
+			Unbinds shader.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat(int,float)">
+			<summary>
+			Sets shader float parameter value by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat(char,float)">
+			<summary>
+			Sets shader float parameter value by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat(char,int,float)">
+			<summary>
+			Sets a shader parameter value for the float variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat2(int,Unigine.Math.vec2)">
+			<summary>
+			Sets a shader parameter value for the float2 variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat2(char,Unigine.Math.vec2)">
+			<summary>
+			Sets a shader parameter value for the float2 variable.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat2(char,int,Unigine.Math.vec2)">
+			<summary>
+			Sets a shader parameter value for the float2 variable.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat3(int,Unigine.Math.vec3)">
+			<summary>
+			Sets a shader parameter value for the float3 variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat3(char,Unigine.Math.vec3)">
+			<summary>
+			Sets a shader parameter value for the float3 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat3(char,int,Unigine.Math.vec3)">
+			<summary>
+			Sets a shader parameter value for the float3 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat4(int,Unigine.Math.vec4)">
+			<summary>
+			Sets a shader parameter value for the float4 variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat4(char,Unigine.Math.vec4)">
+			<summary>
+			Sets a shader parameter value for the float4 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat4(char,int,Unigine.Math.vec4)">
+			<summary>
+			Sets a shader parameter value for the float4 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat3x3(int,Unigine.Math.mat3)">
+			<summary>
+			Sets a shader parameter value for the float3x3 variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat3x3(char,Unigine.Math.mat3)">
+			<summary>
+			Sets a shader parameter value for the float3x3 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat3x3(char,int,Unigine.Math.mat3)">
+			<summary>
+			Sets a shader parameter value for the float3x3 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat4x4(int,Unigine.Math.mat4)">
+			<summary>
+			Sets a shader parameter value for the float4x4 variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat4x4(char,Unigine.Math.mat4)">
+			<summary>
+			Sets a shader parameter value for the float4x4 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterFloat4x4(char,int,Unigine.Math.mat4)">
+			<summary>
+			Sets a shader parameter value for the float4x4 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterInt(int,int)">
+			<summary>
+			Sets a shader parameter value for the int variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterInt(char,int)">
+			<summary>
+			Sets a shader parameter value for the int variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterInt(char,int,int)">
+			<summary>
+			Sets a shader parameter value for the int variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterInt2(int,Unigine.Math.ivec2)">
+			<summary>
+			Sets a shader parameter value for the int2 variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterInt2(char,Unigine.Math.ivec2)">
+			<summary>
+			Sets a shader parameter value for the int2 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterInt2(char,int,Unigine.Math.ivec2)">
+			<summary>
+			Sets a shader parameter value for the int2 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterInt3(int,Unigine.Math.ivec3)">
+			<summary>
+			Sets a shader parameter value for the int3 variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterInt3(char,Unigine.Math.ivec3)">
+			<summary>
+			Sets a shader parameter value for the int3 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterInt3(char,int,Unigine.Math.ivec3)">
+			<summary>
+			Sets a shader parameter value for the int3 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterInt4(int,Unigine.Math.ivec4)">
+			<summary>
+			Sets a shader parameter value for the int4 variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterInt4(char,Unigine.Math.ivec4)">
+			<summary>
+			Sets a shader parameter value for the int4 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterInt4(char,int,Unigine.Math.ivec4)">
+			<summary>
+			Sets a shader parameter value for the int4 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble(int,double)">
+			<summary>
+			Sets a shader parameter value for the double variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble(char,double)">
+			<summary>
+			Sets a shader parameter value for the double variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble(char,int,double)">
+			<summary>
+			Sets a shader parameter value for the double1 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble2(int,Unigine.Math.dvec2)">
+			<summary>
+			Sets a shader parameter value for the double2 variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble2(char,Unigine.Math.dvec2)">
+			<summary>
+			Sets a shader parameter value for the double2 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble2(char,int,Unigine.Math.dvec2)">
+			<summary>
+			Sets a shader parameter value for the double2 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble3(int,Unigine.Math.dvec3)">
+			<summary>
+			Sets a shader parameter value for the double3 variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble3(char,Unigine.Math.dvec3)">
+			<summary>
+			Sets a shader parameter value for the double3 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble3(char,int,Unigine.Math.dvec3)">
+			<summary>
+			Sets a shader parameter value for the double3 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble4(int,Unigine.Math.dvec4)">
+			<summary>
+			Sets a shader parameter value for the double4 variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble4(char,Unigine.Math.dvec4)">
+			<summary>
+			Sets a shader parameter value for the double4 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble4(char,int,Unigine.Math.dvec4)">
+			<summary>
+			Sets a shader parameter value for the double4 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble4x4(int,Unigine.Math.dmat4)">
+			<summary>
+			Sets a shader parameter value for the double4x4 variable.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble4x4(char,Unigine.Math.dmat4)">
+			<summary>
+			Sets a shader parameter value for the double4x4 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterDouble4x4(char,int,Unigine.Math.dmat4)">
+			<summary>
+			Sets a shader parameter value for the double4x4 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterScalar(int,Unigine.Math.Scalar)">
+			<summary>
+			Sets a shader parameter value for the scalar variable using the parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterScalar(char,Unigine.Math.Scalar)">
+			<summary>
+			Sets a shader parameter value for the scalar variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterScalar(char,int,Unigine.Math.Scalar)">
+			<summary>
+			Sets a shader parameter value for the scalar variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterScalar2(int,Unigine.Math.Vec2)">
+			<summary>
+			Sets a shader parameter value for the scalar2 variable using the parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterScalar2(char,Unigine.Math.Vec2)">
+			<summary>
+			Sets a shader parameter value for the scalar2 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterScalar2(char,int,Unigine.Math.Vec2)">
+			<summary>
+			Sets a shader parameter value for the scalar2 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterScalar3(int,Unigine.Math.Vec3)">
+			<summary>
+			Sets a shader parameter value for the scalar3 variable using the parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterScalar3(char,Unigine.Math.Vec3)">
+			<summary>
+			Sets a shader parameter value for the scalar3 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterScalar3(char,int,Unigine.Math.Vec3)">
+			<summary>
+			Sets a shader parameter value for the scalar3 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterScalar4(int,Unigine.Math.Vec4)">
+			<summary>
+			Sets a shader parameter value for the scalar4 variable using the parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterScalar4(char,Unigine.Math.Vec4)">
+			<summary>
+			Sets a shader parameter value for the scalar4 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterScalar4(char,int,Unigine.Math.Vec4)">
+			<summary>
+			Sets a shader parameter value for the scalar4 variable using the parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat(int,float,int)">
+			<summary>
+			Sets shader float array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat(char,float,int)">
+			<summary>
+			Sets shader float array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat(char,int,float,int)">
+			<summary>
+			Sets shader float array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat(int,Unigine.Vector{float,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader float array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat(char,Unigine.Vector{float,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader float array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat(char,int,Unigine.Vector{float,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader float array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat2(int,Unigine.Math.vec2,int)">
+			<summary>
+			Sets shader float2 array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat2(char,Unigine.Math.vec2,int)">
+			<summary>
+			Sets shader float2 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat2(char,int,Unigine.Math.vec2,int)">
+			<summary>
+			Sets shader float2 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat2(int,Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader float2 array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat2(char,Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader float2 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat2(char,int,Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader float2 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat4(int,Unigine.Math.vec4,int)">
+			<summary>
+			Sets shader float4 array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat4(char,Unigine.Math.vec4,int)">
+			<summary>
+			Sets shader float4 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat4(char,int,Unigine.Math.vec4,int)">
+			<summary>
+			Sets shader float4 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat4(int,Unigine.Vector{Unigine.Math.vec4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader float4 array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat4(char,Unigine.Vector{Unigine.Math.vec4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader float4 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat4(char,int,Unigine.Vector{Unigine.Math.vec4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader float4 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat4x4(int,Unigine.Math.mat4,int)">
+			<summary>
+			Sets shader float4x4 array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat4x4(char,Unigine.Math.mat4,int)">
+			<summary>
+			Sets shader float4x4 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat4x4(char,int,Unigine.Math.mat4,int)">
+			<summary>
+			Sets shader float4x4 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat4x4(int,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader float4x4 array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat4x4(char,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader float4x4 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayFloat4x4(char,int,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader float4x4 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt(int,int,int)">
+			<summary>
+			Sets shader integer array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt(char,int,int)">
+			<summary>
+			Sets shader integer array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt(char,int,int,int)">
+			<summary>
+			Sets shader integer array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt(int,Unigine.Vector{int,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader integer array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt(char,Unigine.Vector{int,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader integer array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt(char,int,Unigine.Vector{int,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader integer array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt2(int,Unigine.Math.ivec2,int)">
+			<summary>
+			Sets shader int2 array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt2(char,Unigine.Math.ivec2,int)">
+			<summary>
+			Sets shader int2 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt2(char,int,Unigine.Math.ivec2,int)">
+			<summary>
+			Sets shader int2 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt2(int,Unigine.Vector{Unigine.Math.ivec2,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader int2 array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt2(char,Unigine.Vector{Unigine.Math.ivec2,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader int2 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt2(char,int,Unigine.Vector{Unigine.Math.ivec2,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader int2 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt4(int,Unigine.Math.ivec4,int)">
+			<summary>
+			Sets shader int4 array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt4(char,Unigine.Math.ivec4,int)">
+			<summary>
+			Sets shader int4 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt4(char,int,Unigine.Math.ivec4,int)">
+			<summary>
+			Sets shader int4 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt4(int,Unigine.Vector{Unigine.Math.ivec4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader int4 array parameter values by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt4(char,Unigine.Vector{Unigine.Math.ivec4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader int4 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayInt4(char,int,Unigine.Vector{Unigine.Math.ivec4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader int4 array parameter values by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble(int,double,int)">
+			<summary>
+			Sets shader double parameter value by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble(char,double,int)">
+			<summary>
+			Sets shader double parameter value by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble(char,int,double,int)">
+			<summary>
+			Sets shader double parameter value by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble(int,Unigine.Vector{double,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader double parameter value by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble(char,Unigine.Vector{double,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader double parameter value by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble(char,int,Unigine.Vector{double,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader double parameter value by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble2(int,Unigine.Math.dvec2,int)">
+			<summary>
+			Sets shader double2 parameter value by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble2(char,Unigine.Math.dvec2,int)">
+			<summary>
+			Sets shader double2 parameter value by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble2(char,int,Unigine.Math.dvec2,int)">
+			<summary>
+			Sets shader double2 parameter value by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble2(int,Unigine.Vector{Unigine.Math.dvec2,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader double2 parameter value by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble2(char,Unigine.Vector{Unigine.Math.dvec2,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader double2 parameter value by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble2(char,int,Unigine.Vector{Unigine.Math.dvec2,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader double2 parameter value by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble4(int,Unigine.Math.dvec4,int)">
+			<summary>
+			Sets shader double4 parameter value by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble4(char,Unigine.Math.dvec4,int)">
+			<summary>
+			Sets shader double4 parameter value by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble4(char,int,Unigine.Math.dvec4,int)">
+			<summary>
+			Sets shader double4 parameter value by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param>
+			<param name="num_elements"> The number of array elements. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble4(int,Unigine.Vector{Unigine.Math.dvec4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader double4 parameter value by using given parameter id.
+			</summary> 
+			<param name="id"> Parameter identifier. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble4(char,Unigine.Vector{Unigine.Math.dvec4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader double4 parameter value by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Shader.setParameterArrayDouble4(char,int,Unigine.Vector{Unigine.Math.dvec4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets shader double4 parameter value by using given parameter name.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in the user's auxiliary parameters cache. The value must be in the range [0; 512] </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+	</members>
+</doc>

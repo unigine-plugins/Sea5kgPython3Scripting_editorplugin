@@ -1,0 +1,8 @@
+{
+    "Name" : "UnigineEditorPlugin_Python3Scripting",
+    "Vendor" : "Evgenii Sopov",
+    "Description" : "Special plugin for extend editor by python3 scripts (Expected UNIGINE 2.14)",
+    "Version" : "@PLUGIN_VERSION@",
+    "CompatVersion" : "@PLUGIN_COMPAT_VERSION@",
+    "Dependencies" : []
+}

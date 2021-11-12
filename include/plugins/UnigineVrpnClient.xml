@@ -1,0 +1,114 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.Plugins.VrpnAnalogDevice.setAnalogCallback(char)">
+			<summary>
+			Sets the world script callback function that receives data about input device sticks.					The callback function should be defined in the world script and receive 1 argument - an instance of the VrpnAnalogDevice class.
+			</summary> 
+			<param name="name"> Callback function name. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.VrpnAnalogDevice.getAnalogCallback">
+			<summary>
+			Returns a name of the world script callback function that receives data about input device sticks.				The callback function should be defined in the world script and receive 1 argument - an instance of the VrpnAnalogDevice class.
+			</summary>  
+			<returns>Callback function name.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnAnalogDevice.getChannel(int)">
+			<summary>
+			Returns data received by the analog stick with the given number.					If the given stick haven't received data, the engine assertion will occur.
+			</summary> 
+			<param name="channel"> Analog stick number in range [0;number_of_sticks - 1]. </param> 
+			<returns>Returns data received by the analog stick with the given number.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnAnalogDevice.getNumChannels">
+			<summary>
+			Returns the number of analog sticks that have received data.
+			</summary>  
+			<returns>The number of analog sticks that have received data. If no sticks have received data, 0 will be returned.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnAnalogDevice.update">
+			<summary>
+			Updates the internal state of the device and receives input data.					This function should be called each frame.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.VrpnAnalogDevice.VrpnAnalogDevice(char)">
+			<summary>
+			Constructor.
+			</summary> 
+			<param name="name"> Path to the device in the format device_name@server_address. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.VrpnButtonDevice.setButtonCallback(char)">
+			<summary>
+			Sets the world script callback function that receives data about input device buttons.					The callback function should be defined in the world script and receive 2 arguments - a button number and state.
+			</summary> 
+			<param name="name"> Callback function name. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.VrpnButtonDevice.getButtonCallback">
+			<summary>
+			Returns a name of the world script callback function that receives data about input device buttons.				The callback function should be defined in the world script and receive 2 arguments - a button number and state.
+			</summary>  
+			<returns>Callback function name.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnButtonDevice.update">
+			<summary>
+			Updates the internal state of the device and receives input data.					This function should be called each frame.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.VrpnButtonDevice.VrpnButtonDevice(char)">
+			<summary>
+			Constructor.
+			</summary> 
+			<param name="name"> Path to the device in the format device_name@server_address. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.setAccelerationCallback(char)">
+			<summary>
+			Sets the world script callback function that receives data about acceleration of tracked objects.
+			</summary> 
+			<param name="name"> Callback function name. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.getAccelerationCallback">
+			<summary>
+			Returns a name of the world script callback function that receives data about acceleration of tracked objects.			The callback function should be defined in the world script and receive 4 arguments:											Sensor number (int)						Linear acceleration (vec3 for the float precision version, or dvec3 for the double precision version)						Acceleration of orientation change (an analog of angular acceleration; quat)						Acceleration measurement time (float for the float precision version, or double for the double precision version)
+			</summary>  
+			<returns>Callback function name.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.setTransformCallback(char)">
+			<summary>
+			Sets the world script callback function that receives data about position and orientation of tracked objects.
+			</summary> 
+			<param name="name"> Callback function name. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.getTransformCallback">
+			<summary>
+			Returns a name of the world script callback function that receives data about position and orientation of tracked objects.			The callback function should be defined in the world script and receive 3 arguments:											Sensor number (int)						Position (vec3 for the float precision version, or dvec3 for the double precision version)						Orientation (quat)
+			</summary>  
+			<returns>Callback function name.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.setVelocityCallback(char)">
+			<summary>
+			Sets the world script callback function that receives data about velocity of tracked objects.
+			</summary> 
+			<param name="name"> Callback function name. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.getVelocityCallback">
+			<summary>
+			Returns a name of the world script callback function that receives data about velocity of tracked objects.				The callback function should be defined in the world script and receive 4 arguments:											Sensor number (int)						Linear velocity (vec3 for the float precision version, or dvec3 for the double precision version)						Velocity of orientation change (an analog of angular velocity; quat)						Velocity measurement time (float for the float precision version, or double for the double precision version)
+			</summary>  
+			<returns>Callback function name.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.update">
+			<summary>
+			Updates the internal state of the device and receives input data.					This function should be called each frame.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.VrpnTrackerDevice(char)">
+			<summary>
+			Constructor.
+			</summary> 
+			<param name="name"> Path to the device in the format device_name@server_address. </param> 
+		</member>
+	</members>
+</doc>

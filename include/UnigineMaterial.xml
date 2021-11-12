@@ -1,0 +1,2049 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.Material.#ctor">
+			<summary>
+			Constructor. Creates a new material instance.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Material.isAlphaTest const">
+			<summary>
+			Returns a value indicating if the material has an alpha test option enabled.
+			</summary>  
+			<returns>1 if the material has alpha test option enabled; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.isBrush const">
+			<summary>
+			Returns a value indicating if the material is used for brushes (*.brush or *.basebrush file extension).
+			</summary>  
+			<returns>1 if the material is used for brushes; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.getBlendDestFunc const">
+			<summary>
+			Returns the destination blending function.
+			</summary>  
+			<returns>Destination blending function (one of the BLEND_* variables).</returns>
+		</member>
+		<member name="M:Unigine.Material.setBlendFunc(int,int)">
+			<summary>
+			Sets the source and destination blending functions.
+			</summary> 
+			<param name="src"> Source blending function (one of the BLEND_* values described in the RenderState class). </param>
+			<param name="dest"> Destination blending function (one of the BLEND_* values described in the RenderState class). </param> 
+		</member>
+		<member name="M:Unigine.Material.getBlendSrcFunc const">
+			<summary>
+			Returns the source blending function.
+			</summary>  
+			<returns>Source blending function (one of the BLEND_*values described in the RenderState class).</returns>
+		</member>
+		<member name="M:Unigine.Material.setCastShadow(int)">
+			<summary>
+			Enables or disables the cast shadow option for an object with the material applied.
+			</summary> 
+			<param name="shadow"> 1 to enable casting of shadows, 0 to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Material.getCastShadow const">
+			<summary>
+			Returns a value indicating if an object with the material applied casts shadows.
+			</summary>  
+			<returns>1 if casting of shadows is enabled; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.setCastWorldShadow(int)">
+			<summary>
+			Enables or disables casting of shadows from the world light for an object with the material applied.
+			</summary> 
+			<param name="shadow"> 1 to enable casting of shadows from the world light, 0 to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Material.getCastWorldShadow const">
+			<summary>
+			Returns a value indicating if an object with the material applied casts shadows from the world light.
+			</summary>  
+			<returns>1 if casting of shadows from the world light is enabled; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.getChild(int) const">
+			<summary>
+			Returns a child material with a given number.
+			</summary> 
+			<param name="num"> Child material number. </param> 
+			<returns>The child material smart pointer.</returns>
+		</member>
+		<member name="M:Unigine.Material.isDeferred const">
+			<summary>
+			Returns a value indicating if the material is rendered in the deferred pass.
+			</summary>  
+			<returns>1 if the material is rendered in the deferred pass (non-transparent); otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.setDepthMask(int)">
+			<summary>
+			Sets a value indicating if the material uses a depth mask.
+			</summary> 
+			<param name="mask"> 1 to use the depth mask, 0 not to use. </param> 
+		</member>
+		<member name="M:Unigine.Material.getDepthMask const">
+			<summary>
+			Returns a value indicating if the material uses a depth mask.
+			</summary>  
+			<returns>Positive number if the depth mask is used; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.setDepthTest(int)">
+			<summary>
+			Enables or disables the depth testing option for the material. This option can be used to render certain objects, that are behind other ones.
+			</summary> 
+			<param name="test"> 1 to enable depth testing for the material, 0 to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Material.getDepthTest const">
+			<summary>
+			Returns a value indicating if depth testing is enabled for the material. This option can be used to render certain objects, that are behind other ones.
+			</summary>  
+			<returns>1 if depth testing is enabled for the material; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.isEditable const">
+			<summary>
+			Returns a value indicating if the material can be edited.
+			</summary>  
+			<returns>1 if the material is editable; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.isFilter const">
+			<summary>
+			Returns a value indicating if the material has filter texture.
+			</summary>  
+			<returns>1 if the material has a filter texture; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.isForward const">
+			<summary>
+			Returns a value indicating if the material is rendered in the forward pass.
+			</summary>  
+			<returns>1 if the material is rendered in the forward pass (transparent with blending func); otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.isHidden const">
+			<summary>
+			Returns a value indicating if the material is hidden.
+			</summary>  
+			<returns>1 if the material is hidden; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.setImageTextureProcedural(int,Unigine.Ptr{Unigine.Material},int)">
+			<summary>
+			Assigns the procedural texture of the given procedural material to the specified texture of the current material.
+			</summary> 
+			<param name="num"> Number of the texture, to which the procedural texture will be assigned. </param>
+			<param name="procedural"> Procedural material. </param>
+			<param name="procedural_num"> Procedural texture number. </param> 
+		</member>
+		<member name="M:Unigine.Material.setShadowMask(int)">
+			<summary>
+			Sets a shadow mask for the material.					For the shadow to be rendered for a light source from an object's surface having this material assigned, this mask must match the following ones (one bit, at least):													Shadow mask of the light source																						Shadow mask of the surface of the object having this material assigned																										The surface with the assigned material lit by a light source casts shadow if the shadow mask of the light source matches the corresponding masks of the surface and its material.
+			</summary> 
+			<param name="mask"> Integer value, each bit of which is a mask. </param> 
+		</member>
+		<member name="M:Unigine.Material.getShadowMask const">
+			<summary>
+			Returns a shadow mask of the material.					For the shadow to be rendered for a light source from an object's surface having this material assigned, this mask must match the following ones (one bit, at least):													Shadow mask of the light source																						Shadow mask of the surface of the object having this material assigned
+			</summary>  
+			<returns>Integer value, each bit of which is a mask.</returns>
+		</member>
+		<member name="M:Unigine.Material.getName const">
+			<summary>
+			Returns the current material name.
+			</summary>  
+			<returns>Material name.</returns>
+		</member>
+		<member name="M:Unigine.Material.getNumChildren const">
+			<summary>
+			Returns the number of child materials.
+			</summary>  
+			<returns>Number of child materials.</returns>
+		</member>
+		<member name="M:Unigine.Material.getNumParameters const">
+			<summary>
+			Returns the number of material's parameters.
+			</summary>  
+			<returns>Number of material's parameters.</returns>
+		</member>
+		<member name="M:Unigine.Material.getNumStates const">
+			<summary>
+			Returns the number of material's states.
+			</summary>  
+			<returns>Number of material's states.</returns>
+		</member>
+		<member name="M:Unigine.Material.getNumTextures const">
+			<summary>
+			Returns the number of textures used by the material.
+			</summary>  
+			<returns>Number of used textures.</returns>
+		</member>
+		<member name="M:Unigine.Material.setOrder(int)">
+			<summary>
+			Sets the rendering order of material. The higher the rendering order, the lower the rendering priority (the material with the -128 order will be rendered first).
+			</summary> 
+			<param name="order"> Rendering order, in the range from -128 to 127. </param> 
+		</member>
+		<member name="M:Unigine.Material.getOrder const">
+			<summary>
+			Returns the rendering order of materials.
+			</summary>  
+			<returns>Rendering order, in the range from -128 to 127.</returns>
+		</member>
+		<member name="M:Unigine.Material.setOverlap(int)">
+			<summary>
+			Enables or disables the overlap option for the material. This option enables rendering the material over the final image and can be used for UI elements.
+			</summary> 
+			<param name="overlap"> 1 to enable the overlap option for the material, 0 to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Material.getOverlap const">
+			<summary>
+			Returns a value indicating if the overlap option is enabled for the material. This option enables rendering the material over the final image and can be used for UI elements.
+			</summary>  
+			<returns>1 if the overlap option is enabled for the material; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.isParameterExpressionEnabled(int) const">
+			<summary>
+			Returns a value indicating if the value of the specified material parameter is represented by an expression in UnigineScript. Values of certain parameters can be calculated by an arbitrary expression, written in UnigineScript.					.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>true if the value of the specified material parameter is represented by an expression in UnigineScript; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.setParameterExpressionEnabled(int,bool)">
+			<summary>
+			Sets a value indicating if the value of the specified material parameter is represented by an expression in UnigineScript. Values of certain parameters can be calculated by an arbitrary expression, written in UnigineScript.					.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="enabled"> true to enable setting the values of the specified material parameter by an expression in UnigineScript; false - to disable. </param> 
+		</member>
+		<member name="M:Unigine.Material.isParameterOverridden(int) const">
+			<summary>
+			Returns a value indicating if a given parameter is overridden.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>1 if the given parameter is overridden; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.isParameterInt(int) const">
+			<summary>
+			Returns a value indicating if the parameter with the specified number is an integer-type parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>true if the parameter with the specified number is an integer-type parameter; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.isParameterFloat(int) const">
+			<summary>
+			Returns a value indicating if the parameter with the specified number is a float-type parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>true if the parameter with the specified number is an float-type parameter; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterMinExpand(int) const">
+			<summary>
+			Returns a value indicating if the minimum value of the parameter with the specified number can be decreased.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>1 if the minimum value can be changed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterMaxExpand(int) const">
+			<summary>
+			Returns a value indicating if the maximum value of the parameter with the specified number can be increased.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>1 if the maximum value can be changed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterMinValue(int) const">
+			<summary>
+			Returns the minimum allowed value for the parameter with the specified number.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Minimum parameter value.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterMaxValue(int) const">
+			<summary>
+			Returns the maximum allowed value for the parameter with the specified number.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Maximum parameter value.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterFloat(char) const">
+			<summary>
+			Returns a value of a float parameter with the specified name.
+			</summary> 
+			<param name="name"> Parameter name. </param> 
+			<returns>Float parameter value.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterFloat2(char) const">
+			<summary>
+			Returns a value of a FLOAT2 parameter with the specified name.
+			</summary> 
+			<param name="name"> Parameter name. </param> 
+			<returns>Parameter value as a vec2 vector.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterFloat3(char) const">
+			<summary>
+			Returns a value of a FLOAT3 parameter with the specified name.
+			</summary> 
+			<param name="name"> Parameter name. </param> 
+			<returns>Parameter value as a vec3 vector.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterFloat4(char) const">
+			<summary>
+			Returns a value of a FLOAT4 parameter with the specified name.
+			</summary> 
+			<param name="name"> Parameter name. </param> 
+			<returns>Parameter value as a vec4 vector.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterInt(char) const">
+			<summary>
+			Returns a value of an integer parameter with the specified name.
+			</summary> 
+			<param name="name"> Parameter name. </param> 
+			<returns>Integer parameter value.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterInt2(char) const">
+			<summary>
+			Returns a value of a INT2 parameter with the specified name.
+			</summary> 
+			<param name="name"> Parameter name. </param> 
+			<returns>Parameter value as an ivec2 vector.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterInt3(char) const">
+			<summary>
+			Returns a value of a INT3 parameter with the specified name.
+			</summary> 
+			<param name="name"> Parameter name. </param> 
+			<returns>Parameter value as an ivec3 vector.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterInt4(char) const">
+			<summary>
+			Returns a value of a INT4 parameter with the specified name.
+			</summary> 
+			<param name="name"> Parameter name. </param> 
+			<returns>Parameter value as an ivec4 vector.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterArraySize(int) const">
+			<summary>
+			Returns the number of elements in the array parameter with the specified number.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Number of elements of the specified array parameter.</returns>
+		</member>
+		<member name="M:Unigine.Material.isParameterArray(int) const">
+			<summary>
+			Returns a value indicating if the parameter with the specified number is an array-type parameter, i.e., one of the following:											PARAMETER_ARRAY_FLOAT						PARAMETER_ARRAY_FLOAT2						PARAMETER_ARRAY_FLOAT4						PARAMETER_ARRAY_INT						PARAMETER_ARRAY_INT2						PARAMETER_ARRAY_INT4
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>true if the parameter is an array-type parameter; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterArray(int,Unigine.Vector{float,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Returns a value of the array parameter (type: PARAMETER_ARRAY_FLOAT) with the specified number and puts it to the specified buffer array.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="values"> Buffer array to store parameter values. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterArray(int,Unigine.Vector{float,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets a value of the array parameter (type: PARAMETER_ARRAY_FLOAT) with the specified number using the specified array.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="values"> Array of values to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getParameterArray(int,Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Returns a value of the array parameter (type: PARAMETER_ARRAY_FLOAT2) with the specified number and puts it to the specified buffer array.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="values"> Buffer array to store parameter values. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterArray(int,Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets a value of the array parameter (type: PARAMETER_ARRAY_FLOAT2) with the specified number using the specified array.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="values"> Array of values to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getParameterArray(int,Unigine.Vector{Unigine.Math.vec4,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Returns a value of the array parameter (type: PARAMETER_ARRAY_FLOAT4) with the specified number and puts it to the specified buffer array.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="values"> Buffer array to store parameter values. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterArray(int,Unigine.Vector{Unigine.Math.vec4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets a value of the array parameter (type: PARAMETER_ARRAY_FLOAT4) with the specified number using the specified array.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="values"> Array of values to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getParameterArray(int,Unigine.Vector{int,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Returns a value of the array parameter (type: PARAMETER_ARRAY_INT) with the specified number and puts it to the specified buffer array.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="values"> Buffer array to store parameter values. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterArray(int,Unigine.Vector{int,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets a value of the array parameter (type: PARAMETER_ARRAY_INT) with the specified number using the specified array.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="values"> Array of values to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getParameterArray(int,Unigine.Vector{Unigine.Math.ivec2,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Returns a value of the array parameter (type: PARAMETER_ARRAY_INT2) with the specified number and puts it to the specified buffer array.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="values"> Buffer array to store parameter values. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterArray(int,Unigine.Vector{Unigine.Math.ivec2,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets a value of the array parameter (type: PARAMETER_ARRAY_INT2) with the specified number using the specified array.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="values"> Array of values to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getParameterArray(int,Unigine.Vector{Unigine.Math.ivec4,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Returns a value of the array parameter (type: PARAMETER_ARRAY_INT4) with the specified number and puts it to the specified buffer array.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="values"> Buffer array to store parameter values. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterArray(int,Unigine.Vector{Unigine.Math.ivec4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets a value of the array parameter (type: PARAMETER_ARRAY_INT4) with the specified number using the specified array.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="values"> Array of values to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterExpression(int,char)">
+			<summary>
+			Sets the expression used as a parameter value.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="expression"> New expression. </param> 
+			<returns>1 if the expression is set successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterExpression(int) const">
+			<summary>
+			Returns an expression used as a parameter value.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Parameter expression, if it exists; otherwise, NULL (0).</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterGroup(int) const">
+			<summary>
+			Returns the group of the material parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>The group of the material parameter.</returns>
+		</member>
+		<member name="M:Unigine.Material.isParameterHidden(int) const">
+			<summary>
+			Returns a value indicating if a given parameter is hidden.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>1 if the parameter is hidden; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterName(int) const">
+			<summary>
+			Returns the name of a given parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Parameter name.</returns>
+		</member>
+		<member name="M:Unigine.Material.setParameterFloat(int,float)">
+			<summary>
+			Sets the value of a given float parameter by its number.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterFloat(char,float)">
+			<summary>
+			Sets the value of a given float parameter by its name.
+			</summary> 
+			<param name="name"> Name of the target float parameter. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getParameterFloat(int) const">
+			<summary>
+			Returns the current value of a given float parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Current parameter value.</returns>
+		</member>
+		<member name="M:Unigine.Material.setParameterFloat2(int,Unigine.Math.vec2)">
+			<summary>
+			Sets the value of a given float2 parameter by its number.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterFloat2(char,Unigine.Math.vec2)">
+			<summary>
+			Sets the value of a given float2 parameter by its name.
+			</summary> 
+			<param name="name"> Name of the target float2 parameter. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getParameterFloat2(int) const">
+			<summary>
+			Returns the current value of a given float2 parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Current parameter value.</returns>
+		</member>
+		<member name="M:Unigine.Material.setParameterFloat3(int,Unigine.Math.vec3)">
+			<summary>
+			Sets the value of a given float3 parameter by its number.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterFloat3(char,Unigine.Math.vec3)">
+			<summary>
+			Sets the value of a given float3 parameter by its name.
+			</summary> 
+			<param name="name"> Name of the target float3 parameter. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getParameterFloat3(int) const">
+			<summary>
+			Returns the current value of a given float3 parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Current parameter value.</returns>
+		</member>
+		<member name="M:Unigine.Material.setParameterFloat4(int,Unigine.Math.vec4)">
+			<summary>
+			Sets the value of a given float4 parameter by its number.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterFloat4(char,Unigine.Math.vec4)">
+			<summary>
+			Sets the value of a given float4 parameter by its name.
+			</summary> 
+			<param name="name"> Name of the target float4 parameter. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getParameterFloat4(int) const">
+			<summary>
+			Returns the current value of a given float4 parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Current parameter value.</returns>
+		</member>
+		<member name="M:Unigine.Material.setParameterInt(int,int)">
+			<summary>
+			Sets the value of a given int parameter by its number.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterInt(char,int)">
+			<summary>
+			Sets the value of a given int parameter by its name.
+			</summary> 
+			<param name="name"> Name of the target int parameter. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getParameterInt(int) const">
+			<summary>
+			Returns the current value of a given int parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Current parameter value.</returns>
+		</member>
+		<member name="M:Unigine.Material.setParameterInt2(int,Unigine.Math.ivec2)">
+			<summary>
+			Sets the value of a given int2 parameter by its number.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterInt2(char,Unigine.Math.ivec2)">
+			<summary>
+			Sets the value of a given int2 parameter by its name.
+			</summary> 
+			<param name="name"> Name of the target int2 parameter. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getParameterInt2(int) const">
+			<summary>
+			Returns the current value of a given int2 parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Current parameter value.</returns>
+		</member>
+		<member name="M:Unigine.Material.setParameterInt3(int,Unigine.Math.ivec3)">
+			<summary>
+			Sets the value of a given int3 parameter by its number.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterInt3(char,Unigine.Math.ivec3)">
+			<summary>
+			Sets the value of a given int3 parameter by its name.
+			</summary> 
+			<param name="name"> Name of the target int3 parameter. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getParameterInt3(int) const">
+			<summary>
+			Returns the current value of a given int3 parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Current parameter value.</returns>
+		</member>
+		<member name="M:Unigine.Material.setParameterInt4(int,Unigine.Math.ivec4)">
+			<summary>
+			Sets the value of a given int4 parameter by its number.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.setParameterInt4(char,Unigine.Math.ivec4)">
+			<summary>
+			Sets the value of a given int4 parameter by its name.
+			</summary> 
+			<param name="name"> Name of the target int4 parameter. </param>
+			<param name="value"> Parameter value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getParameterInt4(int) const">
+			<summary>
+			Returns the current value of a given int4 parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Current parameter value.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterTitle(int) const">
+			<summary>
+			Returns the title of the material parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Material parameter title.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterTooltip(int) const">
+			<summary>
+			Returns the tooltip of the material parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>The tooltip text of the material parameter.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterType(int) const">
+			<summary>
+			Returns the type of a given parameter.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>One of the PARAMETER_* pre-defined variables or -1, if an error has occurred.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterWidgetIndex(int) const">
+			<summary>
+			Returns the index of the widget used to display the specified material parameter in UI.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Index of the widget used for the specified material parameter.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParameterWidget(int) const">
+			<summary>
+			Returns the name of the widget used to display the specified material parameter in UI.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+			<returns>Widget name for the specified material parameter.</returns>
+		</member>
+		<member name="M:Unigine.Material.getParent const">
+			<summary>
+			Returns the parent material.
+			</summary>  
+			<returns>Parent material or NULL (0), if the current material has no parent. </returns>
+		</member>
+		<member name="M:Unigine.Material.isParent(char) const">
+			<summary>
+			Returns a value indicating if the material with the given name is a parent of the current material.
+			</summary> 
+			<param name="name"> Material name. </param> 
+			<returns>1 if the material is the parent, otherwise - 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.isParent(Unigine.UGUID) const">
+			<summary>
+			Returns a value indicating if the material with the given GUID is a parent of the current material.
+			</summary> 
+			<param name="guid"> Material GUID. </param> 
+			<returns>1 if the material is the parent; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.isProcedural const">
+			<summary>
+			Returns a value indicating if the material has procedural texture.
+			</summary>  
+			<returns>1 if the material has a procedural texture; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.setProceduralTexture(int,Unigine.Ptr{Unigine.Texture})">
+			<summary>
+			Replaces a procedural texture having the specified number with the specified Texture. Procedural textures are calculated at run-time on GPU, using custom shaders. For example, this function allows to set the initial value for such texture.
+			</summary> 
+			<param name="num"> Texture number. In materials, such texture should be declared withtype="procedural" attribute. </param>
+			<param name="texture"> Texture to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.setProceduralTextureImage(int,Unigine.Ptr{Unigine.Image})">
+			<summary>
+			Replaces a given procedural texture with an Image instance. Procedural textures are calculated at run-time on GPU, using custom shaders. For example, this function allows to set the initial value for such texture.
+			</summary> 
+			<param name="num"> Texture number. In materials, such texture should be declared withtype="procedural" attribute. </param>
+			<param name="image"> An image to set. </param> 
+			<returns>1 if the texture is replaced successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.getProceduralTextureImage(int,Unigine.Ptr{Unigine.Image})">
+			<summary>
+			Reads the given procedural texture into an Image smart pointer. Procedural textures are calculated in run-time on GPU, using custom shaders. So, for example, this function enables to read the value of such texture at any moment.
+			</summary> 
+			<param name="num"> Texture number. In materials, such texture should be declared withtype="procedural" attribute. </param>
+			<param name="image"> Image into which texture is read. </param> 
+			<returns>1 if the texture is read successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.isReflection2D const">
+			<summary>
+			Returns a value indicating if the material has a 2d reflection texture.
+			</summary>  
+			<returns>1 if the material has a 2d reflection texture; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.checkShaderCache const">
+			<summary>
+			Returns a value indicating if shader combination for current material states and options is already in cache.
+			</summary>  
+			<returns>1 if shader combination for current material states and options is already in cache; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.checkShaderCache(Render::PASS,Node::TYPE) const">
+			<summary>
+			Returns a value indicating if shader combination for the given rendering pass and node type is already in cache.
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param>
+			<param name="node_type"> Node type. </param> 
+			<returns>1 if shader combination for the given rendering pass and node type is already in cache; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.compileShader(Render::PASS,Node::TYPE)">
+			<summary>
+			Compiles shader combination for the given rendering pass and node type.
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param>
+			<param name="node_type"> Node type. </param> 
+			<returns>1 if shader combination for the given rendering pass and node type was compiled successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.fetchShader(Render::PASS)">
+			<summary>
+			Returns the rendering shader for the specified rendering pass.
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param> 
+			<returns>Shader for the specified rendering pass.</returns>
+		</member>
+		<member name="M:Unigine.Material.fetchShader(Render::PASS,Node::TYPE)">
+			<summary>
+			Returns the rendering shader for the specified rendering pass and node type.
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param>
+			<param name="node_type"> Node type. </param> 
+			<returns>Shader for the specified rendering pass and node type.</returns>
+		</member>
+		<member name="M:Unigine.Material.fetchShader(char)">
+			<summary>
+			Returns the rendering shader for the specified rendering pass.
+			</summary> 
+			<param name="pass_name"> Rendering pass name. One of the following:wireframevisualizer_soliddeferredauxiliaryemissionreflectionrefractiontransparent_blurambientlight_voxel_probelight_environment_probelight_omnilight_projlight_worldshadowdepth_pre_passpostobject_post </param> 
+			<returns>Shader for the specified rendering pass.</returns>
+		</member>
+		<member name="M:Unigine.Material.fetchShader(char,int)">
+			<summary>
+			Returns the rendering shader for the specified rendering pass and node type.
+			</summary> 
+			<param name="pass_name"> Rendering pass name. One of the following:wireframevisualizer_soliddeferredauxiliaryemissionreflectionrefractiontransparent_blurambientlight_voxel_probelight_environment_probelight_omnilight_projlight_worldshadowdepth_pre_passpostobject_post </param>
+			<param name="node"> Node type. </param> 
+			<returns>Shader for the specified rendering pass and node type.</returns>
+		</member>
+		<member name="M:Unigine.Material.isStateInternal(int) const">
+			<summary>
+			Returns a value indicating if a given state is internal.
+			</summary> 
+			<param name="num"> State number. </param> 
+			<returns>true if the given state is internal; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.isStateOverridden(int) const">
+			<summary>
+			Returns a value indicating if a given state is overridden.
+			</summary> 
+			<param name="num"> State number. </param> 
+			<returns>1 if the given state is overridden; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.setState(int,int)">
+			<summary>
+			Sets the state value.
+			</summary> 
+			<param name="num"> State number. </param>
+			<param name="value"> State value to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.setState(char,int)">
+			<summary>
+			Sets the value of the given state.
+			</summary> 
+			<param name="name"> State name. </param>
+			<param name="value"> State value. </param> 
+		</member>
+		<member name="M:Unigine.Material.getState(int) const">
+			<summary>
+			Returns the state value.
+			</summary> 
+			<param name="num"> State number. </param> 
+			<returns>State value.</returns>
+		</member>
+		<member name="M:Unigine.Material.getState(char) const">
+			<summary>
+			Returns the value of the given state.
+			</summary> 
+			<param name="name"> State name. </param> 
+			<returns>State value.</returns>
+		</member>
+		<member name="M:Unigine.Material.getStateGroup(int) const">
+			<summary>
+			Returns the group of the material state.
+			</summary> 
+			<param name="num"> State number. </param> 
+			<returns>The group of the material state.</returns>
+		</member>
+		<member name="M:Unigine.Material.isStateHidden(int) const">
+			<summary>
+			Returns a value indicating if a given state is hidden.
+			</summary> 
+			<param name="num"> State number. </param> 
+			<returns>1 is the state is hidden; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.getStateName(int) const">
+			<summary>
+			Returns the name of a given state.
+			</summary> 
+			<param name="num"> State number. </param> 
+			<returns>State name.</returns>
+		</member>
+		<member name="M:Unigine.Material.getStateSwitchGroup(int) const">
+			<summary>
+			Returns the switch group name for a given state.
+			</summary> 
+			<param name="num"> State number. </param> 
+			<returns>State switch group name.</returns>
+		</member>
+		<member name="M:Unigine.Material.getStateSwitchItem(int,int) const">
+			<summary>
+			Returns the switch item name for a given state.
+			</summary> 
+			<param name="num"> State number. </param>
+			<param name="item"> Item number. </param> 
+			<returns>Switch item name or NULL (0), if an error has occurred.</returns>
+		</member>
+		<member name="M:Unigine.Material.getStateSwitchNumItems(int) const">
+			<summary>
+			Returns the number of switch items for a given state.
+			</summary> 
+			<param name="num"> State number. </param> 
+			<returns>Number of switch items.</returns>
+		</member>
+		<member name="M:Unigine.Material.getStateTitle(int) const">
+			<summary>
+			Returns the title of the material state.
+			</summary> 
+			<param name="num"> State number. </param> 
+			<returns>The title of the material state.</returns>
+		</member>
+		<member name="M:Unigine.Material.getStateTooltip(int) const">
+			<summary>
+			Returns the tooltip of the material state.
+			</summary> 
+			<param name="num"> State number. </param> 
+			<returns>The tooltip text of the material state.</returns>
+		</member>
+		<member name="M:Unigine.Material.getStateWidgetIndex(int) const">
+			<summary>
+			Returns the index of the widget used to display the specified material state in UI.
+			</summary> 
+			<param name="num"> State number in the range from 0 to the total number of states. </param> 
+			<returns>Index of the widget used for the specified material state.</returns>
+		</member>
+		<member name="M:Unigine.Material.getStateType(int) const">
+			<summary>
+			Returns the type of a given state.
+			</summary> 
+			<param name="num"> State number. </param> 
+			<returns>One of the MATERIAL_STATE_* pre-defined variables or -1, if an error occurred.</returns>
+		</member>
+		<member name="M:Unigine.Material.getTextureGroup(int) const">
+			<summary>
+			Returns the group of the material texture.
+			</summary> 
+			<param name="num"> State number. </param> 
+			<returns>The group of the material texture.</returns>
+		</member>
+		<member name="M:Unigine.Material.isTextureHidden(int) const">
+			<summary>
+			Returns a value indicating if the texture is hidden.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>true if the given texture is hidden; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.isTextureInternal(int) const">
+			<summary>
+			Returns a value indicating if a given texture is internal.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>true if the given texture is internal; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.isTextureOverridden(int) const">
+			<summary>
+			Returns a value indicating if a given texture is overridden.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>true if the given texture is overridden; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.isTextureLoaded(int) const">
+			<summary>
+			Returns a value indicating if a given texture is loaded.
+			</summary>  
+			<returns>true if the given texture is loaded; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.getTextureName(int) const">
+			<summary>
+			Returns the name of a given texture.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>Texture name.</returns>
+		</member>
+		<member name="M:Unigine.Material.getTextureUnit(int) const">
+			<summary>
+			Returns the number of the unit for a given texture used in shaders.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>Texture unit number.</returns>
+		</member>
+		<member name="M:Unigine.Material.getTextureTitle(int) const">
+			<summary>
+			Returns the title of the material texture.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>Title of the material texture.</returns>
+		</member>
+		<member name="M:Unigine.Material.getTextureTooltip(int) const">
+			<summary>
+			Returns the tooltip of the material texture.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>Tooltip text of the material texture.</returns>
+		</member>
+		<member name="M:Unigine.Material.getTextureWidgetIndex(int) const">
+			<summary>
+			Returns the index of the widget used to display the specified material texture in UI.
+			</summary> 
+			<param name="num"> Texture number in the range from 0 to the total number of textures. </param> 
+			<returns>Index of the widget used for the specified material texture.</returns>
+		</member>
+		<member name="M:Unigine.Material.getTextureType(int) const">
+			<summary>
+			Returns the type of a given texture.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>One of the TEXTURE_* pre-defined variables or -1, if an error occurred.</returns>
+		</member>
+		<member name="M:Unigine.Material.setTransparent(int)">
+			<summary>
+			Sets a value indicating the transparency type of the material. If the transparent option is set to TRANSPARENT_NONE or TRANSPARENT_DEFERRED, the blending function won't be used.
+			</summary> 
+			<param name="transparent"> The transparency option (one of the TRANSPARENT_* variables). </param> 
+		</member>
+		<member name="M:Unigine.Material.getTransparent const">
+			<summary>
+			Returns a value indicating the transparency type of the material.
+			</summary>  
+			<returns>One of the TRANSPARENT_* variables.</returns>
+		</member>
+		<member name="M:Unigine.Material.setTwoSided(int)">
+			<summary>
+			Enables or disables the two sided option for the material.
+			</summary> 
+			<param name="sided"> 1 to make the material two-sided, 0 to make it one-sided. </param> 
+		</member>
+		<member name="M:Unigine.Material.getTwoSided const">
+			<summary>
+			Returns a value indicating if the material is two-sided.
+			</summary>  
+			<returns>1 if the material is two-sided; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.setViewportMask(int)">
+			<summary>
+			Sets a bit mask for rendering into the viewport. The material is rendered, if its mask matches the player's one.
+			</summary> 
+			<param name="mask"> Integer, each bit of which is a mask. </param> 
+		</member>
+		<member name="M:Unigine.Material.getViewportMask const">
+			<summary>
+			Returns the current bit mask for rendering into the viewport.  The material is rendered, if its mask matches the player's one.
+			</summary>  
+			<returns>Integer, each bit of which is a mask.</returns>
+		</member>
+		<member name="M:Unigine.Material.isWater const">
+			<summary>
+			Returns a value indicating if the material is rendered in the water pass.
+			</summary>  
+			<returns>1 if the material is rendered in the water pass; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.clone(char)">
+			<summary>
+			Clones the material and assigns the given name to it.					A base material cannot be cloned.
+			</summary> 
+			<param name="name"> Cloned material name. </param> 
+			<returns>Cloned material.</returns>
+		</member>
+		<member name="M:Unigine.Material.clone(char,char,Unigine.UGUID)">
+			<summary>
+			Clones the material and assigns the given name, GUID and path to the cloned material. The cloned material will be saved to the specified path on saveMaterials() call. This method may be used, for example, to create a material missed during project's migration.A base material cannot be cloned.
+			</summary> 
+			<param name="name"> CLoned material name. </param>
+			<param name="path"> Path to the cloned material. </param>
+			<param name="guid"> Cloned material GUID. </param> 
+			<returns>The cloned material.</returns>
+		</member>
+		<member name="M:Unigine.Material.clone(char,char)">
+			<summary>
+			Clones the material and assigns the given name and path to the cloned material. The cloned material will be saved to the specified path on saveMaterials() call.A base material cannot be cloned.
+			</summary> 
+			<param name="name"> Cloned material name. </param>
+			<param name="path"> Path to save the cloned material </param> 
+			<returns>Cloned material.</returns>
+		</member>
+		<member name="M:Unigine.Material.clone">
+			<summary>
+			Clones the material. The cloned material will be empty: it won't have a name, path, textures and won't be displayed in the materials hierarchy.
+			</summary>  
+			<returns>Cloned material.</returns>
+		</member>
+		<member name="M:Unigine.Material.fetchParameter(char,int)">
+			<summary>
+			Searches for a parameter by a given name among all parameters of the material.
+			</summary> 
+			<param name="name"> Parameter name. </param>
+			<param name="fast_id"> Parameter number in users auxiliary parameters cache. The value must be in the range [0; 512] </param> 
+			<returns>Parameter number, if it is found; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.Material.fetchState(char,int)">
+			<summary>
+			Searches for a state by a given name among all states of the current material.
+			</summary> 
+			<param name="name"> State name. </param>
+			<param name="fast_id"> State number in users auxiliary states cache. The value must be in the range [0; 512] </param> 
+			<returns>State number, if it is found; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.Material.fetchTexture(char,int)">
+			<summary>
+			Searches for a texture by a given name among all textures used by the current material.
+			</summary> 
+			<param name="name"> Texture name. </param>
+			<param name="fast_id"> Texture number in users auxiliary textures cache. The value must be in the range [0; 512] </param> 
+			<returns>Texture number, if it is found; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.Material.findParameter(char) const">
+			<summary>
+			Searches for a parameter by a given name among all parameters of the current material.
+			</summary> 
+			<param name="name"> Parameter name. </param> 
+			<returns>Parameter number, if it is found; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.Material.findState(char) const">
+			<summary>
+			Searches for a state by a given name among all states of the current material.
+			</summary> 
+			<param name="name"> State name. </param> 
+			<returns>State number, if it is found; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.Material.findTexture(char) const">
+			<summary>
+			Searches for a texture by a given name among all textures used by the current material.
+			</summary> 
+			<param name="name"> Texture name. </param> 
+			<returns>Texture number, if it is found; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.Material.inherit(char)">
+			<summary>
+			Inherits a material from the current one and assigns the specified name to it.
+			</summary> 
+			<param name="name"> Inherited material name. </param> 
+			<returns>Inherited material.</returns>
+		</member>
+		<member name="M:Unigine.Material.inherit(char,char)">
+			<summary>
+			Inherits a material from the current one and assigns the specified name and path to it. The inherited material will be saved to the specified path on saveMaterials() call.
+			</summary> 
+			<param name="name"> Inherited material name. </param>
+			<param name="path"> Path to the inherited material. </param> 
+			<returns>Inherited material.</returns>
+		</member>
+		<member name="M:Unigine.Material.inherit(char,char,Unigine.UGUID)">
+			<summary>
+			Inherits a material from the current one and assigns the specified name, GUID and path to it. The inherited material will be saved to the specified path on saveMaterials() call.
+			</summary> 
+			<param name="name"> Inherited material name. </param>
+			<param name="path"> Path to the inherited material. </param>
+			<param name="guid"> Inherited material GUID. </param> 
+			<returns>Inherited material.</returns>
+		</member>
+		<member name="M:Unigine.Material.inherit">
+			<summary>
+			Inherits the material. The inherited material will be empty: it won't have a name, path, texture and won't be displayed in materials hierarchy.
+			</summary>  
+			<returns>Inherited material.</returns>
+		</member>
+		<member name="M:Unigine.Material.saveState(Unigine.Ptr{Unigine.Stream},bool) const">
+			<summary>
+			Saves the settings of a given material (all of its options, states and parameters) into a binary stream.					Saving into the stream requires creating a blob to save into. To restore the saved state the restoreState() method is used:
+			</summary> 
+			<param name="stream"> Stream smart pointer. </param>
+			<param name="forced"> Forced saving of material settings. </param> 
+			<returns>true if the material settings are saved successfully; otherwise, true.</returns>
+		</member>
+		<member name="M:Unigine.Material.restoreState(Unigine.Ptr{Unigine.Stream},bool)">
+			<summary>
+			Restores the state of a given material (all of its options, states and parameters) from a binary stream.					Restoring from the stream requires creating a blob to save into and saving the state using the saveState() method:
+			</summary> 
+			<param name="stream"> Stream smart pointer. </param>
+			<param name="forced"> Forced restoring of material settings. </param> 
+			<returns>true if the material settings are restored successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.canRenderNode const">
+			<summary>
+			Returns a value indicating if the marial can be rendered for at least one type of nodes.
+			</summary>  
+			<returns>1 if the material is rendered for at least one type of nodes; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.resetState(int)">
+			<summary>
+			Resets the overridden value of the given state to the parent one.
+			</summary> 
+			<param name="num"> State number. </param> 
+		</member>
+		<member name="M:Unigine.Material.setTexturePath(int,char)">
+			<summary>
+			Sets a new path to the texture with the given number.
+			</summary> 
+			<param name="num"> Texture number. </param>
+			<param name="path"> A path to the texture or NULL to clear the path. </param> 
+		</member>
+		<member name="M:Unigine.Material.setTexturePath(char,char)">
+			<summary>
+			Sets a new path to the texture with the given name.
+			</summary> 
+			<param name="name"> Texture name. </param>
+			<param name="path"> A path to the texture or NULL to clear the path. </param> 
+		</member>
+		<member name="M:Unigine.Material.setName(char)">
+			<summary>
+			Sets a given name for the current material.					The method isn't available for the manual and base materials.
+			</summary> 
+			<param name="name"> Material name. </param> 
+		</member>
+		<member name="M:Unigine.Material.resetTexture(int)">
+			<summary>
+			Resets the overridden value of the given texture to the parent one.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+		</member>
+		<member name="M:Unigine.Material.getTexturePath(int) const">
+			<summary>
+			Returns a path to the texture with the specified number.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>A path to the texture.</returns>
+		</member>
+		<member name="M:Unigine.Material.getTexturePath(char) const">
+			<summary>
+			Returns a path to the texture with the specified name.
+			</summary> 
+			<param name="name"> Texture name. </param> 
+			<returns>A path to the texture.</returns>
+		</member>
+		<member name="M:Unigine.Material.setPath(char)">
+			<summary>
+			Sets a new path for the material.
+			</summary> 
+			<param name="path"> New path to the material file. </param> 
+		</member>
+		<member name="M:Unigine.Material.setFileGUID(Unigine.UGUID)">
+			<summary>
+			Sets a new GUID for the material file.
+			</summary> 
+			<param name="fileguid"> New GUID for the material file. </param> 
+		</member>
+		<member name="M:Unigine.Material.getFileGUID const">
+			<summary>
+			Returns the current GUID of the material file.
+			</summary>  
+			<returns>GUID of the material file.</returns>
+		</member>
+		<member name="M:Unigine.Material.isNodeTypeSupported(Node::TYPE) const">
+			<summary>
+			Returns a value indicating if the given type of nodes is supported by the material.
+			</summary> 
+			<param name="type"> Node type: one of the OBJECT_* or DECAL_* variables. </param> 
+			<returns>1 if the node type is supported; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.setParent(Unigine.Ptr{Unigine.Material},bool)">
+			<summary>
+			Sets the given material as the parent for this material and saves the material's properties values (if the corresponding flag is set).					The method isn't available for the manual and base materials.
+			</summary> 
+			<param name="material"> Material to be set as the parent for this material. </param>
+			<param name="save_all_values"> Flag indicating if the material's properties will be saved after reparenting. </param> 
+			<returns>1 if the material's parent is changed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.checkTextureConditions(int) const">
+			<summary>
+			Checks if conditions set for the given texture are met.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>1 if conditions are met; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.isInternal const">
+			<summary>
+			Returns a value indicating if the current material is internal.
+			</summary>  
+			<returns>1 if the material is internal; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.getTextureFlags(int) const">
+			<summary>
+			Returns the flags set on the given texture.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>Texture flags bit mask.</returns>
+		</member>
+		<member name="M:Unigine.Material.loadXml(Unigine.Ptr{Unigine.Xml})">
+			<summary>
+			Loads material settings from the Xml.
+			</summary> 
+			<param name="xml"> An Xml node containing material settings. </param> 
+			<returns>1 if the material settings are loaded successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.hasOverrides const">
+			<summary>
+			Returns a value indicating if the material has at least one overridden property.
+			</summary>  
+			<returns>true if the material has at least one overridden property; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.canSave const">
+			<summary>
+			Returns a value indicating if the material can be saved. For example, this function will return 0 for a base or manual material.
+			</summary>  
+			<returns>true if the material can be saved; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.checkStateConditions(int) const">
+			<summary>
+			Checks if conditions set for the given state are met.
+			</summary> 
+			<param name="num"> State number. </param> 
+			<returns>true if conditions are met; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.isManual const">
+			<summary>
+			Returns a value indicating if the current material is manual.
+			</summary>  
+			<returns>true if the material is manual; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.isAutoSave const">
+			<summary>
+			Returns a value indicating if the material can be saved automatically to the path specified via setPath() (automatic material saving is performed, for example, on world's saving). The function will return 0 in the following cases:											The canSave() function returns 0 for the material.						The material is non-editable.						The path isn't specified for the material.
+			</summary>  
+			<returns>true if the material can be saved automatically; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.isLegacy const">
+			<summary>
+			Returns a value indicating if the material is a legacy one. A legacy material is a non-ULON base material described in an XML file.
+			</summary>  
+			<returns>true if the material is a legacy one; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.isOptionsHidden const">
+			<summary>
+			Returns a value indicating if Common material options (such as Transparency Preset, Material Mask, etc.) are not available for the material. This method is used for custom materials (e.g., landscape terrain brushes).
+			</summary>  
+			<returns>true if Common material options are not available for the material; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.isPreviewHidden const">
+			<summary>
+			Returns a value indicating if preview in the UnigineEditor is disabled for the material. This method is used for custom materials (e.g., landscape terrain brushes).
+			</summary>  
+			<returns>true if preview in the UnigineEditor is disabled for the material; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.checkParameterConditions(int) const">
+			<summary>
+			Checks if conditions set for the given parameter are met.
+			</summary> 
+			<param name="num"> Parameter name. </param> 
+			<returns>1 if conditions are met; othersiwe, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.save">
+			<summary>
+			Save the material to the current path used for this material.					The method isn't available for the manual and base materials.
+			</summary>  
+			<returns>1 if the material is saved successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.save(char)">
+			<summary>
+			Save the material to the specified path.
+			</summary> 
+			<param name="path"> A path to save the material </param> 
+			<returns>1 if the material is saved successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.load">
+			<summary>
+			Loads the material from the file specified by the setPath() function. The function can be used to load materials created during application execution or stored outside the data directory.
+			</summary>  
+			<returns>1 if the material is loaded successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.load(char)">
+			<summary>
+			Loads a material from the given file. The function can be used to load materials created during application execution or stored outside the data directory.
+			</summary> 
+			<param name="path"> A path to the material file. </param> 
+			<returns>1 if the material is loaded successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.saveXml(Unigine.Ptr{Unigine.Xml}) const">
+			<summary>
+			Saves the material into the given Xml.					The method isn't available for the manual and base materials.
+			</summary> 
+			<param name="xml"> An Xml node. </param> 
+			<returns>1 if the material is saved successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.isBase const">
+			<summary>
+			Returns a value indicating if the material is the base one.
+			</summary>  
+			<returns>1 if the material is the base one; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.isNodeSupported(Unigine.Ptr{Unigine.Node}) const">
+			<summary>
+			Returns a value indicating if the material can be applied to the given node.
+			</summary> 
+			<param name="node"> A node. </param> 
+			<returns>1 if the given node is supported; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.getBaseMaterial const">
+			<summary>
+			Returns the base material of the current material.
+			</summary>  
+			<returns>A base material.</returns>
+		</member>
+		<member name="M:Unigine.Material.setTextureFlags(int,int)">
+			<summary>
+			Sets the specified texture flags to the given texture.
+			</summary> 
+			<param name="num"> Texture number. </param>
+			<param name="flags"> Texture flags bit mask. </param> 
+		</member>
+		<member name="M:Unigine.Material.setTexture(int,Unigine.Ptr{Unigine.Texture})">
+			<summary>
+			Sets the given texture to the texture with the specified number.					This method only sets a pointer to the texture, so mind the scope of the source texture pointer.
+			</summary> 
+			<param name="num"> Texture number. </param>
+			<param name="texture"> Texture to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.setTexture(char,Unigine.Ptr{Unigine.Texture})">
+			<summary>
+			Sets the given texture to the texture with the specified name.					This method only sets a pointer to the texture, so mind the scope of the source texture pointer.
+			</summary> 
+			<param name="name"> Texture name (one of the textures used by the material, e.g.: albedo). </param>
+			<param name="texture"> Texture to be set. </param> 
+		</member>
+		<member name="M:Unigine.Material.getTexture(int) const">
+			<summary>
+			Returns a texture set for the current material.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>A texture.</returns>
+		</member>
+		<member name="M:Unigine.Material.getPath const">
+			<summary>
+			Returns a path to the current material.
+			</summary>  
+			<returns>Path to the material.</returns>
+		</member>
+		<member name="M:Unigine.Material.resetParameter(int)">
+			<summary>
+			Resets the overridden value of the given parameter to the parent one.
+			</summary> 
+			<param name="num"> Parameter number in the range from 0 to the total number of parameters. </param> 
+		</member>
+		<member name="M:Unigine.Material.reload">
+			<summary>
+			Reloads the material and all its children.
+			</summary>  
+			<returns>1 if the material is reloaded successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.setTextureImage(int,Unigine.Ptr{Unigine.Image})">
+			<summary>
+			Set a given image to a given texture.
+			</summary> 
+			<param name="num"> Texture number. </param>
+			<param name="image"> An image to set. </param> 
+			<returns>1 if the image is set successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.getTextureImage(int,Unigine.Ptr{Unigine.Image}) const">
+			<summary>
+			Reads a given texture into a given image.
+			</summary> 
+			<param name="num"> Texture number. </param>
+			<param name="image"> An image. </param> 
+			<returns>1 if the texture is read successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.getTextureCurve(int)">
+			<summary>
+			Returns a curve texture instance for the data stored in the specified curve texture (gradient).					Modifications made to the curve shall propagate to the parent and sibling materials. To modify an overridden curve for this material only use the getTextureCurveOverride() method.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>TextureCurve class instance for the data stored in the gradient texture with the specified number.</returns>
+		</member>
+		<member name="M:Unigine.Material.getTextureCurveOverride(int)">
+			<summary>
+			Returns a new curve texture instance for the data stored in the specified curve texture (gradient) overriding the default one. This method enables you to set individual RGBA curves, adjusting color values of the resulting curve texture (gradient).				Modifications made to the curve shall not propagate to the parent and sibling materials.
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>New TextureCurve class instance overriding the data stored in the specified curve texture (gradient).</returns>
+		</member>
+		<member name="M:Unigine.Material.getGUID const">
+			<summary>
+			Returns the GUID of the material.
+			</summary>  
+			<returns>GUID of the material.</returns>
+		</member>
+		<member name="M:Unigine.Material.isEngine const">
+			<summary>
+			Returns a value indicating if the current material is engine-related (i.e. required for engine operation). Such materials are stored in the core, editor and editor2 folders.
+			</summary>  
+			<returns>true if the material is engine-related; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.destroyShaders">
+			<summary>
+			Deletes all shaders used for the current material and its children and clears shaders cache.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Material.createShaders(bool)">
+			<summary>
+			Creates all shaders for the current material and its children (if specified).
+			</summary> 
+			<param name="recursive"> true to create shaders for child materials of the current material; otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.Material.destroyTextures">
+			<summary>
+			Deletes all textures used by the current material and its children.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Material.isEmpty const">
+			<summary>
+			Returns a value indicating if an empty shader is used as a vertex shader in the current material.
+			</summary>  
+			<returns>true if an empty vertex shader is used; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.getRenderPass(char) const">
+			<summary>
+			Returns the type of the rendering pass by its name (including custom passes).
+			</summary> 
+			<param name="pass_name"> Name of the rendering pass. </param> 
+			<returns>Rendering pass number in the range from 0 to 18 + custom_passes_number, if it exists; otherwise -1.</returns>
+		</member>
+		<member name="M:Unigine.Material.getRenderPassName(Render::PASS) const">
+			<summary>
+			Returns the name of the rendering pass by its number (including custom passes).
+			</summary> 
+			<param name="type"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param> 
+			<returns>Rendering pass name if it exists; otherwise nullptr.</returns>
+		</member>
+		<member name="M:Unigine.Material.runExpression(char,int,int,int)">
+			<summary>
+			Runs the material's expression with the specified name. An expression is a reference to a file containing code in UnigineScript, that can generate various elements used in the material (e.g., textures, texture arrays, unstructured buffers, etc.) or contain other logic. Expressions can be defined in the *.basemat file as follows: An example of expression.usc code:					To execute this expression the following code can be used:											Expressions can be executed only for base materials.
+			</summary> 
+			<param name="name"> Expression name. Expression with this name must be defined in the material declaration (*.basemat file). </param>
+			<param name="w"> Width, e.g. if a texture or a structured buffer is generated by the expression. </param>
+			<param name="h"> Height, e.g. if a texture or a structured buffer is generated by the expression. </param>
+			<param name="d"> Depth, e.g. if a 3D Texture, 2D array or a structured buffer is generated by the expression. </param> 
+			<returns>1 if the specified expression is executed successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Material.renderScreen(char)">
+			<summary>
+			Renders the screen-space material. The material must have a shader for the specified pass associated with it.
+			</summary> 
+			<param name="pass_name"> Name of the rendering pass. </param> 
+			<returns>0 if the specified pass was not found; otherwise, 1.</returns>
+		</member>
+		<member name="M:Unigine.Material.renderScreen(Render::PASS)">
+			<summary>
+			Renders the screen-space material. The material must have a shader for the specified pass associated with it.
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param> 
+		</member>
+		<member name="M:Unigine.Material.renderCompute(char,int,int,int)">
+			<summary>
+			Renders the material using a compute shader. The material must have a compute shader for the specified pass associated with it.
+			</summary> 
+			<param name="pass_name"> Name of the rendering pass. </param>
+			<param name="group_threads_x"> Local X work-group size of the compute shader. </param>
+			<param name="group_threads_y"> Local Y work-group size of the compute shader. </param>
+			<param name="group_threads_z"> Local Z work-group size of the compute shader. </param> 
+			<returns>true if the specified pass was not found; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.renderCompute(Render::PASS,int,int,int)">
+			<summary>
+			Renders the material using a compute shader. The material must have a compute shader for the specified pass associated with it.
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param>
+			<param name="group_threads_x"> Local X work-group size of the compute shader. </param>
+			<param name="group_threads_y"> Local Y work-group size of the compute shader. </param>
+			<param name="group_threads_z"> Local Z work-group size of the compute shader. </param> 
+		</member>
+		<member name="M:Unigine.Material.getOptionTitle(int) const">
+			<summary>
+			Returns the title of the specified material option.
+			</summary> 
+			<param name="option"> Material option: one of the OPTION_* values. </param> 
+			<returns>Material option title.</returns>
+		</member>
+		<member name="M:Unigine.Material.getOptionTooltip(int) const">
+			<summary>
+			Returns the tooltip of the specified material option.
+			</summary> 
+			<param name="option"> Material option: one of the OPTION_* values. </param> 
+			<returns>Tooltip text of the material's option.</returns>
+		</member>
+		<member name="M:Unigine.Material.getOptionGroup(int) const">
+			<summary>
+			Returns the group to which the specified material option belongs.
+			</summary> 
+			<param name="option"> Material option: one of the OPTION_* values. </param> 
+			<returns>The group of the material option.</returns>
+		</member>
+		<member name="M:Unigine.Material.getOptionWidgetIndex(int) const">
+			<summary>
+			Returns the index of the widget used to display the specified material option in UI.
+			</summary> 
+			<param name="option"> Material option: one of the OPTION_* values. </param> 
+			<returns>Index of the widget used for the specified material option.</returns>
+		</member>
+		<member name="M:Unigine.Material.isOptionHidden(int) const">
+			<summary>
+			Returns a value indicating if the specified material option is hidden.
+			</summary> 
+			<param name="option"> Material option: one of the OPTION_* values. </param> 
+			<returns>1 if the option is hidden; otherwise, 0.</returns>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_FLOAT">
+			<summary>
+			Parameter of this type accepts a float value.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_FLOAT2">
+			<summary>
+			Parameter of this type accepts vec2 data type.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_FLOAT3">
+			<summary>
+			Parameter of this type accepts vec3 data type.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_FLOAT4">
+			<summary>
+			Parameter of this type accepts vec4 data type.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_INT">
+			<summary>
+			Parameter of this type accepts an integer value.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_INT2">
+			<summary>
+			Parameter of this type accepts ivec2 data type.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_INT3">
+			<summary>
+			Parameter of this type accepts ivec3 data type.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_INT4">
+			<summary>
+			Parameter of this type accepts ivec4 data type.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_ARRAY_FLOAT">
+			<summary>
+			Parameter of this type accepts an array of float values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_ARRAY_FLOAT2">
+			<summary>
+			Parameter of this type accepts an array of vec2 data type.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_ARRAY_FLOAT4">
+			<summary>
+			Parameter of this type accepts an array of vec2 data type.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_ARRAY_INT">
+			<summary>
+			Parameter of this type accepts an array of integer values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_ARRAY_INT2">
+			<summary>
+			Parameter of this type accepts an array of ivec2 data type.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_ARRAY_INT4">
+			<summary>
+			Parameter of this type accepts an array of ivec4 data type.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.PARAMETER_COMBINER">
+			<summary>
+			Parameter of this type allows you to combine some parameter values in one data type.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.STATE_INT">
+			<summary>
+			State of this type allows specifying only one possible value.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.STATE_SWITCH">
+			<summary>
+			State of this type allows specifying a set of more than two possible values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.STATE_TOGGLE">
+			<summary>
+			State of this type allows only two possible values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_AUTO_EXPOSURE">
+			<summary>
+			An RG16F texture that stores intensity of the exposure (R) and luminance (G).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_AUXILIARY">
+			<summary>
+			Auxiliary texture is used for different post effects (auxiliary pass).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_BENT_NORMAL">
+			<summary>
+			An RG11B10F texture that stores bent normals (RGB) used for smooth ambient lighting.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_CLOUDS_DYNAMIC_COVERAGE">
+			<summary>
+			Texture of this type stores clouds dynamic coverage data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_CLOUDS_STATIC_COVERAGE">
+			<summary>
+			Texture of this type stores clouds static coverage data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_CLOUDS_SCREEN">
+			<summary>
+			An RGBA16F texture into which clouds are rendered.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_CURRENT_DEPTH">
+			<summary>
+			Texture of this type stores current depth data for all geometry on the scene.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_DECAL_ALBEDO">
+			<summary>
+			Texture of this type stores albedo color data for decals.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_DECAL_DEPTH">
+			<summary>
+			Texture of this type stores depth data for decals.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_DECAL_NORMAL">
+			<summary>
+			Texture of this type stores normal data for decals.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_DECAL_SHADING">
+			<summary>
+			Texture of this type stores shading data for decals.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_DEFERRED_LIGHT">
+			<summary>
+			Texture of this type uses a deferred buffer to store light values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_DEFERRED_REFLECTION">
+			<summary>
+			Texture of this type uses a deferred buffer to store reflection values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_DOF_MASK">
+			<summary>
+			Texture of this type stores a DoF (Depth of Field) mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_ENVIRONMENT_PROBES">
+			<summary>
+			A 2D array texture of the RGBA16F format that stores reflections in the first layer (RGBA) and ambient lights in the second layer (RGBA).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_FIELD_HEIGHT_ARRAY">
+			<summary>
+			A heightmap texture is used to create an additional height displacement for water surface. Field Height textures are rendered in a 2D array of R16F or R32F textures (depends on settings). All Field Height textures are packed into 2D array to pass the data to the shader.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_FIELD_SHORELINE_ARRAY">
+			<summary>
+			A field shoreline texture. All Field Shoreline textures are packed into 2D array (of RGBA8) to pass the data to the shader.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_FILTER">
+			<summary>
+			A filtering texture.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_GBUFFER_ALBEDO">
+			<summary>
+			Texture of this type uses a G-Buffer to store albedo values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_GBUFFER_GEODETIC_FLAT_POSITION">
+			<summary>
+			Texture of this type uses the G-buffer to store flat plane coordinates.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_GBUFFER_LIGHTMAP">
+			<summary>
+			Texture of this type uses a G-Buffer to store light map values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_GBUFFER_MATERIAL_MASK">
+			<summary>
+			Texture of this type uses a G-Buffer to store material mask data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_GBUFFER_NORMAL">
+			<summary>
+			Texture of this type uses a G-Buffer to store normal values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_GBUFFER_SHADING">
+			<summary>
+			Texture of this type uses a G-Buffer to store shading data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_GBUFFER_VELOCITY">
+			<summary>
+			Texture of this type uses a G-Buffer to store velocity values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_GBUFFER_FEATURES">
+			<summary>
+			This texture contains surfaces with the materials that have the Bevel state enabled.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_GEODETIC_TOPOLOGY">
+			<summary>
+			Texture of this type stores geodetic topology data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_IMAGE">
+			<summary>
+			A standard bitmap image.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_CURVE">
+			<summary>
+			Curve texture. This texture is used to store the interpolated RGBA points that are evaluated over a given range producing a color gradient that can be used with Materials (curve gradient).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_LIGHTS">
+			<summary>
+			A 2D array texture of the RG11B10F format that stores diffuse light in the first layer (RGB) and specular light in the second layer (RGB).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_LIGHT_SHADOW_COLOR">
+			<summary>
+			Texture of this type (RG) stores depth (G-channel) and transparency (R-channel) values (used to render translucent shadows).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_LIGHT_SHADOW_DEPTH">
+			<summary>
+			Texture of this type stores depth values (used to render shadows).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_LIGHT_IMAGE">
+			<summary>
+			Texture of this type stores the light values provided by projected light sources.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_LINEAR_DEPTH">
+			<summary>
+			Texture of this type stores linear depth data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_NORMAL_UNPACK">
+			<summary>
+			a texture that stores unpacked normals. Available for the following post-effects: SSR, SSGI, SSRTGI, Shadows screen space.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_OPACITY_DEPTH">
+			<summary>
+			Texture of this type stores depth data for opacity geometry and can be used for soft particles and volumetrics.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_OPACITY_SCREEN">
+			<summary>
+			Texture of this type stores the deferred composite and emission data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_PROCEDURAL">
+			<summary>
+			A procedurally generated texture.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_REFLECTION_2D">
+			<summary>
+			Texture of this type stores reflection values (used to render 2D reflections).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_REFLECTION_CUBE">
+			<summary>
+			Texture of this type stores reflection values (used to render cube-mapped reflections).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_REFRACTION">
+			<summary>
+			Texture of this type stores refraction data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SCATTERING_SKY_LUT">
+			<summary>
+			Texture of this type stores sky scattering LUT data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SCREEN_COLOR">
+			<summary>
+			Texture of this type stores screen color data and can be used for post effects.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SCREEN_COLOR_OLD">
+			<summary>
+			Texture of this type stores Color Old (previous frame) data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SCREEN_COLOR_OLD_REPROJECTION">
+			<summary>
+			Texture of this type stores Color Old (previous frame) Reprojection data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SSAO">
+			<summary>
+			Texture of this type stores SSAO (Screen Space Ambient Occlusion) data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SSGI">
+			<summary>
+			Texture of this type stores SSGI (Screen Space Global Illumination) data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SSR">
+			<summary>
+			Texture of this type stores SSR (Screen Space Reflections) data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SSR_DEPTH">
+			<summary>
+			Texture of this type stores SSR (Screen Space Reflections) depth data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_TRANSPARENT_ENVIRONMENT">
+			<summary>
+			An RGBA16F texture that stores environment probes and environment rendered on transparent objects. Available only for transparent materials rendered in the forward pass when Multiple environment probes are enabled.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_TRANSPARENT_BLUR">
+			<summary>
+			a 1-channel R16F mask that stores intensity of blurring for transparent materials. The mask specifies where to blur the material.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_WBUFFER_CONSTANT_ID">
+			<summary>
+			Constant texture, R32U. A texture of this type stores the ID value of the water mesh which is used to load the corresponding textures and parameters for it.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_WBUFFER_DIFFUSE">
+			<summary>
+			Diffuse texture. The diffuse color of the water is black, and diffuse texture is necessary for decals, that will be displayed over the water surface.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_WBUFFER_FOG">
+			<summary>
+			Underwater fog texture, RGBA16.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_WBUFFER_NORMAL">
+			<summary>
+			Normal texture stores normal data for lighting, and alpha channel stores mesh transparency values (it can be used for soft intersections with water geometry).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_WBUFFER_SS_ENVIRONMENT">
+			<summary>
+			An RGBA16 underwater fog texture that stores water bottom coloring values (RGB) and fog transparency (A).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_WBUFFER_WATER">
+			<summary>
+			Water texture, RG8. It is used to create the procedural foam mask. The mask shows where the foam will be depicted.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_WBUFFER_PLANAR_REFLECTION">
+			<summary>
+			Water dynamic planar reflection texture, RGBA16F.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_WBUFFER_WU_MASK">
+			<summary>
+			Underwater mask texture, RGB8. Underwater mask is used only for Global water, since water mesh doesn't have an underwater mode.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_TERRAIN_FLAT_POSITION">
+			<summary>
+			Texture storing terrain geodetic flat position data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_CURVATURE">
+			<summary>
+			Texture used for the Screen-Space Dirt effect (SSDirt).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_REFRACTION_MASK">
+			<summary>
+			Texture storing refraction mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_CUSTOM">
+			<summary>
+			Custom user texture.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_TERRAIN_GLOBAL_DEPTH">
+			<summary>
+			Texture storing depth data for the Global Terrain.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_TERRAIN_GLOBAL_FLAT_POSITION">
+			<summary>
+			Texture storing geodetic flat positions for the Global Terrain.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TRANSPARENT_ALPHA_TEST">
+			<summary>
+			Transparent material which uses alpha test.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TRANSPARENT_BLEND">
+			<summary>
+			Transparent material which is rendered in forward pass, uses blend func.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TRANSPARENT_DEFERRED">
+			<summary>
+			Transparent material which is rendered in deferred pass upon the deferred geometry into the g-buffer with alpha blend, doesn't use blend func.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TRANSPARENT_NONE">
+			<summary>
+			Opaque material (non-transparent), doesn't use blend func.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TRANSPARENT_WATER">
+			<summary>
+			Transparent material which is rendered in water pass.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_BLEND">
+			<summary>
+			The material is Alpha Blend, i.e. it is combined with the background to create an appearance of partial or full transparency.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_ORDER">
+			<summary>
+			Sort order used when rendering transparent objects (objects that are assigned materials with the Alpha Blend, Additive, and Multiplicative presets). Objects with the lowest order numbers are rendered first, and objects with the highest order numbers are rendered last.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_SHADOW_MASK">
+			<summary>
+			Shadow mask used to control shadows cast by an object lit by light sources. A surface, having this material assigned, casts shadows from a light source, if its surface and material shadow masks match the light mask of a light source (one bit at least).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_VIEWPORT_MASK">
+			<summary>
+			Viewport mask of the material. A surface, having this material assigned, is rendered into a viewport, if its surface and material viewport masks match the viewport mask of the camera (one bit at least).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_TRANSPARENT">
+			<summary>
+			The material is transparent.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_DEPTH_MASK">
+			<summary>
+			Option that allows writing in the depth buffer for the material. This option can be used for transparent objects to prevent them from obstructing the others. With this option enabled, the inner part of a transparent object won't be rendered if the outside surface was rendered first. The same can happen to a concave object.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_DEPTH_TEST">
+			<summary>
+			Depth testing for the material. This can be used to make the object visible, when occluded by other objects (e.g. a character behind a wall).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_TWO_SIDED">
+			<summary>
+			The material has two sides, i.e. polygons, to which the material is applied, are rendered two times per lighting pass for the material to be seen from the other side.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_RECEIVE_SHADOW">
+			<summary>
+			The material receives shadows.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_CAST_PROJ_OMNI_SHADOW">
+			<summary>
+			The material casts shadow when lit by the omni and projected light sources.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_RECEIVE_WORLD_SHADOW">
+			<summary>
+			The material receives shadows cast from the global light source.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_CAST_WORLD_SHADOW">
+			<summary>
+			The material casts shadow when lit by the global light source.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_OVERLAP">
+			<summary>
+			Rendering polygons, to which the material is applied, on the top of the render, overlapping any other images. This can be used for UI elements.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.OPTION_DEPTH_PRE_PASS">
+			<summary>
+			Depth pre-pass rendering, i.e. an additional depth buffer rendering pass is performed for the material in the beginning of the rendering sequence. Performed only for alpha test and complex materials.
+		</summary>
+		</member>
+	</members>
+</doc>

@@ -1,0 +1,64 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.Compress.zlibCompress(void,size_t,void,size_t,bool)">
+			<summary>
+			Compresses the source data using the Zlib algorithm with the specified compression level and puts the result to the specified destination.
+			</summary> 
+			<param name="dest"> Destination buffer pointer. </param>
+			<param name="dest_size"> Destination data size. </param>
+			<param name="src"> Source buffer pointer. </param>
+			<param name="src_size"> Source data size. </param>
+			<param name="quality"> Compression quality; false is for faster compression, true is for higher compression (less size). </param> 
+			<returns>true if the operation was successful; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Compress.zlibDecompress(void,size_t,void,size_t)">
+			<summary>
+			Decompresses the source data using the Zlib algorithm and puts the result to the specified destination.
+			</summary> 
+			<param name="dest"> Destination buffer pointer. </param>
+			<param name="dest_size"> Destination data size. </param>
+			<param name="src"> Source buffer pointer. </param>
+			<param name="src_size"> Source data size. </param> 
+			<returns>true if the operation was successful; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Compress.zlibSize(size_t)">
+			<summary>
+			Returns the maximum Zlib-compressed data size for the specified uncompressed size value.
+			</summary> 
+			<param name="size"> Uncompressed data size. </param> 
+			<returns>Maximum Zlib-compressed data size.</returns>
+		</member>
+		<member name="M:Unigine.Compress.lz4Size(size_t)">
+			<summary>
+			Returns the maximum LZ4-compressed data size for the specified uncompressed size value.
+			</summary> 
+			<param name="size"> Uncompressed data size. </param> 
+			<returns>Maximum lz4-compressed data size.</returns>
+		</member>
+		<member name="M:Unigine.Compress.lz4Compress(void,size_t,void,size_t,bool)">
+			<summary>
+			Compresses the source data using the LZ4 algorithm with the specified compression level and puts the result to the specified destination.
+			</summary> 
+			<param name="dest"> Destination buffer pointer. </param>
+			<param name="dest_size"> Destination data size. </param>
+			<param name="src"> Source buffer pointer. </param>
+			<param name="src_size"> Source data size. </param>
+			<param name="quality"> Compression quality; false is for faster compression, true is for higher compression (less size). </param> 
+			<returns>true if the operation was successful; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Compress.lz4Decompress(void,size_t,void,size_t)">
+			<summary>
+			Decompresses the source data using the LZ4 algorithm and puts the result to the specified destination.
+			</summary> 
+			<param name="dest"> Destination buffer pointer. </param>
+			<param name="dest_size"> Destination data size. </param>
+			<param name="src"> Source buffer pointer. </param>
+			<param name="src_size"> Source data size. </param> 
+			<returns>true if the operation was successful; otherwise, false.</returns>
+		</member>
+	</members>
+</doc>

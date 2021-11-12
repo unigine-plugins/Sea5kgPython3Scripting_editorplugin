@@ -1,0 +1,32 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.Timer.getClock">
+			<summary>
+			Returns CPU clocks counter.
+			</summary>  
+			<returns>CPU clocks counter.</returns>
+		</member>
+		<member name="M:Unigine.Timer.getFloatTime">
+			<summary>
+			Returns time in seconds.
+			</summary>  
+			<returns>Time in seconds.</returns>
+		</member>
+		<member name="M:Unigine.Timer.getTime">
+			<summary>
+			Returns time in microseconds.
+			</summary>  
+			<returns>Time in microseconds.</returns>
+		</member>
+		<member name="M:Unigine.Timer.usleep(unsignedint)">
+			<summary>
+			Suspends process execution in microseconds.
+			</summary> 
+			<param name="usec"> Time in microseconds. </param> 
+		</member>
+	</members>
+</doc>

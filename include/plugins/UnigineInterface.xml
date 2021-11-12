@@ -1,0 +1,353 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.Plugins.InterfaceWindow.setCenterPosition">
+			<summary>
+			Sets the interface window in the center of the screen.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.getDropFileName(int)">
+			<summary>
+			Returns the name of the drop file by its number.
+			</summary> 
+			<param name="num"> Number of the drop file. </param> 
+			<returns>Name of the drop file.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.setFocus">
+			<summary>
+			Sets the interface window in focus.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.isFocused">
+			<summary>
+			Returns a value, indicating if the interface window is in focus.
+			</summary>  
+			<returns>1 if the window is in focus, otherwise - 0.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.setHeight(int)">
+			<summary>
+			Sets the window height.
+			</summary> 
+			<param name="height"> Window height. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.getHeight">
+			<summary>
+			Returns a height of the interface window.
+			</summary>  
+			<returns>Window height.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.setHidden(bool)">
+			<summary>
+			Sets a value, indicating if the interface window is hidden.
+			</summary> 
+			<param name="hidden"> Hidden flag. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.isHidden">
+			<summary>
+			Returns a value, indicating if the interface window is hidden.
+			</summary>  
+			<returns>1 if the window is hidden, otherwise - 0.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.getIntersection(int,int)">
+			<summary>
+			Returns a value indicating if the mouse cursor with the given coordinates is positioned on the window.
+			</summary> 
+			<param name="x"> X coordinate of the mouse cursor. </param>
+			<param name="y"> Y coordinate of the mouse cursor. </param> 
+			<returns>1 if the cursor is positioned on the window; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.setMouse(int,int)">
+			<summary>
+			Sets the mouse position.
+			</summary> 
+			<param name="x"> Mouse X-coordinate position. </param>
+			<param name="y"> Mouse Y-coordinate position. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.getMouseX">
+			<summary>
+			Returns the mouse position along the X axis.
+			</summary>  
+			<returns>Mouse X-coordinate position.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.getMouseY">
+			<summary>
+			Returns the mouse position along the Y axis.
+			</summary>  
+			<returns>Mouse Y-coordinate position.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.setMoveable(bool)">
+			<summary>
+			Sets a value indicating if the window is movable.
+			</summary> 
+			<param name="mode"> Movable flag:1 - Movable.0 - Immovable. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.isMoveable">
+			<summary>
+			Returns a value indicating if the window is movable.
+			</summary>  
+			<returns>true if the window is movable; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.getNumDropFiles">
+			<summary>
+			Returns the number of drop files.
+			</summary>  
+			<returns>Number of drop files.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.setParent(int)">
+			<summary>
+			Sets the parent flag for the interface window. If the window is marked as non-parent (the parent flag is set to 0),				this window will be ignored when calling the engine.interface.getCenterPositionX() and engine.interface.getCenterPositionY() functions.
+			</summary> 
+			<param name="parent"> The parent flag: 1 to mark the interface window as a parent window; otherwise, 0. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.isParent">
+			<summary>
+			Returns the parent flag set for the interface window.				If the window is marked as non-parent (the parent flag is set to 0),				this window will be ignored when calling the engine.interface.getCenterPositionX() and engine.interface.getCenterPositionY() functions.
+			</summary>  
+			<returns>The parent flag: 1 if the window is a parent window; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.setPermanentFocus">
+			<summary>
+			Sets the permanent focus on the interface window. The window is permanently focused if it remains in focus even when its child window is in focus.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.isPermanentlyFocused">
+			<summary>
+			Returns a value indicating if the window is in permanent focus The window is permanently focused if it remains in focus even when its child window is in focus.
+			</summary>  
+			<returns>1 if the window is in permanent focus; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.setPosition(int,int)">
+			<summary>
+			Sets the window position.
+			</summary> 
+			<param name="x"> Window X-coordinate position. </param>
+			<param name="y"> Window Y-coordinate position. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.getPositionX">
+			<summary>
+			Returns the window position along X axis.
+			</summary>  
+			<returns>Window X-coordinate position.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.getPositionY">
+			<summary>
+			Returns the window position along Y axis.
+			</summary>  
+			<returns>Window Y-coordinate position.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.setTitle(char)">
+			<summary>
+			Sets the title for the interface window.
+			</summary> 
+			<param name="title"> Title. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.getTitle">
+			<summary>
+			Returns the title of an interface window.
+			</summary>  
+			<returns>Title.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.setWidget(Unigine.Ptr{Unigine.Widget})">
+			<summary>
+			Synchronizes the size and position of the interface window with a given widget.
+			</summary> 
+			<param name="widget"> Widget to be set. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.getWidget">
+			<summary>
+			Returns the interface window widget.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.setWidth(int)">
+			<summary>
+			Sets the window width.
+			</summary> 
+			<param name="width"> Window width. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.getWidth">
+			<summary>
+			Returns a width of the interface window.
+			</summary>  
+			<returns>Window width.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.clearDropFiles">
+			<summary>
+			Clear all the files that are dragged and dropped to the interface window.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.InterfaceWindow(int,char)">
+			<summary>
+			Creates an interface window with the specified parameters.
+			</summary> 
+			<param name="flags"> Flags of the interface window. </param>
+			<param name="name"> Name of the interface window. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.InterfaceWindow.removeFocus">
+			<summary>
+			Removes the focus from the interface window.
+			</summary>  
+		</member>
+		<member name="F:Unigine.Plugins.InterfaceWindow.TITLE">
+			<summary>
+			An Interface window has a title bar.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.InterfaceWindow.FRAME">
+			<summary>
+			An Interface window has only a frame (no title bar).
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.InterfaceWindow.MINIMIZE">
+			<summary>
+			An Interface window has a minimize button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.InterfaceWindow.MAXIMIZE">
+			<summary>
+			An Interface window has a maximize button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.InterfaceWindow.CLOSE">
+			<summary>
+			An Interface window has a close button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.InterfaceWindow.DROP">
+			<summary>
+			The interface window supports drag-and-drop.
+		</summary>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.findWindow(Unigine.Ptr{Gui})">
+			<summary>
+			Returns the number of the Interface window rendered by the given gui instance.
+			</summary> 
+			<param name="gui"> Gui instance. </param> 
+			<returns>Window number, if it exists; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getCenterPositionX(int)">
+			<summary>
+			Returns the coordinate along the X axis, at which the window of the given width will be positioned in the center of the screen.					The function won't return a value in the following cases:													If the parent flag of the interface window is set to 0.							If the window is hidden.							If the window is not focused.							If the window is not an instance of the WidgetWindow class.
+			</summary> 
+			<param name="width"> Window width. </param> 
+			<returns>X coordinate of the window.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getCenterPositionY(int)">
+			<summary>
+			Returns the coordinate along the Y axis, at which the window of the given height will be positioned in the center of the screen.					The function won't return a value in the following cases:													If the parent flag of the interface window is set to 0.							If the window is hidden.							If the window is not focused.							If the window is not an instance of the WidgetWindow class.
+			</summary> 
+			<param name="height"> Window height. </param> 
+			<returns>Y coordinate of the window.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getHeight">
+			<summary>
+			Returns the screen space height. If there are two monitors arranged vertically, the height of two monitors is returned.
+			</summary>  
+			<returns>Screen height.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getMouseX">
+			<summary>
+			Returns the X-coordinate (in the screen space) of the mouse cursor.
+			</summary>  
+			<returns>X-coordinate of the mouse cursor.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getMouseY">
+			<summary>
+			Returns the Y-coordinate (in the screen space) of the mouse cursor.
+			</summary>  
+			<returns>Y-coordinate of the mouse cursor.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getNumScreens">
+			<summary>
+			Returns the number of available screens (monitors).
+			</summary>  
+			<returns>The number of screens.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getNumWindows">
+			<summary>
+			Returns the number of Interface windows.
+			</summary>  
+			<returns>Number of Interface windows.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getPositionX">
+			<summary>
+			Returns the X coordinate of the Interface window.
+			</summary>  
+			<returns>X coordinate of the window.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getPositionY">
+			<summary>
+			Returns the Y coordinate of the Interface window.
+			</summary>  
+			<returns>Y coordinate of the window.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getScreenHeight(int)">
+			<summary>
+			Returns the height of the given screen (monitor).
+			</summary> 
+			<param name="num"> Screen number. </param> 
+			<returns>Height of the screen.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getScreenPositionX(int)">
+			<summary>
+			Returns the position of the given screen (monitor) in a horizontal row in the screen space. If there are two monitors arranged horizontally, the X-coordinate position of the first monitor is 0 and of the second one, for example, 1280.
+			</summary> 
+			<param name="num"> Screen number. </param> 
+			<returns>X-coordinate position of the screen.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getScreenPositionY(int)">
+			<summary>
+			Returns the position of the given screen (monitor) in a vertical column in the screen space. If there are two monitors arranged vertically, the Y-coordinate position of the first monitor is 0 and of the second one, for example, 1024.
+			</summary> 
+			<param name="num"> Screen number. </param> 
+			<returns>Y-coordinate position of the screen.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getScreenWidth(int)">
+			<summary>
+			Returns the width of the given screen (monitor).
+			</summary> 
+			<param name="num"> Screen number. </param> 
+			<returns>Width of the screen.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getVisiblePositionX(int,int,int)">
+			<summary>
+								Checks if the window of the given width is visible on a screen with the specified border at the given coordinate. If the window is visible, its position will remain the same.			Otherwise, it will be updated in order to make the window visible (taking into account the size of the vertical border).
+			</summary> 
+			<param name="x"> X coordinate in the screen space. </param>
+			<param name="width"> Window width. </param>
+			<param name="border_x"> Horizontal border size. </param> 
+			<returns>The given X coordinate if the window is visible; otherwise, the X coordinate, at which the window will be visible.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getVisiblePositionY(int,int,int)">
+			<summary>
+								Checks if the window of the given height is visible on a screen with the specified border at the given coordinate. If the window is visible, its position will remain the same.			Otherwise, it will be updated in order to make the window visible (taking into account the size of the vertical border).
+			</summary> 
+			<param name="y"> Y coordinate in the screen space. </param>
+			<param name="height"> Window height. </param>
+			<param name="border_y"> Vertical border size. </param> 
+			<returns>The given Y coordinate if the window is visible; otherwise, the Y coordinate, at which the window will be visible.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getWidth">
+			<summary>
+			Returns the screen space width. If there are two monitors arranged horizontally, the width of two monitors is returned.
+			</summary>  
+			<returns>Screen width.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.getWindow(int)">
+			<summary>
+			Returns an Interface window by its number.
+			</summary> 
+			<param name="num"> Interface window number. </param> 
+			<returns>Interface window.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Interface.setMouse(int,int)">
+			<summary>
+			Sets position (in screen space coordinates) of the mouse.
+			</summary> 
+			<param name="x"> X-coordinate of the mouse cursor. </param>
+			<param name="y"> Y-coordinate of the mouse cursor. </param> 
+		</member>
+	</members>
+</doc>

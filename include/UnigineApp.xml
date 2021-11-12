@@ -1,0 +1,1002 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.App.isActive">
+			<summary>
+			Returns a value indicating if the current application is active (i.e. in focus). The function will always return 1, if the window background update mode is set to 1.					The sounds will be automatically disabled, if the application is not active.
+			</summary>  
+			<returns>1 if application is active; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.App.isLegacyMode const">
+			<summary>
+			Returns a value indicating if rendering during the Engine's initialization stage is disabled for the application. Engine's boot screen requires rendering to be performed at the Engine's initialization stage. Certain applications do not support rendering in the init() by design. To ensure stable operation for such apps you can disable render-during-init functionality by setting the legacy mode. Thus, the boot screen won't be displayed for these applications.
+			</summary>  
+			<returns>1 if rendering during the Engine's initialization stage is disabled for the application; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.App.setButtonPressFunc(int(*func)(intbutton))">
+			<summary>
+			Application event which is called when pressing the button. The engine will stop event processing if the event function returns 1.
+			</summary> 
+			<param name=""> Event function pointer. </param> 
+		</member>
+		<member name="M:Unigine.App.setButtonReleaseFunc(int(*func)(intbutton))">
+			<summary>
+			Application event which is called when releasing the button. The engine will stop event processing if the event function Returns 1.
+			</summary> 
+			<param name=""> Event function pointer. </param> 
+		</member>
+		<member name="M:Unigine.App.setClipboard(char)">
+			<summary>
+			Updates the contents of the system clipboard.
+			</summary> 
+			<param name="str"> Contents to set. </param> 
+		</member>
+		<member name="M:Unigine.App.getClipboard">
+			<summary>
+			Retrieves the contents of the system clipboard.
+			</summary>  
+			<returns>Contents of the system clipboard.</returns>
+		</member>
+		<member name="M:Unigine.App.getHandle">
+			<summary>
+			Returns a pointer to the application handle.
+			</summary>  
+			<returns>Pointer to the application handle.</returns>
+		</member>
+		<member name="M:Unigine.App.isDone">
+			<summary>
+			Returns a value indicating if the application is closed.
+			</summary>  
+			<returns>1 if the application is closed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.App.isInitialized">
+			<summary>
+			Returns a value indicating if the application is initialized.
+			</summary>  
+			<returns>1 if the application is initialized; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.App.getFlags">
+			<summary>
+			Returns the video mode flags set for the application.
+			</summary>  
+			<returns>Video mode flags: RESIZABLE, FULLSCREEN, etc.</returns>
+		</member>
+		<member name="M:Unigine.App.getFps">
+			<summary>
+			Returns the application FPS counter value.
+			</summary>  
+			<returns>Application FPS counter value.</returns>
+		</member>
+		<member name="M:Unigine.App.getMinFps">
+			<summary>
+			Returns the minimum FPS counter value for the last 600 frames.
+			</summary>  
+			<returns>Minimum FPS counter value for the last 600 frames.</returns>
+		</member>
+		<member name="M:Unigine.App.getMaxFps">
+			<summary>
+			Returns the maximum FPS counter value for the last 600 frames.
+			</summary>  
+			<returns>Maximum FPS counter value for the last 600 frames.</returns>
+		</member>
+		<member name="M:Unigine.App.getMeanFps">
+			<summary>
+			Returns the average FPS counter value for the last 600 frames.
+			</summary>  
+			<returns>Average FPS counter value for the last 600 frames.</returns>
+		</member>
+		<member name="M:Unigine.App.setHeight(int)">
+			<summary>
+			Sets the new height for the application window. The height is specified for the window inside and doesn't include the window borders.					If the INDEPENDENT_SIZE_WINDOW flag is set, only render resolution will be changed, leaving the window size unaffected.
+			</summary> 
+			<param name="value"> Application window height, in pixels. </param> 
+		</member>
+		<member name="M:Unigine.App.getHeight">
+			<summary>
+			Returns the current height of the application window. The returned value is the window inside height without borders.
+			</summary>  
+			<returns>Current height of the application window, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.App.setIcon(Unigine.Ptr{Unigine.Image})">
+			<summary>
+			Sets an icon for the application window. The image must be of the square size and RGBA8 format.
+			</summary> 
+			<param name="icon"> Image to be set as application's icon. </param> 
+			<returns>1 if the icon is set successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.App.getIFps">
+			<summary>
+			Returns an inverse value of the application FPS counter.
+			</summary>  
+			<returns>Inverse value of the application FPS counter (1/FPS).</returns>
+		</member>
+		<member name="M:Unigine.App.getKeyName(int)">
+			<summary>
+			Returns a name of the given key.
+			</summary> 
+			<param name="key"> Key in one of the following formats:Character format (for example,'a')Standard ASCII key code (for example,97)One of KEY_* variables </param> 
+			<returns>Key name.</returns>
+		</member>
+		<member name="M:Unigine.App.setKeyPressFunc(int(*func)(unsignedintkey))">
+			<summary>
+			Application event which is called on pressing the key. The engine will stop event processing if the event function returns 1.
+			</summary> 
+			<param name=""> Event function pointer. </param> 
+		</member>
+		<member name="M:Unigine.App.setKeyPressUnicodeFunc(int(*func)(unsignedintkey))">
+			<summary>
+			Application event which is called on pressing the unicode key. The engine will stop event processing if the event function returns 1.
+			</summary> 
+			<param name=""> Event function pointer. </param> 
+		</member>
+		<member name="M:Unigine.App.setKeyReleaseFunc(int(*func)(unsignedintkey))">
+			<summary>
+			Application event which is called on releasing the key. The engine will stop event processing if the event function returns 1.
+			</summary> 
+			<param name=""> Event function pointer. </param> 
+		</member>
+		<member name="M:Unigine.App.setKeyState(int,int)">
+			<summary>
+			Sets the keyboard key state (pressed or not pressed).
+			</summary> 
+			<param name="key"> Key ID. Possible values can be in range [0;255], which are standard ASCII code symbols, or in range [KEY_ESC;KEY_F12], which are used for control buttons. For full list of control buttons see KEY_* variables. </param>
+			<param name="state"> Key state: 1 to set the button pressed; 0 to set the button not pressed. </param> 
+		</member>
+		<member name="M:Unigine.App.getKeyState(int)">
+			<summary>
+			Returns the keyboard key state (pressed or not pressed).
+			</summary> 
+			<param name="key"> Key ID. Possible values can be in range [0;255], which are standard ASCII code symbols, or in range [KEY_ESC;KEY_F12], which are used for control buttons. For full list of control button see KEY_* variables. </param> 
+			<returns>1 if the key is pressed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.App.setMouse(int,int)">
+			<summary>
+			Sets a mouse pointer to the specified position in the coordinate system of the application window.
+			</summary> 
+			<param name="x"> X coordinate of the mouse pointer. </param>
+			<param name="y"> Y coordinate of the mouse pointer. </param> 
+		</member>
+		<member name="M:Unigine.App.setMouseAxis(int,int)">
+			<summary>
+			Sets the mouse wheel delta along the specified axis. The delta value is changed when scrolling the mouse wheel horizontally (APP_AXIS_X) or vertically (APP_AXIS_Y).
+			</summary> 
+			<param name="axis"> Mouse axis. Possible values are AXIS_X, AXIS_Y. </param>
+			<param name="value"> Mouse wheel delta. </param> 
+		</member>
+		<member name="M:Unigine.App.getMouseAxis(int)">
+			<summary>
+			Returns the current mouse wheel delta along the specified axis. The delta value is changed when scrolling the mouse wheel horizontally (AXIS_X) or vertically (AXIS_Y).
+			</summary> 
+			<param name="axis"> Mouse axis. Possible values are AXIS_X, AXIS_Y. </param> 
+			<returns>Mouse wheel delta regarding the last wheel position.</returns>
+		</member>
+		<member name="M:Unigine.App.setMouseButton(int)">
+			<summary>
+			Simulates pressing of the specified mouse buttons.
+			</summary> 
+			<param name="button"> Mouse buttons to be pressed. Possible values are BUTTON_*. </param> 
+		</member>
+		<member name="M:Unigine.App.getMouseButton">
+			<summary>
+			Returns the current states of all mouse buttons. Each bit of the returned bit mask will specify the state of the buttons in the following order:											BUTTON_LEFT = 1 &lt;&lt; 0						BUTTON_MIDDLE						BUTTON_RIGHT						BUTTON_DCLICK						BUTTON_AUX_0						BUTTON_AUX_1						BUTTON_AUX_2						BUTTON_AUX_3
+			</summary>  
+			<returns>A bit mask that stores current states of all mouse buttons (pressed or not pressed).</returns>
+		</member>
+		<member name="M:Unigine.App.getMouseButtonName(int)">
+			<summary>
+			Returns a name of the given button.
+			</summary> 
+			<param name="button"> One of BUTTON_* variables. </param> 
+			<returns>Button name.</returns>
+		</member>
+		<member name="M:Unigine.App.getMouseButtonState(int)">
+			<summary>
+			Returns a state of the specified button (pressed or not pressed). If several buttons are specified, the function will return the state of the first pressed button (if any); if no buttons are pressed, the function will return 0.
+			</summary> 
+			<param name="button"> One of BUTTON_* variables </param> 
+			<returns>1 if al least one of the specified buttons is pressed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.App.setMouseGrab(int)">
+			<summary>
+			Sets a value indicating if the mouse pointer is bound to the application window.
+			</summary> 
+			<param name="grab"> 1 if the mouse cannot leave the application window; otherwise, 0. </param> 
+		</member>
+		<member name="M:Unigine.App.isMouseGrab">
+			<summary>
+			Returns a value indicating if the mouse pointer is bound to the application window.
+			</summary>  
+			<returns>true if the mouse pointer cannot leave the application window; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.App.getMouseX">
+			<summary>
+			Returns the current X coordinate of the mouse pointer in the coordinate system of the application window.
+			</summary>  
+			<returns>X coordinate of the mouse pointer.</returns>
+		</member>
+		<member name="M:Unigine.App.getMouseY">
+			<summary>
+			Returns the current Y coordinate of the mouse pointer in the coordinate system of the application window.
+			</summary>  
+			<returns>Y coordinate of the mouse pointer.</returns>
+		</member>
+		<member name="M:Unigine.App.getName">
+			<summary>
+			Returns a name of the graphics API used for application rendering.
+			</summary>  
+			<returns>One of the following values:opengl for OpenGLdirect3d11 for DirectX 11NULL if no graphics API is used for application rendering</returns>
+		</member>
+		<member name="M:Unigine.App.getNumTouches">
+			<summary>
+			Returns the number of touches. The maximum number of touches is 16.
+			</summary>  
+			<returns>Number of touches.</returns>
+		</member>
+		<member name="M:Unigine.App.setPosition(int,int)">
+			<summary>
+			Sets the window position.
+			</summary> 
+			<param name="x"> X coordinate of the upper-left corner of the window. </param>
+			<param name="y"> Y coordinate of the upper-left corner of the window. </param> 
+			<returns>1 if the position of the window is set successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.App.getPositionX">
+			<summary>
+			Returns the X coordinate of the upper-left corner of the window.
+			</summary>  
+			<returns>X coordinate of the upper-left corner of the window.</returns>
+		</member>
+		<member name="M:Unigine.App.getPositionY">
+			<summary>
+			Returns the Y coordinate of the upper-left corner of the window.
+			</summary>  
+			<returns>Y coordinate of the upper-left corner of the window.</returns>
+		</member>
+		<member name="M:Unigine.App.setTitle(char)">
+			<summary>
+			Sets a title for the application window.
+			</summary> 
+			<param name="title"> Window title. </param> 
+			<returns>1 if the title is set successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.App.getTouchX(int)">
+			<summary>
+			Returns the X coordinate of the touch in the coordinate system of the application window.
+			</summary> 
+			<param name="touch"> The touch number. </param> 
+			<returns>X coordinate of the touch.</returns>
+		</member>
+		<member name="M:Unigine.App.getTouchY(int)">
+			<summary>
+			Returns the Y coordinate of the touch in the coordinate system of the application window.
+			</summary> 
+			<param name="touch"> The toucn number. </param> 
+			<returns>Y coordinate of the touch.</returns>
+		</member>
+		<member name="M:Unigine.App.setBackgroundUpdate(bool)">
+			<summary>
+			Sets the value indicating whether the application window is updated when the window is hidden or out of focus (rendering frames in background). By default your UNIGINE application stops rendering frames and updating its main window, when it window goes out of focus (e.g. user switches to another window). Setting the background update mode enables constant rendering regardless of whether the application window is focused or in the background.
+			</summary> 
+			<param name="update"> Window update mode: true for constantly repeating update cycle (i.e. the application is updated even if the window is hidden or out of focus); otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.App.isBackgroundUpdate">
+			<summary>
+			Returns a value indicating whether the application window is updated when the window is hidden or out of focus.
+			</summary>  
+			<returns>true if the update cycle is constantly repeated (i.e. the application is updated even if the window is hidden or out of focus); otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.App.setVideoMode(int,int,int)">
+			<summary>
+			Sets a video mode and initializes the application.
+			</summary> 
+			<param name="width"> Video width in pixels. </param>
+			<param name="height"> Video height in pixels. </param>
+			<param name="flags"> Video mode flags: RESIZABLE, FULLSCREEN, FULLWINDOW, VSYNC, DEBUG_CONTEXT, BREAK_ON_ERROR. </param> 
+			<returns>true if the video mode is set and the application is initialized successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.App.getVideoModeName">
+			<summary>
+			Returns the name of the current video mode.
+			</summary>  
+			<returns>Returns the name of the current video mode.</returns>
+		</member>
+		<member name="M:Unigine.App.setWidth(int)">
+			<summary>
+			Sets the new width of the application window. The width is specified for the window inside part and doesn't include the window borders.					If the INDEPENDENT_SIZE_WINDOW flag is set, only render resolution will be changed, leaving the window size unaffected.
+			</summary> 
+			<param name="value"> Window width, in pixels. </param> 
+		</member>
+		<member name="M:Unigine.App.getWidth">
+			<summary>
+			Returns the current application window width.  The returned value is the window inside part width without borders.
+			</summary>  
+			<returns>Window width, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.App.buttonPress(int)">
+			<summary>
+			Application notifies the engine that the specified mouse button is pressed.
+			</summary> 
+			<param name="button"> One of the BUTTON_* variables. </param> 
+		</member>
+		<member name="M:Unigine.App.buttonRelease(int)">
+			<summary>
+			Application notifies the engine that the specified mouse button is released.
+			</summary> 
+			<param name="button"> One of the BUTTON_* variables. </param> 
+		</member>
+		<member name="M:Unigine.App.clearKeyState(int)">
+			<summary>
+			Returns the key state and clears it to 0 (not pressed). This function allows returning the key state only once even if it is kept pressed over several frames.
+			</summary> 
+			<param name="key"> Key ID. Possible values can be in range [0;255], which are standard ASCII code symbols, or in range [KEY_ESC;KEY_F12], which are used for control buttons. For full list of control buttons see KEY_* variables. </param> 
+			<returns>1 if the key is pressed, and this function was not called previously in the current frame; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.App.clearMouseAxis(int)">
+			<summary>
+			Returns the current mouse wheel position delta and clears it to 0.
+			</summary> 
+			<param name="axis"> Mouse wheel axis. Possible values are AXIS_X, AXIS_Y. </param> 
+			<returns>Mouse wheel delta regarding the last mouse wheel position.</returns>
+		</member>
+		<member name="M:Unigine.App.clearMouseButtonState(int)">
+			<summary>
+			Returns the button state and clears it to 0 (not pressed). This function allows returning the button state only once even if it is kept pressed over several frames. The function will return 1 if at least one of the specified buttons is pressed.
+			</summary> 
+			<param name="button"> Button. Possible values are BUTTON_*. </param> 
+			<returns>1 if at least one of the buttons is pressed, and this function was not called previously in the current frame; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogFile(char,char,int,char,char)">
+			<summary>
+			Creates a system modal file dialog. Since the dialog is modal, all other actions are stopped until this function returns a value.
+			</summary> 
+			<param name="title"> Title of the dialog window. </param>
+			<param name="name"> Current file name. </param>
+			<param name="size"> Size of the name buffer. </param>
+			<param name="filter"> File extension filter. Accepts dot-separated file extensions, for example: ".tga.jpg.png.tif.psd". </param>
+			<param name="flags"> File dialog flags. Accepts a string: "o" - open file dialog; "s" - save file dialog; "d" - directory dialog. </param> 
+			<returns>1 if the OK button is pressed; 0 if the Cancel button is pressed.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogMessage(char,char,char)">
+			<summary>
+			Creates a system modal message dialog. Since the dialog is modal, all other actions are stopped until this function returns a value.					If you don't specify flags, the Oc combination will be used by default.
+			</summary> 
+			<param name="title"> Title of the dialog window. </param>
+			<param name="str"> Content of the dialog window. </param>
+			<param name="flags"> Dialog window flags. The argument accepts a string with names of buttons. The following combinations are available:Oc or oC - OK, Cancel.Yn or yN - Yes, NoynC, yNc or Ync - Yes, No, CancelThe uppercase letter indicates which button will be in focus.If you send any other combination, only the OK button will appear in the window. </param> 
+			<returns>The function returns one of the following values:1 if the OK button has been pressed.2 if the Yes button has been pressed.-1 if the No button has been pressed.0 if the Cancel button has been pressed.</returns>
+		</member>
+		<member name="M:Unigine.App.exit">
+			<summary>
+			The engine requests to exit the application.
+			</summary>  
+		</member>
+		<member name="M:Unigine.App.keyPress(unsignedint)">
+			<summary>
+			Application notifies the engine that the specified key on a keyboard is pressed.
+			</summary> 
+			<param name="key"> Key ID. Possible values can be in range [0;255], which are standard ASCII code symbols, or in range [KEY_ESC;KEY_F12], which are used for control buttons. For full list of control buttons see KEY_* variables. </param> 
+		</member>
+		<member name="M:Unigine.App.keyPressUnicode(unsignedint)">
+			<summary>
+			Application notifies the engine that the specified key is pressed.
+			</summary> 
+			<param name="key"> Unicode symbol. </param> 
+		</member>
+		<member name="M:Unigine.App.keyRelease(unsignedint)">
+			<summary>
+			Application notifies the engine that the specified key on a keyboard is released.
+			</summary> 
+			<param name="key"> Key ID. Possible values can be in range [0;255], which are standard ASCII code symbols, or in range [KEY_ESC;KEY_F12], which are used for control buttons. For full list of control buttons see KEY_* variables. </param> 
+		</member>
+		<member name="M:Unigine.App.startFps">
+			<summary>
+			Starts the FPS counter if it was stopped. All function calls are placed into a stack, so the number of calls to this function should correspond to the number of calls to the stopFps() function.
+			</summary>  
+		</member>
+		<member name="M:Unigine.App.stopFps">
+			<summary>
+			Stops the FPS counter. This function should be called if application window is hidden or some heavy non-rendering tasks are processing. All function calls are placed into a stack, so the number of calls to this function should correspond to the number of calls to the startFps() function.
+			</summary>  
+		</member>
+		<member name="M:Unigine.App.setMouseCursorHide(bool)">
+			<summary>
+			Sets a value indicating if the mouse cursor should be hidden. Can be used, for example, to hide mouse cursor for a certain element.This method hides the cursor only for one frame. So, you should call it each frame if a longer period is required.
+			</summary> 
+			<param name="hide"> true to hide the mouse cursor for a single frame, false - to show it. </param> 
+		</member>
+		<member name="M:Unigine.App.isMouseCursorHide">
+			<summary>
+			Returns a value indicating if the mouse cursor is hidden in the current frame.
+			</summary>  
+			<returns>true if mouse cursor is hidden in the current frame, false - to show it.</returns>
+		</member>
+		<member name="M:Unigine.App.setMouseCursorSystem(bool)">
+			<summary>
+			Sets a value indicating if the OS mouse pointer should be displayed.
+			</summary> 
+			<param name="system"> true to display the OS mouse pointer; otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.App.isMouseCursorSystem">
+			<summary>
+			Returns a value indicating if the OS mouse pointer is displayed.
+			</summary>  
+			<returns>true if the OS mouse pointer is displayed; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.App.setMouseCursorNeedUpdate(bool)">
+			<summary>
+			Sets a value indicating that some changes were made to the cursor (e.g., it was shown, hidden, changed to system, etc.) and it has to be updated. Suppose the cursor was modified, for example, by the Interface plugin. After closing the plugin's window the cursor shall not return to its previous state because SDL doesn't even know about the changes. You can use this flag to signalize, that mouse cursor must be updated.
+			</summary> 
+			<param name="update"> true to signalize that the mouse cursor has to be updated; otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.App.isMouseCursorNeedUpdate">
+			<summary>
+			Returns a value indicating that changes were made to the cursor (e.g., it was shown, hidden, changed to system, etc.) and it has to be updated. Suppose the cursor was modified, for example, by the Interface plugin. After closing the plugin's window the cursor shall not return to its previous state because SDL doesn't even know about the changes. You can use this flag to signalize, that mouse cursor must be updated.
+			</summary>  
+			<returns>true if the mouse cursor has to be updated; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.App.setMouseCursorSkinCustom(Unigine.Ptr{Unigine.Image})">
+			<summary>
+			Sets a custom image to be used for the mouse cursor.
+			</summary> 
+			<param name="image"> Image containing pointer shapes to be set for the mouse cursor (e.g., select, move, resize, etc.). </param> 
+		</member>
+		<member name="M:Unigine.App.setMouseCursorSkinSystem">
+			<summary>
+			Sets the current OS cursor skin (pointer shapes like select, move, resize, etc.).
+			</summary>  
+		</member>
+		<member name="M:Unigine.App.setMouseCursorSkinDefault">
+			<summary>
+			Sets the default Engine cursor skin (pointer shapes like select, move, resize, etc.).
+			</summary>  
+		</member>
+		<member name="M:Unigine.App.setMouseCursorCustom(Unigine.Ptr{Unigine.Image},int,int)">
+			<summary>
+			Sets a custom image for the OS mouse cursor. The image must be of the square size and RGBA8 format.
+			</summary> 
+			<param name="image"> Cursor image to be set. </param>
+			<param name="x"> X coordinate of the cursor's hot spot. </param>
+			<param name="y"> Y coordinate of the cursor's hot spot. </param> 
+		</member>
+		<member name="M:Unigine.App.clearMouseCursorCustom">
+			<summary>
+			Clears the custom mouse cursor set via the setMouseCursorCustom() method.
+			</summary>  
+		</member>
+		<member name="M:Unigine.App.updateMouseCursor">
+			<summary>
+			Updates the mouse cursor. This method should be called after making changes to the mouse cursor to apply them all together. After calling this method the cursor shall be updated in the next frame.
+			</summary>  
+		</member>
+		<member name="M:Unigine.App.dialogMessage(char,char)">
+			<summary>
+			Displays a message dialog with the specified title and text.
+			</summary> 
+			<param name="title"> Title of the message dialog to be displayed. </param>
+			<param name="message"> Message text to be displayed. </param> 
+			<returns>true if the message is displayed successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogWarning(char,char)">
+			<summary>
+			Displays a warning dialog with the specified title and text.
+			</summary> 
+			<param name="title"> Title of the warning dialog to be displayed. </param>
+			<param name="warning"> Warning message text to be displayed. </param> 
+			<returns>true if the message is displayed successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogError(char,char)">
+			<summary>
+			Displays an error dialog with the specified title and text.
+			</summary> 
+			<param name="title"> Title of the error dialog to be displayed. </param>
+			<param name="error"> Error message text to be displayed. </param> 
+			<returns>true if the message is displayed successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.App.showSystemDialog(Unigine.Ptr{SystemDialog})">
+			<summary>
+			Displays a custom system dialog with an arbitrary set of buttons.
+			</summary> 
+			<param name="dialog"> SystemDialog class instance representing the custom system dialog to be shown. </param> 
+			<returns>number of the dialog button clicked by the user; or -1 if an error has occurred.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogOpenFolder(char)">
+			<summary>
+			Opens a common dialog enabling the user to specify a folder to open. When the dialog opens the specified default path shall be set displaying the corresponding elements.
+			</summary> 
+			<param name="path"> Path to be set by default when the dialog opens. </param> 
+			<returns>Resulting folder name specified by the user.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogOpenFolder">
+			<summary>
+			Opens a common dialog enabling the user to specify a folder to open.
+			</summary>  
+			<returns>Resulting folder name specified by the user.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogOpenFiles(char,char)">
+			<summary>
+			Opens a common dialog enabling the user to specify a list of filenames to open multiple files. When the dialog opens the specified default path and file filter shall be set displaying the corresponding elements.
+			</summary> 
+			<param name="path"> Path to be set by default when the dialog opens. </param>
+			<param name="filter"> File name filter string to be set by default when the dialog opens. This filter string determines file type choices to be displayed in the Files of type box. </param> 
+			<returns>Resulting list of filenames specified by the user.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogOpenFiles(char)">
+			<summary>
+			Opens a common dialog enabling the user to specify a list of filenames to open multiple files. When the dialog opens the specified default path shall be set displaying the corresponding elements.
+			</summary> 
+			<param name="path"> Path to be set by default when the dialog opens. </param> 
+			<returns>Resulting list of filenames specified by the user.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogOpenFiles">
+			<summary>
+			Opens a common dialog enabling the user to specify a list of filenames to open multiple files.
+			</summary>  
+			<returns>Resulting list of filenames specified by the user.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogOpenFile(char,char)">
+			<summary>
+			Opens a common dialog enabling the user to specify a filename to open a file. When the dialog opens the specified default path and file filter shall be set displaying the corresponding elements.
+			</summary> 
+			<param name="path"> Path to be set by default when the dialog opens. </param>
+			<param name="filter"> File name filter string to be set by default when the dialog opens. This filter string determines file type choices to be displayed in the Files of type box. </param> 
+			<returns>Resulting filename specified by the user.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogOpenFile(char)">
+			<summary>
+			Opens a common dialog enabling the user to specify a filename to open a file. When the dialog opens the specified default path shall be set displaying the corresponding elements.
+			</summary> 
+			<param name="path"> Path to be set by default when the dialog opens. </param> 
+			<returns>Resulting filename specified by the user.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogOpenFile">
+			<summary>
+			Opens a common dialog enabling the user to specify a filename to open a file.
+			</summary>  
+			<returns>Resulting filename specified by the user.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogSaveFile(char,char)">
+			<summary>
+			Opens a common dialog enabling the user to specify a filename to save a file as. When the dialog opens the specified default path and file filter shall be set displaying the corresponding elements.
+			</summary> 
+			<param name="path"> Path to be set by default when the dialog opens. </param>
+			<param name="filter"> File name filter string to be set by default when the dialog opens. This filter string determines file type choices to be displayed in the Save as file type or Files of type box. </param> 
+			<returns>Resulting filename specified by the user.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogSaveFile(char)">
+			<summary>
+			Opens a common dialog enabling the user to specify a filename to save a file as. When the dialog opens the specified default path shall be set displaying the corresponding elements.
+			</summary> 
+			<param name="path"> Path to be set by default when the dialog opens. </param> 
+			<returns>Resulting filename specified by the user.</returns>
+		</member>
+		<member name="M:Unigine.App.dialogSaveFile">
+			<summary>
+			Opens a common dialog enabling the user to specify a filename to save a file as.
+			</summary>  
+			<returns>Resulting filename specified by the user.</returns>
+		</member>
+		<member name="M:Unigine.App.setExternalWindowFocused(bool)">
+			<summary>
+			Sets a value indicating whether some external window of the application is currently focused. SDL handles messages only from its own window. When the focus is switched to another window created, for example, by the Interface plugin which handles all its events, the main window stops responding. In such a case you can tell the main window that another external window of the application is focused (e.g., Interface plugin's window).
+			</summary> 
+			<param name="focused"> true to tell the application that some of its external windows is focused; otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.App.isExternalWindowFocused">
+			<summary>
+			Returns a value indicating whether some external window of the application is currently focused. SDL handles messages only from its own window. When the focus is switched to another window created, for example, by the Interface plugin which handles all its events, the main window stops responding. In such a case you can tell the main window that another external window of the application is focused (e.g., Interface plugin's window).
+			</summary>  
+			<returns>true if some external window of the application is focused; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.App.setCustomSwapBuffersCallback(Unigine.CallbackBase)">
+			<summary>
+			Sets a callback to subscribe for an event to take place instead of swapping from the back buffer to the front one. So you can add your custom logic just before, right after or even instead of the buffer swap operation.				The callback signature is as follows: 						DirectX on Windows: arg1 - ID3D11Device,	arg2 - ID3D11DeviceContext,		arg3 - IDXGISwapChain						OpenGL on Windows: arg1 - HDC						OpenGL on Linux: arg1 - Display,	arg2 - GLXDrawable										Here is an example that uses VSync even if -video_vsync 0:																							Custom Swap Buffer Logic Example
+			</summary> 
+			<param name="callback"> Callback pointer. </param> 
+		</member>
+		<member name="M:Unigine.App.getCustomSwapBuffersCallback">
+			<summary>
+			Returns the current buffer swap callback function set for the application.
+			</summary>  
+			<returns>Callback pointer.</returns>
+		</member>
+		<member name="F:Unigine.App.AXIS_X">
+			<summary>
+			A mouse wheel is scrolled horizontally (along the X axis; a horizontal mouse wheel is required).
+		</summary>
+		</member>
+		<member name="F:Unigine.App.AXIS_Y">
+			<summary>
+			A mouse wheel is scrolled vertically (along the Y axis; a vertical mouse wheel is used).
+		</summary>
+		</member>
+		<member name="F:Unigine.App.BREAK_ON_ERROR">
+			<summary>
+			Break if an error occurs.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.BUTTON_AUX_0">
+			<summary>
+			Detected activity of the first auxiliary mouse button.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.BUTTON_AUX_1">
+			<summary>
+			Detected activity of the second auxiliary mouse button.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.BUTTON_AUX_2">
+			<summary>
+			Detected activity of the third auxiliary mouse button.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.BUTTON_AUX_3">
+			<summary>
+			Detected activity of the fourth auxiliary mouse button.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.BUTTON_DCLICK">
+			<summary>
+			Left mouse button is double-clicked.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.BUTTON_LEFT">
+			<summary>
+			Detected activity of the left mouse button.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.BUTTON_MIDDLE">
+			<summary>
+			Detected activity of the middle mouse button (scrolling wheel).
+		</summary>
+		</member>
+		<member name="F:Unigine.App.BUTTON_RIGHT">
+			<summary>
+			Detected activity of the right mouse button.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.DEBUG_CONTEXT">
+			<summary>
+			Debug context is enabled.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.FULLSCREEN">
+			<summary>
+			Fullscreen mode.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.FULLWINDOW">
+			<summary>
+			Full window mode.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_ALT">
+			<summary>
+			The ALT key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_BACKSPACE">
+			<summary>
+			The Backspace key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_CAPS">
+			<summary>
+			The Caps Lock key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_CMD">
+			<summary>
+			The Command key is pressed (for OS X).
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_CTRL">
+			<summary>
+			The Ctrl key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_DELETE">
+			<summary>
+			The Delete key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_DOWN">
+			<summary>
+			The Down Arrow key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_END">
+			<summary>
+			The End key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_ESC">
+			<summary>
+			The Esc key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_F1">
+			<summary>
+			The F1 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_F10">
+			<summary>
+			The F10 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_F11">
+			<summary>
+			The F11 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_F12">
+			<summary>
+			The F12 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_F2">
+			<summary>
+			The F2 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_F3">
+			<summary>
+			The F3 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_F4">
+			<summary>
+			The F4 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_F5">
+			<summary>
+			The F5 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_F6">
+			<summary>
+			The F6 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_F7">
+			<summary>
+			The F7 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_F8">
+			<summary>
+			The F8 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_F9">
+			<summary>
+			The F9 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_HOME">
+			<summary>
+			The Home key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_INSERT">
+			<summary>
+			The Insert key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_LEFT">
+			<summary>
+			The Left Arrow key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_NUM">
+			<summary>
+			The Num Lock key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_PGDOWN">
+			<summary>
+			The Page Down key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_PGUP">
+			<summary>
+			The Page Up key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_RETURN">
+			<summary>
+			The Enter (Return) key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_RIGHT">
+			<summary>
+			The Right Arrow key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_SCROLL">
+			<summary>
+			The Scroll Lock key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_SHIFT">
+			<summary>
+			The Shift key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_TAB">
+			<summary>
+			The Tab key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.KEY_UP">
+			<summary>
+			The Page Up key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.NUM_AXES">
+			<summary>
+			Number of axes, along which a mouse wheel can be scrolled.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.NUM_KEYS">
+			<summary>
+			Detected number of keyboard keys.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.NUM_TOUCHES">
+			<summary>
+			Number of the detached touches (for touch-screen controls).
+		</summary>
+		</member>
+		<member name="F:Unigine.App.RESIZABLE">
+			<summary>
+			Resizable window.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.VSYNC">
+			<summary>
+			Vertical synchronization.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.QUAD_BUFFER_CONTEXT">
+			<summary>
+			Quad buffer context is enabled.
+		</summary>
+		</member>
+		<member name="F:Unigine.App.INDEPENDENT_SIZE_WINDOW">
+			<summary>
+			Window size is independent of rendering resolution.
+		</summary>
+		</member>
+		<member name="M:Unigine.SystemDialog.#ctor">
+			<summary>
+			Constructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.SystemDialog.setType(int)">
+			<summary>
+			Sets the type of the system dialog.
+			</summary> 
+			<param name="type"> Dialog type to be set: one of the TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.SystemDialog.getType">
+			<summary>
+			Returns the current type of the system dialog.
+			</summary>  
+			<returns>Dialog type to be set: one of the TYPE_* values.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.setTitle(char)">
+			<summary>
+			Sets a new title for the system dialog.
+			</summary> 
+			<param name="title"> Dialog title to be set. </param> 
+		</member>
+		<member name="M:Unigine.SystemDialog.getTitle">
+			<summary>
+			Returns the current title of the system dialog.
+			</summary>  
+			<returns>Current dialog title.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.setMessage(char)">
+			<summary>
+			Sets a new message of the system dialog.
+			</summary> 
+			<param name="message"> Dialog message to be set. </param> 
+		</member>
+		<member name="M:Unigine.SystemDialog.getMessage">
+			<summary>
+			Returns the current message of the system dialog.
+			</summary>  
+			<returns>Current dialog message.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.setDefaultButtonReturn(int)">
+			<summary>
+			Sets a default button to be pressed by default when the user hits the Return key on the keyboard.
+			</summary> 
+			<param name="val"> Number of the button to be set, in the range from 0 to the total number of buttons. </param> 
+		</member>
+		<member name="M:Unigine.SystemDialog.getDefaultButtonReturn">
+			<summary>
+			Returns the current default button to be pressed by default when the user hits the Return key on the keyboard.
+			</summary>  
+			<returns>Number of the button, in the range from 0 to the total number of buttons.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.setDefaultButtonEscape(int)">
+			<summary>
+			Sets a default button to be pressed by default when the user hits the Escape key on the keyboard.
+			</summary> 
+			<param name="escape"> Number of the button to be set, in the range from 0 to the total number of buttons. </param> 
+		</member>
+		<member name="M:Unigine.SystemDialog.getDefaultButtonEscape">
+			<summary>
+			Returns the current default button to be pressed by default when the user hits the Escape key on the keyboard.
+			</summary>  
+			<returns>Number of the button, in the range from 0 to the total number of buttons.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.getNumButtons">
+			<summary>
+			Returns the total number of buttons of the system dialog.
+			</summary>  
+			<returns>Total number of dialog buttons.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.addButton">
+			<summary>
+			Adds a new button to the system dialog.
+			</summary>  
+			<returns>Number of the new added button.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.addButton(char)">
+			<summary>
+			Adds a new button to the system dialog.
+			</summary> 
+			<param name="name"> Name of the button to be added. </param> 
+			<returns>Number of the new added button.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.removeButton(int)">
+			<summary>
+			Removes the button with the specified number from the system dialog.
+			</summary> 
+			<param name="num"> Number of the button to be removed, in the range from 0 to the total number of buttons. </param> 
+		</member>
+		<member name="M:Unigine.SystemDialog.swapButtons(int,int)">
+			<summary>
+			Swaps two buttons with the specified numbers.
+			</summary> 
+			<param name="num_0"> Number of the first button, in the range from 0 to the total number of buttons. </param>
+			<param name="num_1"> Number of the second button, in the range from 0 to the total number of buttons. </param> 
+		</member>
+		<member name="M:Unigine.SystemDialog.getButtonName(int)">
+			<summary>
+			Returns the name of the button by its number.
+			</summary> 
+			<param name="num"> Number of the button, in the range from 0 to the total number of buttons. </param> 
+			<returns>Name of the button with the specified number.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.setButtonName(int,char)">
+			<summary>
+			Sets as new name for the button with the specified number.
+			</summary> 
+			<param name="num"> Number of the button to be renamed, in the range from 0 to the total number of buttons. </param>
+			<param name="name"> New name to be set for the button with the specified number. </param> 
+		</member>
+		<member name="F:Unigine.SystemDialog.TYPE_ERROR">
+			<summary>
+			Error dialog.
+		</summary>
+		</member>
+		<member name="F:Unigine.SystemDialog.TYPE_WARNING">
+			<summary>
+			Warning dialog.
+		</summary>
+		</member>
+		<member name="F:Unigine.SystemDialog.TYPE_INFORMATION">
+			<summary>
+			Information dialog.
+		</summary>
+		</member>
+	</members>
+</doc>

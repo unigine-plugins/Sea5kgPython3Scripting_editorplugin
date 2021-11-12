@@ -1,0 +1,828 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.CustomApp.isActive">
+			<summary>
+			Returns the value indicating if the current application is active (i.e. in focus). The function will always return 1, if the window update mode is set to 1.					The sounds will be automatically disabled, if the application is not active.
+			</summary>  
+			<returns>1 if application is active; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.isLegacyMode const">
+			<summary>
+			Returns a value indicating if rendering during the Engine's initialization stage is disabled for the application. Engine's boot screen requires rendering to be performed at the Engine's initialization stage. Certain applications do not support rendering in the init() by design. To ensure stable operation for such apps you can disable render-during-init functionality by setting the legacy mode. Thus, the boot screen won't be displayed for these applications.
+			</summary>  
+			<returns>1 if rendering during the Engine's initialization stage is disabled for the application; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.setClipboard(char)">
+			<summary>
+			Updates the contents of the system clipboard.
+			</summary> 
+			<param name="str"> Contents to set. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.getClipboard">
+			<summary>
+			Retrieves the contents of the system clipboard.
+			</summary>  
+			<returns>Contents of the system clipboard.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getD3D11Context">
+			<summary>
+			Returns a pointer to the existing ID3D11DeviceContext interface.
+			</summary>  
+		</member>
+		<member name="M:Unigine.CustomApp.getD3D11Device">
+			<summary>
+			Returns a pointer to the existing ID3D11Device interface.
+			</summary>  
+			<returns>ID3D11Device interface pointer.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.isD3D11Initialized">
+			<summary>
+			Returns the status of the Direct3D11 render.
+			</summary>  
+			<returns>1 if the render is initialized; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.isDone">
+			<summary>
+			Returns a value indicating if the application is closed.
+			</summary>  
+			<returns>1 if the application is closed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getFlags">
+			<summary>
+			Returns the video mode flags set for the application.
+			</summary>  
+			<returns>Video mode flags: DESTROY, RESIZABLE, FULLSCREEN, etc.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getFps">
+			<summary>
+			Returns the application FPS counter value.
+			</summary>  
+			<returns>Application FPS counter value.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getMinFps">
+			<summary>
+			Returns the minimum FPS counter value for the last 600 frames.
+			</summary>  
+			<returns>Minimum FPS counter value for the last 600 frames.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getMaxFps">
+			<summary>
+			Returns the maximum FPS counter value for the last 600 frames.
+			</summary>  
+			<returns>Maximum FPS counter value for the last 600 frames.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getMeanFps">
+			<summary>
+			Returns the average FPS counter value for the last 600 frames.
+			</summary>  
+			<returns>Average FPS counter value for the last 600 frames.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.isGLInitialized">
+			<summary>
+			Returns the status of the OpenGL renderer.
+			</summary>  
+			<returns>1 if the OpenGL render is initialized; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getHandle">
+			<summary>
+			Returns a pointer to the application handle.
+			</summary>  
+			<returns>Pointer to the application handle.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.setHeight(int)">
+			<summary>
+			Sets the new height for the application window. The height is specified for the window inside and doesn't include the window borders.					If the INDEPENDENT_SIZE_WINDOW flag is set, only render resolution will be changed, leaving the window size unaffected.
+			</summary> 
+			<param name="value"> Application window height, in pixels. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.getHeight">
+			<summary>
+			Returns the current height of the application window. The returned value is the window inside height without borders.
+			</summary>  
+			<returns>Current height of the application window, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.setIcon(uchar[],int)">
+			<summary>
+			Sets an icon for the application window. The image must be of the square size and RGBA8 format.
+			</summary> 
+			<param name="data"> Icon resource data. </param>
+			<param name="data_size"> Resourse size. </param> 
+			<returns>1 if the icon is set successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getIFps">
+			<summary>
+			Returns an inverse value of the application FPS counter.
+			</summary>  
+			<returns>Inverse value of the application FPS counter (1/FPS).</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getKeyName(int)">
+			<summary>
+			Returns a name of the given key.
+			</summary> 
+			<param name="key"> Key in one of the following formats:Character format (for example,'a')Standard ASCII key code (for example,97)One of KEY_* variables </param> 
+			<returns>Key name.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.setKeyState(int,int)">
+			<summary>
+			Sets the keyboard key state (pressed or not pressed).
+			</summary> 
+			<param name="key"> Key ID. Possible values can be in range [0;255], which are standard ASCII code symbols, or in range [KEY_ESC;KEY_F12], which are used for control buttons. For full list of control buttons see KEY_* variables. </param>
+			<param name="state"> Key state: 1 to set the button pressed; 0 to set the button not pressed. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.getKeyState(int)">
+			<summary>
+			Returns the keyboard key state (pressed or not pressed).
+			</summary> 
+			<param name="key"> Key ID. Possible values can be in range [0;255], which are standard ASCII code symbols, or in range [KEY_ESC;KEY_F12], which are used for control buttons. For full list of control button see KEY_* variables. </param> 
+			<returns>1 if the key is pressed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.setMouse(int,int)">
+			<summary>
+			Sets a mouse pointer to the specified position in the coordinate system of the application window.
+			</summary> 
+			<param name="x"> X coordinate of the mouse pointer. </param>
+			<param name="y"> Y coordinate of the mouse pointer. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.setMouseAxis(int,int)">
+			<summary>
+			Sets the mouse wheel delta along the specified axis. The delta value is changed when scrolling the mouse wheel horizontally (APP_AXIS_X) or vertically (APP_AXIS_Y).
+			</summary> 
+			<param name="axis"> Mouse axis. Possible values are AXIS_X, AXIS_Y. </param>
+			<param name="value"> Mouse wheel delta. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.getMouseAxis(int)">
+			<summary>
+			Returns the current mouse wheel delta along the specified axis. The delta value is changed when scrolling the mouse wheel horizontally (AXIS_X) or vertically (AXIS_Y).
+			</summary> 
+			<param name="axis"> Mouse axis. Possible values are AXIS_X, AXIS_Y. </param> 
+			<returns>Mouse wheel delta regarding the last wheel position.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.setMouseButton(int)">
+			<summary>
+			Simulates pressing of the specified mouse buttons.
+			</summary> 
+			<param name="button"> Mouse buttons to be pressed. Possible values are BUTTON_*. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.getMouseButton">
+			<summary>
+			Returns the current states of all mouse buttons. Each bit of the returned bit mask will specify the state of the buttons in the following order:											BUTTON_LEFT = 1 &lt;&lt; 0						BUTTON_MIDDLE						BUTTON_RIGHT						BUTTON_DCLICK						BUTTON_AUX_0						BUTTON_AUX_1						BUTTON_AUX_2						BUTTON_AUX_3
+			</summary>  
+			<returns>A bit mask that stores current states of all mouse buttons (pressed or not pressed).</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getMouseButtonName(int)">
+			<summary>
+			Returns a name of the given button.
+			</summary> 
+			<param name="button"> One of BUTTON_* variables. </param> 
+			<returns>Button name.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getMouseButtonState(int)">
+			<summary>
+			Returns a state of the specified button (pressed or not pressed). If several buttons are specified, the function will return the state of the first pressed button (if any); if no buttons are pressed, the function will return 0.
+			</summary> 
+			<param name="button"> One of BUTTON_* variables </param> 
+			<returns>1 if al least one of the specified buttons is pressed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getMouseShow">
+			<summary>
+			Returns a value indicating if the OS mouse pointer is displayed.
+			</summary>  
+			<returns>1 if the OS mouse pointer is displayed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getMouseX">
+			<summary>
+			Returns the current X coordinate of the mouse pointer in the coordinate system of the application window.
+			</summary>  
+			<returns>X coordinate of the mouse pointer.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getMouseY">
+			<summary>
+			Returns the current Y coordinate of the mouse pointer in the coordinate system of the application window.
+			</summary>  
+			<returns>Y coordinate of the mouse pointer.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getName">
+			<summary>
+			Returns a name of the graphics API used for application rendering.
+			</summary>  
+			<returns>One of the following values:opengl for OpenGLdirect3d11 for DirectX 11NULL if no graphics API is used for application rendering</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.isNULLInitialized">
+			<summary>
+			Returns a value indicating whether the NULL renderer is initialized.
+			</summary>  
+			<returns>1 if the renderer is initialized; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getNumTouches">
+			<summary>
+			Returns the number of touches. The maximum number of touches is 16.
+			</summary>  
+			<returns>Number of touches.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.setPosition(int,int)">
+			<summary>
+			Sets the window position.
+			</summary> 
+			<param name="x"> X coordinate of the upper-left corner of the window. </param>
+			<param name="y"> Y coordinate of the upper-left corner of the window. </param> 
+			<returns>1 if the position of the window is set successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getPositionX">
+			<summary>
+			Returns the X coordinate of the upper-left corner of the window.
+			</summary>  
+			<returns>X coordinate of the upper-left corner of the window.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getPositionY">
+			<summary>
+			Returns the Y coordinate of the upper-left corner of the window.
+			</summary>  
+			<returns>Y coordinate of the upper-left corner of the window.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.setTitle(char)">
+			<summary>
+			Sets a title for the application window.
+			</summary> 
+			<param name="title"> Window title. </param> 
+			<returns>1 if the title is set successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getTouchX(int)">
+			<summary>
+			Returns the X coordinate of the touch in the coordinate system of the application window.
+			</summary> 
+			<param name="touch"> The touch number. </param> 
+			<returns>X coordinate of the touch.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getTouchY(int)">
+			<summary>
+			Returns the Y coordinate of the touch in the coordinate system of the application window.
+			</summary> 
+			<param name="touch"> The toucn number. </param> 
+			<returns>Y coordinate of the touch.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.isBackgroundUpdate">
+			<summary>
+			Returns the current window update mode (the value indicating whether the application is updated when the window is hidden).
+			</summary>  
+			<returns>1 if the update cycle is constantly repeated; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.setBackgroundUpdate(int)">
+			<summary>
+			Sets the value indicating whether the application widow is updated when the window is hidden or out of focus (rendering frames in background). By default your UNIGINE application stops rendering frames and updating its main window, when it window goes out of focus (e.g. user switches to another window). Setting the update mode to 1 enables constant rendering regardless of whether the application window is focused or in the background.
+			</summary> 
+			<param name="update"> Window update mode: 1 for constantly repeating update cycle (i.e. the application is updated if the window is hidden or out of focus); otherwise, 0. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.setVideoMode(int,int,int)">
+			<summary>
+			Sets a video mode and initializes the application.
+			</summary> 
+			<param name="width"> Video width in pixels. </param>
+			<param name="height"> Video height in pixels. </param>
+			<param name="flags"> Video mode flags: DESTROY, RESIZABLE, FULLSCREEN, FULLWINDOW, VSYNC, DEBUG_CONTEXT, BREAK_ON_ERROR. </param> 
+			<returns>1 if the video mode is set and the application is initialized successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getVideoModeName">
+			<summary>
+			Returns the name of the current video mode.
+			</summary>  
+			<returns>Returns the name of the current video mode.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.setWidth(int)">
+			<summary>
+			Sets the new width of the application window. The width is specified for the window inside part and doesn't include the window borders.					If the INDEPENDENT_SIZE_WINDOW flag is set, only render resolution will be changed, leaving the window size unaffected.
+			</summary> 
+			<param name="value"> Window width, in pixels. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.getWidth">
+			<summary>
+			Returns the current application window width.  The returned value is the window inside part width without borders.
+			</summary>  
+			<returns>Window width, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.buttonPress(int)">
+			<summary>
+			Application notifies the engine that the specified mouse button is pressed.
+			</summary> 
+			<param name="button"> One of the BUTTON_* variables. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.buttonRelease(int)">
+			<summary>
+			Application notifies the engine that the specified mouse button is released.
+			</summary> 
+			<param name="button"> One of the BUTTON_* variables. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.clearKeyState(int)">
+			<summary>
+			Returns the key state and clears it to 0 (not pressed). This function allows returning the key state only once even if it is kept pressed over several frames.
+			</summary> 
+			<param name="key"> Key ID. Possible values can be in range [0;255], which are standard ASCII code symbols, or in range [KEY_ESC;KEY_F12], which are used for control buttons. For full list of control buttons see KEY_* variables. </param> 
+			<returns>1 if the key is pressed, and this function was not called previously in the current frame; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.clearMouseAxis(int)">
+			<summary>
+			Returns the current mouse wheel position delta and clears it to 0.
+			</summary> 
+			<param name="axis"> Mouse wheel axis. Possible values are AXIS_X, AXIS_Y. </param> 
+			<returns>Mouse wheel delta regarding the last mouse wheel position.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.clearMouseButtonState(int)">
+			<summary>
+			Returns the button state and clears it to 0 (not pressed). This function allows returning the button state only once even if it is kept pressed over several frames. The function will return 1 if at least one of the specified buttons is pressed.
+			</summary> 
+			<param name="button"> Button. Possible values are BUTTON_*. </param> 
+			<returns>1 if at least one of the buttons is pressed, and this function was not called previously in the current frame; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.dialogMessage(char,char,char)">
+			<summary>
+			Creates a system modal message dialog. Since the dialog is modal, all other actions are stopped until this function returns a value.					If you don't specify flags, the Oc combination will be used by default.
+			</summary> 
+			<param name="title"> Title of the dialog window. </param>
+			<param name="str"> Content of the dialog window. </param>
+			<param name="flags"> Dialog window flags. The argument accepts a string with names of buttons. The following combinations are available:Oc or oC - OK, Cancel.Yn or yN - Yes, NoynC, yNc or Ync - Yes, No, CancelThe uppercase letter indicates which button will be in focus.If you send any other combination, only the OK button will appear in the window. </param> 
+			<returns>The function returns one of the following values:1 if the OK button has been pressed.2 if the Yes button has been pressed.-1 if the No button has been pressed.0 if the Cancel button has been pressed.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.doRender">
+			<summary>
+			The engine requests to call the render() function. The application can ignore this request if it handles the main loop by itself.
+			</summary>  
+		</member>
+		<member name="M:Unigine.CustomApp.doSwap">
+			<summary>
+			The engine requests to call the swap() function. The application can ignore this request if it handles the main loop by itself.
+			</summary>  
+		</member>
+		<member name="M:Unigine.CustomApp.doUpdate">
+			<summary>
+			The engine requests to call the update() function. Application can ignore this request if it handles the main loop by itself.
+			</summary>  
+		</member>
+		<member name="M:Unigine.CustomApp.exit">
+			<summary>
+			The engine requests to exit the application.
+			</summary>  
+		</member>
+		<member name="M:Unigine.CustomApp.initD3D11(void,void,void,int)">
+			<summary>
+			Initializes the Direct3D11 render. This function should be called when the Direct3D11 device is ready for rendering.
+			</summary> 
+			<param name="adapter"> Pointer to the IDXGIAdapter interface. </param>
+			<param name="device"> Pointer to the ID3D11Device interface. </param>
+			<param name="context"> Pointer to ID3D11DeviceContext interface. </param>
+			<param name="debug"> Debug output flag. Use 1 to enable debug output, 0 to disable it. </param> 
+			<returns>1 if the Direct3D11 render is initialized successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.initGL(void,int)">
+			<summary>
+			Initializes the OpenGL render. This function should be called when OpenGL context is created.
+			</summary> 
+			<param name="context"> Pointer to OpenGL Context interface. </param>
+			<param name="debug"> Debug output flag. Use 1 to enable debug output, 0 to disable it. </param> 
+			<returns>1 if the render is initialized successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.initNULL">
+			<summary>
+			Initializes the NULL renderer: nothing is rendered onto the screen. This mode is used, for example, for servers in case of playing over the network.
+			</summary>  
+			<returns>1 if the renderer is initialized successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.keyPress(unsignedint)">
+			<summary>
+			Application notifies the engine that the specified key on a keyboard is pressed.
+			</summary> 
+			<param name="key"> Key ID. Possible values can be in range [0;255], which are standard ASCII code symbols, or in range [KEY_ESC;KEY_F12], which are used for control buttons. For full list of control buttons see KEY_* variables. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.keyPressUnicode(unsignedint)">
+			<summary>
+			Application notifies the engine that the specified key is pressed.
+			</summary> 
+			<param name="key"> Unicode symbol. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.keyRelease(unsignedint)">
+			<summary>
+			Application notifies the engine that the specified key on a keyboard is released.
+			</summary> 
+			<param name="key"> Key ID. Possible values can be in range [0;255], which are standard ASCII code symbols, or in range [KEY_ESC;KEY_F12], which are used for control buttons. For full list of control buttons see KEY_* variables. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.render">
+			<summary>
+			Application requests the engine to render.
+			</summary>  
+		</member>
+		<member name="M:Unigine.CustomApp.shutdownD3D11">
+			<summary>
+			Shuts down the Direct3D11 render. This function should be called when the Direct3D11 device is released.
+			</summary>  
+			<returns>1 if the Direct3D11 render is shut down successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.shutdownGL">
+			<summary>
+			Shuts down the OpenGL render. This function should be called when OpenGL context is destroyed.
+			</summary>  
+			<returns>1 if the render is shut down successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.shutdownNULL">
+			<summary>
+			Shuts down the NULL renderer.
+			</summary>  
+			<returns>1 if the renderer is shut down successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.startFps">
+			<summary>
+			Starts the FPS counter if it was stopped. All function calls are placed into a stack, so the number of calls to this function should correspond to the number of calls to the stopFps() function.
+			</summary>  
+		</member>
+		<member name="M:Unigine.CustomApp.stopFps">
+			<summary>
+			Stops the FPS counter. This function should be called if application window is hidden or some heavy non-rendering tasks are processing. All function calls are placed into a stack, so the number of calls to this function should correspond to the number of calls to the startFps() function.
+			</summary>  
+		</member>
+		<member name="M:Unigine.CustomApp.swap">
+			<summary>
+			Application requests the engine to swap.
+			</summary>  
+		</member>
+		<member name="M:Unigine.CustomApp.update">
+			<summary>
+			Application requests the engine to update.
+			</summary>  
+		</member>
+		<member name="M:Unigine.CustomApp.createContext">
+			<summary>
+			Creates a rendering context depending on the graphics API used for application rendering.
+			</summary>  
+			<returns>RenderContext smart pointer.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.initGLContext">
+			<summary>
+			Initializes an OpenGL rendering context.
+			</summary>  
+			<returns>RenderContext smart pointer.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.initD3D11Context">
+			<summary>
+			Initializes a D3D11 rendering context.
+			</summary>  
+			<returns>RenderContext smart pointer.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getGLContext">
+			<summary>
+			Returns the pointer to the OpenGL context.
+			</summary>  
+			<returns>OpenGL context pointer.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getGLVersionMajor">
+			<summary>
+			Returns the major version number of the supported OpenGL API.
+			</summary>  
+			<returns>OpenGL API major version number.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.getGLVersionMinor">
+			<summary>
+			Returns the minor version number of the supported OpenGL API.
+			</summary>  
+			<returns>OpenGL API minor version number.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.setCustomSwapBuffersCallback(Unigine.CallbackBase)">
+			<summary>
+			Sets a callback to subscribe for an event to take place instead of swapping from the back buffer to the front one. So you can add your custom logic just before, right after or even instead of the buffer swap operation.				The callback signature is as follows: 						DirectX on Windows: arg1 - ID3D11Device,	arg2 - ID3D11DeviceContext,		arg3 - IDXGISwapChain						OpenGL on Windows: arg1 - HDC						OpenGL on Linux: arg1 - Display,	arg2 - GLXDrawable										Here is an example that uses VSync even if -video_vsync 0:																		Custom Swap Buffer Logic Example
+			</summary> 
+			<param name="callback"> Callback pointer. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.getCustomSwapBuffersCallback">
+			<summary>
+			Returns the current buffer swap callback function set for the application.
+			</summary>  
+			<returns>Callback pointer.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.set(CustomApp)">
+			<summary>
+			Sets the custom application interface.
+			</summary> 
+			<param name="app"> Pointer to the custom application interface. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.setMouseCursorSkinCustom(Unigine.Ptr{Unigine.Image})">
+			<summary>
+			Sets a custom image to be used for the mouse cursor.
+			</summary> 
+			<param name="image"> Image containing pointer shapes to be set for the mouse cursor (e.g., select, move, resize, etc.). </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.setMouseCursorSkinSystem">
+			<summary>
+			Sets the default Engine cursor skin (pointer shapes like select, move, resize, etc.).
+			</summary>  
+		</member>
+		<member name="M:Unigine.CustomApp.setMouseCursorCustom(Unigine.Ptr{Unigine.Image},int,int)">
+			<summary>
+			Sets a custom image for the OS mouse cursor. The image must be of the square size and RGBA8 format.
+			</summary> 
+			<param name="image"> Cursor image to be set. </param>
+			<param name="x"> X coordinate of the cursor's hot spot. </param>
+			<param name="y"> Y coordinate of the cursor's hot spot. </param> 
+		</member>
+		<member name="M:Unigine.CustomApp.clearMouseCursorCustom">
+			<summary>
+			Clears the custom mouse cursor set via the setMouseCursorCustom() method.
+			</summary>  
+		</member>
+		<member name="M:Unigine.CustomApp.updateMouseCursor">
+			<summary>
+			Updates the mouse cursor. This method should be called after making changes to the mouse cursor to apply them all together. After calling this method the cursor shall be updated in the next frame.
+			</summary>  
+		</member>
+		<member name="M:Unigine.CustomApp.dialogWarning(char,char)">
+			<summary>
+			Displays a warning dialog with the specified title and text.
+			</summary> 
+			<param name="title"> Title of the warning dialog to be displayed. </param>
+			<param name="warning"> Warning message text to be displayed. </param> 
+			<returns>true if the message is displayed successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.CustomApp.dialogError(char,char)">
+			<summary>
+			Displays an error dialog with the specified title and text.
+			</summary> 
+			<param name="title"> Title of the error dialog to be displayed. </param>
+			<param name="error"> Error message text to be displayed. </param> 
+			<returns>true if the message is displayed successfully; otherwise, false.</returns>
+		</member>
+		<member name="F:Unigine.CustomApp.AXIS_X">
+			<summary>
+			A mouse wheel is scrolled horizontally (along the X axis; a horizontal mouse wheel is required).
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.AXIS_Y">
+			<summary>
+			A mouse wheel is scrolled vertically (along the Y axis; a vertical mouse wheel is used).
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.BREAK_ON_ERROR">
+			<summary>
+			Break if an error occurs.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.BUTTON_AUX_0">
+			<summary>
+			Detected activity of the first auxiliary mouse button.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.BUTTON_AUX_1">
+			<summary>
+			Detected activity of the second auxiliary mouse button.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.BUTTON_AUX_2">
+			<summary>
+			Detected activity of the third auxiliary mouse button.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.BUTTON_AUX_3">
+			<summary>
+			Detected activity of the fourth auxiliary mouse button.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.BUTTON_DCLICK">
+			<summary>
+			Left mouse button is double-clicked.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.BUTTON_LEFT">
+			<summary>
+			Detected activity of the left mouse button.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.BUTTON_MIDDLE">
+			<summary>
+			Detected activity of the middle mouse button (scrolling wheel).
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.BUTTON_RIGHT">
+			<summary>
+			Detected activity of the right mouse button.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.DEBUG_CONTEXT">
+			<summary>
+			Debug context is enabled.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.DESTROY">
+			<summary>
+			Fullscreen mode is destroyed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.FULLSCREEN">
+			<summary>
+			Fullscreen mode.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.FULLWINDOW">
+			<summary>
+			Full window mode.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_ALT">
+			<summary>
+			The ALT key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_BACKSPACE">
+			<summary>
+			The Backspace key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_CAPS">
+			<summary>
+			The Caps Lock key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_CMD">
+			<summary>
+			The Command key is pressed (for OS X).
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_CTRL">
+			<summary>
+			The Ctrl key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_DELETE">
+			<summary>
+			The Delete key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_DOWN">
+			<summary>
+			The Down Arrow key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_END">
+			<summary>
+			The End key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_ESC">
+			<summary>
+			The Esc key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_F1">
+			<summary>
+			The F1 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_F10">
+			<summary>
+			The F10 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_F11">
+			<summary>
+			The F11 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_F12">
+			<summary>
+			The F12 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_F2">
+			<summary>
+			The F2 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_F3">
+			<summary>
+			The F3 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_F4">
+			<summary>
+			The F4 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_F5">
+			<summary>
+			The F5 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_F6">
+			<summary>
+			The F6 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_F7">
+			<summary>
+			The F7 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_F8">
+			<summary>
+			The F8 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_F9">
+			<summary>
+			The F9 key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_HOME">
+			<summary>
+			The Home key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_INSERT">
+			<summary>
+			The Insert key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_LEFT">
+			<summary>
+			The Left Arrow key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_NUM">
+			<summary>
+			The Num Lock key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_PGDOWN">
+			<summary>
+			The Page Down key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_PGUP">
+			<summary>
+			The Page Up key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_RETURN">
+			<summary>
+			The Enter (Return) key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_RIGHT">
+			<summary>
+			The Right Arrow key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_SCROLL">
+			<summary>
+			The Scroll Lock key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_SHIFT">
+			<summary>
+			The Shift key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_TAB">
+			<summary>
+			The Tab key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.KEY_UP">
+			<summary>
+			The Page Up key is pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.NUM_AXES">
+			<summary>
+			Number of axes, along which a mouse wheel can be scrolled.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.NUM_KEYS">
+			<summary>
+			Detected number of keyboard keys.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.NUM_TOUCHES">
+			<summary>
+			Number of the detached touches (for touch-screen controls).
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.RESIZABLE">
+			<summary>
+			Resizable window.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.VSYNC">
+			<summary>
+			Vertical synchronization.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.QUAD_BUFFER_CONTEXT">
+			<summary>
+			Quad buffer context is enabled.
+		</summary>
+		</member>
+		<member name="F:Unigine.CustomApp.INDEPENDENT_SIZE_WINDOW">
+			<summary>
+			Window size is independent of rendering resolution.
+		</summary>
+		</member>
+	</members>
+</doc>

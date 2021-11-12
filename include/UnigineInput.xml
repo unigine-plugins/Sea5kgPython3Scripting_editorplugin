@@ -1,0 +1,879 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.Input.getMouseCoord">
+			<summary>
+			Returns a vector containing integer values of mouse pointer position.
+			</summary>  
+			<returns>Integer mouse pointer position.</returns>
+		</member>
+		<member name="M:Unigine.Input.getMouseCoordDelta">
+			<summary>
+			Returns a vector containing integer screen position change of the mouse pointer along the X and Y axes — the difference between the values in the previous and the current frames.
+			</summary>  
+			<returns>Integer mouse pointer position delta.</returns>
+		</member>
+		<member name="M:Unigine.Input.getMouseDelta">
+			<summary>
+			Returns a vector containing float screen position change of the mouse pointer along the X and Y axes — the difference between the values in the previous and the current frames.					Float values are useful for rotation and other smooth transformations.
+			</summary>  
+			<returns>Float mouse pointer position delta.</returns>
+		</member>
+		<member name="M:Unigine.Input.getMouseWheel">
+			<summary>
+			Returns the current mouse scroll value. Negative values correspond to scrolling downwards; positive values correspond to scrolling upwards; the value is zero when the mouse wheel is not scrolled.
+			</summary>  
+			<returns>Mouse scroll value in the [-1;1] range.</returns>
+		</member>
+		<member name="M:Unigine.Input.getMouseWheelHorizontal">
+			<summary>
+			Returns the current horizontal mouse scroll value.
+			</summary>  
+			<returns>Horizontal mouse scroll value in the [-1;1] range.</returns>
+		</member>
+		<member name="M:Unigine.Input.getCountGamePads">
+			<summary>
+			Returns the number of all game pads.
+			</summary>  
+			<returns>Number of all game pads.</returns>
+		</member>
+		<member name="M:Unigine.Input.getGamePad(int)">
+			<summary>
+			Returns a game pad of the given index.
+			</summary> 
+			<param name="num"> index. </param> 
+			<returns>InputGamepad object.</returns>
+		</member>
+		<member name="M:Unigine.Input.getCountActiveGamePads">
+			<summary>
+			Returns the number of active game pads.
+			</summary>  
+			<returns>Number of active game pads.</returns>
+		</member>
+		<member name="M:Unigine.Input.getActiveGamePad(int)">
+			<summary>
+			Returns an active game pad of the given index.
+			</summary> 
+			<param name="num"> index. </param> 
+			<returns>InputGamePad object.</returns>
+		</member>
+		<member name="M:Unigine.Input.isKeyPressed(Input::KEY)">
+			<summary>
+			Returns a value indicating if the given key is pressed or not. Check this value to perform continuous actions.
+			</summary> 
+			<param name="key"> One of the preset KEY_ codes. </param> 
+			<returns>1 if the key is pressed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Input.isKeyDown(Input::KEY)">
+			<summary>
+			Returns a value indicating if the given key was pressed during the current frame or not. Check this value to perform one-time actions on pressing a key.
+			</summary> 
+			<param name="key"> One of the preset KEY_ codes. </param> 
+			<returns>1 during the first frame when the key was pressed, 0 for the following ones until it is released and pressed again.</returns>
+		</member>
+		<member name="M:Unigine.Input.isKeyUp(Input::KEY)">
+			<summary>
+			Returns a value indicating if the given key was released during the current frame or not. Check this value to perform one-time actions on releasing a key.
+			</summary> 
+			<param name="key"> One of the preset KEY_ codes. </param> 
+			<returns>1 during the first frame when the key was released; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Input.isMouseButtonPressed(Input::MOUSE_BUTTON)">
+			<summary>
+			Returns a value indicating if the given mouse button is pressed or not. Check this value to perform continuous actions.
+			</summary> 
+			<param name="button"> One of the preset MOUSE_BUTTON_ codes. </param> 
+			<returns>1 if the mouse button is pressed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Input.isMouseButtonDown(Input::MOUSE_BUTTON)">
+			<summary>
+			Returns a value indicating if the given mouse button was pressed during the current frame or not. Check this value to perform one-time actions on pressing a mouse button.
+			</summary> 
+			<param name="button"> One of the preset MOUSE_BUTTON_ codes. </param> 
+			<returns>1 during the first frame when the mouse button was released; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Input.isMouseButtonUp(Input::MOUSE_BUTTON)">
+			<summary>
+			Returns a value indicating if the given mouse button was released during the current frame or not. Check this value to perform one-time actions on releasing a mouse button.
+			</summary> 
+			<param name="button"> One of the preset MOUSE_BUTTON_ codes. </param> 
+			<returns>1 during the first frame when the mouse button was released; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Input.setMouseHandle(Input::MOUSE_HANDLE)">
+			<summary>
+			Sets the mouse behavior mode.
+			</summary> 
+			<param name="handle"> Mouse behavior mode, one of the MOUSE_HANDLE_* values. </param> 
+		</member>
+		<member name="M:Unigine.Input.getMouseHandle">
+			<summary>
+			Returns the mouse behavior mode.
+			</summary>  
+			<returns>Mouse behavior mode, one of the MOUSE_HANDLE_* values.</returns>
+		</member>
+		<member name="F:Unigine.Input.MOUSE_BUTTON_LEFT">
+			<summary>
+			Left mouse button
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.MOUSE_BUTTON_MIDDLE">
+			<summary>
+			Middle mouse button
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.MOUSE_BUTTON_RIGHT">
+			<summary>
+			Right mouse button
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.MOUSE_BUTTON_DCLICK">
+			<summary>
+			Left mouse button double click
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.MOUSE_BUTTON_AUX_0">
+			<summary>
+			Auxiliary mouse button
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.MOUSE_BUTTON_AUX_1">
+			<summary>
+			Auxiliary mouse button
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.MOUSE_BUTTON_AUX_2">
+			<summary>
+			Auxiliary mouse button
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.MOUSE_BUTTON_AUX_3">
+			<summary>
+			Auxiliary mouse button
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.MOUSE_NUM_BUTTONS">
+			<summary>
+			Number of mouse buttons
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.NUM_GAME_PADS">
+			<summary>
+			Number of game pads
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.NUM_TOUCHES">
+			<summary>
+			The current number of touches
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.NUM_JOYSTICKS">
+			<summary>
+			The number of joysticks
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_EXCLAIM">
+			<summary>
+			Exclamation mark key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DOUBLE_QUOTE">
+			<summary>
+			Double quote key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_HASH">
+			<summary>
+			Hash key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DOLLAR">
+			<summary>
+			Dollar key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_PERCENT">
+			<summary>
+			Percent key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_AMPERSAND">
+			<summary>
+			Ampersand key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_QUOTE">
+			<summary>
+			Quote key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_APOSTROPHE">
+			<summary>
+			Apostrophe key (					KEY_APOSTROPHE =					KEY_QUOTE)
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_LEFT_PAREN">
+			<summary>
+			Left parenthesis key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_RIGHT_PAREN">
+			<summary>
+			Right parenthesis key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_ASTERISK">
+			<summary>
+			Asterisk key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_PLUS">
+			<summary>
+			Plus key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_COMMA">
+			<summary>
+			Comma key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_MINUS">
+			<summary>
+			Minus key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DOT">
+			<summary>
+			Dot key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_SLASH">
+			<summary>
+			Slash key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_COLON">
+			<summary>
+			Colon key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_SEMICOLON">
+			<summary>
+			Semicolon key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_LESS">
+			<summary>
+			Less than key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_EQUALS">
+			<summary>
+			Equals key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_GREATER">
+			<summary>
+			Greater than key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_QUESTION">
+			<summary>
+			Question key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_AT">
+			<summary>
+			At key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_LEFT_BRACKET">
+			<summary>
+			Left square bracket key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_BACK_SLASH">
+			<summary>
+			Back slash key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_RIGHT_BRACKET">
+			<summary>
+			Right square bracket key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_CARET">
+			<summary>
+			Caret key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_UNDERSCORE">
+			<summary>
+			Underscore key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_BACK_QUOTE">
+			<summary>
+			Back quote key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DIGIT_0">
+			<summary>
+			The 0 key of the alphanumeric keyboard
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DIGIT_1">
+			<summary>
+			The 1 key of the alphanumeric keyboard
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DIGIT_2">
+			<summary>
+			The 2 key of the alphanumeric keyboard
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DIGIT_3">
+			<summary>
+			The 3 key of the alphanumeric keyboard
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DIGIT_4">
+			<summary>
+			The 4 key of the alphanumeric keyboard
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DIGIT_5">
+			<summary>
+			The 5 key of the alphanumeric keyboard
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DIGIT_6">
+			<summary>
+			The 6 key of the alphanumeric keyboard
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DIGIT_7">
+			<summary>
+			The 7 key of the alphanumeric keyboard
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DIGIT_8">
+			<summary>
+			The 8 key of the alphanumeric keyboard
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DIGIT_9">
+			<summary>
+			The 9 key of the alphanumeric keyboard
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_A">
+			<summary>
+			A key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_B">
+			<summary>
+			B key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_C">
+			<summary>
+			C key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_D">
+			<summary>
+			D key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_E">
+			<summary>
+			E key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_F">
+			<summary>
+			F key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_G">
+			<summary>
+			G key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_H">
+			<summary>
+			H key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_I">
+			<summary>
+			I key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_J">
+			<summary>
+			J key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_K">
+			<summary>
+			K key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_L">
+			<summary>
+			L key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_M">
+			<summary>
+			M key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_N">
+			<summary>
+			N key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_O">
+			<summary>
+			O key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_P">
+			<summary>
+			P key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_Q">
+			<summary>
+			Q key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_R">
+			<summary>
+			R key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_S">
+			<summary>
+			S key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_T">
+			<summary>
+			T key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_U">
+			<summary>
+			U key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_V">
+			<summary>
+			V key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_W">
+			<summary>
+			W key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_X">
+			<summary>
+			X key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_Y">
+			<summary>
+			Y key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_Z">
+			<summary>
+			Z key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_ESC">
+			<summary>
+			Escape key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_TAB">
+			<summary>
+			Tab key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_BACKSPACE">
+			<summary>
+			Backspace key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_RETURN">
+			<summary>
+			Return key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DELETE">
+			<summary>
+			Delete
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_INSERT">
+			<summary>
+			Insert key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_HOME">
+			<summary>
+			Home key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_END">
+			<summary>
+			End key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_PGUP">
+			<summary>
+			Page Up key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_PGDOWN">
+			<summary>
+			Page down
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_LEFT">
+			<summary>
+			Left arrow key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_RIGHT">
+			<summary>
+			Right arrow key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_UP">
+			<summary>
+			Up arrow key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_DOWN">
+			<summary>
+			Down arrow key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_SHIFT">
+			<summary>
+			Shift key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_CTRL">
+			<summary>
+			Control key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_ALT">
+			<summary>
+			Alt key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_CMD">
+			<summary>
+			Command key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_SCROLL">
+			<summary>
+			Scroll lock key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_CAPS">
+			<summary>
+			Caps lock key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_NUM">
+			<summary>
+			Num lock key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_F1">
+			<summary>
+			F1 key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_F2">
+			<summary>
+			F2 key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_F3">
+			<summary>
+			F3 key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_F4">
+			<summary>
+			F4 key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_F5">
+			<summary>
+			F5 key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_F6">
+			<summary>
+			F6 key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_F7">
+			<summary>
+			F7 key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_F8">
+			<summary>
+			F8 key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_F9">
+			<summary>
+			F9 key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_F10">
+			<summary>
+			F10 key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_F11">
+			<summary>
+			F11 key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_F12">
+			<summary>
+			F12 key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.NUM_KEYS">
+			<summary>
+			The number of all keys
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.KEY_SPACE">
+			<summary>
+			Space key
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.MOUSE_HANDLE_GRAB">
+			<summary>
+			The mouse is grabbed when clicked (the cursor disappears and camera movement is controlled by the mouse).
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.MOUSE_HANDLE_SOFT">
+			<summary>
+			The mouse cursor disappears after being idle for a short time period.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.MOUSE_HANDLE_USER">
+			<summary>
+			The mouse is not handled by the system (allows input handling by some custom module).
+		</summary>
+		</member>
+		<member name="M:Unigine.InputGamePad.getNumber">
+			<summary>
+			Returns the game pad number (up to four game pads are supported).
+			</summary>  
+			<returns>Game pad number.</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.getName">
+			<summary>
+			Returns the name of the game pad.
+			</summary>  
+			<returns>One of the following:GamePadWheelArcade StickFlight StickDance PadGuitarDrum KitUnknown</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.setFilter(float)">
+			<summary>
+			Sets a filter value used to correct the current state of the analog axis relative to the previous one. Axis states are interpolated for thumbsticks and triggers.
+			</summary> 
+			<param name="filter"> Filter value for interpolation between axis states. The provided value is clamped to a range [0;1].Filter value of 0 means there is no interpolation and the current value is not corrected.Filter value of 1 means the previous state is used instead of the current one. </param> 
+		</member>
+		<member name="M:Unigine.InputGamePad.getFilter">
+			<summary>
+			A filter value used to correct the current state of the analog axis (thumbsticks and triggers) relative to the previous one:Filter value of 0 means there is no interpolation and the current value is not corrected.Filter value of 1 means the previous state is used instead of the current one.
+			</summary>  
+			<returns>The filter of the gamepad.</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.getAxesLeft">
+			<summary>
+								Returns a vector of axes of the left thumbstick. When a thumbstick is in the center position, this value is [0,0]. The values correspond to the following thumbstick positions:											First value corresponds to the X axis. Negative values indicate the left position; positive values indicate right.						Second value corresponds to the Y axis. Negative values indicate the down position; positive values indicate up.
+			</summary>  
+			<returns>A vector of two values in the [-1;1] range.</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.getAxesLeftDelta">
+			<summary>
+								Returns a vector of delta values of the left thumbstick axes — the difference between the values in the previous and the current frames.
+			</summary>  
+			<returns>Vector of delta axes.</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.getAxesRight">
+			<summary>
+								Returns a vector of axes of the right thumbstick. When a thumbstick is in the center position, this value is [0,0]. The values correspond to the following thumbstick positions:											First value corresponds to the X axis. Negative values indicate the left position; positive values indicate right.						Second value corresponds to the Y axis. Negative values indicate the down position; positive values indicate up.
+			</summary>  
+			<returns>A vector of two values in the [-1;1] range.</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.getAxesRightDelta">
+			<summary>
+								Returns a vector of delta values of the right thumbstick axes — the difference between the values in the previous and the current frames.
+			</summary>  
+			<returns>Vector of delta axes.</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.getTriggerLeft">
+			<summary>
+			Returns an axis state value (the position) of the left trigger. 0 means the trigger is not pressed; 1 means the trigger is pressed to the maximum.
+			</summary>  
+			<returns>Value in range [0; 1].</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.getTriggerLeftDelta">
+			<summary>
+			Returns the delta value of the left trigger — the difference between the values in the previous and the current frame.
+			</summary>  
+			<returns>Left trigger delta.</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.getTriggerRight">
+			<summary>
+			Returns an axis state value (the position) of the right trigger. 0 means the trigger is not pressed; 1 means the trigger is pressed to the maximum.
+			</summary>  
+			<returns>Value in range [0; 1].</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.getTriggerRightDelta">
+			<summary>
+			Returns the delta value of the right trigger — the difference between the values in the previous and the current frame.
+			</summary>  
+			<returns>Right trigger delta.</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.setLeftMotor(float)">
+			<summary>
+			Sets the amount of vibration for the left motor (a low-frequency motor).
+			</summary> 
+			<param name="speed"> value in the [0.0f; 1.0f] range. </param> 
+		</member>
+		<member name="M:Unigine.InputGamePad.setRightMotor(float)">
+			<summary>
+			Sets the amount of vibration for the right motor (a high-frequency motor).
+			</summary> 
+			<param name="speed"> value in the [0.0f; 1.0f] range. </param> 
+		</member>
+		<member name="M:Unigine.InputGamePad.isAvailable">
+			<summary>
+			Checks if the game pad is available.
+			</summary>  
+			<returns>1 if the game pad is available; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.isButtonPressed(int)">
+			<summary>
+			Returns a value indicating if the given button is pressed.
+			</summary> 
+			<param name="button"> One of the preset BUTTON_ codes. </param> 
+			<returns>1 if the button is pressed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.isButtonDown(int)">
+			<summary>
+			Returns a value indicating if the given button was pressed during the current frame.
+			</summary> 
+			<param name="button"> One of the preset BUTTON_ codes. </param> 
+			<returns>1 if the button was pressed during the current frame; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.isButtonUp(int)">
+			<summary>
+			Returns a value indicating if the given button was released during the current frame.
+			</summary> 
+			<param name="button"> One of the preset BUTTON_ codes. </param> 
+			<returns>1 if the button was released during the current frame; otherwise, 0.</returns>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_A">
+			<summary>
+			Button A.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_B">
+			<summary>
+			Button B.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_X">
+			<summary>
+			Button X.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_Y">
+			<summary>
+			Button Y.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_BACK">
+			<summary>
+			Button "Back".
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_START">
+			<summary>
+			Button "Start".
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_DPAD_UP">
+			<summary>
+			Button "Up".
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_DPAD_DOWN">
+			<summary>
+			Button "Down".
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_DPAD_LEFT">
+			<summary>
+			Button "Left".
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_DPAD_RIGHT">
+			<summary>
+			Button "Right".
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_THUMB_LEFT">
+			<summary>
+			Left thumbstick button.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_THUMB_RIGHT">
+			<summary>
+			Right thumbstick button.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_SHOULDER_LEFT">
+			<summary>
+			Left shoulder (bumper) button.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.BUTTON_SHOULDER_RIGHT">
+			<summary>
+			Right shoulder (bumper) button.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputGamePad.NUM_BUTTONS">
+			<summary>
+			Number of buttons on a game pad.
+		</summary>
+		</member>
+	</members>
+</doc>
