@@ -5,6 +5,8 @@
 
 IN-PROGRESS...
 
+![scoreboard](preview.gif)
+
 Pluging for scripting by python3 in Unigine Editor https://unigine.com/get-unigine/
 
 * License of plugin: MIT
