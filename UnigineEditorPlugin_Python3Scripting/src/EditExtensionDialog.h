@@ -26,7 +26,9 @@ signals:
     void findPrevious(const QString &str, Qt::CaseSensitivity cs);
 
 private slots:
-    void saveAndRunClicked();
+    void saveClicked();
+    // void saveClicked();
+    void onCodeChanged();
 
 private:
     QSyntaxStyle *loadStyle(QString path);
@@ -37,10 +39,11 @@ private:
     QLabel *m_pLabelCode;
     QCodeEditor *m_pCodeEditor;
     QSyntaxStyle *m_pStyle;
-    QPushButton *m_pSaveAndRunButton;
+    QPushButton *m_pSaveButton;
     QPushButton *m_pCloseButton;
 
     QString m_sExtensionName;
     QString m_sExtensionFor;
+    QString m_sCodeInFile;
 };
 
