@@ -1,5 +1,8 @@
 # unigine-2.14-editor-plugin-python3scripting
 
+[![Server API Coverage](https://img.shields.io/badge/Unigine-2.14.1-yellow.svg)](https://developer.unigine.com/en/docs/2.14.1/)
+
+
 IN-PROGRESS...
 
 Pluging for scripting by python3 in Unigine Editor https://unigine.com/get-unigine/
@@ -41,3 +44,7 @@ New type (class)
 - https://docs.python.org/3/c-api/typeobj.html
 - https://docs.python.org/3/c-api/typeobj.html#typedef-examples
 - https://docs.python.org/3.5/extending/newtypes.html
+
+
+Mp4 to gif
+- https://cloudconvert.com/mp4-to-gif
