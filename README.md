@@ -1,17 +1,16 @@
-# unigine-2.14-editor-plugin-python3scripting
+# unigine-editor-python3scripting
+
+**IN-PROGRESS...**
 
 [![Server API Coverage](https://img.shields.io/badge/Unigine-2.14.1-yellow.svg)](https://developer.unigine.com/en/docs/2.14.1/)
-
-
-IN-PROGRESS...
-
-![scoreboard](preview.gif)
 
 Pluging for scripting by python3 in Unigine Editor https://unigine.com/get-unigine/
 
 * License of plugin: MIT
 * For code editor used: https://github.com/Megaxela/QCodeEditor - under MIT license
-* Unigine SDK 2.14 - tested on `Community Free`
+* Unigine SDK 2.14.1 - tested on `Community Free`
+
+![scoreboard](preview.gif)
 
 ## Build instruction
 
