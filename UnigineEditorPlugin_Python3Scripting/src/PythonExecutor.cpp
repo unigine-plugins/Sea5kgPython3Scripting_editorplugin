@@ -14,8 +14,12 @@
 #include <sstream>
 #include <locale>
 
-PythonExecutor::PythonExecutor(const std::string &sExtensionId) {
+PythonExecutor::PythonExecutor(
+    const std::string &sExtensionId, 
+    const std::string &sDirPathWithModules
+) {
     m_sExtensionId = sExtensionId;
+    m_sDirPathWithModules = sDirPathWithModules;
     m_vWrappers.push_back(new UniginePythonStdout(sExtensionId));
     m_vWrappers.push_back(new UniginePythonStderr(sExtensionId));
     m_vWrappers.push_back(new UniginePythonUnigineLib(sExtensionId));
@@ -43,32 +47,80 @@ std::wstring str2wstr(const std::string& str) {
     return converterX.from_bytes(str);
 }
 
-void PythonExecutor::addMaterials(QVector<Unigine::Ptr<Unigine::Material>> &vMaterials) {
+void PythonExecutor::addMaterials(const QVector<Unigine::UGUID> &vGuids) {
     Unigine::Log::message("Python3Scripting: add list of materials\n");
     PyObject* pGlobalDict = (PyObject*)m_pGlobalDict;
 
-    PyObject *pList = PyList_New(vMaterials.size());
-    for (int i = 0; i < vMaterials.size(); i++) {
-        PyObject *pMaterial = PyUnigine::Material_New(vMaterials[i]);
-        PyList_SetItem(pList, i, pMaterial);
+    PyObject *pList = PyList_New(vGuids.size());
+    for (int i = 0; i < vGuids.size(); i++) {
+        Unigine::Ptr<Unigine::Material> pMaterial = Unigine::Materials::findMaterialByGUID(vGuids[i]);
+        PyObject *pMaterialObject = PyUnigine::Material_New(pMaterial);
+        PyList_SetItem(pList, i, pMaterialObject);
         // Py_DECREF(pMaterial);
     }
     PyDict_SetItemString(pGlobalDict, "LIST_MATERIALS", pList);
     Py_DECREF(pList);
 }
 
-int PythonExecutor::exec(const std::string &sDirPathWithModules, const std::string &sScriptPath) {
+void PythonExecutor::addProperties(const QVector<Unigine::UGUID> &vGuids) {
+    Unigine::Log::message("Python3Scripting: add list of properties (TODO)\n");
+    PyObject* pGlobalDict = (PyObject*)m_pGlobalDict;
+
+    PyObject *pList = PyList_New(vGuids.size());
+    for (int i = 0; i < vGuids.size(); i++) {
+        // TODO
+        // Unigine::Ptr<Unigine::Material> pMaterial = Unigine::Materials::findMaterialByGUID(vGuids[i]);
+        // PyObject *pMaterialObject = PyUnigine::Material_New(pMaterial);
+        // PyList_SetItem(pList, i, pMaterialObject);
+        // Py_DECREF(pMaterial);
+    }
+    PyDict_SetItemString(pGlobalDict, "LIST_PROPERTIES", pList);
+    Py_DECREF(pList);
+}
+
+void PythonExecutor::addRuntimes(const QVector<Unigine::UGUID> &vGuids) {
+    Unigine::Log::message("Python3Scripting: add list of runtimes (TODO)\n");
+    PyObject* pGlobalDict = (PyObject*)m_pGlobalDict;
+
+    PyObject *pList = PyList_New(vGuids.size());
+    for (int i = 0; i < vGuids.size(); i++) {
+        // TODO
+        // Unigine::Ptr<Unigine::Material> pMaterial = Unigine::Materials::findMaterialByGUID(vGuids[i]);
+        // PyObject *pMaterialObject = PyUnigine::Material_New(pMaterial);
+        // PyList_SetItem(pList, i, pMaterialObject);
+        // Py_DECREF(pMaterial);
+    }
+    PyDict_SetItemString(pGlobalDict, "LIST_RUNTIMES", pList);
+    Py_DECREF(pList);
+}
+
+void PythonExecutor::addNodes(const QVector<Unigine::NodePtr> &vNodes) {
+    Unigine::Log::message("Python3Scripting: add list of nodes (TODO)\n");
+    PyObject* pGlobalDict = (PyObject*)m_pGlobalDict;
+
+    PyObject *pList = PyList_New(vNodes.size());
+    for (int i = 0; i < vNodes.size(); i++) {
+        // TODO
+        // Unigine::Ptr<Unigine::Material> pMaterial = Unigine::Materials::findMaterialByGUID(vGuids[i]);
+        // PyObject *pMaterialObject = PyUnigine::Material_New(pMaterial);
+        // PyList_SetItem(pList, i, pMaterialObject);
+        // Py_DECREF(pMaterial);
+    }
+    PyDict_SetItemString(pGlobalDict, "LIST_NODES", pList);
+    Py_DECREF(pList);
+}
+
+int PythonExecutor::execCode(const std::string &sScriptContent) {
     Unigine::Log::message("Python3Scripting: start executing script\n");
     PyErr_Clear();
     
     // rewrite system path for search modules
-    std::wstring sDir = str2wstr(sDirPathWithModules);
+    std::wstring sDir = str2wstr(m_sDirPathWithModules);
     PySys_SetPath(sDir.c_str());
-    
-	FILE* fp = _Py_fopen(sScriptPath.c_str(), "r");
+
     PyObject* pGlobalDict = (PyObject*)m_pGlobalDict;
 
-    PyObject *pResult = PyRun_File(fp, sScriptPath.c_str(), Py_file_input, pGlobalDict, NULL);
+    PyObject *pResult = PyRun_String(sScriptContent.c_str(), Py_file_input, pGlobalDict, NULL);
     // pResult return result from script - ignore
     Py_XDECREF(pResult);
 

@@ -1,7 +1,7 @@
 #include "UnigineEditorPlugin_Python3Scripting.h"
 #include "PythonExecutor.h"
-#include "CreateExtensionDialog.h"
-#include "EditExtensionDialog.h"
+#include "dialogs/CreateExtensionDialog.h"
+#include "dialogs/EditExtensionDialog.h"
 
 #include <UnigineLog.h>
 #include <UnigineEditor.h>
@@ -28,7 +28,9 @@ void log_info(QString message) {
 }
 
 void log_error(QString message) {
-	Unigine::Log::error(log_prepare_message(message).c_str());
+	std::string sMessage = log_prepare_message(message);
+	const char * pMessage = sMessage.c_str();
+	Unigine::Log::error(pMessage);
 }
 
 bool UnigineEditorPlugin_Python3Scripting::init() {
@@ -225,91 +227,109 @@ void UnigineEditorPlugin_Python3Scripting::about() {
 }
 
 void UnigineEditorPlugin_Python3Scripting::processSelectedMaterials() {
-	QObject* obj = sender();
-	QAction *pAction = dynamic_cast<QAction *>(obj);
-	if (pAction == nullptr) {
-		log_error("processSelectedActions. Could not cast to QAction");
+	ModelExtension *pModel = findModelExtensionByAction(sender());
+	if (pModel == nullptr) {
+		log_error("processSelectedMaterials Could not find model for this action");
 		return;
 	}
-	QVariant userData = pAction->data();
-	QString sExtensionId = userData.toString();
-	log_info("processSelectedActions. sExtensionId == " + sExtensionId);
-	ModelExtension *pExt = nullptr;
-	for (int i = 0; i < m_vExtensions.size(); i++) {
-		if (m_vExtensions[i]->getId() == sExtensionId) {
-			pExt = m_vExtensions[i];
-		}
-	}
-
-	// TODO q mutex lock
-
- 	disconnect(Editor::Selection::instance(), &Editor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
-
-	{
-		PythonExecutor executor(sExtensionId.toStdString());
-		QVector<Unigine::Ptr<Unigine::Material>> vMaterials;
-		for (int i = 0; i < m_vSelectedGuids.size(); i++) {
-			Unigine::Ptr<Unigine::Material> pMaterial = Unigine::Materials::findMaterialByGUID(m_vSelectedGuids[i]);
-			vMaterials.push_back(pMaterial);
-		}
-
-		executor.addMaterials(vMaterials);
-		int ret = executor.exec("./Python3Scripting/", "./Python3Scripting/" + sExtensionId.toStdString() + "/main.py");
-		if (ret == -1) {
-			log_error("Problem with a extension: " + sExtensionId);	
-		}
-	}
-	// PyMaterialObject
-
-	// PyObject* pInt;
-	// Py_Initialize();
-	// PyRun_SimpleString("print('Hello World from Embedded Python!!!')");
-	// Py_Finalize();
-
- 	connect(Editor::Selection::instance(), &Editor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
+	// TODO q mutex lock ?
+	runPythonScript(pModel);
 }
 
+void UnigineEditorPlugin_Python3Scripting::processSelectedNodes() {
+	ModelExtension *pModel = findModelExtensionByAction(sender());
+	if (pModel == nullptr) {
+		log_error("processSelectedNodes Could not find model for this action");
+		return;
+	}
+	runPythonScript(pModel);
+}
 
-void UnigineEditorPlugin_Python3Scripting::globalSelectionChanged()
-{
+void UnigineEditorPlugin_Python3Scripting::processSelectedProperties() {
+	ModelExtension *pModel = findModelExtensionByAction(sender());
+	if (pModel == nullptr) {
+		log_error("processSelectedProperties Could not find model for this action");
+		return;
+	}
+	runPythonScript(pModel);
+}
+
+void UnigineEditorPlugin_Python3Scripting::processSelectedRuntimes() {
+	ModelExtension *pModel = findModelExtensionByAction(sender());
+	if (pModel == nullptr) {
+		log_error("processSelectedRuntimes Could not find model for this action");
+		return;
+	}
+	runPythonScript(pModel);
+}
+
+void UnigineEditorPlugin_Python3Scripting::globalSelectionChanged() {
 	// using namespace std;
-
+	m_vSelectedGuids.clear();
+	m_vSelectedNodes.clear();
 	if (Editor::SelectorGUIDs* selector = Editor::Selection::getSelectorMaterials()) {
+		log_info("Selected materials");
 		switchMenuTo(MenuSelectedType::MST_MATERIALS);
-		log_info("Editor::Selection::getSelectorMaterials()");
-		m_vSelectedGuids.clear();
-		const QVector<Unigine::UGUID> guids = selector->guids();
-		m_vSelectedGuids.append(guids);
-		
-
-	// 	
-	// 	QModelIndexList indexes;
-	// 	indexes.reserve(guids.size());
-	// 	transform(begin(guids), end(guids), back_inserter(indexes),
-	// 			[this](const Unigine::UGUID &guid) { return model_->index(guid); });
-
-	// 	auto it = remove(begin(indexes), end(indexes), QModelIndex());
-	// 	indexes.erase(it, end(indexes));
-
-	// 	QSignalBlocker blocker(view_);
-	// 	view_->globalSelectionChanged(indexes);
-
-	} else if(auto selector = Editor::Selection::getSelectorRuntimes()) {
-		log_info("Editor::Selection::getSelectorRuntimes()");
+		m_vSelectedGuids.append(selector->guids());
+	} else if (auto selector = Editor::Selection::getSelectorRuntimes()) {
+		log_info("Selected runtimes");
 		switchMenuTo(MenuSelectedType::MST_RUNTIMES);
-	} else if(auto selector = Editor::Selection::getSelectorProperties()) {
-		log_info("Editor::Selection::getSelectorProperties()");
+		m_vSelectedGuids.append(selector->guids());
+	} else if (auto selector = Editor::Selection::getSelectorProperties()) {
+		log_info("Selected properties");
 		switchMenuTo(MenuSelectedType::MST_PROPERTIES);
-	} else if(auto selector = Editor::Selection::getSelectorNodes()) {
-		log_info("Editor::Selection::getSelectorNodes()");
+		m_vSelectedGuids.append(selector->guids());
+	} else if (auto selector = Editor::Selection::getSelectorNodes()) {
+		log_info("Selected nodes");
 		switchMenuTo(MenuSelectedType::MST_NODES);
+		m_vSelectedNodes.append(selector->getNodes());
 	} else {
 		log_info("Something else");
 		switchMenuTo(MenuSelectedType::MST_NONE);
 	}
-	// {
-	// 	view_->clearSelection();
-	// }
+}
+
+
+void UnigineEditorPlugin_Python3Scripting::runPythonScript(ModelExtension *pModel, QString sAlternativeCode) {
+	disconnect(Editor::Selection::instance(), &Editor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
+
+	if (sAlternativeCode == "") {
+		QFile fl(pModel->getMainPyPath());
+		if (fl.open(QIODevice::ReadOnly)) {
+			sAlternativeCode = fl.readAll();
+		}
+	}
+
+	PythonExecutor executor(
+		pModel->getId().toStdString(),
+		m_sPython3ScriptingDirPath.toStdString()
+	);
+
+	if (m_nLatestMenu == MenuSelectedType::MST_MATERIALS) {
+		executor.addMaterials(m_vSelectedGuids);
+	} else if(m_nLatestMenu == MenuSelectedType::MST_RUNTIMES) {
+		executor.addRuntimes(m_vSelectedGuids);
+	} else if(m_nLatestMenu == MenuSelectedType::MST_PROPERTIES) {
+		executor.addRuntimes(m_vSelectedGuids);
+	} else if(m_nLatestMenu == MenuSelectedType::MST_NODES) {
+		executor.addNodes(m_vSelectedNodes);
+	}
+	
+	// pModel->getScriptDir().toStdString(),
+	// sAlternativeCode
+	QString sCurrentPathKeep = QDir::currentPath();
+	// TODO set current directory for a run script
+	// QDir::setCurrent(pModel->getScriptDir());
+	int ret = executor.execCode(
+		sAlternativeCode.toStdString()
+	);
+	if (ret == -1) {
+		log_error("Problem with a extension: " + pModel->getId());	
+	}
+	// return current directory
+	QDir::setCurrent(sCurrentPathKeep);
+
+	connect(Editor::Selection::instance(), &Editor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
 }
 
 void UnigineEditorPlugin_Python3Scripting::switchMenuTo(MenuSelectedType nType) {
@@ -474,10 +494,13 @@ bool UnigineEditorPlugin_Python3Scripting::reloadMenuForSelected() {
 			connect(pAction, &QAction::triggered, this, &UnigineEditorPlugin_Python3Scripting::processSelectedMaterials);
 			m_mapCollectorMenuSelected[MenuSelectedType::MST_MATERIALS]->addAction(pAction);
 		} else if (pModel->getFor() == "nodes") {
+			connect(pAction, &QAction::triggered, this, &UnigineEditorPlugin_Python3Scripting::processSelectedNodes);
 			m_mapCollectorMenuSelected[MenuSelectedType::MST_NODES]->addAction(pAction);
 		} else if (pModel->getFor() == "properties") {
+			connect(pAction, &QAction::triggered, this, &UnigineEditorPlugin_Python3Scripting::processSelectedProperties);
 			m_mapCollectorMenuSelected[MenuSelectedType::MST_PROPERTIES]->addAction(pAction);
 		} else if (pModel->getFor() == "runtimes") {
+			connect(pAction, &QAction::triggered, this, &UnigineEditorPlugin_Python3Scripting::processSelectedRuntimes);
 			m_mapCollectorMenuSelected[MenuSelectedType::MST_RUNTIMES]->addAction(pAction);
 		} else {
 			log_error("skipped extension with id " + pModel->getId());
@@ -572,9 +595,28 @@ void UnigineEditorPlugin_Python3Scripting::saveAndReloadExtensions() {
 
 EditExtensionDialog *UnigineEditorPlugin_Python3Scripting::getEditDialog() {
 	if (m_pEditScriptWindow == nullptr) {
-		m_pEditScriptWindow = new EditExtensionDialog(m_pMainWindow);
+		m_pEditScriptWindow = new EditExtensionDialog(m_pMainWindow, this);
 		Qt::WindowFlags flags = m_pEditScriptWindow->windowFlags();
 		m_pEditScriptWindow->setWindowFlags(flags | Qt::Tool);
 	}
 	return m_pEditScriptWindow;
 }
+
+ModelExtension *UnigineEditorPlugin_Python3Scripting::findModelExtensionByAction(QObject *pObject) {
+	QAction *pAction = dynamic_cast<QAction *>(pObject);
+	if (pAction == nullptr) {
+		log_error("findModelExtensionByAction. Could not cast to QAction");
+		return nullptr;
+	}
+	QVariant userData = pAction->data();
+	QString sExtensionId = userData.toString();
+	log_info("processSelectedActions. sExtensionId == " + sExtensionId);
+	ModelExtension *pExt = nullptr;
+	for (int i = 0; i < m_vExtensions.size(); i++) {
+		if (m_vExtensions[i]->getId() == sExtensionId) {
+			return m_vExtensions[i];
+		}
+	}
+}
+
+	

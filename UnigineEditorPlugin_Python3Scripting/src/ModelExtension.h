@@ -24,6 +24,7 @@ public:
     bool isEnabled();
 
     QString getMainPyPath();
+    QString getScriptDir();
 
 private:
     QString m_sBasePath;

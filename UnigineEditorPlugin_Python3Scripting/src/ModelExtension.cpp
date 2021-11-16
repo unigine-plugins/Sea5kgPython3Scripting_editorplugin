@@ -68,5 +68,9 @@ bool ModelExtension::isEnabled() {
 }
 
 QString ModelExtension::getMainPyPath() {
-    return m_sBasePath + "/" + m_sExtensionId + "/main.py";
+    return getScriptDir() + "/main.py";
+}
+
+QString ModelExtension::getScriptDir() {
+    return m_sBasePath + "/" + m_sExtensionId + "/";
 }

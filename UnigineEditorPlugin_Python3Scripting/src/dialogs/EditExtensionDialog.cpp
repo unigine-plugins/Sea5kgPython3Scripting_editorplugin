@@ -12,22 +12,25 @@
 
 #include "EditExtensionDialog.h"
 
-EditExtensionDialog::EditExtensionDialog(QWidget *parent) : QDialog(parent) {
+EditExtensionDialog::EditExtensionDialog(QWidget *parent, IRunPythonScript *pRunPythonScript) : QDialog(parent) {
+	m_pRunPythonScript = pRunPythonScript;
+	m_pModel = nullptr;
 	m_pLabelName = new QLabel(tr("Name: ") + "?");
 	m_pLabelFor = new QLabel(tr("For: ") + "?");
 	m_pLabelCode = new QLabel(tr("Code of extension:"));
 
     m_pSaveButton = new QPushButton(tr("Save script"));
-	// m_pSaveAndRunButton->setDefault(true);
-	m_pCloseButton = new QPushButton(tr("Close"));
+	m_pRunButton = new QPushButton(tr("Run script"));
+	m_pCancelButton = new QPushButton(tr("Close"));
 	
 	connect(m_pSaveButton, SIGNAL(clicked()),this, SLOT(saveClicked()));
-	connect(m_pCloseButton, SIGNAL(clicked()),this, SLOT(close()));
-	
+	connect(m_pRunButton, SIGNAL(clicked()),this, SLOT(runClicked()));
+	connect(m_pCancelButton, SIGNAL(clicked()),this, SLOT(close())); // TODO if dcript was modified so need ask user about wanna keep changes
 
 	QHBoxLayout *topLayout = new QHBoxLayout;
 	topLayout->addWidget(m_pSaveButton);
-	topLayout->addWidget(m_pCloseButton);
+	topLayout->addWidget(m_pRunButton);
+	topLayout->addWidget(m_pCancelButton);
 
 	QVBoxLayout *leftLayout = new QVBoxLayout;
 	leftLayout->addLayout(topLayout);
@@ -56,6 +59,7 @@ EditExtensionDialog::EditExtensionDialog(QWidget *parent) : QDialog(parent) {
 }
 
 void EditExtensionDialog::setModelExtension(ModelExtension *pModel) {
+	m_pModel = pModel;
 	m_pLabelName->setText(tr("Name: ") + pModel->getName());
 	m_pLabelFor->setText(tr("For: ") + pModel->getFor());
 	m_sFilePath = pModel->getMainPyPath();
@@ -91,6 +95,10 @@ void EditExtensionDialog::saveClicked() {
 	fileMainPy.write(m_pCodeEditor->toPlainText().toUtf8());
 	m_sCodeInFile = m_pCodeEditor->toPlainText().toUtf8();
 	fileMainPy.close();
+}
+
+void EditExtensionDialog::runClicked() {
+	m_pRunPythonScript->runPythonScript(m_pModel, m_pCodeEditor->toPlainText().toUtf8());
 }
 
 void EditExtensionDialog::onCodeChanged() {

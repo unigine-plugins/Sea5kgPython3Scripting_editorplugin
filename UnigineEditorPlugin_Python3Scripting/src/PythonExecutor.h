@@ -7,13 +7,21 @@
 
 class PythonExecutor {
     public:
-        PythonExecutor(const std::string &sExtensionId);
+        PythonExecutor(
+            const std::string &sExtensionId,
+            const std::string &sDirPathWithModules
+        );
         ~PythonExecutor();
-        void addMaterials(QVector<Unigine::Ptr<Unigine::Material>> &vMaterials);
+        void addMaterials(const QVector<Unigine::UGUID> &vGuids);
+        void addProperties(const QVector<Unigine::UGUID> &vGuids);
+        void addRuntimes(const QVector<Unigine::UGUID> &vGuids);
+        void addNodes(const QVector<Unigine::NodePtr> &vNodes);
 
-        int exec(const std::string &sDirPathWithModules, const std::string &sScriptPath);
+        int execCode(const std::string &sScriptContent);
+        int execFile(const std::string &sScriptPath);
     private:
         std::vector<UniginePythonWrapperBase *> m_vWrappers;
         std::string m_sExtensionId;
+        std::string m_sDirPathWithModules;
         void* m_pGlobalDict;
 };

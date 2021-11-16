@@ -3,6 +3,7 @@
 
 #include <editor/Plugin.h>
 #include <UnigineGUID.h>
+#include <UnigineNode.h>
 
 #include <QObject>
 #include <QMainWindow>
@@ -11,9 +12,10 @@
 
 #include "CollectorMenuSelected.h"
 #include "ModelExtension.h"
-#include "EditExtensionDialog.h"
+#include "dialogs/EditExtensionDialog.h"
+#include "dialogs/IRunPythonScript.h"
 
-class UnigineEditorPlugin_Python3Scripting : public QObject, public ::Editor::Plugin
+class UnigineEditorPlugin_Python3Scripting : public QObject, public ::Editor::Plugin, public IRunPythonScript
 {
 	Q_OBJECT
 	Q_PLUGIN_METADATA(IID "com.unigine.EditorPlugin" FILE "Plugin.json")
@@ -27,6 +29,9 @@ public:
 
 private slots:
 	void processSelectedMaterials();
+	void processSelectedNodes();
+	void processSelectedProperties();
+	void processSelectedRuntimes();
 	void createNewExtension();
 	void editExtension();
 	void disableExtension();
@@ -35,6 +40,9 @@ private slots:
 	void about();
 
 	void globalSelectionChanged();
+
+	// IRunPythonScript
+	virtual void runPythonScript(ModelExtension *pModel, QString sAlternativeCode = "") override;
 
 private:
 	void switchMenuTo(MenuSelectedType nType);
@@ -51,6 +59,7 @@ private:
 
 	void saveAndReloadExtensions();
 	EditExtensionDialog *getEditDialog();
+	ModelExtension *findModelExtensionByAction(QObject* pObject);
 
 	MenuSelectedType m_nLatestMenu;
 	QString m_sRootPath;
@@ -71,6 +80,7 @@ private:
 	QAction *m_pActionAbout;
 
 	QVector<Unigine::UGUID> m_vSelectedGuids;
+	QVector<Unigine::NodePtr> m_vSelectedNodes;
 
 	EditExtensionDialog *m_pEditScriptWindow;
 };

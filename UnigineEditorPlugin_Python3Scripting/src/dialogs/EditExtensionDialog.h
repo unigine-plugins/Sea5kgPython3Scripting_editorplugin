@@ -12,12 +12,13 @@
 #include <QSyntaxStyle>
 #include <QCodeEditor>
 #include "ModelExtension.h"
+#include "IRunPythonScript.h"
 
 class EditExtensionDialog : public QDialog
 {
     Q_OBJECT
 public:
-    EditExtensionDialog(QWidget *parent);
+    EditExtensionDialog(QWidget *parent, IRunPythonScript *pRunPythonScript);
     
     void setModelExtension(ModelExtension *pModelExtension);
 
@@ -27,12 +28,15 @@ signals:
 
 private slots:
     void saveClicked();
+    void runClicked();
     // void saveClicked();
     void onCodeChanged();
 
 private:
     QSyntaxStyle *loadStyle(QString path);
     QString m_sFilePath;
+    ModelExtension *m_pModel;
+    IRunPythonScript *m_pRunPythonScript;
 
     QLabel *m_pLabelName;
     QLabel *m_pLabelFor;
@@ -40,7 +44,8 @@ private:
     QCodeEditor *m_pCodeEditor;
     QSyntaxStyle *m_pStyle;
     QPushButton *m_pSaveButton;
-    QPushButton *m_pCloseButton;
+    QPushButton *m_pRunButton;
+    QPushButton *m_pCancelButton;
 
     QString m_sExtensionName;
     QString m_sExtensionFor;
