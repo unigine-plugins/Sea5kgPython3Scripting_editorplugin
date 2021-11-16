@@ -12,15 +12,9 @@
 
 #include "EditExtensionDialog.h"
 
-EditExtensionDialog::EditExtensionDialog(
-	QWidget *parent,
-	const QString &sFilePath,
-	const QString &sExtensionName,
-	const QString &sExtensionFor
-) : QDialog(parent) {
-	m_sFilePath = sFilePath;
-	m_pLabelName = new QLabel(tr("Name: ") + sExtensionName);
-	m_pLabelFor = new QLabel(tr("For: ") + sExtensionFor);
+EditExtensionDialog::EditExtensionDialog(QWidget *parent) : QDialog(parent) {
+	m_pLabelName = new QLabel(tr("Name: ") + "?");
+	m_pLabelFor = new QLabel(tr("For: ") + "?");
 	m_pLabelCode = new QLabel(tr("Code of extension:"));
 
     m_pSaveAndRunButton = new QPushButton(tr("Save"));
@@ -40,10 +34,7 @@ EditExtensionDialog::EditExtensionDialog(
 	m_pStyle = loadStyle(":/styles/drakula.xml");
 	m_pCodeEditor->setSyntaxStyle(m_pStyle);
 
-	QFile fl(m_sFilePath);
-    if (fl.open(QIODevice::ReadOnly)) {
-		m_pCodeEditor->setPlainText(fl.readAll());
-    }
+	
 	m_pCodeEditor->setHighlighter(new QPythonHighlighter());
 	m_pCodeEditor->setCompleter(new QPythonCompleter(this));
 
@@ -60,6 +51,16 @@ EditExtensionDialog::EditExtensionDialog(
 	setWindowTitle(tr("Python3Scripting: Edit Extension"));
 	setFixedWidth(800);
 	setFixedHeight(sizeHint().height());
+}
+
+void EditExtensionDialog::setModelExtension(ModelExtension *pModel) {
+	m_pLabelName->setText(tr("Name: ") + pModel->getName());
+	m_pLabelFor->setText(tr("For: ") + pModel->getFor());
+	m_sFilePath = pModel->getMainPyPath();
+	QFile fl(m_sFilePath);
+    if (fl.open(QIODevice::ReadOnly)) {
+		m_pCodeEditor->setPlainText(fl.readAll());
+    }
 }
 
 QSyntaxStyle *EditExtensionDialog::loadStyle(QString path) {

@@ -11,6 +11,7 @@
 
 #include "CollectorMenuSelected.h"
 #include "ModelExtension.h"
+#include "EditExtensionDialog.h"
 
 class UnigineEditorPlugin_Python3Scripting : public QObject, public ::Editor::Plugin
 {
@@ -47,8 +48,9 @@ private:
 	bool initMenuForCreateExtension();
 	bool initMenuForAbout();
 	bool loadExtensions();
-	
+
 	void saveAndReloadExtensions();
+	EditExtensionDialog *getEditDialog();
 
 	MenuSelectedType m_nLatestMenu;
 	QString m_sRootPath;
@@ -69,4 +71,6 @@ private:
 	QAction *m_pActionAbout;
 
 	QVector<Unigine::UGUID> m_vSelectedGuids;
+
+	EditExtensionDialog *m_pEditScriptWindow;
 };

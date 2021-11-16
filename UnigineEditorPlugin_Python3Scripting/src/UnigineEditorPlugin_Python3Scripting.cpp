@@ -34,6 +34,7 @@ void log_error(QString message) {
 bool UnigineEditorPlugin_Python3Scripting::init() {
 	log_info(" Initializing...");
 	m_pMenuExtensions = nullptr;
+	m_pEditScriptWindow = nullptr;
 	m_nLatestMenu = MenuSelectedType::MST_NONE;
 	m_mapCollectorMenuSelected[MenuSelectedType::MST_MATERIALS] = new CollectorMenuSelected(this, "Materials");
 	m_mapCollectorMenuSelected[MenuSelectedType::MST_NODES] = new CollectorMenuSelected(this, "Nodes");
@@ -54,6 +55,9 @@ bool UnigineEditorPlugin_Python3Scripting::init() {
 
 void UnigineEditorPlugin_Python3Scripting::shutdown() {
 	log_info("shutdown");
+	if (m_pEditScriptWindow != nullptr) {
+		delete m_pEditScriptWindow;
+	}
 }
 
 void UnigineEditorPlugin_Python3Scripting::editExtension() {
@@ -76,11 +80,13 @@ void UnigineEditorPlugin_Python3Scripting::editExtension() {
 	}
 
 	QString sPython3ScriptingMainPyPath = m_sPython3ScriptingDirPath + "/" + sExtensionId + "/main.py";
-	EditExtensionDialog sd(m_pMainWindow, sPython3ScriptingMainPyPath, pModel->getName(), pModel->getFor());
-    sd.setModal(true);
-    if (sd.exec() == QDialog::Accepted) {
+	auto *pEdit = getEditDialog();
+	pEdit->setModelExtension(pModel);
+	pEdit->show();
+    // sd.setModal(true);
+    /*if (sd.exec() == QDialog::Accepted) {
 
-    }
+    }*/
 }
 
 void UnigineEditorPlugin_Python3Scripting::disableExtension() {
@@ -185,7 +191,7 @@ void UnigineEditorPlugin_Python3Scripting::createNewExtension() {
 			);
 			fileMainPy.close();
 		}
-		auto pModel = new ModelExtension();
+		auto pModel = new ModelExtension(m_sPython3ScriptingDirPath);
 		pModel->setId(sExtensionId);
 		pModel->setName(sName);
 		pModel->setFor(sFor);
@@ -193,11 +199,9 @@ void UnigineEditorPlugin_Python3Scripting::createNewExtension() {
 		m_vExtensions.push_back(pModel);
 		saveAndReloadExtensions();
 
-		EditExtensionDialog editDialog(m_pMainWindow, sPython3ScriptingMainPyPath, sName, sFor);
-		// editDialog.setModal(true);
-		if (editDialog.exec() == QDialog::Accepted) {
-
-		}
+		auto *pEdit = getEditDialog();
+		pEdit->setModelExtension(pModel);
+		pEdit->show();
     }
 }
 
@@ -340,7 +344,7 @@ bool UnigineEditorPlugin_Python3Scripting::prepareExtensionsJson() {
 	if (!fileExtensionsJson.exists()) {
 		QJsonArray exts;
 		QJsonObject obj;
-		obj["id"] = "materials_test1";
+		obj["id"] = "materials_shadows_disable";
 		obj["name"] = "Test1";
 		obj["for"] = "materials";
 		obj["enabled"] = true;
@@ -398,7 +402,7 @@ bool UnigineEditorPlugin_Python3Scripting::parseExtensionsJson() {
 	QJsonObject jsonExtension;
 	for (int i = 0; i < jsonListExts.size(); i++) {
 		QJsonObject jsonExt = jsonListExts[i].toObject();
-		auto pModel = new ModelExtension();
+		auto pModel = new ModelExtension(m_sPython3ScriptingDirPath);
 		if (pModel->loadFromJsonObject(jsonExt)) {
 			m_vExtensions.push_back(pModel);
 		} else {
@@ -564,4 +568,13 @@ void UnigineEditorPlugin_Python3Scripting::saveAndReloadExtensions() {
 	this->rewriteExtensionsJson();
 	this->reloadMenuForSelected();
 	this->reloadMenuForExtensions();
+}
+
+EditExtensionDialog *UnigineEditorPlugin_Python3Scripting::getEditDialog() {
+	if (m_pEditScriptWindow == nullptr) {
+		m_pEditScriptWindow = new EditExtensionDialog(m_pMainWindow);
+		Qt::WindowFlags flags = m_pEditScriptWindow->windowFlags();
+		m_pEditScriptWindow->setWindowFlags(flags | Qt::Tool);
+	}
+	return m_pEditScriptWindow;
 }

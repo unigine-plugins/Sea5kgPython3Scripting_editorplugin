@@ -1,7 +1,8 @@
 
 #include "ModelExtension.h"
 
-ModelExtension::ModelExtension() {
+ModelExtension::ModelExtension(const QString &sBasePath) {
+    m_sBasePath = sBasePath;
 }
 
 ModelExtension::~ModelExtension() {
@@ -64,4 +65,8 @@ QString ModelExtension::getFor() {
 
 bool ModelExtension::isEnabled() {
     return m_bEnabled;
+}
+
+QString ModelExtension::getMainPyPath() {
+    return m_sBasePath + "/" + m_sExtensionId + "/main.py";
 }

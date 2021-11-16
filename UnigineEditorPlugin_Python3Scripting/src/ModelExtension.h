@@ -8,7 +8,7 @@ class ModelExtension {
     
 
 public:
-    ModelExtension();
+    ModelExtension(const QString &sBasePath);
     ~ModelExtension();
     bool loadFromJsonObject(const QJsonObject &jsonExt);
     QJsonObject toJsonObject();
@@ -23,7 +23,10 @@ public:
     QString getFor();
     bool isEnabled();
 
+    QString getMainPyPath();
+
 private:
+    QString m_sBasePath;
     QString m_sExtensionId;
     QString m_sExtensionName;
     QString m_sExtensionFor;

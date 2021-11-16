@@ -11,18 +11,15 @@
 #include <QComboBox>
 #include <QSyntaxStyle>
 #include <QCodeEditor>
+#include "ModelExtension.h"
 
 class EditExtensionDialog : public QDialog
 {
     Q_OBJECT
 public:
-    EditExtensionDialog(
-        QWidget *parent,
-        const QString &sFilePath,
-        const QString &sExtensionName,
-        const QString &sExtensionFor
-    );
+    EditExtensionDialog(QWidget *parent);
     
+    void setModelExtension(ModelExtension *pModelExtension);
 
 signals:
     void findNext(const QString &str, Qt::CaseSensitivity cs);
