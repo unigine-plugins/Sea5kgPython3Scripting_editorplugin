@@ -49,3 +49,12 @@ New type (class)
 
 Mp4 to gif
 - https://cloudconvert.com/mp4-to-gif
+
+
+## Generate Python Wrappers Classes
+
+```
+$ python3 -m pip install CppHeaderParser
+$ ./generate_python_wrapper.sh
+```
+
