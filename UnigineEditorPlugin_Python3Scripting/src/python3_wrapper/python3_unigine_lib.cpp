@@ -1,5 +1,5 @@
 
-#include "unigine_python_unigine_lib.h"
+#include "python3_unigine_lib.h"
 
 // std
 #include <string>
@@ -10,7 +10,7 @@
 
 // unigine headers
 #include <UnigineLog.h>
-#include "unigine_python_material.h"
+#include "python3_unigine_material.h"
 
 static PyObject* unigine_log_info(PyObject* self, PyObject* args) {
     const char *message;
@@ -57,46 +57,52 @@ PyObject* _PyInit_unigine_lib(void) {
 
     PyObject* pModule;
 
+    auto *pPyTypes = new Python3PyTypeObjectAll();
+
     // unigine_MaterialType.tp_new = PyType_GenericNew;
     // if (PyType_Ready(&unigine_MaterialType) < 0)
     //     return NULL;
-    if (!UniginePyTypeObjectMaterial::isReady()) {
+    if (!pPyTypes->isReady()) {
+        delete pPyTypes;
         return NULL;
     }
 
     pModule = PyModule_Create(&modDefUnigine);
-    if (pModule == NULL)
-        return NULL;
-
-    UniginePyTypeObjectMaterial::addClassDefinitionToModule(pModule);
-
-    if (!UniginePyTypeObjectMaterial::addClassDefinitionToModule(pModule)) {
-        Py_DECREF(pModule);
+    if (pModule == NULL) {
+        delete pPyTypes;
         return NULL;
     }
+        
+
+    if (!pPyTypes->addClassDefinitionToModule(pModule)) {
+        Py_DECREF(pModule);
+        delete pPyTypes;
+        return NULL;
+    }
+    delete pPyTypes;
     return pModule;
 }
 
 // ------------------------------------------------------------------------------------------
-// UniginePythonUnigineLib
+// Python3UnigineLib
 
-UniginePythonUnigineLib::UniginePythonUnigineLib(const std::string &sExtensionId) {
+Python3UnigineLib::Python3UnigineLib(const std::string &sExtensionId) {
     m_sExtensionId = sExtensionId;
 }
 
-void UniginePythonUnigineLib::Call_PyImport_AppendInittab() {
+void Python3UnigineLib::Call_PyImport_AppendInittab() {
     PyImport_AppendInittab("unigine", &_PyInit_unigine_lib);
 }
 
-void UniginePythonUnigineLib::Call_PyImport_ImportModule() {
+void Python3UnigineLib::Call_PyImport_ImportModule() {
     // must be imported by user
 }
 
-void UniginePythonUnigineLib::Call_Before_Py_Finalize() {
+void Python3UnigineLib::Call_Before_Py_Finalize() {
     // nothing
 }
 
-void UniginePythonUnigineLib::Call_After_Py_Finalize() {
+void Python3UnigineLib::Call_After_Py_Finalize() {
     // nothing
 }
 

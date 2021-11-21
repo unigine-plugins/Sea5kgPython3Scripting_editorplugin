@@ -1,12 +1,11 @@
 #pragma once
 
 #include "python3_wrapper.h"
-#include <Python.h>
-#include <UnigineMaterials.h>
 
-class UniginePythonUnigineLib : public Python3ModuleRegister {
+
+class Python3UnigineStderr : public Python3ModuleRegister {
     public:
-        UniginePythonUnigineLib(const std::string &sExtensionId);
+        Python3UnigineStderr(const std::string &sExtensionId);
         virtual void Call_PyImport_AppendInittab() override;
         virtual void Call_PyImport_ImportModule() override;
         virtual void Call_Before_Py_Finalize() override;
@@ -15,7 +14,3 @@ class UniginePythonUnigineLib : public Python3ModuleRegister {
     private:
         std::string m_sExtensionId;
 };
-
-
-
-

@@ -4,10 +4,10 @@
 #include <Python.h>
 
 // local
-#include "unigine_python_stdout.h"
-#include "unigine_python_stderr.h"
-#include "unigine_python_unigine_lib.h"
-#include "unigine_python_material.h"
+#include "python3_unigine_stdout.h"
+#include "python3_unigine_stderr.h"
+#include "python3_unigine_lib.h"
+#include "python3_unigine_material.h"
 
 // std
 #include <codecvt>
@@ -20,9 +20,9 @@ PythonExecutor::PythonExecutor(
 ) {
     m_sExtensionId = sExtensionId;
     m_sDirPathWithModules = sDirPathWithModules;
-    m_vWrappers.push_back(new UniginePythonStdout(sExtensionId));
-    m_vWrappers.push_back(new UniginePythonStderr(sExtensionId));
-    m_vWrappers.push_back(new UniginePythonUnigineLib(sExtensionId));
+    m_vWrappers.push_back(new Python3UnigineStdout(sExtensionId));
+    m_vWrappers.push_back(new Python3UnigineStderr(sExtensionId));
+    m_vWrappers.push_back(new Python3UnigineLib(sExtensionId));
 
     for (int i = 0; i < m_vWrappers.size(); i++) {
         m_vWrappers[i]->Call_PyImport_AppendInittab();

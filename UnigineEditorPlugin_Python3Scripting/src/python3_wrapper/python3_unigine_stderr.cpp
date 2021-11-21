@@ -3,7 +3,7 @@
 #include <string>
 #include <Python.h>
 #include <UnigineLog.h>
-#include "unigine_python_stderr.h"
+#include "python3_unigine_stderr.h"
 
 // code copied from here and modified
 // https://stackoverflow.com/questions/4307187/how-to-catch-python-stdout-in-c-code
@@ -118,17 +118,17 @@ PyMODINIT_FUNC _PyInit_library_stderr(void)  {
 }
 
 // ------------------------------------------------------------------------------------------
-// UniginePythonStderr
+// Python3UnigineStderr
 
-UniginePythonStderr::UniginePythonStderr(const std::string &sExtensionId) {
+Python3UnigineStderr::Python3UnigineStderr(const std::string &sExtensionId) {
     m_sExtensionId = sExtensionId;
 }
 
-void UniginePythonStderr::Call_PyImport_AppendInittab() {
+void Python3UnigineStderr::Call_PyImport_AppendInittab() {
     PyImport_AppendInittab("unigine_stderr", &_PyInit_library_stderr);
 }
 
-void UniginePythonStderr::Call_PyImport_ImportModule() {
+void Python3UnigineStderr::Call_PyImport_ImportModule() {
     PyImport_ImportModule("unigine_stderr");
     
     std::string buffer;
@@ -145,7 +145,7 @@ void UniginePythonStderr::Call_PyImport_ImportModule() {
     PySys_SetObject("stderr", g_stderr);
 }
 
-void UniginePythonStderr::Call_Before_Py_Finalize() {
+void Python3UnigineStderr::Call_Before_Py_Finalize() {
     // reset stderr
     if (g_stderr_saved) {
         PySys_SetObject("stderr", g_stderr_saved);
@@ -155,6 +155,6 @@ void UniginePythonStderr::Call_Before_Py_Finalize() {
     g_stderr = 0;
 }
 
-void UniginePythonStderr::Call_After_Py_Finalize() {
+void Python3UnigineStderr::Call_After_Py_Finalize() {
     // nothing
 }

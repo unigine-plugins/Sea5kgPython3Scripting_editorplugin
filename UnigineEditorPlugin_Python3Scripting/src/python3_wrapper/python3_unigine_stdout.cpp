@@ -3,7 +3,7 @@
 #include <string>
 #include <Python.h>
 #include <UnigineLog.h>
-#include "unigine_python_stdout.h"
+#include "python3_unigine_stdout.h"
 
 // code copied from here and modified
 // https://stackoverflow.com/questions/4307187/how-to-catch-python-stdout-in-c-code
@@ -119,17 +119,17 @@ PyMODINIT_FUNC _PyInit_library_stdout(void)  {
 }
 
 // ------------------------------------------------------------------------------------------
-// UniginePythonStdout
+// Python3UnigineStdout
 
-UniginePythonStdout::UniginePythonStdout(const std::string &sExtensionId) {
+Python3UnigineStdout::Python3UnigineStdout(const std::string &sExtensionId) {
     m_sExtensionId = sExtensionId;
 }
 
-void UniginePythonStdout::Call_PyImport_AppendInittab() {
+void Python3UnigineStdout::Call_PyImport_AppendInittab() {
     PyImport_AppendInittab("unigine_stdout", &_PyInit_library_stdout);
 }
 
-void UniginePythonStdout::Call_PyImport_ImportModule() {
+void Python3UnigineStdout::Call_PyImport_ImportModule() {
     PyImport_ImportModule("unigine_stdout");
     
     std::string buffer;
@@ -147,7 +147,7 @@ void UniginePythonStdout::Call_PyImport_ImportModule() {
     
 }
 
-void UniginePythonStdout::Call_Before_Py_Finalize() {
+void Python3UnigineStdout::Call_Before_Py_Finalize() {
     // reset stdout
     if (g_stdout_saved) {
         PySys_SetObject("stdout", g_stdout_saved);
@@ -157,7 +157,7 @@ void UniginePythonStdout::Call_Before_Py_Finalize() {
     g_stdout = 0;
 }
 
-void UniginePythonStdout::Call_After_Py_Finalize() {
+void Python3UnigineStdout::Call_After_Py_Finalize() {
     // nothing
 }
 

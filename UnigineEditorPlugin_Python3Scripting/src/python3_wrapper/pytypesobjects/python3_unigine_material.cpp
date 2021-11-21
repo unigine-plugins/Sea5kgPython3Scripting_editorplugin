@@ -1,5 +1,5 @@
 
-#include "unigine_python_material.h"
+#include "python3_unigine_material.h"
 #include <string>
 #include <UnigineMaterials.h>
 
@@ -192,14 +192,14 @@ PyObject * PyUnigineMaterial::NewObject(Unigine::Ptr<Unigine::Material> material
 
 // UniginePyTypeObjectMaterial
 
-bool UniginePyTypeObjectMaterial::isReady() {
+bool Python3UnigineMaterial::isReady() {
     if (PyType_Ready(&unigine_MaterialType) < 0) {
         return false;
     }
     return true;
 }
 
-bool UniginePyTypeObjectMaterial::addClassDefinitionToModule(PyObject* pModule) {
+bool Python3UnigineMaterial::addClassDefinitionToModule(PyObject* pModule) {
     Py_INCREF(&unigine_MaterialType);
     if (PyModule_AddObject(pModule, "Material", (PyObject *)&unigine_MaterialType) < 0) {
         Py_DECREF(&unigine_MaterialType);
