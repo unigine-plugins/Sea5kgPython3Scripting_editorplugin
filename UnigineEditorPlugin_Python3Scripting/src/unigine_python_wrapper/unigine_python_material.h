@@ -1,22 +1,18 @@
 #pragma once
 
 #include "unigine_python_wrapper_base.h"
-#include <UnigineMaterials.h>
 #include <Python.h>
+#include <UnigineMaterials.h>
 
-class PyMaterialObject : public PyObject {
+class UniginePyTypeObjectMaterial {
     public:
-        PyMaterialObject(Unigine::Ptr<Unigine::Material> &material);
-
-    private:
-        Unigine::Ptr<Unigine::Material> m_material;
+        static bool isReady();
+        static bool addClassDefinitionToModule(PyObject* pModule);
 };
 
 
-class UniginePythonMaterial {
+class PyUnigineMaterial {
     public:
-        UniginePythonMaterial(Unigine::Ptr<Unigine::Material> material);
-
-    private:
-        Unigine::Ptr<Unigine::Material> m_material;
+        static PyObject * NewObject(Unigine::Ptr<Unigine::Material> material);
+        // Unigine::Ptr<Unigine::Material> material
 };

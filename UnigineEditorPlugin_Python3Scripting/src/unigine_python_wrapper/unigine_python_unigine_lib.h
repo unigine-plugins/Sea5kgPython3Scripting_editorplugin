@@ -16,10 +16,6 @@ class UniginePythonUnigineLib : public UniginePythonWrapperBase {
         std::string m_sExtensionId;
 };
 
-class PyUnigine {
-    public:
-        static PyObject * Material_New(Unigine::Ptr<Unigine::Material> material);
-        // Unigine::Ptr<Unigine::Material> material
-};
+
 
 

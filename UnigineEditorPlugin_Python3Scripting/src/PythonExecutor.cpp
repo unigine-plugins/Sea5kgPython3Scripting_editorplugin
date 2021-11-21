@@ -54,7 +54,7 @@ void PythonExecutor::addMaterials(const QVector<Unigine::UGUID> &vGuids) {
     PyObject *pList = PyList_New(vGuids.size());
     for (int i = 0; i < vGuids.size(); i++) {
         Unigine::Ptr<Unigine::Material> pMaterial = Unigine::Materials::findMaterialByGUID(vGuids[i]);
-        PyObject *pMaterialObject = PyUnigine::Material_New(pMaterial);
+        PyObject *pMaterialObject = PyUnigineMaterial::NewObject(pMaterial);
         PyList_SetItem(pList, i, pMaterialObject);
         // Py_DECREF(pMaterial);
     }
