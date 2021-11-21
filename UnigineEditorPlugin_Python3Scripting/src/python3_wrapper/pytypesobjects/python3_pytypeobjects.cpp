@@ -1,9 +1,11 @@
 
 #include "python3_pytypeobjects.h"
 #include "python3_unigine_material.h"
+#include "python3_unigine_node.h"
 
 Python3PyTypeObjectAll::Python3PyTypeObjectAll() {
     m_vPyTypesObjects.push_back(new Python3UnigineMaterial());
+    m_vPyTypesObjects.push_back(new Python3UnigineNode());
 }
 
 bool Python3PyTypeObjectAll::isReady() {

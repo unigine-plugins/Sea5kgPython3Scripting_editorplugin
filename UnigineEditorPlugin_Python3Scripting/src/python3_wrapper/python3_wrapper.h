@@ -10,9 +10,3 @@ class Python3ModuleRegister {
         virtual void Call_Before_Py_Finalize() = 0;
         virtual void Call_After_Py_Finalize() = 0;
 };
-
-// class Python3PyTypeObjectBase {
-//     public:
-//         virtual bool isReady() = 0;
-//         virtual bool addClassDefinitionToModule(PyObject* pModule) = 0;
-// };

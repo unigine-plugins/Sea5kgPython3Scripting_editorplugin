@@ -8,6 +8,7 @@
 #include "python3_unigine_stderr.h"
 #include "python3_unigine_lib.h"
 #include "python3_unigine_material.h"
+#include "python3_unigine_node.h"
 
 // std
 #include <codecvt>
@@ -101,9 +102,9 @@ void PythonExecutor::addNodes(const QVector<Unigine::NodePtr> &vNodes) {
     PyObject *pList = PyList_New(vNodes.size());
     for (int i = 0; i < vNodes.size(); i++) {
         // TODO
-        // Unigine::Ptr<Unigine::Material> pMaterial = Unigine::Materials::findMaterialByGUID(vGuids[i]);
-        // PyObject *pMaterialObject = PyUnigine::Material_New(pMaterial);
-        // PyList_SetItem(pList, i, pMaterialObject);
+        // Unigine::Ptr<Unigine::Node> pMaterial = Unigine::Materials::findMaterialByGUID(vGuids[i]);
+        PyObject *pNode = PyUnigineNode::NewObject(vNodes[i]);
+        PyList_SetItem(pList, i, pNode);
         // Py_DECREF(pMaterial);
     }
     PyDict_SetItemString(pGlobalDict, "LIST_NODES", pList);

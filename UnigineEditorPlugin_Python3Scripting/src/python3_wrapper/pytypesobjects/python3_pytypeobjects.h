@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <Python.h>
-#include <UnigineMaterials.h>
 
 class Python3PyTypeObjectBase {
     public:
