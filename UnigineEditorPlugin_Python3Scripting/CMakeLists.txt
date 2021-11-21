@@ -48,6 +48,7 @@ add_library(UnigineEditorPlugin_Python3Scripting SHARED
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/python3_unigine_lib.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_pytypeobjects.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_material.cpp
+	# ${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_material_gen.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_node.cpp
 	)
 

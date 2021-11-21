@@ -12,5 +12,5 @@ class Python3UnigineMaterial : public Python3PyTypeObjectBase {
 
 class PyUnigineMaterial {
     public:
-        static PyObject * NewObject(Unigine::Ptr<Unigine::Material> o);
+        static PyObject * NewObject(Unigine::Ptr<Unigine::Material> unigine_object_ptr);
 };

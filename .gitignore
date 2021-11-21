@@ -38,3 +38,4 @@
 /launch*
 junk
 .thumbnails
+__pycache__

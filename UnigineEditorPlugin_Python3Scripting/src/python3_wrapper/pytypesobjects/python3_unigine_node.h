@@ -1,7 +1,8 @@
+// this file automaticly generated from UnigineNode.h 
 #pragma once
 
 #include "python3_pytypeobjects.h"
-#include <UnigineNodes.h>
+#include <UnigineNode.h>
 
 class Python3UnigineNode : public Python3PyTypeObjectBase {
     public:
@@ -11,6 +12,5 @@ class Python3UnigineNode : public Python3PyTypeObjectBase {
 
 class PyUnigineNode {
     public:
-        static PyObject * NewObject(Unigine::Ptr<Unigine::Node> material);
-        // Unigine::Ptr<Unigine::Material> material
+        static PyObject * NewObject(Unigine::Ptr<Unigine::Node> unigine_object_ptr);
 };
