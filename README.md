@@ -55,6 +55,6 @@ Mp4 to gif
 
 ```
 $ python3 -m pip install CppHeaderParser
-$ ./generate_python_wrapper.sh
+$ ./generate_pytypeobjects.sh
 ```
 
