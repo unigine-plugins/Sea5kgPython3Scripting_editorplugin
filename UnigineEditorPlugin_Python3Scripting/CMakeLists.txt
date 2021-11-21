@@ -43,10 +43,10 @@ add_library(UnigineEditorPlugin_Python3Scripting SHARED
     ${PROJECT_SOURCE_DIR}/src/ModelExtension.cpp
 	${PROJECT_SOURCE_DIR}/src/dialogs/CreateExtensionDialog.cpp
 	${PROJECT_SOURCE_DIR}/src/dialogs/EditExtensionDialog.cpp
-	${PROJECT_SOURCE_DIR}/src/unigine_python_wrapper/unigine_python_material.cpp
-	${PROJECT_SOURCE_DIR}/src/unigine_python_wrapper/unigine_python_stdout.cpp
-	${PROJECT_SOURCE_DIR}/src/unigine_python_wrapper/unigine_python_stderr.cpp
-	${PROJECT_SOURCE_DIR}/src/unigine_python_wrapper/unigine_python_unigine_lib.cpp
+	${PROJECT_SOURCE_DIR}/src/python3_wrapper/unigine_python_material.cpp
+	${PROJECT_SOURCE_DIR}/src/python3_wrapper/unigine_python_stdout.cpp
+	${PROJECT_SOURCE_DIR}/src/python3_wrapper/unigine_python_stderr.cpp
+	${PROJECT_SOURCE_DIR}/src/python3_wrapper/unigine_python_unigine_lib.cpp
 	)
 
 target_include_directories(UnigineEditorPlugin_Python3Scripting SYSTEM
@@ -54,7 +54,7 @@ target_include_directories(UnigineEditorPlugin_Python3Scripting SYSTEM
 	${PROJECT_SOURCE_DIR}/QCodeEditor/include
     ${PROJECT_SOURCE_DIR}/include
 	${PROJECT_SOURCE_DIR}/src/
-	${PROJECT_SOURCE_DIR}/src/unigine_python_wrapper
+	${PROJECT_SOURCE_DIR}/src/python3_wrapper
 	${CMAKE_CURRENT_BINARY_DIR}
 	${Python_INCLUDE_DIRS}
 	)

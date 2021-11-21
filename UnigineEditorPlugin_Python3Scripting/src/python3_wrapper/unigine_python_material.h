@@ -1,6 +1,5 @@
 #pragma once
 
-#include "unigine_python_wrapper_base.h"
 #include <Python.h>
 #include <UnigineMaterials.h>
 

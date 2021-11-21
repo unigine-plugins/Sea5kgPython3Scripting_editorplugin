@@ -3,7 +3,7 @@
 #include <vector>
 #include <QVector>
 #include <UnigineMaterials.h>
-#include "unigine_python_wrapper_base.h"
+#include "python3_wrapper.h"
 
 class PythonExecutor {
     public:
@@ -20,7 +20,7 @@ class PythonExecutor {
         int execCode(const std::string &sScriptContent);
         int execFile(const std::string &sScriptPath);
     private:
-        std::vector<UniginePythonWrapperBase *> m_vWrappers;
+        std::vector<Python3ModuleRegister *> m_vWrappers;
         std::string m_sExtensionId;
         std::string m_sDirPathWithModules;
         void* m_pGlobalDict;

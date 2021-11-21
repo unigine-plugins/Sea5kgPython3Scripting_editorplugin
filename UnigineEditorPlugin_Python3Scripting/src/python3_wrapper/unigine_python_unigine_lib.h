@@ -1,10 +1,10 @@
 #pragma once
 
-#include "unigine_python_wrapper_base.h"
+#include "python3_wrapper.h"
 #include <Python.h>
 #include <UnigineMaterials.h>
 
-class UniginePythonUnigineLib : public UniginePythonWrapperBase {
+class UniginePythonUnigineLib : public Python3ModuleRegister {
     public:
         UniginePythonUnigineLib(const std::string &sExtensionId);
         virtual void Call_PyImport_AppendInittab() override;

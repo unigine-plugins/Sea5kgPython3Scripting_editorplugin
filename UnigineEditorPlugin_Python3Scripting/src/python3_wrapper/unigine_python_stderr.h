@@ -1,9 +1,9 @@
 #pragma once
 
-#include "unigine_python_wrapper_base.h"
+#include "python3_wrapper.h"
 
 
-class UniginePythonStderr : public UniginePythonWrapperBase {
+class UniginePythonStderr : public Python3ModuleRegister {
     public:
         UniginePythonStderr(const std::string &sExtensionId);
         virtual void Call_PyImport_AppendInittab() override;

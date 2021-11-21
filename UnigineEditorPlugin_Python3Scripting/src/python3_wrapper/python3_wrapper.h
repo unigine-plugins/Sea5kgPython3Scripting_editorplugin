@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-class UniginePythonWrapperBase {
+class Python3ModuleRegister {
     public:
         virtual void Call_PyImport_AppendInittab() = 0;
         virtual void Call_PyImport_ImportModule() = 0;
