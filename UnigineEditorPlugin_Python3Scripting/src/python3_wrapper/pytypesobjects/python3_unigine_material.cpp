@@ -2,7 +2,6 @@
 #include "python3_unigine_material.h"
 #include <string>
 #include <UnigineMaterials.h>
-
 #include <Python.h>
 #include <structmember.h>
 
@@ -35,6 +34,8 @@ static int unigine_Material_init(unigine_Material *self, PyObject *args, PyObjec
 
 static PyObject *unigine_Material_get_name(unigine_Material* self) {
     PyErr_Clear();
+    // const char *sName = RUN_IN_MAIN_THREAD(self->unigine_object_ptr->getName())
+
     PyObject *pName = Py_BuildValue("s", self->unigine_object_ptr->getName());
     return PyUnicode_FromFormat("%S", pName);
 }
@@ -52,6 +53,8 @@ unigine_Material_set_shadow_mask(unigine_Material* self, PyObject *arg)
 
     // int n = PyInt_AsInt(arg);
     uint32_t nVal = PyLong_AsLong(arg);
+    // RUN_IN_MAIN_THREAD(self->unigine_object_ptr->setShadowMask(nVal))
+    
     self->unigine_object_ptr->setShadowMask(nVal);
     
     Py_INCREF(Py_None);

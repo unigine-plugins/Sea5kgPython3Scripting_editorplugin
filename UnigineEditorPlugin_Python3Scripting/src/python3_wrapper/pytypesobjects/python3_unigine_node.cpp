@@ -10,6 +10,7 @@
 
 // ------------------------------------------------------------------------------------------
 // unigine_Node
+
 typedef struct {
     PyObject_HEAD
     /* Type-specific fields go here. */
@@ -140,9 +141,26 @@ unigine_Node_rotate_by_angels(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "fff", &angle_x, &angle_y, &angle_z);
 
     // void rotate(float angle_x, float angle_y, float angle_z);
-    self->m_pNode->rotate(angle_x, angle_y, angle_z);
 
-    // 
+    class LocalRunner : public Python3Runner {
+		public:
+			virtual void run() override {
+                pNode->rotate(angle_x, angle_y, angle_z);
+			};
+            Unigine::Ptr<Unigine::Node> pNode;
+            float angle_x, angle_y, angle_z;
+	};
+	auto *pRunner = new LocalRunner();
+    pRunner->pNode = self->m_pNode;
+    pRunner->angle_x = angle_x;
+    pRunner->angle_y = angle_y;
+    pRunner->angle_z = angle_y;
+	Python3Runner::runInMainThread(pRunner);
+	while(!pRunner->mutexAsync.tryLock(5)) {
+	}
+	pRunner->mutexAsync.unlock();
+	delete pRunner;
+
 	// void worldRotate(float angle_x, float angle_y, float angle_z);
 
     Py_INCREF(Py_None);

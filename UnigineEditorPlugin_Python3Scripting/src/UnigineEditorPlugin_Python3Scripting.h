@@ -9,13 +9,20 @@
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QJsonObject>
+#include <QThread>
 
 #include "CollectorMenuSelected.h"
 #include "ModelExtension.h"
 #include "dialogs/EditExtensionDialog.h"
 #include "dialogs/IRunPythonScript.h"
+#include "run_python_in_thread.h"
 
-class UnigineEditorPlugin_Python3Scripting : public QObject, public ::Editor::Plugin, public IRunPythonScript
+class UnigineEditorPlugin_Python3Scripting
+	:
+		public QObject,
+		public ::Editor::Plugin,
+		public IRunPythonScript,
+		public IPython3RunnerMain
 {
 	Q_OBJECT
 	Q_PLUGIN_METADATA(IID "com.unigine.EditorPlugin" FILE "Plugin.json")
@@ -26,6 +33,12 @@ public:
 
 	bool init() override;
 	void shutdown() override;
+
+	// Python3Runner
+	void executeRunner(Python3Runner *p);
+
+Q_SIGNALS:
+    void signal_executeRunner(Python3Runner *pRunner);
 
 private slots:
 	void processSelectedMaterials();
@@ -41,10 +54,12 @@ private slots:
 
 	void globalSelectionChanged();
 
+	void slot_executeRunner(Python3Runner *pRunner);
+
+private:
 	// IRunPythonScript
 	virtual void runPythonScript(ModelExtension *pModel, QString sAlternativeCode = "") override;
 
-private:
 	void switchMenuTo(MenuSelectedType nType);
 	bool prepareDirectoryWithExtensions();
 	bool prepareExtensionsJson();
@@ -83,4 +98,5 @@ private:
 	QVector<Unigine::NodePtr> m_vSelectedNodes;
 
 	EditExtensionDialog *m_pEditScriptWindow;
+	RunScriptInThread *m_pScriptThread;
 };

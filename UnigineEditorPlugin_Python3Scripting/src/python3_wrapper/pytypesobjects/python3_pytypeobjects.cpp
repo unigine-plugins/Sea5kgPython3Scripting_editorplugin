@@ -27,5 +27,3 @@ bool Python3PyTypeObjectAll::addClassDefinitionToModule(PyObject* pModule) {
     }
     return bAdded;
 }
-
-    

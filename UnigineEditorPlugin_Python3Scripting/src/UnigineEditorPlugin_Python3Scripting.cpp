@@ -8,12 +8,15 @@
 #include <QCoreApplication>
 #include <UnigineMaterials.h>
 
-
 #include <QMessageBox>
 #include <QDir>
 #include <QJsonDocument>
 #include <QJsonArray>
+#include "run_python_in_thread.h"
+#include <iostream>
 
+// ------------------------------------------------------------------------------------------
+// UnigineEditorPlugin_Python3Scripting
 
 UnigineEditorPlugin_Python3Scripting::UnigineEditorPlugin_Python3Scripting()  = default;
 UnigineEditorPlugin_Python3Scripting::~UnigineEditorPlugin_Python3Scripting() = default;
@@ -37,6 +40,7 @@ bool UnigineEditorPlugin_Python3Scripting::init() {
 	log_info(" Initializing...");
 	m_pMenuExtensions = nullptr;
 	m_pEditScriptWindow = nullptr;
+	m_pScriptThread = nullptr;
 	m_nLatestMenu = MenuSelectedType::MST_NONE;
 	m_mapCollectorMenuSelected[MenuSelectedType::MST_MATERIALS] = new CollectorMenuSelected(this, "Materials");
 	m_mapCollectorMenuSelected[MenuSelectedType::MST_NODES] = new CollectorMenuSelected(this, "Nodes");
@@ -50,7 +54,9 @@ bool UnigineEditorPlugin_Python3Scripting::init() {
 	}
 
 	connect(Editor::Selection::instance(), &Editor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
+	connect(this, &UnigineEditorPlugin_Python3Scripting::signal_executeRunner, this, &UnigineEditorPlugin_Python3Scripting::slot_executeRunner);
 
+	g_pPython3RunnerMain = this;
 	log_info("Initialiazed");
 	return true;
 }
@@ -60,6 +66,21 @@ void UnigineEditorPlugin_Python3Scripting::shutdown() {
 	if (m_pEditScriptWindow != nullptr) {
 		delete m_pEditScriptWindow;
 	}
+}
+
+void UnigineEditorPlugin_Python3Scripting::executeRunner(Python3Runner *p) {
+	p->mutexAsync.lock();
+	emit signal_executeRunner(p);
+}
+
+void UnigineEditorPlugin_Python3Scripting::slot_executeRunner(Python3Runner *pRunner) {
+	// std::cout << "slot_executeRunner, QThread::currentThreadId(): " << QThread::currentThread() << std::endl;
+	// std::cout << "slot_executeRunner, QCoreApplication::instance()->thread(): " << QCoreApplication::instance()->thread() << std::endl;
+	if (QThread::currentThread() != QCoreApplication::instance()->thread()) {
+		log_error("UnigineEditorPlugin_Python3Scripting::slot_executeRunner Not main thread!!!");
+	}
+	pRunner->run();
+	pRunner->mutexAsync.unlock();
 }
 
 void UnigineEditorPlugin_Python3Scripting::editExtension() {
@@ -289,8 +310,17 @@ void UnigineEditorPlugin_Python3Scripting::globalSelectionChanged() {
 	}
 }
 
-
 void UnigineEditorPlugin_Python3Scripting::runPythonScript(ModelExtension *pModel, QString sAlternativeCode) {
+	
+	if (m_pScriptThread != nullptr && !m_pScriptThread->isFinished()) {
+		log_info("Another script working...");
+		return;
+	}
+
+	if (m_pScriptThread != nullptr) {
+		delete m_pScriptThread;
+	}
+
 	disconnect(Editor::Selection::instance(), &Editor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
 
 	if (sAlternativeCode == "") {
@@ -300,36 +330,28 @@ void UnigineEditorPlugin_Python3Scripting::runPythonScript(ModelExtension *pMode
 		}
 	}
 
-	PythonExecutor executor(
-		pModel->getId().toStdString(),
-		m_sPython3ScriptingDirPath.toStdString()
+	m_pScriptThread = new RunScriptInThread(
+		pModel->getId(),
+		m_sPython3ScriptingDirPath
 	);
 
 	if (m_nLatestMenu == MenuSelectedType::MST_MATERIALS) {
-		executor.addMaterials(m_vSelectedGuids);
+		m_pScriptThread->executor()->addMaterials(m_vSelectedGuids);
 	} else if(m_nLatestMenu == MenuSelectedType::MST_RUNTIMES) {
-		executor.addRuntimes(m_vSelectedGuids);
+		m_pScriptThread->executor()->addRuntimes(m_vSelectedGuids);
 	} else if(m_nLatestMenu == MenuSelectedType::MST_PROPERTIES) {
-		executor.addRuntimes(m_vSelectedGuids);
+		m_pScriptThread->executor()->addRuntimes(m_vSelectedGuids);
 	} else if(m_nLatestMenu == MenuSelectedType::MST_NODES) {
-		executor.addNodes(m_vSelectedNodes);
+		m_pScriptThread->executor()->addNodes(m_vSelectedNodes);
 	}
-	
-	// pModel->getScriptDir().toStdString(),
-	// sAlternativeCode
-	QString sCurrentPathKeep = QDir::currentPath();
-	// TODO set current directory for a run script
-	// QDir::setCurrent(pModel->getScriptDir());
-	int ret = executor.execCode(
-		sAlternativeCode.toStdString()
-	);
-	if (ret == -1) {
-		log_error("Problem with a extension: " + pModel->getId());	
-	}
-	// return current directory
-	QDir::setCurrent(sCurrentPathKeep);
+
+	m_pScriptThread->setExecCode(sAlternativeCode);
+	m_pScriptThread->start();
 
 	connect(Editor::Selection::instance(), &Editor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
+
+	// TODO after finish trhed remove it
+	// delete pThread;
 }
 
 void UnigineEditorPlugin_Python3Scripting::switchMenuTo(MenuSelectedType nType) {
@@ -617,6 +639,7 @@ ModelExtension *UnigineEditorPlugin_Python3Scripting::findModelExtensionByAction
 			return m_vExtensions[i];
 		}
 	}
+	return nullptr;
 }
 
 	
