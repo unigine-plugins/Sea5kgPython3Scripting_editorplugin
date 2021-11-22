@@ -154,7 +154,7 @@ unigine_Node_rotate_by_angels(unigine_Node* self, PyObject *args)
     pRunner->pNode = self->m_pNode;
     pRunner->angle_x = angle_x;
     pRunner->angle_y = angle_y;
-    pRunner->angle_z = angle_y;
+    pRunner->angle_z = angle_z;
 	Python3Runner::runInMainThread(pRunner);
 	while(!pRunner->mutexAsync.tryLock(5)) {
 	}
