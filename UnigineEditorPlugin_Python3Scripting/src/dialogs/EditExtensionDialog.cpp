@@ -54,8 +54,8 @@ EditExtensionDialog::EditExtensionDialog(QWidget *parent, IRunPythonScript *pRun
 	setLayout(mainLayout);
 	// setLayout(leftLayout);
 	setWindowTitle(tr("Python3Scripting: Edit Extension"));
-	setFixedWidth(800);
-	setFixedHeight(sizeHint().height());
+	// setFixedWidth(800);
+	// setFixedHeight(sizeHint().height());
 }
 
 void EditExtensionDialog::setModelExtension(ModelExtension *pModel) {
