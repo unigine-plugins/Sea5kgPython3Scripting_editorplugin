@@ -62,10 +62,8 @@ private:
 
 	void switchMenuTo(MenuSelectedType nType);
 	bool prepareDirectoryWithExtensions();
-	bool prepareExtensionsJson();
-	bool parseExtensionsJson();
 	bool rewriteExtensionsJson();
-	bool findMenuPython3Scripting();
+	bool safeCreateMenuPython3Scripting();
 	bool reloadMenuForSelected();
 	bool reloadMenuForExtensions();
 	bool initMenuForCreateExtension();
@@ -88,8 +86,6 @@ private:
 
 	QMenu *m_pMenuExtensions;
 	QVector<QMenu *> m_vSubMenusExtensions;
-
-	QJsonObject m_jsonExtensions;
 
 	QAction *m_pActionCreateNewExtension;
 	QAction *m_pActionAbout;

@@ -12,6 +12,7 @@
 #include <QDir>
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QMessageBox>
 #include "run_python_in_thread.h"
 #include <iostream>
 
@@ -41,6 +42,8 @@ bool UnigineEditorPlugin_Python3Scripting::init() {
 	m_pMenuExtensions = nullptr;
 	m_pEditScriptWindow = nullptr;
 	m_pScriptThread = nullptr;
+	m_pMenuPython3Scripting = nullptr;
+	m_pMainWindow = nullptr;
 	m_nLatestMenu = MenuSelectedType::MST_NONE;
 	m_mapCollectorMenuSelected[MenuSelectedType::MST_MATERIALS] = new CollectorMenuSelected(this, "Materials");
 	m_mapCollectorMenuSelected[MenuSelectedType::MST_NODES] = new CollectorMenuSelected(this, "Nodes");
@@ -160,18 +163,31 @@ void UnigineEditorPlugin_Python3Scripting::removeExtension() {
 	QVariant userData = pAction->data();
 	QString sExtensionId = userData.toString();
 	log_info("removeExtension. sExtensionId == " + sExtensionId);
-
+	ModelExtension *pExt = nullptr;
 	for (int i = 0; i < m_vExtensions.size(); i++) {
 		if (m_vExtensions[i]->getId() == sExtensionId) {
+			pExt = m_vExtensions[i];
 			m_vExtensions.removeAt(i);
 			break;
 		}
 	}
 	
 	// remove all files for extension
-	QDir dir(m_sPython3ScriptingDirPath + "/" + sExtensionId);
-	dir.removeRecursively();
-	saveAndReloadExtensions();
+	// TODO ask sure?
+	if (pExt != nullptr) {
+		QMessageBox::StandardButton reply;
+		reply = QMessageBox::question(
+			m_pMainWindow,
+			"Test",
+			"Are you sure that wanna delete extension?\nDirectory: " + pExt->getScriptDir(),
+			QMessageBox::Yes|QMessageBox::No
+		);
+		if (reply == QMessageBox::Yes) {
+			QDir dir(pExt->getScriptDir());
+			dir.removeRecursively();
+		}
+	}
+	saveAndReloadExtensions(); // here will be removed 
 }
 
 void UnigineEditorPlugin_Python3Scripting::createNewExtension() {
@@ -185,7 +201,7 @@ void UnigineEditorPlugin_Python3Scripting::createNewExtension() {
 		QString sFor = sd.getExtensionFor();
 		log_info("createNewExtension. Next with " + sFor + ": " + sName);
 
-		// notrmalize extension id
+		// normalize extension id
 		QString sExtensionId = sFor + "_";
 		for (int i = 0; i < sName.length(); i++) {
 			if (sName[i].isNumber()
@@ -200,8 +216,15 @@ void UnigineEditorPlugin_Python3Scripting::createNewExtension() {
 		log_info("createNewExtension. Next sExtensionId == " + sExtensionId);
 
 		// preapre extension folder
+		QDir newExtDir(m_sPython3ScriptingDirPath + "/" + sExtensionId);
+		int num = 0;
+		while (newExtDir.exists()) {
+			newExtDir = QDir(m_sPython3ScriptingDirPath + "/" + sExtensionId + "_" + QString::number(num));
+		}
+		sExtensionId = newExtDir.dirName();
 		QDir(m_sPython3ScriptingDirPath).mkdir(sExtensionId);
-		QString sPython3ScriptingMainPyPath = m_sPython3ScriptingDirPath + "/" + sExtensionId + "/main.py";
+		
+		QString sPython3ScriptingMainPyPath = newExtDir.absolutePath() + "/main.py";
 		QFile fileMainPy(sPython3ScriptingMainPyPath);
 		if (!fileMainPy.exists()) {
 			fileMainPy.open(QFile::WriteOnly);
@@ -214,7 +237,7 @@ void UnigineEditorPlugin_Python3Scripting::createNewExtension() {
 			);
 			fileMainPy.close();
 		}
-		auto pModel = new ModelExtension(m_sPython3ScriptingDirPath);
+		auto pModel = new ModelExtension(newExtDir.absolutePath());
 		pModel->setId(sExtensionId);
 		pModel->setName(sName);
 		pModel->setFor(sFor);
@@ -380,6 +403,7 @@ bool UnigineEditorPlugin_Python3Scripting::prepareDirectoryWithExtensions() {
 	return true;
 }
 
+/*
 bool UnigineEditorPlugin_Python3Scripting::prepareExtensionsJson() {
 	QFile fileExtensionsJson(m_sPython3ScriptingJsonFilePath);
 	// example
@@ -414,65 +438,17 @@ bool UnigineEditorPlugin_Python3Scripting::prepareExtensionsJson() {
 	}
 	return true;
 }
-
-bool UnigineEditorPlugin_Python3Scripting::parseExtensionsJson() {
-	QFile fileExtensionsJson(m_sPython3ScriptingJsonFilePath);
-    if (!fileExtensionsJson.open(QIODevice::ReadOnly)) {
-        log_error(m_sPython3ScriptingJsonFilePath + " - couldn't open file to read.");
-        return false;
-    }
-    QByteArray saveData = fileExtensionsJson.readAll();
-    QJsonParseError error;
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(saveData, &error);
-    if (jsonDoc.isNull()) {
-        log_error(m_sPython3ScriptingJsonFilePath + " - (Broken json), error info " + error.errorString());
-        return false;
-    }
-    if (!jsonDoc.isObject()) {
-        log_error(m_sPython3ScriptingJsonFilePath + " - expected object");
-        return false;
-    }
-    m_jsonExtensions = jsonDoc.object();
-
-	// remove all previous
-	for (int i = 0; i < m_vExtensions.size(); i++) {
-		delete m_vExtensions[i];
-	}
-	m_vExtensions.clear();
-
-	QJsonArray jsonListExts = m_jsonExtensions["py3extensions"].toArray();
-	QJsonObject jsonExtension;
-	for (int i = 0; i < jsonListExts.size(); i++) {
-		QJsonObject jsonExt = jsonListExts[i].toObject();
-		auto pModel = new ModelExtension(m_sPython3ScriptingDirPath);
-		if (pModel->loadFromJsonObject(jsonExt)) {
-			m_vExtensions.push_back(pModel);
-		} else {
-			log_error(m_sPython3ScriptingJsonFilePath + " - could not load some extension by index " + QString::number(i));
-			delete pModel;
-		}
-	}
-	return true;
-}
+*/
 
 bool UnigineEditorPlugin_Python3Scripting::rewriteExtensionsJson() {
-	QFile fileExtensionsJson(m_sPython3ScriptingJsonFilePath);
-	QJsonObject jsonExtensions;
-	QJsonArray exts;
 	for (int i = 0; i < m_vExtensions.size(); i++) {
 		ModelExtension *pModel = m_vExtensions[i];
-		exts.append(pModel->toJsonObject());
+		pModel->saveJson();
 	}
-	m_jsonExtensions["py3extensions"] = exts;
-
-	QJsonDocument document(m_jsonExtensions);
-	fileExtensionsJson.open(QFile::WriteOnly);
-	fileExtensionsJson.write(document.toJson(QJsonDocument::Indented));
-	fileExtensionsJson.close();
 	return true;
 }
 
-bool UnigineEditorPlugin_Python3Scripting::findMenuPython3Scripting() {
+bool UnigineEditorPlugin_Python3Scripting::safeCreateMenuPython3Scripting() {
 	QString sMenuName = Constants::MM_TOOLS;
 	QMenu *pMenu = Editor::WindowManager::findMenu(sMenuName);
 	if (pMenu == nullptr) {
@@ -482,12 +458,14 @@ bool UnigineEditorPlugin_Python3Scripting::findMenuPython3Scripting() {
 	}
 	// log_info(" Found menu " + sMenuName);
 	// get main menu
-	QWidget* pMenuTools = dynamic_cast<QWidget*>(pMenu);
-	QMenuBar* pMenuBar = dynamic_cast<QMenuBar*>(pMenuTools->parentWidget());
-	m_pMenuPython3Scripting = pMenuBar->addMenu(tr("Python3Scripting"));
-	m_pMainWindow = pMenuTools->parentWidget()->parentWidget();
-	QString sClassname  = m_pMainWindow->metaObject()->className();
-	log_info(" Found  " + sClassname);
+	if (m_pMenuPython3Scripting == nullptr) {
+		QWidget* pMenuTools = dynamic_cast<QWidget*>(pMenu);
+		QMenuBar* pMenuBar = dynamic_cast<QMenuBar*>(pMenuTools->parentWidget());
+		m_pMenuPython3Scripting = pMenuBar->addMenu(tr("Python3Scripting"));
+		m_pMainWindow = pMenuTools->parentWidget()->parentWidget();
+		QString sClassname  = m_pMainWindow->metaObject()->className();
+		log_info(" Found  " + sClassname);
+	}
 	return true;
 }
 
@@ -590,12 +568,30 @@ bool UnigineEditorPlugin_Python3Scripting::loadExtensions() {
 	if (!prepareDirectoryWithExtensions()) {
 		return false;
 	}
-	m_sPython3ScriptingJsonFilePath = m_sPython3ScriptingDirPath + "/extensions.json";
-	prepareExtensionsJson();
-	if (!parseExtensionsJson()) {
-		return false;
+	
+	// remove all previous
+	for (int i = 0; i < m_vExtensions.size(); i++) {
+		delete m_vExtensions[i];
 	}
-	if (!findMenuPython3Scripting()) {
+	m_vExtensions.clear();
+	QDir mainDir(m_sPython3ScriptingDirPath);
+	QStringList allDirs = mainDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs);
+	for(int i = 0; i < allDirs.size(); i++) {
+		QString sPython3ScriptJsonFilePath = m_sPython3ScriptingDirPath + "/" + allDirs[i];
+		ModelExtension *pModel = new ModelExtension(sPython3ScriptJsonFilePath);
+		if (pModel->loadFromDirectory()) {
+			m_vExtensions.push_back(pModel);
+		} else {
+			log_error(sPython3ScriptJsonFilePath + " - could not load some extension by index");
+			delete pModel;
+			continue;
+		}
+    }
+
+	// TODO
+	m_sPython3ScriptingJsonFilePath = m_sPython3ScriptingDirPath + "/extensions.json";
+	// prepareExtensionsJson();
+	if (!safeCreateMenuPython3Scripting()) {
 		return false;
 	}
 	if (!reloadMenuForSelected()) {

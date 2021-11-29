@@ -1,8 +1,12 @@
 
 #include "ModelExtension.h"
 
-ModelExtension::ModelExtension(const QString &sBasePath) {
-    m_sBasePath = sBasePath;
+#include <QFile>
+#include <QJsonDocument>
+#include <iostream>
+
+ModelExtension::ModelExtension(const QString &sScriptDir) {
+    m_sScriptDir = sScriptDir;
 }
 
 ModelExtension::~ModelExtension() {
@@ -22,6 +26,46 @@ bool ModelExtension::loadFromJsonObject(const QJsonObject &jsonExtension) {
     m_sExtensionName = jsonExtension["name"].toString();
     m_sExtensionFor = jsonExtension["for"].toString();
     m_bEnabled = jsonExtension["enabled"].toBool();
+    return true;
+}
+
+bool ModelExtension::loadFromDirectory() {
+    QString sPython3ScriptJsonFilePath = getScriptDir() + "/python3script.json";
+
+	std::cout << "Try opening... " << sPython3ScriptJsonFilePath.toStdString() << std::endl;
+	QFile fileExtensionJson(sPython3ScriptJsonFilePath);
+    if (!fileExtensionJson.open(QIODevice::ReadOnly)) {
+        // log_error(sPython3ScriptJsonFilePath + " - couldn't open file to read.");
+        return false;
+    }
+    QByteArray saveData = fileExtensionJson.readAll();
+    QJsonParseError error;
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(saveData, &error);
+    if (jsonDoc.isNull()) {
+        // log_error(sPython3ScriptJsonFilePath + " - (Broken json), error info " + error.errorString());
+        return false;
+    }
+    if (!jsonDoc.isObject()) {
+        // log_error(sPython3ScriptJsonFilePath + " - expected object");
+        return false;
+    }
+
+    m_jsonOriginalScriptInfo = jsonDoc.object();
+	if (!loadFromJsonObject(m_jsonOriginalScriptInfo)) {
+	    // log_error(sPython3ScriptJsonFilePath + " - could not load some extension by index");
+		return false;
+	}
+	return true;
+}
+
+bool ModelExtension::saveJson() {
+    QString sPython3ScriptJsonFilePath = getScriptDir() + "/python3script.json";
+	QFile fileExtensionJson(sPython3ScriptJsonFilePath);
+
+    QJsonDocument document(this->toJsonObject());
+	fileExtensionJson.open(QFile::WriteOnly);
+	fileExtensionJson.write(document.toJson(QJsonDocument::Indented));
+	fileExtensionJson.close();
     return true;
 }
 
@@ -62,7 +106,6 @@ QString ModelExtension::getFor() {
     return m_sExtensionFor;
 }
 
-
 bool ModelExtension::isEnabled() {
     return m_bEnabled;
 }
@@ -72,5 +115,5 @@ QString ModelExtension::getMainPyPath() {
 }
 
 QString ModelExtension::getScriptDir() {
-    return m_sBasePath + "/" + m_sExtensionId + "/";
+    return m_sScriptDir;
 }

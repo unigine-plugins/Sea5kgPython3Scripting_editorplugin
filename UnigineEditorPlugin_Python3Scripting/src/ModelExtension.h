@@ -8,9 +8,11 @@ class ModelExtension {
     
 
 public:
-    ModelExtension(const QString &sBasePath);
+    ModelExtension(const QString &sScriptDir);
     ~ModelExtension();
     bool loadFromJsonObject(const QJsonObject &jsonExt);
+    bool loadFromDirectory();
+    bool saveJson();
     QJsonObject toJsonObject();
 
     void setId(const QString &sId);
@@ -27,9 +29,10 @@ public:
     QString getScriptDir();
 
 private:
-    QString m_sBasePath;
+    QString m_sScriptDir;
     QString m_sExtensionId;
     QString m_sExtensionName;
     QString m_sExtensionFor;
     bool m_bEnabled;
+    QJsonObject m_jsonOriginalScriptInfo;
 };
