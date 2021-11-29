@@ -44,6 +44,7 @@ add_library(UnigineEditorPlugin_Python3Scripting SHARED
     ${PROJECT_SOURCE_DIR}/src/ModelExtension.cpp
 	${PROJECT_SOURCE_DIR}/src/dialogs/CreateExtensionDialog.cpp
 	${PROJECT_SOURCE_DIR}/src/dialogs/EditExtensionDialog.cpp
+	${PROJECT_SOURCE_DIR}/src/dialogs/ManageScriptsDialog.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/python3_unigine_stdout.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/python3_unigine_stderr.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/python3_unigine_lib.cpp

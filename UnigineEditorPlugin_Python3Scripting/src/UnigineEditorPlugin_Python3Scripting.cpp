@@ -2,6 +2,7 @@
 #include "PythonExecutor.h"
 #include "dialogs/CreateExtensionDialog.h"
 #include "dialogs/EditExtensionDialog.h"
+#include "dialogs/ManageScriptsDialog.h"
 
 #include <UnigineLog.h>
 #include <UnigineEditor.h>
@@ -98,9 +99,9 @@ void UnigineEditorPlugin_Python3Scripting::editExtension() {
 	log_info("editExtension. sExtensionId == " + sExtensionId);
 
 	ModelExtension *pModel = nullptr;
-	for (int i = 0; i < m_vExtensions.size(); i++) {
-		if (m_vExtensions[i]->getId() == sExtensionId) {
-			pModel = m_vExtensions[i];
+	for (int i = 0; i < m_vScripts.size(); i++) {
+		if (m_vScripts[i]->getId() == sExtensionId) {
+			pModel = m_vScripts[i];
 			break;
 		}
 	}
@@ -126,9 +127,9 @@ void UnigineEditorPlugin_Python3Scripting::disableExtension() {
 	QString sExtensionId = userData.toString();
 	log_info("disableExtension. sExtensionId == " + sExtensionId);
 
-	for (int i = 0; i < m_vExtensions.size(); i++) {
-		if (m_vExtensions[i]->getId() == sExtensionId) {
-			m_vExtensions[i]->setEnabled(false);
+	for (int i = 0; i < m_vScripts.size(); i++) {
+		if (m_vScripts[i]->getId() == sExtensionId) {
+			m_vScripts[i]->setEnabled(false);
 		}
 	}
 	saveAndReloadExtensions();
@@ -145,9 +146,9 @@ void UnigineEditorPlugin_Python3Scripting::enableExtension() {
 	QString sExtensionId = userData.toString();
 	log_info("enableExtension. sExtensionId == " + sExtensionId);
 
-	for (int i = 0; i < m_vExtensions.size(); i++) {
-		if (m_vExtensions[i]->getId() == sExtensionId) {
-			m_vExtensions[i]->setEnabled(true);
+	for (int i = 0; i < m_vScripts.size(); i++) {
+		if (m_vScripts[i]->getId() == sExtensionId) {
+			m_vScripts[i]->setEnabled(true);
 		}
 	}
 	saveAndReloadExtensions();
@@ -164,10 +165,10 @@ void UnigineEditorPlugin_Python3Scripting::removeExtension() {
 	QString sExtensionId = userData.toString();
 	log_info("removeExtension. sExtensionId == " + sExtensionId);
 	ModelExtension *pExt = nullptr;
-	for (int i = 0; i < m_vExtensions.size(); i++) {
-		if (m_vExtensions[i]->getId() == sExtensionId) {
-			pExt = m_vExtensions[i];
-			m_vExtensions.removeAt(i);
+	for (int i = 0; i < m_vScripts.size(); i++) {
+		if (m_vScripts[i]->getId() == sExtensionId) {
+			pExt = m_vScripts[i];
+			m_vScripts.removeAt(i);
 			break;
 		}
 	}
@@ -242,12 +243,23 @@ void UnigineEditorPlugin_Python3Scripting::createNewExtension() {
 		pModel->setName(sName);
 		pModel->setFor(sFor);
 		pModel->setEnabled(true);
-		m_vExtensions.push_back(pModel);
+		m_vScripts.push_back(pModel);
 		saveAndReloadExtensions();
 
 		auto *pEdit = getEditDialog();
 		pEdit->setModelExtension(pModel);
 		pEdit->show();
+    }
+}
+
+void UnigineEditorPlugin_Python3Scripting::manageScripts() {
+	QString strPaths = "";
+    ManageScriptsDialog sd(m_pMainWindow, &m_vScripts);
+    sd.setModal(true);
+    if (sd.exec() == QDialog::Accepted) {
+		// QString sName = sd.getExtensionName();
+		
+		// saveAndReloadExtensions();
     }
 }
 
@@ -441,8 +453,8 @@ bool UnigineEditorPlugin_Python3Scripting::prepareExtensionsJson() {
 */
 
 bool UnigineEditorPlugin_Python3Scripting::rewriteExtensionsJson() {
-	for (int i = 0; i < m_vExtensions.size(); i++) {
-		ModelExtension *pModel = m_vExtensions[i];
+	for (int i = 0; i < m_vScripts.size(); i++) {
+		ModelExtension *pModel = m_vScripts[i];
 		pModel->saveJson();
 	}
 	return true;
@@ -481,8 +493,8 @@ bool UnigineEditorPlugin_Python3Scripting::reloadMenuForSelected() {
     	i.value()->clear();
 	}
 
-	for (int i = 0; i < m_vExtensions.size(); i++) {
-		ModelExtension *pModel = m_vExtensions[i];
+	for (int i = 0; i < m_vScripts.size(); i++) {
+		ModelExtension *pModel = m_vScripts[i];
 		if (!pModel->isEnabled()) {
 			continue;
 		}
@@ -518,8 +530,8 @@ bool UnigineEditorPlugin_Python3Scripting::reloadMenuForExtensions() {
 		m_pMenuExtensions->removeAction(m_vSubMenusExtensions[i]->menuAction());
 	}
 
-	for (int i = 0; i < m_vExtensions.size(); i++) {
-		ModelExtension *pModel = m_vExtensions[i];
+	for (int i = 0; i < m_vScripts.size(); i++) {
+		ModelExtension *pModel = m_vScripts[i];
 
 		QMenu *pExtension = m_pMenuExtensions->addMenu(pModel->getFor() + ": " + pModel->getName());
 		m_vSubMenusExtensions.push_back(pExtension);
@@ -557,6 +569,13 @@ bool UnigineEditorPlugin_Python3Scripting::initMenuForCreateExtension() {
 	return true;
 }
 
+bool UnigineEditorPlugin_Python3Scripting::initMenuForManageScripts() {
+	m_pActionManageScripts = new QAction(tr("Manage scripts"), this);
+	connect(m_pActionManageScripts, &QAction::triggered, this, &UnigineEditorPlugin_Python3Scripting::manageScripts);
+	m_pMenuPython3Scripting->addAction(m_pActionManageScripts);
+	return true;
+}
+
 bool UnigineEditorPlugin_Python3Scripting::initMenuForAbout() {
 	m_pActionAbout = new QAction(tr("About Python3Scripting Plugin"), this);
 	connect(m_pActionAbout, &QAction::triggered, this, &UnigineEditorPlugin_Python3Scripting::about);
@@ -570,17 +589,18 @@ bool UnigineEditorPlugin_Python3Scripting::loadExtensions() {
 	}
 	
 	// remove all previous
-	for (int i = 0; i < m_vExtensions.size(); i++) {
-		delete m_vExtensions[i];
+	for (int i = 0; i < m_vScripts.size(); i++) {
+		delete m_vScripts[i];
 	}
-	m_vExtensions.clear();
+	m_vScripts.clear();
+
 	QDir mainDir(m_sPython3ScriptingDirPath);
 	QStringList allDirs = mainDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs);
 	for(int i = 0; i < allDirs.size(); i++) {
 		QString sPython3ScriptJsonFilePath = m_sPython3ScriptingDirPath + "/" + allDirs[i];
 		ModelExtension *pModel = new ModelExtension(sPython3ScriptJsonFilePath);
 		if (pModel->loadFromDirectory()) {
-			m_vExtensions.push_back(pModel);
+			m_vScripts.push_back(pModel);
 		} else {
 			log_error(sPython3ScriptJsonFilePath + " - could not load some extension by index");
 			delete pModel;
@@ -601,6 +621,7 @@ bool UnigineEditorPlugin_Python3Scripting::loadExtensions() {
 		return false;
 	}
 	initMenuForCreateExtension();
+	initMenuForManageScripts();
 	initMenuForAbout();
 	return true;
 }
@@ -630,9 +651,9 @@ ModelExtension *UnigineEditorPlugin_Python3Scripting::findModelExtensionByAction
 	QString sExtensionId = userData.toString();
 	log_info("processSelectedActions. sExtensionId == " + sExtensionId);
 	ModelExtension *pExt = nullptr;
-	for (int i = 0; i < m_vExtensions.size(); i++) {
-		if (m_vExtensions[i]->getId() == sExtensionId) {
-			return m_vExtensions[i];
+	for (int i = 0; i < m_vScripts.size(); i++) {
+		if (m_vScripts[i]->getId() == sExtensionId) {
+			return m_vScripts[i];
 		}
 	}
 	return nullptr;

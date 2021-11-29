@@ -46,6 +46,7 @@ private slots:
 	void processSelectedProperties();
 	void processSelectedRuntimes();
 	void createNewExtension();
+	void manageScripts();
 	void editExtension();
 	void disableExtension();
 	void enableExtension();
@@ -67,6 +68,7 @@ private:
 	bool reloadMenuForSelected();
 	bool reloadMenuForExtensions();
 	bool initMenuForCreateExtension();
+	bool initMenuForManageScripts();
 	bool initMenuForAbout();
 	bool loadExtensions();
 
@@ -82,12 +84,13 @@ private:
 	QMenu *m_pMenuPython3Scripting;
 	QMap<MenuSelectedType, CollectorMenuSelected *> m_mapCollectorMenuSelected;
 
-	QVector<ModelExtension *> m_vExtensions;
+	QVector<ModelExtension *> m_vScripts;
 
 	QMenu *m_pMenuExtensions;
 	QVector<QMenu *> m_vSubMenusExtensions;
 
 	QAction *m_pActionCreateNewExtension;
+	QAction *m_pActionManageScripts;
 	QAction *m_pActionAbout;
 
 	QVector<Unigine::UGUID> m_vSelectedGuids;
