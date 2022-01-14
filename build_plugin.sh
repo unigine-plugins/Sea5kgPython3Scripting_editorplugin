@@ -25,6 +25,10 @@ check_ret $? "cmake configure release"
 cmake --build junk/release --parallel 8 --config Release
 check_ret $? "cmake build release"
 
+
+cd ../bin/editor/
+ldd -d libUnigineEditorPlugin_Python3Scripting.so
+
 # cmake -H. -Bjunk/debug -DCMAKE_BUILD_TYPE=Debug \
 #     -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
 #     -DCMAKE_INSTALL_PREFIX=../bin

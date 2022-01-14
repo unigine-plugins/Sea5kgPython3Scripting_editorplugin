@@ -7,6 +7,8 @@ set(PYTHON3SCRIPTING_VERSION "0.0.1")
 add_definitions(-DPYTHON3SCRIPTING_VERSION="${PYTHON3SCRIPTING_VERSION}")
 add_subdirectory(QCodeEditor)
 
+# set(CMAKE_INSTALL_RPATH "./")
+
 include(${PROJECT_SOURCE_DIR}/cmake/Unigine.cmake)
 
 if (EXISTS ${PROJECT_SOURCE_DIR}/UnigineEditorPlugin_Python3Scripting.json.in)
@@ -25,13 +27,6 @@ set(RESOURCES_FILE
 set(CMAKE_AUTOMOC TRUE)
 set(CMAKE_AUTOUIC TRUE)
 set(CMAKE_AUTORCC TRUE)
-
-find_package (Python COMPONENTS Interpreter Development REQUIRED)
-
-message("Python_FOUND:${Python_FOUND}")
-message("Python_VERSION:${Python_VERSION}")
-message("Python_Development_FOUND:${Python_Development_FOUND}")
-message("Python_LIBRARIES:${Python_LIBRARIES}")
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
@@ -61,6 +56,7 @@ target_include_directories(UnigineEditorPlugin_Python3Scripting SYSTEM
 	${PROJECT_SOURCE_DIR}/src/
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/
+	${PROJECT_SOURCE_DIR}/python-bin/include/python3.10
 	${CMAKE_CURRENT_BINARY_DIR}
 	${Python_INCLUDE_DIRS}
 	)
@@ -72,8 +68,8 @@ target_link_libraries(UnigineEditorPlugin_Python3Scripting
 	Unigine::Editor
 	Qt5::Core
 	Qt5::Widgets
-	${Python_LIBRARIES}
     QCodeEditor
+	${CMAKE_SOURCE_DIR}/python-bin/lib/libpython3.10.a
 	)
 
 set_target_properties(UnigineEditorPlugin_Python3Scripting
