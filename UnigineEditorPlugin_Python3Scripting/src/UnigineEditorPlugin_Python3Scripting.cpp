@@ -16,6 +16,8 @@
 #include <QMessageBox>
 #include "run_python_in_thread.h"
 #include <iostream>
+#include <QGuiApplication>
+#include <QScreen>
 
 // ------------------------------------------------------------------------------------------
 // UnigineEditorPlugin_Python3Scripting
@@ -62,6 +64,7 @@ bool UnigineEditorPlugin_Python3Scripting::init() {
 
 	g_pPython3RunnerMain = this;
 	log_info("Initialiazed");
+
 	return true;
 }
 
@@ -477,6 +480,21 @@ bool UnigineEditorPlugin_Python3Scripting::safeCreateMenuPython3Scripting() {
 		m_pMainWindow = pMenuTools->parentWidget()->parentWidget();
 		QString sClassname  = m_pMainWindow->metaObject()->className();
 		log_info(" Found  " + sClassname);
+
+		// screenshot from main window
+		// QPixmap originalPixmap = m_pMainWindow->grab(); 
+		// QFile file("yourFile.png");
+		// file.open(QIODevice::WriteOnly);
+		// originalPixmap.save(&file, "PNG");
+
+		// screenshot from desktop
+		// QScreen *screen = QGuiApplication::primaryScreen();
+		// if (screen) {
+		// 	QPixmap originalPixmap = screen->grabWindow(0);
+		// 	QFile file("yourFile.png");
+		// 	file.open(QIODevice::WriteOnly);
+		// 	originalPixmap.save(&file, "PNG");
+		// }
 	}
 	return true;
 }
