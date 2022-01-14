@@ -58,7 +58,6 @@ target_include_directories(UnigineEditorPlugin_Python3Scripting SYSTEM
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/
 	${PROJECT_SOURCE_DIR}/python-bin/include/python3.10
 	${CMAKE_CURRENT_BINARY_DIR}
-	${Python_INCLUDE_DIRS}
 	)
 
 target_link_libraries(UnigineEditorPlugin_Python3Scripting

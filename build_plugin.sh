@@ -26,7 +26,10 @@ cmake --build junk/release --parallel 8 --config Release
 check_ret $? "cmake build release"
 
 
+
 cd ../bin/editor/
+export LD_LIBRARY_PATH=`pwd`/../../bin/:$LD_LIBRARY_PATH
+echo $LD_LIBRARY_PATH
 ldd -d libUnigineEditorPlugin_Python3Scripting.so
 
 # cmake -H. -Bjunk/debug -DCMAKE_BUILD_TYPE=Debug \
