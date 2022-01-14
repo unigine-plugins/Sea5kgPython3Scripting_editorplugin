@@ -1,5 +1,7 @@
-cmake_minimum_required(VERSION 3.6)
-project(QCodeEditor)
+cmake_minimum_required(VERSION 3.14)
+
+set(proj_name QCodeEditor)
+project(${proj_name})
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -79,18 +81,18 @@ find_package(Qt5Core    CONFIG REQUIRED)
 find_package(Qt5Widgets CONFIG REQUIRED)
 find_package(Qt5Gui     CONFIG REQUIRED)
 
-add_library(QCodeEditor STATIC
+add_library(${proj_name} STATIC
     ${RESOURCES_FILE}
     ${SOURCE_FILES}
     ${INCLUDE_FILES}
 )
 
-target_include_directories(QCodeEditor PUBLIC
+target_include_directories(${proj_name} PUBLIC
     include
 )
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-    target_compile_options(QCodeEditor
+    target_compile_options(${proj_name}
 		PRIVATE
 		-ansi
 		-pedantic
@@ -103,7 +105,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 	)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
-target_link_libraries(QCodeEditor
+target_link_libraries(${proj_name}
     Qt5::Core
     Qt5::Widgets
     Qt5::Gui

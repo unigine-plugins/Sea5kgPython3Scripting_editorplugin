@@ -132,7 +132,7 @@ unigine_Node_rotate_by_angels(unigine_Node* self, PyObject *args)
 {
     PyErr_Clear();
     PyObject *ret = NULL;
-    assert(arg);
+    // assert(arg);
 
     //
     float angle_x;
