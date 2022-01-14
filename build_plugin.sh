@@ -47,7 +47,7 @@ ldd -d libUnigineEditorPlugin_Python3Scripting_x64d.so
 
 cd ../../
 
-pkgname="linux_UnigineEditorPlugin_Python3Scripting_v0.0.1"
+pkgname="linux_UnigineEditorPlugin_Python3Scripting_v2.14.1.1_v0.0.1"
 if [ -d "$pkgname" ]; then
     rm -rf "$pkgname"
 fi

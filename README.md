@@ -12,6 +12,10 @@ Pluging for scripting by python3 in Unigine Editor https://unigine.com/get-unigi
 
 ![scoreboard](preview.gif)
 
+## Prebuilded versions here
+
+[here](https://sea-kg.com/files/unigine-plugins/UnigineEditorPlugin_Python3Scripting/v2.14.1.1/)
+
 ## Build instruction
 
 ### Linux (Ubuntu)
