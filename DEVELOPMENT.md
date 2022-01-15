@@ -5,10 +5,22 @@
 
 Install requirements
 
+1. Require UNIGINE SDK Browser
+Pluging for scripting by python3 in Unigine Editor https://unigine.com/get-unigine/
+
+
+2. Require System Packages
+
 Ubuntu/Debian:
 ```bash
 $ sudo apt install qt5-default cmake gcc git-core
 ```
+
+Windows:
+- install cmake >= 3.20 
+- install visual studio
+- install qt 5.12.x
+- install python3 (for command scripts)
 
 ### step 1: create a empty project
 
@@ -41,7 +53,7 @@ Ubuntu/Debian:
 ```bash
 $ cd my_project
 $ cd UnigineEditorPlugin_Python3Scripting
-$ ./build_plugin.sh
+$ ./build_plugin_linux.sh
 ```
 
 ### step 5: run editor

@@ -1,0 +1,6 @@
+{
+    "enabled": true,
+    "for": "materials",
+    "id": "materials_shadows_disable",
+    "name": "Shadows Disable"
+}

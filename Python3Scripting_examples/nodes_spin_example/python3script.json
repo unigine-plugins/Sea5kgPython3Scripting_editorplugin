@@ -1,0 +1,6 @@
+{
+    "enabled": true,
+    "for": "nodes",
+    "id": "nodes_spin_example",
+    "name": "Spin Example"
+}
