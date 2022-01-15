@@ -48,6 +48,9 @@ build_commands = [
 os.chdir("UnigineEditorPlugin_Python3Scripting")
 
 for _cmd in build_commands:
+    print("Starting... " + _cmd["name"])
     ret = os.system(_cmd["command"])
     if ret != 0:
+        print("Failed... " + _cmd["name"])
         sys.exit(-1)
+    print("Done. " + _cmd["name"] + "\n\n-----\n\n")

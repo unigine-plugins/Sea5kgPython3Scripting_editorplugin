@@ -51,7 +51,7 @@ Windows (Visual Studio 2017):
 ```
 > cd my_project
 > cd UnigineEditorPlugin_Python3Scripting
-> PCBuild\build.bat
+> build_python.bat
 ```
 
 ### step 4: build plugin
@@ -63,9 +63,19 @@ $ cd UnigineEditorPlugin_Python3Scripting
 $ python3 build_plugin.py
 ```
 
+Windows:
+```bash
+$ cd my_project
+$ cd UnigineEditorPlugin_Python3Scripting
+$ python3 build_plugin.py
+```
+
 ### step 5: run editor
 
 After this call `./launch_editor.sh` or launch editor from `UNIGINE SDK Browser`
+
+After this call `./launch_editor.bat`
+
 
 ## Helpful links
 

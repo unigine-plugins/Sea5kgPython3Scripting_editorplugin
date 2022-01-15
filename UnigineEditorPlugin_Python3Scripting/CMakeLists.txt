@@ -92,29 +92,26 @@ if (CMAKE_BUILD_TYPE MATCHES "Debug")
 		DEBUG
 		QT_DEBUG
 	)
-
-	set_target_properties(${proj_name}
-		PROPERTIES
-		RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../bin/editor_debug/
-		LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../bin/editor_debug/
-		ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../lib/editor_debug/
-		CXX_VISIBILITY_PRESET hidden
-	)
 else()
 	target_compile_definitions(${proj_name}
 		PRIVATE
 		NDEBUG
 		QT_NO_DEBUG
 	)
-
-	set_target_properties(${proj_name}
-		PROPERTIES
-		RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../bin/editor/
-		LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../bin/editor/
-		ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../lib/editor/
-		CXX_VISIBILITY_PRESET hidden
-	)
 endif()
+
+
+set_target_properties(${proj_name}
+	PROPERTIES
+	RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../bin/editor/
+	LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../bin/editor/
+	# ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../lib/editor/
+	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../bin/editor_debug/
+	LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../bin/editor_debug/
+	# ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../lib/editor_debug/
+	C_VISIBILITY_PRESET hidden
+	CXX_VISIBILITY_PRESET hidden
+)
 
 target_link_libraries(${proj_name}
 	PRIVATE
