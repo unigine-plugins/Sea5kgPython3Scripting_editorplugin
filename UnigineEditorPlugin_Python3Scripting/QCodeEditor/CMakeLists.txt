@@ -77,9 +77,18 @@ set(CMAKE_AUTOMOC On)
 set(CMAKE_AUTORCC ON)
 
 # Find includes in corresponding build directories
-find_package(Qt5Core    CONFIG REQUIRED)
-find_package(Qt5Widgets CONFIG REQUIRED)
-find_package(Qt5Gui     CONFIG REQUIRED)
+IF (WIN32)
+	# windows
+    find_package(Qt5Core    HINTS "$ENV{QTDIR}" CONFIG REQUIRED)
+    find_package(Qt5Widgets HINTS "$ENV{QTDIR}" CONFIG REQUIRED)
+    find_package(Qt5Gui     HINTS "$ENV{QTDIR}" CONFIG REQUIRED)
+ELSE()
+	# linux
+    find_package(Qt5Core    CONFIG REQUIRED)
+    find_package(Qt5Widgets CONFIG REQUIRED)
+    find_package(Qt5Gui     CONFIG REQUIRED)
+ENDIF()
+
 
 add_library(${proj_name} STATIC
     ${RESOURCES_FILE}

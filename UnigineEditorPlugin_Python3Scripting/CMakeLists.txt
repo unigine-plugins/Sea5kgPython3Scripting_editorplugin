@@ -11,8 +11,6 @@ file (STRINGS "../version" PYTHON3SCRIPTING_VERSION)
 add_definitions(-DPYTHON3SCRIPTING_VERSION="${PYTHON3SCRIPTING_VERSION}")
 add_subdirectory(QCodeEditor)
 
-
-
 include(${PROJECT_SOURCE_DIR}/cmake/Unigine.cmake)
 
 if (EXISTS ${PROJECT_SOURCE_DIR}/${proj_name}.json.in)
@@ -34,7 +32,13 @@ set(CMAKE_AUTOMOC ON)
 # Create code from resource files
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
+IF (WIN32)
+	# windows
+	find_package(Qt5 HINTS "$ENV{QTDIR}" COMPONENTS Core Widgets Gui REQUIRED)
+ELSE()
+	# linux
+	find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
+ENDIF()
 
 set(RESOURCES_FILE
     resources/UnigineEditorPlugin_Python3Scripting_resources.qrc

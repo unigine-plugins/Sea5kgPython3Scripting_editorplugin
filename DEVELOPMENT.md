@@ -19,7 +19,7 @@ $ sudo apt install qt5-default cmake gcc git-core
 Windows:
 - install cmake >= 3.20 
 - install visual studio
-- install qt 5.12.x
+- install qt 5.12.x (And set system environment variable `QTDIR=C:\Qt\Qt5.12.3\5.12.3\`)
 - install python3 (for command scripts)
 
 ### step 1: create a empty project
