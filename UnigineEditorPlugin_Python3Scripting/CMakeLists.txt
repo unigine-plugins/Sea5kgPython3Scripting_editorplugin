@@ -5,7 +5,9 @@ if (CMAKE_BUILD_TYPE MATCHES "Debug")
 endif()
 project(${proj_name} CXX)
 
-set(PYTHON3SCRIPTING_VERSION "0.0.1")
+# set(PYTHON3SCRIPTING_VERSION "0.0.2")
+file (STRINGS "../version" PYTHON3SCRIPTING_VERSION)
+
 add_definitions(-DPYTHON3SCRIPTING_VERSION="${PYTHON3SCRIPTING_VERSION}")
 add_subdirectory(QCodeEditor)
 

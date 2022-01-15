@@ -8,6 +8,7 @@ Pluging for scripting by python3 in Unigine Editor https://unigine.com/get-unigi
 
 * License of plugin: MIT
 * For code editor used: https://github.com/Megaxela/QCodeEditor - under MIT license
+* Build-in Python-3.10.1 https://github.com/python/cpython/tree/v3.10.1 - under Python Software Foundation license
 * Unigine SDK 2.14.1 - tested on `Community Free`
 
 ![scoreboard](preview.gif)

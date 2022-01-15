@@ -275,10 +275,12 @@ void UnigineEditorPlugin_Python3Scripting::about() {
     msgBox.setText(
         "<h2>Python3Scripting</h2> <br>"
         "Version: " + QString(PYTHON3SCRIPTING_VERSION) + " <br>"
-        "Source-code: <a href='https://github.com/opensource-unigine-plugins/unigine-2.14-editor-plugin-python3scripting'>https://github.com/opensource-unigine-plugins/unigine-2.14-editor-plugin-python3scripting</a> <br>"
+        "Source-code: <a href='https://github.com/unigine-plugins/unigine-editor-python3scripting'>https://github.com/unigine-plugins/unigine-editor-python3scripting</a> <br>"
         "<hr/>"
-        "Author(s):<ul>"
-        "  <li>Evgenii Sopov (mrseakg@gmail.com) </li>"
+        "Components and author(s):<ul>"
+		"  <li>Build-in Python-3.10.1 (Python Software Foundation): <a href='https://github.com/python/cpython/tree/v3.10.1'>https://github.com/python/cpython/tree/v3.10.1</a></li>"
+		"  <li>Build-in QCodeEditor (MIT License): <a href='https://github.com/Megaxela/QCodeEditor'>https://github.com/Megaxela/QCodeEditor</a> </li>"
+		"  <li>Evgenii Sopov (mrseakg@gmail.com) </li>"
         "</ul><hr>"
         // + sFileLicenseContent
     );
