@@ -19,13 +19,7 @@ elif _platform.startswith("windows"):
 else:
     sys.exit("Unknown platform")
 
-
-if is_linux:
-    ret = os.system("./build_plugin_linux.sh")
-
-if is_windows:
-    ret = os.system("./build_plugin_windows.bat")
-
+ret = os.system("python3 build_plugin.py")
 if ret != 0:
     sys.exit("Could not build...")
 
@@ -35,7 +29,7 @@ with open("version") as _file:
     _version = content.strip()
 
 folder_inside = "UnigineEditorPlugin_Python3Scripting_" + _version
-_zip_filename = _platform + "_UnigineEditorPlugin_Python3Scripting_" + _version + ".zip"
+_zip_filename = _platform + "_" + folder_inside + ".zip"
 
 if os.path.isfile(_zip_filename):
     os.remove(_zip_filename)

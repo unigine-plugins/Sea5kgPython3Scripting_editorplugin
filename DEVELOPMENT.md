@@ -53,7 +53,7 @@ Ubuntu/Debian:
 ```bash
 $ cd my_project
 $ cd UnigineEditorPlugin_Python3Scripting
-$ ./build_plugin_linux.sh
+$ python3 build_plugin.py
 ```
 
 ### step 5: run editor
