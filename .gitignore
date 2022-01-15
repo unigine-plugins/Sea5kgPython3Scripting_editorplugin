@@ -1,5 +1,6 @@
-UnigineEditorPlugin_Python3Scripting/python-bin
+UnigineEditorPlugin_Python3Scripting/python-bin*
 linux_UnigineEditorPlugin_Python3Scripting*
+lib/
 
 # Prerequisites
 *.d

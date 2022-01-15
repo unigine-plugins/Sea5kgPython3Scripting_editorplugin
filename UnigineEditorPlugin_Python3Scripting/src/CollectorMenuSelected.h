@@ -22,8 +22,8 @@ public:
     void addAction(QAction *pAction);
     void setEnabled(bool bEnabled);
 
-private slots:
-    void processSelected();
+// private slots:
+//     void processSelected();
 
 private:
     QMenu *m_pMenuSelected;

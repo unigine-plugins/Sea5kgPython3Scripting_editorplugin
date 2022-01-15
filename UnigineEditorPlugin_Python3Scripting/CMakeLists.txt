@@ -13,11 +13,11 @@ add_subdirectory(QCodeEditor)
 
 include(${PROJECT_SOURCE_DIR}/cmake/Unigine.cmake)
 
-if (EXISTS ${PROJECT_SOURCE_DIR}/${proj_name}.json.in)
+if (EXISTS ${PROJECT_SOURCE_DIR}/UnigineEditorPlugin_Python3Scripting.json.in)
 	set(PLUGIN_VERSION ${UNIGINE_VERSION})
 	set(PLUGIN_COMPAT_VERSION ${PYTHON3SCRIPTING_VERSION})
 	configure_file(
-		${PROJECT_SOURCE_DIR}/${proj_name}.json.in
+		${PROJECT_SOURCE_DIR}/UnigineEditorPlugin_Python3Scripting.json.in
 		${CMAKE_CURRENT_BINARY_DIR}/Plugin.json
 		)
 endif()
@@ -63,6 +63,18 @@ add_library(${proj_name} SHARED
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_node.cpp
 	)
 
+IF (WIN32)
+	# windows
+	set(PYTHON3_INCLUDES "")
+	list (APPEND PYTHON3_INCLUDES "${CMAKE_SOURCE_DIR}/Python-3.10.1/Include")
+	list (APPEND PYTHON3_INCLUDES "${CMAKE_SOURCE_DIR}/Python-3.10.1/PC")
+	set(PYTHON3_LIB "${CMAKE_SOURCE_DIR}/python-bin-windows/python310.lib")
+ELSE()
+	# linux
+	set(PYTHON3_INCLUDES "${PROJECT_SOURCE_DIR}/python-bin-linux/include/python3.10")
+	set(PYTHON3_LIB "${CMAKE_SOURCE_DIR}/python-bin-linux/lib/libpython3.10.a")
+ENDIF()
+
 target_include_directories(${proj_name} SYSTEM
 	PRIVATE
 	${PROJECT_SOURCE_DIR}/QCodeEditor/include
@@ -70,7 +82,7 @@ target_include_directories(${proj_name} SYSTEM
 	${PROJECT_SOURCE_DIR}/src/
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/
-	${PROJECT_SOURCE_DIR}/python-bin/include/python3.10
+	${PYTHON3_INCLUDES}
 	${CMAKE_CURRENT_BINARY_DIR}
 	)
 
@@ -113,7 +125,7 @@ target_link_libraries(${proj_name}
 	Qt5::Gui
 	Qt5::Widgets
     QCodeEditor
-	${CMAKE_SOURCE_DIR}/python-bin/lib/libpython3.10.a
+	${PYTHON3_LIB}
 	)
 
 

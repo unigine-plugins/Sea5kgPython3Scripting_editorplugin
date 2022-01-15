@@ -18,7 +18,7 @@ $ sudo apt install qt5-default cmake gcc git-core
 
 Windows:
 - install cmake >= 3.20 
-- install visual studio
+- install Visual Studio 2017
 - install qt 5.12.x (And set system environment variable `QTDIR=C:\Qt\Qt5.12.3\5.12.3\`)
 - install python3 (for command scripts)
 
@@ -45,6 +45,13 @@ Ubuntu/Debian:
 $ cd my_project
 $ cd UnigineEditorPlugin_Python3Scripting
 $ ./build_python.sh
+```
+
+Windows (Visual Studio 2017):
+```
+> cd my_project
+> cd UnigineEditorPlugin_Python3Scripting
+> PCBuild\build.bat
 ```
 
 ### step 4: build plugin

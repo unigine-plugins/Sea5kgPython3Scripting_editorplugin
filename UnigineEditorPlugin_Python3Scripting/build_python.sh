@@ -20,7 +20,7 @@ cd Python-3.10.1
 export CFLAGS="$CFLAGS -fPIC"
 ./configure \
    --enable-optimizations \
-   --prefix=`pwd`/../python-bin \
+   --prefix=`pwd`/../python-bin-linux \
    --with-static-libpython
 check_ret $? "Configure python"
 

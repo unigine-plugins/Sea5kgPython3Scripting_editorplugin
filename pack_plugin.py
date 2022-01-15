@@ -19,9 +19,9 @@ elif _platform.startswith("windows"):
 else:
     sys.exit("Unknown platform")
 
-ret = os.system("python3 build_plugin.py")
-if ret != 0:
-    sys.exit("Could not build...")
+# ret = os.system("python3 build_plugin.py")
+# if ret != 0:
+#     sys.exit("Could not build...")
 
 
 with open("version") as _file:
@@ -51,10 +51,26 @@ if is_windows:
         "bin/editor/UnigineEditorPlugin_Python3Scripting_x64.dll",
         folder_inside + "/bin/editor/UnigineEditorPlugin_Python3Scripting_x64.dll",
     )
-    zf.write(
-        "bin/editor_debug/UnigineEditorPlugin_Python3Scripting_x64d.dll",
-        folder_inside + "/bin/editor_debug/UnigineEditorPlugin_Python3Scripting_x64d.dll",
-    )
+    python_libs = [
+        "libcrypto-1_1.dll",
+        "libffi-7.dll",
+        "libssl-1_1.dll",
+        "pyshellext.dll",
+        "python310.dll",
+        "sqlite3.dll",
+        "tcl86t.dll",
+        "tk86t.dll",
+    ]
+    for _pydll in python_libs:
+        zf.write(
+            "UnigineEditorPlugin_Python3Scripting/python-bin-windows/" + _pydll,
+            folder_inside + "/bin/" + _pydll,
+        )
+
+    # zf.write(
+    #     "bin/editor_debug/UnigineEditorPlugin_Python3Scripting_x64d.dll",
+    #     folder_inside + "/bin/editor_debug/UnigineEditorPlugin_Python3Scripting_x64d.dll",
+    # )
 
 
 rootdir = "Python3Scripting_examples"

@@ -7,6 +7,7 @@ import platform
 
 
 _platform = platform.platform().lower()
+_cmake_gen = ""
 is_linux = False
 is_windows = False
 if _platform.startswith("linux"):
@@ -14,6 +15,7 @@ if _platform.startswith("linux"):
     is_linux = True
 elif _platform.startswith("windows"):
     _platform = "windows"
+    _cmake_gen = " -G \"Visual Studio 15 2017 Win64\""
     is_windows = True
 else:
     sys.exit("Unknown platform")
@@ -23,17 +25,17 @@ else:
 build_commands = [
     {
         "name": "cmake configure release",
-        "command": "cmake -H. -Bjunk/release_" + _platform + " -DCMAKE_BUILD_TYPE=Release \
+        "command": "cmake -H. -Bjunk/release_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DCMAKE_INSTALL_PREFIX=../bin",
     },
     {
         "name": "cmake build release",
-        "command": "cmake --build junk/release_" + _platform + " --parallel 8 --config Release",
+        "command": 'cmake --build junk/release_' + _platform + ' --parallel 8 --config Release',
     }, 
     {
         "name": "cmake configure debug",
-        "command": "cmake -H. -Bjunk/debug_" + _platform + " -DCMAKE_BUILD_TYPE=Debug \
+        "command": "cmake -H. -Bjunk/debug_" + _platform + " " + _cmake_gen + "-DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DCMAKE_INSTALL_PREFIX=../bin",
     },
