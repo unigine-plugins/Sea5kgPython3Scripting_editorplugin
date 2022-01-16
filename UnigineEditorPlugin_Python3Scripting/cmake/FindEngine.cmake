@@ -62,11 +62,17 @@ if(Engine_FOUND)
 		set_target_properties(Unigine::Engine PROPERTIES
 			IMPORTED_LOCATION_RELEASE ${Engine_LIBRARY_RELEASE}
 			)
+		set_target_properties(Unigine::Engine PROPERTIES
+			IMPORTED_LOCATION_DEBUG ${Engine_LIBRARY_DEBUG}
+		)
 	endif()
 
 	if (Engine_LIBRARY_DEBUG)
 		set_target_properties(Unigine::Engine PROPERTIES
 			IMPORTED_LOCATION_DEBUG ${Engine_LIBRARY_DEBUG}
+			)
+		set_target_properties(Unigine::Engine PROPERTIES
+			IMPORTED_LOCATION_RELWITHDEBINFO ${Engine_LIBRARY_DEBUG}
 			)
 	endif()
 

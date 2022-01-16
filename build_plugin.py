@@ -35,13 +35,13 @@ build_commands = [
     }, 
     {
         "name": "cmake configure debug",
-        "command": "cmake -H. -Bjunk/debug_" + _platform + " " + _cmake_gen + "-DCMAKE_BUILD_TYPE=Debug \
+        "command": "cmake -H. -Bjunk/debug_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=RelWithDebInfo \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DCMAKE_INSTALL_PREFIX=../bin",
     },
     {
         "name": "cmake build debug",
-        "command": "cmake --build junk/debug_" + _platform + " --parallel 8 --config Debug",
+        "command": "cmake --build junk/debug_" + _platform + " --parallel 8 --config RelWithDebInfo",
     }, 
 ]
 

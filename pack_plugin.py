@@ -66,11 +66,10 @@ if is_windows:
             "UnigineEditorPlugin_Python3Scripting/python-bin-windows/" + _pydll,
             folder_inside + "/bin/" + _pydll,
         )
-
-    # zf.write(
-    #     "bin/editor_debug/UnigineEditorPlugin_Python3Scripting_x64d.dll",
-    #     folder_inside + "/bin/editor_debug/UnigineEditorPlugin_Python3Scripting_x64d.dll",
-    # )
+    zf.write(
+        "bin/editor_debug/UnigineEditorPlugin_Python3Scripting_x64d.dll",
+        folder_inside + "/bin/editor_debug/UnigineEditorPlugin_Python3Scripting_x64d.dll",
+    )
 
 
 rootdir = "Python3Scripting_examples"

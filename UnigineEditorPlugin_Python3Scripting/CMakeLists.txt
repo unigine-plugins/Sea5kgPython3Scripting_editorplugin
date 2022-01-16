@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 set(proj_name UnigineEditorPlugin_Python3Scripting_x64)
-if (CMAKE_BUILD_TYPE MATCHES "Debug")
+if (CMAKE_BUILD_TYPE MATCHES "RelWithDebInfo")
 	set(proj_name UnigineEditorPlugin_Python3Scripting_x64d)
 endif()
 project(${proj_name} CXX)
@@ -69,6 +69,14 @@ IF (WIN32)
 	list (APPEND PYTHON3_INCLUDES "${CMAKE_SOURCE_DIR}/Python-3.10.1/Include")
 	list (APPEND PYTHON3_INCLUDES "${CMAKE_SOURCE_DIR}/Python-3.10.1/PC")
 	set(PYTHON3_LIB "${CMAKE_SOURCE_DIR}/python-bin-windows/python310.lib")
+	
+	# if (CMAKE_BUILD_TYPE MATCHES "Debug")
+	# 	set(PYTHON3_LIB "${CMAKE_SOURCE_DIR}/python-bin-windows/python310_d.lib")
+	# else()
+	# 	set(PYTHON3_LIB "${CMAKE_SOURCE_DIR}/python-bin-windows/python310.lib")
+	# endif()
+
+	
 ELSE()
 	# linux
 	set(PYTHON3_INCLUDES "${PROJECT_SOURCE_DIR}/python-bin-linux/include/python3.10")
@@ -86,17 +94,17 @@ target_include_directories(${proj_name} SYSTEM
 	${CMAKE_CURRENT_BINARY_DIR}
 	)
 
-if (CMAKE_BUILD_TYPE MATCHES "Debug")
+if (CMAKE_BUILD_TYPE MATCHES "RelWithDebInfo")
     target_compile_definitions(${proj_name}
 		PRIVATE
 		DEBUG
-		QT_DEBUG
+		# QT_DEBUG
 	)
 else()
 	target_compile_definitions(${proj_name}
 		PRIVATE
 		NDEBUG
-		QT_NO_DEBUG
+		# QT_NO_DEBUG
 	)
 endif()
 
@@ -108,6 +116,8 @@ set_target_properties(${proj_name}
 	# ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../lib/editor/
 	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../bin/editor_debug/
 	LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../bin/editor_debug/
+	RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_SOURCE_DIR}/../bin/editor_debug/
+	LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_SOURCE_DIR}/../bin/editor_debug/
 	# ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../lib/editor_debug/
 	C_VISIBILITY_PRESET hidden
 	CXX_VISIBILITY_PRESET hidden

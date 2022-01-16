@@ -68,6 +68,9 @@ if(Editor_FOUND)
 		set_target_properties(Unigine::Editor PROPERTIES
 			IMPORTED_LOCATION_DEBUG ${Editor_LIBRARY_DEBUG}
 			)
+		set_target_properties(Unigine::Editor PROPERTIES
+			IMPORTED_LOCATION_RELWITHDEBINFO ${Editor_LIBRARY_DEBUG}
+			)
 	endif()
 
 endif()
