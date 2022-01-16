@@ -108,6 +108,10 @@ void UnigineEditorPlugin_Python3Scripting::editExtension() {
 			break;
 		}
 	}
+	if (pModel == nullptr) {
+		log_error("UnigineEditorPlugin_Python3Scripting::editExtension(), Not found model");
+		return;
+	}
 
 	QString sPython3ScriptingMainPyPath = m_sPython3ScriptingDirPath + "/" + sExtensionId + "/main.py";
 	auto *pEdit = getEditDialog();
@@ -351,7 +355,7 @@ void UnigineEditorPlugin_Python3Scripting::globalSelectionChanged() {
 }
 
 void UnigineEditorPlugin_Python3Scripting::runPythonScript(ModelExtension *pModel, QString sAlternativeCode) {
-	
+	log_info("Start run python script...");
 	if (m_pScriptThread != nullptr && !m_pScriptThread->isFinished()) {
 		log_info("Another script working...");
 		return;
@@ -360,6 +364,12 @@ void UnigineEditorPlugin_Python3Scripting::runPythonScript(ModelExtension *pMode
 	if (m_pScriptThread != nullptr) {
 		delete m_pScriptThread;
 	}
+
+	QString sPythonHome = QCoreApplication::applicationDirPath() + "/Python3Home/";
+	log_info("PYTHONHOME=" + sPythonHome);
+	qputenv("PYTHONHOME", sPythonHome.toLatin1());
+
+	// QProcessEnvironment proc
 
 	disconnect(Editor::Selection::instance(), &Editor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
 
@@ -370,11 +380,12 @@ void UnigineEditorPlugin_Python3Scripting::runPythonScript(ModelExtension *pMode
 		}
 	}
 
+	log_info("Run script in thread");
 	m_pScriptThread = new RunScriptInThread(
 		pModel->getId(),
 		m_sPython3ScriptingDirPath
 	);
-
+	log_info("Prepare environment for python script...");
 	if (m_nLatestMenu == MenuSelectedType::MST_MATERIALS) {
 		m_pScriptThread->executor()->addMaterials(m_vSelectedGuids);
 	} else if(m_nLatestMenu == MenuSelectedType::MST_RUNTIMES) {
@@ -384,9 +395,11 @@ void UnigineEditorPlugin_Python3Scripting::runPythonScript(ModelExtension *pMode
 	} else if(m_nLatestMenu == MenuSelectedType::MST_NODES) {
 		m_pScriptThread->executor()->addNodes(m_vSelectedNodes);
 	}
-
+	log_info("Add code to execution...");
 	m_pScriptThread->setExecCode(sAlternativeCode);
+	log_info("Start...");
 	m_pScriptThread->start();
+	log_info("Done...");
 
 	connect(Editor::Selection::instance(), &Editor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
 
@@ -673,6 +686,7 @@ ModelExtension *UnigineEditorPlugin_Python3Scripting::findModelExtensionByAction
 	ModelExtension *pExt = nullptr;
 	for (int i = 0; i < m_vScripts.size(); i++) {
 		if (m_vScripts[i]->getId() == sExtensionId) {
+			log_info("Found script");
 			return m_vScripts[i];
 		}
 	}

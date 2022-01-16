@@ -72,13 +72,25 @@ if is_windows:
     )
 
 
+# Python3Home (Lib)
+rootdir = "UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Lib"
+for root, subdirs, files in os.walk(rootdir):
+    for _file in files:
+        _src = os.path.join(root, _file)
+        _dst = _src[len(rootdir)+1:]
+        _dst = os.path.join("bin", "Python3Home", "Lib", _dst)
+        _dst = os.path.join(folder_inside, _dst)
+        print(_src, "->", _dst)
+        zf.write(_src, _dst)
+
 rootdir = "Python3Scripting_examples"
 for root, subdirs, files in os.walk(rootdir):
     for _file in files:
         _src = os.path.join(root, _file)
-        _src = _src[len(rootdir)+1:]
-        _src = os.path.join("bin", "Python3Scripting", _src)
-        _dst = os.path.join(folder_inside, _src)
+        _dst = _src[len(rootdir)+1:]
+        _dst = os.path.join("bin", "Python3Scripting", _dst)
+        _dst = os.path.join(folder_inside, _dst)
+        print(_src, "->", _dst)
         zf.write(_src, _dst)
 
 zf.close()

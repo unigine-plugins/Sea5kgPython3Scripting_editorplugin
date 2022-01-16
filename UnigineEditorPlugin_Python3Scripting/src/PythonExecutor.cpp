@@ -15,6 +15,12 @@
 #include <sstream>
 #include <locale>
 
+std::wstring str2wstr(const std::string& str) {
+    using convert_typeX = std::codecvt_utf8<wchar_t>;
+    std::wstring_convert<convert_typeX, wchar_t> converterX;
+    return converterX.from_bytes(str);
+}
+
 PythonExecutor::PythonExecutor(
     const std::string &sExtensionId, 
     const std::string &sDirPathWithModules
@@ -28,7 +34,12 @@ PythonExecutor::PythonExecutor(
     for (int i = 0; i < m_vWrappers.size(); i++) {
         m_vWrappers[i]->Call_PyImport_AppendInittab();
     }
+
     Py_Initialize();
+
+    // m_sDirPathWithModules = "P:\\UnigineEditorPlugin_Python3Scripting\\Python-3.10.1\\";
+    // std::wstring sDir = str2wstr(m_sDirPathWithModules);
+    // PySys_SetPath(sDir.c_str());
 
     {
         PyObject* pGlobalDict = PyDict_New();
@@ -40,12 +51,6 @@ PythonExecutor::PythonExecutor(
     for (int i = 0; i < m_vWrappers.size(); i++) {
         m_vWrappers[i]->Call_PyImport_ImportModule();
     }
-}
-
-std::wstring str2wstr(const std::string& str) {
-    using convert_typeX = std::codecvt_utf8<wchar_t>;
-    std::wstring_convert<convert_typeX, wchar_t> converterX;
-    return converterX.from_bytes(str);
 }
 
 void PythonExecutor::addMaterials(const QVector<Unigine::UGUID> &vGuids) {
@@ -114,10 +119,10 @@ void PythonExecutor::addNodes(const QVector<Unigine::NodePtr> &vNodes) {
 int PythonExecutor::execCode(const std::string &sScriptContent) {
     Unigine::Log::message("Python3Scripting: start executing script\n");
     PyErr_Clear();
-    
-    // rewrite system path for search modules
-    std::wstring sDir = str2wstr(m_sDirPathWithModules);
-    PySys_SetPath(sDir.c_str());
+
+    // m_sDirPathWithModules = "P:\\UnigineEditorPlugin_Python3Scripting\\Python-3.10.1\\Modules";
+    // std::wstring sDir = str2wstr(m_sDirPathWithModules);
+    // PySys_SetPath(sDir.c_str());
 
     PyObject* pGlobalDict = (PyObject*)m_pGlobalDict;
 

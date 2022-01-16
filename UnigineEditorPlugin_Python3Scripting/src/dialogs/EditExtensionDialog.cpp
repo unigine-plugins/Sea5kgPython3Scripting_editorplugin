@@ -9,6 +9,7 @@
 #include <QJSONHighlighter>
 #include <QLuaHighlighter>
 #include <QPythonHighlighter>
+#include <Unigine.h>
 
 #include "EditExtensionDialog.h"
 
@@ -98,7 +99,15 @@ void EditExtensionDialog::saveClicked() {
 }
 
 void EditExtensionDialog::runClicked() {
-	m_pRunPythonScript->runPythonScript(m_pModel, m_pCodeEditor->toPlainText().toUtf8());
+	// log_info("runPythonScript");
+	Unigine::Log::message("runClicked");
+	QString sScript = m_pCodeEditor->toPlainText().toUtf8();
+	try {
+		m_pRunPythonScript->runPythonScript(m_pModel, sScript);
+	} catch (...) {
+		Unigine::Log::message("Something wrong");
+	}
+	
 }
 
 void EditExtensionDialog::onCodeChanged() {
