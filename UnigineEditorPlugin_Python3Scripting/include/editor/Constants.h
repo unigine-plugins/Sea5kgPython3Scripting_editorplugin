@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -16,8 +16,7 @@
 
 #include <editor/EditorGlobal.h>
 
-
-class QString;
+#include <UnigineBase.h>
 
 
 namespace Constants
@@ -30,19 +29,26 @@ extern EDITOR_API const char *PLUGIN_IID;
 // The main QMenuBar menu's keys.
 ////////////////////////////////////////////////////////////////////////////////
 /// <summary> File menu category of the main menu bar.</summary>
-extern EDITOR_API const QString MM_FILE;
+extern EDITOR_API const char *MM_FILE;
 /// <summary> Edit menu category of the main menu bar.</summary>
-extern EDITOR_API const QString MM_EDIT;
+extern EDITOR_API const char *MM_EDIT;
 /// <summary> Create menu category of the main menu bar.</summary>
-extern EDITOR_API const QString MM_CREATE;
+extern EDITOR_API const char *MM_CREATE;
 /// <summary> Tools menu category of the main menu bar.</summary>
-extern EDITOR_API const QString MM_TOOLS;
+extern EDITOR_API const char *MM_TOOLS;
 /// <summary> Windows menu category of the main menu bar.</summary>
-extern EDITOR_API const QString MM_WINDOWS;
+extern EDITOR_API const char *MM_WINDOWS;
 /// <summary> Rendering menu category of the main menu bar.</summary>
-extern EDITOR_API const QString MM_RENDERING;
+extern EDITOR_API const char *MM_RENDERING;
 /// <summary> Help menu category of the main menu bar.</summary>
-extern EDITOR_API const QString MM_HELP;
+extern EDITOR_API const char *MM_HELP;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// The main QToolBar toolbar's keys.
+////////////////////////////////////////////////////////////////////////////////
+/// <summary> Tools toolbar.</summary>
+extern EDITOR_API const char *MT_TOOLS;
 
 
 /// <summary> Type of selectable subobjects for various types of nodes.</summary>
@@ -69,7 +75,24 @@ enum class SubObjectType
 	/// <summary> Spline tangent (WorldSplineGraph).</summary>
 	SPLINE_TANGENT,
 };
-EDITOR_API uint qHash(Constants::SubObjectType key);
-
 
 } // namespace Constants
+
+namespace Unigine
+{
+
+template<typename Type>
+struct Hasher;
+
+template<>
+struct Hasher<::Constants::SubObjectType>
+{
+	using HashType = unsigned int;
+	UNIGINE_INLINE static HashType create(::Constants::SubObjectType v)
+	{
+		return static_cast<HashType>(v);
+	}
+};
+
+} // namespace Unigine
+

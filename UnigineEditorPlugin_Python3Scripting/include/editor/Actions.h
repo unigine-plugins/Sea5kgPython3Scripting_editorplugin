@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -17,12 +17,14 @@
 #include <editor/Undo.h>
 
 #include <UnigineNode.h>
+#include <UnigineVector.h>
 
 
 namespace Editor
 {
 class Selector;
 class SelectionActionPrivate;
+class CreateNodesActionPrivate;
 class RemoveNodesActionPrivate;
 class SetNodeTransformActionPrivate;
 class ReparentNodesActionPrivate;
@@ -59,7 +61,7 @@ public:
 	/// <summary>
 	/// This method allows action to do some internal cleanup.
 	/// Return value indicates whether the action is still sane.
-	/// Whenever it returns false asset system will delete invalid action
+	/// Whenever it returns false undo system will delete invalid action
 	/// for good.
 	/// </summary>
 	bool validate() override;
@@ -75,6 +77,31 @@ public:
 	SelectionActionPrivate *d;
 };
 
+/// <summary>This class is used to represent any user's action creating nodes.</summary>
+class EDITOR_API CreateNodesAction : public Action
+{
+public:
+	/// <summary>Creates a new create action for the specified node.</summary>
+	/// <param name="node">Node to be created.</param>
+	explicit CreateNodesAction(const Unigine::NodePtr &node);
+	/// <summary>Creates a new create action for the specified node.</summary>
+	/// <param name="nodes">Nodes to be created.</param>
+	explicit CreateNodesAction(const Unigine::Vector<Unigine::NodePtr> &nodes);
+	~CreateNodesAction() override;
+
+	/// <summary>Applies the create nodes action.</summary>
+	void apply() override;
+	/// <summary>Reverts the create nodes action.</summary>
+	void undo() override;
+	/// <summary>Redoes the previously undone create nodes action (reverses the undo method).</summary>
+	void redo() override;
+
+	Unigine::Vector<Unigine::NodePtr> getNodes() const;
+
+private:
+	CreateNodesActionPrivate *d;
+};
+
 /// <summary>This class is used to represent any user's action removing nodes.</summary>
 class EDITOR_API RemoveNodesAction : public Action
 {
@@ -84,7 +111,7 @@ public:
 	explicit RemoveNodesAction(const Unigine::NodePtr &node);
 	/// <summary>Creates a new remove action for the specified node.</summary>
 	/// <param name="nodes">Nodes to be removed.</param>
-	explicit RemoveNodesAction(const QVector<Unigine::NodePtr> &nodes);
+	explicit RemoveNodesAction(const Unigine::Vector<Unigine::NodePtr> &nodes);
 	~RemoveNodesAction() override;
 
 	/// <summary>Applies the remove nodes action.</summary>
@@ -97,12 +124,12 @@ public:
 	/// <summary>
 	/// This method allows action to do some internal cleanup.
 	/// Return value indicates whether the action is still sane.
-	/// Whenever it returns false asset system will delete invalid action
+	/// Whenever it returns false undo system will delete invalid action
 	/// for good.
 	/// </summary>
 	bool validate() override;
 
-	QVector<Unigine::NodePtr> getNodes() const;
+	Unigine::Vector<Unigine::NodePtr> getNodes() const;
 
 private:
 	RemoveNodesActionPrivate *d;
@@ -115,7 +142,7 @@ public:
 	/// <summary>Creates a new set node transform action for the specified node.</summary>
 	/// <param name="node">Nodes affected by the set node transform action.</param>
 	/// <param name="transform">New transformation to be set for the specified node.</param>
-	SetNodeTransformAction(const Unigine::NodePtr &node,
+	explicit SetNodeTransformAction(const Unigine::NodePtr &node,
 		const Unigine::Math::Mat4 &transform);
 	~SetNodeTransformAction() override;
 
@@ -128,7 +155,7 @@ public:
 	/// <summary>
 	/// This method allows action to do some internal cleanup.
 	/// Return value indicates whether the action is still sane.
-	/// Whenever it returns false asset system will delete invalid action
+	/// Whenever it returns false undo system will delete invalid action
 	/// for good.
 	/// </summary>
 	bool validate() override;
@@ -147,7 +174,7 @@ public:
 	/// <param name="nodes">Nodes affected by the reparent action.</param>
 	/// <param name="new_parent">New parent to be set for the specified nodes.</param>
     /// <param name="new_index">Index of the new parent node's child after which the specified nodes are to be added. The default <b>-1</b> value adds nodes after the last child.</param>
-	ReparentNodesAction(const QVector<Unigine::NodePtr> &nodes,
+	explicit ReparentNodesAction(const Unigine::Vector<Unigine::NodePtr> &nodes,
 		const Unigine::NodePtr &new_parent,
 		int new_index = -1);
 	~ReparentNodesAction() override;
@@ -170,7 +197,7 @@ public:
 	/// <summary>Creates a new rename action for the specified node.</summary>
 	/// <param name="node">Node affected by the rename action.</param>
 	/// <param name="new_name">New name of the node.</param>
-	RenameNodeAction(const Unigine::NodePtr &node, const QString &new_name);
+	explicit RenameNodeAction(const Unigine::NodePtr &node, const char *new_name);
 	~RenameNodeAction() override;
 
 	/// <summary>Applies the rename node action.</summary>
@@ -182,7 +209,7 @@ public:
 	/// <summary>
 	/// This method allows action to do some internal cleanup.
 	/// Return value indicates whether the action is still sane.
-	/// Whenever it returns false asset system will delete invalid action
+	/// Whenever it returns false undo system will delete invalid action
 	/// for good.
 	/// </summary>
 	bool validate() override;
@@ -198,11 +225,11 @@ public:
 	/// <summary>Creates a new enable node action for the specified node.</summary>
 	/// <param name="node">Node affected by the action.</param>
 	/// <param name="enabled"><b>true</b> if the action enables the specified node; otherwise, <b>false</b>.</param>
-	EnableNodeAction(const Unigine::NodePtr &node, bool enabled);
+	explicit EnableNodeAction(const Unigine::NodePtr &node, bool enabled);
 	/// <summary>Creates a new enable action for the specified nodes.</summary>
 	/// <param name="nodes">Nodes affected by the action.</param>
 	/// <param name="enabled"><b>true</b> if the action enables the specified nodes; otherwise, <b>false</b>.</param>
-	EnableNodeAction(const QVector<Unigine::NodePtr> &nodes, bool enabled);
+	EnableNodeAction(const Unigine::Vector<Unigine::NodePtr> &nodes, bool enabled);
 	~EnableNodeAction() override;
 
 	/// <summary>Applies the enable node action.</summary>
@@ -214,7 +241,7 @@ public:
 	/// <summary>
 	/// This method allows action to do some internal cleanup.
 	/// Return value indicates whether the action is still sane.
-	/// Whenever it returns false asset system will delete invalid action
+	/// Whenever it returns false undo system will delete invalid action
 	/// for good.
 	/// </summary>
 	bool validate() override;

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -18,8 +18,8 @@
 #include <editor/EditorGlobal.h>
 
 #include <UnigineNode.h>
-
-#include <QVector>
+#include <UnigineVector.h>
+#include <UnigineHashSet.h>
 
 
 namespace Unigine
@@ -85,21 +85,21 @@ public:
 	/// <summary> Creates a runtimes selector using the specified list of GUIDs.</summary>
 	/// <param name="guids"> The list of GUIDs of runtimes.</param>
 	/// <returns> SelectorGUIDs containing runtimes with the specified GUIDs.</returns>
-	static SelectorGUIDs *createRuntimesSelector  (QVector<Unigine::UGUID> guids);
+	static SelectorGUIDs *createRuntimesSelector  (Unigine::Vector<Unigine::UGUID> guids);
 	/// <summary> Creates a materials selector using the specified list of GUIDs.</summary>
 	/// <param name="guids"> The list of GUIDs of materials.</param>
 	/// <returns> SelectorGUIDs containing materials with the specified GUIDs.</returns>
-	static SelectorGUIDs *createMaterialsSelector (QVector<Unigine::UGUID> guids);
+	static SelectorGUIDs *createMaterialsSelector (Unigine::Vector<Unigine::UGUID> guids);
 	/// <summary> Creates a properties selector using the specified list of GUIDs.</summary>
 	/// <param name="guids"> The list of GUIDs of properties.</param>
 	/// <returns> SelectorGUIDs containing properties with the specified GUIDs.</returns>
-	static SelectorGUIDs *createPropertiesSelector(QVector<Unigine::UGUID> guids);
+	static SelectorGUIDs *createPropertiesSelector(Unigine::Vector<Unigine::UGUID> guids);
 
 	/// <summary> Creates a SelectorGUIDs of the specified type (materials, properties, runtimes) using the specified list of GUIDs.</summary>
 	/// <param name="type"> The type of the selector to be created: one of the <see cref="SelectorType"/> enum values.</param>
 	/// <param name="guids"> The list of GUIDs of items to be added to the new selector.</param>
 	/// <returns> Selector of the specified type containing items with the specified GUIDs.</returns>
-	SelectorGUIDs(int type, QVector<Unigine::UGUID> guids);
+	SelectorGUIDs(int type, Unigine::Vector<Unigine::UGUID> guids);
 	~SelectorGUIDs() override;
 
 	/// <summary> Returns the current selector type.</summary>
@@ -115,7 +115,15 @@ public:
 
 	/// <summary> Returns the list of GUIDs for all selected items.</summary>
 	/// <returns> Vector containing GUIDs for all selected items.</returns>
-	QVector<Unigine::UGUID> guids() const;
+	Unigine::Vector<Unigine::UGUID> guids() const;
+
+	/// <summary> Checks whether the SelectorGUIDs contains the specified GUID.</summary>
+	/// <returns> <b>true</b> if the current selection contains the specified GUID; otherwise, <b>false</b>.</returns>
+	bool contains(const Unigine::UGUID &guid) const;
+
+	/// <summary> Checks whether the SelectorGUIDs is empty (no GUID-s are currently selected).</summary>
+	/// <returns> <b>true</b> if the selector is empty; otherwise, <b>false</b>.</returns>
+	bool empty() const;
 
 private:
 	::Editor::Internal::SelectorGUIDsPrivate *d;
@@ -132,7 +140,7 @@ class EDITOR_API SelectorNodes : public Selector
 public:
 	/// <summary> Creates a new selection (<see cref="SelectorNodes"/>) combining all objects from the specified list of nodes. All surfaces of these objects shall also be included in the current selection.</summary>
 	/// <returns> Selector of the nodes type including all objects from the specified list of nodes, or <b>nullptr</b> if there are no objects in the specified list.</returns>
-	static SelectorNodes *createObjectsSelector(const QVector<Unigine::NodePtr> &nodes);
+	static SelectorNodes *createObjectsSelector(const Unigine::Vector<Unigine::NodePtr> &nodes);
 
 	/// <summary> Subitem type. The first 256 types are reserved by UNIGINE, user subitem types start from USER + i (256 and higher).</summary>
 	enum SubType
@@ -147,7 +155,7 @@ public:
 	/// When an object is selected, some of its surfaces or collision shapes can also be selected,
 	/// the subitems list shall contain all of them.
 	/// </summary>
-	class SubItemList
+	class EDITOR_API SubItemList
 	{
 	public:
 		SubItemList();
@@ -169,7 +177,7 @@ public:
 	};
 
 	SelectorNodes();
-	explicit SelectorNodes(const QVector<Unigine::NodePtr> &nodes);
+	explicit SelectorNodes(const Unigine::Vector<Unigine::NodePtr> &nodes);
 	~SelectorNodes() override;
 
 	/// <summary> Returns the current selector type.</summary>
@@ -185,7 +193,7 @@ public:
 
 	/// <summary> Returns the list of all selected nodes.</summary>
 	/// <returns> Vector containing all selected.</returns>
-	QVector<Unigine::NodePtr> getNodes() const;
+	Unigine::Vector<Unigine::NodePtr> getNodes() const;
 	/// <summary> Returns the number of selected nodes.</summary>
 	/// <returns> Number of selected nodes.</returns>
 	int size() const;
@@ -198,7 +206,7 @@ public:
 	void extend(const Unigine::NodePtr &node);
 	/// <summary> Extends the current selection by adding the specified list of nodes to it.</summary>
 	/// <param name="nodes"> Vector containing nodes to be added to the current selection.</param>
-	void extend(const QVector<Unigine::NodePtr> &nodes);
+	void extend(const Unigine::Vector<Unigine::NodePtr> &nodes);
 	/// <summary> Extends the current selection by adding the specified node to it along with the list of selected subitems.</summary>
 	/// <param name="node"> Node to be added to the current selection.</param>
 	/// <param name="subs"> List of subitems to be added to the current selection.</param>
@@ -209,7 +217,7 @@ public:
 	void exclude(const Unigine::NodePtr &node);
 	/// <summary> Excludes the specified list of nodes from the current selection.</summary>
 	/// <param name="nodes"> Vector containing nodes to be excluded from the current selection.</param>
-	void exclude(const QVector<Unigine::NodePtr> &nodes);
+	void exclude(const Unigine::Vector<Unigine::NodePtr> &nodes);
 	/// <summary> Excludes the specified type of subitems from the current selection for all 
 	/// selected nodes (e.g., remove all joints from the selection for all selected nodes).
 	/// </summary>
@@ -255,7 +263,7 @@ public:
 	/// </summary>
 	/// <param name="stype"> Selected node for which the list of indices of selected subitems is to be obtained.</param>
 	/// <returns> List of indices of selected subitems for the specified selected node (if any); otherwise, <b>nullptr</b>.</returns>
-	QSet<int> getIntersectedIndexes(Constants::SubObjectType stype) const;
+	Unigine::HashSet<int> getIntersectedIndexes(Constants::SubObjectType stype) const;
 
 	/// <summary>
 	/// Resets nodes cache used for selection. Storing direct pointers to nodes is unsafe, 
@@ -331,7 +339,7 @@ public:
 	/// <summary> Returns all indices of subitems of the specified type stored in the list (e.g., you can get all surfaces).</summary>
 	/// <param name="stype"> Subitem type. One of the <see cref="Constants::SubObjectType"/> enum values.</param>
 	/// <returns> A set of indices of all list subitems of the specified type (if any); otherwise, <b>nullptr</b>.</returns>
-	QSet<int> getSubObjectIndexes(Constants::SubObjectType stype) const;
+	Unigine::HashSet<int> getSubObjectIndexes(Constants::SubObjectType stype) const;
 	/// <summary> Checks whether the index list does not contain any indices of subitems of the specified type.</summary>
 	/// <returns> <b>true</b> if the list does not contain any indices of subitems of the specified type; otherwise, <b>false</b>.</returns>
 	bool empty(Constants::SubObjectType stype) const;

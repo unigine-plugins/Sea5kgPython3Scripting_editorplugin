@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -16,9 +16,8 @@
 
 #include <editor/EditorGlobal.h>
 
-#include <QString>
-#include <QVector>
-#include <QHash>
+#include <UnigineString.h>
+
 #include <QPluginLoader>
 
 
@@ -50,12 +49,10 @@ struct EDITOR_API PluginDependency
 
 	Type type = Type::REQUIRED;
 	/// <summary> Plugin name.</summary>
-	QString name;
+	Unigine::String name;
 	/// <summary> Plugin version.</summary>
-	QString version;
+	Unigine::String version;
 };
-
-uint qHash(const PluginDependency &value);
 
 /// <summary> This class it is responsible for plugin loading/unloading and contains all necessary plugin metadata (name, version, dependencies, etc.).
 /// It can also be used to check the current plugin state and get information on errors (if any).
@@ -86,27 +83,27 @@ public:
 	~PluginInfo();
 
 	/// <summary> Returns the name of the UnigineEditor plugin.</summary>
-	const QString &name() const;
+	const char *name() const;
 	/// <summary> Returns the version of the UnigineEditor plugin.</summary>
-	const QString &version() const;
+	const char *version() const;
 	/// <summary> Returns the vendor of the UnigineEditor plugin.</summary>
-	const QString &vendor() const;
+	const char *vendor() const;
 	/// <summary> Returns the description of the UnigineEditor plugin.</summary>
-	const QString &description() const;
+	const char *description() const;
 	/// <summary> Returns version of the plugin considered as compatible.</summary>
-	const QString &compatibleVersion() const;
+	const char *compatibleVersion() const;
 	/// <summary> Returns the list of dependencies for the plugin.</summary>
-	const QVector<PluginDependency> dependencies() const;
+	Unigine::Vector<PluginDependency> dependencies() const;
 
 	/// <summary> Returns an absolute filepath to the corresponding plugin's binary file.</summary>
-	const QString &absoluteFilePath() const;
+	const char *absoluteFilePath() const;
 
 	/// <summary> Returns true if a plugin error has occurred.
 	/// If the result is positive, you can use the errorString() method to get detailed error information.
 	/// </summary>
 	bool hasError() const;
 	/// <summary> Returns a string describing a plugin error.</summary>
-	const QString &errorString() const;
+	const char *errorString() const;
 
 	/// <summary> Returns the current plugin state.</summary>
 	/// <returns> One of the PluginInfo::State enum values.</returns>
@@ -115,7 +112,7 @@ public:
 	/// <summary> Returns true if the plugin can be used to resolve a dependency of the given name and version.</summary>
 	/// <param name="name"> Plugin name.</param>
 	/// <param name="version"> Plugin version.</param>
-	bool isInstanceOf(const QString &name, const QString &version) const;
+	bool isInstanceOf(const char *name, const char *version) const;
 
 	/// <summary> Returns the Plugin interface.</summary>
 	Plugin *plugin() const;
@@ -130,4 +127,22 @@ private:
 } // namespace Editor
 
 Q_DECLARE_METATYPE(::Editor::PluginInfo *);
+
+namespace Unigine
+{
+
+template<typename Type>
+struct Hasher;
+
+template<>
+struct Hasher<::Editor::PluginDependency>
+{
+	using HashType = unsigned int;
+	UNIGINE_INLINE static HashType create(const ::Editor::PluginDependency &v)
+	{
+		return ::Unigine::Hasher<::Unigine::String>::create(v.name);
+	}
+};
+
+} // namespace Unigine
 

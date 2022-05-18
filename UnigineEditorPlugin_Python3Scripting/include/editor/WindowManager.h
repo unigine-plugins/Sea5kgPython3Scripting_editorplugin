@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -16,6 +16,8 @@
 
 #include <editor/EditorGlobal.h>
 
+#include <UnigineVector.h>
+
 #include <QObject>
 
 
@@ -25,6 +27,7 @@
 namespace Editor { class Presenter; }
 class QWidget;
 class QMenu;
+class QToolBar;
 
 
 namespace Editor
@@ -112,7 +115,7 @@ public:
 	/// </summary>
 	/// <param name="widgets"> List of tool windows to be added.</param>
 	/// <param name="area"> Main window area to which the specified tool windows are to be added.</param>
-	static void add(const QVector<QWidget *> &widgets, AreaType area = LAST_USED_AREA);
+	static void add(const Unigine::Vector<QWidget *> &widgets, AreaType area = LAST_USED_AREA);
 	/// <summary>
 	/// Adds the specified set of tool windows to the specified area
 	/// according to the specified anchor type (<see cref="RefType"/>).
@@ -121,7 +124,7 @@ public:
 	/// <param name="ref"> Anchor type to define the layout relative to the specified area.</param>
 	/// <param name="area"> Window area to which the specified tool windows are to be added.</param>
 	/// <remarks> To get a window area use <see cref="getArea"/>()</remarks>
-	static void add(const QVector<QWidget *> &widgets, RefType ref, QWidget *area);
+	static void add(const Unigine::Vector<QWidget *> &widgets, RefType ref, QWidget *area);
 	static void addCornerWidget(QWidget *parent, QWidget *child);
 
 	/// <summary> Removes the specified tool window.</summary>
@@ -153,7 +156,7 @@ public:
 	/// </summary>
 	/// <param name="widgets"> List of tool windows to be moved.</param>
 	/// <param name="area"> Main window area to which the specified tool windows are to be moved.</param>
-	static void move(const QVector<QWidget *> &widgets, AreaType area = LAST_USED_AREA);
+	static void move(const Unigine::Vector<QWidget *> &widgets, AreaType area = LAST_USED_AREA);
 	/// <summary>
 	/// Moves the specified set of tool windows to the specified area
 	/// according to the specified anchor type (<see cref="RefType"/>).
@@ -162,7 +165,7 @@ public:
 	/// <param name="ref"> Anchor type to define the layout relative to the specified area.</param>
 	/// <param name="area"> Window area to which the specified tool windows are to be moved.</param>
 	/// <remarks> To get a window area use <see cref="getArea"/>()</remarks>
-	static void move(const QVector<QWidget *> &widgets, RefType ref, QWidget *area);
+	static void move(const Unigine::Vector<QWidget *> &widgets, RefType ref, QWidget *area);
 
 	/// <summary>Resizes the specified tool window.</summary>
 	/// <param name="widget">Tool window to be resized.</param>
@@ -192,12 +195,40 @@ public:
 	static QWidget *getArea(QWidget *child);
 	/// <summary> Returns the list of all existing tool windows.</summary>
 	/// <returns> Vector containing all existing tool windows.</returns>
-	static QVector<QWidget *> allWindows();
+	static Unigine::Vector<QWidget *> allWindows();
 
 	/// <summary> Searches for a submenu of the main menu bar with the specified name.</summary>
 	/// <param name="name">Name of the submenu to be found.</param>
 	/// <returns> Menu with the specified name; otherwise <b>nullptr</b>.</returns>
-	static QMenu *findMenu(const QString &name);
+	static QMenu *findMenu(const char *name);
+
+	/// <summary> Searches for a toolbar with the specified name.</summary>
+	/// <param name="name">Name of the toolbar to be found.</param>
+	/// <returns> Toolbar with the specified name; otherwise <b>nullptr</b>.</returns>
+	static QToolBar *findToolBar(const char *name);
+
+	/// <summary> Returns a window area by its name.</summary>
+	/// <param name="area_name">Name of the window area.</param>
+	/// <returns> Window area with the specified name (if it exists); otherwise <b>nullptr</b>.</returns>
+	static QWidget *getArea(const QString &area_name);
+	/// <summary> Returns the name of the area to which the specified tool window belongs.</summary>
+	/// <param name="child">Tool window for which the area name is to be obtained.</param>
+	/// <returns> Name of the area to which the specified tool window belongs; otherwise an empty string.</returns>
+	static QString getAreaName(QWidget *child);
+
+	/// <summary> Returns the state of a floating area (a separate window that can be moved atop of the main window) to which the tool window belongs.
+	/// In case the parent area is not a floating one, an empty QByteArray shall be returned.
+	/// </summary>
+	/// <param name="child">Tool window for which the area name is to be obtained.</param>
+	/// <returns> State of a floating area; otherwise, if the parent area is not a floating one, empty <b>QByteArray</b>.</returns>
+	static QWidget *getFloatingWindow(QWidget *child);
+
+	/// <summary> Restores the state of the specified tool window in the window area with the specified name using the data of the previous session. 
+	/// In case of a failure to obtain the data from the previous session, default settings shall be used.</summary>
+	/// <param name="tool_window">Tool window to be restored.</param>
+	/// <param name="area_name">Name of the window area.</param>
+	/// <returns> <b>true</b> if the state of the specified tool window is restored successfully; otherwise, <b>false</b>.</returns>
+	static bool restoreLastWindowConfig(QWidget *tool_window, const QString &area_name);
 
 signals:
 	/// <summary>

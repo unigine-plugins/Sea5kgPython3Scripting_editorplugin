@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -13,11 +13,11 @@
 
 #pragma once
 
-#include <QtGlobal>
+#include <UnigineBase.h>
 
 
 #ifdef EDITOR_LIBRARY
-    #define EDITOR_API Q_DECL_EXPORT
+    #define EDITOR_API UNIGINE_EXPORT
 #else
-    #define EDITOR_API Q_DECL_IMPORT
+    #define EDITOR_API UNIGINE_IMPORT
 #endif

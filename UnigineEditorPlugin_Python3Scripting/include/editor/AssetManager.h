@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -18,9 +18,10 @@
 
 #include <UnigineBase.h>
 #include <UnigineGUID.h>
+#include <UnigineString.h>
+#include <UnigineVector.h>
 
 #include <QObject>
-#include <QVector>
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -61,15 +62,15 @@ public:
 	/// Returns a value indicating whether an asset with the specified file path exists.
 	/// </summary>
 	/// <param name="s_filepath">Path of the asset to be checked.</param>
-	static bool hasAsset(const QString &s_filepath);
+	static bool hasAsset(const char *s_filepath);
 	/// <summary> Returns the list of GUIDs for all existing assets.</summary>
-	static QVector<Unigine::UGUID> assets();
+	static Unigine::Vector<Unigine::UGUID> assets();
 	/// <summary> Returns the list of GUIDs for all assets existing in the specified directory.</summary>
 	/// <param name="dirpath">Path to a directory containing assets.</param>
-	static QVector<Unigine::UGUID> assets(const QString &dirpath);
+	static Unigine::Vector<Unigine::UGUID> assets(const char *dirpath);
 	/// <summary> Returns the path to the asset file by its GUID.</summary>
 	/// <param name="guid">GUID of the asset to find the path for.</param>
-	static QString assetFilePath(const Unigine::UGUID &guid);
+	static Unigine::String assetFilePath(const Unigine::UGUID &guid);
 
 signals:
 	/// <summary> This signal is emitted when a new asset is added,
