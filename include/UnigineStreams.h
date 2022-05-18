@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -18,6 +18,7 @@
 #include "UniginePtr.h"
 #include "UnigineString.h"
 #include "UnigineMathLib.h"
+#include "UniginePalette.h"
 
 namespace Unigine
 {
@@ -76,31 +77,33 @@ public:
 	double readDouble();
 	bool writeDouble(double value);
 	Math::vec2 readVec2();
-	bool writeVec2(const Math::vec2 &value);
+	bool writeVec2(const Math::vec2& value);
 	Math::vec3 readVec3();
-	bool writeVec3(const Math::vec3 &value);
+	bool writeVec3(const Math::vec3& value);
 	Math::vec4 readVec4();
-	bool writeVec4(const Math::vec4 &value);
+	bool writeVec4(const Math::vec4& value);
 	Math::dvec2 readDVec2();
-	bool writeDVec2(const Math::dvec2 &value);
+	bool writeDVec2(const Math::dvec2& value);
 	Math::dvec3 readDVec3();
-	bool writeDVec3(const Math::dvec3 &value);
+	bool writeDVec3(const Math::dvec3& value);
 	Math::dvec4 readDVec4();
-	bool writeDVec4(const Math::dvec4 &value);
+	bool writeDVec4(const Math::dvec4& value);
 	Math::ivec2 readIVec2();
-	bool writeIVec2(const Math::ivec2 &value);
+	bool writeIVec2(const Math::ivec2& value);
 	Math::ivec3 readIVec3();
-	bool writeIVec3(const Math::ivec3 &value);
+	bool writeIVec3(const Math::ivec3& value);
 	Math::ivec4 readIVec4();
-	bool writeIVec4(const Math::ivec4 &value);
+	bool writeIVec4(const Math::ivec4& value);
 	Math::mat4 readMat4();
-	bool writeMat4(const Math::mat4 &value);
+	bool writeMat4(const Math::mat4& value);
 	Math::mat4 readMat44();
-	bool writeMat44(const Math::mat4 &value);
+	bool writeMat44(const Math::mat4& value);
 	Math::dmat4 readDMat4();
-	bool writeDMat4(const Math::dmat4 &value);
+	bool writeDMat4(const Math::dmat4& value);
 	Math::quat readQuat();
-	bool writeQuat(const Math::quat &value);
+	bool writeQuat(const Math::quat& value);
+	Palette readPalette();
+	int writePalette(const Palette& value);
 	String readString();
 	int readString(char *str, int str_size);
 	bool writeString(const char *str);
@@ -150,29 +153,29 @@ public:
 	bool write(double value) const;
 	bool write(const char *value) const;
 	void read(Math::vec2 &value) const;
-	bool write(const Math::vec2 &value) const;
+	bool write(const Math::vec2& value) const;
 	void read(Math::vec3 &value) const;
-	bool write(const Math::vec3 &value) const;
+	bool write(const Math::vec3& value) const;
 	void read(Math::vec4 &value) const;
-	bool write(const Math::vec4 &value) const;
+	bool write(const Math::vec4& value) const;
 	void read(Math::dvec2 &value) const;
-	bool write(const Math::dvec2 &value) const;
+	bool write(const Math::dvec2& value) const;
 	void read(Math::dvec3 &value) const;
-	bool write(const Math::dvec3 &value) const;
+	bool write(const Math::dvec3& value) const;
 	void read(Math::dvec4 &value) const;
-	bool write(const Math::dvec4 &value) const;
+	bool write(const Math::dvec4& value) const;
 	void read(Math::ivec2 &value) const;
-	bool write(const Math::ivec2 &value) const;
+	bool write(const Math::ivec2& value) const;
 	void read(Math::ivec3 &value) const;
-	bool write(const Math::ivec3 &value) const;
+	bool write(const Math::ivec3& value) const;
 	void read(Math::ivec4 &value) const;
-	bool write(const Math::ivec4 &value) const;
+	bool write(const Math::ivec4& value) const;
 	void read(Math::mat4 &value) const;
-	bool write(const Math::mat4 &value) const;
+	bool write(const Math::mat4& value) const;
 	void read(Math::dmat4 &value) const;
-	bool write(const Math::dmat4 &value) const;
+	bool write(const Math::dmat4& value) const;
 	void read(Math::quat &value) const;
-	bool write(const Math::quat &value) const;
+	bool write(const Math::quat& value) const;
 };
 typedef Ptr<Stream> StreamPtr;
 
@@ -209,6 +212,8 @@ public:
 	int seekCur(size_t offset) const;
 	size_t tell() const;
 	int flush() const;
+	size_t readFile(void *ptr, size_t size, size_t nmemb) const;
+	size_t writeFile(void *ptr, size_t size, size_t nmemb) const;
 };
 typedef Ptr<File> FilePtr;
 
@@ -275,6 +280,7 @@ public:
 	int getPort() const;
 	int getFD() const;
 	int isReadyToRead(int timeout_usec = 0) const;
+	int isReadyToWrite(int timeout_usec = 0) const;
 
 	enum
 	{

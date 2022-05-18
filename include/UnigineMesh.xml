@@ -11,9 +11,9 @@
 		</member>
 		<member name="M:Unigine.Mesh.#ctor(char)">
 			<summary>
-			Constructor. Creates a mesh with the specified name.
+			Constructor. Creates a mesh using the specified file.
 			</summary> 
-			<param name="name"> Mesh name. </param> 
+			<param name="name"> Path to the mesh file. </param> 
 		</member>
 		<member name="M:Unigine.Mesh.#ctor(Unigine.Ptr{Unigine.Mesh})">
 			<summary>
@@ -1026,9 +1026,9 @@
 		</member>
 		<member name="M:Unigine.Mesh.save(char) const">
 			<summary>
-			Saves the given mesh.
+			Saves the given mesh in either MESH or ANIM file format. Creates the given mesh path if it doesn’t exist yet (including subdirectories).
 			</summary> 
-			<param name="name"> Mesh name. </param> 
+			<param name="name"> Path to the mesh including the file name and extension — *.mesh or *.anim. </param> 
 			<returns>1 if the mesh is saved successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Mesh.sortAnimations">

@@ -288,6 +288,12 @@
 			</summary>  
 			<returns>true if the update cycle is constantly repeated (i.e. the application is updated even if the window is hidden or out of focus); otherwise, false.</returns>
 		</member>
+		<member name="M:Unigine.App.getVideoAdapter const">
+			<summary>
+			Returns the number of the current video adapter.
+			</summary>  
+			<returns>Number of the current video adapter.</returns>
+		</member>
 		<member name="M:Unigine.App.setVideoMode(int,int,int)">
 			<summary>
 			Sets a video mode and initializes the application.

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -93,6 +93,8 @@ public:
 	static const char *getConsoleCommand();
 	static void setWindowTitle(const char *title);
 	static const char *getWindowTitle();
+	static void setWindowIconPath(const char *path);
+	static const char *getWindowIconPath();
 	static int getNumPluginPaths();
 	static void removePluginPath(int num);
 	static void swapPluginPath(int num0, int num1);
@@ -107,9 +109,9 @@ public:
 	static int getScreenWidth();
 	static void setScreenHeight(int height);
 	static int getScreenHeight();
-	static void setScreenBackgroundColor(const Math::vec4 &color);
+	static void setScreenBackgroundColor(const Math::vec4& color);
 	static Math::vec4 getScreenBackgroundColor();
-	static void setScreenTransform(const Math::vec4 &transform);
+	static void setScreenTransform(const Math::vec4& transform);
 	static Math::vec4 getScreenTransform();
 	static void setScreenThreshold(int threshold);
 	static int getScreenThreshold();

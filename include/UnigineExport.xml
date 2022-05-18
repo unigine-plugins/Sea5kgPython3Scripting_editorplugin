@@ -15,11 +15,12 @@
 			</summary>  
 			<returns>Export manager instance.</returns>
 		</member>
-		<member name="M:Unigine.Export.registerExporter(char,int)">
+		<member name="M:Unigine.Export.registerExporter(char,Unigine.Vector{String,int,Unigine.VectorAllocator})">
 			<summary>
-			Registers a new exporter with a given name.
+			Registers a new exporter with a given name for the specified list of file extensions.
 			</summary> 
-			<param name="type_name"> Exporter type name. </param> 
+			<param name="type_name"> Exporter type name. </param>
+			<param name="extensions"> List of file extensions for which the specified Exporter is to be used. </param> 
 		</member>
 		<member name="M:Unigine.Export.unregisterExporter(char)">
 			<summary>
@@ -79,16 +80,17 @@
 			<param name="extension"> Null-terminated string with file extension. </param> 
 			<returns>Type of exporter for the specified extension, if it exists, as a string; otherwise, null string.</returns>
 		</member>
-		<member name="M:Unigine.Export.doExport(NodePtr,Unigine.Node,char) const">
+		<member name="M:Unigine.Export.doExport(NodePtr,char) const">
 			<summary>
-			
+			Creates an exporter and then exports the node to the specified output file.
 			</summary> 
+			<param name="root_node"> Root node of the hierarchy to be exported. </param>
 			<param name="output_filepath"> Output path to be used to store generated file(s) with exported data. </param> 
 			<returns>true if the file is exported successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Exporter.#ctor">
 			<summary>
-			Constructor. Creates an importer with default settings.
+			Constructor. Creates an exporter with default settings.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Exporter.containsParameter(char) const">
@@ -161,20 +163,24 @@
 		</member>
 		<member name="M:Unigine.Exporter.doExport(NodePtr,char)">
 			<summary>
+			Exports the node to the specified output file.					To customize actions to be performed on node export processing you can override the onExport() method.
 			</summary> 
 			<param name="root_node"> Root node of the hierarchy to be exported. </param>
 			<param name="output_filepath"> Output path to be used to store generated file(s) with exported data. </param> 
 		</member>
 		<member name="M:Unigine.Exporter.deinit">
 			<summary>
+			Uninitializes the exporter.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Exporter.onInit">
 			<summary>
+			Initializes the exporter. This function is called each time when the init() function is called. You can specify your custom actions to be performed on exporter initialization.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Exporter.onExport(NodePtr,char)">
 			<summary>
+			Node export processing event handler function. This function is called each time when the doExport() function is called. You can specify your custom actions to be performed on node export processing.
 			</summary> 
 			<param name="root_node"> Root node of the hierarchy to be exported. </param>
 			<param name="output_filepath"> Output path to be used to store generated file(s) with exported data. </param> 
@@ -182,6 +188,7 @@
 		</member>
 		<member name="M:Unigine.Exporter.onDeinit">
 			<summary>
+			Uninitializes the exporter. This function is called each time when the deinit() function is called. You can specify your custom actions to be performed on exporter uninitialization.
 			</summary>  
 		</member>
 	</members>

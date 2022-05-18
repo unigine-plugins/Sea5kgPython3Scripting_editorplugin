@@ -75,7 +75,7 @@
 			<param name="point"> Starting point of the ray. </param>
 			<param name="idirection"> Inverse direction of the ray. </param>
 			<param name="min"> Min coordinates of the axis-aligned bounding box. </param>
-			<param name="max"> Min coordinates of the axis-aligned bounding box. </param> 
+			<param name="max"> Max coordinates of the axis-aligned bounding box. </param> 
 			<returns>1 if the given ray intersects the given bounding box; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.irayBoundBoxIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">

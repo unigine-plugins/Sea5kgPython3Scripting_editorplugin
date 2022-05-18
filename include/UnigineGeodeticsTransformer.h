@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -30,9 +30,9 @@ public:
 	static UNIGINE_API GeodeticsTransformer *get();
 
 public:
-	virtual Math::dmat4 geodeticToWorld(const Math::dvec3 &geo_coords) const = 0;
-	virtual Unigine::Math::dvec3 geodeticToWorldPosition(const Unigine::Math::dvec3 &geo_coords) const = 0;
-	virtual Math::dvec3 worldToGeodetic(const Math::dvec3 & world_pos) const = 0;
+	virtual Math::dmat4 geodeticToWorld(const Math::dvec3 &geo_coords, bool rotate_to_en = false) const = 0;
+	virtual Unigine::Math::dvec3 geodeticToWorldPosition(const Unigine::Math::dvec3 &geo_coords, bool rotate_to_en = false) const = 0;
+	virtual Math::dvec3 worldToGeodetic(const Math::dvec3 & world_pos, bool rotate_to_en = false) const = 0;
 	virtual int setProjectionWkt(const char *projection_cs_wkt_string, const Unigine::Math::dvec3 &world_origin_geo_coords,
 		const char *geodetic_cs_string = "WGS84", int geodetic_cs_is_well_known = 1) = 0;
 	virtual int setProjectionEpsg(int projection_cs_epsg_code, const Unigine::Math::dvec3 &world_origin_geo_coords,

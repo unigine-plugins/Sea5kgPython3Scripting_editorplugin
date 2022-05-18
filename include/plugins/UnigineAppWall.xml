@@ -12,46 +12,31 @@
 			<param name="y"> Monitor number in a vertical column. </param> 
 			<returns>GUI instance.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppWall.getWallHeight">
+		<member name="M:Unigine.Plugins.AppWall.getWallHeight const">
 			<summary>
 			Returns the number of AppWall monitors in a vertical column (how many rows of monitors there are).
 			</summary>  
 			<returns>Number of AppWall monitors.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppWall.getModelview(int,int)">
-			<summary>
-			Gets the current model-view matrix used for the specified monitor.
-			</summary> 
-			<param name="x"> Monitor number in a horizontal row. </param>
-			<param name="y"> Monitor number in a vertical column. </param> 
-			<returns>Current model-view matrix used for the specified monitor</returns>
-		</member>
-		<member name="M:Unigine.Plugins.AppWall.getPrimaryX">
+		<member name="M:Unigine.Plugins.AppWall.getPrimaryX const">
 			<summary>
 			Returns the number of the monitor in a horizontal row, which is the primary and can render GUI, wireframe and other additional information.
 			</summary>  
 			<returns>Monitor number in a horizontal row.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppWall.getPrimaryY">
+		<member name="M:Unigine.Plugins.AppWall.getPrimaryY const">
 			<summary>
 			Returns the number of the monitor in a vertical column, which is the primary and can render GUI, wireframe and other additional information.
 			</summary>  
 			<returns>Monitor number in a vertical column.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppWall.getProjection(int,int)">
-			<summary>
-			Gets the current projection matrix used for the specified monitor.
-			</summary> 
-			<param name="x"> Monitor number in a horizontal row. </param>
-			<param name="y"> Monitor number in a vertical column. </param> 
-		</member>
-		<member name="M:Unigine.Plugins.AppWall.getWallWidth">
+		<member name="M:Unigine.Plugins.AppWall.getWallWidth const">
 			<summary>
 			Returns the number of AppWall monitors in a horizontal row.
 			</summary>  
 			<returns>Number of AppWall monitors.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppWall.isEnabled(int,int)">
+		<member name="M:Unigine.Plugins.AppWall.isEnabled(int,int) const">
 			<summary>
 			Returns a value indicating if the specified AppWall monitor is enabled for viewport rendering.
 			</summary> 
@@ -67,22 +52,6 @@
 			<param name="y"> Monitor number in a vertical column. </param>
 			<param name="enable"> 1 to enable the monitor for rendering; 0 to disable it. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppWall.setMaterials(int,int,char)">
-			<summary>
-			Sets postprocess materials to be applied to the specified monitor.
-			</summary> 
-			<param name="x"> Monitor number in a horizontal row. </param>
-			<param name="y"> Monitor number in a vertical column. </param>
-			<param name="materials"> Postprocess materials (comma-separated list). </param> 
-		</member>
-		<member name="M:Unigine.Plugins.AppWall.setModelview(int,int,Unigine.Math.Mat4)">
-			<summary>
-			Sets the model-view matrix for the specified monitor.
-			</summary> 
-			<param name="x"> Monitor number in a horizontal row. </param>
-			<param name="y"> Monitor number in a vertical column. </param>
-			<param name="modelview"> Model-view matrix. </param> 
-		</member>
 		<member name="M:Unigine.Plugins.AppWall.setPrimary(int,int)">
 			<summary>
 			Sets the monitor to be the primary display that can render GUI, wireframe and other additional information.
@@ -90,29 +59,21 @@
 			<param name="x"> Monitor number in a horizontal row. </param>
 			<param name="y"> Monitor number in a vertical column. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppWall.setProjection(int,int,Unigine.Math.mat4)">
+		<member name="M:Unigine.Plugins.AppWall.getCamera(int,int)">
 			<summary>
-			Sets the projection matrix for the specified monitor.
+			Returns the camera from the specified monitor.
 			</summary> 
-			<param name="x"> Monitor number in a horizontal row. </param>
-			<param name="y"> Monitor number in a vertical column. </param>
-			<param name="projection"> Projection matrix. </param> 
+			<param name="x"> Column of the monitor. </param>
+			<param name="y"> Row of the monitor. </param> 
+			<returns>Camera smart pointer.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppWall.setReflectionViewportMask(int,int,int)">
+		<member name="M:Unigine.Plugins.AppWall.setCamera(int,int,Unigine.Ptr{Unigine.Camera}) const">
 			<summary>
-			Sets a bit mask for rendering reflections on the specified monitor. Reflections are rendered in the viewport if masks of reflective materials match this one (one matching bit is enough).
+			Copies the camera from the specified monitor to the provided camera.
 			</summary> 
-			<param name="x"> Monitor number in a horizontal row. </param>
-			<param name="y"> Monitor number in a vertical column. </param>
-			<param name="mask"> Integer, each bit of which is a mask. </param> 
-		</member>
-		<member name="M:Unigine.Plugins.AppWall.setViewportMask(int,int,int)">
-			<summary>
-			Sets a viewport bit mask for the specified monitor. Object surfaces, materials, decals, lights and GUI objects will be rendered into this viewport only if their viewport mask matches this one (one matching bit is enough).
-			</summary> 
-			<param name="x"> Monitor number in a horizontal row. </param>
-			<param name="y"> Monitor number in a vertical column. </param>
-			<param name="mask"> Integer, each bit of which is a mask. </param> 
+			<param name="x"> Column of the monitor. </param>
+			<param name="y"> Row of the monitor. </param>
+			<param name="camera"> Camera smart pointer. </param> 
 		</member>
 	</members>
 </doc>

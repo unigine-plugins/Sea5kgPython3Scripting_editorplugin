@@ -10,7 +10,7 @@
 			</summary> 
 			<param name="mode"> Viewport mode. One of the VIEWPORT variables. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getViewportMode">
+		<member name="M:Unigine.Plugins.AppVarjo.getViewportMode const">
 			<summary>
 			Returns a value indicating the current viewport mode, that determines the type of image to be displayed in the viewport.
 			</summary>  
@@ -28,25 +28,25 @@
 			</summary> 
 			<param name="lock"> true to lock the head rotation. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.isHeadPositionLocked">
+		<member name="M:Unigine.Plugins.AppVarjo.isHeadPositionLocked const">
 			<summary>
 			Returns the value indicating if the head position is locked.
 			</summary>  
 			<returns>true if the head position is locked; otherwise - false.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.isHeadRotationLocked">
+		<member name="M:Unigine.Plugins.AppVarjo.isHeadRotationLocked const">
 			<summary>
 			Returns the value indicating if the head rotation is locked.
 			</summary>  
 			<returns>true if the head rotation is locked; otherwise - false.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getMaxTrackedDeviceCount">
+		<member name="M:Unigine.Plugins.AppVarjo.getMaxTrackedDeviceCount const">
 			<summary>
 			Returns the maximum value of tracked devices.
 			</summary>  
 			<returns>The maximum value of tracked devices.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getControllerStateAxisCount">
+		<member name="M:Unigine.Plugins.AppVarjo.getControllerStateAxisCount const">
 			<summary>
 			Returns a number of axes.
 			</summary>  
@@ -147,13 +147,13 @@
 			<param name="device_num"> Device ID. </param>
 			<param name="duration"> Duration of the vibration. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.isEyeTrackingValid">
+		<member name="M:Unigine.Plugins.AppVarjo.isEyeTrackingValid const">
 			<summary>
 			Returns the value indicating if eye tracking is valid.
 			</summary>  
 			<returns>true if eye tracking is valid; otherwise - false.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getFocusWorldPosition">
+		<member name="M:Unigine.Plugins.AppVarjo.getFocusWorldPosition const">
 			<summary>
 			Returns the position of the eye focus point in world coordinates.
 			</summary>  
@@ -164,85 +164,85 @@
 			Triggers the gaze calibration sequence, if gaze tracking has been enabled in Varjo settings and the Varjo system is in a state where it can bring up the calibration UI.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getLeftEyeWorldPosition">
+		<member name="M:Unigine.Plugins.AppVarjo.getLeftEyeWorldPosition const">
 			<summary>
 			Returns the position of the left eye in world coordinates.
 			</summary>  
 			<returns>World position of the left eye.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getLeftEyeWorldDirection">
+		<member name="M:Unigine.Plugins.AppVarjo.getLeftEyeWorldDirection const">
 			<summary>
 			Returns the direction vector of the left eye in world coordinates.
 			</summary>  
 			<returns>Direction vector of the left eye.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getRightEyeWorldPosition">
+		<member name="M:Unigine.Plugins.AppVarjo.getRightEyeWorldPosition const">
 			<summary>
 			Returns the position of the right eye in world coordinates.
 			</summary>  
 			<returns>World position of the right eye.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getRightEyeWorldDirection">
+		<member name="M:Unigine.Plugins.AppVarjo.getRightEyeWorldDirection const">
 			<summary>
 			Returns the direction vector of the right eye in world coordinates.
 			</summary>  
 			<returns>Direction vector of the right eye.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getGazeWorldDirection">
+		<member name="M:Unigine.Plugins.AppVarjo.getGazeWorldDirection const">
 			<summary>
 			Returns the gaze direction vector, which is a combined value for both eyes, in world coordinates.
 			</summary>  
 			<returns>Direction vector for both eyes.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getLeftEyePupilSize">
+		<member name="M:Unigine.Plugins.AppVarjo.getLeftEyePupilSize const">
 			<summary>
 			Returns the size of the left eye pupil, the value between 0 and 1 calculated according to the pupil size range detected by the Varjo headset.
 			</summary>  
 			<returns>The size of the left eye pupil, the value between 0 and 1.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getRightEyePupilSize">
+		<member name="M:Unigine.Plugins.AppVarjo.getRightEyePupilSize const">
 			<summary>
 			Returns the size of the right eye pupil, the value between 0 and 1 calculated according to the pupil size range detected by the Varjo headset.
 			</summary>  
 			<returns>The size of the right eye pupil, the value between 0 and 1.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getCaptureTime">
+		<member name="M:Unigine.Plugins.AppVarjo.getCaptureTime const">
 			<summary>
 			Returns the timestamp of when the data was recorded, in nanoseconds.
 			</summary>  
 			<returns>Timestamp of when the data was recorded, in nanoseconds.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getFocusDistance">
+		<member name="M:Unigine.Plugins.AppVarjo.getFocusDistance const">
 			<summary>
 			Returns the distance between the eye and the focus point. It is a value between 0 and 2 meters.
 			</summary>  
 			<returns>The distance between the eye and the focus point.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getStability">
+		<member name="M:Unigine.Plugins.AppVarjo.getStability const">
 			<summary>
 			Returns a value between 0.0 and 1.0 specifying the stability of the user’s focus. 0.0 means not stable and 1.0 means stable.
 			</summary>  
 			<returns>A value between 0.0 and 1.0 specifying the stability of the user’s focus. 0.0 means not stable and 1.0 means stable.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getEyeTrackingStatus">
+		<member name="M:Unigine.Plugins.AppVarjo.getEyeTrackingStatus const">
 			<summary>
 			Returns a value representing the status of eye tracking in the Varjo headsets.
 			</summary>  
 			<returns>Value representing the status of eye tracking in the Varjo headsets, one of the EYETRACKING_STATUS variables.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getLeftEyeStatus">
+		<member name="M:Unigine.Plugins.AppVarjo.getLeftEyeStatus const">
 			<summary>
 			Returns a value representing the tracking status for the left eye.
 			</summary>  
 			<returns>Value representing the tracking status for the left eye, one of the EYE_STATUS variables.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getRightEyeStatus">
+		<member name="M:Unigine.Plugins.AppVarjo.getRightEyeStatus const">
 			<summary>
 			Returns a value representing the tracking status for the right eye.
 			</summary>  
 			<returns>Value representing the tracking status for the right eye, one of the EYE_STATUS variables.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.getFrameNum">
+		<member name="M:Unigine.Plugins.AppVarjo.getFrameNum const">
 			<summary>
 			Returns a unique identifier of the frame when the data was recorded.
 			</summary>  
@@ -254,7 +254,7 @@
 			</summary> 
 			<param name="enabled"> true to enable visualizer; false to disable it. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppVarjo.isVisualizerEnabled">
+		<member name="M:Unigine.Plugins.AppVarjo.isVisualizerEnabled const">
 			<summary>
 			Returns the value indicating if visualizer is enabled.
 			</summary>  
@@ -266,6 +266,421 @@
 			</summary> 
 			<param name="device_num"> Device ID. </param> 
 			<returns>Role associated with a tracked device. One of the CONTROLLER_ROLE variables.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getDeviceManufacturerName(int)">
+			<summary>
+			Returns the manufacturer name of the specified device.
+			</summary> 
+			<param name="device"> Device ID. </param> 
+			<returns>Manufacturer name.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getDeviceModelNumber(int)">
+			<summary>
+			Returns the model number of the specified device.
+			</summary> 
+			<param name="device"> Device ID. </param> 
+			<returns>Model number.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isMixedRealityAvaliable const">
+			<summary>
+			Returns a value indicating if mixed reality mode is available. Mixed reality enables you to combine real-world view from front-facing cameras mounted on the headset with the VR image rendered.
+			</summary>  
+			<returns>Flag: true if mixed reality mode is available; otherwise - false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setFoveatedRenderingEnabled(bool)">
+			<summary>
+			Sets a value indicating if foveated rendering is enabled. Foveated rendering makes use of the eye tracking functionality in Varjo headsets to improve performance by reducing the image quality in peripheral areas where the user is not looking. Foveation allows applications to render fewer pixels and achieve a better VR experience.
+			</summary> 
+			<param name="enabled"> Set true to enable foveated rendering; or false - to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isFoveatedRenderingEnabled const">
+			<summary>
+			Returns a value indicating if foveated rendering is enabled. Foveated rendering makes use of the eye tracking functionality in Varjo headsets to improve performance by reducing the image quality in peripheral areas where the user is not looking. Foveation allows applications to render fewer pixels and achieve a better VR experience.
+			</summary>  
+			<returns>Flag: true if foveated rendering is enabled; otherwise - false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setAlphaBlend(bool)">
+			<summary>
+			Sets a value indicating if alpha blending is enabled. This option enables blending VR and AR images using the alpha channel.
+			</summary> 
+			<param name="blend"> Set true to enable alpha blending; or false - to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isAlphaBlend const">
+			<summary>
+			Returns a value indicating if alpha blending is enabled. This option enables blending VR and AR images using the alpha channel.
+			</summary>  
+			<returns>Flag: true if alpha blending is enabled; otherwise - false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setAlphaInvert(bool)">
+			<summary>
+			Sets a value indicating if alpha channel is inverted before using it for blending VR and AR images.
+			</summary> 
+			<param name="invert"> Set true to use inverted alpha channel inversion; or false - to use alpha channel as is. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isAlphaInvert const">
+			<summary>
+			Returns a value indicating if alpha channel is inverted before using it for blending VR and AR images.
+			</summary>  
+			<returns>Flag: true if alpha channel inversion is enabled; otherwise - false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setVideo(bool)">
+			<summary>
+			Sets a value indicating if video signal from the real-world view from the front-facing HMD-mounted cameras is enabled. The real-world view is used for combining virtual and real-world elements to create an immersive experience in mixed reality.
+			</summary> 
+			<param name="video"> Set true to enable the real-world view from the front-facing HMD-mounted cameras; or false - to disable it (VR-only mode). </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isVideo const">
+			<summary>
+			Returns a value indicating if video signal from the real-world view from the front-facing HMD-mounted cameras is enabled. The real-world view is used for combining virtual and real-world elements to create an immersive experience in mixed reality.
+			</summary>  
+			<returns>Flag: true if real-world view from the front-facing HMD-mounted cameras is enabled; otherwise - false (VR-only mode).</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setDepthTest(bool)">
+			<summary>
+			Sets a value indicating if depth testing is enabled.
+			</summary> 
+			<param name="test"> Set true to enable depth testing; or false - to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isDepthTest const">
+			<summary>
+			Returns a value indicating if depth testing is enabled.
+			</summary>  
+			<returns>Flag: true if depth testing is enabled; otherwise - false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setDepthTestRangeEnabled(bool)">
+			<summary>
+			Sets a value indicating if depth testing range is enabled. Use DepthTestRange (					Depth Test Near Z, Depth Test Far Z) to control the range for which the depth test is evaluated.
+			</summary> 
+			<param name="enabled"> Set true to enable depth testing range; or false - to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isDepthTestRangeEnabled const">
+			<summary>
+			Returns a value indicating if depth testing range is enabled. Use DepthTestRange (					Depth Test Near Z, Depth Test Far Z) to control the range for which the depth test is evaluated.
+			</summary>  
+			<returns>Flag: true if depth testing range is enabled; otherwise - false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setDepthTestRange(Unigine.Math.dvec2)">
+			<summary>
+			Sets a new depth testing range as a two-component vector.
+			</summary> 
+			<param name="range"> New depth testing range to be set: (Depth Test Near Z, Depth Test Far Z). The range for each component in meters is[0.0, 50.0]. The default depth test range is set to [0.0, 1.0]. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getDepthTestRange const">
+			<summary>
+			Returns the current depth testing range as a two-component vector.
+			</summary>  
+			<returns>Current depth testing range: (Depth Test Near Z, Depth Test Far Z). The range for each component in meters is[0.0, 50.0]. The default depth test range is set to [0.0, 1.0].</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setChromaKey(bool)">
+			<summary>
+			Sets a value indicating if chroma keying is enabled. Chroma keying is a video technique where a predefined color is replaced with virtual content. Usually the color to be replaced is bright green or bright blue, as those colors contrast the most with human skin.
+			</summary> 
+			<param name="key"> Set true to enable chroma keying; or false - to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isChromaKey const">
+			<summary>
+			Returns a value indicating if chroma keying is enabled.
+			</summary>  
+			<returns>Flag: true if chroma keying is enabled; otherwise - false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getChromaKeyConfigNum const">
+			<summary>
+			Returns the number of chroma key config indices supported. The maximum index will be					count-1.
+			</summary>  
+			<returns>Number of supported chroma key configs.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.chromaKeyConfigSubmit(int) const">
+			<summary>
+			Applies the chroma key configuration with the specified index.
+			</summary> 
+			<param name="index"> Chroma key config index in the range fron 0 toconfig count - 1. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getChromaKeyConfigType(int) const">
+			<summary>
+			Returns the type of the chroma key configuration with the specified index. Each chroma key configuration index has a config type, which can be used to determine if the slot in the current index is being used. Active configurations have the HSV type.
+			</summary> 
+			<param name="index"> Chroma key config index in the range fron 0 toconfig count - 1. </param> 
+			<returns>Chroma key configuration type.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setChromaKeyConfigType(int,AppVarjo::CHROMAKEY_TYPE)">
+			<summary>
+			Sets a new type for the chroma key configuration with the specified index. Each chroma key configuration index has a config type, which can be used to determine if the slot in the current index is being used. Active configurations have the HSV type.
+			</summary> 
+			<param name="index"> Chroma key config index in the range fron 0 toconfig count - 1. </param>
+			<param name="type"> New chroma key configuration type to be set. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getChromaKeyConfigFalloff(int) const">
+			<summary>
+			Returns the current tolerance falloff values for HSV components of the chroma key target color.
+			</summary> 
+			<param name="index"> Chroma key config index in the range fron 0 toconfig count - 1. </param> 
+			<returns>Current tolerance falloff values for HSV components of the chroma key target color. The range for each component is [0.0; 1.0].</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setChromaKeyConfigFalloff(int,Unigine.Math.vec3)">
+			<summary>
+			Sets new tolerance falloff values for HSV components of the chroma key target color.
+			</summary> 
+			<param name="index"> Chroma key config index in the range fron 0 toconfig count - 1. </param>
+			<param name="falloff"> New tolerance falloff values to be set for HSV components of the chroma key target color. The range for each component is [0.0; 1.0]. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getChromaKeyConfigTargetColor(int) const">
+			<summary>
+			Returns the current chroma key target color.
+			</summary> 
+			<param name="index"> Chroma key config index in the range fron 0 toconfig count - 1. </param> 
+			<returns>Current chroma key target color in HSV colorspace. The range for each component is [0.0; 1.0].</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setChromaKeyConfigTargetColor(int,Unigine.Math.vec3)">
+			<summary>
+			Sets a new chroma key target color.
+			</summary> 
+			<param name="index"> Chroma key config index in the range fron 0 toconfig count - 1. </param>
+			<param name="target_color"> New chroma key target color to be set in HSV colorspace. The range for each component is [0.0; 1.0]. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getChromaKeyConfigTolerance(int) const">
+			<summary>
+			Returns the current tolerance values for HSV components of the chroma key target color.
+			</summary> 
+			<param name="index"> Chroma key config index in the range fron 0 toconfig count - 1. </param> 
+			<returns>Current tolerance values for HSV components of the chroma key target color. The range for each component is [0.0; 1.0].</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setChromaKeyConfigTolerance(int,Unigine.Math.vec3)">
+			<summary>
+			Sets new tolerance values for HSV components of the chroma key target color.
+			</summary> 
+			<param name="index"> Chroma key config index in the range fron 0 toconfig count - 1. </param>
+			<param name="tolerance"> New tolerance values for HSV components of the chroma key target color to be set. The range for each component is [0.0; 1.0]. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setCameraExposureTime(double)">
+			<summary>
+			Sets a new exposure time value for the camera.
+			</summary> 
+			<param name="time"> New exposure time to be set, in frames per second (e.g. 90.0 -&gt; ~11ms). </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getCameraExposureTime const">
+			<summary>
+			Returns the current exposure time for the camera.
+			</summary>  
+			<returns>Current exposure time, in frames per second (e.g. 90.0 -&gt; ~11ms).</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setCameraExposureTimeAuto const">
+			<summary>
+			Enables automatic exposure adjustment mode for the camera.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setCameraExposureTimeManual const">
+			<summary>
+			Enables manual exposure adjustment mode for the camera. In this mode you can set the desired exposure time correction value manually via the setCameraExposureTime() method.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isCameraExposureTimeAuto const">
+			<summary>
+			Returns a value indicating if automatic exposure adjustment mode for the camera is enabled.
+			</summary>  
+			<returns>true if automatic exposure adjustment mode for the camera is enabled; otherwise - false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setCameraWhiteBalance(int)">
+			<summary>
+			Sets a new white balance correction value for the camera.
+			</summary> 
+			<param name="balance"> New color temperature value to be set, in Kelvin. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getCameraWhiteBalance const">
+			<summary>
+			Returns the current white balance correction value for the camera.
+			</summary>  
+			<returns>Current color temperature value, in Kelvin.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setCameraWhiteBalanceAuto const">
+			<summary>
+			Enables automatic white balance adjustment mode for the camera.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setCameraWhiteBalanceManual const">
+			<summary>
+			Enables manual white balance adjustment mode for the camera. In this mode you can set the desired white balance correction value manually via the getCameraWhiteBalance() method.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isCameraWhiteBalanceAuto const">
+			<summary>
+			Returns a value indicating if automatic white balance adjustment mode for the camera is enabled.
+			</summary>  
+			<returns>true if automatic white balance adjustment mode for the camera is enabled; otherwise - false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setCameraISO(int)">
+			<summary>
+			Sets a new ISO value for the camera.
+			</summary> 
+			<param name="cameraiso"> New ISO value to be set (e.g., "200" -&gt; ISO200). </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getCameraISO const">
+			<summary>
+			Returns the current ISO value for the camera.
+			</summary>  
+			<returns>Current ISO value set for the camera (e.g., "200" -&gt; ISO200).</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setCameraISOAuto const">
+			<summary>
+			Enables automatic ISO adjustment mode for the camera.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setCameraISOManual const">
+			<summary>
+			Enables manual ISO adjustment mode for the camera. In this mode you can set the desired ISO value manually via the setCameraISO() method.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isCameraISOAuto const">
+			<summary>
+			Returns a value indicating if automatic ISO adjustment mode for the camera is enabled.
+			</summary>  
+			<returns>true if automatic ISO adjustment mode for the camera is enabled; otherwise - false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setCameraFlickerCompensation(int)">
+			<summary>
+			Sets a new flicker compensation value for the camera. This is useful when using the HMD indoors with mostly artificial light bulbs, which flicker at the frequency of 50Hz or 60Hz and can cause visual flicker artifacts on the video see through image. The correct setting depends on the underlying power grid's frequency. e.g. In most parts of Africa/Asia/Australia/Europe the frequency is 50 Hz and in most parts of North and South America 60 Hz.
+			</summary> 
+			<param name="compensation"> Flicker compensation value, in Hz (e.g "50" -&gt; compensation for 50 Hz). </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getCameraFlickerCompensation const">
+			<summary>
+			Returns the current flicker compensation value for the camera.
+			</summary>  
+			<returns>Current flicker compensation value, in Hz (e.g "50" -&gt; compensation for 50 Hz).</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setCameraSharpness(int)">
+			<summary>
+			Sets a new sharpness filter power value for the camera.
+			</summary> 
+			<param name="sharpness"> New sharpness filter power value to be set: lowest value (0) corresponds to small amount of filtering and the highest value corresponds to the largest amount of filtering. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getCameraSharpness const">
+			<summary>
+			Returns the current sharpness filter power value for the camera.
+			</summary>  
+			<returns>Current sharpness filter power value: lowest value (0) corresponds to small amount of filtering and the highest value corresponds to the largest amount of filtering.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setMarkerTrackingEnabled(bool)">
+			<summary>
+			Sets a value indicating if marker tracking is enabled.
+			</summary> 
+			<param name="enabled"> Set true to enable marker tracking; or false - to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isMarkerTrackingEnabled const">
+			<summary>
+			Returns a value indicating if marker tracking is enabled.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setMarkerLifetime(float,Unigine.Vector{unsignedlonglong,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets a lifetime for markers under specified ids.
+			</summary> 
+			<param name="lifetime"> Lifetime to be set. </param>
+			<param name="marker_ids"> Marker ids to receive a new lifetime. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setMarkerLifetime(float,unsignedlonglong)">
+			<summary>
+			Sets a lifetime for a marker under specified id.
+			</summary> 
+			<param name="lifetime"> Lifetime to be set. </param>
+			<param name="marker_id"> A marker id to receive a new lifetime. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setMarkerFlags(AppVarjo::MARKER_FLAGS,Unigine.Vector{unsignedlonglong,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets the flags for all markers by specified ids.
+			</summary> 
+			<param name="flags"> New flags to set up. </param>
+			<param name="marker_ids"> Marker ids to receive new flags. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setMarkerFlags(AppVarjo::MARKER_FLAGS,unsignedlonglong)">
+			<summary>
+			Sets the flags for a marker by a specified id.
+			</summary> 
+			<param name="flags"> New flags to set up. </param>
+			<param name="marker_id"> Marker id to receive new flags. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getMarkerObjectNum const">
+			<summary>
+			Returns the number of visible marker objects.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setStreamEnvironmentCubemapEnabled(bool)">
+			<summary>
+			Enables or disables the cubemap streaming from AR cameras.
+			</summary> 
+			<param name="enabled"> true to enable the cubemap streaming; false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isStreamEnvironmentCubemapEnabled const">
+			<summary>
+			Returns a value indicating if the cubemap streaming from AR cameras is enabled.
+			</summary>  
+			<returns>true if the cubemap streaming is enabled; otherwise - false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setStreamColorCorrectionEnabled(bool)">
+			<summary>
+			Enables or disables the AR cameras streaming exposition.
+			</summary> 
+			<param name="enabled"> true to enable the streaming exposition; false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.isStreamColorCorrectionEnabled const">
+			<summary>
+			Returns a value indicating if the AR cameras streaming exposition is enabled.
+			</summary>  
+			<returns>true if the streaming exposition is enabled; otherwise - false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setStreamEnvironmentCubemapGGXQuality(float)">
+			<summary>
+			Sets the quality of the generated GGX mips for the AR cubemap.
+			</summary> 
+			<param name="quality"> Quality value within the [0.0f; 1.0f] range. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getStreamEnvironmentCubemapGGXQuality const">
+			<summary>
+			Returns the quality of the generated GGX mips for the AR cubemap.
+			</summary>  
+			<returns>Quality value within the [0.0f; 1.0f] range.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setViewOffset(double)">
+			<summary>
+			Sets the eyes view offset.
+			</summary> 
+			<param name="offset"> View offset. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getViewOffset const">
+			<summary>
+			Returns the eyes view offset.
+			</summary>  
+			<returns>View offset.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setStreamEnvironmentCubemapMode(AppVarjo::ENVIRONMENT_MODE)">
+			<summary>
+			Sets the mode defining the way the AR texture is set for the environment.
+			</summary> 
+			<param name="mode"> Environment mode. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getStreamEnvironmentCubemapMode const">
+			<summary>
+			Returns the mode defining the way the AR texture is set for the environment.
+			</summary>  
+			<returns>Environment mode.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.setStreamEnvironmentCubemapPresetIndex(int)">
+			<summary>
+			Sets the index of the environment preset to which the texture is set.
+			</summary> 
+			<param name="index"> Index of the environment preset. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getStreamEnvironmentCubemapPresetIndex const">
+			<summary>
+			Returns the index of the environment preset to which the texture is set.
+			</summary>  
+			<returns>Index of the environment preset.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppVarjo.getMarkerObject(int) const">
+			<summary>
+			Returns the marker object with the specified marker index.
+			</summary> 
+			<param name="index"> Marker index. </param> 
+			<returns>Marker object.</returns>
 		</member>
 		<member name="F:Unigine.Plugins.AppVarjo.VIEWPORT_BLACK_SCREEN">
 			<summary>
@@ -475,6 +890,76 @@
 		<member name="F:Unigine.Plugins.AppVarjo.CONTROLLER_ROLE_MAX">
 			<summary>
 			Indicates the maximum number of controller roles.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.CHROMAKEY_TYPE_HSV">
+			<summary>
+			HSV chroma key config.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.CHROMAKEY_TYPE_DISABLED">
+			<summary>
+			Disabled chroma key config.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.MARKER_POSE_FLAGS_HAS_CONFIDENCE">
+			<summary>
+			Pose has confidence information.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.MARKER_POSE_FLAGS_HAS_ACCELERATION">
+			<summary>
+			Pose has acceleration information.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.MARKER_POSE_FLAGS_HAS_ANGULAR_VELOCITY">
+			<summary>
+			Pose has angular velocity information.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.MARKER_POSE_FLAGS_HAS_VELOCITY">
+			<summary>
+			Pose has velocity information.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.MARKER_POSE_FLAGS_HAS_ROTATION">
+			<summary>
+			Pose has rotation information.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.MARKER_POSE_FLAGS_HAS_POSITION">
+			<summary>
+			Pose has position information.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.MARKER_POSE_FLAGS_TRACING_DISCONNECTED">
+			<summary>
+			Tracking subsystem is not connected and poses cannot be acquired.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.MARKER_POSE_FLAGS_TRACING_LOST">
+			<summary>
+			Pose has been tracked but currently is not detected by the tracking subsystem.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.MARKER_POSE_FLAGS_TRACING_OK">
+			<summary>
+			Pose is being currently tracked.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.MARKER_FLAGS_DO_PREDICTION">
+			<summary>
+			Marker pose is predicted. If not specified, the latest detected pose is used.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.ENVIRONMENT_MODE_OVERLAP">
+			<summary>
+			Environment mode that sets the environment texture substituting the sky.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.AppVarjo.ENVIRONMENT_MODE_PRESET">
+			<summary>
+			Environment mode that sets the cubemap defining the color for the environment preset that retains the sky color, haze, etc.
 		</summary>
 		</member>
 	</members>

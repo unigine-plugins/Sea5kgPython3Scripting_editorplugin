@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -172,7 +172,6 @@ public:
 	// Material-related signals.
 	virtual void materialAdded(const UGUID &guid) {}
 	virtual void materialRemoved(const UGUID &guid) {}
-	virtual void materialMoved(const UGUID &guid) {}
 	virtual void materialChanged(const UGUID &guid) {}
 	virtual void materialReparented(const UGUID &guid, const UGUID &old_parent, const UGUID &new_parent) {}
 

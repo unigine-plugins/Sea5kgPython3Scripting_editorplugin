@@ -423,6 +423,18 @@
 			</summary>  
 			<returns>Current application window title.</returns>
 		</member>
+		<member name="M:Unigine.BootConfig.setWindowIconPath(char)">
+			<summary>
+			Sets the path to the custom icon for the final application's window.
+			</summary> 
+			<param name="path"> Path to the custom icon for the final application's window. </param> 
+		</member>
+		<member name="M:Unigine.BootConfig.getWindowIconPath">
+			<summary>
+			Returns the path to the custom icon for the final application's window.
+			</summary>  
+			<returns>Path to the custom icon for the final application's window.</returns>
+		</member>
 		<member name="M:Unigine.Config.setBool(char,int)">
 			<summary>
 			Sets a value of the given boolean setting. If the setting with this name already exists, its value is overwritten.

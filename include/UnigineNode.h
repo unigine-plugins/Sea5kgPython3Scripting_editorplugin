@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -19,7 +19,6 @@
 #include "UnigineStreams.h"
 #include "UnigineVector.h"
 #include "UnigineProperties.h"
-#include "UnigineBounds.h"
 #include "UnigineCallback.h"
 #include "UnigineImage.h"
 #include "UnigineMathLib.h"
@@ -235,8 +234,8 @@ public:
 	void setSaveToWorldEnabledRecursive(bool enable);
 	void setName(const char *name);
 	const char *getName() const;
-	void setData(const char *data);
-	const char *getData() const;
+	void setData(const char *name, const char *data);
+	const char *getData(const char *name);
 	void setPtr(void *ptr);
 	void *getPtr();
 	int getNumAncestors() const;
@@ -262,24 +261,24 @@ public:
 	void getHierarchy(Vector< Ptr<Node> > &hierarchy);
 	int getNumProperties() const;
 	int addProperty(const char *name);
-	int addProperty(const UGUID & guid);
+	int addProperty(const UGUID& guid);
 	int addProperty(const Ptr<Property> &property);
 	int findProperty(const char *name) const;
-	int findProperty(const UGUID & guid) const;
+	int findProperty(const UGUID& guid) const;
 	int findProperty(const Ptr<Property> &property) const;
 	int setProperty(const char *name);
-	int setProperty(const UGUID & guid);
+	int setProperty(const UGUID& guid);
 	int setProperty(const Ptr<Property> &property);
 	int setProperty(int num, const char *name);
-	int setProperty(int num, const UGUID & guid);
+	int setProperty(int num, const UGUID& guid);
 	int setProperty(int num, const Ptr<Property> &property);
 	int insertProperty(int num, const char *name);
-	int insertProperty(int num, const UGUID & guid);
+	int insertProperty(int num, const UGUID& guid);
 	int insertProperty(int num, const Ptr<Property> &property);
 	void swapProperty(int from_num, int to_num);
 	void removeProperty(int num = 0);
 	void removeProperty(const char *name);
-	void removeProperty(const UGUID & guid);
+	void removeProperty(const UGUID& guid);
 	void removeProperty(const Ptr<Property> &property);
 	void clearProperties();
 	Ptr<Property> getProperty(int num = 0) const;
@@ -287,28 +286,28 @@ public:
 	void setPropertyEnabled(int num, bool enable);
 	bool isPropertyEnabled(int num) const;
 	UGUID getLostNodePropertyGUID(int num) const;
-	void setTransform(const Math::Mat4 & transform);
+	void setTransform(const Math::Mat4& transform);
 	Math::Mat4 getTransform() const;
-	void setWorldTransform(const Math::Mat4 & transform);
+	void setWorldTransform(const Math::Mat4& transform);
 	Math::Mat4 getWorldTransform() const;
-	void setOldWorldTransform(const Math::Mat4 & transform);
+	void setOldWorldTransform(const Math::Mat4& transform);
 	Math::Mat4 getOldWorldTransform() const;
 	Math::Vec3 getOldWorldPosition() const;
 	Math::Mat4 getIWorldTransform() const;
-	void setTransformWithoutChildren(const Math::Mat4 & transform);
-	void setWorldTransformWithoutChildren(const Math::Mat4 & transform);
-	BoundBox getBoundBox() const;
-	BoundSphere getBoundSphere() const;
-	UNIGINE_BOUND_BOX getWorldBoundBox() const;
-	UNIGINE_BOUND_SPHERE getWorldBoundSphere() const;
-	UNIGINE_BOUND_BOX getSpatialBoundBox() const;
-	UNIGINE_BOUND_SPHERE getSpatialBoundSphere() const;
-	BoundBox getHierarchyBoundBox() const;
-	BoundSphere getHierarchyBoundSphere() const;
-	UNIGINE_BOUND_BOX getHierarchyWorldBoundBox() const;
-	UNIGINE_BOUND_SPHERE getHierarchyWorldBoundSphere() const;
-	UNIGINE_BOUND_BOX getHierarchySpatialBoundBox() const;
-	UNIGINE_BOUND_SPHERE getHierarchySpatialBoundSphere() const;
+	void setTransformWithoutChildren(const Math::Mat4& transform);
+	void setWorldTransformWithoutChildren(const Math::Mat4& transform);
+	Math::BoundBox getBoundBox() const;
+	Math::BoundSphere getBoundSphere() const;
+	Math::WorldBoundBox getWorldBoundBox() const;
+	Math::WorldBoundSphere getWorldBoundSphere() const;
+	Math::WorldBoundBox getSpatialBoundBox() const;
+	Math::WorldBoundSphere getSpatialBoundSphere() const;
+	Math::WorldBoundBox getHierarchyBoundBox() const;
+	Math::WorldBoundSphere getHierarchyBoundSphere() const;
+	Math::WorldBoundBox getHierarchyWorldBoundBox() const;
+	Math::WorldBoundSphere getHierarchyWorldBoundSphere() const;
+	Math::WorldBoundBox getHierarchySpatialBoundBox() const;
+	Math::WorldBoundSphere getHierarchySpatialBoundSphere() const;
 	bool loadWorld(const Ptr<Xml> &xml);
 	bool saveWorld(const Ptr<Xml> &xml) const;
 	bool saveState(const Ptr<Stream> &stream) const;
@@ -317,39 +316,39 @@ public:
 	Ptr<BodyRigid> getObjectBodyRigid() const;
 	Math::vec3 getBodyLinearVelocity() const;
 	Math::vec3 getBodyAngularVelocity() const;
-	Math::vec3 getBodyWorldVelocity(const Math::Vec3 & point) const;
+	Math::vec3 getBodyWorldVelocity(const Math::Vec3& point) const;
 	int getNumWorldTriggers() const;
 	Ptr<WorldTrigger> getWorldTrigger(int num);
-	void setPosition(const Math::Vec3 & pos);
+	void setPosition(const Math::Vec3& pos);
 	Math::Vec3 getPosition() const;
-	void setRotation(const Math::quat &rot, bool identity = false);
+	void setRotation(const Math::quat& rot, bool identity = false);
 	Math::quat getRotation() const;
-	void setDirection(const Math::vec3 &dir, const Math::vec3 &up, MathLib::AXIS axis = Math::AXIS_NZ);
+	void setDirection(const Math::vec3& dir, const Math::vec3& up, MathLib::AXIS axis = Math::AXIS_NZ);
 	Math::vec3 getDirection(MathLib::AXIS axis = Math::AXIS_NZ) const;
-	void setScale(const Math::vec3 &s);
+	void setScale(const Math::vec3& s);
 	Math::vec3 getScale() const;
-	void setWorldPosition(const Math::Vec3 & pos);
+	void setWorldPosition(const Math::Vec3& pos);
 	Math::Vec3 getWorldPosition() const;
-	void setWorldRotation(const Math::quat &rot, bool identity = false);
+	void setWorldRotation(const Math::quat& rot, bool identity = false);
 	Math::quat getWorldRotation() const;
-	void setWorldDirection(const Math::vec3 &dir, const Math::vec3 &up, MathLib::AXIS axis = Math::AXIS_NZ);
+	void setWorldDirection(const Math::vec3& dir, const Math::vec3& up, MathLib::AXIS axis = Math::AXIS_NZ);
 	Math::vec3 getWorldDirection(MathLib::AXIS axis = Math::AXIS_NZ) const;
-	void setWorldScale(const Math::vec3 &s);
+	void setWorldScale(const Math::vec3& s);
 	Math::vec3 getWorldScale() const;
-	void translate(const Math::Vec3 & t);
+	void translate(const Math::Vec3& t);
 	void translate(Math::Scalar x, Math::Scalar y, Math::Scalar z);
-	void rotate(const Math::quat &r);
-	void rotate(const Math::vec3 &angles);
+	void rotate(const Math::quat& r);
+	void rotate(const Math::vec3& angles);
 	void rotate(float angle_x, float angle_y, float angle_z);
-	void worldTranslate(const Math::Vec3 & t);
+	void worldTranslate(const Math::Vec3& t);
 	void worldTranslate(Math::Scalar x, Math::Scalar y, Math::Scalar z);
-	void worldRotate(const Math::quat &r);
-	void worldRotate(const Math::vec3 &angles);
+	void worldRotate(const Math::quat& r);
+	void worldRotate(const Math::vec3& angles);
 	void worldRotate(float angle_x, float angle_y, float angle_z);
-	void worldLookAt(const Math::Vec3 & target);
-	void worldLookAt(const Math::Vec3 & target, const Math::vec3 &up);
-	Math::Vec3 toWorld(const Math::vec3 &p) const;
-	Math::vec3 toLocal(const Math::Vec3 & p) const;
+	void worldLookAt(const Math::Vec3& target);
+	void worldLookAt(const Math::Vec3& target, const Math::vec3& up);
+	Math::Vec3 toWorld(const Math::vec3& p) const;
+	Math::vec3 toLocal(const Math::Vec3& p) const;
 	void renderVisualizer();
 	void setVariable(const Variable & variable);
 	Variable  getVariable() const;

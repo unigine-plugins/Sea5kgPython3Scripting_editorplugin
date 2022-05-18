@@ -1573,7 +1573,7 @@
 		</member>
 		<member name="M:Unigine.BodyFracture.setExclusionMask(int)">
 			<summary>
-			Sets an bit mask to prevent collisions of the body with other ones. This mask is independent of the collision mask. For bodies with matching collision masks not to collide, at least one bit of their exclusion mask should match. 0 is to collide with all bodies with a matching collision mask.
+			Sets a bit mask to prevent collisions of the body with other ones. This mask is independent of the collision mask. For bodies with matching collision masks not to collide, at least one bit of their exclusion mask should match. 0 is to collide with all bodies with a matching collision mask.
 			</summary> 
 			<param name="mask"> Integer, each bit of which is a mask. </param> 
 		</member>
@@ -1655,17 +1655,17 @@
 			</summary>  
 			<returns>Mass of the body.</returns>
 		</member>
-		<member name="M:Unigine.BodyFracture.setMaterial(char)">
+		<member name="M:Unigine.BodyFracture.setMaterial(Unigine.Ptr{Unigine.Material})">
 			<summary>
 			Sets the material for fractured verge surfaces appearing after breaking the body.
 			</summary> 
-			<param name="material"> Material name for the fractured verges. </param> 
+			<param name="material"> Material smart pointer. </param> 
 		</member>
 		<member name="M:Unigine.BodyFracture.getMaterial const">
 			<summary>
 			Returns the material for fractured verge surfaces appearing after breaking the body.
 			</summary>  
-			<returns>Material name for the fractured verges.</returns>
+			<returns>Smart pointer for the material of the fractured verges.</returns>
 		</member>
 		<member name="M:Unigine.BodyFracture.setMaxAngularVelocity(float)">
 			<summary>
@@ -1820,6 +1820,30 @@
 			<param name="point"> Point of contact. </param>
 			<param name="normal"> Normal of the contact point. </param> 
 			<returns>Positive number if the object was successfully broken; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.BodyFracture.setMaterialPath(char)">
+			<summary>
+			Sets the material for fractured verge surfaces by path.
+			</summary> 
+			<param name="path"> Material path. </param> 
+		</member>
+		<member name="M:Unigine.BodyFracture.getMaterialPath const">
+			<summary>
+			Returns the path of the material for fractured verge surfaces.
+			</summary>  
+			<returns>Material path.</returns>
+		</member>
+		<member name="M:Unigine.BodyFracture.setMaterialGUID(Unigine.UGUID)">
+			<summary>
+			Sets the material for fractured verge surfaces by GUID.
+			</summary> 
+			<param name="materialguid"> Material GUID. </param> 
+		</member>
+		<member name="M:Unigine.BodyFracture.getMaterialGUID const">
+			<summary>
+			Returns the GUID of the material for fractured verge surfaces.
+			</summary>  
+			<returns>Material GUID.</returns>
 		</member>
 		<member name="M:Unigine.BodyParticles.setAngularRestitution(float)">
 			<summary>
@@ -3107,6 +3131,11 @@
 			Wheel joint.
 		</summary>
 		</member>
+		<member name="F:Unigine.Joint.NUM_JOINTS">
+			<summary>
+			Number of joints.
+		</summary>
+		</member>
 		<member name="M:Unigine.JointBall.#ctor">
 			<summary>
 			Constructor. Creates a ball joint with an anchor at the origin of the world coordinates.
@@ -3497,7 +3526,9 @@
 		</member>
 		<member name="M:Unigine.JointFixed.getRotation0">
 			<summary>
+			Gets a rotation matrix of the anchor point in a system of coordinates of the first connected body.
 			</summary>  
+			<returns>Returns a rotation matrix of the anchor point in a system of coordinates of the first connected body.</returns>
 		</member>
 		<member name="M:Unigine.JointFixed.setRotation1(Unigine.Math.mat3)">
 			<summary>
@@ -3507,7 +3538,9 @@
 		</member>
 		<member name="M:Unigine.JointFixed.getRotation1">
 			<summary>
+			Gets a rotation matrix of the anchor point in a system of coordinates of the second connected body.
 			</summary>  
+			<returns>Returns a rotation matrix of the anchor point in a system of coordinates of the second connected body.</returns>
 		</member>
 		<member name="M:Unigine.JointFixed.setWorldRotation(Unigine.Math.mat3)">
 			<summary>
@@ -3517,7 +3550,9 @@
 		</member>
 		<member name="M:Unigine.JointFixed.getWorldRotation">
 			<summary>
+			Gets a rotation matrix of the anchor point in the world system of coordinates.
 			</summary>  
+			<returns>Returns a rotation matrix of the anchor point in the world system of coordinates.</returns>
 		</member>
 		<member name="M:Unigine.JointHinge.#ctor">
 			<summary>
@@ -3812,7 +3847,9 @@
 		</member>
 		<member name="M:Unigine.JointPath.getRotation0">
 			<summary>
+			Gets a rotation matrix of the anchor point in a system of coordinates of the connected rigid body.
 			</summary>  
+			<returns>Returns a rotation matrix of the anchor point in a system of coordinates of the connected rigid body.</returns>
 		</member>
 		<member name="M:Unigine.JointPath.setWorldRotation(Unigine.Math.mat3)">
 			<summary>
@@ -3963,7 +4000,9 @@
 		</member>
 		<member name="M:Unigine.JointPrismatic.getRotation0">
 			<summary>
+			Gets a rotation matrix of the anchor point in a system of coordinates of the first connected body.
 			</summary>  
+			<returns>Returns a rotation matrix of the anchor point in a system of coordinates of the first connected body.</returns>
 		</member>
 		<member name="M:Unigine.JointPrismatic.setRotation1(Unigine.Math.mat3)">
 			<summary>
@@ -3973,7 +4012,9 @@
 		</member>
 		<member name="M:Unigine.JointPrismatic.getRotation1">
 			<summary>
+			Gets a rotation matrix of the anchor point in a system of coordinates of the second connected body.
 			</summary>  
+			<returns>Returns a rotation matrix of the anchor point in a system of coordinates of the second connected body.</returns>
 		</member>
 		<member name="M:Unigine.JointPrismatic.setWorldAxis(Unigine.Math.vec3)">
 			<summary>
@@ -3995,7 +4036,9 @@
 		</member>
 		<member name="M:Unigine.JointPrismatic.getWorldRotation">
 			<summary>
+			Gets a rotation matrix of the anchor point in the world system of coordinates.
 			</summary>  
+			<returns>Returns a rotation matrix of the anchor point in the world system of coordinates.</returns>
 		</member>
 		<member name="M:Unigine.JointSuspension.#ctor">
 			<summary>

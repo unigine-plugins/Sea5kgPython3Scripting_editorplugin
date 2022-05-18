@@ -56,7 +56,7 @@
 			<param name="device_num"> Device ID. </param> 
 			<returns>true - connected; false - not connected.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVive.getDevicePose(int)">
+		<member name="M:Unigine.Plugins.AppVive.getDeviceTransform(int)">
 			<summary>
 			Returns a single pose for a tracked device.
 			</summary> 
@@ -83,7 +83,7 @@
 			</summary> 
 			<param name="lock"> true to lock the head position. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppVive.isHeadPositionLocked">
+		<member name="M:Unigine.Plugins.AppVive.isHeadPositionLocked const">
 			<summary>
 			Returns the value indicating if the head position is locked.
 			</summary>  
@@ -95,7 +95,7 @@
 			</summary> 
 			<param name="lock"> true to lock the head rotation. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppVive.isHeadRotationLocked">
+		<member name="M:Unigine.Plugins.AppVive.isHeadRotationLocked const">
 			<summary>
 			Returns the value indicating if the head rotation is locked.
 			</summary>  
@@ -115,7 +115,7 @@
 			<param name="device_num"> Device ID. </param> 
 			<returns>Tracking result.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVive.getViewportMode">
+		<member name="M:Unigine.Plugins.AppVive.getViewportMode const">
 			<summary>
 			Returns a value indicating the current viewport mode, that determines the type of image to be displayed in the viewport.
 			</summary>  
@@ -127,13 +127,13 @@
 			</summary> 
 			<param name="mode"> Viewport mode. One of the VIEWPORT variables. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppVive.getMaxTrackedDeviceCount">
+		<member name="M:Unigine.Plugins.AppVive.getMaxTrackedDeviceCount const">
 			<summary>
 			Returns the maximum value of tracked devices.
 			</summary>  
 			<returns>The maximum value of tracked devices.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppVive.getControllerStateAxisCount">
+		<member name="M:Unigine.Plugins.AppVive.getControllerStateAxisCount const">
 			<summary>
 			Returns a number of axes.
 			</summary>  

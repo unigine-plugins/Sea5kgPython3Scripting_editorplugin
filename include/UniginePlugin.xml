@@ -22,11 +22,11 @@
 			</summary>  
 			<returns>Plugin execution order.</returns>
 		</member>
-		<member name="M:Unigine.Plugin.get_version const">
+		<member name="M:Unigine.Plugin.getCompilationFlags const">
 			<summary>
-			Returns the version of the plugin.
+			Returns the Unigine compilation flags.
 			</summary>  
-			<returns>Plugin version.</returns>
+			<returns>Unigine compilation flags.</returns>
 		</member>
 		<member name="M:Unigine.Plugin.updatePhysics">
 			<summary>

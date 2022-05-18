@@ -114,7 +114,7 @@
 		</member>
 		<member name="M:Unigine.Sound.setSourceLimit(int,int)">
 			<summary>
-			Limits the number of simultaneously played sound sources per one mixer channel.
+			Limits the number of simultaneously played sound sources per one mixer channel. This setting is also available in the Editor global sound settings.
 			</summary> 
 			<param name="source"> Number of the mixer channel (from 0 to 31). </param>
 			<param name="limit"> The maximum number of sound sources that can be played simultaneously. </param> 
@@ -961,7 +961,7 @@
 		</member>
 		<member name="M:Unigine.SoundSource.stop">
 			<summary>
-			Stops playback. This function saves the playback position so that playing of the file can be resumed from the same point.					The playback won't stop immediately, as the sound thread is updated at 30 FPS. So, when you need to perform operations that require stopping of the playback (for example, updating the time, from which the sample should be played), you need to force update the sound thread after stopping the playback.
+			Stops playback. This function doesn't reset the playback position so that playing of the file can be resumed from the same point.					The playback won't stop immediately, as the sound thread is updated at 30 FPS. So, when you need to perform operations that require stopping of the playback (for example, updating the time, from which the sample should be played), you need to force update the sound thread after stopping the playback.
 			</summary>  
 		</member>
 		<member name="M:Unigine.SoundSource.type">

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -23,6 +23,7 @@
 #include <time.h>
 #include <math.h>
 #include <float.h>
+#include <functional>
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
@@ -31,6 +32,10 @@
 #include <stdint.h>
 #include <assert.h>
 #include <limits.h>
+#include <utility>
+
+#define UNIGINE_CONCATENATE_IMPL(A, B) A ## B
+#define UNIGINE_CONCATENATE(A, B) UNIGINE_CONCATENATE_IMPL(A, B)
 
  /*
  */
@@ -61,11 +66,11 @@
 /*
  */
 #ifdef __GNUC__
-#define UNIGINE_DEPRECATED(id) id __attribute__ ((deprecated))
+	#define UNIGINE_DEPRECATED(id) id __attribute__ ((deprecated))
 #elif defined(_MSC_VER)
-#define UNIGINE_DEPRECATED(id) __declspec(deprecated) id
+	#define UNIGINE_DEPRECATED(id) __declspec(deprecated) id
 #else
-#define UNIGINE_DEPRECATED(id) id
+	#define UNIGINE_DEPRECATED(id) id
 #endif
 
 /*
@@ -103,11 +108,11 @@
 	#define UNIGINE_ASSERT(EXP)	(static_cast<void>(0))
 #else
 	#ifdef _LINUX
-		#define UNIGINE_ASSERT(EXP) { if(EXP) { } else { Unigine::Log::fatal("%s:%d: %s: Assertion: '%s'\n",__FILE__,__LINE__,__ASSERT_FUNCTION,#EXP); } }
+		#define UNIGINE_ASSERT(EXP) { if (EXP) { } else { Unigine::Log::fatal("%s:%d: %s: Assertion: '%s'\n",__FILE__,__LINE__,__ASSERT_FUNCTION,#EXP); } }
 	#elif defined(_MACOS) || defined(_IOS)
-		#define UNIGINE_ASSERT(EXP) { if(EXP) { } else { Unigine::Log::fatal("%s:%d: %s: Assertion: '%s'\n",__FILE__,__LINE__,__PRETTY_FUNCTION__,#EXP); } }
+		#define UNIGINE_ASSERT(EXP) { if (EXP) { } else { Unigine::Log::fatal("%s:%d: %s: Assertion: '%s'\n",__FILE__,__LINE__,__PRETTY_FUNCTION__,#EXP); } }
 	#else
-		#define UNIGINE_ASSERT(EXP) { if(EXP) { } else { Unigine::Log::fatal("%s:%d: Assertion: '%s'\n",__FILE__,__LINE__,#EXP); } }
+		#define UNIGINE_ASSERT(EXP) { if (EXP) { } else { Unigine::Log::fatal("%s:%d: Assertion: '%s'\n",__FILE__,__LINE__,#EXP); } }
 	#endif
 #endif
 
@@ -124,27 +129,63 @@
 
 /*
  */
-#ifdef _WIN32
-	#define UNIGINE_ALIGNED4(NAME) __declspec(align(4)) NAME
-	#define UNIGINE_ALIGNED8(NAME) __declspec(align(8)) NAME
-	#define UNIGINE_ALIGNED16(NAME) __declspec(align(16)) NAME
-	#define UNIGINE_ALIGNED128(NAME) __declspec(align(128)) NAME
-#else
-	#define UNIGINE_ALIGNED4(NAME) NAME __attribute__ ((aligned(4)))
-	#define UNIGINE_ALIGNED8(NAME) NAME __attribute__ ((aligned(8)))
-	#define UNIGINE_ALIGNED16(NAME) NAME __attribute__ ((aligned(16)))
-	#define UNIGINE_ALIGNED128(NAME) NAME __attribute__ ((aligned(128)))
-#endif
-
-/*
- */
 #define UNIGINE_DECLARE_USE_MEMORY \
 static UNIGINE_INLINE void *operator new(size_t size) { return Unigine::Memory::allocate(size); } \
 static UNIGINE_INLINE void *operator new[](size_t size) { return Unigine::Memory::allocate(size); } \
 static UNIGINE_INLINE void operator delete(void *ptr) { Unigine::Memory::deallocate(ptr); } \
 static UNIGINE_INLINE void operator delete[](void *ptr) { Unigine::Memory::deallocate(ptr); } \
 static UNIGINE_INLINE void operator delete(void *ptr,size_t size) { Unigine::Memory::deallocate(ptr,size); } \
-static UNIGINE_INLINE void operator delete[](void *ptr,size_t size) { Unigine::Memory::deallocate(ptr,size); }
+static UNIGINE_INLINE void operator delete[](void *ptr,size_t size) { Unigine::Memory::deallocate(ptr,size); } \
+static UNIGINE_INLINE void *operator new(size_t, void *here) { return here; } \
+static UNIGINE_INLINE void operator delete(void *, void *) {}
+
+/*
+ */
+namespace Unigine
+{
+
+struct ConstexprTag {};
+
+constexpr size_t constexpr_strlen(const char *str)
+{
+	return *str ? 1 + constexpr_strlen(str + 1) : 0;
+}
+
+template <class F>
+struct YCombinator
+{
+	template <class... Args>
+	decltype(auto) operator()(Args&&... args) const
+	{
+		return f(std::ref(*this), std::forward<Args>(args)...);
+	}
+
+	F f;
+};
+
+template <class F>
+YCombinator<std::decay_t<F>> makeRecursiveLambda(F &&f)
+{
+	return {std::forward<F>(f)};
+}
+
+template <typename F>
+struct ScopeExit
+{
+	~ScopeExit() { f(); }
+
+	F f;
+};
+
+template <typename F>
+ScopeExit<F> makeScopeExit(F &&f)
+{
+	return {std::forward<F>(f)};
+}
+#define UNIGINE_SCOPE_EXIT(lambda) \
+	auto UNIGINE_CONCATENATE(scope_exit_var, __LINE__) = Unigine::makeScopeExit(lambda);
+
+}
 
 /*
  */

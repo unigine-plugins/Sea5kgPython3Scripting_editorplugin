@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -49,8 +49,10 @@ public:
 	using Iterator = typename Parent::Iterator;
 	using ConstIterator = typename Parent::ConstIterator;
 
+    // STL compatibility
 	using iterator = typename Parent::iterator;
 	using const_iterator = typename Parent::const_iterator;
+    using value_type = Key;
 
 	HashSet()
 	{
@@ -65,7 +67,8 @@ public:
 			return;
 		for (Counter i = 0; i < Parent::capacity; ++i)
 			delete Parent::data[i];
-		delete [] Parent::data;
+
+		Memory::deallocate(Parent::data);
 	}
 
 	HashSet(const HashSet &o)
@@ -116,7 +119,7 @@ public:
 		for (Counter i = 0; i < Parent::capacity; ++i)
 			delete Parent::data[i];
 
-		delete [] Parent::data;
+		Memory::deallocate(Parent::data);
 		Parent::length = o.length;
 		Parent::capacity = o.capacity;
 		Parent::data = o.data;
@@ -132,14 +135,38 @@ public:
 
 	UNIGINE_INLINE void append(const HashSet &o)
 	{
+		if (&o == this)
+			return;
+
 		for (const auto &it : o)
 			Parent::do_append(it.hash, it.key);
 	}
 
-	UNIGINE_INLINE void append(HashSet &&o) {
+	UNIGINE_INLINE void append(HashSet &&o)
+	{
+		if (&o == this)
+			return;
+
 		for (const auto &it : o)
 			Parent::do_append(it.hash, std::move(it.key));
 		o.clear();
+	}
+
+	using Parent::remove;
+
+	UNIGINE_INLINE void remove(const HashSet &o)
+	{
+		if (&o == this)
+			Parent::clear();
+		else
+		{
+			for (Counter i = 0; i < o.capacity; ++i)
+			{
+				if (o.data[i] == nullptr)
+					continue;
+				Parent::do_remove(o.data[i]->hash, o.data[i]->key);
+			}
+		}
 	}
 
 	UNIGINE_INLINE void insert(const Key &key) { Parent::do_append(key); }
@@ -147,8 +174,13 @@ public:
 	UNIGINE_INLINE void insert(const HashSet &o) { append(o); }
 	UNIGINE_INLINE void insert(HashSet &&o) { append(std::move(o)); }
 
+	UNIGINE_INLINE void subtract(const HashSet &o) { remove(o); }
+
 	UNIGINE_INLINE bool operator==(const HashSet &o) const
 	{
+		if (&o == this)
+			return true;
+
 		if (Parent::length != o.length)
 			return false;
 
@@ -166,6 +198,11 @@ public:
 	}
 
 	UNIGINE_INLINE bool operator!=(const HashSet &o) const { return !(*this == o); }
+
+	UNIGINE_INLINE HashSet &operator+=(const Key &key) { insert(key); return *this; }
+	UNIGINE_INLINE HashSet &operator+=(const HashSet &o) { insert(o); return *this; }
+	UNIGINE_INLINE HashSet &operator-=(const Key &key) { Parent::remove(key); return *this; }
+	UNIGINE_INLINE HashSet &operator-=(const HashSet &o) { remove(o); return *this; }
 
 	UNIGINE_INLINE static HashSet fromKeys(const Key *keys, size_t size)
 	{

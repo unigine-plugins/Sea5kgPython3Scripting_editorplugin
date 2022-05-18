@@ -15,7 +15,7 @@
 			</summary> 
 			<param name="upscale"> Resolution upscale factor. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getResolutionUpscale">
+		<member name="M:Unigine.Plugins.AppProjection.getResolutionUpscale const">
 			<summary>
 			Returns the current resolution upscale factor.
 			</summary>  
@@ -27,13 +27,13 @@
 			</summary> 
 			<param name="enabled"> true to enable the AppProjection plugin; false to disable it. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.isPluginEnabled">
+		<member name="M:Unigine.Plugins.AppProjection.isPluginEnabled const">
 			<summary>
 			Returns a value indicating if the AppProjection plugin is enabled.
 			</summary>  
 			<returns>true if the AppProjection plugin is enabled; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.projectionGetWidth">
+		<member name="M:Unigine.Plugins.AppProjection.projectionGetWidth const">
 			<summary>
 			Returns the number of projections set via video_width					 CLI option.
 			</summary>  
@@ -45,20 +45,20 @@
 			</summary> 
 			<param name="primary"> Projection number, in the range from 0 to the total number of projections. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getPrimary">
+		<member name="M:Unigine.Plugins.AppProjection.getPrimary const">
 			<summary>
 			Returns the number of projection, which is used as a primary one.
 			</summary>  
 			<returns>Projection number, in the range from 0 to the total number of projections.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.saveState(Unigine.Ptr{Unigine.Stream})">
+		<member name="M:Unigine.Plugins.AppProjection.saveState(Unigine.Ptr{Unigine.Stream}) const">
 			<summary>
 			Saves current states of all projections (warping, blending, color, etc.) to the specified stream.					Saving into the stream requires creating a blob to save into. To restore the saved state the restoreState() method is used:
 			</summary> 
 			<param name="stream"> Stream to save state data for all projections. </param> 
 			<returns>true on success; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.saveState(int,Unigine.Ptr{Unigine.Stream})">
+		<member name="M:Unigine.Plugins.AppProjection.saveState(int,Unigine.Ptr{Unigine.Stream}) const">
 			<summary>
 			Saves the current state of the projection with the specified number to the specified stream.					Saving into the stream requires creating a blob to save into. To restore the saved state the restoreState() method is used:
 			</summary> 
@@ -68,7 +68,7 @@
 		</member>
 		<member name="M:Unigine.Plugins.AppProjection.restoreState(Unigine.Ptr{Unigine.Stream})">
 			<summary>
-			Restores states of all projections (warping, blending, color, etc.) from the specified stream.					Restoring from the stream requires creating a blob to save into and saving the state using the saveState() method:
+								Restores states of all projections (warping, blending, color, etc.) from the specified stream.					Restoring from the stream requires creating a blob to save into and saving the state using the saveState() method:
 			</summary> 
 			<param name="stream"> Stream containing saved state data for all projections. </param> 
 			<returns>true on success; otherwise, false.</returns>
@@ -129,61 +129,12 @@
 			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
 			<param name="enable"> 1 to enable the projection for rendering; 0 to disable it. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.isEnabled(int)">
+		<member name="M:Unigine.Plugins.AppProjection.isEnabled(int) const">
 			<summary>
 			Returns a value indicating if the specified projection is enabled for viewport rendering.
 			</summary> 
 			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param> 
 			<returns>1 if the projection is enabled for rendering; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Plugins.AppProjection.setViewportMask(int,int)">
-			<summary>
-			Sets a viewport bit mask for the specified projection. Object surfaces, materials, decals, lights and GUI objects will be rendered into this viewport only if their viewport mask matches this one (one matching bit is enough).
-			</summary> 
-			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
-			<param name="mask"> Integer, each bit of which is a mask. </param> 
-		</member>
-		<member name="M:Unigine.Plugins.AppProjection.setReflectionViewportMask(int,int)">
-			<summary>
-			Sets a bit mask for rendering reflections on the specified projection. Reflections are rendered in the viewport if masks of reflective materials match this one (one matching bit is enough).
-			</summary> 
-			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
-			<param name="mask"> Integer, each bit of which is a mask. </param> 
-		</member>
-		<member name="M:Unigine.Plugins.AppProjection.setProjection(int,Unigine.Math.mat4)">
-			<summary>
-			Sets the projection matrix for the specified projection.
-			</summary> 
-			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
-			<param name="projection"> Projection matrix. </param> 
-		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getProjection(int)">
-			<summary>
-			Returns the current projection matrix used for the specified projection.
-			</summary> 
-			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param> 
-			<returns>Projection matrix used for the specified projection.</returns>
-		</member>
-		<member name="M:Unigine.Plugins.AppProjection.setModelview(int,Unigine.Math.Mat4)">
-			<summary>
-			Sets the model-view matrix for the specified projection.
-			</summary> 
-			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
-			<param name="modelview"> Model-view matrix. </param> 
-		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getModelview(int)">
-			<summary>
-			Gets the current model-view matrix used for the specified projection.
-			</summary> 
-			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param> 
-			<returns>Model-view matrix used for the specified projection.</returns>
-		</member>
-		<member name="M:Unigine.Plugins.AppProjection.setMaterials(int,char)">
-			<summary>
-			Sets postprocess materials to be applied to the specified projection.
-			</summary> 
-			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
-			<param name="materials"> Postprocess materials (comma-separated list). </param> 
 		</member>
 		<member name="M:Unigine.Plugins.AppProjection.setAngle(int,int)">
 			<summary>
@@ -192,7 +143,7 @@
 			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
 			<param name="angle"> Canvas rotation angle:0 - 0 degrees1 - 90 degrees2 - 180 degrees3 - 270 degrees </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getAngle(int)">
+		<member name="M:Unigine.Plugins.AppProjection.getAngle(int) const">
 			<summary>
 			Returns the current canvas rotation angle for the specified projection.
 			</summary> 
@@ -206,7 +157,7 @@
 			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
 			<param name="flip"> 1 to enable horizontal flipping for the canvas of the specified projection, 0 to disable it. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.isFlipHorizontal(int)">
+		<member name="M:Unigine.Plugins.AppProjection.isFlipHorizontal(int) const">
 			<summary>
 			Returns a value indicating if the canvas of the specified projection is flipped horizontally.
 			</summary> 
@@ -220,7 +171,7 @@
 			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
 			<param name="flip"> 1 to enable vertical flipping for the canvas of the specified projection, 0 to disable it. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.isFlipVertical(int)">
+		<member name="M:Unigine.Plugins.AppProjection.isFlipVertical(int) const">
 			<summary>
 			Returns a value indicating if the canvas of the specified projection is flipped vertically.
 			</summary> 
@@ -234,7 +185,7 @@
 			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
 			<param name="color_num"> Color to be used for the specified projection in debug mode, one of the following values:0 - no color1 - red2 - green3 - blue4 - cyan5 - magenta6 - yellow7 - white8 - black </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getDebugFillColor(int)">
+		<member name="M:Unigine.Plugins.AppProjection.getDebugFillColor(int) const">
 			<summary>
 			Returns the current color used for the specified projection in debug mode.					Setting individual colors for different projections enables you to visualize overlapping regions for different projections and facilitates the setup process.
 			</summary> 
@@ -248,7 +199,7 @@
 			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
 			<param name="show"> 1 to enable visualization of warping grid for the specified projection on the screen, 0 to disable it. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.isDebugShowGrid(int)">
+		<member name="M:Unigine.Plugins.AppProjection.isDebugShowGrid(int) const">
 			<summary>
 			Returns a value indicating if warping grid for the specified projection is displayed on the screen.					This option significantly facilitates the process of debugging configuration of a multi-projector setup.
 			</summary> 
@@ -262,7 +213,7 @@
 			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
 			<param name="show"> 1 to enable visualization of warping control points for the specified projection on the screen, 0 to disable it. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.isDebugShowWarpPoints(int)">
+		<member name="M:Unigine.Plugins.AppProjection.isDebugShowWarpPoints(int) const">
 			<summary>
 			Returns a value indicating if warping control points for the specified projection are displayed on the screen.					This option significantly facilitates the process of debugging configuration of a multi-projector setup.
 			</summary> 
@@ -278,7 +229,7 @@
 			<param name="columns"> Grid width, defines the number of warping grid points horizontally. </param>
 			<param name="rows"> Grid height, defines the number of warping grid points vertically. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getWarpPoints(int,Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator},int,int)">
+		<member name="M:Unigine.Plugins.AppProjection.getWarpPoints(int,Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator},int,int) const">
 			<summary>
 			Gets the current size (width, height) of the warping grid along with positions of all its control points for the specified projection and puts them to the specified variables.
 			</summary> 
@@ -295,7 +246,7 @@
 			<param name="handles"> Vector containing coordinates of handles for all warping grid points. First half - vertical handles, next half - horizontal ones. </param>
 			<param name="handles"> The number of control handles must be twice as large as the number of grid points, as there are two handles for each point. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getWarpHandles(int,Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.Plugins.AppProjection.getWarpHandles(int,Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator}) const">
 			<summary>
 			Gets coordinates of control handles of all warping grid points for the specified projection and puts them to the specified vector.
 			</summary> 
@@ -317,7 +268,7 @@
 			<param name="border_num"> Number of projection's side:0 - left1 - right2 - top3 - bottom </param>
 			<param name="blend"> Four-component vector containing soft edge blending parameters for the specified side of the specified projection: (X - size, Y - alpha, Z - contrast, W - gamma).The power component should have a non-zero value to enable blending. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getBorderBlend(int,int)">
+		<member name="M:Unigine.Plugins.AppProjection.getBorderBlend(int,int) const">
 			<summary>
 			Returns current edge blending parameters for the specified side of the specified projection.
 			</summary> 
@@ -356,7 +307,7 @@
 			<param name="handles_right"> Vector containing coordinates of right control handles for all screen-space blend area polygon points. </param> 
 			<returns>Number of the last added screen-space blend area.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getBlend(int,int,Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.Plugins.AppProjection.getBlend(int,int,Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator}) const">
 			<summary>
 			Gets all points, along with their control handles, for the specified screen-space blend area of the specified projection and puts the data to the corresponding vectors specified.
 			</summary> 
@@ -366,7 +317,7 @@
 			<param name="handles_left"> Vector containing coordinates of left control handles for all screen-space blend area polygon points. </param>
 			<param name="handles_right"> Vector containing coordinates of right control handles for all screen-space blend area polygon points. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getNumBlends(int)">
+		<member name="M:Unigine.Plugins.AppProjection.getNumBlends(int) const">
 			<summary>
 			Returns the total number of screen-space blend areas assigned for the specified projection. Blends can be used for blending regions or to cut out certain areas (e.g. top and bottom areas for a curved screen projection).
 			</summary> 
@@ -381,7 +332,7 @@
 			<param name="blend_num"> Screen-space blend area number, in the range from 0 to the total number of screen-space blend areas. </param>
 			<param name="enabled"> 1 to enable the specified screen-space blend area of the specified projection, 0 to disable it. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.isBlendEnabled(int,int)">
+		<member name="M:Unigine.Plugins.AppProjection.isBlendEnabled(int,int) const">
 			<summary>
 			Returns a value indicating if the specified screen-space blend area of the specified projection is enabled.
 			</summary> 
@@ -397,7 +348,7 @@
 			<param name="blend_num"> Screen-space blend area number, in the range from 0 to the total number of screen-space blend areas. </param>
 			<param name="alpha"> New transparency value to be set. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getBlendAlpha(int,int)">
+		<member name="M:Unigine.Plugins.AppProjection.getBlendAlpha(int,int) const">
 			<summary>
 			Returns the current transparency value for the specified screen-space blend area of the specified projection.
 			</summary> 
@@ -413,7 +364,7 @@
 			<param name="blend_num"> Screen-space blend area number, in the range from 0 to the total number of screen-space blend areas. </param>
 			<param name="alpha"> New gradient part contrast value to be set. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getBlendContrast(int,int)">
+		<member name="M:Unigine.Plugins.AppProjection.getBlendContrast(int,int) const">
 			<summary>
 			Returns the current gradient part contrast value for the specified screen-space blend area of the specified projection.
 			</summary> 
@@ -429,7 +380,7 @@
 			<param name="blend_num"> Screen-space blend area number, in the range from 0 to the total number of screen-space blend areas. </param>
 			<param name="power"> New gamma correction value to be set. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getBlendGamma(int,int)">
+		<member name="M:Unigine.Plugins.AppProjection.getBlendGamma(int,int) const">
 			<summary>
 			Returns the current gamma correction value for the specified screen-space blend area of the specified projection.
 			</summary> 
@@ -450,7 +401,7 @@
 			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
 			<param name="show"> 1 to enable visualization of screen-space blend area control points for the specified projection on the screen, 0 to disable it. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.isDebugShowBlendPoints(int)">
+		<member name="M:Unigine.Plugins.AppProjection.isDebugShowBlendPoints(int) const">
 			<summary>
 			Returns a value indicating if screen-space blend area control points for the specified projection are displayed on the screen.					This option significantly facilitates the process of debugging configuration of a multi-projector setup.
 			</summary> 
@@ -467,7 +418,7 @@
 			<param name="handles_right"> Vector containing coordinates of right control handles for all mask polygon points. </param> 
 			<returns>Number of the last added mask.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getMask(int,int,Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.Plugins.AppProjection.getMask(int,int,Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.vec2,int,Unigine.VectorAllocator}) const">
 			<summary>
 			Gets all points, along with their control handles, for the specified mask of the specified projection and puts the data to the corresponding vectors specified.
 			</summary> 
@@ -477,7 +428,7 @@
 			<param name="handles_left"> Vector containing coordinates of left control handles for all mask polygon points. </param>
 			<param name="handles_right"> Vector containing coordinates of right control handles for all mask polygon points. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getNumMasks(int)">
+		<member name="M:Unigine.Plugins.AppProjection.getNumMasks(int) const">
 			<summary>
 			Returns the total number of masks assigned for the specified projection. Masks can be used for blending regions or to cut out certain areas (e.g. top and bottom areas for a curved screen projection).
 			</summary> 
@@ -492,7 +443,7 @@
 			<param name="mask_num"> Mask number, in the range from 0 to the total number of masks. </param>
 			<param name="enabled"> 1 to enable the specified mask of the specified projection, 0 to disable it. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.isMaskEnabled(int,int)">
+		<member name="M:Unigine.Plugins.AppProjection.isMaskEnabled(int,int) const">
 			<summary>
 			Returns a value indicating if the specified mask of the specified projection is enabled.
 			</summary> 
@@ -508,7 +459,7 @@
 			<param name="mask_num"> Mask number, in the range from 0 to the total number of masks. </param>
 			<param name="smooth"> Smoothing value to be set. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getMaskSmooth(int,int)">
+		<member name="M:Unigine.Plugins.AppProjection.getMaskSmooth(int,int) const">
 			<summary>
 			Returns the current smoothing value used for edges of the specified mask of the specified projection. This value determines the number of additional points to be inserted between the control points of the mask.
 			</summary> 
@@ -529,7 +480,7 @@
 			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
 			<param name="scale"> Per-channel color scale. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getColorScale(int)">
+		<member name="M:Unigine.Plugins.AppProjection.getColorScale(int) const">
 			<summary>
 			Returns the color multiplier for the specified projection.
 			</summary> 
@@ -543,7 +494,7 @@
 			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
 			<param name="bias"> Per-channel color bias. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getColorBias(int)">
+		<member name="M:Unigine.Plugins.AppProjection.getColorBias(int) const">
 			<summary>
 			Returns the color bias for the specified projection.
 			</summary> 
@@ -557,7 +508,7 @@
 			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param>
 			<param name="brightness"> Four-component vector containing brightness values, in the [0.0f, 1.0f] range, for projection's corners (upper left, upper right, lower left, lower right). </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppProjection.getCornerBrightness(int)">
+		<member name="M:Unigine.Plugins.AppProjection.getCornerBrightness(int) const">
 			<summary>
 			Returns current brightness correction values for corners of the specified projection as a four-component vector.
 			</summary> 
@@ -657,6 +608,20 @@
 			</summary> 
 			<param name="num"> Projection number, in the range from 0 to the total number of projections. </param> 
 			<returns>GUI instance.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.AppProjection.setCamera(int,Unigine.Ptr{Unigine.Camera})">
+			<summary>
+			Copies the camera from the specified display to the provided camera.
+			</summary> 
+			<param name="num"> Display index. </param>
+			<param name="camera"> Camera to copy the data to. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.AppProjection.getCamera(int)">
+			<summary>
+			Returns the camera from the display with the specified index.
+			</summary> 
+			<param name="num"> Display index. </param> 
+			<returns>Camera smart pointer.</returns>
 		</member>
 	</members>
 </doc>

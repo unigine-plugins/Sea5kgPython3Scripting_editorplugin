@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -61,8 +61,7 @@ public:
 	};
 
 	// pixel
-	UNIGINE_ALIGNED16(struct)
-	Pixel
+	struct alignas(16) Pixel
 	{
 		UNIGINE_INLINE Pixel() {}
 		UNIGINE_INLINE Pixel(int r, int g = 0, int b = 0, int a = 0)
@@ -159,6 +158,9 @@ public:
 	bool load(const Ptr<Stream> &stream);
 	bool saveDDS(const Ptr<Stream> &stream) const;
 	bool loadDDS(const Ptr<Stream> &stream);
+	static Vector< String >  getSupportedExtensions();
+	static bool isSupportedExtension(const char *ext);
+	static bool isSupported(const char *path);
 	void clear();
 	bool isLoaded() const;
 	int getType() const;
@@ -231,13 +233,16 @@ public:
 	bool normalize();
 	bool flipX();
 	bool flipY();
+	bool flipCubemapX();
+	bool flipCubemapY();
+	bool flipCubemapZ();
 	bool sign();
 	bool invert();
 	bool invertChannel(unsigned char channel);
 	void calcRange(Math::dvec2 &range);
 	void calcRange(Math::dvec2 &r, Math::dvec2 &g, Math::dvec2 &b, Math::dvec2 &a);
-	void changeRange(const Math::dvec4 &range);
-	void changeRange(const Math::dvec4 &range_r, const Math::dvec4 &range_g, const Math::dvec4 &range_b, const Math::dvec4 &range_a);
+	void changeRange(const Math::dvec4& range);
+	void changeRange(const Math::dvec4& range_r, const Math::dvec4& range_g, const Math::dvec4& range_b, const Math::dvec4& range_a);
 	void normalizeRange(bool per_cahnnel);
 	bool createMipmaps(Image::FILTER filter = Image::FILTER_LINEAR, float gamma = 1.0f);
 	bool removeMipmaps();
@@ -250,39 +255,55 @@ public:
 	bool decompress();
 	bool compress(int new_format = -1);
 	void swap(const Ptr<Image> &image);
-	static Image::Pixel toPixel(int format, const Math::vec4 &color);
-	Image::Pixel toPixel(const Math::vec4 &color);
-	static Math::vec4 toVec4(int format, const Image::Pixel & p);
-	Math::vec4 toVec4(const Image::Pixel & pixel);
+	static Image::Pixel toPixel(int format, const Math::vec4& color);
+	Image::Pixel toPixel(const Math::vec4& color);
+	static Math::vec4 toVec4(int format, const Image::Pixel& p);
+	Math::vec4 toVec4(const Image::Pixel& pixel);
 	void get(int id, Math::dvec4 &value) const;
-	void set(int id, const Math::dvec4 &value);
-	Math::vec4 get(const Math::ivec2 &coord, int offset) const;
-	void get(const Math::ivec2 &coord, int offset, Math::vec4 &p00, Math::vec4 &p01, Math::vec4 &p10, Math::vec4 &p11) const;
-	void get8F(const Math::ivec2 &coord, Math::vec4 &p) const;
-	float get8F(const Math::ivec2 &coord) const;
-	void get16F(const Math::ivec2 &coord, Math::vec4 &p) const;
-	float get16F(const Math::ivec2 &coord) const;
-	void get32F(const Math::ivec2 &coord, Math::vec4 &p) const;
-	float get32F(const Math::ivec2 &coord) const;
-	void set2D(int x, int y, const Image::Pixel & p);
+	void set(int id, const Math::dvec4& value);
+	Math::vec4 get(const Math::ivec2& coord, int offset) const;
+	void get(const Math::ivec2& coord, int offset, Math::vec4 &p00, Math::vec4 &p01, Math::vec4 &p10, Math::vec4 &p11) const;
+	void get8F(const Math::ivec2& coord, Math::vec4 &p) const;
+	float get8F(const Math::ivec2& coord) const;
+	void get16F(const Math::ivec2& coord, Math::vec4 &p) const;
+	float get16F(const Math::ivec2& coord) const;
+	void get32F(const Math::ivec2& coord, Math::vec4 &p) const;
+	float get32F(const Math::ivec2& coord) const;
+	void set2D(int x, int y, const Image::Pixel& p);
+	void set2D(const Math::ivec2& coord, const Image::Pixel& p);
 	Image::Pixel get2D(int x, int y) const;
+	Image::Pixel get2D(const Math::ivec2& coord) const;
 	Image::Pixel get2D(float x, float y) const;
-	Image::Pixel get2D(float x, float y, const Image::Pixel & skip_pixel) const;
-	void set3D(int x, int y, int z, const Image::Pixel & p);
+	Image::Pixel get2D(const Math::vec2& uv) const;
+	Image::Pixel get2D(float x, float y, const Image::Pixel& skip_pixel) const;
+	Image::Pixel get2D(const Math::vec2& uv, const Image::Pixel& skip_pixel) const;
+	void set3D(int x, int y, int z, const Image::Pixel& p);
+	void set3D(const Math::ivec3& coord, const Image::Pixel& p);
 	Image::Pixel get3D(int x, int y, int z) const;
+	Image::Pixel get3D(const Math::ivec3& coord) const;
 	Image::Pixel get3D(float x, float y, float z) const;
+	Image::Pixel get3D(const Math::vec3& uvw) const;
 	Image::Pixel get3DSmooth(float x, float y, float z) const;
-	void setCube(int x, int y, int face, const Image::Pixel & p);
+	Image::Pixel get3DSmooth(const Math::vec3& uvw) const;
+	void setCube(int x, int y, int face, const Image::Pixel& p);
 	Image::Pixel getCube(int x, int y, int face) const;
+	Image::Pixel getCube(const Math::ivec2& coord, int face) const;
 	Image::Pixel getCube(float x, float y, int face) const;
-	Image::Pixel getCube(const Math::vec3 &direction) const;
-	void set2DArray(int x, int y, int layer, const Image::Pixel & p);
+	Image::Pixel getCube(const Math::vec2& uv, int face) const;
+	Image::Pixel getCube(const Math::vec3& direction) const;
+	void set2DArray(int x, int y, int layer, const Image::Pixel& p);
+	void set2DArray(const Math::ivec2& coord, int layer, const Image::Pixel& p);
 	Image::Pixel get2DArray(int x, int y, int layer) const;
+	Image::Pixel get2DArray(const Math::ivec2& coord, int layer) const;
 	Image::Pixel get2DArray(float x, float y, int layer) const;
-	void setCubeArray(int x, int y, int face, int layer, const Image::Pixel & p);
+	Image::Pixel get2DArray(const Math::vec2& uv, int layer) const;
+	void setCubeArray(int x, int y, int face, int layer, const Image::Pixel& p);
+	void setCubeArray(const Math::ivec2& coord, int face, int layer, const Image::Pixel& p);
 	Image::Pixel getCubeArray(int v1, int v2, int face, int layer) const;
+	Image::Pixel getCubeArray(const Math::ivec2& coord, int face, int layer) const;
 	Image::Pixel getCubeArray(float v1, float v2, int face, int layer) const;
-	Image::Pixel getCubeArray(const Math::vec3 &direction, int layer) const;
+	Image::Pixel getCubeArray(const Math::vec2& uv, int face, int layer) const;
+	Image::Pixel getCubeArray(const Math::vec3& direction, int layer) const;
 	unsigned char * getPixels() const;
 	unsigned char * getPixels2D(int level = 0) const;
 	unsigned char * getPixels3D(int level = 0) const;
@@ -367,7 +388,7 @@ public:
 	void setRangeMode(ImageConverter::RANGE_MODE mode);
 	ImageConverter::RANGE_MODE getRangeMode() const;
 	Math::dvec4 getRange(int channel) const;
-	void setRange(int channel, const Math::dvec4 &value);
+	void setRange(int channel, const Math::dvec4& value);
 	void setFlipX(bool flipx);
 	bool isFlipX() const;
 	void setFlipY(bool flipy);

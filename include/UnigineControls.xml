@@ -810,21 +810,21 @@
 		</member>
 		<member name="M:Unigine.ControlsSixAxis.getSensorX">
 			<summary>
-			Returns a state value of the of the controller position along the X axis.
+			Returns a state value of the controller position along the X-axis.
 			</summary>  
-			<returns>The value along the X axis.</returns>
+			<returns>The value along the X-axis.</returns>
 		</member>
 		<member name="M:Unigine.ControlsSixAxis.getSensorY">
 			<summary>
-			Returns a state value of the of the controller position along the Y axis.
+			Returns a state value of the controller position along the Y-axis.
 			</summary>  
-			<returns>The value along the Y axis.</returns>
+			<returns>The value along the Y-axis.</returns>
 		</member>
 		<member name="M:Unigine.ControlsSixAxis.getSensorZ">
 			<summary>
-			Returns a state value of the of the controller position along the Z axis.
+			Returns a state value of the controller position along the Z-axis.
 			</summary>  
-			<returns>The value along the Z axis.</returns>
+			<returns>The value along the Z-axis.</returns>
 		</member>
 		<member name="M:Unigine.ControlsSixAxis.setSmallMotor(float)">
 			<summary>
@@ -1021,13 +1021,13 @@
 		</member>
 		<member name="M:Unigine.ControlsXPad360.getLeftX">
 			<summary>
-			Returns a state value of the left thumbstick along the X axis. When a thumbstick is in the center position, this value is zero. Negative values indicate left; positive values indicate right.
+			Returns a state value of the left thumbstick along the X-axis. When a thumbstick is in the center position, this value is zero. Negative values indicate left; positive values indicate right.
 			</summary>  
 			<returns>Value in range [-1; 1]. </returns>
 		</member>
 		<member name="M:Unigine.ControlsXPad360.getLeftY">
 			<summary>
-			Returns a state value of the left thumbstick along the Y axis. When a thumbstick is in the center position, this value is zero. Negative values indicate down; positive values indicate up.
+			Returns a state value of the left thumbstick along the Y-axis. When a thumbstick is in the center position, this value is zero. Negative values indicate down; positive values indicate up.
 			</summary>  
 			<returns>Value in range [-1; 1]. </returns>
 		</member>
@@ -1057,13 +1057,13 @@
 		</member>
 		<member name="M:Unigine.ControlsXPad360.getRightX">
 			<summary>
-			Returns a state value of the right thumbstick along the X axis. When a thumbstick is in the center position, this value is zero. Negative values indicate left; positive values indicate right.
+			Returns a state value of the right thumbstick along the X-axis. When a thumbstick is in the center position, this value is zero. Negative values indicate left; positive values indicate right.
 			</summary>  
 			<returns>Value in range [-1; 1]. </returns>
 		</member>
 		<member name="M:Unigine.ControlsXPad360.getRightY">
 			<summary>
-			Returns a state value of the right thumbstick along the Y axis. When a thumbstick is in the center position, this value is zero. Negative values indicate down; positive values indicate up.
+			Returns a state value of the right thumbstick along the Y-axis. When a thumbstick is in the center position, this value is zero. Negative values indicate down; positive values indicate up.
 			</summary>  
 			<returns>Value in range [-1; 1]. </returns>
 		</member>

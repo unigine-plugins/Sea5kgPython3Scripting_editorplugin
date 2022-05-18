@@ -158,13 +158,13 @@
 			</summary> 
 			<param name="name"> Name of the layer. </param> 
 		</member>
-		<member name="M:Unigine.NodeLayer.setNodeName(char)">
+		<member name="M:Unigine.NodeLayer.setNodePath(char)">
 			<summary>
 			Updates the name of the node layer: a path to a .node file where child nodes of the layer are stored.
 			</summary> 
 			<param name="name"> Path to a .node file. </param> 
 		</member>
-		<member name="M:Unigine.NodeLayer.getNodeName">
+		<member name="M:Unigine.NodeLayer.getNodePath">
 			<summary>
 			Returns the name of the node layer: a path to a .node file where child nodes of the layer are stored.
 			</summary>  
@@ -182,13 +182,13 @@
 			</summary> 
 			<param name="name"> Path to a *.node file.  </param> 
 		</member>
-		<member name="M:Unigine.NodeReference.setNodeName(char)">
+		<member name="M:Unigine.NodeReference.setNodePath(char)">
 			<summary>
 			Sets a reference to a new *.node file.
 			</summary> 
 			<param name="name"> Path to a *.node file. </param> 
 		</member>
-		<member name="M:Unigine.NodeReference.getNodeName">
+		<member name="M:Unigine.NodeReference.getNodePath">
 			<summary>
 			Returns the path to the referenced *.node file.
 			</summary>  

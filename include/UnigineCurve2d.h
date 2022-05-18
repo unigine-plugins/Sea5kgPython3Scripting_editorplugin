@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -42,14 +42,14 @@ public:
 	void copy(const Ptr<Curve2d> &curve);
 	int getHash() const;
 	int getNumKeys() const;
-	int addKey(const Math::vec2 &point);
-	int addKey(const Math::vec2 &point, const Math::vec2 &left_tangent, const Math::vec2 &right_tangent);
+	int addKey(const Math::vec2& point);
+	int addKey(const Math::vec2& point, const Math::vec2& left_tangent, const Math::vec2& right_tangent);
 	void removeKey(int index);
-	int moveKey(int index, const Math::vec2 &point);
+	int moveKey(int index, const Math::vec2& point);
 	void sortKeys();
-	void setKeyPoint(int index, const Math::vec2 &point);
-	void setKeyLeftTangent(int index, const Math::vec2 &point);
-	void setKeyRightTangent(int index, const Math::vec2 &point);
+	void setKeyPoint(int index, const Math::vec2& point);
+	void setKeyLeftTangent(int index, const Math::vec2& point);
+	void setKeyRightTangent(int index, const Math::vec2& point);
 	Math::vec2 getKeyPoint(int index);
 	Math::vec2 getKeyLeftTangent(int index);
 	Math::vec2 getKeyRightTangent(int index);

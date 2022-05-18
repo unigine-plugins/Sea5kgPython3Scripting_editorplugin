@@ -4,62 +4,11 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.Decal.setFadeTime(float)">
-			<summary>
-			Sets a time period during which the decal will fade away (after its life time expires). Fade time is ignored if the decal does not disappear.
-			</summary> 
-			<param name="time"> Time in seconds. </param> 
-		</member>
-		<member name="M:Unigine.Decal.getFadeTime const">
-			<summary>
-			Returns the time period during which the decal will fade away (after its life time expires).
-			</summary>  
-			<returns>Time in seconds.</returns>
-		</member>
-		<member name="M:Unigine.Decal.setInitTime(float)">
-			<summary>
-			Sets a time period during which the decal will be projected.
-			</summary> 
-			<param name="time"> Time in seconds. If a negative value is provided, the decal will be permanent. </param> 
-		</member>
-		<member name="M:Unigine.Decal.getInitTime const">
-			<summary>
-			Returns a time period of render initialization.
-			</summary>  
-			<returns>Time in seconds.</returns>
-		</member>
-		<member name="M:Unigine.Decal.setLifeTime(float)">
-			<summary>
-			Sets a time period during which the decal will be projected. By default the decal will not disappear and setFadeTime() will be ignored.
-			</summary> 
-			<param name="time"> Time in seconds. If a negative value is provided, the decal will be permanent. </param> 
-		</member>
-		<member name="M:Unigine.Decal.getLifeTime const">
-			<summary>
-			Returns the time period during which the decal will be projected.
-			</summary>  
-			<returns>Time in seconds. If a negative value is returned, the decal is permanent.</returns>
-		</member>
-		<member name="M:Unigine.Decal.setMaterial(char)">
-			<summary>
-			Sets a new material for the decal.
-			</summary> 
-			<param name="name"> Name of a new material. </param> 
-			<returns>1 if the material is set successfully; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Decal.setMaterial(Unigine.Ptr{Unigine.Material})">
 			<summary>
 			Sets a new material for the decal.
 			</summary> 
 			<param name="mat"> Smart pointer to the material to be used for the decal. </param> 
-			<returns>1 if the material is set successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Decal.setMaterial(Unigine.UGUID)">
-			<summary>
-			Sets a new material for the decal.
-			</summary> 
-			<param name="guid"> Material GUID. </param> 
-			<returns>1 if the material is set successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Decal.getMaterial const">
 			<summary>
@@ -78,12 +27,6 @@
 			Returns the value indicating if a given material is inherited (instanced). Modifications made in a material instance do not affect the source material.
 			</summary>  
 			<returns>1 if the material is inherited successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Decal.getMaterialName const">
-			<summary>
-			Returns the name of a decal material.
-			</summary>  
-			<returns>The material name.</returns>
 		</member>
 		<member name="M:Unigine.Decal.setMaxFadeDistance(float)">
 			<summary>
@@ -133,17 +76,17 @@
 			</summary>  
 			<returns>Distance value, in units.</returns>
 		</member>
-		<member name="M:Unigine.Decal.setTexCoord(Unigine.Math.vec4)">
+		<member name="M:Unigine.Decal.setRadius(float)">
 			<summary>
-			Sets texture coordinates for the decal (a texture atlas can be used).											The first pair of coordinates (x and y) set texture scale by the X and Y axes. For example, by the scale of 2 the texture is repeated twice on one decal.						The second pair (z and w) set texture offset along the X and Y axes. For example, by the offset of 0.5 along the X axis the texture is repositioned to the right (so that the edge of the texture is rendered in the center).
+			Sets the new height of the projection box/pyramid along the Z axis.
 			</summary> 
-			<param name="coord"> Texture coordinates for the decal. </param> 
+			<param name="radius"> Height of the projection box/pyramid along the Z axis, in units. </param> 
 		</member>
-		<member name="M:Unigine.Decal.getTexCoord const">
+		<member name="M:Unigine.Decal.getRadius const">
 			<summary>
-			Returns the texture coordinates for the decal (a texture atlas can be used).											The first pair of coordinates (x and y) set texture scale by the X and Y axes. For example, by the scale of 2 the texture is repeated twice on one decal.						The second pair (z and w) set texture offset along the X and Y axes. For example, by the offset of 0.5 along the X axis the texture is repositioned to the right (so that the edge of the texture is rendered in the center).
+			Returns the current height of the projection box along the Z axis.
 			</summary>  
-			<returns>Current texture coordinates for the decal.</returns>
+			<returns>The height of the projection box along the Z axis, in units.</returns>
 		</member>
 		<member name="M:Unigine.Decal.setViewportMask(int)">
 			<summary>
@@ -182,21 +125,34 @@
 			<param name="p"> Point coordinates. </param> 
 			<returns>1 if the point is inside the decal; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.DecalMesh.#ctor(Unigine.Ptr{Unigine.Mesh},float,char)">
+		<member name="M:Unigine.Decal.setMaterialPath(char)">
 			<summary>
-			Constructor. Creates a new mesh decal with the given properties.
+			Sets the material for the decal by path.
 			</summary> 
-			<param name="mesh"> Pointer to Mesh. </param>
-			<param name="radius"> The height of the decal projection box along the Z axis, in units. </param>
-			<param name="material_name"> Material name. </param> 
+			<param name="path"> Material path. </param> 
 		</member>
-		<member name="M:Unigine.DecalMesh.#ctor(char,float,char)">
+		<member name="M:Unigine.Decal.getMaterialPath const">
 			<summary>
-			Constructor. Creates a new mesh decal with the given properties.
+			Returns the path to the material used for the decal.
+			</summary>  
+			<returns>Material path.</returns>
+		</member>
+		<member name="M:Unigine.Decal.setMaterialGUID(Unigine.UGUID)">
+			<summary>
+			Sets the material for the decal by GUID.
 			</summary> 
-			<param name="mesh_path"> Mesh name.The mesh should contain a single surface. In case if the mesh contains several surfaces, only the one with the 0 index will be used. Thus, the area of the decal will differ from the initial mesh. </param>
-			<param name="radius"> The height of the decal projection box along the Z axis, in units. </param>
-			<param name="material_name"> Material name </param> 
+			<param name="materialguid"> Material GUID. </param> 
+		</member>
+		<member name="M:Unigine.Decal.getMaterialGUID const">
+			<summary>
+			Returns the GUID of the material used for the decal.
+			</summary>  
+			<returns>Material GUID.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.#ctor">
+			<summary>
+			Constructor. Creates a new mesh decal.
+			</summary>  
 		</member>
 		<member name="M:Unigine.DecalMesh.setMesh(Unigine.Ptr{Unigine.Mesh},bool)">
 			<summary>
@@ -224,25 +180,13 @@
 			<summary>
 			Sets a name for the mesh.
 			</summary> 
-			<param name="name"> A name to be set for the mesh. </param> 
+			<param name="name"> New name to be set for the mesh. </param> 
 		</member>
 		<member name="M:Unigine.DecalMesh.getMeshName const">
 			<summary>
-			Returns the name of the mesh used as a base for the decal.
+			Returns a name of the mesh used as a base for the decal.
 			</summary>  
-			<returns>The mesh name.</returns>
-		</member>
-		<member name="M:Unigine.DecalMesh.setRadius(float)">
-			<summary>
-			Sets the new height of the decal projection box along the Z axis.
-			</summary> 
-			<param name="radius"> The height of the decal projection box along the Z axis, in units. </param> 
-		</member>
-		<member name="M:Unigine.DecalMesh.getRadius const">
-			<summary>
-			Returns the current height of the decal projection box along the Z axis.
-			</summary>  
-			<returns>The height of the decal projection box along the Z axis, in units.</returns>
+			<returns>Name of the mesh.</returns>
 		</member>
 		<member name="M:Unigine.DecalMesh.loadMesh(char,bool)">
 			<summary>
@@ -255,7 +199,7 @@
 			<summary>
 			Saves the decal mesh into a file.
 			</summary> 
-			<param name="path"> A name of the mesh file. </param> 
+			<param name="path"> Mesh file name. </param> 
 			<returns>1 if the mesh is saved successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.DecalMesh.type">
@@ -264,14 +208,10 @@
 			</summary>  
 			<returns>Type identifier.</returns>
 		</member>
-		<member name="M:Unigine.DecalOrtho.#ctor(float,float,float,char)">
+		<member name="M:Unigine.DecalOrtho.#ctor">
 			<summary>
-			Constructor. Creates a new projected decal with the given properties.
-			</summary> 
-			<param name="radius"> The height of the projection box along the Z axis, in units. </param>
-			<param name="width"> The length of the projection box along the X axis, in units. </param>
-			<param name="height"> The length of the projection box along the Y axis, in units. </param>
-			<param name="material"> A material of the decal. </param> 
+			Constructor. Creates a new orthographic decal with default parameters.
+			</summary>  
 		</member>
 		<member name="M:Unigine.DecalOrtho.setHeight(float)">
 			<summary>
@@ -290,18 +230,6 @@
 			Returns the projection matrix.
 			</summary>  
 			<returns>The projection matrix of the decal.</returns>
-		</member>
-		<member name="M:Unigine.DecalOrtho.setRadius(float)">
-			<summary>
-			Sets a new height of the projection box along the Z axis.
-			</summary> 
-			<param name="radius"> A height of the projection box along the Z axis, in units. If a too small value is provided, 1E-6 will be used instead. </param> 
-		</member>
-		<member name="M:Unigine.DecalOrtho.getRadius const">
-			<summary>
-			Returns the current height of the projection box along the Z axis.
-			</summary>  
-			<returns>The height of the projection box along the Z axis, in units.</returns>
 		</member>
 		<member name="M:Unigine.DecalOrtho.setWidth(float)">
 			<summary>
@@ -333,14 +261,10 @@
 			</summary>  
 			<returns>Type identifier.</returns>
 		</member>
-		<member name="M:Unigine.DecalProj.#ctor(float,float,float,char)">
+		<member name="M:Unigine.DecalProj.#ctor">
 			<summary>
-			Constructor. Creates a new projected decal with the given properties.
-			</summary> 
-			<param name="radius"> The height of the projection pyramid along the Z axis, in units. </param>
-			<param name="fov"> The field of view of the decal's projector, in degrees. </param>
-			<param name="aspect"> The aspect ratio of the decal, in units. </param>
-			<param name="name"> A material of the decal. </param> 
+			Constructor. Creates a new projected decal with default parameters.
+			</summary>  
 		</member>
 		<member name="M:Unigine.DecalProj.setAspect(float)">
 			<summary>
@@ -371,18 +295,6 @@
 			Returns the projection matrix.
 			</summary>  
 			<returns>The projection matrix of the decal.</returns>
-		</member>
-		<member name="M:Unigine.DecalProj.setRadius(float)">
-			<summary>
-			Sets a new height of the projection pyramid along the Z axis, in units.
-			</summary> 
-			<param name="radius"> A height of the projection pyramid along the Z axis, in units. If a too small value is provided, 1E-6 will be used instead. </param> 
-		</member>
-		<member name="M:Unigine.DecalProj.getRadius const">
-			<summary>
-			Returns the current height of the projection pyramid along the Z axis, in units.
-			</summary>  
-			<returns>The height of the projection pyramid along the Z axis, in units.</returns>
 		</member>
 		<member name="M:Unigine.DecalProj.setZNear(float)">
 			<summary>

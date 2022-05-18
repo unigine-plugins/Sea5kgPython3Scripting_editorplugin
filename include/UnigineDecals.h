@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -29,18 +29,15 @@ class UNIGINE_API Decal : public Node
 public:
 	static bool convertible(Node *node) { return node && node->isDecal(); }
 
-	void setLifeTime(float time);
-	float getLifeTime() const;
-	void setFadeTime(float time);
-	float getFadeTime() const;
-	void setInitTime(float time);
-	float getInitTime() const;
-	Ptr<Material> getMaterialInherit() const;
-	const char *getMaterialName() const;
-	int setMaterial(const char *name);
-	int setMaterial(const UGUID & guid);
-	int setMaterial(const Ptr<Material> &mat);
+	void setMaterialPath(const char *path);
+	const char *getMaterialPath() const;
+	void setMaterialGUID(const UGUID& materialguid);
+	UGUID getMaterialGUID() const;
+	void setMaterial(const Ptr<Material> &material);
 	Ptr<Material> getMaterial() const;
+	Ptr<Material> getMaterialInherit() const;
+	void setRadius(float radius);
+	float getRadius() const;
 	void setMaxFadeDistance(float distance);
 	float getMaxFadeDistance() const;
 	void setMaxVisibleDistance(float distance);
@@ -49,15 +46,13 @@ public:
 	float getMinFadeDistance() const;
 	void setMinVisibleDistance(float distance);
 	float getMinVisibleDistance() const;
-	void setTexCoord(const Math::vec4 &coord);
-	Math::vec4 getTexCoord() const;
 	void setViewportMask(int mask);
 	int getViewportMask() const;
 	void setIntersectionMask(int mask);
 	int getIntersectionMask() const;
 	int isMaterialInherited() const;
 	int isTerrainHole() const;
-	int inside(const Math::vec3 &p);
+	int inside(const Math::vec3& p);
 };
 typedef Ptr<Decal> DecalPtr;
 
@@ -69,15 +64,12 @@ public:
 	static int type() { return Node::DECAL_MESH; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<DecalMesh> create(const Ptr<Mesh> &mesh, float radius, const char *material_name);
-	static Ptr<DecalMesh> create(const char *mesh_path, float radius, const char *material_name);
+	static Ptr<DecalMesh> create();
 	void setMeshName(const char *path, bool force_load);
 	void setMeshName(const char *name);
 	const char *getMeshName() const;
 	int setMesh(const Ptr<Mesh> &mesh, bool unique = true);
 	int getMesh(const Ptr<Mesh> &mesh) const;
-	void setRadius(float radius);
-	float getRadius() const;
 	void loadMesh(const char *path, bool unique = false);
 	int saveMesh(const char *path) const;
 };
@@ -91,11 +83,9 @@ public:
 	static int type() { return Node::DECAL_ORTHO; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<DecalOrtho> create(float radius, float width, float height, const char *material);
+	static Ptr<DecalOrtho> create();
 	void setHeight(float height);
 	float getHeight() const;
-	void setRadius(float radius);
-	float getRadius() const;
 	void setWidth(float width);
 	float getWidth() const;
 	void setZNear(float znear);
@@ -112,13 +102,11 @@ public:
 	static int type() { return Node::DECAL_PROJ; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<DecalProj> create(float radius, float fov, float aspect, const char *name);
+	static Ptr<DecalProj> create();
 	void setAspect(float aspect);
 	float getAspect() const;
 	void setFov(float fov);
 	float getFov() const;
-	void setRadius(float radius);
-	float getRadius() const;
 	void setZNear(float znear);
 	float getZNear() const;
 	Math::mat4 getProjection() const;

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -27,8 +27,8 @@ class Plugin
 public:
 	virtual ~Plugin() { }
 
-	// Must return the engine version for which the plugin is implemented.
-	virtual int get_version() const { return UNIGINE_VERSION; }
+	// Must return the UNIGINE compilation flags for which the plugin is built (please, see UNIGINE_COMPILATION_FLAG_).
+	virtual int getCompilationFlags() const { return UNIGINE_COMPILATION_FLAGS; }
 
 	// May return the plugin name.
 	virtual const char *get_name() { return nullptr; }

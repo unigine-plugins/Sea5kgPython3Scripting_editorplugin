@@ -258,14 +258,14 @@
 		</member>
 		<member name="M:Unigine.WorldLogic.save(StreamPtr)">
 			<summary>
-			Engine calls this function when the world is saving its state (state_save is called). Here you can save custom user data to a file. Similar to the world script's save() function.
+			Engine calls this function when the world is saving its state. Here you can save custom user data to a file. Similar to the world script's save() function.
 			</summary> 
 			<param name="stream"> Data stream. </param> 
 			<returns>Returns 1 if there were no errors; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.WorldLogic.restore(StreamPtr)">
 			<summary>
-			Engine calls this function when the world is restoring its state (state_restore is called). Restore custom user data to a file here.	Similar to the world script's restore() function.
+			Engine calls this function when the world is restoring its state. Restore custom user data to a file here.	Similar to the world script's restore() function.
 			</summary> 
 			<param name="stream"> Stream for restored data. </param> 
 			<returns>Returns 1 if there were no errors; otherwise, 0.</returns>

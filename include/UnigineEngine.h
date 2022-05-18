@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -18,42 +18,24 @@
 #include "UnigineString.h"
 #include "UnigineCallback.h"
 
-// Unigine version bits
+// Unigine compilation flags
 enum
 {
-	VERSION_BASE_BITS = 0x0000400d,
-	VERSION_DOUBLE_BIT = 1 << 28,
-	VERSION_EVALUATION_BIT = 1 << 27,
-	VERSION_DEBUG_BIT = 1 << 26,
+	UNIGINE_COMPILATION_FLAG_DOUBLE = 1 << 0,
+	UNIGINE_COMPILATION_FLAG_DEBUG = 1 << 1,
 };
 
-#ifdef USE_EVALUATION
-	#ifdef UNIGINE_DOUBLE
-		#ifndef NDEBUG
-			#define UNIGINE_VERSION (VERSION_BASE_BITS | VERSION_EVALUATION_BIT | VERSION_DOUBLE_BIT | VERSION_DEBUG_BIT)
-		#else
-			#define UNIGINE_VERSION (VERSION_BASE_BITS | VERSION_EVALUATION_BIT | VERSION_DOUBLE_BIT)
-		#endif
+#ifdef UNIGINE_DOUBLE
+	#ifdef NDEBUG
+		#define UNIGINE_COMPILATION_FLAGS (UNIGINE_COMPILATION_FLAG_DOUBLE)
 	#else
-		#ifndef NDEBUG
-			#define UNIGINE_VERSION (VERSION_BASE_BITS | VERSION_EVALUATION_BIT | VERSION_DEBUG_BIT)
-		#else
-			#define UNIGINE_VERSION (VERSION_BASE_BITS | VERSION_EVALUATION_BIT)
-		#endif
+		#define UNIGINE_COMPILATION_FLAGS (UNIGINE_COMPILATION_FLAG_DOUBLE | UNIGINE_COMPILATION_FLAG_DEBUG)
 	#endif
 #else
-	#ifdef UNIGINE_DOUBLE
-		#ifndef NDEBUG
-			#define UNIGINE_VERSION (VERSION_BASE_BITS | VERSION_DOUBLE_BIT | VERSION_DEBUG_BIT)
-		#else
-			#define UNIGINE_VERSION (VERSION_BASE_BITS | VERSION_DOUBLE_BIT)
-		#endif
+	#ifdef NDEBUG
+		#define UNIGINE_COMPILATION_FLAGS (0)
 	#else
-		#ifndef NDEBUG
-			#define UNIGINE_VERSION (VERSION_BASE_BITS | VERSION_DEBUG_BIT)
-		#else
-			#define UNIGINE_VERSION (VERSION_BASE_BITS)
-		#endif
+		#define UNIGINE_COMPILATION_FLAGS (UNIGINE_COMPILATION_FLAG_DEBUG)
 	#endif
 #endif
 
@@ -61,11 +43,16 @@ namespace Unigine
 {
 
 class App;
+class Engine;
 class SystemLogic;
 class WorldLogic;
 class EditorLogic;
 class Plugin;
 class Variable;
+
+/// Free functions for internal usage.
+UNIGINE_API Engine* Engine_internal_init(int compilation_flags, App* app, const char* window_title, const char* window_icon_path, const char* app_path, const char* home_path, const char* project, const char* password, int argc, char **argv);
+UNIGINE_API Engine* Engine_internal_init(int compilation_flags, App* app, const char* window_title, const char* window_icon_path, const char* app_path, const char* home_path, const char* project, const char* password, int argc, wchar_t **argv);
 
 class Engine
 {
@@ -75,6 +62,12 @@ public:
 		BUILD_CONFIG_DEBUG = 0,
 		BUILD_CONFIG_DEVELOPMENT,
 		BUILD_CONFIG_RELEASE,
+	};
+
+	enum PRECISION
+	{
+		PRECISION_FLOAT = 0,
+		PRECISION_DOUBLE,
 	};
 
 	enum CALLBACK_INDEX
@@ -172,43 +165,70 @@ public:
 		NUM_CALLBACKS,
 	};
 
-	/// Initializes a new engine instance.
-	static UNIGINE_API Engine *init(int version, int argc, char **argv, const char *project = nullptr, const char *password = nullptr);
-	/// Initializes a new engine instance.
-	static UNIGINE_API Engine *init(int version, int argc, wchar_t **argv, const char *project = nullptr, const char *password = nullptr);
+	/// Additional parameters to initialize a new Engine instance
+	struct InitParameters
+	{
+		App *app = nullptr;
+		const char *window_title = nullptr;
+		const char *window_icon_path = nullptr;
+		const char *app_path = nullptr;
+		const char *home_path = nullptr;
+		const char *project = nullptr;
+		const char *password = nullptr;
+	};
 
-	/// Initializes a new engine instance.
-	static UNIGINE_API Engine *init(int version, const char *window_title, int argc, char **argv, const char *project = nullptr, const char *password = nullptr);
-	/// Initializes a new engine instance.
-	static UNIGINE_API Engine *init(int version, const char *window_title, int argc, wchar_t **argv, const char *project = nullptr, const char *password = nullptr);
+	/// Initializes a new Engine instance.
+	static UNIGINE_INLINE Engine *init(int argc, char **argv)
+	{
+		const InitParameters init_parameters;
+		return init(init_parameters, argc, argv);
+	}
+	/// Initializes a new Engine instance.
+	static UNIGINE_INLINE Engine *init(int argc, wchar_t **argv)
+	{
+		const InitParameters init_parameters;
+		return init(init_parameters, argc, argv);
+	}
 
-	/// Initializes a new engine instance to be used with an external graphics application.
-	static UNIGINE_API Engine *init(int version, App *app, int argc, char **argv, const char *project = nullptr, const char *password = nullptr);
-	/// Initializes a new engine instance to be used with an external graphics application.
-	static UNIGINE_API Engine *init(int version, App *app, int argc, wchar_t **argv, const char *project = nullptr, const char *password = nullptr);
+	/// Initializes a new Engine instance.
+	static UNIGINE_INLINE Engine *init(const InitParameters &init_parameters, int argc, char **argv)
+	{
+		const InitParameters &p = init_parameters;
+		return Engine_internal_init(UNIGINE_COMPILATION_FLAGS, p.app, p.window_title, p.window_icon_path, p.app_path, p.home_path, p.project, p.password, argc, argv);
+	}
+	/// Initializes a new Engine instance.
+	static UNIGINE_INLINE Engine *init(const InitParameters &init_parameters, int argc, wchar_t **argv)
+	{
+		const InitParameters &p = init_parameters;
+		return Engine_internal_init(UNIGINE_COMPILATION_FLAGS, p.app, p.window_title, p.window_icon_path, p.app_path, p.home_path, p.project, p.password, argc, argv);
+	}
 
-	/// Initializes a new engine instance to be used with an external graphics application, which is stored at the specified path.
-	static UNIGINE_API Engine *init(int version, App *app, const char *app_path, const char *home_path, int argc, char **argv, const char *project = nullptr, const char *password = nullptr);
-	/// Initializes a new engine instance to be used with an external graphics application, which is stored at the specified path.
-	static UNIGINE_API Engine *init(int version, App *app, const char *app_path, const char *home_path, int argc, wchar_t **argv, const char *project = nullptr, const char *password = nullptr);
-
-	static UNIGINE_API Engine *init(int version, App *app, const char *window_title, const char *app_path, const char *home_path, int argc, char **argv, const char *project, const char *password);
-	static UNIGINE_API Engine *init(int version, App *app, const char *window_title, const char *app_path, const char *home_path, int argc, wchar_t **argv, const char *project, const char *password);
-
-	/// Deletes the pointer to the existing engine instance.
+	/// Deletes the pointer to the existing Engine instance.
 	static UNIGINE_API void shutdown();
 
-	/// Returns a pointer to the existing engine instance.
+	/// Returns a pointer to the existing Engine instance.
 	static UNIGINE_API Engine *get();
 
-	/// Returns 1 if the engine is initialized; otherwise, 0.
-	static UNIGINE_API int isInitialized();
+	/// Returns true if the Engine is initialized; otherwise, false.
+	static UNIGINE_API bool isInitialized();
 
-	/// Returns 1 if the argument is known by the engine; otherwise, 0.
-	static UNIGINE_API int isKnownArg(const char *arg);
+	/// Returns true if the argument is known by the Engine; otherwise, false.
+	static UNIGINE_API bool isKnownArg(const char *arg);
 
-	/// Returns the build configuration
+	/// Returns Unigine Engine Version.
+	static UNIGINE_API const char *getVersion();
+
+	/// Returns Unigine Engine Build Configuration.
 	static UNIGINE_API BUILD_CONFIG getBuildConfiguration();
+
+	/// Returns Unigine Engine precision type.
+	static UNIGINE_API PRECISION getPrecision();
+
+	/// Returns true if Engine was built as an evaluation version; otherwise false.
+	static UNIGINE_API bool isEvaluation();
+
+	/// Returns the list of features (like OpenGL, Direct3D, Microprofile, Geodetic, etc.) as a string 
+	static UNIGINE_API const char *getFeatures();
 
 	/// Returns the number of command line arguments.
 	virtual int getNumArgs() const = 0;
@@ -225,7 +245,7 @@ public:
 	/// Returns the number of loaded plugins.
 	virtual int getNumPlugins() const = 0;
 
-	/// Finds index of the loaded plugin by its name.
+	/// Finds an index of a loaded plugin by its name.
 	virtual int findPlugin(const char *name) const = 0;
 
 	/// Returns the name of the loaded plugin by its index.
@@ -250,38 +270,38 @@ public:
 	/// Returns the execution order of the loaded plugin by its index.
 	virtual int getPluginOrder(int num) const = 0;
 
-	/// Adds a plugin in engine runtime by using a name of this plugin.
-	virtual int addPlugin(const char *name) = 0;
+	/// Adds a plugin to Engine runtime by using a name of this plugin.
+	virtual bool addPlugin(const char *name) = 0;
 
-	/// Adds a plugin instance in engine runtime.
-	virtual int addPlugin(Plugin *plugin) = 0;
+	/// Adds a plugin instance to Engine runtime.
+	virtual bool addPlugin(Plugin *plugin) = 0;
 
-	/// Removes a plugin instance from engine runtime.
-	virtual int removePlugin(Plugin *plugin) = 0;
+	/// Removes a plugin instance from Engine runtime.
+	virtual bool removePlugin(Plugin *plugin) = 0;
 
 	/// Returns the number of registered SystemLogic instances.
 	virtual int getNumSystemLogics() const = 0;
 
-	/// Returns the registered SystemLogic instance.
+	/// Returns the registered SystemLogic instance by its number.
 	virtual SystemLogic *getSystemLogic(int num) const = 0;
 
-	/// Adds a system logic instance in engine runtime.
-	virtual int addSystemLogic(SystemLogic *logic) = 0;
+	/// Adds a SystemLogic instance to Engine runtime.
+	virtual bool addSystemLogic(SystemLogic *logic) = 0;
 
-	/// Removes a system logic instance from engine runtime.
-	virtual int removeSystemLogic(SystemLogic *logic) = 0;
+	/// Removes a SystemLogic instance from Engine runtime.
+	virtual bool removeSystemLogic(SystemLogic *logic) = 0;
 
 	/// Returns the number of registered WorldLogic instances.
 	virtual int getNumWorldLogics() const = 0;
 
-	/// Returns the registered WorldLogic instance.
+	/// Returns the registered WorldLogic instance by its number.
 	virtual WorldLogic *getWorldLogic(int num) const = 0;
 
-	/// Adds a world logic instance in engine runtime.
-	virtual int addWorldLogic(WorldLogic *logic) = 0;
+	/// Adds a WorldLogic instance in Engine runtime.
+	virtual bool addWorldLogic(WorldLogic *logic) = 0;
 
-	/// Removes a world logic instance from engine runtime.
-	virtual int removeWorldLogic(WorldLogic *logic) = 0;
+	/// Removes a WorldLogic instance from Engine runtime.
+	virtual bool removeWorldLogic(WorldLogic *logic) = 0;
 
 	/// Returns the number of registered EditorLogic instances.
 	virtual int getNumEditorLogics() const = 0;
@@ -289,11 +309,11 @@ public:
 	/// Returns the registered EditorLogic instance.
 	virtual EditorLogic *getEditorLogic(int num) const = 0;
 
-	/// Adds an editor logic instance in engine runtime.
-	virtual int addEditorLogic(EditorLogic *logic) = 0;
+	/// Adds an EditorLogic instance to Engine runtime.
+	virtual bool addEditorLogic(EditorLogic *logic) = 0;
 
-	/// Removes an editor logic instance from engine runtime.
-	virtual int removeEditorLogic(EditorLogic *logic) = 0;
+	/// Removes an EditorLogic instance from Engine runtime.
+	virtual bool removeEditorLogic(EditorLogic *logic) = 0;
 
 	/// Returns a path to the binary executable file.
 	virtual const char *getAppPath() const = 0;
@@ -301,13 +321,13 @@ public:
 	/// Returns a path to the user's home directory.
 	virtual const char *getHomePath() const = 0;
 
-	/// Returns a path where a default configuration file, save files and screenshots will be stored.
+	/// Returns a path where a default configuration file, save files, and screenshots will be stored.
 	virtual const char *getSavePath() const = 0;
 
 	/// Returns a path where cache files will be stored.
 	virtual const char *getCachePath() const = 0;
 
-	/// Returns a path to the engine's dynamilc library file.
+	/// Returns a path to the Engine's dynamic library file.
 	virtual const char *getLibraryModulePath() const = 0;
 
 	/// Returns a path to data directory.
@@ -337,20 +357,11 @@ public:
 	/// Returns a sound API used for rendering (provided with -sound_app command line argument).
 	virtual const char *getSoundApp() const = 0;
 
-	/// Returns Unigine Script defines specified at launch (provided with -extern_define command line argument).
+	/// Returns Unigine Script defines specified at startup (provided with -extern_define command line argument).
 	virtual const char *getExternDefine() const = 0;
 
-	/// Returns Unigine Engine Version.
-	virtual const char *getVersion() const = 0;
-
-	/// Returns Unigine Engine Build Configuration. Example: "Development-Float"
-	virtual const char *getBuildConfig() const = 0;
-
-	/// return Returns 1 when engine is build with Double support; otherwise, 0.
-	virtual int isDouble() const = 0;
-
-	/// return Returns 1 when engine is quitting; otherwise, 0.
-	virtual int isDone() const = 0;
+	/// return Returns true when the Engine is quitting; otherwise, false.
+	virtual bool isDone() const = 0;
 
 	/// Engine update function. This function must be called every frame.
 	virtual void update() = 0;
@@ -364,14 +375,14 @@ public:
 	/// Engine main loop. Replaces while (isDone() == 0) { update(): render(); swap(); } commands.
 	virtual void main(SystemLogic *system = nullptr, WorldLogic *world = nullptr, EditorLogic *editor = nullptr) = 0;
 
-	/// Returns 1 when the function is called from the system script; otherwise, 0.
-	virtual int isSystemInterpreter() const = 0;
+	/// Returns true when the function is called from the system script; otherwise, false.
+	virtual bool isSystemInterpreter() const = 0;
 
 	/// Returns an instance of the system interpreter.
 	virtual void *getSystemInterpreter() const = 0;
 
-	/// Returns 1 if the system script variable exists; otherwise, 0.
-	virtual int isSystemVariable(const char *name) const = 0;
+	/// Returns true if the system script variable exists; otherwise, false.
+	virtual bool isSystemVariable(const char *name) const = 0;
 
 	/// Sets a system script variable by a name.
 	virtual void setSystemVariable(const char *name, const Variable &v) = 0;
@@ -379,8 +390,8 @@ public:
 	/// Returns the system script variable by its name.
 	virtual const Variable &getSystemVariable(const char *name) const = 0;
 
-	/// Returns 1 if the system script function exists; otherwise, 0.
-	virtual int isSystemFunction(const char *name, int num_args) const = 0;
+	/// Returns true if the system script function exists; otherwise, false.
+	virtual bool isSystemFunction(const char *name, int num_args) const = 0;
 
 	/// Returns system script function identifier.
 	virtual int getSystemFunction(const char *name, int num_args) const = 0;
@@ -445,17 +456,17 @@ public:
 	/// Runs system script function by its identifier.
 	virtual const Variable &runSystemFunction(int id, const Variable &a0, const Variable &a1, const Variable &a2, const Variable &a3, const Variable &a4, const Variable &a5, const Variable &a6, const Variable &a7) = 0;
 
-	/// Returns 1 if the world script is loaded; otherwise, 0.
-	virtual int isWorldLoaded() const = 0;
+	/// Returns true if the world script is loaded; otherwise, false.
+	virtual bool isWorldLoaded() const = 0;
 
-	/// Returns 1 if the function is called from the world script; otherwise, 0.
-	virtual int isWorldInterpreter() const = 0;
+	/// Returns true if the function is called from the world script; otherwise, false.
+	virtual bool isWorldInterpreter() const = 0;
 
 	/// Returns the world interpreter instance.
 	virtual void *getWorldInterpreter() const = 0;
 
-	/// Returns 1 if the world script variable exists; otherwise, 0.
-	virtual int isWorldVariable(const char *name) const = 0;
+	/// Returns true if the world script variable exists; otherwise, false.
+	virtual bool isWorldVariable(const char *name) const = 0;
 
 	/// Sets a world script variable by its name.
 	virtual void setWorldVariable(const char *name, const Variable &v) = 0;
@@ -463,8 +474,8 @@ public:
 	/// Returns a world script variable by its name.
 	virtual const Variable &getWorldVariable(const char *name) const = 0;
 
-	/// Returns 1 if the world script function exists; otherwise, 0.
-	virtual int isWorldFunction(const char *name, int num_args) const = 0;
+	/// Returns true if the world script function exists; otherwise, false.
+	virtual bool isWorldFunction(const char *name, int num_args) const = 0;
 
 	/// Returns the world function identifier.
 	virtual int getWorldFunction(const char *name, int num_args) const = 0;
@@ -529,17 +540,17 @@ public:
 	/// Runs the world script function by its identifier.
 	virtual const Variable &runWorldFunction(int id, const Variable &a0, const Variable &a1, const Variable &a2, const Variable &a3, const Variable &a4, const Variable &a5, const Variable &a6, const Variable &a7) = 0;
 
-	/// Returns 1 if the editor script is loaded; otherwise, 0.
-	virtual int isEditorLoaded() const = 0;
+	/// Returns true if the editor script is loaded; otherwise, false.
+	virtual bool isEditorLoaded() const = 0;
 
-	/// Returns 1 if the function is called from the editor script; otherwise, 0.
-	virtual int isEditorInterpreter() const = 0;
+	/// Returns true if the function is called from the editor script; otherwise, false.
+	virtual bool isEditorInterpreter() const = 0;
 
 	/// Returns the editor interpreter instance.
 	virtual void *getEditorInterpreter() const = 0;
 
-	/// Returns 1 if the editor script variable exists; otherwise, 0.
-	virtual int isEditorVariable(const char *name) const = 0;
+	/// Returns true if the editor script variable exists; otherwise, false.
+	virtual bool isEditorVariable(const char *name) const = 0;
 
 	/// Sets the editor script variable by its name.
 	virtual void setEditorVariable(const char *name, const Variable &v) = 0;
@@ -547,8 +558,8 @@ public:
 	/// Returns the editor script variable by its name.
 	virtual const Variable &getEditorVariable(const char *name) const = 0;
 
-	/// Returns 1 if the editor script function exists; otherwise, 0.
-	virtual int isEditorFunction(const char *name, int num_args) const = 0;
+	/// Returns true if the editor script function exists; otherwise, false.
+	virtual bool isEditorFunction(const char *name, int num_args) const = 0;
 
 	/// Returns the editor function identifier.
 	virtual int getEditorFunction(const char *name, int num_args) const = 0;
@@ -613,10 +624,10 @@ public:
 	/// Runs the editor script function by its identifier.
 	virtual const Variable &runEditorFunction(int id, const Variable &a0, const Variable &a1, const Variable &a2, const Variable &a3, const Variable &a4, const Variable &a5, const Variable &a6, const Variable &a7) = 0;
 
-	/// Returns a total accumulative time spent on preparing engine frames (includes update, render and swap, present).
+	/// Returns a total accumulative time spent on preparing Engine frames (includes update, render and swap, present).
 	virtual float getTotalTime() const = 0;
 
-	/// Returns a accumulative time spent on preparing engine frames (includes update, render and swap).
+	/// Returns a accumulative time spent on preparing Engine frames (includes update, render and swap).
 	virtual float getTotalCPUTime() const = 0;
 
 	/// Returns a total accumulative time spent on updating the scene.
@@ -631,14 +642,11 @@ public:
 	/// Returns a total accumulative time spent on rendering the interface.
 	virtual float getInterfaceTime() const = 0;
 
-	/// Returns current engine frame
-	virtual int64_t getFrame() const = 0;
+	/// Returns current Engine frame
+	virtual long long getFrame() const = 0;
 
-	/// Returns 1 if the function from the main engine thread; otherwise, 0.
-	virtual int isMainThread() const = 0;
-
-	/// Returns 1 if engine was built as an evaluation version; otherwise 0.
-	virtual int isEvaluation() const = 0;
+	/// Returns true if the function from the main Engine thread; otherwise, false.
+	virtual bool isMainThread() const = 0;
 
 	/// Callbacks
 	virtual void *addCallback(CALLBACK_INDEX callback, CallbackBase *func) = 0;
@@ -650,109 +658,85 @@ protected:
 };
 
 // Unigine Engine smart pointer
-class UNIGINE_API EnginePtr
+class EnginePtr
 {
 public:
-	/// Initializes the pointer to a new engine instance.
-	EnginePtr() : engine(0), owner(0) { init(); }
+	/// Initializes the pointer to a new Engine instance.
+	UNIGINE_INLINE EnginePtr() : engine(0), owner(0) { init(); }
 
-	/// Initializes the pointer to an existing engine instance.
-	EnginePtr(const EnginePtr &ptr)
+	/// Initializes the pointer to an existing Engine instance.
+	UNIGINE_INLINE EnginePtr(const EnginePtr &ptr)
 		: engine(ptr.engine), owner(0)
 	{}
 
-	/// Initializes the pointer to a new engine instance.
-	EnginePtr(int version, const char *window_title, int argc, char **argv, const char *project = nullptr, const char *password = nullptr)
+	/// Initializes the pointer to a new Engine instance.
+	UNIGINE_INLINE EnginePtr(int argc, char **argv)
 		: engine(0), owner(0)
 	{
-		init(version, nullptr, window_title, nullptr, nullptr, argc, argv, project, password);
+		const Engine::InitParameters init_parameters;
+		init(init_parameters, argc, argv);
 	}
-	/// Initializes the pointer to a new engine instance.
-	EnginePtr(int version, const char *window_title, int argc, wchar_t **argv, const char *project = nullptr, const char *password = nullptr)
+	/// Initializes the pointer to a new Engine instance.
+	UNIGINE_INLINE EnginePtr(int argc, wchar_t **argv)
 		: engine(0), owner(0)
 	{
-		init(version, nullptr, window_title, nullptr, nullptr, argc, argv, project, password);
-	}
-
-	/// Initializes the pointer to a new engine instance.
-	EnginePtr(int version, int argc, char **argv, const char *project = nullptr, const char *password = nullptr)
-		: engine(0), owner(0)
-	{
-		init(version, nullptr, nullptr, nullptr, nullptr, argc, argv, project, password);
-	}
-	/// Initializes the pointer to a new engine instance.
-	EnginePtr(int version, int argc, wchar_t **argv, const char *project = nullptr, const char *password = nullptr)
-		: engine(0), owner(0)
-	{
-		init(version, nullptr, nullptr, nullptr, nullptr, argc, argv, project, password);
+		const Engine::InitParameters init_parameters;
+		init(init_parameters, argc, argv);
 	}
 
-	/// Initializes the pointer to a new engine instance to be used with an external graphics application.
-	EnginePtr(int version, App *app, int argc, char **argv, const char *project = nullptr, const char *password = nullptr)
+	/// Initializes the pointer to a new Engine instance.
+	UNIGINE_INLINE EnginePtr(const Engine::InitParameters &init_parameters, int argc, char **argv)
 		: engine(0), owner(0)
 	{
-		init(version, app, nullptr, nullptr, nullptr, argc, argv, project, password);
+		init(init_parameters, argc, argv);
 	}
-	/// Initializes the pointer to a new engine instance to be used with an external graphics application.
-	EnginePtr(int version, App *app, int argc, wchar_t **argv, const char *project = nullptr, const char *password = nullptr)
+	/// Initializes the pointer to a new Engine instance.
+	UNIGINE_INLINE EnginePtr(const Engine::InitParameters &init_parameters, int argc, wchar_t **argv)
 		: engine(0), owner(0)
 	{
-		init(version, app, nullptr, nullptr, nullptr, argc, argv, project, password);
-	}
-
-	/// Initializes the pointer to a new engine instance to be used with an external graphics application, which is stored at the specified path.
-	EnginePtr(int version, App *app, const char *app_path, const char *home_path, int argc, char **argv, const char *project = nullptr, const char *password = nullptr)
-		: engine(0), owner(0)
-	{
-		init(version, app, nullptr, app_path, home_path, argc, argv, project, password);
-	}
-	/// Initializes the pointer to a new engine instance to be used with an external graphics application, which is stored at the specified path.
-	EnginePtr(int version, App *app, const char *app_path, const char *home_path, int argc, wchar_t **argv, const char *project = nullptr, const char *password = nullptr)
-		: engine(0), owner(0)
-	{
-		init(version, app, nullptr, app_path, home_path, argc, argv, project, password);
+		init(init_parameters, argc, argv);
 	}
 
-	~EnginePtr()
+	UNIGINE_INLINE ~EnginePtr()
 	{
 		if (isOwner())
 			shutdown();
 	}
 
 	/// Sets the owner flag for the pointer. Engine instance will be destroyed along with the pointer.
-	void grab() { owner = 1; }
+	UNIGINE_INLINE void grab() { owner = 1; }
 
 	/// Releases the owner flag for the pointer. Engine instance will stay alive upon the pointer destruction.
-	void release() { owner = 0; }
+	UNIGINE_INLINE void release() { owner = 0; }
 
-	/// Returns the owner flag indicating whether engine instance will be destroyed along with the pointer or not.
-	int isOwner() const { return owner; }
+	/// Returns the owner flag indicating whether Engine instance will be destroyed along with the pointer or not.
+	UNIGINE_INLINE int isOwner() const { return owner; }
 
-	/// Initializes the pointer to a new engine instance.
-	void init()
+	/// Initializes the pointer to a new Engine instance.
+	UNIGINE_INLINE void init()
 	{
 		if (Engine::isInitialized())
 			engine = Engine::get();
 	}
 
-	/// Initializes the pointer to a new engine instance.
-	void init(int version, App *app, const char *window_title, const char *app_path, const char *home_path, int argc, char **argv, const char *project, const char *password)
+	/// Initializes the pointer to a new Engine instance.
+	UNIGINE_INLINE void init(const Engine::InitParameters &init_parameters, int argc, char **argv)
 	{
-		UNIGINE_ASSERT(!engine && "Unigine::EnginePtr::init(): engine is already initialized");
-		engine = Engine::init(version, app, window_title, app_path, home_path, argc, argv, project, password);
+		UNIGINE_ASSERT(!engine && "Unigine::EnginePtr::init(): Engine is already initialized");
+		engine = Engine::init(init_parameters, argc, argv);
 		owner = 1;
 	}
 
-	/// Initializes the pointer to a new engine instance.
-	void init(int version, App *app, const char *window_title, const char *app_path, const char *home_path, int argc, wchar_t **argv, const char *project, const char *password)
+	/// Initializes the pointer to a new Engine instance.
+	UNIGINE_INLINE void init(const Engine::InitParameters &init_parameters, int argc, wchar_t **argv)
 	{
-		UNIGINE_ASSERT(!engine && "Unigine::EnginePtr::init(): engine is already initialized");
-		engine = Engine::init(version, app, window_title, app_path, home_path, argc, argv, project, password);
+		UNIGINE_ASSERT(!engine && "Unigine::EnginePtr::init(): Engine is already initialized");
+		engine = Engine::init(init_parameters, argc, argv);
 		owner = 1;
 	}
 
-	/// Destroys the existing engine instance. The pointer must be an owner of the engine instance.
-	void shutdown()
+	/// Destroys the existing Engine instance. The pointer must be an owner of the Engine instance.
+	UNIGINE_INLINE void shutdown()
 	{
 		UNIGINE_ASSERT(owner && "Unigine::EnginePtr::shutdown(): is not an owner");
 		Engine::shutdown();
@@ -760,7 +744,7 @@ public:
 		owner = 0;
 	}
 
-	EnginePtr &operator=(const EnginePtr &ptr)
+	UNIGINE_INLINE EnginePtr &operator=(const EnginePtr &ptr)
 	{
 		engine = ptr.engine;
 		owner = 0;
@@ -773,7 +757,7 @@ public:
 		return engine;
 	}
 
-	/// Return a raw pointer to the engine instance.
+	/// Return a raw pointer to the Engine instance.
 	UNIGINE_INLINE Engine *get() const { return engine;	}
 
 private:

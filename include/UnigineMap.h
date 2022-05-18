@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -100,7 +100,7 @@ public:
 
 	Map(std::initializer_list<Pair<Key, Type>> list)
 	{
-		for(const auto &it : list)
+		for (const auto &it : list)
 			append(it.first, it.second);
 	}
 
@@ -304,7 +304,7 @@ public:
 	UNIGINE_INLINE Type value(const Key &key) const
 	{
 		Node *node = Parent::do_find(key);
-		return node == nullptr ? Type() : node->data;
+		return node == nullptr ? Type{} : node->data;
 	}
 
 	UNIGINE_INLINE Type value(const Key &key, const Type &def) const

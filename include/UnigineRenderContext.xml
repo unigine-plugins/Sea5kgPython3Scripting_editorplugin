@@ -91,6 +91,12 @@
 			</summary>  
 			<returns>OpenGL context pointer.</returns>
 		</member>
+		<member name="M:Unigine.RenderContext.getGLDisplay const">
+			<summary>
+			Returns a pointer to the OpenGL display.
+			</summary>  
+			<returns>OpenGL display pointer.</returns>
+		</member>
 		<member name="M:Unigine.RenderContext.resizeWindow(int,int)">
 			<summary>
 			Resizes the window.
@@ -115,7 +121,7 @@
 			<summary>
 			Returns a value indicating if the rendering context is ready.
 			</summary>  
-			<returns>1 if the rendering context is ready; otherwise, 0.</returns>
+			<returns>true if the rendering context is ready; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.RenderContext.createVisual">
 			<summary>

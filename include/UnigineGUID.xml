@@ -187,5 +187,20 @@
 			Empty GUID, containing all 0s.
 		</summary>
 		</member>
+		<member name="F:Unigine.UGUID.HASH_SIZE">
+			<summary>
+			Hash size in bytes (40).
+		</summary>
+		</member>
+		<member name="F:Unigine.UGUID.PREFIX_SIZE">
+			<summary>
+			GUID prefix size in bytes (7).
+		</summary>
+		</member>
+		<member name="F:Unigine.UGUID.PREFIX">
+			<summary>
+			GUID prefix ("guid://").
+		</summary>
+		</member>
 	</members>
 </doc>

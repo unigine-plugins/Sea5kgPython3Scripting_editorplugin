@@ -28,14 +28,14 @@
 			<param name="type_name"> Importer type name. </param> 
 			<returns>true if a given importer type was successfully unregistered; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Import.createImporter(char)">
+		<member name="M:Unigine.Import.createImporter(char) const">
 			<summary>
 			Creates a new importer of the specified type.					The importer type name specified must be previously registered.
 			</summary> 
 			<param name="type_name"> Importer type name. </param> 
 			<returns>Pointer to a new created importer of a given type, if it was created successfully; otherwise, nullptr.</returns>
 		</member>
-		<member name="M:Unigine.Import.createImporterByFileName(char)">
+		<member name="M:Unigine.Import.createImporterByFileName(char) const">
 			<summary>
 			Creates an importer for the input file with a given name by its extension, if such an importer was previously registered.
 			</summary> 
@@ -62,45 +62,45 @@
 			<param name="type_name"> Import processor type name. </param> 
 			<returns>Pointer to a new created import processor of a given type if it was created successfully; otherwise, nullptr.</returns>
 		</member>
-		<member name="M:Unigine.Import.isSupportedExtension(char)">
+		<member name="M:Unigine.Import.isSupportedExtension(char) const">
 			<summary>
 			Returns a value indicating whether the specified file extension is supported by the importer.
 			</summary> 
 			<param name="extension"> Null-terminated string with file extension to be checked. </param> 
 			<returns>true if the specified file extension is supported by the importer; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Import.getSupportedExtensions">
+		<member name="M:Unigine.Import.getSupportedExtensions const">
 			<summary>
 			Returns the list of all supported file extensions as a vector of strings.
 			</summary>  
 			<returns>List of all supported extensions as a vector of strings.</returns>
 		</member>
-		<member name="M:Unigine.Import.getSupportedExtensions(Unigine.Vector{String,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.Import.getSupportedExtensions(Unigine.Vector{String,int,Unigine.VectorAllocator}) const">
 			<summary>
 			Returns the list of all supported file extensions and puts it to the given vector.
 			</summary> 
 			<param name="extensions"> Vector to put the list of all supported extensions to. </param> 
 		</member>
-		<member name="M:Unigine.Import.getImporterTypeByExtension(char)">
+		<member name="M:Unigine.Import.getImporterTypeByExtension(char) const">
 			<summary>
 			Returns the type of importer for the specified extension.
 			</summary> 
 			<param name="extension"> Null-terminated string with file extension. </param> 
 			<returns>Type of importer for the specified extension, if it exists, as a string; otherwise, null string.</returns>
 		</member>
-		<member name="M:Unigine.Import.getImporterTypes(Unigine.Vector{String,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.Import.getImporterTypes(Unigine.Vector{String,int,Unigine.VectorAllocator}) const">
 			<summary>
 			Returns the list of all importer types registered by the Import Manager and puts it to the given vector.
 			</summary> 
 			<param name="types"> Vector to put the list of all registered importer types to. </param> 
 		</member>
-		<member name="M:Unigine.Import.getImporterTypes">
+		<member name="M:Unigine.Import.getImporterTypes const">
 			<summary>
 			Returns the list of all importer types registered by the Import Manager.
 			</summary>  
 			<returns>List of all importer types registered by the Import Manager as a vector of strings.</returns>
 		</member>
-		<member name="M:Unigine.Import.import(char,char,String)">
+		<member name="M:Unigine.Import.import(char,char,String) const">
 			<summary>
 			Imports the contents from the specified input file to the specified output path and puts the path to the resulting					output file to					out_filepath.
 			</summary> 
@@ -109,18 +109,25 @@
 			<param name="out_filepath"> Path to the resulting output file. </param> 
 			<returns>true if the specified input file is imported successfully; otherwise, false.</returns>
 		</member>
+		<member name="M:Unigine.Import.containsImportProcessor(char) const">
+			<summary>
+			Checks if the specified import processor type exists.
+			</summary> 
+			<param name="type_name"> Import processor type name. </param> 
+			<returns>true if a given import processor type exists; otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.Importer.#ctor">
 			<summary>
 			Constructor. Creates an importer with default settings.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Importer.getScene">
+		<member name="M:Unigine.Importer.getScene const">
 			<summary>
 			Returns the imported scene.
 			</summary>  
 			<returns>ImportScene instance.</returns>
 		</member>
-		<member name="M:Unigine.Importer.containsParameter(char)">
+		<member name="M:Unigine.Importer.containsParameter(char) const">
 			<summary>
 			Returns a value indicating whether the list of import parameters includes a parameter with a given name.
 			</summary> 
@@ -134,7 +141,7 @@
 			<param name="name"> Name of the integer parameter. </param>
 			<param name="v"> New value to be set. </param> 
 		</member>
-		<member name="M:Unigine.Importer.getParameterInt(char)">
+		<member name="M:Unigine.Importer.getParameterInt(char) const">
 			<summary>
 			Returns the current value of the specified integer parameter. There are built-in parameters that can also be used in custom importers.
 			</summary> 
@@ -148,7 +155,7 @@
 			<param name="name"> Name of the float parameter. </param>
 			<param name="v"> New value to be set. </param> 
 		</member>
-		<member name="M:Unigine.Importer.getParameterFloat(char)">
+		<member name="M:Unigine.Importer.getParameterFloat(char) const">
 			<summary>
 			Returns the current value of the specified float parameter. There are built-in parameters that can also be used in custom importers.
 			</summary> 
@@ -162,7 +169,7 @@
 			<param name="name"> Name of the double parameter. </param>
 			<param name="v"> New value to be set. </param> 
 		</member>
-		<member name="M:Unigine.Importer.getParameterDouble(char)">
+		<member name="M:Unigine.Importer.getParameterDouble(char) const">
 			<summary>
 			Returns the current value of the specified double parameter.
 			</summary> 
@@ -176,7 +183,7 @@
 			<param name="name"> Name of the string parameter. </param>
 			<param name="v"> New value to be set. </param> 
 		</member>
-		<member name="M:Unigine.Importer.getParameterString(char)">
+		<member name="M:Unigine.Importer.getParameterString(char) const">
 			<summary>
 			Returns the current value of the specified string parameter. There are built-in parameters that can also be used in custom importers.
 			</summary> 
@@ -266,7 +273,7 @@
 			<param name="output_path"> Output path. </param> 
 			<returns>1 if the contents of the input file are successfully imported to the specified output path; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Importer.getOutputFilepath">
+		<member name="M:Unigine.Importer.getOutputFilepath const">
 			<summary>
 			Returns the resulting output file path for imported scene component(s). In case if a set of files were generated the path to resulting *.node file will be returned.
 			</summary>  
@@ -290,7 +297,7 @@
 		</member>
 		<member name="M:Unigine.Importer.importCamera(ImportProcessor,PlayerPtr,ImportCamera)">
 			<summary>
-			Imports the specified camera and uses the specified processor to process and save the generated player to a corresponding *.node file in the output directory specified in the import() method.					To customize actions to be performed on importing cameras, when implementing a custom importer, you can override the onImportCamera() method.
+								Imports the specified camera and uses the specified processor to process and save the generated player to a corresponding *.node file in the output directory specified in the import() method.					To customize actions to be performed on importing cameras, when implementing a custom importer, you can override the onImportCamera() method.
 			</summary> 
 			<param name="processor"> Import processor to be used for this import operation. </param>
 			<param name="camera"> Target UNIGINE's player instance to store the specified imported camera. </param>
@@ -299,7 +306,7 @@
 		</member>
 		<member name="M:Unigine.Importer.importLight(ImportProcessor,LightPtr,ImportLight)">
 			<summary>
-			Imports the specified light and uses the specified processor to process and save the generated light to a corresponding *.node file in the output directory specified in the import() method.					To customize actions to be performed on importing lights, when implementing a custom importer, you can override the onImportLight() method.
+								Imports the specified light and uses the specified processor to process and save the generated light to a corresponding *.node file in the output directory specified in the import() method.					To customize actions to be performed on importing lights, when implementing a custom importer, you can override the onImportLight() method.
 			</summary> 
 			<param name="processor"> Import processor to be used for this import operation. </param>
 			<param name="light"> Target UNIGINE's light instance to store the specified imported light. </param>
@@ -349,6 +356,7 @@
 		</member>
 		<member name="M:Unigine.Importer.onInit(String)">
 			<summary>
+			Imports the scene contained in the specified input file.
 			</summary> 
 			<param name="filepath"> Path to a file to be imported. </param> 
 			<returns>Scene contained in the specified input file.</returns>
@@ -423,6 +431,55 @@
 			<param name="import_texture"> ImportTexture structure pointer. </param> 
 			<returns>true if the specified texture was successfully imported; otherwise, false.</returns>
 		</member>
+		<member name="M:Unigine.Importer.hasPreProcessor(char)">
+			<summary>
+			Checks if the specified import pre-processor type exists.
+			</summary> 
+			<param name="type_name"> Import pre-processor type to check. </param> 
+		</member>
+		<member name="M:Unigine.Importer.getSourceFilepath const">
+			<summary>
+			Returns the source file path.
+			</summary>  
+			<returns>Source file path.</returns>
+		</member>
+		<member name="M:Unigine.Importer.computeBoundBox(ImportMesh)">
+			<summary>
+			Computes a bound box for the mesh.
+			</summary> 
+			<param name="import_mesh"> Imported mesh. </param> 
+		</member>
+		<member name="M:Unigine.Importer.importAnimation(ImportProcessor,MeshPtr,ImportAnimation)">
+			<summary>
+			Imports the specified mesh animation and uses the specified processor to process and save the generated mesh animation to a corresponding file in the output directory specified in the import() method.To customize actions to be performed on importing mesh animations, when implementing a custom importer, you can override the onImportAnimation() method.
+			</summary> 
+			<param name="processor"> Import processor to be used for this import operation. </param>
+			<param name="animation"> Target UNIGINE's mesh instance to store the specified imported mesh animation. </param>
+			<param name="import_animation"> ImportMesh structure pointer. The metadata for the animation that needs to be imported. </param> 
+		</member>
+		<member name="M:Unigine.Importer.getBasis(Importer::Axis,Importer::Axis,Unigine.dmat4)">
+			<summary>
+			Returns the transformation matrix for the basis specified by axes.
+			</summary> 
+			<param name="up_axis"> Up axis of the basis. </param>
+			<param name="front_axis"> Front axis of the basis. </param>
+			<param name="ret"> Transformation matrix for the basis specified by axes. </param> 
+		</member>
+		<member name="M:Unigine.Importer.onComputeBoundBox(ImportMesh)">
+			<summary>
+			Extendable method for custom bound box computation.
+			</summary> 
+			<param name="import_mesh"> Imported mesh. </param> 
+		</member>
+		<member name="M:Unigine.Importer.onImportAnimation(ImportProcessor,MeshPtr,ImportAnimation)">
+			<summary>
+			Animation import event handler function. This function is called each time when the importAnimation() function is called. You can specify your custom actions to be performed on animation import.
+			</summary> 
+			<param name="processor"> Import processor used for this import operation. </param>
+			<param name="animation"> Target UNIGINE's mesh instance to store the specified imported mesh animation. </param>
+			<param name="import_animation"> ImportMesh structure pointer.The metadata for the animation that needs to be imported. </param> 
+			<returns>true if the specified mesh animation was successfully imported; otherwise, false.</returns>
+		</member>
 		<member name="F:Unigine.Importer.IMPORT_LIGHTS">
 			<summary>
 			Flag indicating that lights are to be imported.
@@ -458,6 +515,41 @@
 			Flag indicating that joints (bones) for animated FBX assets are to be imported.
 		</summary>
 		</member>
+		<member name="F:Unigine.Importer.Axis_None">
+			<summary>
+			Axis none.
+		</summary>
+		</member>
+		<member name="F:Unigine.Importer.Axis_X">
+			<summary>
+			X axis.
+		</summary>
+		</member>
+		<member name="F:Unigine.Importer.Axis_NX">
+			<summary>
+			Negative X axis.
+		</summary>
+		</member>
+		<member name="F:Unigine.Importer.Axis_Y">
+			<summary>
+			Y axis.
+		</summary>
+		</member>
+		<member name="F:Unigine.Importer.Axis_NY">
+			<summary>
+			Negative Y axis.
+		</summary>
+		</member>
+		<member name="F:Unigine.Importer.Axis_Z">
+			<summary>
+			Z axis.
+		</summary>
+		</member>
+		<member name="F:Unigine.Importer.Axis_NZ">
+			<summary>
+			Negative Z axis.
+		</summary>
+		</member>
 		<member name="M:Unigine.ImportProcessor.#ctor">
 			<summary>
 			Constructor. Creates an empty import processor.
@@ -469,7 +561,7 @@
 			</summary> 
 			<param name="imp"> Importer to be used. </param> 
 		</member>
-		<member name="M:Unigine.ImportProcessor.getImporter">
+		<member name="M:Unigine.ImportProcessor.getImporter const">
 			<summary>
 			Returns the importer for the import processor.
 			</summary>  
@@ -481,7 +573,7 @@
 			</summary> 
 			<param name="path"> Output path to be set. </param> 
 		</member>
-		<member name="M:Unigine.ImportProcessor.getOutputPath">
+		<member name="M:Unigine.ImportProcessor.getOutputPath const">
 			<summary>
 			Returns the current output path used to put files with imported scene elements to.
 			</summary>  
@@ -613,6 +705,22 @@
 			<param name="import_texture"> ImportTexture structure pointer. </param> 
 			<returns>true if the specified texture is successfully processed; otherwise, false.</returns>
 		</member>
+		<member name="M:Unigine.ImportProcessor.processAnimation(MeshPtr,ImportAnimation)">
+			<summary>
+			Performs mesh animation processing: saves the specified generated mesh animation to a corresponding file in the output directory.					To customize actions to be performed on mesh animation processing, when implementing a custom import processor, you can override the onProcessAnimation() method.
+			</summary> 
+			<param name="animation"> UNIGINE's mesh instance generated for the specified imported mesh animation. </param>
+			<param name="import_animation"> ImportAnimation structure pointer. </param> 
+			<returns>true if the specified animation is successfully processed; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ImportProcessor.onProcessAnimation(MeshPtr,ImportAnimation)">
+			<summary>
+			Animation processing event handler function. This function is called each time when the processAnimation() function is called. You can specify your custom actions to be performed on animation processing.
+			</summary> 
+			<param name="animation"> UNIGINE's mesh instance generated for the specified imported mesh animation. </param>
+			<param name="import_animation"> ImportAnimation structure pointer. </param> 
+			<returns>true if the specified animation is successfully processed; otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.ImportScene.#ctor">
 			<summary>
 			Constructor. Creates an empty import scene
@@ -658,85 +766,85 @@
 			<param name="parent"> Scene graph node to add a new node to. </param> 
 			<returns>ImportNode structure pointer.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getAnimation(int)">
+		<member name="M:Unigine.ImportScene.getAnimation(int) const">
 			<summary>
 			Returns the animation with a given index.
 			</summary> 
 			<param name="i"> Animation index, in the range from 0 to the total number of animations in the scene. </param> 
 			<returns>ImportAnimation structure pointer.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getAnimations">
+		<member name="M:Unigine.ImportScene.getAnimations const">
 			<summary>
 			Returns a vector containing all scene animations.
 			</summary>  
 			<returns>Vector containing all scene animations as ImportAnimation structure pointers.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getCamera(int)">
+		<member name="M:Unigine.ImportScene.getCamera(int) const">
 			<summary>
 			Returns the camera with a given index.
 			</summary> 
 			<param name="i"> Camera index, in the range from 0 to the total number of cameras in the scene. </param> 
 			<returns>ImportCamera structure pointer.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getCameras">
+		<member name="M:Unigine.ImportScene.getCameras const">
 			<summary>
 			Returns a vector containing all scene cameras.
 			</summary>  
 			<returns>Vector containing all scene cameras as ImportCamera structure pointers.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getLight(int)">
+		<member name="M:Unigine.ImportScene.getLight(int) const">
 			<summary>
 			Returns the light with a given index.
 			</summary> 
 			<param name="i"> Light index, in the range from 0 to the total number of lights in the scene. </param> 
 			<returns>ImportLight structure pointer.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getLights">
+		<member name="M:Unigine.ImportScene.getLights const">
 			<summary>
 			Returns a vector containing all scene lights.
 			</summary>  
 			<returns>Vector containing all scene lights as ImportLight structure pointers.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getMaterial(int)">
+		<member name="M:Unigine.ImportScene.getMaterial(int) const">
 			<summary>
 			Returns the material with a given index.
 			</summary> 
 			<param name="i"> Material index, in the range from 0 to the total number of materials in the scene. </param> 
 			<returns>ImportMaterial structure pointer.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getMaterials">
+		<member name="M:Unigine.ImportScene.getMaterials const">
 			<summary>
 			Returns a vector containing all scene materials.
 			</summary>  
 			<returns>Vector containing all scene materials as ImportMaterial structure pointers.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getMesh(int)">
+		<member name="M:Unigine.ImportScene.getMesh(int) const">
 			<summary>
 			Returns the mesh with a given index.
 			</summary> 
 			<param name="i"> Mesh index, in the range from 0 to the total number of meshes in the scene. </param> 
 			<returns>ImportMesh structure pointer.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getMeshes">
+		<member name="M:Unigine.ImportScene.getMeshes const">
 			<summary>
 			Returns a vector containing all scene meshes.
 			</summary>  
 			<returns>Vector containing all scene meshes as ImportMesh structure pointers.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getNode(int)">
+		<member name="M:Unigine.ImportScene.getNode(int) const">
 			<summary>
 			Returns the node with a given index.
 			</summary> 
 			<param name="i"> Node index, in the range from 0 to the total number of nodes in the scene. </param> 
 			<returns>ImportNode structure pointer.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getNodes">
+		<member name="M:Unigine.ImportScene.getNodes const">
 			<summary>
 			Returns a vector containing all scene graph nodes.
 			</summary>  
 			<returns>Vector containing all scene graph nodes as ImportNode structure pointers.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getTexture(int)">
+		<member name="M:Unigine.ImportScene.getTexture(int) const">
 			<summary>
 			Returns the texture with a given index.
 			</summary> 
@@ -750,49 +858,49 @@
 			<param name="filepath"> Path to texture file. </param> 
 			<returns>ImportTexture structure pointer if it exists; otherwise, nullptr.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getTextures">
+		<member name="M:Unigine.ImportScene.getTextures const">
 			<summary>
 			Returns a vector containing all scene textures.
 			</summary>  
 			<returns>Vector containing all scene textures as ImportTexture structure pointers.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getNumAnimations">
+		<member name="M:Unigine.ImportScene.getNumAnimations const">
 			<summary>
 			Returns the total number of animations in the scene.
 			</summary>  
 			<returns>Number of animations in the scene.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getNumCameras">
+		<member name="M:Unigine.ImportScene.getNumCameras const">
 			<summary>
 			Returns the total number of cameras in the scene.
 			</summary>  
 			<returns>Number of cameras in the scene.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getNumLights">
+		<member name="M:Unigine.ImportScene.getNumLights const">
 			<summary>
 			Returns the total number of lights in the scene.
 			</summary>  
 			<returns>Number of lights in the scene.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getNumMaterials">
+		<member name="M:Unigine.ImportScene.getNumMaterials const">
 			<summary>
 			Returns the total number of materials in the scene.
 			</summary>  
 			<returns>Number of materials in the scene.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getNumMeshes">
+		<member name="M:Unigine.ImportScene.getNumMeshes const">
 			<summary>
 			Returns the total number of meshes in the scene.
 			</summary>  
 			<returns>Number of meshes in the scene.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getNumNodes">
+		<member name="M:Unigine.ImportScene.getNumNodes const">
 			<summary>
 			Returns the total number of nodes in the scene.
 			</summary>  
 			<returns>Number of nodes in the scene.</returns>
 		</member>
-		<member name="M:Unigine.ImportScene.getNumTextures">
+		<member name="M:Unigine.ImportScene.getNumTextures const">
 			<summary>
 			Returns the total number of textures in the scene.
 			</summary>  
@@ -828,7 +936,7 @@
 			</summary> 
 			<param name="node"> Pointer to an ImportNode structure to be removed. </param> 
 		</member>
-		<member name="M:Unigine.ImportScene.findTexture(char)">
+		<member name="M:Unigine.ImportScene.findTexture(char) const">
 			<summary>
 			Returns a texture used in the scene by its file path.
 			</summary> 
@@ -841,6 +949,19 @@
 			</summary> 
 			<param name="old_material"> Pointer to ImportMaterial structure to be replaced. </param>
 			<param name="new_material"> Pointer to ImportMaterial structure to be used to replace the old material. </param> 
+		</member>
+		<member name="M:Unigine.ImportScene.removeAnimation(ImportAnimation)">
+			<summary>
+			Removes the specified animation from the scene.
+			</summary> 
+			<param name="animation"> Pointer to an ImportAnimation structure to be removed. </param> 
+		</member>
+		<member name="M:Unigine.ImportScene.getMaterial(char) const">
+			<summary>
+			Returns the material with a given name.
+			</summary> 
+			<param name="name"> Name of the material. </param> 
+			<returns>ImportMaterial structure pointer.</returns>
 		</member>
 	</members>
 </doc>

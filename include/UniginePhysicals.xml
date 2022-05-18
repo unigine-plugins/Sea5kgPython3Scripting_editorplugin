@@ -85,7 +85,7 @@
 		</member>
 		<member name="M:Unigine.PhysicalTrigger.getBody(int)">
 			<summary>
-			Returns the specified body that intersects the physical trigger .
+			Returns the specified body that intersects the physical trigger.
 			</summary> 
 			<param name="num"> Body number. </param> 
 			<returns>Intersected body.</returns>
@@ -146,8 +146,7 @@
 		</member>
 		<member name="M:Unigine.PhysicalTrigger.addEnterCallback(Unigine.CallbackBase1{Unigine.Ptr{Unigine.Body}})">
 			<summary>
-			Sets the callback function to be fired on entering the physical trigger.
-			Adds a callback function to be fired when a body enters the physical trigger. The callback function must receive a Body as its first argument. In addition, it can also take 2 arguments of any type.
+								Adds a callback function to be fired when a body enters the physical trigger. The callback function must receive a Body as its first argument. In addition, it can also take 2 arguments of any type.
 			</summary> 
 			<param name="func"> Callback pointer. </param> 
 			<returns>ID of the last added enter callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
@@ -190,7 +189,7 @@
 		</member>
 		<member name="M:Unigine.PhysicalTrigger.addLeaveCallback(Unigine.CallbackBase1{Unigine.Ptr{Unigine.Body}})">
 			<summary>
-			Adds a callback function to be fired when a body leaves the physical trigger. The callback function must receive a Body as its first argument. In addition, it can also take 2 arguments of any type.
+								Adds a callback function to be fired when a body leaves the physical trigger. The callback function must receive a Body as its first argument. In addition, it can also take 2 arguments of any type.
 			</summary> 
 			<param name="func"> Callback pointer. </param> 
 			<returns>ID of the last added leave callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>

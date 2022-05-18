@@ -145,6 +145,12 @@
 			</summary>  
 			<returns>List of available Syncker channels (id -&gt; SynckerChannelDef).</returns>
 		</member>
+		<member name="M:Unigine.IG.IGConfig.getPrecipitationTypes">
+			<summary>
+			Returns the list of available precipitation types (id -&gt; PrecipitationTypeDef).
+			</summary>  
+			<returns>List of available precipitation types (id -&gt; PrecipitationTypeDef).</returns>
+		</member>
 		<member name="F:Unigine.IG.IGConfig.ITEM_TYPE_STRING">
 			<summary>
 			The parameter type is a string.

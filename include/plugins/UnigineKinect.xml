@@ -434,7 +434,7 @@
 		</member>
 		<member name="F:Unigine.Plugins.Kinect.STREAM_ALL">
 			<summary>
-			The STREAM_COLOR, STREAM_INFRARED, STREAM_DEPTH, STREAM_BODY constants combined by using logical OR.
+			The COLOR, INFRARED, DEPTH, BODY constants combined by using logical OR.
 		</summary>
 		</member>
 		<member name="F:Unigine.Plugins.Kinect.STREAM_BODY">

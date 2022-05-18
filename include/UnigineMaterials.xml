@@ -4,27 +4,6 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.Materials.isMaterial(char) const">
-			<summary>
-			Checks if there is a material with a given name.
-			</summary> 
-			<param name="name"> Material name. </param> 
-			<returns>true if the material exists; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Materials.isMaterial(Unigine.UGUID) const">
-			<summary>
-			Checks if there is a material with a given GUID.
-			</summary> 
-			<param name="guid"> A material GUID. </param> 
-			<returns>true if the material exists; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Materials.findMaterial(char) const">
-			<summary>
-			Searches for a material with a given name.
-			</summary> 
-			<param name="name"> Material name. </param> 
-			<returns>Material smart pointer.</returns>
-		</member>
 		<member name="M:Unigine.Materials.reloadMaterials">
 			<summary>
 			Reloads all loaded materials.
@@ -49,13 +28,6 @@
 			</summary> 
 			<param name="name"> A manual material name. </param> 
 			<returns>A manual material smart pointer.</returns>
-		</member>
-		<member name="M:Unigine.Materials.findBaseMaterial(char) const">
-			<summary>
-			Searches for a base material by the given name.
-			</summary> 
-			<param name="name"> A base material name. </param> 
-			<returns>A base material.</returns>
 		</member>
 		<member name="M:Unigine.Materials.setPrecompileAllShaders(bool)">
 			<summary>
@@ -124,32 +96,11 @@
 			<param name="guid"> A material GUID. </param> 
 			<returns>A material smart pointer.</returns>
 		</member>
-		<member name="M:Unigine.Materials.isManualMaterial(char) const">
-			<summary>
-			Checks if the material with the given name is the manual one.
-			</summary> 
-			<param name="name"> A material name. </param> 
-			<returns>1 if the material is the manual one; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Materials.isBaseMaterial(char) const">
-			<summary>
-			Checks if the material with the given name is the base one.
-			</summary> 
-			<param name="name"> A material name. </param> 
-			<returns>1 if the material is the base one; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Materials.getNumMaterials const">
 			<summary>
 			Returns the number of materials loaded for the current project.
 			</summary>  
 			<returns>The number of materials.</returns>
-		</member>
-		<member name="M:Unigine.Materials.getMaterialName(int) const">
-			<summary>
-			Returns a name of the material with the given number.
-			</summary> 
-			<param name="num"> A material number. </param> 
-			<returns>A material name.</returns>
 		</member>
 		<member name="M:Unigine.Materials.removeMaterial(Unigine.UGUID,bool,bool)">
 			<summary>

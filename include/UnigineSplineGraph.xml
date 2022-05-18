@@ -173,26 +173,26 @@
 		</member>
 		<member name="M:Unigine.SplineGraph.calcSegmentPoint(int,float) const">
 			<summary>
-			Returns the coordinates of the point on the given segment.
+			Returns the coordinates of the point at the parametrically specified position on the segment (along the T axis).
 			</summary> 
 			<param name="index"> Segment index. </param>
-			<param name="t"> Position of the point on the segment, in increments of the segment's length normalized to 1. </param> 
+			<param name="t"> Position of the point on the segment, specified parametrically along the T (times axis) in the [0.0f, 1.0f] range. </param> 
 			<returns>Coordinates of the point on the given segment.</returns>
 		</member>
 		<member name="M:Unigine.SplineGraph.calcSegmentTangent(int,float) const">
 			<summary>
-			Returns the tangent coordinates for the point on the given segment.
+			Returns the tangent coordinates for the point at the parametrically specified position on the segment (along the T axis).
 			</summary> 
 			<param name="index"> Segment index. </param>
-			<param name="t"> Position of the point on the segment, in increments of the segment's length normalized to 1. </param> 
+			<param name="t"> Position of the point on the segment, specified parametrically along the T (times axis) in the [0.0f, 1.0f] range. </param> 
 			<returns>Tangent coordinates for the point on the given segment.</returns>
 		</member>
 		<member name="M:Unigine.SplineGraph.calcSegmentUpVector(int,float) const">
 			<summary>
-			Returns the "up" vector coordinates for the point on the given segment.
+			Returns the "up" vector coordinates for the point at the parametrically specified position on the segment (along the T axis).
 			</summary> 
 			<param name="index"> Segment index. </param>
-			<param name="t"> Position of the point on the segment, in increments of the segment's length normalized to 1. </param> 
+			<param name="t"> Position of the point on the segment, specified parametrically along the T (times axis) in the [0.0f, 1.0f] range. </param> 
 			<returns>"Up" vector coordinates for the point on the given segment.</returns>
 		</member>
 		<member name="M:Unigine.SplineGraph.clear">
@@ -242,10 +242,10 @@
 		</member>
 		<member name="M:Unigine.SplineGraph.insertPointToSegment(int,float)">
 			<summary>
-			Inserts a new point into the given segment with the specified offset from the starting point.
+			Inserts a new point into the given segment. The point is parametrically specified on the T (times axis) in the [0.0f, 1.0f] range from the segment's start point.
 			</summary> 
 			<param name="segment_index"> Segment index. </param>
-			<param name="new_point_t"> Offset of the new point to be added from the starting point of the segment in the range [0.0f, 1.0f]. </param> 
+			<param name="new_point_t"> Coordinate of the new point to be added along the horizontal T (times) axis in the range [0.0f, 1.0f]. </param> 
 		</member>
 		<member name="M:Unigine.SplineGraph.getPointSegmentsIndices(int,Unigine.Vector{int,int,Unigine.VectorAllocator}) const">
 			<summary>

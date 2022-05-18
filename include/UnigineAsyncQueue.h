@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -47,6 +47,7 @@ public:
 	static int removeFile(int id);
 	static int forceFile(int id);
 	static int checkFile(int id);
+	static int loadImageInfo(const char *name, int group = 0, float weight = 0.0f);
 	static int loadImage(const char *name, int group = 0, float weight = 0.0f);
 	static int removeImage(int id);
 	static int forceImage(int id);

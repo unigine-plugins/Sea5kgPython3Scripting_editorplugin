@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -32,7 +32,7 @@ class UNIGINE_API Player : public Node
 public:
 	static bool convertible(Node *node) { return node && node->isPlayer(); }
 
-	void setProjection(const Math::mat4 &projection);
+	void setProjection(const Math::mat4& projection);
 	Math::mat4 getProjection() const;
 	Math::mat4 getAspectCorrectedProjection(int width = -1, int height = -1) const;
 	void setFovMode(int mode);
@@ -48,9 +48,9 @@ public:
 	float getZNear() const;
 	void setZFar(float zfar);
 	float getZFar() const;
-	void setUp(const Math::vec3 &up);
+	void setUp(const Math::vec3& up);
 	Math::vec3 getUp() const;
-	void setObliqueFrustumPlane(const Math::Vec4 & plane);
+	void setObliqueFrustumPlane(const Math::Vec4& plane);
 	Math::Vec4 getObliqueFrustumPlane() const;
 	void setObliqueFrustum(bool frustum);
 	bool isObliqueFrustum() const;
@@ -62,11 +62,9 @@ public:
 	int getSourceMask() const;
 	void setReverbMask(int mask);
 	int getReverbMask() const;
-	void setPostMaterials(const char *materials);
-	const char *getPostMaterials() const;
-	void setViewDirection(const Math::vec3 &direction);
+	void setViewDirection(const Math::vec3& direction);
 	Math::vec3 getViewDirection() const;
-	void setVelocity(const Math::vec3 &velocity);
+	void setVelocity(const Math::vec3& velocity);
 	Math::vec3 getVelocity() const;
 	void setControlled(bool controlled);
 	bool isControlled() const;
@@ -94,7 +92,7 @@ public:
 	void getDirectionFromScreen(Math::Vec3 & p0, Math::Vec3 & p1, int x = -1, int y = -1, int width = -1, int height = -1) const;
 	Math::vec3 getDirectionFromScreen(int x = -1, int y = -1, int width = -1, int height = -1) const;
 	Math::mat4 getProjectionFromScreen(int x0, int y0, int x1, int y1, int width = -1, int height = -1) const;
-	int getScreenPosition(int & x, int & y, const Math::Vec3 & point, int width = -1, int height = -1) const;
+	int getScreenPosition(int & x, int & y, const Math::Vec3& point, int width = -1, int height = -1) const;
 };
 typedef Ptr<Player> PlayerPtr;
 
@@ -107,7 +105,7 @@ public:
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<PlayerDummy> create();
-	void setViewDirection(const Math::vec3 &direction);
+	void setViewDirection(const Math::vec3& direction);
 	Math::vec3 getViewDirection() const;
 };
 typedef Ptr<PlayerDummy> PlayerDummyPtr;
@@ -163,7 +161,7 @@ public:
 	float getPhiAngle() const;
 	void setThetaAngle(float angle);
 	float getThetaAngle() const;
-	void setViewDirection(const Math::vec3 &direction);
+	void setViewDirection(const Math::vec3& direction);
 	Math::vec3 getViewDirection() const;
 
 	enum
@@ -228,7 +226,7 @@ public:
 	float getCollisionRadius() const;
 	void setTarget(const Ptr<Node> &target);
 	Ptr<Node> getTarget() const;
-	void setAnchor(const Math::vec3 &anchor);
+	void setAnchor(const Math::vec3& anchor);
 	Math::vec3 getAnchor() const;
 	void setMinDistance(float distance);
 	float getMinDistance() const;
@@ -265,7 +263,7 @@ public:
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<PlayerSpectator> create();
-	void setViewDirection(const Math::vec3 &direction);
+	void setViewDirection(const Math::vec3& direction);
 	Math::vec3 getViewDirection() const;
 	void setCollision(int collision);
 	int getCollision() const;

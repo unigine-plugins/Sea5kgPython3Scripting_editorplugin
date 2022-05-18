@@ -11,7 +11,9 @@
 		</member>
 		<member name="M:Unigine.Set.#ctor(std::initializer_list{Key})">
 			<summary>
-			</summary>  
+			Constructor. Creates a set from keys of the giving list.
+			</summary> 
+			<param name="list"> List of keys. </param> 
 		</member>
 		<member name="M:Unigine.Set.#ctor(Unigine.Set{Key,Allocator})">
 			<summary>
@@ -51,11 +53,15 @@
 		</member>
 		<member name="M:Unigine.Set.operator=(Unigine.Set{Key,Allocator})">
 			<summary>
-			</summary>  
+			Assignment operator for the set.
+			</summary> 
+			<param name="o"> Set. </param> 
 		</member>
 		<member name="M:Unigine.Set.operator=(Unigine.Set{Key,Allocator})">
 			<summary>
-			</summary>  
+			Assignment operator for the set.
+			</summary> 
+			<param name="o"> Set. </param> 
 		</member>
 		<member name="M:Unigine.Set.append(Unigine.Set{Key,Allocator})">
 			<summary>

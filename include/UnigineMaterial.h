@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -17,6 +17,7 @@
 
 #include "UnigineRender.h"
 #include "UnigineXml.h"
+#include "UnigineUlon.h"
 #include "UnigineStreams.h"
 #include "UnigineImage.h"
 #include "UnigineTextures.h"
@@ -35,17 +36,16 @@ public:
 
 	enum
 	{
-		OPTION_BLEND = 0,
+		OPTION_TRANSPARENT = 0,
 		OPTION_ORDER,
 		OPTION_SHADOW_MASK,
 		OPTION_VIEWPORT_MASK,
-		OPTION_TRANSPARENT,
+		OPTION_BLEND_SRC,
+		OPTION_BLEND_DEST,
 		OPTION_DEPTH_MASK,
 		OPTION_DEPTH_TEST,
 		OPTION_TWO_SIDED,
-		OPTION_RECEIVE_SHADOW,
 		OPTION_CAST_PROJ_OMNI_SHADOW,
-		OPTION_RECEIVE_WORLD_SHADOW,
 		OPTION_CAST_WORLD_SHADOW,
 		OPTION_OVERLAP,
 	};
@@ -67,61 +67,64 @@ public:
 
 	enum
 	{
-		TEXTURE_IMAGE = 0,
-		TEXTURE_CURVE,
-		TEXTURE_GBUFFER_ALBEDO,
-		TEXTURE_GBUFFER_SHADING,
-		TEXTURE_GBUFFER_NORMAL,
-		TEXTURE_GBUFFER_VELOCITY,
-		TEXTURE_GBUFFER_MATERIAL_MASK,
-		TEXTURE_GBUFFER_FEATURES,
-		TEXTURE_AUXILIARY,
-		TEXTURE_REFRACTION,
-		TEXTURE_REFRACTION_MASK,
-		TEXTURE_TRANSPARENT_BLUR,
-		TEXTURE_LIGHTS,
-		TEXTURE_BENT_NORMAL,
-		TEXTURE_SSAO,
-		TEXTURE_SSGI,
-		TEXTURE_SSR,
-		TEXTURE_CURVATURE,
-		TEXTURE_DOF_MASK,
-		TEXTURE_AUTO_EXPOSURE,
-		TEXTURE_SCREEN_COLOR,
-		TEXTURE_SCREEN_COLOR_OLD,
-		TEXTURE_NORMAL_UNPACK,
-		TEXTURE_CURRENT_DEPTH,
-		TEXTURE_OPACITY_DEPTH,
-		TEXTURE_LINEAR_DEPTH,
-		TEXTURE_OPACITY_SCREEN,
-		TEXTURE_LIGHT_IMAGE,
-		TEXTURE_LIGHT_SHADOW_DEPTH,
-		TEXTURE_LIGHT_SHADOW_COLOR,
-		TEXTURE_TRANSPARENT_ENVIRONMENT,
-		TEXTURE_REFLECTION_2D,
-		TEXTURE_REFLECTION_CUBE,
-		TEXTURE_SCATTERING_SKY_LUT,
-		TEXTURE_WBUFFER_CONSTANT_ID,
-		TEXTURE_WBUFFER_DIFFUSE,
-		TEXTURE_WBUFFER_NORMAL,
-		TEXTURE_WBUFFER_WATER,
-		TEXTURE_WBUFFER_SS_ENVIRONMENT,
-		TEXTURE_WBUFFER_WU_MASK,
-		TEXTURE_WBUFFER_PLANAR_REFLECTION,
-		TEXTURE_CLOUDS_SCREEN,
-		TEXTURE_CLOUDS_STATIC_COVERAGE,
-		TEXTURE_CLOUDS_DYNAMIC_COVERAGE,
-		TEXTURE_TERRAIN_GLOBAL_DEPTH,
-		TEXTURE_TERRAIN_GLOBAL_FLAT_POSITION,
-		TEXTURE_FIELD_HEIGHT_ARRAY,
-		TEXTURE_FIELD_SHORELINE_ARRAY,
-		TEXTURE_DECAL_DEPTH,
-		TEXTURE_DECAL_ALBEDO,
-		TEXTURE_DECAL_NORMAL,
-		TEXTURE_DECAL_SHADING,
-		TEXTURE_PROCEDURAL,
-		TEXTURE_FILTER,
-		TEXTURE_CUSTOM,
+		TEXTURE_SOURCE_ASSET = 0,
+		TEXTURE_SOURCE_CURVE,
+		TEXTURE_SOURCE_PROCEDURAL,
+		TEXTURE_SOURCE_GBUFFER_ALBEDO,
+		TEXTURE_SOURCE_GBUFFER_SHADING,
+		TEXTURE_SOURCE_GBUFFER_NORMAL,
+		TEXTURE_SOURCE_GBUFFER_VELOCITY,
+		TEXTURE_SOURCE_GBUFFER_MATERIAL_MASK,
+		TEXTURE_SOURCE_GBUFFER_FEATURES,
+		TEXTURE_SOURCE_AUXILIARY,
+		TEXTURE_SOURCE_REFRACTION,
+		TEXTURE_SOURCE_REFRACTION_MASK,
+		TEXTURE_SOURCE_TRANSPARENT_BLUR,
+		TEXTURE_SOURCE_LIGHTS,
+		TEXTURE_SOURCE_BENT_NORMAL,
+		TEXTURE_SOURCE_SSAO,
+		TEXTURE_SOURCE_SSGI,
+		TEXTURE_SOURCE_SSR,
+		TEXTURE_SOURCE_CURVATURE,
+		TEXTURE_SOURCE_DOF_MASK,
+		TEXTURE_SOURCE_AUTO_EXPOSURE,
+		TEXTURE_SOURCE_AUTO_WHITE_BALANCE,
+		TEXTURE_SOURCE_SCREEN_COLOR,
+		TEXTURE_SOURCE_SCREEN_COLOR_OPACITY,
+		TEXTURE_SOURCE_SCREEN_COLOR_OLD,
+		TEXTURE_SOURCE_SCREEN_COLOR_OLD_REPROJECTION,
+		TEXTURE_SOURCE_NORMAL_UNPACK,
+		TEXTURE_SOURCE_CURRENT_DEPTH,
+		TEXTURE_SOURCE_OPACITY_DEPTH,
+		TEXTURE_SOURCE_LINEAR_DEPTH,
+		TEXTURE_SOURCE_LIGHT_IMAGE,
+		TEXTURE_SOURCE_LIGHT_SHADOW_DEPTH,
+		TEXTURE_SOURCE_LIGHT_SHADOW_COLOR,
+		TEXTURE_SOURCE_TRANSPARENT_ENVIRONMENT,
+		TEXTURE_SOURCE_REFLECTION_2D,
+		TEXTURE_SOURCE_REFLECTION_CUBE,
+		TEXTURE_SOURCE_SCATTERING_SKY_LUT,
+		TEXTURE_SOURCE_WBUFFER_CONSTANT_ID,
+		TEXTURE_SOURCE_WBUFFER_DIFFUSE,
+		TEXTURE_SOURCE_WBUFFER_NORMAL,
+		TEXTURE_SOURCE_WBUFFER_WATER,
+		TEXTURE_SOURCE_WBUFFER_SS_ENVIRONMENT,
+		TEXTURE_SOURCE_WBUFFER_WU_MASK,
+		TEXTURE_SOURCE_WBUFFER_PLANAR_REFLECTION,
+		TEXTURE_SOURCE_WBUFFER_OPACITY_SCREEN,
+		TEXTURE_SOURCE_CLOUDS_SCREEN,
+		TEXTURE_SOURCE_CLOUDS_STATIC_COVERAGE,
+		TEXTURE_SOURCE_CLOUDS_REGION_MASK,
+		TEXTURE_SOURCE_CLOUDS_DYNAMIC_COVERAGE,
+		TEXTURE_SOURCE_TERRAIN_GLOBAL_DEPTH,
+		TEXTURE_SOURCE_TERRAIN_GLOBAL_FLAT_POSITION,
+		TEXTURE_SOURCE_FIELD_HEIGHT_ARRAY,
+		TEXTURE_SOURCE_FIELD_SHORELINE_ARRAY,
+		TEXTURE_SOURCE_DECAL_DEPTH,
+		TEXTURE_SOURCE_DECAL_ALBEDO,
+		TEXTURE_SOURCE_DECAL_NORMAL,
+		TEXTURE_SOURCE_DECAL_SHADING,
+		TEXTURE_SOURCE_CUSTOM,
 	};
 
 	enum
@@ -142,54 +145,106 @@ public:
 		PARAMETER_ARRAY_INT4,
 		PARAMETER_COMBINER,
 	};
+
+	enum DATA_TYPE
+	{
+		DATA_TYPE_OPTION = 0,
+		DATA_TYPE_STATE,
+		DATA_TYPE_PARAMETER,
+		DATA_TYPE_TEXTURE,
+		DATA_TYPE_GROUP,
+	};
+
+	enum WIDGET
+	{
+		WIDGET_EDIT_INT,
+		WIDGET_EDIT_INT2,
+		WIDGET_EDIT_INT3,
+		WIDGET_EDIT_INT4,
+		WIDGET_EDIT_FLOAT,
+		WIDGET_EDIT_FLOAT2,
+		WIDGET_EDIT_FLOAT3,
+		WIDGET_EDIT_FLOAT4,
+		WIDGET_TOGGLE,
+		WIDGET_COMBOBOX,
+		WIDGET_TEXTURE_ASSET,
+		WIDGET_TEXTURE_CURVE,
+		WIDGET_ACCORDION,
+		WIDGET_SLIDER,
+		WIDGET_COLOR,
+		WIDGET_UV,
+		WIDGET_MASK24,
+		WIDGET_MASK32,
+	};
 	static Ptr<Material> create();
-	int getBlendDestFunc() const;
-	int getBlendSrcFunc() const;
-	void setBlendFunc(int src, int dest);
-	void setCastShadow(int shadow);
-	int getCastShadow() const;
-	void setCastWorldShadow(int shadow);
-	int getCastWorldShadow() const;
-	void setShadowMask(int mask);
-	int getShadowMask() const;
-	void setDepthMask(int mask);
-	int getDepthMask() const;
-	void setDepthTest(int test);
-	int getDepthTest() const;
-	void setOverlap(int overlap);
-	int getOverlap() const;
-	void setOrder(int order);
-	int getOrder() const;
-	const char *getOptionTitle(int option) const;
-	const char *getOptionTooltip(int option) const;
-	const char *getOptionGroup(int option) const;
-	int getOptionWidgetIndex(int option) const;
-	bool isOptionHidden(int option) const;
 	bool setParent(const Ptr<Material> &material, bool save_all_values = true);
 	Ptr<Material> getParent() const;
-	bool isParent(const char *name) const;
-	bool isParent(const UGUID & guid) const;
+	bool isParent(const Ptr<Material> &parent) const;
+	bool isParent(const UGUID& guid) const;
 	Ptr<Material> getBaseMaterial() const;
 	int getNumChildren() const;
 	Ptr<Material> getChild(int num) const;
-	Ptr<Material> clone(const char *name, const char *path, const UGUID & guid);
-	Ptr<Material> clone(const char *name, const char *path);
-	Ptr<Material> clone(const char *name);
+	Ptr<Material> clone(const UGUID& guid);
 	Ptr<Material> clone();
-	Ptr<Material> inherit(const char *name, const char *path, const UGUID & guid);
-	Ptr<Material> inherit(const char *name, const char *path);
-	Ptr<Material> inherit(const char *name);
+	Ptr<Material> inherit(const UGUID& guid);
 	Ptr<Material> inherit();
-	void setName(const char *name);
-	const char *getName() const;
+	const char *getNamespaceName() const;
+	const char *getManualName() const;
 	UGUID getGUID() const;
-	void setPath(const char *path);
 	const char *getPath() const;
-	void setFileGUID(const UGUID & fileguid);
-	UGUID getFileGUID() const;
 	bool isNodeTypeSupported(Node::TYPE type) const;
 	bool isNodeSupported(const Ptr<Node> &node) const;
 	bool canRenderNode() const;
+	int getNumUIItems() const;
+	Material::DATA_TYPE getUIItemDataType(int item) const;
+	int getUIItemDataID(int item) const;
+	bool isUIItemHidden(int item) const;
+	const char *getUIItemTitle(int item) const;
+	const char *getUIItemTooltip(int item) const;
+	Material::WIDGET getUIItemWidget(int item) const;
+	int getUIItemParent(int item) const;
+	int getUIItemNumChildren(int item) const;
+	int getUIItemChild(int item, int num) const;
+	bool isUIItemSliderMinExpand(int item) const;
+	bool isUIItemSliderMaxExpand(int item) const;
+	float getUIItemSliderMinValue(int item) const;
+	float getUIItemSliderMaxValue(int item) const;
+	int getUIItemGroupToggleStateID(int item) const;
+	bool isUIItemGroupCollapsed(int item) const;
+	static const char *widgetToString(Material::WIDGET widget);
+	static Material::WIDGET stringToWidget(const char *str);
+	void setOption(int num, int value);
+	int getOption(int num) const;
+	bool isOptionOverridden(int num) const;
+	void resetOption(int num);
+	void setTransparent(int transparent);
+	int getTransparent() const;
+	bool isWater() const;
+	bool isDeferred() const;
+	bool isForward() const;
+	bool isAlphaTest() const;
+	void setBlendDestFunc(int func);
+	int getBlendDestFunc() const;
+	void setBlendSrcFunc(int func);
+	int getBlendSrcFunc() const;
+	void setShadowMask(int mask);
+	int getShadowMask() const;
+	void setViewportMask(int mask);
+	int getViewportMask() const;
+	void setDepthMask(int mask);
+	int getDepthMask() const;
+	void setOrder(int order);
+	int getOrder() const;
+	void setCastShadow(bool shadow);
+	bool isCastShadow() const;
+	void setCastWorldShadow(bool shadow);
+	bool isCastWorldShadow() const;
+	void setDepthTest(bool test);
+	bool isDepthTest() const;
+	void setTwoSided(bool sided);
+	bool isTwoSided() const;
+	void setOverlap(bool overlap);
+	bool isOverlap() const;
 	bool checkShaderCache() const;
 	bool checkShaderCache(Render::PASS pass, Node::TYPE node_type) const;
 	bool compileShader(Render::PASS pass, Node::TYPE node_type);
@@ -202,58 +257,47 @@ public:
 	void destroyTextures();
 	int getNumParameters() const;
 	int findParameter(const char *name) const;
-	int fetchParameter(const char *name, int fast_id);
 	void resetParameter(int num);
 	bool checkParameterConditions(int num) const;
 	int getParameterType(int num) const;
-	bool isParameterHidden(int num) const;
 	bool isParameterInt(int num) const;
 	bool isParameterFloat(int num) const;
 	bool isParameterOverridden(int num) const;
 	const char *getParameterName(int num) const;
-	const char *getParameterTitle(int num) const;
-	const char *getParameterTooltip(int num) const;
-	const char *getParameterGroup(int num) const;
-	const char *getParameterWidget(int num) const;
-	int getParameterWidgetIndex(int num) const;
 	bool isParameterExpressionEnabled(int num) const;
 	void setParameterExpressionEnabled(int num, bool enabled);
 	const char *getParameterExpression(int num) const;
 	int setParameterExpression(int num, const char *expression);
-	int getParameterMinExpand(int num) const;
-	int getParameterMaxExpand(int num) const;
-	float getParameterMinValue(int num) const;
-	float getParameterMaxValue(int num) const;
 	void setParameterFloat(int num, float value);
 	void setParameterFloat(const char *name, float value);
 	float getParameterFloat(int num) const;
 	float getParameterFloat(const char *name) const;
-	void setParameterFloat2(int num, const Math::vec2 &value);
-	void setParameterFloat2(const char *name, const Math::vec2 &value);
+	void setParameterFloat2(int num, const Math::vec2& value);
+	void setParameterFloat2(const char *name, const Math::vec2& value);
 	Math::vec2 getParameterFloat2(int num) const;
 	Math::vec2 getParameterFloat2(const char *name) const;
-	void setParameterFloat3(int num, const Math::vec3 &value);
-	void setParameterFloat3(const char *name, const Math::vec3 &value);
+	void setParameterFloat3(int num, const Math::vec3& value);
+	void setParameterFloat3(const char *name, const Math::vec3& value);
 	Math::vec3 getParameterFloat3(int num) const;
 	Math::vec3 getParameterFloat3(const char *name) const;
-	void setParameterFloat4(int num, const Math::vec4 &value);
-	void setParameterFloat4(const char *name, const Math::vec4 &value);
+	void setParameterFloat4(int num, const Math::vec4& value);
+	void setParameterFloat4(const char *name, const Math::vec4& value);
 	Math::vec4 getParameterFloat4(int num) const;
 	Math::vec4 getParameterFloat4(const char *name) const;
 	void setParameterInt(int num, int value);
 	void setParameterInt(const char *name, int value);
 	int getParameterInt(int num) const;
 	int getParameterInt(const char *name) const;
-	void setParameterInt2(int num, const Math::ivec2 &value);
-	void setParameterInt2(const char *name, const Math::ivec2 &value);
+	void setParameterInt2(int num, const Math::ivec2& value);
+	void setParameterInt2(const char *name, const Math::ivec2& value);
 	Math::ivec2 getParameterInt2(int num) const;
 	Math::ivec2 getParameterInt2(const char *name) const;
-	void setParameterInt3(int num, const Math::ivec3 &value);
-	void setParameterInt3(const char *name, const Math::ivec3 &value);
+	void setParameterInt3(int num, const Math::ivec3& value);
+	void setParameterInt3(const char *name, const Math::ivec3& value);
 	Math::ivec3 getParameterInt3(int num) const;
 	Math::ivec3 getParameterInt3(const char *name) const;
-	void setParameterInt4(int num, const Math::ivec4 &value);
-	void setParameterInt4(const char *name, const Math::ivec4 &value);
+	void setParameterInt4(int num, const Math::ivec4& value);
+	void setParameterInt4(const char *name, const Math::ivec4& value);
 	Math::ivec4 getParameterInt4(int num) const;
 	Math::ivec4 getParameterInt4(const char *name) const;
 	int getParameterArraySize(int num) const;
@@ -272,19 +316,11 @@ public:
 	void setParameterArray(int num, const Vector< Math::ivec4 > &values);
 	int getNumStates() const;
 	int findState(const char *name) const;
-	int fetchTexture(const char *name, int fast_id);
-	int fetchState(const char *name, int fast_id);
-	bool isStateHidden(int num) const;
 	bool isStateOverridden(int num) const;
 	bool isStateInternal(int num) const;
 	void resetState(int num);
 	bool checkStateConditions(int num) const;
 	const char *getStateName(int num) const;
-	const char *getStateTitle(int num) const;
-	const char *getStateTooltip(int num) const;
-	const char *getStateGroup(int num) const;
-	const char *getStateSwitchGroup(int num) const;
-	int getStateWidgetIndex(int num) const;
 	const char *getStateSwitchItem(int num, int item) const;
 	int getStateSwitchNumItems(int num) const;
 	int getStateType(int num) const;
@@ -294,55 +330,35 @@ public:
 	void setState(const char *name, int value);
 	int getNumTextures() const;
 	int findTexture(const char *name) const;
-	bool isTextureHidden(int num) const;
 	bool isTextureOverridden(int num) const;
 	bool isTextureLoaded(int num) const;
 	bool isTextureInternal(int num) const;
 	void resetTexture(int num);
 	bool checkTextureConditions(int num) const;
 	const char *getTextureName(int num) const;
-	const char *getTextureTitle(int num) const;
-	const char *getTextureTooltip(int num) const;
-	const char *getTextureGroup(int num) const;
-	int getTextureWidgetIndex(int num) const;
 	int getTextureUnit(int num) const;
-	int getTextureType(int num) const;
-	int getTextureFlags(int num) const;
-	void setTextureFlags(int num, int flags);
+	int getTextureSource(int num) const;
+	int getTextureSamplerFlags(int num) const;
+	void setTextureSamplerFlags(int num, int sampler_flags);
+	int getTextureFormatFlags(int num) const;
 	int getTextureImage(int num, const Ptr<Image> &image) const;
 	int setTextureImage(int num, const Ptr<Image> &image);
 	Ptr<Texture> getTexture(int num);
+	Ptr<Texture> getTexture(const char *name);
 	void setTexture(int num, const Ptr<Texture> &texture);
 	void setTexture(const char *name, const Ptr<Texture> &texture);
 	void setTexturePath(int num, const char *path);
 	const char *getTexturePath(int num) const;
 	void setTexturePath(const char *name, const char *path);
 	const char *getTexturePath(const char *name) const;
-	int getProceduralTextureImage(int num, const Ptr<Image> &image);
-	int setProceduralTextureImage(int num, const Ptr<Image> &image);
-	void setProceduralTexture(int num, const Ptr<Texture> &texture);
-	void setImageTextureProcedural(int num, const Ptr<Material> &procedural, int procedural_num);
 	Ptr<TextureCurve> getTextureCurve(int num);
 	Ptr<TextureCurve> getTextureCurveOverride(int num);
-	void setTransparent(int transparent);
-	int getTransparent() const;
-	bool isWater() const;
-	bool isDeferred() const;
-	bool isForward() const;
-	bool isAlphaTest() const;
-	void setTwoSided(int sided);
-	int getTwoSided() const;
-	void setViewportMask(int mask);
-	int getViewportMask() const;
 	bool isEditable() const;
-	bool isFilter() const;
 	bool isHidden() const;
 	bool isBase() const;
 	bool isBrush() const;
 	bool isLegacy() const;
-	bool isOptionsHidden() const;
 	bool isPreviewHidden() const;
-	bool isProcedural() const;
 	bool isReflection2D() const;
 	bool isInternal() const;
 	bool isManual() const;
@@ -355,11 +371,11 @@ public:
 	bool restoreState(const Ptr<Stream> &stream, bool forced = false);
 	int loadXml(const Ptr<Xml> &xml);
 	bool saveXml(const Ptr<Xml> &xml) const;
+	bool loadUlon(const Ptr<UlonNode> &ulon);
 	bool load(const char *path);
-	bool load();
-	bool save(const char *path);
 	bool save();
 	bool reload();
+	bool createMaterialFile(const char *path);
 	Render::PASS getRenderPass(const char *pass_name) const;
 	const char *getRenderPassName(Render::PASS type) const;
 	bool runExpression(const char *name, int w, int h, int d = 1);

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -33,20 +33,22 @@ public:
 	enum
 	{
 		MODE_DEFAULT = 0,
-		MODE_MULTISAMPLE_2,
-		MODE_MULTISAMPLE_4,
-		MODE_MULTISAMPLE_8,
-		MODE_MULTISAMPLE_16,
-		MODE_SHADOW,
 		MODE_LOADING_SCREEN,
 		MODE_SOLID,
-		MODE_CUBE,
-		MODE_GRAD,
-		MODE_SRGB,
 		MODE_YUV,
-		MODE_POLYGON_OFFSET,
-		MODE_ARRAY,
-		MODE_INTEGER,
+		MODE_SRGB,
+		NUM_MODES,
+	};
+
+	enum
+	{
+		TEXTURE_SAMPLE_2D = 0,
+		TEXTURE_SAMPLE_3D,
+		TEXTURE_SAMPLE_CUBE,
+		TEXTURE_SAMPLE_ARRAY,
+		TEXTURE_SAMPLE_SHADOW,
+		TEXTURE_SAMPLE_INTEGER,
+		NUM_TEXTURES_SAMPLE,
 	};
 
 	enum
@@ -71,11 +73,13 @@ public:
 
 	static void setMode(int mode);
 	static int getMode();
+	static void setTextureSample(int sample);
+	static int getTextureSample();
 	static bool isEnabled();
-	static void enable(int mode = MODE_DEFAULT);
+	static void enable(int mode = 0, int texture_sample = 0);
 	static void disable();
 	static void setOrtho(int width, int height);
-	static void setTransform(const Math::mat4 &transform);
+	static void setTransform(const Math::mat4& transform);
 	static Math::mat4 getTransform();
 	static void beginLines();
 	static void endLines();
@@ -83,7 +87,7 @@ public:
 	static void endTriangles();
 	static void renderScreen();
 	static int getNumVertex();
-	static void addVertex(const Ffp::Vertex & vertex);
+	static void addVertex(const Ffp::Vertex& vertex);
 	static void addVertex(const Ffp::Vertex *vertex, int vertex_size);
 	static void addVertex(float x, float y, float z = 0.0f);
 	static void setTexCoord(float x, float y, float z = 0.0f, float w = 1.0f);

@@ -237,13 +237,13 @@
 			<summary>
 			Runs CPU shader code synchronously. This method is blocking. No additional threads are created, as the Engine's thread pool is used.
 			</summary> 
-			<param name="threads_count"> Number of threads to be used. The default value of -1 sets the number of threads equal to the number of CPU cores. </param> 
+			<param name="threads_count"> Number of threads to be used. The default value of -1 sets an optimum number of threads calculated for the particular PC. </param> 
 		</member>
 		<member name="M:Unigine.CPUShader.runAsync(int)">
 			<summary>
 			Runs CPU shader code asynchronously. This method is non-blocking. No additional threads are created, as the Engine's thread pool is used.
 			</summary> 
-			<param name="threads_count"> Number of threads to be used. The default value of -1 sets the number of threads equal to the number of CPU cores. </param> 
+			<param name="threads_count"> Number of threads to be used. The default value of -1 sets an optimum number of threads calculated for the particular PC. </param> 
 		</member>
 		<member name="M:Unigine.CPUShader.wait">
 			<summary>
@@ -267,7 +267,7 @@
 			Override this method to implement calculations.
 			</summary> 
 			<param name="thread_num"> Current thread number. This number is not a thread ID, it just a virtual number. </param>
-			<param name="threads_count"> Number of threads to be used. The default value of -1 sets the number of threads equal to the number of CPU cores. </param> 
+			<param name="threads_count"> Number of threads to be used. </param> 
 		</member>
 	</members>
 </doc>

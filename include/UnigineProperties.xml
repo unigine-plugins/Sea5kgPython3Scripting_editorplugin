@@ -384,14 +384,9 @@
 			<summary>
 			</summary>  
 		</member>
-		<member name="F:Unigine.Property.PARAMETER_COLOR">
+		<member name="F:Unigine.Property.PARAMETER_INT">
 			<summary>
-			Type of the property parameter that allows specifying the material color (a vec4 value).
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_DOUBLE">
-			<summary>
-			Type of the property parameter that allows accepting any double value in a given range.
+			Type of the property parameter that allows accepting any integer value in a given range.
 		</summary>
 		</member>
 		<member name="F:Unigine.Property.PARAMETER_FLOAT">
@@ -399,39 +394,14 @@
 			Type of the property parameter that allows accepting float value in a given range.
 		</summary>
 		</member>
-		<member name="F:Unigine.Property.PARAMETER_FILE">
+		<member name="F:Unigine.Property.PARAMETER_DOUBLE">
 			<summary>
-			Type of the property parameter that allows accepting any file GUID value.
+			Type of the property parameter that allows accepting any double value in a given range.
 		</summary>
 		</member>
-		<member name="F:Unigine.Property.PARAMETER_INT">
+		<member name="F:Unigine.Property.PARAMETER_TOGGLE">
 			<summary>
-			Type of the property parameter that allows accepting any integer value in a given range.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK">
-			<summary>
-			Type of the property parameter that allows specifying a mask (an integer value).
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_MATERIAL">
-			<summary>
-			Type of the property parameter that allows accepting any material GUID value.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_NODE">
-			<summary>
-			Type of the property parameter that allows accepting any Node.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_PROPERTY">
-			<summary>
-			Type of the property parameter that allows accepting any property GUID value.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_STRING">
-			<summary>
-			Type of the property parameter that allows accepting any string value.
+			Type of the property parameter that allows only 2 possible values.
 		</summary>
 		</member>
 		<member name="F:Unigine.Property.PARAMETER_SWITCH">
@@ -439,9 +409,14 @@
 			Type of the property parameter that allows specifying a set of several possible values (more than 2).
 		</summary>
 		</member>
-		<member name="F:Unigine.Property.PARAMETER_TOGGLE">
+		<member name="F:Unigine.Property.PARAMETER_STRING">
 			<summary>
-			Type of the property parameter that allows only 2 possible values.
+			Type of the property parameter that allows accepting any string value.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_COLOR">
+			<summary>
+			Type of the property parameter that allows specifying the material color (a vec4 value).
 		</summary>
 		</member>
 		<member name="F:Unigine.Property.PARAMETER_VEC2">
@@ -489,14 +464,44 @@
 			Type of the property parameter that allows accepting any ivec4 value.
 		</summary>
 		</member>
-		<member name="F:Unigine.Property.PARAMETER_STRUCT">
+		<member name="F:Unigine.Property.PARAMETER_MASK">
 			<summary>
-			Type of the property parameter that allows accepting structures.
+			Type of the property parameter that allows specifying a mask (an integer value).
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_FILE">
+			<summary>
+			Type of the property parameter that allows accepting any file GUID value.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_PROPERTY">
+			<summary>
+			Type of the property parameter that allows accepting any property GUID value.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_MATERIAL">
+			<summary>
+			Type of the property parameter that allows accepting any material GUID value.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_NODE">
+			<summary>
+			Type of the property parameter that allows accepting any Node.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_CURVE2D">
+			<summary>
+			Type of the property parameter that allows accepting a 2D Curve.
 		</summary>
 		</member>
 		<member name="F:Unigine.Property.PARAMETER_ARRAY">
 			<summary>
 			Type of the property parameter that allows accepting arrays.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_STRUCT">
+			<summary>
+			Type of the property parameter that allows accepting structures.
 		</summary>
 		</member>
 		<member name="F:Unigine.Property.CALLBACK_DESTROY">
@@ -710,7 +715,8 @@
 		</member>
 		<member name="M:Unigine.PropertyParameter.getType const">
 			<summary>
-			Returns the type of the property parameter.
+			Returns the type identifier of the property parameter.
+			You can get the name of the parameter type using the Property::parameterNameByType() method:
 			</summary>  
 			<returns>One of the PARAMETER_* pre-defined variables; if an error occurs, -1 will be returned.</returns>
 		</member>

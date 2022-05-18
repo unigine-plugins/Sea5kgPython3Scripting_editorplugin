@@ -98,18 +98,6 @@
 			</summary>  
 			<returns>World coordinates of the oblique near clipping plane to set (Nx, Ny, Nz, D), where Nx, Ny, Nz - coordinates of the plane normal, D - distance from the origin to the plane.</returns>
 		</member>
-		<member name="M:Unigine.Player.setPostMaterials(char)">
-			<summary>
-			Sets postprocess materials that are applied after all other postprocess (such as HDR, DOF, etc.) are rendered.
-			</summary> 
-			<param name="materials"> Comma-separated list of names of postprocess materials. </param> 
-		</member>
-		<member name="M:Unigine.Player.getPostMaterials const">
-			<summary>
-			Returns names of postprocess materials applied after all other postprocess (such as HDR, DOF, etc.) are rendered.
-			</summary>  
-			<returns>Comma-separated list of names of postprocess materials.</returns>
-		</member>
 		<member name="M:Unigine.Player.setProjection(Unigine.Math.mat4)">
 			<summary>
 			Updates the current projection matrix.					It is not recommended to use this method for setting obliqueness of the near clipping plane of the frustum, as in this case a number of features (such as clouds, shadows, TAA, a number of engine optimizations, etc.) will not function properly. Please, use the setObliqueFrustum() method instead.
@@ -272,7 +260,7 @@
 		</member>
 		<member name="M:Unigine.Player.getFovMode const">
 			<summary>
-			Sets the value indicating the type of FOV that is used for the player.
+			Returns the value indicating the type of FOV that is used for the player.
 			</summary>  
 			<returns>0 if the player with the vertical FOV is used; 1 if the physically-based player with the horizontal FOV is used.</returns>
 		</member>
@@ -782,20 +770,6 @@
 			Returns the maximum height of a surface to which the player can make a step.
 			</summary>  
 			<returns>Maximum step height.</returns>
-		</member>
-		<member name="M:Unigine.PlayerActor.setWorldTransform(Unigine.Math.Mat4)">
-			<summary>
-			Sets the transformation matrix for the node in the world coordinates.					Mind the axes in this method: X - right, Y - up, Z - back. It is important, that axes for PlayerActor in the getWorldTransform() method are different: X - right, Y - front, Z - up.To avoid issues with incorrect orientation when using					setWorldTransform() and getWorldTransform() methods the following code should be used:
-			
-			</summary> 
-			<param name="transform"> Transformation matrix. </param> 
-		</member>
-		<member name="M:Unigine.PlayerActor.getWorldTransform">
-			<summary>
-			Returns the transformation matrix of the node in the world coordinates.					Mind the axes in this method: X - right, Y - front, Z - up. It is important, that axes for PlayerActor in the setWorldTransform() method are different: X - right, Y - up, Z - back.To avoid issues with incorrect orientation when using					setWorldTransform() and getWorldTransform() methods the following code should be used:
-			
-			</summary>  
-			<returns>Transformation matrix.</returns>
 		</member>
 		<member name="F:Unigine.PlayerActor.STATE_BACKWARD">
 			<summary>

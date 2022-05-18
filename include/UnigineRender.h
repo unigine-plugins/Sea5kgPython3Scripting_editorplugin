@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -22,6 +22,8 @@
 #include "UnigineGUID.h"
 #include "UnigineCurve2d.h"
 #include "UniginePalette.h"
+#include "UnigineMeshStatic.h"
+#include "UnigineTextures.h"
 
 namespace Unigine
 {
@@ -32,7 +34,6 @@ class Object;
 class ObjectMeshStatic;
 class Viewport;
 class Shader;
-class Texture;
 class RenderTarget;
 class Light;
 class LightVoxelProbe;
@@ -52,7 +53,7 @@ public:
 	int getNum() const;
 	void setIntensity(float intensity);
 	float getIntensity() const;
-	void setHazeColor(const Math::vec4 &color);
+	void setHazeColor(const Math::vec4& color);
 	Math::vec4 getHazeColor() const;
 	void setHazeDensity(float density);
 	float getHazeDensity() const;
@@ -82,7 +83,7 @@ public:
 	const char *getSunTextureName() const;
 	void setSunAngularSize(float size);
 	float getSunAngularSize() const;
-	void setSunTextureColor(const Math::vec4 &color);
+	void setSunTextureColor(const Math::vec4& color);
 	Math::vec4 getSunTextureColor() const;
 	void setSunTextureIntensity(float intensity);
 	float getSunTextureIntensity() const;
@@ -90,18 +91,20 @@ public:
 	const char *getMoonTextureName() const;
 	void setMoonAngularSize(float size);
 	float getMoonAngularSize() const;
-	void setMoonTextureColor(const Math::vec4 &color);
+	void setMoonTextureColor(const Math::vec4& color);
 	Math::vec4 getMoonTextureColor() const;
 	void setMoonTextureIntensity(float intensity);
 	float getMoonTextureIntensity() const;
-	void setTextureColor(const Math::vec4 &color);
+	void setTextureColor(const Math::vec4& color);
 	Math::vec4 getTextureColor() const;
-	void setTextureRotation(const Math::vec3 &rotation);
+	void setTextureRotation(const Math::vec3& rotation);
 	Math::vec3 getTextureRotation() const;
 	void setTextureBlur(float blur);
 	float getTextureBlur() const;
 	void setTextureName(const char *name);
 	const char *getTextureName() const;
+	void setTexture(const Ptr<Texture> &texture);
+	Ptr<Texture> getTexture() const;
 	void setAmbientIntensity(float intensity);
 	float getAmbientIntensity() const;
 	void setReflectionIntensity(float intensity);
@@ -156,7 +159,6 @@ public:
 		PASS_DEFERRED,
 		PASS_AUXILIARY,
 		PASS_EMISSION,
-		PASS_REFLECTION,
 		PASS_REFRACTION,
 		PASS_TRANSPARENT_BLUR,
 		PASS_AMBIENT,
@@ -251,6 +253,8 @@ public:
 	enum CALLBACK_INDEX
 	{
 		CALLBACK_BEGIN = 0,
+		CALLBACK_BEGIN_ENVIRONMENT,
+		CALLBACK_END_ENVIRONMENT,
 		CALLBACK_BEGIN_SHADOWS,
 		CALLBACK_BEGIN_WORLD_SHADOW,
 		CALLBACK_END_WORLD_SHADOW,
@@ -328,8 +332,8 @@ public:
 		CALLBACK_END,
 		NUM_CALLBACKS,
 	};
-	UNIGINE_DEPRECATED(static void renderProcedurals(const Vector< Ptr<Material> > &materials));
-	static int createMipmapsCubeGGX(const Ptr<Image> &image, float quality);
+	static bool createMipmapsCubeGGXImage(const Ptr<Image> &image, float quality);
+	static bool createMipmapsCubeGGXTexture(const Ptr<Texture> &texture, float quality);
 	static int createShorelineDistanceField(const Ptr<Image> &image, const Ptr<Image> &mask, int shoreline_radius, int blur_radius, int downsample_resolution);
 	static int compressTexture(const Ptr<Texture> &texture, Ptr<Image> &destination, int quality = 1, int new_texture_format = -1, int use_mip_maps = -1);
 	static int compressImage(Ptr<Image> &image, int quality = 1, int new_image_format = -1, int use_mip_maps = -1);
@@ -377,6 +381,21 @@ public:
 	static Ptr<Viewport> getViewport();
 	static bool isViewportModeStereo(Render::VIEWPORT_MODE mode);
 	static bool isViewportModePanorama(Render::VIEWPORT_MODE mode);
+	static void setCompositeMaterialGUID(const UGUID& compositematerialguid);
+	static UGUID getCompositeMaterialGUID();
+	static void setDeferredMaterialGUID(const UGUID& deferredmaterialguid);
+	static UGUID getDeferredMaterialGUID();
+	static void clearDebugMaterials();
+	static int getNumDebugMaterials();
+	static Ptr<Material> getDebugMaterial(int num);
+	static void setDebugMaterial(int num, const Ptr<Material> &material);
+	static void insertDebugMaterial(int num, const Ptr<Material> &material);
+	static int findDebugMaterial(const Ptr<Material> &material);
+	static void addDebugMaterial(const Ptr<Material> &material);
+	static void removeDebugMaterial(int num);
+	static void swapDebugMaterials(int num_0, int num_1);
+	static void setDebugMaterialEnabled(int num, bool enabled);
+	static bool getDebugMaterialEnabled(int num);
 	static void clearScriptableMaterials();
 	static int getNumScriptableMaterials();
 	static Ptr<Material> getScriptableMaterial(int num);
@@ -388,19 +407,13 @@ public:
 	static void swapScriptableMaterials(int num_0, int num_1);
 	static void setScriptableMaterialEnabled(int num, bool enabled);
 	static bool getScriptableMaterialEnabled(int num);
-	static void setPrePostMaterials(const char *materials);
-	static const char *getPrePostMaterials();
-	static void setCompositeMaterial(const char *material);
-	static const char *getCompositeMaterial();
-	static void setPostMaterials(const char *materials);
-	static const char *getPostMaterials();
 	static void setBudget(float budget);
 	static float getBudget();
-	static void setBorder(const Math::vec2 &border);
+	static void setBorder(const Math::vec2& border);
 	static Math::vec2 getBorder();
 	static void setMaxFPS(float maxfps);
 	static float getMaxFPS();
-	static void setVirtualResolution(const Math::vec2 &resolution);
+	static void setVirtualResolution(const Math::vec2& resolution);
 	static Math::vec2 getVirtualResolution();
 	static void setDepthPrePass(bool pass);
 	static bool isDepthPrePass();
@@ -408,10 +421,6 @@ public:
 	static bool isGbufferLightmap();
 	static void setDebug(bool debug);
 	static bool isDebug();
-	static void setDebugMaterials(const char *materials);
-	static const char *getDebugMaterials();
-	static void setDeferredMaterial(const char *material);
-	static const char *getDeferredMaterial();
 	static void setLatency(int latency);
 	static int getLatency();
 	static void setTexturesQuality(int quality);
@@ -440,8 +449,12 @@ public:
 	static int getStreamingMeshesMemoryLimit();
 	static void setStreamingParticlesMemoryLimit(int limit);
 	static int getStreamingParticlesMemoryLimit();
+	static void setStreamingUpdateLimit(float limit);
+	static float getStreamingUpdateLimit();
 	static void setShadersPreload(bool preload);
 	static bool isShadersPreload();
+	static void setDistanceOffset(float offset);
+	static float getDistanceOffset();
 	static void setDistanceScale(float scale);
 	static float getDistanceScale();
 	static void setFieldDistance(float distance);
@@ -464,7 +477,7 @@ public:
 	static float getAnimationLeaf();
 	static void setAnimationScale(float scale);
 	static float getAnimationScale();
-	static void setAnimationWind(const Math::vec3 &wind);
+	static void setAnimationWind(const Math::vec3& wind);
 	static Math::vec3 getAnimationWind();
 	static void setAnimationTime(float time);
 	static float getAnimationTime();
@@ -481,9 +494,9 @@ public:
 	static float getStereoOffset();
 	static void setStereoHiddenArea(int area);
 	static int getStereoHiddenArea();
-	static void setStereoHiddenAreaTransform(const Math::vec4 &transform);
+	static void setStereoHiddenAreaTransform(const Math::vec4& transform);
 	static Math::vec4 getStereoHiddenAreaTransform();
-	static void setStereoHiddenAreaExposureTransform(const Math::vec4 &transform);
+	static void setStereoHiddenAreaExposureTransform(const Math::vec4& transform);
 	static Math::vec4 getStereoHiddenAreaExposureTransform();
 	static void setPanoramaFisheyeFov(float fov);
 	static float getPanoramaFisheyeFov();
@@ -551,7 +564,7 @@ public:
 	static bool isDecals();
 	static void setRefraction(bool refraction);
 	static bool isRefraction();
-	static void setRefractionDispersion(const Math::vec3 &dispersion);
+	static void setRefractionDispersion(const Math::vec3& dispersion);
 	static Math::vec3 getRefractionDispersion();
 	static void setRefractionWarpBackgroundTransparentSurfaces(int surfaces);
 	static int getRefractionWarpBackgroundTransparentSurfaces();
@@ -763,7 +776,7 @@ public:
 	static int getSSSSSResolution();
 	static void setSSSSSRadius(float radius);
 	static float getSSSSSRadius();
-	static void setSSSSSColor(const Math::vec4 &color);
+	static void setSSSSSColor(const Math::vec4& color);
 	static Math::vec4 getSSSSSColor();
 	static void setSSSSSDiffuse(bool diffuse);
 	static bool isSSSSSDiffuse();
@@ -805,7 +818,7 @@ public:
 	static bool isSSSSSTAACatmullResampling();
 	static void setSSSSSTAASamples(int samples);
 	static int getSSSSSTAASamples();
-	static void setTranslucentColor(const Math::vec4 &color);
+	static void setTranslucentColor(const Math::vec4& color);
 	static Math::vec4 getTranslucentColor();
 	static void setCameraEffectsThreshold(float threshold);
 	static float getCameraEffectsThreshold();
@@ -897,8 +910,8 @@ public:
 	static float getBloomScale();
 	static void setBloomPower(float power);
 	static float getBloomPower();
-	static void setFilmic(bool filmic);
-	static bool isFilmic();
+	static void setTonemapper(int tonemapper);
+	static int getTonemapper();
 	static void setFilmicShoulderScale(float scale);
 	static float getFilmicShoulderScale();
 	static void setFilmicLinearScale(float scale);
@@ -915,6 +928,32 @@ public:
 	static float getFilmicWhiteLevel();
 	static void setFilmicSaturationRecovery(float recovery);
 	static float getFilmicSaturationRecovery();
+	static void setReinhardContribution(float contribution);
+	static float getReinhardContribution();
+	static void setReinhardLumaBasedContribution(float contribution);
+	static float getReinhardLumaBasedContribution();
+	static void setACESWithReinhardMix(float mix);
+	static float getACESWithReinhardMix();
+	static void setACESWhiteClip(float clip);
+	static float getACESWhiteClip();
+	static void setACESToe(float toe);
+	static float getACESToe();
+	static void setACESShoulderAngle(float angle);
+	static float getACESShoulderAngle();
+	static void setACESShoulderStrength(float strength);
+	static float getACESShoulderStrength();
+	static void setACESShoulderLength(float length);
+	static float getACESShoulderLength();
+	static void setACESWithReinhardWhiteClip(float clip);
+	static float getACESWithReinhardWhiteClip();
+	static void setACESWithReinhardToe(float toe);
+	static float getACESWithReinhardToe();
+	static void setACESWithReinhardShoulderAngle(float angle);
+	static float getACESWithReinhardShoulderAngle();
+	static void setACESWithReinhardShoulderStrength(float strength);
+	static float getACESWithReinhardShoulderStrength();
+	static void setACESWithReinhardShoulderLength(float length);
+	static float getACESWithReinhardShoulderLength();
 	static void setCross(bool cross);
 	static bool isCross();
 	static void setCrossShafts(int shafts);
@@ -927,7 +966,7 @@ public:
 	static float getCrossAngle();
 	static void setCrossThreshold(float threshold);
 	static float getCrossThreshold();
-	static void setCrossColor(const Math::vec4 &color);
+	static void setCrossColor(const Math::vec4& color);
 	static Math::vec4 getCrossColor();
 	static void setShadowShafts(bool shafts);
 	static bool isShadowShafts();
@@ -945,15 +984,15 @@ public:
 	static float getLensRadius();
 	static void setLensThreshold(float threshold);
 	static float getLensThreshold();
-	static void setLensColor(const Math::vec4 &color);
+	static void setLensColor(const Math::vec4& color);
 	static Math::vec4 getLensColor();
-	static void setLensDispersion(const Math::vec3 &dispersion);
+	static void setLensDispersion(const Math::vec3& dispersion);
 	static Math::vec3 getLensDispersion();
-	static void setWireframeColor(const Math::vec4 &color);
+	static void setWireframeColor(const Math::vec4& color);
 	static Math::vec4 getWireframeColor();
-	static void setBackgroundColor(const Math::vec4 &color);
+	static void setBackgroundColor(const Math::vec4& color);
 	static Math::vec4 getBackgroundColor();
-	static void setFadeColor(const Math::vec4 &color);
+	static void setFadeColor(const Math::vec4& color);
 	static Math::vec4 getFadeColor();
 	static void setWireframeAntialiasing(bool antialiasing);
 	static bool isWireframeAntialiasing();
@@ -965,7 +1004,7 @@ public:
 	static float getColorCorrectionContrast();
 	static void setColorCorrectionGamma(float gamma);
 	static float getColorCorrectionGamma();
-	static void setColorCorrectionWhite(const Math::vec4 &white);
+	static void setColorCorrectionWhite(const Math::vec4& white);
 	static Math::vec4 getColorCorrectionWhite();
 	static int setColorCorrectionLUTImage(const Ptr<Image> &image);
 	static int getColorCorrectionLUTImage(Ptr<Image> &image);
@@ -976,12 +1015,18 @@ public:
 	static Ptr<TextureCurve> getColorCorrectionCurve();
 	static void resetColorCorrectionCurve();
 	static void resetColorCorrectionSaturationCurve();
-	static void setColorCorrectionSaturation(const Palette & saturation);
+	static void setColorCorrectionSaturationIndex(int index, float value);
+	static float getColorCorrectionSaturationIndex(int index);
+	static void setColorCorrectionHueShiftIndex(int index, float value);
+	static float getColorCorrectionHueShiftIndex(int index);
+	static void setColorCorrectionSaturation(const Palette& saturation);
 	static Palette getColorCorrectionSaturation();
-	static void setColorCorrectionHueShift(const Palette & shift);
+	static void setColorCorrectionHueShift(const Palette& shift);
 	static Palette getColorCorrectionHueShift();
 	static void setEnvironment(bool environment);
 	static bool isEnvironment();
+	static void setEnvironmentHemisphere(bool hemisphere);
+	static bool isEnvironmentHemisphere();
 	static void setEnvironmentHazeMode(int mode);
 	static int getEnvironmentHazeMode();
 	static void setEnvironmentHazeGradient(int gradient);
@@ -1004,7 +1049,7 @@ public:
 	static float getEnvironmentAmbientIntensity();
 	static float getEnvironmentReflectionIntensity();
 	static float getEnvironmentSkyIntensity();
-	static void setSkyRotation(const Math::quat &rotation);
+	static void setSkyRotation(const Math::quat& rotation);
 	static Math::quat getSkyRotation();
 	static void setOcclusionQueries(bool queries);
 	static bool isOcclusionQueries();
@@ -1012,11 +1057,11 @@ public:
 	static int getOcclusionQueriesNumFrames();
 	static void setOccluders(bool occluders);
 	static bool isOccluders();
-	static void setOccludersResolution(const Math::vec2 &resolution);
+	static void setOccludersResolution(const Math::vec2& resolution);
 	static Math::vec2 getOccludersResolution();
 	static void setOccludersShadows(bool shadows);
 	static bool isOccludersShadows();
-	static void setOccludersShadowsResolution(const Math::vec2 &resolution);
+	static void setOccludersShadowsResolution(const Math::vec2& resolution);
 	static Math::vec2 getOccludersShadowsResolution();
 	static void setLightsEnabled(bool enabled);
 	static bool isLightsEnabled();
@@ -1040,11 +1085,13 @@ public:
 	static int getLightsForwardPerObjectProj();
 	static void setLightsForwardPerObjectEnv(int env);
 	static int getLightsForwardPerObjectEnv();
+	static void setLightsForwardPerObjectPlanar(int planar);
+	static int getLightsForwardPerObjectPlanar();
 	static void setLightsForwardPerObjectVoxel(int voxel);
 	static int getLightsForwardPerObjectVoxel();
 	static void setLightsLensFlares(bool flares);
 	static bool isLightsLensFlares();
-	static void setLightmapColor(const Math::vec4 &color);
+	static void setLightmapColor(const Math::vec4& color);
 	static Math::vec4 getLightmapColor();
 	static void setShadows(bool shadows);
 	static bool isShadows();
@@ -1104,7 +1151,7 @@ public:
 	static const char *getSSDirtConvexityShadingTextureName();
 	static void setSSDirtCavityTextureSize(float size);
 	static float getSSDirtCavityTextureSize();
-	static void setSSDirtCavityColor(const Math::vec4 &color);
+	static void setSSDirtCavityColor(const Math::vec4& color);
 	static Math::vec4 getSSDirtCavityColor();
 	static void setSSDirtCavityExponent(float exponent);
 	static float getSSDirtCavityExponent();
@@ -1114,7 +1161,7 @@ public:
 	static float getSSDirtCavityMetalnessVisibility();
 	static void setSSDirtConvexityTextureSize(float size);
 	static float getSSDirtConvexityTextureSize();
-	static void setSSDirtConvexityColor(const Math::vec4 &color);
+	static void setSSDirtConvexityColor(const Math::vec4& color);
 	static Math::vec4 getSSDirtConvexityColor();
 	static void setSSDirtConvexityExponent(float exponent);
 	static float getSSDirtConvexityExponent();
@@ -1136,7 +1183,7 @@ public:
 	static float getLandscapeTerrainTexelSize();
 	static void setLandscapeTerrainVTMemorySize(float size);
 	static float getLandscapeTerrainVTMemorySize();
-	static void setLandscapeTerrainVTTargetResolution(const Math::vec2 &resolution);
+	static void setLandscapeTerrainVTTargetResolution(const Math::vec2& resolution);
 	static Math::vec2 getLandscapeTerrainVTTargetResolution();
 	static void setLandscapeTerrainVTDetailLevelByAngle(float angle);
 	static float getLandscapeTerrainVTDetailLevelByAngle();
@@ -1192,6 +1239,26 @@ public:
 	static int getTerrainGlobalAnisotropy();
 	static void setTerrainGlobalHoles(bool holes);
 	static bool isTerrainGlobalHoles();
+	static void setWaterGeometryPreset(int preset);
+	static int getWaterGeometryPreset();
+	static int getWaterGeometryPresetNumNames();
+	static const char *getWaterGeometryPresetName(int num);
+	static void setWaterVisibleDistance(float distance);
+	static float getWaterVisibleDistance();
+	static void setWaterGeometryPolygonSize(float size);
+	static float getWaterGeometryPolygonSize();
+	static void setWaterGeometryProgression(float progression);
+	static float getWaterGeometryProgression();
+	static void setWaterGeometryFadeLods(float lods);
+	static float getWaterGeometryFadeLods();
+	static void setWaterGeometrySubpixelReduction(float reduction);
+	static float getWaterGeometrySubpixelReduction();
+	static void setWaterCullingAggressive(bool aggressive);
+	static bool isWaterCullingAggressive();
+	static void setWaterCullingFrustumPadding(float padding);
+	static float getWaterCullingFrustumPadding();
+	static void setWaterCullingObliqueFrustum(float frustum);
+	static float getWaterCullingObliqueFrustum();
 	static void setWaterEnabled(bool enabled);
 	static bool isWaterEnabled();
 	static void setWaterSSR(bool waterssr);
@@ -1206,6 +1273,8 @@ public:
 	static bool isWaterOpacityDepth();
 	static void setWaterEnvironmentProbes(bool probes);
 	static bool isWaterEnvironmentProbes();
+	static void setWaterPlanarProbes(bool probes);
+	static bool isWaterPlanarProbes();
 	static void setWaterVoxelProbes(bool probes);
 	static bool isWaterVoxelProbes();
 	static void setWaterLights(bool lights);
@@ -1214,6 +1283,8 @@ public:
 	static int getWaterSSRQuality();
 	static void setWaterRefractionQuality(int quality);
 	static int getWaterRefractionQuality();
+	static void setWaterWaterlineAccuracy(int accuracy);
+	static int getWaterWaterlineAccuracy();
 	static void setWaterAnisotropy(int anisotropy);
 	static int getWaterAnisotropy();
 	static void setCloudsEnabled(bool enabled);
@@ -1288,8 +1359,6 @@ public:
 	static bool isFieldPrecision();
 	static void setFieldShorelineResolution(int resolution);
 	static int getFieldShorelineResolution();
-	static void setPrePostMaterialsEnabled(bool enabled);
-	static bool isPrePostMaterialsEnabled();
 	static void setScreenSpaceEffects(bool effects);
 	static bool isScreenSpaceEffects();
 	static void setTransparentEnabled(bool enabled);
@@ -1308,8 +1377,6 @@ public:
 	static bool isShowDecals();
 	static void setShowScissors(bool scissors);
 	static bool isShowScissors();
-	static void setShowMipmaps(bool mipmaps);
-	static bool isShowMipmaps();
 	static void setShowLightmapChecker(bool checker);
 	static bool isShowLightmapChecker();
 	static void setShowOccluder(bool occluder);
@@ -1347,33 +1414,49 @@ public:
 	static void setShowTriangles(int triangles);
 	static int getShowTriangles();
 	static int getHDRTextureFormat();
-	static Ptr<Texture> getTemporaryTexture(int width, int height, int format, int flags = 0, const char *name = 0);
-	static Ptr<Texture> getTemporaryTexture(int format, const char *name = "");
+
+	enum
+	{
+		TEXTURE_ACCESSORY_NONE = 0,
+		TEXTURE_ACCESSORY_GBUFFER,
+		TEXTURE_ACCESSORY_WBUFFER,
+		TEXTURE_ACCESSORY_RENDER,
+		TEXTURE_ACCESSORY_OCCLUDERS,
+		TEXTURE_ACCESSORY_EXTERNAL,
+	};
+	static Ptr<Texture> getTemporaryTexture(int width, int height, int depth, int format, int flags, int type, const char *name, int accessory);
+	static Ptr<Texture> getTemporaryTexture(int width, int height, int depth, int format, int flags, int type, const char *name);
+	static Ptr<Texture> getTemporaryTexture(int width, int height, int depth, int format, int flags, int type);
+	static Ptr<Texture> getTemporaryTexture(const Ptr<Texture> &texture, const char *name, int accessory);
 	static Ptr<Texture> getTemporaryTexture(const Ptr<Texture> &texture, const char *name);
 	static Ptr<Texture> getTemporaryTexture(const Ptr<Texture> &texture);
-	static Ptr<Texture> getTemporary2DArrayTexture(int width, int height, int depth, int format, int flags = 0, const char *name = 0);
-	static Ptr<Texture> getTemporary3DTexture(int width, int height, int depth, int format, int flags = 0, const char *name = 0);
+	static Ptr<Texture> getTemporaryTexture2D(int width, int height, int format, int flags = -1, const char *name = 0, int accessory = 0);
+	static Ptr<Texture> getTemporaryTexture2DArray(int width, int height, int depth, int format, int flags = -1, const char *name = 0, int accessory = 0);
+	static Ptr<Texture> getTemporaryTexture3D(int width, int height, int depth, int format, int flags = -1, const char *name = 0, int accessory = 0);
+	static Ptr<Texture> getTemporaryTextureCube(int width, int height, int format, int flags = -1, const char *name = 0, int accessory = 0);
 	static void releaseTemporaryTexture(const Ptr<Texture> &texture);
 	static Ptr<RenderTarget> getTemporaryRenderTarget();
 	static void releaseTemporaryRenderTarget(const Ptr<RenderTarget> &render_target);
-	static Ptr<Texture> getBlack2DTexture();
-	static Ptr<Texture> getBlack3DTexture();
-	static Ptr<Texture> getBlackCubeTexture();
-	static Ptr<Texture> getBlack2DArrayTexture();
-	static Ptr<Texture> getWhite2DTexture();
-	static Ptr<Texture> getWhite3DTexture();
-	static Ptr<Texture> getWhiteCubeTexture();
-	static Ptr<Texture> getWhite2DArrayTexture();
-	static Ptr<Texture> getGray2DTexture();
-	static Ptr<Texture> getGray3DTexture();
-	static Ptr<Texture> getGrayCubeTexture();
-	static Ptr<Texture> getGray2DArrayTexture();
+	static Ptr<Texture> getBlack2DTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getBlack2DUIntTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getBlack2DArrayTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getBlackCubeTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getBlack3DTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getWhite2DTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getWhite2DUIntTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getWhite2DArrayTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getWhiteCubeTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getWhite3DTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getGray2DTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getGray2DUIntTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getGray2DArrayTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getGrayCubeTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
+	static Ptr<Texture> getGray3DTexture(int flags = (1<<19|1<<12|1<<13|1<<14));
 	static int getNumDecals();
 	static int getNumDips();
 	static int getNumLights();
 	static int getNumMaterials();
 	static int getNumPrimitives();
-	static int getNumProcedurals();
 	static int getNumReflections();
 	static long long getNumShaders();
 	static int getNumShadows();
@@ -1385,8 +1468,9 @@ public:
 	static bool saveWorld(const Ptr<Xml> &xml);
 	static bool restoreState(const Ptr<Stream> &stream);
 	static bool saveState(const Ptr<Stream> &stream);
-	static void destroyCacheTexture(const UGUID & guid);
-	static void createCacheTexture(const UGUID & guid);
+	static void destroyCacheTexture(const UGUID& guid);
+	static void createCacheTexture(const UGUID& guid);
+	static Ptr<Texture> getCacheTexture(const UGUID& guid);
 	static void destroyCacheTextures();
 	static void unloadCacheTextures();
 	static void createCacheTextures();
@@ -1504,7 +1588,7 @@ public:
 	static void clearStructuredBuffer(const Ptr<StructuredBuffer> &buffer);
 	static void clearTextures();
 	static void clearTexture(const Ptr<Texture> &texture);
-	static void clearBuffer(int buffer, const Math::vec4 &color, float depth = 0.0f, int stencil = 0);
+	static void clearBuffer(int buffer, const Math::vec4& color, float depth = 0.0f, int stencil = 0);
 	static void dispatch(int group_threads_x, int group_threads_y, int group_threads_z);
 	static void saveState();
 	static void restoreState();
@@ -1516,8 +1600,8 @@ public:
 	static int getCoordX();
 	static int getCoordY();
 	static void setScissorTest(float x, float y, float width, float height);
-	static void setScissorTest(const Math::vec4 &rectangle);
-	static void setScissorTest(const Math::ivec4 &rectangle);
+	static void setScissorTest(const Math::vec4& rectangle);
+	static void setScissorTest(const Math::ivec4& rectangle);
 	static int getScissorTest();
 	static void setBufferMask(int num, int mask);
 	static int getBufferMask(int num);
@@ -1559,6 +1643,7 @@ public:
 	static Ptr<Material> getMaterial();
 	static void setMaterial(Render::PASS pass, const Ptr<Material> &material);
 	static void setTexture(int binding, int num, const Ptr<Texture> &texture);
+	static void setTexture(int binding, int num, const Ptr<Texture> &texture, int sampler_flags);
 	static void setStructuredBuffer(int num, const Ptr<StructuredBuffer> &buffer);
 	static Ptr<Texture> getTexture(int num);
 	static Ptr<Texture> getScreenDepthTexture();
@@ -1601,6 +1686,7 @@ public:
 		Math::mat4 old_imodelview_delta;
 
 		Math::mat4 modelview;
+		Math::mat4 old_modelview;
 
 		Math::vec3 camera_offset;
 		Math::vec3 camera_position;
@@ -1662,23 +1748,25 @@ public:
 	static int getReflectionViewportMask();
 	static int getSkipFlags();
 	static int checkSkipFlags(int flags);
+	static void setUseTAAOffset(bool offset);
+	static bool isUseTAAOffset();
 	static int getStereoMode();
 	static Ptr<Viewport> getViewport();
-	static void setProjection(const Math::mat4 &projection);
+	static void setProjection(const Math::mat4& projection);
 	static Math::mat4 getProjection();
-	static void setOldProjection(const Math::mat4 &projection);
+	static void setOldProjection(const Math::mat4& projection);
 	static Math::mat4 getOldProjection();
 	static Math::mat4 getProjectionWithoutTAA();
-	static void setModelview(const Math::Mat4 & modelview);
+	static void setModelview(const Math::Mat4& modelview);
 	static Math::Mat4 getModelview();
 	static Math::Mat4 getIModelview();
-	static void setOldModelview(const Math::Mat4 & modelview);
+	static void setOldModelview(const Math::Mat4& modelview);
 	static Math::Mat4 getOldModelview();
-	static void setCameraPosition(const Math::Vec3 & position);
+	static void setCameraPosition(const Math::Vec3& position);
 	static Math::Vec3 getCameraPosition();
 	static float getZNear();
 	static float getZFar();
-	static void setObliqueFrustumPlane(const Math::Vec4 & plane);
+	static void setObliqueFrustumPlane(const Math::Vec4& plane);
 	static Math::Vec4 getObliqueFrustumPlane();
 	static void setObliqueFrustum(bool frustum);
 	static bool isObliqueFrustum();
@@ -1690,6 +1778,9 @@ public:
 	static bool usePostEffects();
 	static bool useOcclusionQueries();
 	static Ptr<Light> getCurrentLight();
+	static void setOverlapEnvironmentTexture(const Ptr<Texture> &texture);
+	static Ptr<Texture> getOverlapEnvironmentTexture();
+	static void resetOverlapEnvironmentTexture();
 	static void saveState();
 	static void restoreState();
 	static void setBufferMask(Render::PASS pass, const Ptr<Material> &material);
@@ -1699,22 +1790,24 @@ public:
 	static void clearShader();
 	static void clearStates();
 	static void setMaterial(Render::PASS pass, const Ptr<Material> &material);
-	static void setShaderParameters(Render::PASS pass, const Ptr<Shader> &shader, const Ptr<Material> &material, const Ptr<Object> &object, int surface, int is_screen_space);
-	static void setShaderParameters(Render::PASS pass, const Ptr<Shader> &shader, const Ptr<Material> &material, int is_screen_space);
-	static void setShaderParameters(Render::PASS pass, const Ptr<Shader> &shader, int is_screen_space);
-	static void setShaderParameters(Render::PASS pass, const Ptr<Material> &material, int is_screen_space);
-	static void setShaderParameters(Render::PASS pass, const Ptr<Object> &object, int surface, int is_screen_space);
+	static void setShaderParameters(Render::PASS pass, const Ptr<Shader> &shader, const Ptr<Material> &material, const Ptr<Object> &object, int surface, bool is_screen_space);
+	static void setShaderParameters(Render::PASS pass, const Ptr<Shader> &shader, const Ptr<Material> &material, bool is_screen_space);
+	static void setShaderParameters(Render::PASS pass, const Ptr<Shader> &shader, bool is_screen_space);
+	static void setShaderParameters(Render::PASS pass, const Ptr<Material> &material, bool is_screen_space);
+	static void setShaderParameters(Render::PASS pass, const Ptr<Object> &object, int surface, bool is_screen_space);
 	static Vector< Ptr<Object> >  getObjects();
 	static int getWidth();
 	static int getHeight();
 	static Ptr<RenderTarget> getRenderTarget();
 	static Ptr<RenderTarget> getPostRenderTarget();
 	static Ptr<Texture> getTextureColor();
+	static Ptr<Texture> getTextureColorOpacity();
 	static Ptr<Texture> getTextureColorOld();
 	static Ptr<Texture> getTextureColorOldReprojection();
+	static Ptr<Texture> getTextureNormalUnpack();
 	static Ptr<Texture> getTextureCurrentDepth();
 	static Ptr<Texture> getTextureOpacityDepth();
-	static Ptr<Texture> getTextureColorOpacity();
+	static Ptr<Texture> getTextureLinearDepth();
 	static Ptr<Texture> getTextureAuxiliary();
 	static Ptr<Texture> getTextureRefraction();
 	static Ptr<Texture> getTextureRefractionMask();
@@ -1739,6 +1832,7 @@ public:
 	static Ptr<Texture> createCustomTexture2DArray(const char *name, int width, int height, int depth, int format, int flags = 0);
 	static Ptr<Texture> createCustomTexture2D(const char *name, int width, int height, int format, int flags = 0);
 	static Ptr<Texture> getCustomTexture(const char *name);
+	static void renderMeshStatic(const Ptr<MeshStatic> &mesh, const Ptr<Material> &material, const char *pass_name, const Math::Mat4& transform, const Ptr<Camera> &camera);
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -1785,8 +1879,8 @@ public:
 	static int getProgressLight();
 	static int getProgressBounce();
 	static int getProgress();
-	static void addReadOnlyTexture(const UGUID & guid);
-	static void removeReadOnlyTexture(const UGUID & guid);
+	static void addReadOnlyTexture(const UGUID& guid);
+	static void removeReadOnlyTexture(const UGUID& guid);
 };
 
 } // namespace Unigine

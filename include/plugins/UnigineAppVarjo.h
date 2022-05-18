@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -16,6 +16,7 @@
 #pragma once
 
 #include <UnigineMathLib.h>
+#include <UnigineVector.h>
 #include <UnigineEngine.h>
 
 namespace Unigine
@@ -83,6 +84,12 @@ public:
 		CONTROLLER_ROLE_TREADMILL = 4,
 		CONTROLLER_ROLE_MAX = 5,
 	};
+
+	enum ENVIRONMENT_MODE
+	{
+		ENVIRONMENT_MODE_PRESET = 0,
+		ENVIRONMENT_MODE_OVERLAP = 1,
+	};
 	virtual void setViewportMode(AppVarjo::VIEWPORT mode) = 0;
 	virtual AppVarjo::VIEWPORT getViewportMode() const = 0;
 	virtual void setHeadPositionLock(bool lock) = 0;
@@ -107,6 +114,111 @@ public:
 	virtual bool getControllerButtonTouched(int device_num, AppVarjo::BUTTON button) = 0;
 	virtual Math::vec2 getControllerAxis(int device_num, int axis_num) = 0;
 	virtual void setControllerVibration(int device_num, unsigned short duration) = 0;
+	virtual bool isMixedRealityAvaliable() const = 0;
+	virtual void setMarkerTrackingEnabled(bool enabled) = 0;
+	virtual bool isMarkerTrackingEnabled() const = 0;
+	virtual void setAlphaBlend(bool blend) = 0;
+	virtual bool isAlphaBlend() const = 0;
+	virtual void setAlphaInvert(bool invert) = 0;
+	virtual bool isAlphaInvert() const = 0;
+	virtual void setVideo(bool video) = 0;
+	virtual bool isVideo() const = 0;
+	virtual void setDepthTest(bool test) = 0;
+	virtual bool isDepthTest() const = 0;
+	virtual void setDepthTestRangeEnabled(bool enabled) = 0;
+	virtual bool isDepthTestRangeEnabled() const = 0;
+	virtual void setStreamEnvironmentCubemapEnabled(bool enabled) = 0;
+	virtual bool isStreamEnvironmentCubemapEnabled() const = 0;
+	virtual void setStreamColorCorrectionEnabled(bool enabled) = 0;
+	virtual bool isStreamColorCorrectionEnabled() const = 0;
+	virtual void setStreamEnvironmentCubemapGGXQuality(float quality) = 0;
+	virtual float getStreamEnvironmentCubemapGGXQuality() const = 0;
+	virtual void setDepthTestRange(const Math::dvec2& range) = 0;
+	virtual Math::dvec2 getDepthTestRange() const = 0;
+	virtual void setViewOffset(double offset) = 0;
+	virtual double getViewOffset() const = 0;
+	virtual void setStreamEnvironmentCubemapMode(AppVarjo::ENVIRONMENT_MODE mode) = 0;
+	virtual AppVarjo::ENVIRONMENT_MODE getStreamEnvironmentCubemapMode() const = 0;
+	virtual void setStreamEnvironmentCubemapPresetIndex(int index) = 0;
+	virtual int getStreamEnvironmentCubemapPresetIndex() const = 0;
+	virtual void setFoveatedRenderingEnabled(bool enabled) = 0;
+	virtual bool isFoveatedRenderingEnabled() const = 0;
+
+	enum CHROMAKEY_TYPE
+	{
+		CHROMAKEY_TYPE_DISABLED = 0,
+		CHROMAKEY_TYPE_HSV = 1,
+	};
+
+	enum MARKER_FLAGS
+	{
+		MARKER_FLAGS_DO_PREDICTION = 0x1,
+	};
+
+	enum MARKER_POSE_FLAGS
+	{
+		MARKER_POSE_FLAGS_TRACING_OK = 0x1,
+		MARKER_POSE_FLAGS_TRACING_LOST = 0x2,
+		MARKER_POSE_FLAGS_TRACING_DISCONNECTED = 0x4,
+		MARKER_POSE_FLAGS_HAS_POSITION = 0x8,
+		MARKER_POSE_FLAGS_HAS_ROTATION = 0x10,
+		MARKER_POSE_FLAGS_HAS_VELOCITY = 0x20,
+		MARKER_POSE_FLAGS_HAS_ANGULAR_VELOCITY = 0x40,
+		MARKER_POSE_FLAGS_HAS_ACCELERATION = 0x80,
+		MARKER_POSE_FLAGS_HAS_CONFIDENCE = 0x100,
+	};
+	virtual void setMarkerLifetime(float lifetime, Vector< unsigned long long > &marker_ids) = 0;
+	virtual void setMarkerLifetime(float lifetime, unsigned long long marker_id) = 0;
+	virtual void setMarkerFlags(AppVarjo::MARKER_FLAGS flags, Vector< unsigned long long > &marker_ids) = 0;
+	virtual void setMarkerFlags(AppVarjo::MARKER_FLAGS flags, unsigned long long marker_id) = 0;
+
+	struct MarkerObject
+	{
+		Math::Mat4 transform;
+		Math::Vec3 size;
+		Math::Vec3 velocity;
+		Math::Vec3 angular_velocity;
+		Math::Vec3 acceleration;
+		int64_t timestamp; // In Nanoseconds
+		double confidence;
+		MARKER_POSE_FLAGS pose_flags;
+		MARKER_FLAGS flags;
+		int id;
+	};
+
+	virtual AppVarjo::MarkerObject getMarkerObject(int index) const = 0;
+	virtual int getMarkerObjectNum() const = 0;
+	virtual void setChromaKey(bool key) = 0;
+	virtual bool isChromaKey() const = 0;
+	virtual int getChromaKeyConfigNum() const = 0;
+	virtual void chromaKeyConfigSubmit(int index) const = 0;
+	virtual AppVarjo::CHROMAKEY_TYPE getChromaKeyConfigType(int index) const = 0;
+	virtual void setChromaKeyConfigType(int index, AppVarjo::CHROMAKEY_TYPE type) = 0;
+	virtual Math::vec3 getChromaKeyConfigFalloff(int index) const = 0;
+	virtual void setChromaKeyConfigFalloff(int index, const Math::vec3& falloff) = 0;
+	virtual Math::vec3 getChromaKeyConfigTargetColor(int index) const = 0;
+	virtual void setChromaKeyConfigTargetColor(int index, const Math::vec3& target_color) = 0;
+	virtual Math::vec3 getChromaKeyConfigTolerance(int index) const = 0;
+	virtual void setChromaKeyConfigTolerance(int index, const Math::vec3& tolerance) = 0;
+	virtual void setCameraExposureTime(double time) = 0;
+	virtual double getCameraExposureTime() const = 0;
+	virtual void setCameraExposureTimeAuto() const = 0;
+	virtual void setCameraExposureTimeManual() const = 0;
+	virtual bool isCameraExposureTimeAuto() const = 0;
+	virtual void setCameraWhiteBalance(int balance) = 0;
+	virtual int getCameraWhiteBalance() const = 0;
+	virtual void setCameraWhiteBalanceAuto() const = 0;
+	virtual void setCameraWhiteBalanceManual() const = 0;
+	virtual bool isCameraWhiteBalanceAuto() const = 0;
+	virtual void setCameraISO(int cameraiso) = 0;
+	virtual int getCameraISO() const = 0;
+	virtual void setCameraISOAuto() const = 0;
+	virtual void setCameraISOManual() const = 0;
+	virtual bool isCameraISOAuto() const = 0;
+	virtual void setCameraFlickerCompensation(int compensation) = 0;
+	virtual int getCameraFlickerCompensation() const = 0;
+	virtual void setCameraSharpness(int sharpness) = 0;
+	virtual int getCameraSharpness() const = 0;
 
 	enum EYETRACKING_STATUS
 	{

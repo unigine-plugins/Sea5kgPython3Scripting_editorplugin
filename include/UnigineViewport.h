@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -43,6 +43,8 @@ public:
 		SKIP_FORMAT_RG11B10 = 1 << 6,
 		SKIP_TRANSPARENT = 1 << 7,
 		SKIP_STREAMING = 1 << 8,
+		SKIP_AUTO_EXPOSURE = 1 << 9,
+		SKIP_AUTO_WHITE_BALANCE = 1 << 10,
 	};
 
 	enum
@@ -59,8 +61,10 @@ public:
 		USAGE_NODE_LIGHT = 2,
 	};
 	int getID() const;
-	void setAspectCorrection(int correction);
-	int getAspectCorrection() const;
+	void setAspectCorrection(bool correction);
+	bool isAspectCorrection() const;
+	void setUseTAAOffset(bool offset);
+	bool isUseTAAOffset() const;
 	void setFirstFrame(int frame);
 	int getFirstFrame() const;
 	void setSkipFlags(int flags);
@@ -72,6 +76,8 @@ public:
 	Render::VIEWPORT_MODE getMode() const;
 	void setRenderMode(int mode);
 	int getRenderMode() const;
+	void setPaused(bool paused);
+	bool isPaused() const;
 	bool isStereo() const;
 	bool isPanorama() const;
 	void setPanoramaFisheyeFov(float fov);
@@ -96,7 +102,11 @@ public:
 	void clearStereoHiddenAreaMesh();
 	void setNodeLightUsage(int usage);
 	int getNodeLightUsage() const;
-	void setNodeEnvironmentTextureName(const char *name);
+	void setEnvironmentTexturePath(const char *name);
+	const char *getEnvironmentTexturePath();
+	void setEnvironmentTexture(const Ptr<Texture> &texture);
+	Ptr<Texture> getEnvironmentTexture() const;
+	void resetEnvironmentTexture();
 	void renderNode(const Ptr<Camera> &camera, const Ptr<Node> &node);
 	void renderNode(const Ptr<Camera> &camera, const Ptr<Node> &node, int width, int height);
 	void renderNodeTexture2D(const Ptr<Camera> &camera, const Ptr<Node> &node, const Ptr<Texture> &texture);

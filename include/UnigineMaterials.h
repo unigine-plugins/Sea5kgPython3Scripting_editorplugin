@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -40,20 +40,14 @@ public:
 	static void setLoadingMode(Materials::LOADING_MODE mode);
 	static Materials::LOADING_MODE getLoadingMode();
 	static Ptr<Material> loadMaterial(const char *path);
+	static bool isMaterialGUID(const UGUID& guid);
 	static int getNumMaterials();
 	static Ptr<Material> getMaterial(int num);
-	static const char *getMaterialName(int num);
-	static bool isManualMaterial(const char *name);
-	static bool isBaseMaterial(const char *name);
-	static bool isMaterial(const char *name);
-	static bool isMaterial(const UGUID & guid);
-	static Ptr<Material> findMaterial(const char *name);
 	static Ptr<Material> findManualMaterial(const char *name);
-	static Ptr<Material> findBaseMaterial(const char *name);
-	static Ptr<Material> findMaterialByGUID(const UGUID & guid);
-	static Ptr<Material> findMaterialByFileGUID(const UGUID & guid);
+	static Ptr<Material> findMaterialByGUID(const UGUID& guid);
+	static Ptr<Material> findMaterialByFileGUID(const UGUID& guid);
 	static Ptr<Material> findMaterialByPath(const char *path);
-	static bool removeMaterial(const UGUID & guid, bool remove_file = false, bool remove_children = true);
+	static bool removeMaterial(const UGUID& guid, bool remove_file = false, bool remove_children = true);
 	static bool replaceMaterial(const Ptr<Material> &material, const Ptr<Material> &new_material);
 	static bool saveMaterials();
 	static void compileShaders(const Vector< Ptr<Material> > &materials);
@@ -64,6 +58,9 @@ public:
 	static void destroyShaders();
 	static void destroyTextures();
 	static void createShaders();
+	static void *addReloadCallback(Unigine::CallbackBase *func);
+	static bool removeReloadCallback(void *id);
+	static void clearReloadCallbacks();
 };
 
 } // namespace Unigine

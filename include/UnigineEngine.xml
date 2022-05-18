@@ -87,7 +87,7 @@
 			</summary> 
 			<param name="name"> Name of the editor script function. </param>
 			<param name="num_args"> Number of editor script function arguments. </param> 
-			<returns>1 if the editor script function exists; otherwise, 0.</returns>
+			<returns>true if the editor script function exists; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getEditorInterpreter const">
 			<summary>
@@ -99,13 +99,13 @@
 			<summary>
 			Returns a value indicating if the function is called from the editor script.
 			</summary>  
-			<returns>1 if the function is called from the editor script; otherwise, 0.</returns>
+			<returns>true if the function is called from the editor script; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.isEditorLoaded const">
 			<summary>
 			Returns a value indicating if the editor script is loaded.
 			</summary>  
-			<returns>1 if the editor script is loaded; otherwise, 0.</returns>
+			<returns>true if the editor script is loaded; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getEditorLogic(int) const">
 			<summary>
@@ -139,7 +139,7 @@
 			Returns a value indicating if the editor script variable exists.
 			</summary> 
 			<param name="name"> Name of the editor script variable. </param> 
-			<returns>1 if the editor script variable exists; otherwise, 0.</returns>
+			<returns>true if the editor script variable exists; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getError">
 			<summary>
@@ -153,65 +153,23 @@
 			</summary>  
 			<returns>The list of external definitions.</returns>
 		</member>
-		<member name="M:Unigine.Engine.getVersion const">
+		<member name="M:Unigine.Engine.getFeatures">
+			<summary>
+			Returns the list of features (like OpenGL, Direct3D, Microprofile, Geodetic, etc.).
+			</summary>  
+			<returns>The list of features (like OpenGL, Direct3D, Microprofile, Geodetic, etc.).</returns>
+		</member>
+		<member name="M:Unigine.Engine.getVersion">
 			<summary>
 			Returns the Engine version info.
 			</summary>  
 			<returns>Engine version info.</returns>
 		</member>
-		<member name="M:Unigine.Engine.getBuildConfig const">
-			<summary>
-			Returns the Engine build configuration.
-			</summary>  
-			<returns>Engine build configuration (Debug, Development, or Release).</returns>
-		</member>
-		<member name="M:Unigine.Engine.isDouble const">
-			<summary>
-			Returns a value indicating if double precision of coordinates is enabled.
-			</summary>  
-			<returns>true if double precision of coordinates is enabled; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getHomePath">
-			<summary>
-			Returns a path to the user's home directory.
-			</summary>  
-			<returns>Path to the user's home directory.</returns>
-		</member>
-		<member name="M:Unigine.Engine.isInitialized">
-			<summary>
-			Returns the initialization status of the engine.
-			</summary>  
-			<returns>1 if the engine is initialized; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getInterfaceTime">
-			<summary>
-			Returns the total accumulative time spent on rendering GUI widgets.
-			</summary>  
-			<returns>Time value, in milliseconds.</returns>
-		</member>
 		<member name="M:Unigine.Engine.isMainThread">
 			<summary>
 			Checks if the current thread is main.
 			</summary>  
-			<returns>1 if the current thread is main; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Engine.isKnownArg">
-			<summary>
-			Checks if the specified command line argument is a registered one.
-			</summary>  
-			<returns>1 if the specified command line argument is a registered one; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getMessage">
-			<summary>
-			Returns the last system message of the current frame, or empty string if there are no messages.
-			</summary>  
-			<returns>The last system message.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getNumArgs">
-			<summary>
-			Returns the number of command line arguments.
-			</summary>  
-			<returns>Number of command line arguments.</returns>
+			<returns>true if the current thread is main; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getArg(int)">
 			<summary>
@@ -298,6 +256,12 @@
 			</summary>  
 			<returns>Time value, in milliseconds.</returns>
 		</member>
+		<member name="M:Unigine.Engine.getPrecision">
+			<summary>
+			Returns the Unigine Engine precision type.
+			</summary>  
+			<returns>Precision type.</returns>
+		</member>
 		<member name="M:Unigine.Engine.getRenderTime">
 			<summary>
 			Returns the time value, required to prepare all data to be rendered in the current frame and feed rendering commands from the CPU to the GPU. See the Profiler article for details.
@@ -336,7 +300,7 @@
 			</summary> 
 			<param name="name"> Name of the system script function. </param>
 			<param name="num_args"> Number of system script function arguments. </param> 
-			<returns>1 if the system script function exists; otherwise, 0.</returns>
+			<returns>true if the system script function exists; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getSystemInterpreter const">
 			<summary>
@@ -348,7 +312,7 @@
 			<summary>
 			Checks if the function is called from the system script.
 			</summary>  
-			<returns>1 when the function is called from the system script; otherwise, 0.</returns>
+			<returns>true when the function is called from the system script; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getSystemLogic(int) const">
 			<summary>
@@ -382,7 +346,7 @@
 			Checks whether a system script variable exists.
 			</summary> 
 			<param name="name"> Name of the system script variable. </param> 
-			<returns>1 if the system script variable exists; otherwise, 0.</returns>
+			<returns>true if the system script variable exists; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getTotalTime">
 			<summary>
@@ -422,7 +386,7 @@
 			</summary> 
 			<param name="name"> Name of the world script function. </param>
 			<param name="num_args"> Number of world script function arguments. </param> 
-			<returns>1 if the world script function exists; otherwise, 0.</returns>
+			<returns>true if the world script function exists; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getWorldInterpreter const">
 			<summary>
@@ -434,13 +398,13 @@
 			<summary>
 			Returns a value indicating if the function is called from the world script.
 			</summary>  
-			<returns>1 if the function is called from the world script; otherwise, 0.</returns>
+			<returns>true if the function is called from the world script; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.isWorldLoaded const">
 			<summary>
 			Returns a value indicating if the world script is loaded.
 			</summary>  
-			<returns>1 if the world script is loaded; otherwise, 0.</returns>
+			<returns>true if the world script is loaded; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getWorldLogic(int) const">
 			<summary>
@@ -468,42 +432,42 @@
 			Returns a value indicating if the world script variable exists.
 			</summary> 
 			<param name="name"> Name of the world script variable. </param> 
-			<returns>1 if the world script variable exists; otherwise, 0.</returns>
+			<returns>true if the world script variable exists; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.addEditorLogic(EditorLogic)">
 			<summary>
 			Adds an EditorLogic instance to the engine runtime.
 			</summary> 
 			<param name="logic"> EditorLogic instance. </param> 
-			<returns>1 if the EditorLogic instance has been added successfully; otherwise, 0.</returns>
+			<returns>true if the EditorLogic instance has been added successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.addPlugin(Plugin)">
 			<summary>
-			Adds a plugin in engine runtime by using a pointer to this plugin.
+			Adds a plugin to engine runtime by using a pointer to this plugin.
 			</summary> 
 			<param name="plugin"> Plugin pointer. </param> 
-			<returns>1 if the plugin ha been added successfully; otherwise, 0.</returns>
+			<returns>true if the plugin ha been added successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.addPlugin(char)">
 			<summary>
-			Adds a plugin in engine runtime by its name.
+			Adds a plugin to engine runtime by its name.
 			</summary> 
 			<param name="name"> Plugin name. </param> 
-			<returns>1 if the plugin has been added successfully; otherwise, 0.</returns>
+			<returns>true if the plugin has been added successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.addSystemLogic(SystemLogic)">
 			<summary>
-			Adds an SystemLogic instance to the engine runtime.
+			Adds a SystemLogic instance to Engine runtime.
 			</summary> 
 			<param name="logic"> SystemLogic instance. </param> 
-			<returns>1 if the SystemLogic instance has been added successfully; otherwise, 0.</returns>
+			<returns>true if the SystemLogic instance has been added successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.addWorldLogic(WorldLogic)">
 			<summary>
 			Adds a WorldLogic instance to the engine runtime.					Instances of the WorldLogic class should not be added while the world is loaded and the world script is being executed (as you can't change a world script while the world is loaded). In such a case the init() method shall not be called if the WorldLogic is added before opening the world.
 			</summary> 
 			<param name="logic"> WorldLogic instance. </param> 
-			<returns>1 if the WorldLogic instance has been added successfully; otherwise, 0.</returns>
+			<returns>true if the WorldLogic instance has been added successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.dialogError(char)">
 			<summary>
@@ -522,24 +486,22 @@
 			Searches the index of the loaded plugin by its name.
 			</summary> 
 			<param name="name"> Name of the plugin. </param> 
-			<returns>Index of the plugin.</returns>
+			<returns>Index of the plugin if it is found, or -1 otherwise.</returns>
 		</member>
-		<member name="M:Unigine.Engine.init(int,int,char,char,char)">
+		<member name="M:Unigine.Engine.init(int,char,char,char)">
 			<summary>
 			Initializes a new engine instance to be used with an external graphics application.
 			</summary> 
-			<param name="version"> Version number (UNIGINE_VERSION). </param>
 			<param name="argc"> Number of command line arguments. </param>
 			<param name="argv"> Array of command line arguments values. </param>
 			<param name="project"> Project name. If this parameter is set, it forces the engine to store rewritable data (such as log file, cache files, config files) in user profile rather than in a directory with binaries. Notice that only the project name is required to pass in for this parameter, not the full path to the project. If there is no need to change location of such files, pass the 0 value. </param>
 			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
 			<returns>Pointer to the new engine instance.</returns>
 		</member>
-		<member name="M:Unigine.Engine.init(int,int,wchar_t,char,char)">
+		<member name="M:Unigine.Engine.init(int,wchar_t,char,char)">
 			<summary>
 			Initializes a new engine instance.
 			</summary> 
-			<param name="version"> Engine version number (UNIGINE_VERSION). </param>
 			<param name="argc"> Number of command line arguments. </param>
 			<param name="argv"> Array of command line arguments values. </param>
 			<param name="args"> Array of command line arguments values. </param>
@@ -547,11 +509,10 @@
 			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
 			<returns>Pointer to the new engine instance.</returns>
 		</member>
-		<member name="M:Unigine.Engine.init(int,char,int,char,char,char)">
+		<member name="M:Unigine.Engine.init(char,int,char,char,char)">
 			<summary>
 			Initializes a new engine instance to be used with an external graphics application.
 			</summary> 
-			<param name="version"> Version number (UNIGINE_VERSION). </param>
 			<param name="window_title"> Title to be set for the application window. </param>
 			<param name="argc"> Number of command line arguments. </param>
 			<param name="argv"> Array of command line arguments values. </param>
@@ -559,11 +520,10 @@
 			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
 			<returns>Pointer to the new engine instance.</returns>
 		</member>
-		<member name="M:Unigine.Engine.init(int,char,int,wchar_t,char,char)">
+		<member name="M:Unigine.Engine.init(char,int,wchar_t,char,char)">
 			<summary>
 			Initializes a new engine instance.
 			</summary> 
-			<param name="version"> Engine version number (UNIGINE_VERSION). </param>
 			<param name="window_title"> Title to be set for the application window. </param>
 			<param name="argc"> Number of command line arguments. </param>
 			<param name="argv"> Array of command line arguments values. </param>
@@ -572,11 +532,10 @@
 			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
 			<returns>Pointer to the new engine instance.</returns>
 		</member>
-		<member name="M:Unigine.Engine.init(int,CustomApp,int,wchar_t,char,char)">
+		<member name="M:Unigine.Engine.init(CustomApp,int,wchar_t,char,char)">
 			<summary>
 			Initializes a new engine instance to be used with an external graphics application.
 			</summary> 
-			<param name="version"> Version number (UNIGINE_VERSION). </param>
 			<param name="app"> Pointer to the graphics CustomApp class. </param>
 			<param name="argc"> Number of command line arguments. </param>
 			<param name="argv"> Array of values of command line arguments (a wide-character string). </param>
@@ -584,11 +543,10 @@
 			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
 			<returns>Pointer to the new engine instance.</returns>
 		</member>
-		<member name="M:Unigine.Engine.init(int,CustomApp,int,char,char,char)">
+		<member name="M:Unigine.Engine.init(CustomApp,int,char,char,char)">
 			<summary>
 			Initializes a new engine instance to be used with an external graphics application.
 			</summary> 
-			<param name="version"> Version number (UNIGINE_VERSION). </param>
 			<param name="app"> Pointer to the graphics CustomApp class. </param>
 			<param name="argc"> Number of command line arguments. </param>
 			<param name="argv"> Array of values of command line arguments. </param>
@@ -597,11 +555,10 @@
 			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
 			<returns>Pointer to the new engine instance.</returns>
 		</member>
-		<member name="M:Unigine.Engine.init(int,CustomApp,char,char,char,int,wchar_t,char,char)">
+		<member name="M:Unigine.Engine.init(CustomApp,char,char,char,int,wchar_t,char,char)">
 			<summary>
 			Initializes a new engine instance to be used with an external graphics application, which is stored at the specified path.
 			</summary> 
-			<param name="version"> Version number (UNIGINE_VERSION). </param>
 			<param name="app"> Pointer to the graphics CustomApp class. </param>
 			<param name="window_title"> Title to be set for the application window. </param>
 			<param name="app_path"> Path to a directory where binary executable file is stored. Pass the 0 value to ignore this parameter. </param>
@@ -612,11 +569,10 @@
 			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
 			<returns>Pointer to the new engine instance.</returns>
 		</member>
-		<member name="M:Unigine.Engine.init(int,CustomApp,char,char,int,wchar_t,char,char)">
+		<member name="M:Unigine.Engine.init(CustomApp,char,char,int,wchar_t,char,char)">
 			<summary>
 			Initializes a new engine instance to be used with an external graphics application, which is stored at the specified path.
 			</summary> 
-			<param name="version"> Version number (UNIGINE_VERSION). </param>
 			<param name="app"> Pointer to the graphics CustomApp class. </param>
 			<param name="app_path"> Path to a directory where binary executable file is stored. Pass the 0 value to ignore this parameter. </param>
 			<param name="home_path"> Path to the user's home directory. </param>
@@ -626,11 +582,10 @@
 			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
 			<returns>Pointer to the new engine instance.</returns>
 		</member>
-		<member name="M:Unigine.Engine.init(int,CustomApp,char,char,char,int,char,char,char)">
+		<member name="M:Unigine.Engine.init(CustomApp,char,char,char,int,char,char,char)">
 			<summary>
 			Initializes a new engine instance to be used with an external graphics application, which is stored at the specified path.
 			</summary> 
-			<param name="version"> Version number (UNIGINE_VERSION). </param>
 			<param name="app"> Pointer to the graphics CustomApp class. </param>
 			<param name="window_title"> Title to be set for the application window. </param>
 			<param name="app_path"> Path to a directory where binary executable file is stored. Pass the 0 value to ignore this parameter. </param>
@@ -641,11 +596,10 @@
 			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
 			<returns>Pointer to the new engine instance.</returns>
 		</member>
-		<member name="M:Unigine.Engine.init(int,CustomApp,char,char,int,char,char,char)">
+		<member name="M:Unigine.Engine.init(CustomApp,char,char,int,char,char,char)">
 			<summary>
 			Initializes a new engine instance to be used with an external graphics application, which is stored at the specified path.
 			</summary> 
-			<param name="version"> Version number (UNIGINE_VERSION). </param>
 			<param name="app"> Pointer to the graphics CustomApp class. </param>
 			<param name="app_path"> Path to a directory where binary executable file is stored. Pass the 0 value to ignore this parameter. </param>
 			<param name="home_path"> Path to the user's home directory. </param>
@@ -668,28 +622,28 @@
 			Removes an EditorLogic instance from engine runtime.
 			</summary> 
 			<param name="logic"> An EditorLogic instance. </param> 
-			<returns>1 if the instance has been removed successfully; otherwise, 0.</returns>
+			<returns>true if the instance has been removed successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.removePlugin(Plugin)">
 			<summary>
 			Removes a plugin by using a pointer to this plugin.
 			</summary> 
 			<param name="plugin"> Plugin pointer to remove. </param> 
-			<returns>1 if the plugin has been removed successfully; otherwise, 0.</returns>
+			<returns>true if the plugin has been removed successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.removeSystemLogic(SystemLogic)">
 			<summary>
 			Removes a SystemLogic instance from engine runtime.
 			</summary> 
 			<param name="logic"> A SystemLogic instance. </param> 
-			<returns>1 if the instance has been removed successfully; otherwise, 0.</returns>
+			<returns>true if the instance has been removed successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.removeWorldLogic(WorldLogic)">
 			<summary>
 			Removes a WorldLogic instance from engine runtime.					Instances of the WorldLogic class should not be removed while the world is loaded and the world script is being executed (as you can't change a world script while the world is loaded). In such a case the shutdown() method shall not be called if the WorldLogic is removed before closing the world.
 			</summary> 
 			<param name="logic"> A WorldLogic instance. </param> 
-			<returns>1 if the instance has been removed successfully; otherwise, 0.</returns>
+			<returns>true if the instance has been removed successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.render">
 			<summary>
@@ -1391,6 +1345,40 @@
 			</summary> 
 			<param name="callback"> Stage of the execution sequence for which a callback is to be added. One of the CALLBACK_* variables.The _BEGIN prefix corresponds to the beginning of the execution sequence step, _END — to its completion. </param> 
 		</member>
+		<member name="M:Unigine.Engine.init(int,char)">
+			<summary>
+			Initializes a new engine instance to be used with an external graphics application.
+			</summary> 
+			<param name="argc"> Number of command line arguments. </param>
+			<param name="argv"> Array of command line arguments values. </param> 
+			<returns>Pointer to the new engine instance.</returns>
+		</member>
+		<member name="M:Unigine.Engine.init(int,wchar_t)">
+			<summary>
+			Initializes a new engine instance to be used with an external graphics application.
+			</summary> 
+			<param name="argc"> Number of command line arguments. </param>
+			<param name="argv"> Array of command line arguments values. </param> 
+			<returns>Pointer to the new engine instance.</returns>
+		</member>
+		<member name="M:Unigine.Engine.init(InitParameters,int,char)">
+			<summary>
+			Initializes a new engine instance to be used with an external graphics application.
+			</summary> 
+			<param name="init_parameters"> Structure of initializing parameters. </param>
+			<param name="argc"> Number of command line arguments. </param>
+			<param name="argv"> Array of command line arguments values. </param> 
+			<returns>Pointer to the new engine instance.</returns>
+		</member>
+		<member name="M:Unigine.Engine.init(InitParameters,int,wchar_t)">
+			<summary>
+			Initializes a new engine instance to be used with an external graphics application.
+			</summary> 
+			<param name="init_parameters"> Structure of initializing parameters. </param>
+			<param name="argc"> Number of command line arguments. </param>
+			<param name="argv"> Array of command line arguments values. </param> 
+			<returns>Pointer to the new engine instance.</returns>
+		</member>
 		<member name="F:Unigine.Engine.GCMODE_DEFAULT">
 			<summary>
 			Default C# garbage collector mode. In this case heavy spikes and excessive memory consumption are imminent if you don't manage your objects properly and do not use the Dispose() method.
@@ -1849,6 +1837,16 @@
 		<member name="F:Unigine.Engine.CALLBACK_BEGIN_UPDATE">
 			<summary>
 			Callback before the update stage is started.
+		</summary>
+		</member>
+		<member name="F:Unigine.Engine.PRECISION_PRECISION_DOUBLE">
+			<summary>
+			Double precision type.
+		</summary>
+		</member>
+		<member name="F:Unigine.Engine.PRECISION_PRECISION_FLOAT">
+			<summary>
+			Float precision type.
 		</summary>
 		</member>
 	</members>

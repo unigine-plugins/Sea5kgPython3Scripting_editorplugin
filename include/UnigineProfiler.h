@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -34,7 +34,7 @@ public:
 	static void setEnabled(bool enabled);
 	static bool isEnabled();
 	static void begin(const char *name);
-	static void begin(const char *name, const Math::vec4 &color);
+	static void begin(const char *name, const Math::vec4& color);
 	static float end();
 	static int beginMicro(const char *name, bool gpu = false);
 	static void endMicro(int id);
@@ -46,15 +46,26 @@ public:
 	static Ptr<Gui> getGui();
 };
 
+
 struct ScopedProfiler
 {
 	int id;
-	ScopedProfiler(const char *name, bool gpu = false) { id = Profiler::beginMicro(name, gpu); }
-	~ScopedProfiler() { Profiler::endMicro(id); }
+	ScopedProfiler(const char *name, bool gpu = false)
+	{
+		if (Profiler::isInitialized())
+			id = Profiler::beginMicro(name, gpu);
+		else
+			id = -1;
+	}
+	~ScopedProfiler()
+	{
+		if (Profiler::isInitialized() && id != -1)
+			Profiler::endMicro(id);
+	}
 };
-#define UNIGINE_PROFILER_SCOPED(NAME) ScopedProfiler unigine_prof ## __LINE__(NAME)
-#define UNIGINE_PROFILER_SCOPED_GPU(NAME) ScopedProfiler unigine_prof ## __LINE__(NAME, true)
-#define UNIGINE_PROFILER_FUNCTION ScopedProfiler unigine_prof ## __LINE__(__FUNCTION__)
-#define UNIGINE_PROFILER_FUNCTION_GPU ScopedProfiler unigine_prof ## __LINE__(__FUNCTION__, true)
+#define UNIGINE_PROFILER_SCOPED(NAME) ::Unigine::ScopedProfiler unigine_prof ## __LINE__(NAME)
+#define UNIGINE_PROFILER_SCOPED_GPU(NAME) ::Unigine::ScopedProfiler unigine_prof ## __LINE__(NAME, true)
+#define UNIGINE_PROFILER_FUNCTION ::Unigine::ScopedProfiler unigine_prof ## __LINE__(__FUNCTION__)
+#define UNIGINE_PROFILER_FUNCTION_GPU ::Unigine::ScopedProfiler unigine_prof ## __LINE__(__FUNCTION__, true)
 
 } // namespace Unigine

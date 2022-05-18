@@ -152,6 +152,13 @@
 			<param name="path"> Path to the file containing ULON description. </param> 
 			<returns>true if ULON-data from the specified file is read successfully; otherwise, false.</returns>
 		</member>
+		<member name="M:Unigine.UlonNode.parse(char)">
+			<summary>
+			Parses a given string into the ULON node.
+			</summary> 
+			<param name="str"> String to parse. </param> 
+			<returns>true if the string was parsed successfully; otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.UlonNode.getChildren const">
 			<summary>
 			Returns the list of all children of the ULON node.

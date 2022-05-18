@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -39,14 +39,14 @@ public:
 		FOV_FIXED_HORIZONTAL,
 	};
 	static Ptr<Camera> create();
-	void setModelview(const Math::Mat4 & modelview);
+	void setModelview(const Math::Mat4& modelview);
 	Math::Mat4 getModelview() const;
 	Math::Mat4 getIModelview() const;
-	void setPosition(const Math::Vec3 & position);
+	void setPosition(const Math::Vec3& position);
 	Math::Vec3 getPosition() const;
-	void setOffset(const Math::mat4 &offset);
+	void setOffset(const Math::mat4& offset);
 	Math::mat4 getOffset() const;
-	void setProjection(const Math::mat4 &projection);
+	void setProjection(const Math::mat4& projection);
 	Math::mat4 getProjection() const;
 	Math::mat4 getAspectCorrectedProjection(float aspect) const;
 	void setFovMode(int mode);
@@ -62,9 +62,9 @@ public:
 	float getZNear() const;
 	void setZFar(float zfar);
 	float getZFar() const;
-	void setUp(const Math::vec3 &up);
+	void setUp(const Math::vec3& up);
 	Math::vec3 getUp() const;
-	void setObliqueFrustumPlane(const Math::Vec4 & plane);
+	void setObliqueFrustumPlane(const Math::Vec4& plane);
 	Math::Vec4 getObliqueFrustumPlane() const;
 	void setObliqueFrustum(bool frustum);
 	bool isObliqueFrustum() const;
@@ -76,8 +76,6 @@ public:
 	int getSourceMask() const;
 	void setReverbMask(int mask);
 	int getReverbMask() const;
-	void setPostMaterials(const char *materials);
-	const char *getPostMaterials() const;
 	void clearScriptableMaterials();
 	int getNumScriptableMaterials() const;
 	Ptr<Material> getScriptableMaterial(int num) const;
@@ -92,8 +90,10 @@ public:
 	void getDirectionFromScreen(Math::Vec3 & p0, Math::Vec3 & p1, float screen_x, float screen_y, float aspect) const;
 	Math::vec3 getDirectionFromScreen(float screen_x, float screen_y, float aspect) const;
 	Math::mat4 getProjectionFromScreen(float screen_x0, float screen_y0, float screen_x1, float screen_y1, float aspect) const;
-	int getScreenPosition(float & screen_x, float & screen_y, const Math::Vec3 & point, float aspect) const;
+	int getScreenPosition(float & screen_x, float & screen_y, const Math::Vec3& point, float aspect) const;
 	Ptr<Camera> clone() const;
+	Ptr<Camera> copy(const Ptr<Camera> &camera) const;
+	void swap(const Ptr<Camera> &camera);
 };
 typedef Ptr<Camera> CameraPtr;
 

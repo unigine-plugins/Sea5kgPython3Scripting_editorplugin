@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -40,9 +40,9 @@ public:
 	static int type() { return Node::NODE_LAYER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<NodeLayer> create(const char *name);
-	void setNodeName(const char *name);
-	const char *getNodeName() const;
+	static Ptr<NodeLayer> create(const char *path);
+	void setNodePath(const char *path);
+	const char *getNodePath() const;
 };
 typedef Ptr<NodeLayer> NodeLayerPtr;
 
@@ -54,12 +54,12 @@ public:
 	static int type() { return Node::NODE_REFERENCE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<NodeReference> create(const char *name);
+	static Ptr<NodeReference> create(const char *path);
 	Ptr<Node> getReference() const;
 	Ptr<Node> detachReference() const;
-	void setNodeName(const char *name);
-	const char *getNodeName() const;
-	static bool canBeReference(const char *name, const Ptr<Node> &node);
+	void setNodePath(const char *path);
+	const char *getNodePath() const;
+	static bool canBeReference(const char *path, const Ptr<Node> &node);
 };
 typedef Ptr<NodeReference> NodeReferencePtr;
 
@@ -116,8 +116,8 @@ public:
 	virtual void updateEnabled();
 	virtual void updatePosition();
 	virtual void updateTransform();
-	virtual const BoundBox &getBoundBox();
-	virtual const BoundSphere &getBoundSphere();
+	virtual const Math::BoundBox &getBoundBox();
+	virtual const Math::BoundSphere &getBoundSphere();
 	virtual void renderHandler();
 	virtual void renderVisualizer();
 	virtual void copy(NodeExternBase *node, int is_root);

@@ -146,7 +146,7 @@
 		</member>
 		<member name="M:Unigine.Game.setScale(float)">
 			<summary>
-								Sets a value that is used to scale frame duration. It scales up or down the speed of rendering, physics and game logic. This function can be used to create effects of slow/accelerated motion.					For example, if the scale equals 2, the rate of simulation of all effects (such as particles) speeds up to two times faster. As for physics, in reality it will be simulated with the same fixed physics FPS, but the number of iterations will be two times higher. It is possible to scale the physics FPS separately via engine.physics.setScale() function.					This function the value set by the setIFps().
+								Sets a value that is used to scale frame duration. It scales up or down the speed of rendering, physics and game logic. This function can be used to create effects of slow/accelerated motion.					For example, if the scale equals 2, the rate of simulation of all effects (such as particles) speeds up to two times faster. As for physics, in reality it will be simulated with the same fixed physics FPS, but the number of iterations will be two times higher. It is possible to scale the physics FPS separately via engine.physics.setScale() function.					This function scales the value set by the setIFps().
 			</summary> 
 			<param name="scale"> Scaling factor. The provided values is clamped within the range [0;32]. </param> 
 		</member>

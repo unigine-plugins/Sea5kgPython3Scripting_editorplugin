@@ -43,6 +43,13 @@
 			<param name="num"> File index. </param> 
 			<returns>File size.</returns>
 		</member>
+		<member name="M:Unigine.Dir.getFileSize(char)">
+			<summary>
+			Returns the size of the specified file.
+			</summary> 
+			<param name="path"> Path to an existing file to retrieve the size for. </param> 
+			<returns>File size in bytes.</returns>
+		</member>
 		<member name="M:Unigine.Dir.setMTime(char,longlong)">
 			<summary>
 			Sets the time of the last directory modification.

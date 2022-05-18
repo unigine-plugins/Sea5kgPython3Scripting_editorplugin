@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -16,7 +16,6 @@
 #pragma once
 
 #include "UniginePtr.h"
-#include "UnigineBounds.h"
 #include "UnigineVector.h"
 #include "UnigineStreams.h"
 

@@ -147,6 +147,12 @@
 			</summary> 
 			<param name="files"> String buffer to store the list of names for all known virtual files. </param> 
 		</member>
+		<member name="M:Unigine.FileSystem.getVirtualFiles(Unigine.Vector{Unigine.UGUID,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Saves the list of GUIDs for all known files registered in the file system to the specified string buffer.
+			</summary> 
+			<param name="files"> String buffer to store the list of GUIDs for all known virtual files. </param> 
+		</member>
 		<member name="M:Unigine.FileSystem.isVirtualFile(char)">
 			<summary>
 			Checks if the given file is known to the virtual file system.
@@ -511,6 +517,20 @@
 			</summary> 
 			<param name="path"> File path. It can be a relative, absolute, network, or virtual path.If you want to specify a path to an asset, you should use the asset path format (asset://). Otherwise, if you specify the regular path to the asset, it will be treated as the path to its runtime file (if any) from the .runtimes folder. </param> 
 			<returns>File GUID if it exists; otherwise, an empty GUID.</returns>
+		</member>
+		<member name="M:Unigine.FileSystem.getFileSize(char) const">
+			<summary>
+			Returns the size of the specified file.
+			</summary> 
+			<param name="path"> File path. It can be a relative, absolute, network, or virtual path.If you want to specify a path to an asset, you should use the asset path format (asset://). Otherwise, if you specify the regular path to the asset, it will be treated as the path to its runtime file (if any) from the .runtimes folder. </param> 
+			<returns>File size in bytes.</returns>
+		</member>
+		<member name="M:Unigine.FileSystem.getFileSize(Unigine.UGUID) const">
+			<summary>
+			Returns the size of the file with the specified GUID.
+			</summary> 
+			<param name="guid"> File GUID </param> 
+			<returns>File size in bytes.</returns>
 		</member>
 		<member name="M:Unigine.FileSystem.getNumModifiers">
 			<summary>

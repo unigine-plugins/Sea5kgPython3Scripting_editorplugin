@@ -9,17 +9,17 @@
 			Creates a new viewport with default settings.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Viewport.setAspectCorrection(int)">
+		<member name="M:Unigine.Viewport.setAspectCorrection(bool)">
 			<summary>
-			Sets the aspect correction for current viewport. 1 enables correction, 0 disables.
+			Sets the aspect correction for current viewport. true enables correction, false disables it.
 			</summary> 
-			<param name="correction"> 1 to enable aspect correction, 0 to disable. </param> 
+			<param name="correction"> true to enable aspect correction, false to disable. </param> 
 		</member>
-		<member name="M:Unigine.Viewport.getAspectCorrection const">
+		<member name="M:Unigine.Viewport.isAspectCorrection const">
 			<summary>
-			Return the value indicating if the aspect correction enabled for current viewport.
+			Return the value indicating if the aspect correction enabled for the current viewport.
 			</summary>  
-			<returns>1 if the aspect correction enabled, otherwise 0.</returns>
+			<returns>true if the aspect correction enabled, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.Viewport.addCallback(int,Unigine.CallbackBase1{Unigine.Renderer})">
 			<summary>
@@ -62,7 +62,7 @@
 			</summary>  
 			<returns>Viewport ID.</returns>
 		</member>
-		<member name="M:Unigine.Viewport.setMode(int)">
+		<member name="M:Unigine.Viewport.setMode(Render::VIEWPORT_MODE)">
 			<summary>
 			Sets the rendering mode for the current viewport.  It can be one of the stereo or panoramic modes or the default mode.
 			</summary> 
@@ -73,18 +73,6 @@
 			Returns the rendering mode set for the current viewport. It can be one of the stereo or panoramic modes or the default mode.
 			</summary>  
 			<returns>The current rendering mode.</returns>
-		</member>
-		<member name="M:Unigine.Viewport.setNodeEnvironmentTextureName(char)">
-			<summary>
-			Sets a name for the environment texture.
-			</summary> 
-			<param name="name"> A texture name. </param> 
-		</member>
-		<member name="M:Unigine.Viewport.setNodeLightUsage(int)">
-			<summary>
-			Sets the type of lighting for the render node.
-			</summary> 
-			<param name="usage"> The lighting type. Can be one of the following:USAGE_WORLD_LIGHTUSAGE_AUX_LIGHTUSAGE_NODE_LIGHT </param> 
 		</member>
 		<member name="M:Unigine.Viewport.getNodeLightUsage const">
 			<summary>
@@ -112,13 +100,13 @@
 		</member>
 		<member name="M:Unigine.Viewport.setRenderMode(int)">
 			<summary>
-			Sets the specified render mode. The mode determines the set buffers to be rendered.
+			Sets the specified render mode. The mode determines the set of buffers to be rendered.
 			</summary> 
 			<param name="mode"> Render mode to set. Can be one of the following:RENDER_DEPTHRENDER_DEPTH_GBUFFERRENDER_DEPTH_GBUFFER_FINAL </param> 
 		</member>
 		<member name="M:Unigine.Viewport.getRenderMode const">
 			<summary>
-			Returns the current render mode. The mode determines the set buffers to be rendered.
+			Returns the current render mode. The mode determines the set of buffers to be rendered.
 			</summary>  
 			<returns>Current render mode. Can be one of the following:RENDER_DEPTHRENDER_DEPTH_GBUFFERRENDER_DEPTH_GBUFFER_FINAL</returns>
 		</member>
@@ -222,7 +210,7 @@
 			<param name="camera"> Camera, an image from which should be rendered. </param>
 			<param name="image"> Target 2D image to save the result to. </param> 
 		</member>
-		<member name="M:Unigine.Viewport.renderImage2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Image},int,int,int)">
+		<member name="M:Unigine.Viewport.renderImage2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Image},int,int,bool)">
 			<summary>
 			Renders an image of the specified size from the camera to the 2D image.
 			</summary> 
@@ -232,7 +220,7 @@
 			<param name="height"> Image height, in pixels. </param>
 			<param name="hdr"> HDR flag.This parameter determines the format of the 2D image:1 - image format will be set to RGBA16F0 - image format will be set to RGBA8 </param> 
 		</member>
-		<member name="M:Unigine.Viewport.renderImageCube(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Image},int,int,int)">
+		<member name="M:Unigine.Viewport.renderImageCube(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Image},int,bool,bool)">
 			<summary>
 			Renders the image from the camera to the cube map of the specified size.
 			</summary> 
@@ -265,7 +253,7 @@
 			<param name="width"> Image width, in pixels. </param>
 			<param name="height"> Image height, in pixels. </param> 
 		</member>
-		<member name="M:Unigine.Viewport.renderNodeImage2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Node},Unigine.Ptr{Unigine.Image},int,int,int)">
+		<member name="M:Unigine.Viewport.renderNodeImage2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Node},Unigine.Ptr{Unigine.Image},int,int,bool)">
 			<summary>
 			Renders the given node with all children to the 2D image of the specified size.
 			</summary> 
@@ -370,14 +358,73 @@
 			Clears meshes that represent hidden areas for both, left and right eye. Hidden areas are used for culling pixels, that are not visible in VR
 			</summary>  
 		</member>
-		<member name="F:Unigine.Viewport.SKIP_DYNAMIC_REFLECTIONS">
+		<member name="M:Unigine.Viewport.setEnvironmentTexturePath(char)">
 			<summary>
-			Skip rendering of dynamic reflections in the viewport.
+			Sets the path to the cubemap defining the environment color for the viewport. This texture is used for imitating landscape reflections and lighting in accordance with the ground mask.
+			</summary> 
+			<param name="name"> Path to the cubemap defining the environment color. </param> 
+		</member>
+		<member name="M:Unigine.Viewport.getEnvironmentTexturePath">
+			<summary>
+			Returns the path to the cubemap defining the environment color set for the viewport. This texture is used for imitating landscape reflections and lighting in accordance with the ground mask.
+			</summary>  
+			<returns>Path to the cubemap defining the environment color.</returns>
+		</member>
+		<member name="M:Unigine.Viewport.setEnvironmentTexture(Unigine.Ptr{Unigine.Texture})">
+			<summary>
+			Sets the specified environment texture.
+			</summary> 
+			<param name="texture"> Cubemap defining the environment color. </param> 
+		</member>
+		<member name="M:Unigine.Viewport.getEnvironmentTexture const">
+			<summary>
+			Returns the current environment texture.
+			</summary>  
+			<returns>Cubemap defining the environment color.</returns>
+		</member>
+		<member name="M:Unigine.Viewport.resetEnvironmentTexture">
+			<summary>
+			Resets the current environment texture to the default one.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Viewport.setPaused(bool)">
+			<summary>
+			Sets the viewport rendering to the paused mode.
+			</summary> 
+			<param name="paused"> A flag indicating if the current viewport should be paused or not. </param> 
+		</member>
+		<member name="M:Unigine.Viewport.isPaused const">
+			<summary>
+			Returns a value indicating if the rendering in the current viewport is paused or not.
+			</summary>  
+			<returns>1 if the viewport is paused; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Viewport.setNodeLightUsage(int)">
+			<summary>
+			Sets the type of lighting for the render of a node (used for impostor grabbing, node preview rendering, etc.).
+			</summary> 
+			<param name="usage"> The lighting type. Can be one of the following:0 - USAGE_WORLD_LIGHT (use lighting from the auxiliary virtual scene containing one LightWorld with 45 degrees slope angles along all axes, scattering is not used).1 - USAGE_AUX_LIGHT (use the node lighting).2 - USAGE_NODE_LIGHT (use lighting from the LightWorld set in the current loaded world). </param> 
+		</member>
+		<member name="M:Unigine.Viewport.setUseTAAOffset(bool)">
+			<summary>
+			Sets a value indicating if skipping render mode check is enabled for using TAA. Can be used to ensure proper TAA calculation when rendering mode for the Viewport is set to RENDER_DEPTH.
+			</summary> 
+			<param name="offset"> true to enable skipping render mode check and use TAA; otherwise false. </param> 
+		</member>
+		<member name="M:Unigine.Viewport.isUseTAAOffset const">
+			<summary>
+			Returns a value indicating if skipping render mode check is enabled for using TAA. Can be used to ensure proper TAA calculation when rendering mode for the Viewport is set to RENDER_DEPTH.
+			</summary>  
+			<returns>true if skipping render mode check is enabled for using TAA; otherwise false.</returns>
+		</member>
+		<member name="F:Unigine.Viewport.SKIP_SHADOWS">
+			<summary>
+			Skip shadows rendering in the viewport.
 		</summary>
 		</member>
-		<member name="F:Unigine.Viewport.SKIP_FORMAT_RG11B10">
+		<member name="F:Unigine.Viewport.SKIP_VISUALIZER">
 			<summary>
-			Skip rendering of RG11B10 formats in the viewport.
+			Skip rendering of the visualizer in the viewport. This flag is set by default for a new viewport.
 		</summary>
 		</member>
 		<member name="F:Unigine.Viewport.SKIP_POSTEFFECTS">
@@ -385,24 +432,9 @@
 			Skip rendering of post effects in the viewport.
 		</summary>
 		</member>
-		<member name="F:Unigine.Viewport.SKIP_SHADOWS">
+		<member name="F:Unigine.Viewport.SKIP_DYNAMIC_REFLECTIONS">
 			<summary>
-			Skip shadows rendering in the viewport.
-		</summary>
-		</member>
-		<member name="F:Unigine.Viewport.SKIP_SRGB">
-			<summary>
-			Skip rendering of the srgb color space.
-		</summary>
-		</member>
-		<member name="F:Unigine.Viewport.SKIP_STREAMING">
-			<summary>
-			Disables data streaming in the process of rendering.
-		</summary>
-		</member>
-		<member name="F:Unigine.Viewport.SKIP_TRANSPARENT">
-			<summary>
-			Skip rendering of transparent objects in the viewport.
+			Skip rendering of dynamic reflections in the viewport.
 		</summary>
 		</member>
 		<member name="F:Unigine.Viewport.SKIP_VELOCITY_BUFFER">
@@ -410,9 +442,34 @@
 			Skip rendering to the velocity buffer for the viewport.
 		</summary>
 		</member>
-		<member name="F:Unigine.Viewport.SKIP_VISUALIZER">
+		<member name="F:Unigine.Viewport.SKIP_SRGB">
 			<summary>
-			Skip rendering of the visualizer in the viewport. This flag is set by default for a new viewport.
+			Skip rendering of the srgb color space.
+		</summary>
+		</member>
+		<member name="F:Unigine.Viewport.SKIP_FORMAT_RG11B10">
+			<summary>
+			Skip rendering of RG11B10 formats in the viewport.
+		</summary>
+		</member>
+		<member name="F:Unigine.Viewport.SKIP_TRANSPARENT">
+			<summary>
+			Skip rendering of transparent objects in the viewport.
+		</summary>
+		</member>
+		<member name="F:Unigine.Viewport.SKIP_STREAMING">
+			<summary>
+			Disables data streaming in the process of rendering.
+		</summary>
+		</member>
+		<member name="F:Unigine.Viewport.SKIP_AUTO_EXPOSURE">
+			<summary>
+			Disables auto exposure in the process of rendering.
+		</summary>
+		</member>
+		<member name="F:Unigine.Viewport.SKIP_AUTO_WHITE_BALANCE">
+			<summary>
+			Disables auto white balance in the process of rendering.
 		</summary>
 		</member>
 		<member name="F:Unigine.Viewport.USAGE_AUX_LIGHT">

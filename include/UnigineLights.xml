@@ -573,11 +573,15 @@
 		</member>
 		<member name="M:Unigine.Light.setShadowColorTextureMode(Light::SHADOW_COLOR_MODE)">
 			<summary>
-			</summary>  
+			Sets the type of texture used to define light distribution.					This feature is available only for Omni Lights and Projected Lights. See description of the modes in the corresponding articles for Omni Lights and Projected Lights.
+			</summary> 
+			<param name="mode"> One of the following modes:SHADOW_COLOR_MODE_IES - Light distibution is defined by the IES profile.SHADOW_COLOR_MODE_SIMPLE - An arbitrary 2D texture is projected onto the scene. </param> 
 		</member>
 		<member name="M:Unigine.Light.getShadowColorTextureMode const">
 			<summary>
+			Returns the current type of texture used to define light distribution.					This feature is available only for Omni Lights and Projected Lights. See description of the modes in the corresponding articles for Omni Lights and Projected Lights.
 			</summary>  
+			<returns>Current mode.</returns>
 		</member>
 		<member name="M:Unigine.Light.setDynamicDepthTexture(Unigine.Ptr{Unigine.Texture})">
 			<summary>
@@ -748,6 +752,16 @@
 			Shadow mode for omni and projected light sources with the static light mode enabled to render both static and dynamic shadows.
 		</summary>
 		</member>
+		<member name="F:Unigine.Light.SHADOW_COLOR_MODE_SIMPLE">
+			<summary>
+			An arbitrary 2D texture is projected onto the scene.
+		</summary>
+		</member>
+		<member name="F:Unigine.Light.SHADOW_COLOR_MODE_IES">
+			<summary>
+			Light distibution is defined by the IES profile.
+		</summary>
+		</member>
 		<member name="F:Unigine.Light.SHADOW_RESOLUTION_VALUE_16384">
 			<summary>
 			Shadow map resolution equals 16384×16384.
@@ -856,6 +870,56 @@
 		<member name="F:Unigine.Light.SHADOW_FILTER_GLOBAL">
 			<summary>
 			Quality mode of shadow filtering that is set globally is applied.
+		</summary>
+		</member>
+		<member name="F:Unigine.Light.SHADOW_RESOLUTION_MODE_16384">
+			<summary>
+			Shadow map resolution equals 16384×16384.
+		</summary>
+		</member>
+		<member name="F:Unigine.Light.SHADOW_RESOLUTION_MODE_8192">
+			<summary>
+			Shadow map resolution equals 8192×8192.
+		</summary>
+		</member>
+		<member name="F:Unigine.Light.SHADOW_RESOLUTION_MODE_4096">
+			<summary>
+			Shadow map resolution equals 4096×4096.
+		</summary>
+		</member>
+		<member name="F:Unigine.Light.SHADOW_RESOLUTION_MODE_2048">
+			<summary>
+			Shadow map resolution equals 2048×2048.
+		</summary>
+		</member>
+		<member name="F:Unigine.Light.SHADOW_RESOLUTION_MODE_1024">
+			<summary>
+			Shadow map resolution equals 1024×1024.
+		</summary>
+		</member>
+		<member name="F:Unigine.Light.SHADOW_RESOLUTION_MODE_512">
+			<summary>
+			Shadow map resolution equals 512×512.
+		</summary>
+		</member>
+		<member name="F:Unigine.Light.SHADOW_RESOLUTION_MODE_256">
+			<summary>
+			Shadow map resolution equals 256×256.
+		</summary>
+		</member>
+		<member name="F:Unigine.Light.SHADOW_RESOLUTION_MODE_128">
+			<summary>
+			Shadow map resolution equals 128×128.
+		</summary>
+		</member>
+		<member name="F:Unigine.Light.SHADOW_RESOLUTION_MODE_64">
+			<summary>
+			Shadow map resolution equals 64×64.
+		</summary>
+		</member>
+		<member name="F:Unigine.Light.SHADOW_RESOLUTION_MODE_DEFAULT">
+			<summary>
+			Default shadow map resolution (512×512).
 		</summary>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.#ctor(Unigine.Math.vec4,Unigine.Math.vec3,char)">
@@ -1434,17 +1498,17 @@
 			</summary>  
 			<returns>Texture instance.</returns>
 		</member>
-		<member name="M:Unigine.LightVoxelProbe.setUseSunColor(bool)">
+		<member name="M:Unigine.LightVoxelProbe.setUseSkyColor(bool)">
 			<summary>
-			Enables or disables sun color modulation for the voxel probe (the light of the environment probe changes as the sun color changes).											To bake lighting from the sky separately with this option enabled, it is recommended to enable baking visibility for the sky only, while disabling it for other light sources.						Changing this option requires the lighting to be re-baked.
+			Enables or disables sky color modulation for the voxel probe (the light of the environment probe changes as the sky color changes).											To bake lighting from the sky separately with this option enabled, it is recommended to enable baking visibility for the sky only, while disabling it for other light sources.						Changing this option requires the lighting to be re-baked.
 			</summary> 
-			<param name="color"> 1 to enable sun color modulation for the environment probe, 0 to disable it. The default value is 0. </param> 
+			<param name="color"> 1 to enable sky color modulation for the environment probe, 0 to disable it. The default value is 0. </param> 
 		</member>
-		<member name="M:Unigine.LightVoxelProbe.isUseSunColor const">
+		<member name="M:Unigine.LightVoxelProbe.isUseSkyColor const">
 			<summary>
-			Returns a value indicating if sun color modulation for the voxel probe is enabled.
+			Returns a value indicating if sky color modulation for the voxel probe is enabled.
 			</summary>  
-			<returns>1 if sun color modulation for the environment probe is enabled; otherwise, 0.</returns>
+			<returns>1 if sky color modulation for the environment probe is enabled; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.LightVoxelProbe.getResolution">
 			<summary>

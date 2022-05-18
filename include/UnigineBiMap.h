@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -134,7 +134,7 @@ public:
 	BiMap(std::initializer_list<Pair<Key, Type>> list)
 		: root_value{nullptr}
 	{
-		for(const auto &it : list)
+		for (const auto &it: list)
 			do_append_value(Parent::do_append_node(new Node(it.first, nullptr, it.second)));
 	}
 
@@ -144,7 +144,7 @@ public:
 		Parent::length = 0;
 		Parent::root = nullptr;
 
-		for (const auto &it : o)
+		for (const auto &it: o)
 			do_append_value(Parent::do_append_node(new Node(it.key, nullptr, it.data)));
 	}
 
@@ -157,7 +157,7 @@ public:
 		Parent::root = nullptr;
 		root_value = nullptr;
 
-		for (const auto &it : o)
+		for (const auto &it: o)
 			do_append_value(Parent::do_append_node(new Node(it.key, nullptr, it.data)));
 		return *this;
 	}
@@ -243,13 +243,13 @@ public:
 
 	UNIGINE_INLINE void insert(const BiMap &m)
 	{
-		for (const auto &it : m)
+		for (const auto &it: m)
 			do_replace(it.key, it.data);
 	}
 
 	UNIGINE_INLINE void insert(BiMap &&m)
 	{
-		for (const auto &it : m)
+		for (const auto &it: m)
 			do_replace(std::move(it.key), std::move(it.data));
 		m.clear();
 	}
@@ -276,13 +276,13 @@ public:
 
 	UNIGINE_INLINE void append(const BiMap &m)
 	{
-		for (const auto &it : m)
+		for (const auto &it: m)
 			do_replace(it.key, it.data);
 	}
 
 	UNIGINE_INLINE void append(BiMap &&m)
 	{
-		for (const auto &it : m)
+		for (const auto &it: m)
 			do_replace(std::move(it.key), std::move(it.data));
 		m.clear();
 	}
@@ -321,13 +321,13 @@ public:
 
 	UNIGINE_INLINE void appendFast(const BiMap &m)
 	{
-		for (const auto &it : m)
+		for (const auto &it: m)
 			appendFast(it.key, it.data);
 	}
 
 	UNIGINE_INLINE void appendFast(BiMap &&m)
 	{
-		for (const auto &it : m)
+		for (const auto &it: m)
 			appendFast(std::move(it.key), std::move(it.data));
 		m.clear();
 	}
@@ -476,7 +476,7 @@ public:
 	UNIGINE_INLINE Type value(const Key &key) const
 	{
 		Node *node = Parent::do_find(key);
-		return node == nullptr ? Type() : node->data;
+		return node == nullptr ? Type{} : node->data;
 	}
 
 	UNIGINE_INLINE Type value(const Key &key, const Type &def) const
@@ -661,7 +661,7 @@ private:
 		return finded_node;
 	}
 
-	UNIGINE_INLINE Node *do_append_value(Node *data)
+	Node *do_append_value(Node *data)
 	{
 		Node *parent = nullptr;
 		Node *&finded_node = do_find_value_node(data->data, parent);

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -50,6 +50,7 @@ public:
 	static bool isFile(const char *path);
 	static int setMTime(const char *path, long long time);
 	static long long getMTime(const char *path);
+	static long long getFileSize(const char *path);
 	static int isAbsolute(const char *path);
 	static int setAttribute(const char *path, int attribute);
 	static int getAttribute(const char *path);

@@ -53,16 +53,18 @@
 			<param name="objects"> Array with collider objects' smart pointers. </param> 
 			<returns>1 if collider objects are found; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.World.setData(char)">
+		<member name="M:Unigine.World.setData(char,char)">
 			<summary>
-			Sets user data associated with the world. In the *.world file, the data is set in the data tag.
+			Sets user data associated with the world with the specified key. In the *.world file, the data is set in the data tag with the specified key.
 			</summary> 
+			<param name="name"> String containing a key identifying user data to be stored in the *.world file.The "editor_data" key is reserved for the UnigineEditor. </param>
 			<param name="data"> New user data. </param> 
 		</member>
-		<member name="M:Unigine.World.getData">
+		<member name="M:Unigine.World.getData(char)">
 			<summary>
-			Returns user string data associated with the world. This string is written directly into the data tag of the *.world file.
-			</summary>  
+			Returns user string data associated with the world by the specified key. This string is written directly into the data tag of the *.world file with the specified key.
+			</summary> 
+			<param name="name"> String containing a key identifying user data stored in the *.world file.The "editor_data" key is reserved for the UnigineEditor. </param> 
 			<returns>User string data.</returns>
 		</member>
 		<member name="M:Unigine.World.setDistance(float)">
@@ -150,7 +152,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{WorldIntersectionTexCoord})">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find the first object intersecting the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Performs tracing from the p0 point to the p1 point to find the first object intersected by the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
 			<param name="p0"> Coordinates of the line start point. </param>
 			<param name="p1"> Coordinates of the line end point. </param>
@@ -161,7 +163,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find objects that intersecting the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Performs tracing from the p0 point to the p1 point to find objects intersected by the line. This function detects intersection with objects' bounds.										As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
 			<param name="p0"> Coordinates of the line start point. </param>
 			<param name="p1"> Coordinates of the line end point. </param>
@@ -186,7 +188,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(UNIGINE_BOUND_FRUSTUM,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
-								Searches for intersections with objects that are found in a given bounding frustum.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Searches for intersections with objects that are found in a given bounding frustum. Increase the global distance scale to detect intersections with invisible objects.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.					 This method ignores the "visual" component enabling you to catch objects hidden by visibility distance (for example if an object LOD is hidden by visibility distance, but the object is within the bounding frustum the intersection shall be detected). To check for intersections regarding the visibility aspect use getVisibleIntersection().
 			</summary> 
 			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
 			<param name="objects"> Array of intersected objects' smart pointers. </param> 
@@ -228,12 +230,33 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(UNIGINE_BOUND_FRUSTUM,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
-								Searches for intersections with specified type of nodes that are found in a given bounding frustum.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Searches for intersections with specified type of nodes that are found in a given bounding frustum.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.					 This method ignores the "visual" component enabling you to catch objects hidden by visibility distance (for example if an object LOD is hidden by visibility distance, but the object is within the bounding frustum the intersection shall be detected). To check for intersections regarding the visibility aspect use getVisibleIntersection().
 			</summary> 
 			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
 			<param name="type"> Node type filter. Only the nodes of the specified type will be checked. </param>
 			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
 			<returns>1 if intersections are found; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.World.getVisibleIntersection(Unigine.Math.Vec3,Unigine.Math.WorldBoundFrustum,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator},float)">
+			<summary>
+			Searches for intersections with nodes that are found in a given bounding frustum and are visible to the specified camera position within the specified distance range. Unlike the getIntersection() method, this one takes the "visibility" component into account (hidden nodes or the ones that are too far away won't be found.).
+			</summary> 
+			<param name="camera"> Position of the camera to check visibility of nodes for. </param>
+			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
+			<param name="objects"> Array of intersected nodes. </param>
+			<param name="max_distance"> Maximum visibility distance limit for nodes, in units. If the distance from the specified camera position to a node exceeds this limit, intersection will not be registered even if the node is within the specified bounding box. </param> 
+			<returns>true if at least one intersection is found; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.World.getVisibleIntersection(Unigine.Math.Vec3,Unigine.Math.WorldBoundFrustum,Node::TYPE,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},float)">
+			<summary>
+			Searches for intersections with nodes that are found in a given bounding frustum and are visible to the specified camera position within the specified distance range. Unlike the getIntersection() method, this one takes the "visibility" component into account (hidden nodes or the ones that are too far away won't be found.).
+			</summary> 
+			<param name="camera"> Position of the camera to check visibility of nodes for. </param>
+			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
+			<param name="type"> Node type (one of the NODE_* variables); -1 is not to use a filter. </param>
+			<param name="nodes"> Array of intersected nodes. </param>
+			<param name="max_distance"> Maximum visibility distance limit for nodes, in units. If the distance from the specified camera position to a node exceeds this limit, intersection will not be registered even if the node is within the specified bounding box. </param> 
+			<returns>true if at least one intersection is found; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.World.loadWorld(char)">
 			<summary>
@@ -390,14 +413,14 @@
 		</member>
 		<member name="M:Unigine.World.clearNode(char)">
 			<summary>
-			Clears cached nodes of the given node file.
+			Clears cached nodes of the given node file. 					When the node is cached and you try to access it, take into account the following:													if the node was loaded by the name — the node gets stored in the cache by its name;							if the node was loaded from the parent node reference — the node is stored in the cache by its GUID. 												Here is an example on how to clear cached nodes in both cases:
 			</summary> 
 			<param name="name"> Path to the *.node file. </param> 
 			<returns>1 if the cache is cleared successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.World.loadNode(char,int)">
 			<summary>
-								Loads a node (or a hierarchy of nodes) from a .node / .fbx file. If the node is loaded successfully, it is managed by the current world (its Lifetime is World).					Caching of nodes is used to speed up loading process: a hidden copy of the loaded node (or a hierarchy of nodes) is added to the list of world nodes, thus enabling to simply get clones of cached nodes, instead of parsing the .node file and retrieving data once again.					Cached nodes remain in the memory. If you don't intend to load more node references from a certain .node asset, set the cache argument to 0 or you can delete cached nodes from the list of world nodes afterwards by using the clearNode() method.
+								Loads a node (or a hierarchy of nodes) from a .node / .fbx file. If the node is loaded successfully, it is managed by the current world (its Lifetime is World).										Cached nodes remain in the memory. If you don't intend to load more node references from a certain .node asset, set the cache argument to 0 or you can delete cached nodes from the list of world nodes afterwards by using the clearNode() method.
 			</summary> 
 			<param name="name"> Path to the *.node file. </param>
 			<param name="cache"> 1 to use caching of nodes, 0 not to use. </param> 
@@ -431,13 +454,13 @@
 		</member>
 		<member name="M:Unigine.World.setUnpackNodeReferences(int)">
 			<summary>
-			Enables or disables automatic unpacking of node references at run time. This option can be used to simplify hierarchy management, as when it is enabled all nodes contained in node references will be present in the world hierarchy. When disabled you have to check the hierarchy of each node reference individually (e.g. to find the number of children or manage some of them). The content of NodeReference nodes is unpacked only at run time and does not affect your *.world and *.node files. So, you can use all advantages of node references when building worlds in the UnigineEditor and manage a clear and straightforward hierarchy at run time. This option is available only via code, can be enabled in the System Script and works for all worlds used in your project.
+			Enables or disables automatic unpacking of node references at run time. This option can be used to simplify hierarchy management, as when it is enabled all nodes contained in node references will be present in the world hierarchy. When disabled you have to check the hierarchy of each node reference individually (e.g. to find the number of children or manage some of them). The content of NodeReference nodes is unpacked only at run time and does not affect your *.world and *.node files. So, you can use all advantages of node references when building worlds in the UnigineEditor and manage a clear and straightforward hierarchy at run time. This option is available only via code, can be enabled in the System Script and works for all worlds used in your project.Auto-unpacking is disabled in C++ and UnigineScript only projects by default for backward compatibility.
 			</summary> 
 			<param name="references"> 1 - to enable automatic unpacking of node references at run time, 0 - to disable it. </param> 
 		</member>
 		<member name="M:Unigine.World.isUnpackNodeReferences">
 			<summary>
-			Returns the value indicating if automatic unpacking of node references at run time is enabled. This option can be used to simplify hierarchy management, as when it is enabled all nodes contained in node references will be present in the world hierarchy. When disabled you have to check the hierarchy of each node reference individually (e.g. to find the number of children or manage some of them). The content of NodeReference nodes is unpacked only at run time and does not affect your *.world and *.node files. So, you can use all advantages of node references when building worlds in the UnigineEditor and manage a clear and straightforward hierarchy at run time.					This option is available only via code, can be enabled in the System Script and works for all worlds used in your project.
+			Returns the value indicating if automatic unpacking of node references at run time is enabled. This option can be used to simplify hierarchy management, as when it is enabled all nodes contained in node references will be present in the world hierarchy. When disabled you have to check the hierarchy of each node reference individually (e.g. to find the number of children or manage some of them). The content of NodeReference nodes is unpacked only at run time and does not affect your *.world and *.node files. So, you can use all advantages of node references when building worlds in the UnigineEditor and manage a clear and straightforward hierarchy at run time.					This option is available only via code, can be enabled in the System Script and works for all worlds used in your project.Auto-unpacking is disabled in C++ and UnigineScript only projects by default for backward compatibility.
 			</summary>  
 			<returns>1 if automatic unpacking of node references at run time is enabled; otherwise, 0.</returns>
 		</member>
@@ -519,10 +542,9 @@
 		</member>
 		<member name="M:Unigine.World.getRootNodes(Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
-			Gets all root nodes in the world hierarchy and puts them to nodes.
+			Gets all root nodes in the world hierarchy and puts them to nodes. Doesn't include cached nodes.
 			</summary> 
-			<param name="nodes"> Vector, to which all root nodes of the world hierarchy are to be put. </param>
-			<param name="nodes"> Array, to which all root nodes of the world hierarchy are to be put. </param> 
+			<param name="nodes"> Vector, to which all root nodes of the world hierarchy are to be put. </param> 
 		</member>
 		<member name="M:Unigine.World.getRootNodeIndex(Unigine.Ptr{Unigine.Node})">
 			<summary>

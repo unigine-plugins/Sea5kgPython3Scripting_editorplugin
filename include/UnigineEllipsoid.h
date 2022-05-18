@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -38,20 +38,20 @@ public:
 	double getMeanRadius() const;
 	double getSemimajorEccentricitySqr() const;
 	double getSemiminorEccentricitySqr() const;
-	Math::dmat4 getENUWorldTransform(const Math::dvec3 &geodetic_origin) const;
-	Math::quat getENUWorldRotation(const Math::dvec3 &geodetic_origin) const;
-	Math::dvec3 getENUSurfacePoint(const Math::dvec3 &geodetic_origin, const Math::dvec3 &tangent_point) const;
-	Math::dvec3 getENUTangentPoint(const Math::dvec3 &geodetic_origin, const Math::dvec3 &surface_point) const;
-	Math::dmat4 getNEDWorldTransform(const Math::dvec3 &geodetic_origin) const;
-	Math::quat getNEDWorldRotation(const Math::dvec3 &geodetic_origin) const;
-	Math::dvec3 getNEDSurfacePoint(const Math::dvec3 &geodetic_origin, const Math::dvec3 &tangent_point) const;
-	Math::dvec3 getNEDTangentPoint(const Math::dvec3 &geodetic_origin, const Math::dvec3 &surface_point) const;
-	Math::dvec3 toGeodetic(const Math::dvec3 &ecf_coords, int need_alt = 1) const;
-	Math::dvec3 toECF(const Math::dvec3 &geodetic_coords) const;
-	Math::dvec3 toNED(const Math::dvec3 &geodetic_origin, const Math::dvec3 &geodetic_coords) const;
-	Math::dvec3 toENU(const Math::dvec3 &geodetic_origin, const Math::dvec3 &geodetic_coords) const;
-	void solveGeodeticInverse(const Math::dvec3 &geodetic_start, const Math::dvec3 &geodetic_end, double & bearing, double & distance) const;
-	Math::dvec3 solveGeodeticDirect(const Math::dvec3 &geodetic_start, double bearing, double distance) const;
+	Math::dmat4 getENUWorldTransform(const Math::dvec3& geodetic_origin) const;
+	Math::quat getENUWorldRotation(const Math::dvec3& geodetic_origin) const;
+	Math::dvec3 getENUSurfacePoint(const Math::dvec3& geodetic_origin, const Math::dvec3& tangent_point) const;
+	Math::dvec3 getENUTangentPoint(const Math::dvec3& geodetic_origin, const Math::dvec3& surface_point) const;
+	Math::dmat4 getNEDWorldTransform(const Math::dvec3& geodetic_origin) const;
+	Math::quat getNEDWorldRotation(const Math::dvec3& geodetic_origin) const;
+	Math::dvec3 getNEDSurfacePoint(const Math::dvec3& geodetic_origin, const Math::dvec3& tangent_point) const;
+	Math::dvec3 getNEDTangentPoint(const Math::dvec3& geodetic_origin, const Math::dvec3& surface_point) const;
+	Math::dvec3 toGeodetic(const Math::dvec3& ecf_coords, int need_alt = 1) const;
+	Math::dvec3 toECF(const Math::dvec3& geodetic_coords) const;
+	Math::dvec3 toNED(const Math::dvec3& geodetic_origin, const Math::dvec3& geodetic_coords) const;
+	Math::dvec3 toENU(const Math::dvec3& geodetic_origin, const Math::dvec3& geodetic_coords) const;
+	void solveGeodeticInverse(const Math::dvec3& geodetic_start, const Math::dvec3& geodetic_end, double & bearing, double & distance) const;
+	Math::dvec3 solveGeodeticDirect(const Math::dvec3& geodetic_start, double bearing, double distance) const;
 
 	enum
 	{

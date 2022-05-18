@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -45,15 +45,15 @@ public:
 	static void addEditorPlayer(const Ptr<Player> &player);
 	static void removeEditorPlayer(const Ptr<Player> &player);
 	static bool isEditorPlayer(const Ptr<Player> &player);
-	static Ptr<Node> getIntersection(const Math::Vec3 & p0, const Math::Vec3 & p1);
-	static Ptr<Node> getIntersection(const Math::Vec3 & p0, const Math::Vec3 & p1, const Ptr<WorldIntersection> &intersection);
-	static Ptr<Node> getIntersection(const Math::Vec3 & p0, const Math::Vec3 & p1, const Ptr<WorldIntersectionNormal> &intersection);
-	static Ptr<Node> getIntersection(const Math::Vec3 & p0, const Math::Vec3 & p1, const Ptr<WorldIntersectionTexCoord> &intersection);
-	static Ptr<Node> getIntersection(const Math::Vec3 & p0, const Math::Vec3 & p1, const Vector< Ptr<Node> > &exclude);
-	static Ptr<Node> getIntersection(const Math::Vec3 & p0, const Math::Vec3 & p1, const Vector< Ptr<Node> > &exclude, const Ptr<WorldIntersection> &intersection);
-	static Ptr<Node> getIntersection(const Math::Vec3 & p0, const Math::Vec3 & p1, const Vector< Ptr<Node> > &exclude, const Ptr<WorldIntersectionNormal> &intersection);
-	static Ptr<Node> getIntersection(const Math::Vec3 & p0, const Math::Vec3 & p1, const Vector< Ptr<Node> > &exclude, const Ptr<WorldIntersectionTexCoord> &intersection);
-	static bool getIntersection(const UNIGINE_BOUND_FRUSTUM & bs, Vector< Ptr<Node> > &nodes, bool use_handlers);
+	static Ptr<Node> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1);
+	static Ptr<Node> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, const Ptr<WorldIntersection> &intersection);
+	static Ptr<Node> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, const Ptr<WorldIntersectionNormal> &intersection);
+	static Ptr<Node> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, const Ptr<WorldIntersectionTexCoord> &intersection);
+	static Ptr<Node> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, const Vector< Ptr<Node> > &exclude);
+	static Ptr<Node> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, const Vector< Ptr<Node> > &exclude, const Ptr<WorldIntersection> &intersection);
+	static Ptr<Node> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, const Vector< Ptr<Node> > &exclude, const Ptr<WorldIntersectionNormal> &intersection);
+	static Ptr<Node> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, const Vector< Ptr<Node> > &exclude, const Ptr<WorldIntersectionTexCoord> &intersection);
+	static bool getIntersection(const Math::WorldBoundFrustum& bs, Vector< Ptr<Node> > &nodes, bool use_handlers);
 };
 
 } // namespace Unigine

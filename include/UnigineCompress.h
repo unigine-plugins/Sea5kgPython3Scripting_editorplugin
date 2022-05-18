@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -36,6 +36,7 @@ namespace Unigine {
 			 */
 			static UNIGINE_API size_t zlibSize(size_t size);
 			static UNIGINE_API size_t lz4Size(size_t size);
+			static UNIGINE_API size_t jackallessSize(size_t size);
 			/**
 			 * Compress the data.
 			 *
@@ -59,6 +60,26 @@ namespace Unigine {
 			 */
 			static UNIGINE_API bool zlibDecompress(void *dest, size_t dest_size, const void *src, size_t src_size);
 			static UNIGINE_API bool lz4Decompress(void *dest, size_t dest_size, const void *src, size_t src_size);
+
+			static UNIGINE_API bool jackallessCompress(void *dest, size_t &dest_size, const void *src, size_t src_size);
+			static UNIGINE_API bool jackallessDecompress(void *dest, const void *src);
+			static UNIGINE_API bool jackallessCompressFloat(void *dest, size_t &dest_size, const float *src, size_t src_length);
+			static UNIGINE_API bool jackallessDecompressFloat(float *dest, size_t dest_length, const void *src);
+
+			/**
+			 * Returns decompressed data size
+			 *
+			 * @param compressed_data Compressed data pointer
+			 * @return Returns size of the uncompressed data size if the operation was a success; otherwise, 0 is returned.
+			 */
+			static UNIGINE_API size_t jackallessRawSize(void *compressed_data);
+			/**
+			 * Returns compressed data size
+			 *
+			 * @param compressed_data Compressed data pointer
+			 * @return Returns size of the compressed data size if the operation was a success; otherwise, 0 is returned.
+			 */
+			static UNIGINE_API size_t jackallessCompressedSize(void *compressed_data);
 	};
 	
 } /* namespace Unigine */

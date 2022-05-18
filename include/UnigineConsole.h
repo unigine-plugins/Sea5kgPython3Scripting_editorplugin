@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -19,6 +19,7 @@
 #include "UnigineMathLib.h"
 #include "UnigineCallback.h"
 #include "UnigineString.h"
+#include "UniginePalette.h"
 
 namespace Unigine
 {
@@ -43,15 +44,15 @@ public:
 	static bool isActive();
 	static void setLock(int lock);
 	static int getLock();
-	static void setBackgroundColor(const Math::vec4 &color);
+	static void setBackgroundColor(const Math::vec4& color);
 	static Math::vec4 getBackgroundColor();
-	static void setMessageColor(const Math::vec4 &color);
+	static void setMessageColor(const Math::vec4& color);
 	static Math::vec4 getMessageColor();
-	static void setWarningColor(const Math::vec4 &color);
+	static void setWarningColor(const Math::vec4& color);
 	static Math::vec4 getWarningColor();
-	static void setErrorColor(const Math::vec4 &color);
+	static void setErrorColor(const Math::vec4& color);
 	static Math::vec4 getErrorColor();
-	static void setTextColor(const Math::vec4 &color);
+	static void setTextColor(const Math::vec4& color);
 	static Math::vec4 getTextColor();
 	static void setPrompt(const char *prompt);
 	static const char *getPrompt();
@@ -79,17 +80,17 @@ public:
 	static void getWarnings(Vector< String > &messages, int limit);
 	static void getErrors(Vector< String > &messages, int limit);
 	static void write(const char *text);
-	static void write(const char *text, const Math::vec4 &color);
-	static void write(const char *text, Console::LEVEL level);
+	static void write(const Math::vec4& color, const char *text);
+	static void write(Console::LEVEL level, const char *text);
 	static void writeLine(const char *text);
-	static void writeLine(const char *text, const Math::vec4 &color);
-	static void writeLine(const char *text, Console::LEVEL level);
+	static void writeLine(const Math::vec4& color, const char *text);
+	static void writeLine(Console::LEVEL level, const char *text);
 	static void onscreenWrite(const char *text);
-	static void onscreenWrite(const char *text, const Math::vec4 &color);
-	static void onscreenWrite(const char *text, Console::LEVEL level);
+	static void onscreenWrite(const Math::vec4& color, const char *text);
+	static void onscreenWrite(Console::LEVEL level, const char *text);
 	static void onscreenWriteLine(const char *text);
-	static void onscreenWriteLine(const char *text, const Math::vec4 &color);
-	static void onscreenWriteLine(const char *text, Console::LEVEL level);
+	static void onscreenWriteLine(const Math::vec4& color, const char *text);
+	static void onscreenWriteLine(Console::LEVEL level, const char *text);
 
 	static void message(const Unigine::Math::vec4 &color, const char *format, ...);
 	static void message(const char *format, ...);
@@ -133,17 +134,22 @@ public:
 	static float getFloatMin(const char *name);
 	static float getFloatMax(const char *name);
 	static bool isVec4(const char *name);
-	static void setVec4(const char *name, const Math::vec4 &value);
+	static void setVec4(const char *name, const Math::vec4& value);
 	static Math::vec4 getVec4(const char *name);
 	static bool isVec3(const char *name);
-	static void setVec3(const char *name, const Math::vec3 &value);
+	static void setVec3(const char *name, const Math::vec3& value);
 	static Math::vec3 getVec3(const char *name);
 	static bool isVec2(const char *name);
-	static void setVec2(const char *name, const Math::vec2 &value);
+	static void setVec2(const char *name, const Math::vec2& value);
 	static Math::vec2 getVec2(const char *name);
 	static bool isString(const char *name);
 	static void setString(const char *name, const char *value);
 	static const char *getString(const char *name);
+	static bool isPalette(const char *name);
+	static void setPalette(const char *name, const Palette& value);
+	static void setPalette(const char *name, int index, float value);
+	static void setPalette(const char *name, const char *color, float value);
+	static Palette getPalette(const char *name);
 	static void run(const char *command);
 	static void flush();
 	static int addCommand(const char *name, const char *desc, Unigine::CallbackBase2<int, char **> *func);

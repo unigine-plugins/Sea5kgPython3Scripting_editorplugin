@@ -157,7 +157,7 @@
 			Returns a value indicating if a command with a given name exists.
 			</summary> 
 			<param name="name"> The command name. </param> 
-			<returns>Returns true if the command with a given name exists; otherwise, false.</returns>
+			<returns>true if the command with a given name exists; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Console.getCommandDescription(char) const">
 			<summary>
@@ -483,16 +483,17 @@
 			</summary>  
 			<returns>Four-component vector specifying the color in the RGBA format.</returns>
 		</member>
-		<member name="M:Unigine.Console.setLimit(int)">
+		<member name="M:Unigine.Console.setFontSize(int)">
 			<summary>
-			Sets the maximum number of messages the console can output.
+			Returns the current font size used for console messages.
 			</summary> 
-			<param name="limit"> Maximum number of messages the console can output. </param> 
+			<param name="size"> New font size to be set for console messages </param> 
 		</member>
-		<member name="M:Unigine.Console.getLimit const">
+		<member name="M:Unigine.Console.getFontSize const">
 			<summary>
-			Returns the maximum number of messages the console can output. The default value is 16384.
+			Returns the current font size used for console messages.
 			</summary>  
+			<returns>Current font size set for console messages</returns>
 		</member>
 		<member name="M:Unigine.Console.setHeight(int)">
 			<summary>
@@ -503,6 +504,17 @@
 		<member name="M:Unigine.Console.getHeight const">
 			<summary>
 			Returns the console height in percentage of the window height.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Console.setLimit(int)">
+			<summary>
+			Sets the maximum number of messages the console can output.
+			</summary> 
+			<param name="limit"> Maximum number of messages the console can output. </param> 
+		</member>
+		<member name="M:Unigine.Console.getLimit const">
+			<summary>
+			Returns the maximum number of messages the console can output. The default value is 16384.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Console.setWrapping(bool)">
@@ -570,33 +582,32 @@
 			</summary> 
 			<param name="text"> Text to output to the console. </param> 
 		</member>
-		<member name="M:Unigine.Console.write(char,Unigine.Math.vec4)">
+		<member name="M:Unigine.Console.write(Unigine.Math.vec4,char)">
 			<summary>
 			Writes the specified text to the console and displays it on the screen (onscreen overlay).					The onscreen overlay must be enabled for the text to be seen.
 			</summary> 
-			<param name="text"> Text to output to the console. </param>
-			<param name="color"> Four-component vector specifying the text color in the RGBA format. </param> 
+			<param name="color"> Four-component vector specifying the text color in the RGBA format. </param>
+			<param name="text"> Text to output to the console. </param> 
 		</member>
-		<member name="M:Unigine.Console.write(char,Console::LEVEL)">
+		<member name="M:Unigine.Console.write(Console::LEVEL,char)">
 			<summary>
 			Writes the specified text to the console and displays it on the screen (onscreen overlay).					The onscreen overlay must be enabled for the text to be seen.
 			</summary> 
-			<param name="text"> Text to output to the console. </param>
-			<param name="level"> Type of the message. </param> 
-		</member>
-		<member name="M:Unigine.Console.write(char,Console::LEVEL,Unigine.Math.vec4)">
-			<summary>
-			Writes the specified text to the console and displays it on the screen (onscreen overlay).					The onscreen overlay must be enabled for the text to be seen.
-			</summary> 
-			<param name="text"> Text to output to the console. </param>
 			<param name="level"> Type of the message. </param>
-			<param name="color"> Four-component vector specifying the text color in the RGBA format. </param> 
+			<param name="text"> Text to output to the console. </param> 
 		</member>
 		<member name="M:Unigine.Console.getMessages(Unigine.Vector{String,int,Unigine.VectorAllocator},int)">
 			<summary>
 			Gets the messages written to the console and the onscreen overlay.
 			</summary> 
 			<param name="messages"> Vector to populate with messages. </param>
+			<param name="limit"> Maximum number of messages to retrieve. </param> 
+		</member>
+		<member name="M:Unigine.Console.getMessages(Unigine.Vector{String,int,Unigine.VectorAllocator},Unigine.Vector{int,int,Unigine.VectorAllocator},int) const">
+			<summary>
+			</summary> 
+			<param name="messages"> Vector to populate with messages. </param>
+			<param name="levels"> Types of messages to retrieve. </param>
 			<param name="limit"> Maximum number of messages to retrieve. </param> 
 		</member>
 		<member name="M:Unigine.Console.getWarnings(Unigine.Vector{String,int,Unigine.VectorAllocator},int)">
@@ -613,25 +624,43 @@
 			<param name="messages"> Vector to populate with messages. </param>
 			<param name="limit"> Maximum number of messages to retrieve. </param> 
 		</member>
+		<member name="M:Unigine.Console.getLastMessage const">
+			<summary>
+			Returns the last message printed to the console.
+			</summary>  
+			<returns>Last message printed to the console.</returns>
+		</member>
+		<member name="M:Unigine.Console.getLastWarning const">
+			<summary>
+			Returns the last warning message printed to the console.
+			</summary>  
+			<returns>Last warning message printed to the console.</returns>
+		</member>
+		<member name="M:Unigine.Console.getLastError const">
+			<summary>
+			Returns the last error message printed to the console.
+			</summary>  
+			<returns>Last error message printed to the console.</returns>
+		</member>
 		<member name="M:Unigine.Console.writeLine(char)">
 			<summary>
 			Writes the text followed by the line terminator to the console and the onscreen overlay.					The onscreen overlay must be enabled for the text to be seen.
 			</summary> 
 			<param name="text"> Text to output to the console. </param> 
 		</member>
-		<member name="M:Unigine.Console.writeLine(char,Unigine.Math.vec4)">
+		<member name="M:Unigine.Console.writeLine(Unigine.Math.vec4,char)">
 			<summary>
 			Writes the text followed by the line terminator to the console and the onscreen overlay.					The onscreen overlay must be enabled for the text to be seen.
 			</summary> 
-			<param name="text"> Text to output to the console. </param>
-			<param name="color"> Four-component vector specifying the text color in the RGBA format. </param> 
+			<param name="color"> Four-component vector specifying the text color in the RGBA format. </param>
+			<param name="text"> Text to output to the console. </param> 
 		</member>
-		<member name="M:Unigine.Console.writeLine(char,Console::LEVEL)">
+		<member name="M:Unigine.Console.writeLine(Console::LEVEL,char)">
 			<summary>
 			Writes the text followed by the line terminator to the console and the onscreen overlay.					The onscreen overlay must be enabled for the text to be seen.
 			</summary> 
-			<param name="text"> Text to output to the console. </param>
-			<param name="level"> Type of the message.. </param> 
+			<param name="level"> Type of the message. </param>
+			<param name="text"> Text to output to the console. </param> 
 		</member>
 		<member name="M:Unigine.Console.onscreenWrite(char)">
 			<summary>
@@ -639,19 +668,19 @@
 			</summary> 
 			<param name="text"> Text to output to the console. </param> 
 		</member>
-		<member name="M:Unigine.Console.onscreenWrite(char,Unigine.Math.vec4)">
+		<member name="M:Unigine.Console.onscreenWrite(Unigine.Math.vec4,char)">
 			<summary>
 			Writes the text to the onscreen overlay only.					The onscreen overlay must be enabled for the text to be seen.
 			</summary> 
-			<param name="text"> Text to output to the console. </param>
-			<param name="color"> Four-component vector specifying the text color in the RGBA format. </param> 
+			<param name="color"> Four-component vector specifying the text color in the RGBA format. </param>
+			<param name="text"> Text to output to the console. </param> 
 		</member>
-		<member name="M:Unigine.Console.onscreenWrite(char,Console::LEVEL)">
+		<member name="M:Unigine.Console.onscreenWrite(Console::LEVEL,char)">
 			<summary>
 			Writes the text to the onscreen overlay only.					The onscreen overlay must be enabled for the text to be seen.
 			</summary> 
-			<param name="text"> Text to output to the console. </param>
-			<param name="level"> Type of the message. </param> 
+			<param name="level"> Type of the message. </param>
+			<param name="text"> Text to output to the console. </param> 
 		</member>
 		<member name="M:Unigine.Console.onscreenWriteLine(char)">
 			<summary>
@@ -659,19 +688,19 @@
 			</summary> 
 			<param name="text"> Text to output to the console. </param> 
 		</member>
-		<member name="M:Unigine.Console.onscreenWriteLine(char,Unigine.Math.vec4)">
+		<member name="M:Unigine.Console.onscreenWriteLine(Unigine.Math.vec4,char)">
 			<summary>
 			Writes the text only to the onscreen overlay followed by the line terminator.					The console overlay must be enabled for the text to be seen on the screen.
 			</summary> 
-			<param name="text"> Text to output to the console. </param>
-			<param name="color"> Four-component vector specifying the text color in the RGBA format. </param> 
+			<param name="color"> Four-component vector specifying the text color in the RGBA format. </param>
+			<param name="text"> Text to output to the console. </param> 
 		</member>
-		<member name="M:Unigine.Console.onscreenWriteLine(char,Console::LEVEL)">
+		<member name="M:Unigine.Console.onscreenWriteLine(Console::LEVEL,char)">
 			<summary>
 			Writes the text only to the onscreen overlay followed by the line terminator.					The console overlay must be enabled for the text to be seen on the screen.
 			</summary> 
-			<param name="text"> Text to output to the console. </param>
-			<param name="level"> Type of the message. </param> 
+			<param name="level"> Type of the message. </param>
+			<param name="text"> Text to output to the console. </param> 
 		</member>
 		<member name="M:Unigine.Console.message(Unigine.Math.vec4,char,...)">
 			<summary>

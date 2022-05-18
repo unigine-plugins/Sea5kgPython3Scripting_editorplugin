@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -17,6 +17,7 @@
 
 #include "UniginePtr.h"
 #include "UnigineMathLib.h"
+#include "UnigineCallback.h"
 
 namespace Unigine
 {
@@ -46,6 +47,7 @@ public:
 		LEAVE,
 		DRAG_MOVE,
 		DRAG_DROP,
+		REMOVE,
 		NUM_CALLBACKS,
 	};
 
@@ -136,9 +138,9 @@ public:
 	bool isHidden() const;
 	int getWidth() const;
 	int getHeight() const;
-	void setColor(const Math::vec4 &color);
+	void setColor(const Math::vec4& color);
 	Math::vec4 getColor() const;
-	void setTransform(const Math::mat4 &transform);
+	void setTransform(const Math::mat4& transform);
 	Math::mat4 getTransform() const;
 	void setExposeSpeed(float speed);
 	float getExposeSpeed() const;
@@ -148,7 +150,7 @@ public:
 	float getFadeOutSpeed() const;
 	void setDefaultSize(int size);
 	int getDefaultSize() const;
-	void setDefaultColor(const Math::vec4 &color);
+	void setDefaultColor(const Math::vec4& color);
 	Math::vec4 getDefaultColor() const;
 	void setDefaultAlpha(float alpha);
 	float getDefaultAlpha() const;
@@ -156,19 +158,19 @@ public:
 	bool isFocusedEnabled() const;
 	void setFocusedPermanent(bool permanent);
 	bool isFocusedPermanent() const;
-	void setFocusedColor(const Math::vec4 &color);
+	void setFocusedColor(const Math::vec4& color);
 	Math::vec4 getFocusedColor() const;
 	void setFocusedAlpha(float alpha);
 	float getFocusedAlpha() const;
 	void setDisabledEnabled(bool enabled);
 	bool isDisabledEnabled() const;
-	void setDisabledColor(const Math::vec4 &color);
+	void setDisabledColor(const Math::vec4& color);
 	Math::vec4 getDisabledColor() const;
 	void setDisabledAlpha(float alpha);
 	float getDisabledAlpha() const;
 	void setTransparentEnabled(bool enabled);
 	bool isTransparentEnabled() const;
-	void setTransparentColor(const Math::vec4 &color);
+	void setTransparentColor(const Math::vec4& color);
 	Math::vec4 getTransparentColor() const;
 	void setTransparentAlpha(float alpha);
 	float getTransparentAlpha() const;
@@ -178,7 +180,7 @@ public:
 	int getToolTipSize() const;
 	void setToolTipWidth(int width);
 	int getToolTipWidth() const;
-	void setToolTipColor(const Math::vec4 &color);
+	void setToolTipColor(const Math::vec4& color);
 	Math::vec4 getToolTipColor() const;
 	void setToolTipAlpha(float alpha);
 	float getToolTipAlpha() const;
@@ -233,6 +235,9 @@ public:
 	static bool isRenderingBootScreen();
 	static bool isRenderingSplashScreen();
 	static bool isRenderingLoadingScreen();
+	void *addUpdateCallback(Unigine::CallbackBase *func);
+	bool removeUpdateCallback(void *id);
+	void clearUpdateCallbacks();
 };
 typedef Ptr<Gui> GuiPtr;
 

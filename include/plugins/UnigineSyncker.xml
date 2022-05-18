@@ -252,9 +252,9 @@
 		</member>
 		<member name="M:Unigine.Plugins.Syncker.Syncker.setInterpolationPeriod(double)">
 			<summary>
-			Sets the interpolation period value for the computer.
+								Sets the interpolation period value for the computer. It is recommended to use this method when setting the frequency of sending packets to Slaves.
 			</summary> 
-			<param name="period"> Interpolation period value, in seconds. The default value is 0.04. </param> 
+			<param name="period"> Interpolation period value, in seconds. The default value is 0.04.The value should not be less than 1/getSendRate(), otherwise the image shall be "stuttering". </param> 
 		</member>
 		<member name="M:Unigine.Plugins.Syncker.Syncker.getInterpolationPeriod const">
 			<summary>
@@ -651,9 +651,9 @@
 		</member>
 		<member name="M:Unigine.Plugins.Syncker.Master.setSendRate(float)">
 			<summary>
-			Sets the frequency of sending packets to Slaves. Use this method when network load is too high and slows down the whole IG system. It is recommended to use this method with interpolation enabled.
+								Sets the frequency of sending packets to Slaves. Use this method when network load is too high and slows down the whole IG system. It is recommended to use this method with interpolation enabled.
 			</summary> 
-			<param name="rate"> Frequency of sending packets to Slaves. The default value is -1 (every frame).The value should not be less than 1 / getInterpolationPeriod(), otherwise the image shall be "stuttering". </param> 
+			<param name="rate"> Frequency of sending packets to Slaves. The default value is -1 (every frame).The value should not be less than 1/getInterpolationPeriod(), otherwise the image shall be "stuttering". </param> 
 		</member>
 		<member name="M:Unigine.Plugins.Syncker.Master.getSendRate">
 			<summary>

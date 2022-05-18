@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -108,7 +108,7 @@ public:
 	}
 	void counterDec()
 	{
-		const auto old_counter = AtomicAdd(&counter, -1);
+		const int old_counter = AtomicAdd(&counter, -1);
 		if (old_counter == 1)
 		{
 			if (isNull())
@@ -170,7 +170,6 @@ public:
 
 	UnigineBaseObject *getInternalObject() const { return obj; }
 
-protected:
 	friend UnigineBaseObject;
 	void object_destructor()
 	{
@@ -316,8 +315,6 @@ public:
 	}
 
 	UNIGINE_DECLARE_USE_MEMORY
-	static void *operator new(size_t, void *here) { return here; }
-	static void operator delete(void *, void *) {}
 
 private:
 	template<typename OtherType>
@@ -332,6 +329,7 @@ private:
 	APIInterface *api_interface() { return static_cast<APIInterface *>(ptr); }
 	const APIInterface *api_interface() const { return static_cast<const APIInterface *>(ptr); }
 
+private:
 	Type *ptr;
 };
 

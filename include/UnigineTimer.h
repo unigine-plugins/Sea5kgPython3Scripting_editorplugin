@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -11,7 +11,6 @@
  * UNIGINE. at http://unigine.com/
  */
 
-
 #pragma once
 
 #include "UnigineBase.h"
@@ -19,49 +18,65 @@
 /**
  * Unigine namespace.
  */
-namespace Unigine {
-	
-	/**
-	 * Unigine Timer.
-	 */
-	class Timer {
-			
-		public:
-			
-			/**
-			 * Returns CPU clocks counter.
-			 *
-			 * @return CPU clocks counter.
-			 */
-			static UNIGINE_API long long getClock();
-			
-			/**
-			 * Returns time in microseconds.
-			 *
-			 * @return Time in microseconds.
-			 */
-			static UNIGINE_API long long getTime();
-			
-			/**
-			 * Returns time in seconds.
-			 *
-			 * @return Time in seconds.
-			 */
-			static UNIGINE_API long double getFloatTime();
-			
-			/**
-			 * Suspends process execution in microseconds.
-			 *
-			 * @param usec Time in microseconds.
-			 */
-			UNIGINE_DEPRECATED(static UNIGINE_API void usleep(unsigned int usec));
-			
-			/**
-			 * Microseconds to seconds.
-			 */
-			enum {
-				CLOCKS_PER_SECOND = 1000000,
-			};
+namespace Unigine
+{
+
+#ifdef _LINUX
+	#ifdef Time
+		#undef Time
+	#endif
+#endif
+
+class Time
+{
+public:
+	enum
+	{
+		CLOCKS_PER_SECOND = 1000000,
 	};
-	
+	UNIGINE_INLINE static double MicrosecondsToSeconds(long long microseconds) { return (double)microseconds / CLOCKS_PER_SECOND; }
+	UNIGINE_INLINE static double MicrosecondsToMilliseconds(long long microseconds) { return (double)(microseconds * 1000) / CLOCKS_PER_SECOND; }
+
+	/**
+	 * Returns CPU clocks counter.
+	 *
+	 * @return CPU clocks counter.
+	 */
+	UNIGINE_API static long long getClock();
+
+	/**
+	 * Returns time in microseconds.
+	 *
+	 * @return Time in microseconds.
+	 */
+	UNIGINE_API static long long get();
+
+	/**
+	 * Returns time in seconds.
+	 *
+	 * @return Time in seconds.
+	 */
+	UNIGINE_INLINE static double getSeconds() { return MicrosecondsToSeconds(get()); }
+
+	/**
+	 * Returns time in milliseconds.
+	 *
+	 * @return Time in milliseconds.
+	 */
+	UNIGINE_INLINE static double getMilliseconds() { return MicrosecondsToMilliseconds(get()); }
+};
+
+struct Timer
+{
+	long long begin_time{0};
+
+	// return elapsed time
+	UNIGINE_INLINE void begin() { begin_time = Time::get(); }
+	UNIGINE_INLINE long long end() const { return Time::get() - begin_time; }
+	UNIGINE_INLINE double endSeconds() const { return Time::MicrosecondsToSeconds(end()); }
+	UNIGINE_INLINE double endMilliseconds() const { return Time::MicrosecondsToMilliseconds(end()); }
+
+	UNIGINE_INLINE long long getBeginTime() const { return begin_time; }
+};
+
 } /* namespace Unigine */

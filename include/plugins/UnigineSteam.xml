@@ -434,27 +434,27 @@
 		</member>
 		<member name="M:Unigine.Plugins.SteamLeaderboard.isLastUploadFailed const">
 			<summary>
-			
+			Checks the leaderboard upload result.
 			</summary>  
-			<returns>true if , otherwise false.</returns>
+			<returns>true if the leaderboard upload has failed, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.SteamLeaderboard.isLastDownloadFailed const">
 			<summary>
-			
+			Checks the leaderboard download result.
 			</summary>  
-			<returns></returns>
+			<returns>true if the leaderboard download has failed, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.SteamLeaderboard.getLastDataRequest const">
 			<summary>
-			
+			Returns the type of requested data in the most recent leaderbord download.
 			</summary>  
-			<returns></returns>
+			<returns>Type of requested data, one of the DATA_REQUEST values.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.SteamLeaderboard.getEntryCount const">
 			<summary>
-			
+			Returns the total number of entries in the leaderboard.
 			</summary>  
-			<returns></returns>
+			<returns>Number of entries in the leaderboard. Returns 0, if the leaderboard handle is invalid.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.SteamLeaderboard.getSortMethod const">
 			<summary>
@@ -476,24 +476,24 @@
 		</member>
 		<member name="M:Unigine.Plugins.SteamLeaderboard.getEntryUserID(int) const">
 			<summary>
-			
+			Returns the ID of the user who this entry belongs to.
 			</summary> 
-			<param name="num">  </param> 
-			<returns></returns>
+			<param name="num"> Number of an entry in a leaderboard. </param> 
+			<returns>The globally unique identifier for all Steam accounts.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.SteamLeaderboard.getEntryRank(int) const">
 			<summary>
-			
+			Returns the global rank of the entry.
 			</summary> 
-			<param name="num">  </param> 
-			<returns></returns>
+			<param name="num"> Number of an entry in a leaderboard. </param> 
+			<returns>The global rank of this entry ranging from [1..N], where N is the number of users with an entry in the leaderboard.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.SteamLeaderboard.getEntryScore(int) const">
 			<summary>
-			
+			Returns the raw score of the entry as set in the leaderboard.
 			</summary> 
-			<param name="num">  </param> 
-			<returns></returns>
+			<param name="num"> Number of an entry in a leaderboard. </param> 
+			<returns>The raw score as set in the leaderboard.</returns>
 		</member>
 		<member name="F:Unigine.Plugins.SteamLeaderboard.SORT_METHOD_NONE">
 			<summary>

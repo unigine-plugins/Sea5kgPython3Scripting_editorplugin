@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -21,6 +21,8 @@
 	#include <intrin.h>
 #elif _LINUX
 	#include <pthread.h>
+#else
+	#error "Platform unsupported"
 #endif
 
 #include <xmmintrin.h>
@@ -32,6 +34,28 @@ namespace Unigine
 //////////////////////////////////////////////////////////////////////////
 /// Atomics and locks.
 //////////////////////////////////////////////////////////////////////////
+
+/// Atomic CAS (Compare-And-Swap), 8-bit.
+UNIGINE_INLINE bool AtomicCAS(volatile char *ptr, char old_value, char new_value)
+{
+	assert((((size_t)ptr) % (sizeof(char))) == 0 && "unaligned atomic!");
+	#ifdef _WIN32
+		return (_InterlockedCompareExchange8(ptr, new_value, old_value) == old_value);
+	#elif _LINUX
+		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
+	#endif
+}
+
+/// Atomic CAS (Compare-And-Swap), 16-bit.
+UNIGINE_INLINE bool AtomicCAS(volatile short *ptr, short old_value, short new_value)
+{
+	assert((((size_t)ptr) % (sizeof(short))) == 0 && "unaligned atomic!");
+	#ifdef _WIN32
+		return (_InterlockedCompareExchange16(ptr, new_value, old_value) == old_value);
+	#elif _LINUX
+		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
+	#endif
+}
 
 /// Atomic CAS (Compare-And-Swap), 32-bit.
 UNIGINE_INLINE bool AtomicCAS(volatile int *ptr, int old_value, int new_value)
@@ -49,7 +73,7 @@ UNIGINE_INLINE bool AtomicCAS(volatile long long *ptr, long long old_value, long
 {
 	assert((((size_t)ptr) % (sizeof(int))) == 0 && "unaligned atomic!");
 	#ifdef _WIN32
-		return (_InterlockedCompareExchange64((volatile long long *)ptr, new_value, old_value) == old_value);
+		return (_InterlockedCompareExchange64(ptr, new_value, old_value) == old_value);
 	#elif _LINUX
 		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
 	#endif
@@ -62,6 +86,30 @@ UNIGINE_INLINE bool AtomicCAS(void *volatile * ptr, void* old_value, void * new_
 		return (_InterlockedCompareExchangePointer(ptr, new_value, old_value) == old_value);
 	#elif _LINUX
 		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
+	#endif
+}
+
+/// Atomic add, 8-bit.
+/// Returns the previous value (just before adding).
+UNIGINE_INLINE char AtomicAdd(volatile char *ptr, char value)
+{
+	assert((((size_t)ptr) % (sizeof(char))) == 0 && "unaligned atomic!");
+	#ifdef _WIN32
+		return _InterlockedExchangeAdd8(ptr, value);
+	#else
+		return __sync_fetch_and_add(ptr, value);
+	#endif
+}
+
+/// Atomic add, 16-bit.
+/// Returns the previous value (just before adding).
+UNIGINE_INLINE short AtomicAdd(volatile short *ptr, short value)
+{
+	assert((((size_t)ptr) % (sizeof(short))) == 0 && "unaligned atomic!");
+	#ifdef _WIN32
+		return _InterlockedExchangeAdd16(ptr, value);
+	#else
+		return __sync_fetch_and_add(ptr, value);
 	#endif
 }
 
@@ -89,6 +137,20 @@ UNIGINE_INLINE long long AtomicAdd(volatile long long *ptr, long long value)
 	#endif
 }
 
+/// Atomic read, 8-bit.
+/// Because simply accessing the variable directly is actually unsafe!
+UNIGINE_INLINE char AtomicGet(volatile char *ptr)
+{
+	return AtomicAdd(ptr, 0);
+}
+
+/// Atomic read, 16-bit.
+/// Because simply accessing the variable directly is actually unsafe!
+UNIGINE_INLINE short AtomicGet(volatile short *ptr)
+{
+	return AtomicAdd(ptr, 0);
+}
+
 /// Atomic read, 32-bit.
 /// Because simply accessing the variable directly is actually unsafe!
 UNIGINE_INLINE int AtomicGet(volatile int *ptr)
@@ -101,6 +163,30 @@ UNIGINE_INLINE int AtomicGet(volatile int *ptr)
 UNIGINE_INLINE long long AtomicGet(volatile long long *ptr)
 {
 	return AtomicAdd(ptr, 0);
+}
+
+/// Atomic set, 8-bit.
+/// Returns the previous value.
+UNIGINE_INLINE char AtomicSet(volatile char *ptr, char value)
+{
+	for (;;)
+	{
+		char old = AtomicAdd(ptr, 0);
+		if (AtomicCAS(ptr, old, value))
+			return old;
+	}
+}
+
+/// Atomic set, 16-bit.
+/// Returns the previous value.
+UNIGINE_INLINE short AtomicSet(volatile short *ptr, short value)
+{
+	for (;;)
+	{
+		short old = AtomicAdd(ptr, 0);
+		if (AtomicCAS(ptr, old, value))
+			return old;
+	}
 }
 
 /// Atomic set, 32-bit.
@@ -170,6 +256,13 @@ public:
 	// Returns a platform specific thread
 	auto getThread() const { return thread; }
 
+	// Sets thread's affinity mask
+	int setAffinityMask(long long mask);
+
+	// Returns thread's affinity mask
+	// returns -1 if mask is not set.
+	long long getAffinityMask() const;
+
 	#ifndef _WIN32
 		auto getThreadMutex() const { return mutex; }
 	#endif
@@ -204,6 +297,8 @@ protected:
 		pthread_mutex_t mutex;
 	#endif
 
+	long long affinity_mask;
+
 	volatile bool running{false};
 	mutable int priority;
 
@@ -229,7 +324,11 @@ public:
 		else if (backoff < 22)
 			for (int i = 0; i < 100; ++i) _mm_pause();
 		else
+		{
 			Thread::switchThread();
+			return;
+		}
+
 		++backoff;
 	}
 private:

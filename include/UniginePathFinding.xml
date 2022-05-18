@@ -73,7 +73,9 @@
 		</member>
 		<member name="M:Unigine.Navigation.inside(Unigine.Ptr{Navigation})">
 			<summary>
-			</summary>  
+			Returns a value indicating if the specified Navigation area is a part of the Navigation area.
+			</summary> 
+			<param name="navigation"> Navigation area </param> 
 		</member>
 		<member name="M:Unigine.Navigation.inside2D(Unigine.Math.Vec3,float)">
 			<summary>
@@ -135,7 +137,7 @@
 		</member>
 		<member name="M:Unigine.NavigationMesh.getMesh(Unigine.Ptr{Unigine.Mesh})">
 			<summary>
-			Copies the mesh that is used as a base for the current navigation mesh into the received mesh.
+			Copies the mesh that is used as a base for the current navigation mesh into the received mesh.					A mesh used as a base for the navigation mesh should meet the requirements described here.
 			</summary> 
 			<param name="mesh"> A mesh into which the current mesh is copied. </param> 
 			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
@@ -176,7 +178,9 @@
 		</member>
 		<member name="M:Unigine.NavigationMesh.setMeshName(char)">
 			<summary>
-			</summary>  
+			Saves the name of the mesh used as a base for the navigation mesh.					A mesh used as a base for the navigation mesh should meet the requirements described here.
+			</summary> 
+			<param name="name"> A mesh name to be set. </param> 
 		</member>
 		<member name="M:Unigine.NavigationSector.#ctor(Unigine.Math.vec3)">
 			<summary>

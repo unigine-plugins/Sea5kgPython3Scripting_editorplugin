@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -43,6 +43,9 @@ public:
 	// parameters
 	PROP_PARAM(Float, my_float, 1.5f);
 	PROP_PARAM(Node, my_node);
+	PROP_PARAM(Switch, my_type, 0, "one,two,three", "Title", "ToolTip for param", "Group");
+	// last parameter "args" - for specify attributes "name1=value1;name2=value2" (https://developer.unigine.com/en/docs/2.14.1/code/formats/property_format?rlang=cpp#element_parameter)
+	PROP_PARAM(Float, my_float_2, 0.0f, "Float Title", "Float ToolTip for param", "Group", "my_type=2;max=10;min=-10");
 
 protected:
 	// world main loop
@@ -181,7 +184,7 @@ public:																																			\
 #pragma region Factory
 #endif
 
-class ComponentCreatorInterface
+class ComponentCreatorInterface : public Base
 {
 public:
 	virtual ~ComponentCreatorInterface() {}
@@ -195,7 +198,7 @@ public:
 	virtual ComponentBase *create(const NodePtr &node, int num) const { return new C(node, num); }
 };
 
-class ComponentFactory
+class ComponentFactory : public Base
 {
 public:
 	ComponentFactory() {}
@@ -279,12 +282,47 @@ public:
 		PropertyPtr prop = Properties::findManualProperty(C::getPropertyName());
 		if (!prop)
 			createPropertyFile(C::getPropertyName());
+		else
+		{
+			// If world was loaded before registerComponent gets called, there might be potential instances
+			// of that component, that weren't created when addProperty was called before registration.
+			int count = prop->getNumChildren();
+			for (int i = 0; i < count; i++)
+			{
+				PropertyPtr child_prop = prop->getChild(i);
+				NodePtr node = child_prop->getNode();
+				if (node)
+				{
+					if (components.find(node->getID()) == components.end() || components[node->getID()].size() != node->getNumProperties())
+						on_property_slots_changed(node, node->getNumProperties());
+
+					on_property_created(node, child_prop, node->findProperty(child_prop));
+				}
+			}
+		}
 	}
 
 	template <class C>
 	void unregisterComponent()
 	{
 		component_factory.remove<C>(C::getPropertyName());
+
+		// Delete all instances of a component.
+		// If the module containing the component is unloaded while the world is still loaded,
+		// and if there are instances of those components in the world, they will crash due to dangling pointers.
+		for (auto it = components.begin(); it != components.end(); ++it)
+		{
+			int count = it->data.size();
+			for (int i = 0; i < count; i++)
+			{
+				C *c = dynamic_cast<C *>(it->data[i]);
+				if (c)
+				{
+					delete it->data[i];
+					it->data[i] = nullptr;
+				}
+			}
+		}
 	}
 
 	// create property files for all registered components in data folder ComponentSystem/
@@ -332,7 +370,6 @@ public:
 		if (it == components.end())
 			return nullptr;
 
-		String name = C::getPropertyName();
 		int count = it->data.size();
 		for (int i = 0; i < count; i++)
 		{
@@ -465,7 +502,6 @@ public:
 		if (it == components.end())
 			return 0;
 
-		String name = C::getPropertyName();
 		int count = it->data.size();
 		for (int i = 0; i < count; i++)
 		{
@@ -611,7 +647,7 @@ class ComponentVariable;
 class ComponentStruct;
 
 // class that stores info about property, its parameters and structs
-class UNIGINE_CS PropertyWrapper
+class UNIGINE_CS PropertyWrapper : public Base
 {
 public:
 	PropertyWrapper() = default;
@@ -637,16 +673,16 @@ public:
 	UNIGINE_API int findStructIndex(const char *name) const;
 };
 
-class UNIGINE_CS ComponentVariable
+class UNIGINE_CS ComponentVariable : public Base
 {
 public:
 	ComponentVariable() = default;
 	UNIGINE_API ComponentVariable(PropertyWrapper *component, const char *name, int type,
-		const char *title, const char *tooltip, const char *group);
+		const char *title, const char *tooltip, const char *group, const char *args);
 	UNIGINE_API virtual ~ComponentVariable();
 
 	UNIGINE_INLINE int getID() const { return parameter->getID(); }
-	UNIGINE_INLINE const char *getName() const { return name.get(); }
+	UNIGINE_INLINE const char *getName() const { return name; }
 	UNIGINE_INLINE int getType() const { return type; }
 	UNIGINE_API const char *getTypeName() const;
 	UNIGINE_INLINE virtual String getValueAsString() const { return String::null; }
@@ -660,13 +696,14 @@ public:
 protected:
 	UNIGINE_API int is_type_name(const char *name) const;
 
-	PropertyWrapper *holder;
+	PropertyWrapper *holder = nullptr;
 
 	PropertyParameterPtr parameter;
-	String name;
-	String title;
-	String tooltip;
-	String group;
+	const char *name = "";
+	const char *title = "";
+	const char *tooltip = "";
+	const char *group = "";
+	const char *args = "";
 	int type;
 };
 
@@ -675,8 +712,8 @@ class UNIGINE_CS ComponentVariableInt : public ComponentVariable
 public:
 	ComponentVariableInt() = default;
 	UNIGINE_API ComponentVariableInt(PropertyWrapper* component, const char *name, int default_value = 0,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_INT, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_INT, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableInt() = default;
 
 	UNIGINE_API ComponentVariableInt &operator=(int value);
@@ -693,8 +730,8 @@ class UNIGINE_CS ComponentVariableToggle : public ComponentVariable
 public:
 	ComponentVariableToggle() = default;
 	UNIGINE_API ComponentVariableToggle(PropertyWrapper* component, const char *name, int default_value = 0,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_TOGGLE, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_TOGGLE, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableToggle() = default;
 
 	UNIGINE_API ComponentVariableToggle &operator=(int value);
@@ -711,8 +748,8 @@ class UNIGINE_CS ComponentVariableSwitch : public ComponentVariable
 public:
 	ComponentVariableSwitch() = default;
 	UNIGINE_API ComponentVariableSwitch(PropertyWrapper* component, const char *name, int default_value = 0, const char *in_items = nullptr,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_SWITCH, title, tooltip, group), value(default_value), items(in_items) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_SWITCH, title, tooltip, group, args), value(default_value), items(in_items) {}
 	virtual ~ComponentVariableSwitch() = default;
 
 	UNIGINE_API ComponentVariableSwitch &operator=(int value);
@@ -732,11 +769,11 @@ class UNIGINE_CS ComponentVariableMask : public ComponentVariable
 public:
 	ComponentVariableMask() = default;
 	UNIGINE_API ComponentVariableMask(PropertyWrapper* component, const char *name, int default_value = 0,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_MASK, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_MASK, title, tooltip, group, args), value(default_value) {}
 	UNIGINE_API ComponentVariableMask(PropertyWrapper* component, const char *name, const char *mask_type, int default_value = 0,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_MASK, title, tooltip, group), value(default_value), flags(mask_type) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_MASK, title, tooltip, group, args), value(default_value), flags(mask_type) {}
 	virtual ~ComponentVariableMask() = default;
 
 	UNIGINE_API ComponentVariableMask &operator=(int value);
@@ -756,8 +793,8 @@ class UNIGINE_CS ComponentVariableFloat : public ComponentVariable
 public:
 	ComponentVariableFloat() = default;
 	UNIGINE_API ComponentVariableFloat(PropertyWrapper* component, const char *name, float default_value = 0,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_FLOAT, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_FLOAT, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableFloat() = default;
 
 	UNIGINE_API ComponentVariableFloat &operator=(float value);
@@ -774,8 +811,8 @@ class UNIGINE_CS ComponentVariableDouble : public ComponentVariable
 public:
 	ComponentVariableDouble() = default;
 	UNIGINE_API ComponentVariableDouble(PropertyWrapper* component, const char *name, double default_value = 0,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_DOUBLE, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_DOUBLE, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableDouble() = default;
 
 	UNIGINE_API ComponentVariableDouble &operator=(double value);
@@ -792,8 +829,8 @@ class UNIGINE_CS ComponentVariableString : public ComponentVariable
 public:
 	ComponentVariableString() = default;
 	UNIGINE_API ComponentVariableString(PropertyWrapper* component, const char *name, const char *default_value = nullptr,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_STRING, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_STRING, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableString() = default;
 
 	UNIGINE_API ComponentVariableString &operator=(const char *value);
@@ -810,11 +847,11 @@ class UNIGINE_CS ComponentVariableVec2 : public ComponentVariable
 public:
 	ComponentVariableVec2() = default;
 	UNIGINE_API ComponentVariableVec2(PropertyWrapper* component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_VEC2, title, tooltip, group) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_VEC2, title, tooltip, group, args) {}
 	UNIGINE_API ComponentVariableVec2(PropertyWrapper* component, const char *name, const Math::vec2 &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_VEC2, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_VEC2, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableVec2() = default;
 
 	UNIGINE_API ComponentVariableVec2 &operator=(const Math::vec2 &value);
@@ -831,11 +868,11 @@ class UNIGINE_CS ComponentVariableVec3 : public ComponentVariable
 public:
 	ComponentVariableVec3() = default;
 	UNIGINE_API ComponentVariableVec3(PropertyWrapper* component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_VEC3, title, tooltip, group) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_VEC3, title, tooltip, group, args) {}
 	UNIGINE_API ComponentVariableVec3(PropertyWrapper* component, const char *name, const Math::vec3 &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_VEC3, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_VEC3, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableVec3() = default;
 
 	UNIGINE_API ComponentVariableVec3 &operator=(const Math::vec3 &value);
@@ -852,11 +889,11 @@ class UNIGINE_CS ComponentVariableVec4 : public ComponentVariable
 public:
 	ComponentVariableVec4() = default;
 	UNIGINE_API ComponentVariableVec4(PropertyWrapper* component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_VEC4, title, tooltip, group) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_VEC4, title, tooltip, group, args) {}
 	UNIGINE_API ComponentVariableVec4(PropertyWrapper* component, const char *name, const Math::vec4 &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_VEC4, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_VEC4, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableVec4() = default;
 
 	UNIGINE_API ComponentVariableVec4 &operator=(const Math::vec4 &value);
@@ -873,11 +910,11 @@ class UNIGINE_CS ComponentVariableDVec2 : public ComponentVariable
 public:
 	ComponentVariableDVec2() = default;
 	UNIGINE_API ComponentVariableDVec2(PropertyWrapper* component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_DVEC2, title, tooltip, group) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_DVEC2, title, tooltip, group, args) {}
 	UNIGINE_API ComponentVariableDVec2(PropertyWrapper* component, const char *name, const Math::dvec2 &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_DVEC2, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_DVEC2, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableDVec2() = default;
 
 	UNIGINE_API ComponentVariableDVec2 &operator=(const Math::dvec2 &value);
@@ -894,11 +931,11 @@ class UNIGINE_CS ComponentVariableDVec3 : public ComponentVariable
 public:
 	ComponentVariableDVec3() = default;
 	UNIGINE_API ComponentVariableDVec3(PropertyWrapper* component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_DVEC3, title, tooltip, group) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_DVEC3, title, tooltip, group, args) {}
 	UNIGINE_API ComponentVariableDVec3(PropertyWrapper* component, const char *name, const Math::dvec3 &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_DVEC3, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_DVEC3, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableDVec3() = default;
 
 	UNIGINE_API ComponentVariableDVec3 &operator=(const Math::dvec3 &value);
@@ -915,11 +952,11 @@ class UNIGINE_CS ComponentVariableDVec4 : public ComponentVariable
 public:
 	ComponentVariableDVec4() = default;
 	UNIGINE_API ComponentVariableDVec4(PropertyWrapper* component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_DVEC4, title, tooltip, group) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_DVEC4, title, tooltip, group, args) {}
 	UNIGINE_API ComponentVariableDVec4(PropertyWrapper* component, const char *name, const Math::dvec4 &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_DVEC4, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_DVEC4, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableDVec4() = default;
 
 	UNIGINE_API ComponentVariableDVec4 &operator=(const Math::dvec4 &value);
@@ -936,11 +973,11 @@ class UNIGINE_CS ComponentVariableIVec2 : public ComponentVariable
 public:
 	ComponentVariableIVec2() = default;
 	UNIGINE_API ComponentVariableIVec2(PropertyWrapper* component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_IVEC2, title, tooltip, group) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_IVEC2, title, tooltip, group, args) {}
 	UNIGINE_API ComponentVariableIVec2(PropertyWrapper* component, const char *name, const Math::ivec2 &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_IVEC2, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_IVEC2, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableIVec2() = default;
 
 	UNIGINE_API ComponentVariableIVec2 &operator=(const Math::ivec2 &value);
@@ -957,11 +994,11 @@ class UNIGINE_CS ComponentVariableIVec3 : public ComponentVariable
 public:
 	ComponentVariableIVec3() = default;
 	UNIGINE_API ComponentVariableIVec3(PropertyWrapper* component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_IVEC3, title, tooltip, group) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_IVEC3, title, tooltip, group, args) {}
 	UNIGINE_API ComponentVariableIVec3(PropertyWrapper* component, const char *name, const Math::ivec3 &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_IVEC3, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_IVEC3, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableIVec3() = default;
 
 	UNIGINE_API ComponentVariableIVec3 &operator=(const Math::ivec3 &value);
@@ -978,11 +1015,11 @@ class UNIGINE_CS ComponentVariableIVec4 : public ComponentVariable
 public:
 	ComponentVariableIVec4() = default;
 	UNIGINE_API ComponentVariableIVec4(PropertyWrapper* component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_IVEC4, title, tooltip, group) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_IVEC4, title, tooltip, group, args) {}
 	UNIGINE_API ComponentVariableIVec4(PropertyWrapper* component, const char *name, const Math::ivec4 &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_IVEC4, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_IVEC4, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableIVec4() = default;
 
 	UNIGINE_API ComponentVariableIVec4 &operator=(const Math::ivec4 &value);
@@ -999,11 +1036,11 @@ class UNIGINE_CS ComponentVariableColor : public ComponentVariable
 public:
 	ComponentVariableColor() = default;
 	UNIGINE_API ComponentVariableColor(PropertyWrapper* component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_COLOR, title, tooltip, group) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_COLOR, title, tooltip, group, args) {}
 	UNIGINE_API ComponentVariableColor(PropertyWrapper* component, const char *name, const Math::vec4 &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_COLOR, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_COLOR, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableColor() = default;
 
 	UNIGINE_API ComponentVariableColor &operator=(const Math::vec4 &value);
@@ -1020,8 +1057,8 @@ class UNIGINE_CS ComponentVariableFile : public ComponentVariable
 public:
 	ComponentVariableFile() = default;
 	UNIGINE_API ComponentVariableFile(PropertyWrapper* component, const char *name, const char *default_value = nullptr,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_FILE, title, tooltip, group), value(default_value) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_FILE, title, tooltip, group, args), value(default_value) {}
 	virtual ~ComponentVariableFile() = default;
 
 	UNIGINE_API ComponentVariableFile &operator=(const char *value);
@@ -1040,11 +1077,11 @@ class UNIGINE_CS ComponentVariableProperty : public ComponentVariable
 public:
 	ComponentVariableProperty() = default;
 	UNIGINE_API ComponentVariableProperty(PropertyWrapper* component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_PROPERTY, title, tooltip, group) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_PROPERTY, title, tooltip, group, args) {}
 	UNIGINE_API ComponentVariableProperty(PropertyWrapper* component, const char *name, const PropertyPtr &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_PROPERTY, title, tooltip, group)
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_PROPERTY, title, tooltip, group, args)
 		, value(default_value)
 		, value_guid(default_value->getGUID()) {}
 
@@ -1070,11 +1107,11 @@ class UNIGINE_CS ComponentVariableMaterial : public ComponentVariable
 public:
 	ComponentVariableMaterial() = default;
 	UNIGINE_API ComponentVariableMaterial(PropertyWrapper* component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_MATERIAL, title, tooltip, group) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_MATERIAL, title, tooltip, group, args) {}
 	UNIGINE_API ComponentVariableMaterial(PropertyWrapper* component, const char *name, const MaterialPtr &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_MATERIAL, title, tooltip, group)
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_MATERIAL, title, tooltip, group, args)
 		, value(default_value)
 		, value_guid(default_value->getGUID()) {}
 
@@ -1100,12 +1137,12 @@ class UNIGINE_CS ComponentVariableNode : public ComponentVariable
 public:
 	ComponentVariableNode() = default;
 	UNIGINE_API ComponentVariableNode(PropertyWrapper* component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_NODE, title, tooltip, group)
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_NODE, title, tooltip, group, args)
 		, value_id(0) {}
 	UNIGINE_API ComponentVariableNode(PropertyWrapper* component, const char *name, const NodePtr &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_NODE, title, tooltip, group)
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_NODE, title, tooltip, group, args)
 		, value(default_value)
 		, value_id(default_value->getID()) {}
 
@@ -1136,11 +1173,11 @@ public:
 	}
 
 	UNIGINE_API ComponentVariableCurve2d(PropertyWrapper *component, const char *name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Unigine::Property::PARAMETER_CURVE2D, title, tooltip, group) {}
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Unigine::Property::PARAMETER_CURVE2D, title, tooltip, group, args) {}
 	ComponentVariableCurve2d(PropertyWrapper* component, const char *name, const Unigine::Curve2dPtr &default_value,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Unigine::Property::PARAMETER_CURVE2D, title, tooltip, group)
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Unigine::Property::PARAMETER_CURVE2D, title, tooltip, group, args)
 		, value(default_value) {}
 
 	virtual ~ComponentVariableCurve2d() = default;
@@ -1162,8 +1199,8 @@ class UNIGINE_CS ComponentVariableStructBase : public ComponentVariable
 public:
 	ComponentVariableStructBase() = default;
 	UNIGINE_API ComponentVariableStructBase(PropertyWrapper *component, const char *type_name,
-		const char *name = nullptr, const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_STRUCT, title, tooltip, group) {}
+		const char *name = nullptr, const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_STRUCT, title, tooltip, group, args) {}
 	virtual ~ComponentVariableStructBase() = default;
 
 	UNIGINE_INLINE ComponentStruct *getBase() const { return value_base; }
@@ -1183,8 +1220,8 @@ class UNIGINE_CS ComponentVariableStruct : public ComponentVariableStructBase
 public:
 	ComponentVariableStruct() = default;
 	ComponentVariableStruct(PropertyWrapper *component, const char *type_name,
-		const char *name = nullptr, const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariableStructBase(component, type_name, name, title, tooltip, group)
+		const char *name = nullptr, const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariableStructBase(component, type_name, name, title, tooltip, group, args)
 	{
 		// set base variables
 		value_base = &value;
@@ -1214,8 +1251,8 @@ class UNIGINE_CS ComponentVariableArray : public ComponentVariable
 public:
 	UNIGINE_API ComponentVariableArray(): struct_reference(nullptr) {}
 	ComponentVariableArray(PropertyWrapper *component, const char *name, const char *type_name,
-		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_ARRAY, title, tooltip, group)
+		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
+		: ComponentVariable(component, name, Property::PARAMETER_ARRAY, title, tooltip, group, args)
 		, struct_reference(nullptr)
 	{
 		is_basic_type = is_type_name(type_name);
@@ -1245,7 +1282,7 @@ public:
 		delete struct_reference;
 	}
 
-	UNIGINE_INLINE void resize(int size)
+	void resize(int size)
 	{
 		int prev_size = value.size();
 
@@ -1265,6 +1302,7 @@ public:
 				value[i] = new C { holder, "" };
 			else
 				value[i] = new C { holder, value_type.get() };
+			holder->variables.removeLast(); // remove array values from component (they are added in ComponentVariable constructor)
 		}
 
 		// set actual PropertyParameter to children

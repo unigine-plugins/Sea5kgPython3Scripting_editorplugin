@@ -103,7 +103,7 @@
 			<summary>
 			Enables or disables casting shadows from world lights for a given surface.
 			</summary> 
-			<param name="enabled"> 1 if world shadows are to be cast by a given surface; otherwise, 0. </param>
+			<param name="enabled"> true if world shadows are to be cast by a given surface; otherwise, false. </param>
 			<param name="surface"> Surface number. </param> 
 		</member>
 		<member name="M:Unigine.Object.getCastWorldShadow(int) const">
@@ -176,13 +176,13 @@
 		</member>
 		<member name="M:Unigine.Object.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Ptr{ObjectIntersectionTexCoord},int) const">
 			<summary>
-			Checks if there is an intersection between a line and a given surface. If the function returns 1 the data about the texture coordinates of the intersection point will be put to ObjectIntersectionTexCoord object.
+			Checks if there is an intersection between a line and a given surface. If the function returns true the data about the texture coordinates of the intersection point will be put to ObjectIntersectionTexCoord object.				The following objects have individual parameters, that control accuracy of intersection detection for them:											ObjectLandscapeTerrain						ObjectWaterGlobal
 			</summary> 
-			<param name="p0"> Line start point coordinates. </param>
-			<param name="p1"> Line end point coordinates. </param>
+			<param name="p0"> Line start point coordinates (local). </param>
+			<param name="p1"> Line end point coordinates (local). </param>
 			<param name="v"> ObjectIntersectionTexCoord class instance to store corresponding intersection data. </param>
 			<param name="surface"> Surface number. </param> 
-			<returns>1 if there is an intersection with a given surface; otherwise, 0.</returns>
+			<returns>true if there is an intersection with a given surface; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Object.getIntersection(int) const">
 			<summary>
@@ -193,63 +193,63 @@
 		</member>
 		<member name="M:Unigine.Object.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Ptr{ObjectIntersectionNormal},int) const">
 			<summary>
-			Checks if there is an intersection between a line and a given surface. If the function returns 1 the data about the normal at the intersection point will be put to ObjectIntersectionNormal object.
+			Checks if there is an intersection between a line and a given surface. If the function returns true the data about the normal at the intersection point will be put to ObjectIntersectionNormal object.				The following objects have individual parameters, that control accuracy of intersection detection for them:											ObjectLandscapeTerrain						ObjectWaterGlobal
 			</summary> 
-			<param name="p0"> Line start point coordinates. </param>
-			<param name="p1"> Line end point coordinates. </param>
+			<param name="p0"> Line start point coordinates (local). </param>
+			<param name="p1"> Line end point coordinates (local). </param>
 			<param name="v"> ObjectIntersectionNormal class instance to store corresponding intersection data. </param>
 			<param name="surface"> Surface number. </param> 
-			<returns>1 if there is an intersection with a given surface; otherwise, 0.</returns>
+			<returns>true if there is an intersection with a given surface; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Object.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Ptr{ObjectIntersection},int) const">
 			<summary>
-			Checks if there is an intersection between a line and a surface with a given intersection mask. If the function returns 1 the data about the intersection point will be put to ObjectIntersection object and the number of the first intersected surface will be put to the return variable.
+			Checks if there is an intersection between a line and a surface with a given intersection mask. If the function returns true the data about the intersection point will be put to ObjectIntersection object and the number of the first intersected surface will be put to the return variable.				The following objects have individual parameters, that control accuracy of intersection detection for them:											ObjectLandscapeTerrain						ObjectWaterGlobal
 			</summary> 
-			<param name="p0"> Line start point coordinates. </param>
-			<param name="p1"> Line end point coordinates. </param>
+			<param name="p0"> Line start point coordinates (local). </param>
+			<param name="p1"> Line end point coordinates (local). </param>
 			<param name="mask"> Intersection mask. </param>
 			<param name="v"> ObjectIntersection class instance to store corresponding intersection data. </param>
 			<param name="ret_surface"> Intersected surface index. </param> 
-			<returns>1 if there is an intersection; otherwise, 0.</returns>
+			<returns>true if there is an intersection; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Object.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Ptr{ObjectIntersection},int) const">
 			<summary>
-			Checks if there is an intersection between a line and a given surface. If the function returns 1 the data about the intersection point will be put to ObjectIntersection object.
+			Checks if there is an intersection between a line and a given surface. If the function returns true the data about the intersection point will be put to ObjectIntersection object.				The following objects have individual parameters, that control accuracy of intersection detection for them:											ObjectLandscapeTerrain						ObjectWaterGlobal
 			</summary> 
-			<param name="p0"> Line start point coordinates. </param>
-			<param name="p1"> Line end point coordinates. </param>
+			<param name="p0"> Line start point coordinates (local). </param>
+			<param name="p1"> Line end point coordinates (local). </param>
 			<param name="v"> ObjectIntersection class instance to store corresponding intersection data. </param>
 			<param name="surface"> Surface number. </param> 
-			<returns>1 if there is an intersection with a given surface; otherwise, 0.</returns>
+			<returns>true if there is an intersection with a given surface; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Object.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Ptr{ObjectIntersectionNormal},int) const">
 			<summary>
-			Checks if there is an intersection between a line and a surface with a given intersection mask. If the function returns 1 the data about the normal at the intersection point will be put to ObjectIntersectionNormal object and the number of the first intersected surface will be put to the return variable.
+			Checks if there is an intersection between a line and a surface with a given intersection mask. If the function returns true the data about the normal at the intersection point will be put to ObjectIntersectionNormal object and the number of the first intersected surface will be put to the return variable.				The following objects have individual parameters, that control accuracy of intersection detection for them:											ObjectLandscapeTerrain						ObjectWaterGlobal
 			</summary> 
-			<param name="p0"> Line start point coordinates. </param>
-			<param name="p1"> Line end point coordinates. </param>
+			<param name="p0"> Line start point coordinates (local). </param>
+			<param name="p1"> Line end point coordinates (local). </param>
 			<param name="mask"> Intersection mask. </param>
 			<param name="v"> ObjectIntersectionNormal class instance to store corresponding intersection data. </param>
 			<param name="ret_surface"> Intersected surface index. </param> 
-			<returns>1 if there is an intersection; otherwise, 0.</returns>
+			<returns>true if there is an intersection; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Object.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Ptr{ObjectIntersectionTexCoord},int) const">
 			<summary>
-			Checks if there is an intersection between a line and a surface with a given intersection mask. If the function returns 1 the data about the texture coordinates of the intersection point will be put to ObjectIntersectionNormal object and the number of the first intersected surface will be put to the return variable.
+			Checks if there is an intersection between a line and a surface with a given intersection mask. If the function returns true the data about the texture coordinates of the intersection point will be put to ObjectIntersectionNormal object and the number of the first intersected surface will be put to the return variable.				The following objects have individual parameters, that control accuracy of intersection detection for them:											ObjectLandscapeTerrain						ObjectWaterGlobal
 			</summary> 
-			<param name="p0"> Line start point coordinates. </param>
-			<param name="p1"> Line end point coordinates. </param>
+			<param name="p0"> Line start point coordinates (local). </param>
+			<param name="p1"> Line end point coordinates (local). </param>
 			<param name="mask"> Intersection mask. </param>
 			<param name="v"> ObjectIntersectionTexCoord class instance to store corresponding intersection data. </param>
 			<param name="ret_surface"> Intersected surface index. </param> 
-			<returns>1 if there is an intersection; otherwise, 0.</returns>
+			<returns>true if there is an intersection; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Object.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Math.Vec3,Unigine.Math.vec3,Unigine.Math.vec4,int,int,int) const">
 			<summary>
-			Checks if there is an intersection between a line and a surface with a given intersection mask. If the function returns 1 the data about the intersection (point, normal and texture coordinates) and the number of the first intersected surface will be put to corresponding return variables.
+			Checks if there is an intersection between a line and a surface with a given intersection mask. If the function returns true the data about the intersection (point, normal and texture coordinates) and the number of the first intersected surface will be put to corresponding return variables.				The following objects have individual parameters, that control accuracy of intersection detection for them:											ObjectLandscapeTerrain						ObjectWaterGlobal
 			</summary> 
-			<param name="p0"> Line start point coordinates. </param>
-			<param name="p1"> Line end point coordinates. </param>
+			<param name="p0"> Line start point coordinates (local). </param>
+			<param name="p1"> Line end point coordinates (local). </param>
 			<param name="mask"> Intersection mask. </param>
 			<param name="ret_point"> Intersection point coordinates. Pass NULL if this parameter is not required. </param>
 			<param name="ret_normal"> Coordinates of the normal vector to the intersection point. Pass NULL if this parameter is not required. </param>
@@ -257,21 +257,21 @@
 			<param name="ret_index"> Intersected triangle number. Pass NULL if this parameter is not required. </param>
 			<param name="ret_instance"> Intersected instance number. Pass NULL if this parameter is not required.Intersected instance number can be obtained for the following classes:ObjectMeshSkinnedObjectMeshClusterObjectMeshSplineCluster </param>
 			<param name="ret_surface"> Intersected surface number. Pass NULL if this parameter is not required. </param> 
-			<returns>1 if there is at least one intersection found; otherwise, 0.</returns>
+			<returns>true if there is at least one intersection found; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Object.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Math.vec3,Unigine.Math.vec4,int,int,int) const">
 			<summary>
-			Checks if there is an intersection between a line and a given surface. If the function returns 1 the data about the intersection (point, normal and texture coordinates) will be put to corresponding return variables.
+			Checks if there is an intersection between a line and a given surface. If the function returns true the data about the intersection (point, normal and texture coordinates) will be put to corresponding return variables.				The following objects have individual parameters, that control accuracy of intersection detection for them:											ObjectLandscapeTerrain						ObjectWaterGlobal
 			</summary> 
-			<param name="p0"> Line start point coordinates. </param>
-			<param name="p1"> Line end point coordinates. </param>
+			<param name="p0"> Line start point coordinates (local). </param>
+			<param name="p1"> Line end point coordinates (local). </param>
 			<param name="ret_point"> Intersection point coordinates. Pass NULL if this parameter is not required. </param>
 			<param name="ret_normal"> Coordinates of the normal vector to the intersection point. Pass NULL if this parameter is not required. </param>
 			<param name="ret_texcoord"> Texture coordinates of the intersection point (vec4, where vec4.xy is for the first (0) UV channel, vec4.zw is for the second (1) UV channel). Pass NULL if this parameter is not required. </param>
 			<param name="ret_index"> Intersected triangle number. Pass NULL if this parameter is not required. </param>
 			<param name="ret_instance"> Intersected instance number. Pass NULL if this parameter is not required.Intersected instance number can be obtained for the following classes:ObjectMeshSkinnedObjectMeshClusterObjectMeshSplineCluster </param>
 			<param name="surface"> Surface number. </param> 
-			<returns>1 if there is an intersection with a given surface; otherwise, 0.</returns>
+			<returns>true if there is an intersection with a given surface; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Object.setIntersectionMask(int,int)">
 			<summary>
@@ -329,54 +329,6 @@
 			<param name="surface"> Surface number. </param> 
 			<returns>Surface shadow mask.</returns>
 		</member>
-		<member name="M:Unigine.Object.setMaterial(char,int)">
-			<summary>
-			Sets a new material for the specified surface.
-			</summary> 
-			<param name="name"> Material name. </param>
-			<param name="surface"> Surface number. </param> 
-			<returns>1 if the material is set successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Object.setMaterial(char,char)">
-			<summary>
-			Sets a new material for the specified surface.
-			</summary> 
-			<param name="name"> Material name. </param>
-			<param name="pattern"> Pattern (string with a regular expression), against which surface names will be matched. </param> 
-			<returns>1 if the material is set successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Object.setMaterial(Unigine.Ptr{Unigine.Material},char)">
-			<summary>
-			Sets a new material for the specified surface.
-			</summary> 
-			<param name="mat"> Material smart pointer. </param>
-			<param name="pattern"> Pattern (string with a regular expression), against which surface names will be matched. </param> 
-			<returns>1 if the material is set successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Object.setMaterial(Unigine.Ptr{Unigine.Material},int)">
-			<summary>
-			Sets a new material for the specified surface.
-			</summary> 
-			<param name="mat"> Material smart pointer. </param>
-			<param name="surface"> Surface number. </param> 
-			<returns>1 if the material is set successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Object.setMaterial(Unigine.UGUID,char)">
-			<summary>
-			Sets a new material for the specified surface.
-			</summary> 
-			<param name="guid"> Material GUID. </param>
-			<param name="pattern"> Pattern (string with a regular expression), against which surface names will be matched. </param> 
-			<returns>1 if the material is set successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Object.setMaterial(Unigine.UGUID,int)">
-			<summary>
-			Sets a new material for the specified surface.
-			</summary> 
-			<param name="guid"> Material GUID. </param>
-			<param name="surface"> Surface number. </param> 
-			<returns>1 if the material is set successfully; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Object.getMaterial(int) const">
 			<summary>
 			Returns a material used for a given surface.
@@ -404,16 +356,9 @@
 			</summary> 
 			<param name="surface"> Surface number. </param> 
 		</member>
-		<member name="M:Unigine.Object.getMaterialName(int) const">
-			<summary>
-			Returns the name of the material applied to a given surface.
-			</summary> 
-			<param name="surface"> Surface number. </param> 
-			<returns>Material name.</returns>
-		</member>
 		<member name="M:Unigine.Object.setMaterialParameterInt(char,int,int)">
 			<summary>
-			Sets the value of a given integer parameter of the surface material.
+			Sets the value of a given integer parameter of the surface material.					When called for the first time, this method creates a copy of the source material (which is equal to the getMaterialInherit method).
 			</summary> 
 			<param name="name"> Parameter name. </param>
 			<param name="parameter"> Parameter value. </param>
@@ -429,7 +374,7 @@
 		</member>
 		<member name="M:Unigine.Object.setMaterialParameterInt2(char,Unigine.Math.ivec2,int)">
 			<summary>
-			Sets the value of a given ivec2 parameter of the surface material.
+			Sets the value of a given ivec2 parameter of the surface material. When called for the first time, this method creates a copy of the source material (which is equal to the getMaterialInherit method).
 			</summary> 
 			<param name="name"> Parameter name. </param>
 			<param name="parameter"> Parameter value. </param>
@@ -445,7 +390,7 @@
 		</member>
 		<member name="M:Unigine.Object.setMaterialParameterInt3(char,Unigine.Math.ivec3,int)">
 			<summary>
-			Sets the value of a given ivec3 parameter of the surface material.
+			Sets the value of a given ivec3 parameter of the surface material. When called for the first time, this method creates a copy of the source material (which is equal to the getMaterialInherit method).
 			</summary> 
 			<param name="name"> Parameter name. </param>
 			<param name="parameter"> Parameter value. </param>
@@ -461,7 +406,7 @@
 		</member>
 		<member name="M:Unigine.Object.setMaterialParameterInt4(char,Unigine.Math.ivec4,int)">
 			<summary>
-			Sets the value of a given ivec4 parameter of the surface material.
+			Sets the value of a given ivec4 parameter of the surface material. When called for the first time, this method creates a copy of the source material (which is equal to the getMaterialInherit method).
 			</summary> 
 			<param name="name"> Parameter name. </param>
 			<param name="parameter"> Parameter value. </param>
@@ -477,7 +422,7 @@
 		</member>
 		<member name="M:Unigine.Object.setMaterialParameterFloat(char,float,int)">
 			<summary>
-			Sets the value of a given float parameter of the surface material.
+			Sets the value of a given float parameter of the surface material.					When called for the first time, this method creates a copy of the source material (which is equal to the getMaterialInherit method).
 			</summary> 
 			<param name="name"> Parameter name. </param>
 			<param name="parameter"> Parameter value. </param>
@@ -493,7 +438,7 @@
 		</member>
 		<member name="M:Unigine.Object.setMaterialParameterFloat2(char,Unigine.Math.vec2,int)">
 			<summary>
-			Sets the value of a given vec2 parameter of the surface material.
+			Sets the value of a given vec2 parameter of the surface material. When called for the first time, this method creates a copy of the source material (which is equal to the getMaterialInherit method).
 			</summary> 
 			<param name="name"> Parameter name. </param>
 			<param name="parameter"> Parameter value. </param>
@@ -509,7 +454,7 @@
 		</member>
 		<member name="M:Unigine.Object.setMaterialParameterFloat3(char,Unigine.Math.vec3,int)">
 			<summary>
-			Sets the value of a given vec3 parameter of the surface material.
+			Sets the value of a given vec3 parameter of the surface material. When called for the first time, this method creates a copy of the source material (which is equal to the getMaterialInherit method).
 			</summary> 
 			<param name="name"> Parameter name. </param>
 			<param name="parameter"> Parameter value. </param>
@@ -525,7 +470,7 @@
 		</member>
 		<member name="M:Unigine.Object.setMaterialParameterFloat4(char,Unigine.Math.vec4,int)">
 			<summary>
-			Sets the value of a given vec4 parameter of the surface material.
+			Sets the value of a given vec4 parameter of the surface material. When called for the first time, this method creates a copy of the source material (which is equal to the getMaterialInherit method).
 			</summary> 
 			<param name="name"> Parameter name. </param>
 			<param name="parameter"> Parameter value. </param>
@@ -541,7 +486,7 @@
 		</member>
 		<member name="M:Unigine.Object.setMaterialState(char,int,int)">
 			<summary>
-			Sets the state value for a given surface material.
+			Sets the state value for a given surface material.					When called for the first time, this method creates a copy of the source material (which is equal to the getMaterialInherit method).
 			</summary> 
 			<param name="name"> Material state name. </param>
 			<param name="state"> State value. </param>
@@ -557,7 +502,7 @@
 		</member>
 		<member name="M:Unigine.Object.setMaterialTexture(char,char,int)">
 			<summary>
-			Sets the path to a given texture of a given surface material.
+			Sets the path to a given texture of a given surface material.					When called for the first time, this method creates a copy of the source material (which is equal to the getMaterialInherit method).
 			</summary> 
 			<param name="name"> Material texture name. </param>
 			<param name="texture"> Path to the texture file. </param>
@@ -921,11 +866,73 @@
 		</member>
 		<member name="M:Unigine.Object.setLightingMode(Object::SURFACE_LIGHTING_MODE,int)">
 			<summary>
-			</summary>  
+			Sets the lighting mode for the specified surface.
+			</summary> 
+			<param name="mode"> Surface lighting mode to be set, one of the following:SURFACE_LIGHTING_MODE_STATICSURFACE_LIGHTING_MODE_DYNAMICSURFACE_LIGHTING_MODE_ADVANCED </param>
+			<param name="surface"> Target surface number. </param> 
 		</member>
 		<member name="M:Unigine.Object.getLightingMode(int) const">
 			<summary>
-			</summary>  
+			Returns the lighting mode for the specified surface.
+			</summary> 
+			<param name="surface"> Target surface number. </param> 
+			<returns>Surface lighting mode, one of the following:SURFACE_LIGHTING_MODE_STATICSURFACE_LIGHTING_MODE_DYNAMICSURFACE_LIGHTING_MODE_ADVANCED</returns>
+		</member>
+		<member name="M:Unigine.Object.setMaterialPath(char,int)">
+			<summary>
+			Sets the material by path to a given surface.
+			</summary> 
+			<param name="path"> Material path. </param>
+			<param name="surface"> Target surface number. </param> 
+		</member>
+		<member name="M:Unigine.Object.setMaterialPath(char,char)">
+			<summary>
+			Sets the material by path to given surfaces.
+			</summary> 
+			<param name="path"> Material path. </param>
+			<param name="pattern"> Pattern (string with a regular expression), against which surface names will be matched. </param> 
+		</member>
+		<member name="M:Unigine.Object.getMaterialPath(int) const">
+			<summary>
+			Returns the path of the material assigned to a given surface.
+			</summary> 
+			<param name="surface"> Target surface number. </param> 
+			<returns>Material path.</returns>
+		</member>
+		<member name="M:Unigine.Object.setMaterialGUID(Unigine.UGUID,int)">
+			<summary>
+			Sets a new material with a given GUID to the specified surface.
+			</summary> 
+			<param name="guid"> Material GUID. </param>
+			<param name="surface"> Target surface number. </param> 
+		</member>
+		<member name="M:Unigine.Object.setMaterialGUID(Unigine.UGUID,char)">
+			<summary>
+			Sets a new material with a given GUID to the specified surface.
+			</summary> 
+			<param name="guid"> Material GUID. </param>
+			<param name="pattern"> Pattern (string with a regular expression), against which surface names will be matched. </param> 
+		</member>
+		<member name="M:Unigine.Object.getMaterialGUID(int) const">
+			<summary>
+			Returns a GUID of the material for the specified surface.
+			</summary> 
+			<param name="surface"> Target surface number. </param> 
+			<returns>Material GUID.</returns>
+		</member>
+		<member name="M:Unigine.Object.setMaterial(Unigine.Ptr{Unigine.Material},int)">
+			<summary>
+			Sets a new material for the specified surface.
+			</summary> 
+			<param name="mat"> Material smart pointer. </param>
+			<param name="surface"> Surface number. </param> 
+		</member>
+		<member name="M:Unigine.Object.setMaterial(Unigine.Ptr{Unigine.Material},char)">
+			<summary>
+			Sets a new material for the specified surface.
+			</summary> 
+			<param name="mat"> Material smart pointer. </param>
+			<param name="pattern"> Pattern (string with a regular expression), against which surface names will be matched. </param> 
 		</member>
 		<member name="F:Unigine.Object.SURFACE_SHADOW_MODE_DYNAMIC">
 			<summary>
@@ -935,6 +942,21 @@
 		<member name="F:Unigine.Object.SURFACE_SHADOW_MODE_MIXED">
 			<summary>
 			Mode to cast shadows from both static and dynamic light sources.
+		</summary>
+		</member>
+		<member name="F:Unigine.Object.SURFACE_LIGHTING_MODE_ADVANCED">
+			<summary>
+			Enables manual adjustment of all lighting-related settings.
+		</summary>
+		</member>
+		<member name="F:Unigine.Object.SURFACE_LIGHTING_MODE_DYNAMIC">
+			<summary>
+			Excludes the surface from use in static GI and static reflections and is suitable for dynamic shadows.
+		</summary>
+		</member>
+		<member name="F:Unigine.Object.SURFACE_LIGHTING_MODE_STATIC">
+			<summary>
+			Optimized for use in static GI, static reflections and cached shadows.
 		</summary>
 		</member>
 		<member name="M:Unigine.ObjectBillboards.#ctor">
@@ -1161,6 +1183,14 @@
 			Returns current coverage animation offset value.
 			</summary>  
 			<returns>Coverage animation offset (a vec4 value, where X and Y components represent coverage texture offsets along the X-axis and Y-axis respectively, both Z and W components are 0).</returns>
+		</member>
+		<member name="M:Unigine.ObjectCloudLayer.refreshCloudsRegionMask">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.ObjectCloudLayer.getDensity(Unigine.Math.Vec3) const">
+			<summary>
+			</summary>  
 		</member>
 		<member name="M:Unigine.ObjectDummy.#ctor">
 			<summary>
@@ -2867,6 +2897,26 @@
 			</summary>  
 			<returns>Object intersection type name.</returns>
 		</member>
+		<member name="F:Unigine.ObjectIntersection.NUM_OBJECT_INTERSECTIONS">
+			<summary>
+			Number of object intersection types.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectIntersection.OBJECT_INTERSECTION_TEX_COORD">
+			<summary>
+			ObjectIntersectionTexCoord (stores the point of intersection, surface and triangle indices + normal and texture coordinates at the point of intersection).
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectIntersection.OBJECT_INTERSECTION_NORMAL">
+			<summary>
+			ObjectIntersectionNormal (stores the point of intersection, surface and triangle indices + normal coordinates at the point of intersection).
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectIntersection.OBJECT_INTERSECTION">
+			<summary>
+			ObjectIntersection (stores only the point of intersection, surface and triangle indices).
+		</summary>
+		</member>
 		<member name="M:Unigine.ObjectIntersectionNormal.#ctor">
 			<summary>
 			The ObjectIntersectionNormal constructor.
@@ -3167,20 +3217,6 @@
 			</summary> 
 			<param name="material"> New material to be used for the detail. </param> 
 		</member>
-		<member name="M:Unigine.TerrainDetail.setMaterial(char)">
-			<summary>
-			Sets a new detail material with the specified name to be used for the detail.
-			</summary> 
-			<param name="name"> Name of a new material to be used for the detail. </param> 
-			<returns>1 if the material with the specified name was successfully assigned to the detail; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.TerrainDetail.setMaterial(Unigine.UGUID)">
-			<summary>
-			Sets a new detail material with the specified GUID to be used for the detail.
-			</summary> 
-			<param name="guid"> GUID of a new material to be used for the detail. </param> 
-			<returns>1 if the material with the specified GUID was successfully assigned to the detail; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.TerrainDetail.copy(Unigine.Ptr{Unigine.TerrainDetail}) const">
 			<summary>
 			Copies the detail to the specified destination detail (with all its children).
@@ -3193,6 +3229,29 @@
 			Clones the terrain detail (with all its children).
 			</summary>  
 			<returns>Cloned detail.</returns>
+		</member>
+		<member name="M:Unigine.TerrainDetail.setMaterialPath(char)">
+			<summary>
+			Sets the detail material by a given path.
+			</summary> 
+			<param name="path"> Material path. </param> 
+		</member>
+		<member name="M:Unigine.TerrainDetail.getMaterialPath const">
+			<summary>
+			Returns the path of the assigned detail material.
+			</summary>  
+			<returns>Material path.</returns>
+		</member>
+		<member name="M:Unigine.TerrainDetail.setMaterialGUID(Unigine.UGUID)">
+			<summary>
+			Sets the material by a GUID.
+			</summary> 
+			<param name="materialguid"> Material GUID. </param> 
+		</member>
+		<member name="M:Unigine.TerrainDetail.getMaterialGUID const">
+			<summary>
+			Returns the GUID of the assigned detail material.
+			</summary>  
 		</member>
 		<member name="M:Unigine.TerrainDetailMask.setName(char)">
 			<summary>
@@ -3374,7 +3433,6 @@
 			Commences an asynchronous GPU-based drawing operation with forced pre-loading of terrain data within the specified bounding box (all landscape layer maps). The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining data layers defined by the specified flags. The operation itself is to be implemented in the TextureDrawCallback handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes) that requires additional data beyond the area specified by coords and resolution parameters as well as the data of other landscape layer maps (e.g. a copy brush).
 			</summary> 
 			<param name="operation_id"> Draw operation ID. </param>
-			<param name="guid"> GUI </param>
 			<param name="guid"> GUID of the landscape layer map file to be modified. </param>
 			<param name="coord"> Coordinates of the upper left corner of the landscape layer map data segment to be modified along the X and Y axes. </param>
 			<param name="resolution"> Resolution of the landscape layer map data segment to be modified along the X and Y axes. </param>
@@ -3926,7 +3984,7 @@
 			</summary> 
 			<param name="path"> New path to the *.lmap file with landscape map data. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeLayerMap.getPath">
+		<member name="M:Unigine.LandscapeLayerMap.getPath const">
 			<summary>
 			Returns the current path to the *.lmap file containing landscape map data.
 			</summary>  
@@ -3944,7 +4002,7 @@
 			</summary> 
 			<param name="intersection"> true to enable intersection detection for the landscape layer map, false - to disable it. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeLayerMap.isIntersection">
+		<member name="M:Unigine.LandscapeLayerMap.isIntersection const">
 			<summary>
 			Returns a value indicating if intersection detection is enabled for the landscape layer map.
 			</summary>  
@@ -3956,7 +4014,7 @@
 			</summary> 
 			<param name="filter"> true to enable bicubic filtering is enabled for height texture (collision and intersection detection and fetch requests) and normals texture (intersection detection and fetch requests), false - to disable it. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeLayerMap.isIntersectionBicubicFilter">
+		<member name="M:Unigine.LandscapeLayerMap.isIntersectionBicubicFilter const">
 			<summary>
 			Returns a value indicating if bicubic filtering is enabled for height texture (collision and intersection detection and fetch requests) and normals texture (intersection detection and fetch requests).
 			</summary>  
@@ -3968,7 +4026,7 @@
 			</summary> 
 			<param name="collision"> true to enable collision detection for the landscape layer map, false - to disable it. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeLayerMap.isCollision">
+		<member name="M:Unigine.LandscapeLayerMap.isCollision const">
 			<summary>
 			Returns a value indicating if collision detection is enabled for the landscape layer map.
 			</summary>  
@@ -3980,7 +4038,7 @@
 			</summary> 
 			<param name="culling"> true to use the layer map for culling, false - to ignore it. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeLayerMap.isCulling">
+		<member name="M:Unigine.LandscapeLayerMap.isCulling const">
 			<summary>
 			Returns a value indicating if heights data of the layer map is to be used for culling precalculation. In order to define which parts of the terrain are to be rendered a culling test is required. This test is performed on the basis of a precalculated low-detail height map, combining heights data of all landscape layer maps having a significant impact on the result. Precalculation is performed on the CPU side, so processing a large number of landscape layer maps may reduce performance. Moreover, some layer maps may be used as decals (i.e. their impact on the resulting height map is insignificant). For such cases you can simply disable this option to avoid unnecessary calculations.
 			</summary>  
@@ -3992,7 +4050,7 @@
 			</summary> 
 			<param name="order"> New rendering order to be set for the landscape layer map. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeLayerMap.getOrder">
+		<member name="M:Unigine.LandscapeLayerMap.getOrder const">
 			<summary>
 			Sets the current rendering order for the landscape layer map. A map with a higher order value shall be rendered above the ones with lower ones.
 			</summary>  
@@ -4004,7 +4062,7 @@
 			</summary> 
 			<param name="size"> Two-component vector (X, Y) defining the size of the landscape layer map along X and Y axes, in units. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeLayerMap.getSize">
+		<member name="M:Unigine.LandscapeLayerMap.getSize const">
 			<summary>
 			Returns the current size of the landscape layer map.
 			</summary>  
@@ -4016,19 +4074,19 @@
 			</summary> 
 			<param name="scale"> Scale factor used for heights data. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeLayerMap.getHeightScale">
+		<member name="M:Unigine.LandscapeLayerMap.getHeightScale const">
 			<summary>
 			Returns the current scale factor used for heights data. Height values of landscape layer map are multiplied by this value during terrain rendering.
 			</summary>  
 			<returns>Scale factor used for heights data.</returns>
 		</member>
-		<member name="M:Unigine.LandscapeLayerMap.getTexelSize">
+		<member name="M:Unigine.LandscapeLayerMap.getTexelSize const">
 			<summary>
 			Returns the current texel size for the landscape layer map textures.
 			</summary>  
 			<returns>Two-component vector (X, Y) defining the size of the texel of the landscape layer map textures along X and Y axes.</returns>
 		</member>
-		<member name="M:Unigine.LandscapeLayerMap.isInit">
+		<member name="M:Unigine.LandscapeLayerMap.isInit const">
 			<summary>
 			Returns a value indicating if the landscape layer map is initialized.
 			</summary>  
@@ -4052,6 +4110,18 @@
 			Returns the current landscape map resolution.
 			</summary>  
 			<returns>Two-component vector (X, Y) representing landscape map resolution along X and Y axes, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeLayerMap.setFadeAttenuation(Unigine.Math.vec2)">
+			<summary>
+			Sets a new fade attenuation of landscape layer map. This parameter defines the distance of the map transparency attenuation, starting from the edge of the map.
+			</summary> 
+			<param name="attenuation"> Two-component vector (X, Y) defining the fade attenuation of the landscape layer map along X and Y axes. </param> 
+		</member>
+		<member name="M:Unigine.LandscapeLayerMap.getFadeAttenuation const">
+			<summary>
+			Returns the current fade attenuation for the landscape layer map. This parameter defines the distance of the map transparency attenuation, starting from the edge of the map.
+			</summary>  
+			<returns>Two-component vector (X, Y) defining the fade attenuation of the landscape layer map  along X and Y axes.</returns>
 		</member>
 		<member name="F:Unigine.LandscapeLayerMap.ALPHA_BLEND">
 			<summary>
@@ -4142,7 +4212,7 @@
 		</member>
 		<member name="M:Unigine.LandscapeMapFileCreator.run(bool,bool)">
 			<summary>
-			Runs the landscape map file creation process. You can set callbacks to be fired in the beginning, upon completion and during the process to monitor progress and display statistics.
+			Runs the landscape map file creation process. You can set callbacks to be fired in the beginning, upon completion and during the process to monitor progress and display statistics. Creates the landscape map file path if it doesn’t exist yet (including subdirectories).
 			</summary> 
 			<param name="is_empty"> true to create an empty .lmap file (e.g., when you create a layer map to be manually sculpted from scratch using brushes), false - to get necessary data from the sources and put them to the generated .lmap file. </param>
 			<param name="is_safe"> true to make the Engine automatically call filesClose()/fileOpen() methods when performing operations (before modifying an .lmap file the Engine should release files via filesClose(), while after modification fileOpen() should be called), false - to call filesClose()/fileOpen() methods manually.The Landscape class has two overloads for the filesClose() method:filesClose() - to be called in case of moving an .lmap file (no data reloading is performed as the file itself was not modified - saves time on reloading data)filesClose(reload_files) - to be called in case of deleting or modifying an .lmap file.When is_safe = true the Engine shall always call filesClose(reload_files) with complete data reloading. </param> 
@@ -4224,6 +4294,221 @@
 			Clears all added file creation completion callbacks.
 			</summary>  
 		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.#ctor">
+			<summary>
+			Constructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.isCompressing const">
+			<summary>
+			Returns the value indicating if the compression is in progress.
+			</summary>  
+			<returns>true if the compression is running; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.isDecompressing const">
+			<summary>
+			Returns the value indicating if the decompression is in progress.
+			</summary>  
+			<returns>true if the decompression is running; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.getProgress const">
+			<summary>
+			Returns the current landscape map file compression progress.
+			</summary>  
+			<returns>Current landscape map file compression progress (percentage).</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.run(bool,bool)">
+			<summary>
+			Runs the landscape map file compression/decompression process.
+			</summary> 
+			<param name="decompress"> true — the landscape map file will be decompressed, false — the landscape map file will be compressed. </param>
+			<param name="is_safe"> true to make the Engine automatically call filesClose()/fileOpen() methods when performing operations (before modifying an .lmap file the Engine should release files via filesClose(), while after modification fileOpen() should be called), false — to call filesClose()/fileOpen() methods manually.The Landscape class has two overloads for the filesClose() method:filesClose() — to be called in case of moving an .lmap file (no data reloading is performed as the file itself was not modified — saves time on reloading data)filesClose(reload_files) — to be called in case of deleting or modifying an .lmap file.When is_safe = true the Engine shall always call filesClose(reload_files) with complete data reloading. </param> 
+			<returns>true if the operation is successful; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.stop">
+			<summary>
+			Stops the landscape map file compression/decompression process.
+			</summary>  
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.isLoaded const">
+			<summary>
+			Returns a value indicating if the landscape map file (.lmap) is loaded.
+			</summary>  
+			<returns>true if the .lmap is loaded; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.load(Unigine.UGUID)">
+			<summary>
+			Loads the landscape map file (.lmap) having the specified GUID.
+			</summary> 
+			<param name="guid"> GUID of the landscape map file (.lmap) to be loaded. </param> 
+			<returns>true if the operation is successful; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.setHeightCompressor(LandscapeMapFileCompression::COMPRESSOR_TYPE)">
+			<summary>
+			Sets the type of the compressor used for height data compression.
+			</summary> 
+			<param name="compressor"> Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.getHeightCompressor const">
+			<summary>
+			Returns the current type of the compressor used for height data compression.
+			</summary>  
+			<returns>Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.setAlbedoCompressor(LandscapeMapFileCompression::COMPRESSOR_TYPE)">
+			<summary>
+			Sets the type of the compressor used for albedo data compression.
+			</summary> 
+			<param name="compressor"> Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.getAlbedoCompressor const">
+			<summary>
+			Returns the current type of the compressor used for albedo data compression.
+			</summary>  
+			<returns>Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.setOpacityHeightCompressor(LandscapeMapFileCompression::COMPRESSOR_TYPE)">
+			<summary>
+			Sets the type of the compressor used for compression of the opacity height data.
+			</summary> 
+			<param name="compressor"> Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.getOpacityHeightCompressor const">
+			<summary>
+			Returns the current type of the compressor used for compression of the opacity height data.
+			</summary>  
+			<returns>Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.setMaskCompressor(int,LandscapeMapFileCompression::COMPRESSOR_TYPE)">
+			<summary>
+			Sets the type of the compressor used for the specified mask.
+			</summary> 
+			<param name="mask"> Mask number. </param>
+			<param name="compressor_type"> Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.setMaskOpacityCompressor(int,LandscapeMapFileCompression::COMPRESSOR_TYPE)">
+			<summary>
+			Sets the type of the compressor used for the opacity data of the specified mask.
+			</summary> 
+			<param name="mask"> Mask number. </param>
+			<param name="compressor_type"> Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.setCompressorAll(LandscapeMapFileCompression::COMPRESSOR_TYPE)">
+			<summary>
+			Sets the type of the compressor used to compress all data.
+			</summary> 
+			<param name="compressor_type"> Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.isCompressed const">
+			<summary>
+			Returns the value indicating if the .lmap file is compressed.
+			</summary>  
+			<returns>true if the file is compressed; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.getMaskCompressor(int)">
+			<summary>
+			Returns the current type of the compressor used for the specified mask.
+			</summary> 
+			<param name="mask"> Mask number. </param> 
+			<returns>Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.getMaskOpacityCompressor(int)">
+			<summary>
+			Returns the current type of the compressor used for the opacity data of the specified mask.
+			</summary> 
+			<param name="mask"> Mask number. </param> 
+			<returns>Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.setEnabledAlbedoTextureCompression(bool)">
+			<summary>
+			Sets the albedo texture compression enabled or disabled.
+			</summary> 
+			<param name="compression"> true to enable albedo texture compression; otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.isEnabledAlbedoTextureCompression const">
+			<summary>
+			Returns the value indicating if the albedo texture compression is enabled.
+			</summary>  
+			<returns>true if the albedo texture compression is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.setEnabledOpacityHeightTextureCompression(bool)">
+			<summary>
+			Sets the compression of the opacity height texture enabled or disabled.
+			</summary> 
+			<param name="compression"> true to enable compression of the opacity height texture; otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.isEnabledOpacityHeightTextureCompression const">
+			<summary>
+			Returns the value indicating if the compression of the opacity height texture is enabled.
+			</summary>  
+			<returns>true if the compression of the opacity height texture is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.setEnabledMaskTextureCompression(int,bool)">
+			<summary>
+			Enables or disables compression of the specified mask texture.
+			</summary> 
+			<param name="mask"> Mask number. </param>
+			<param name="enable"> true to enable the mask texture compression; otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.setEnabledMaskOpacityTextureCompression(int,bool)">
+			<summary>
+			Enables or disables compression of the specified mask opacity texture.
+			</summary> 
+			<param name="mask"> Mask number. </param>
+			<param name="enable"> true to enable the compression of the mask opacity texture; otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.isEnabledMaskTextureCompression(int)">
+			<summary>
+			Returns a value undicating if the mask texture compression is enabled.
+			</summary> 
+			<param name="mask"> Mask number. </param> 
+			<returns>true if the mask texture compression is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.isEnabledMaskOpacityTextureCompression(int)">
+			<summary>
+			Returns the value indicating if the compression of the mask opacity texture is enabled.
+			</summary> 
+			<param name="mask"> Mask number. </param> 
+			<returns>true if the mask opacity texture compression is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.getGUID const">
+			<summary>
+			Returns a GUID of the .lmap file containing landscape map data.
+			</summary>  
+			<returns>GUID of the .lmap file.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.setCacheDirectory(char)">
+			<summary>
+			Sets a path to the directory that is used to store the cache. By default the cache is located in the same place where the UnigineEditor's cache is (you can find it in the UnigineEditor Settings tab). If there is not enough memory, you can use another disk. A full copy of the current terrain will be temporarily stored in the cache directory, so you should take this into account when estimating the cache size. SSD is recommended for fast data copying.
+			</summary> 
+			<param name="directory"> The path to the directory that stores the cache. </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.getCacheDirectory const">
+			<summary>
+			Returns the current path to the directory that is used to store the cache.
+			</summary>  
+			<returns>The path to the directory that stores the cache.</returns>
+		</member>
+		<member name="F:Unigine.LandscapeMapFileCompression.COMPRESSOR_TYPE_NONE">
+			<summary>
+			No compression is used.
+		</summary>
+		</member>
+		<member name="F:Unigine.LandscapeMapFileCompression.COMPRESSOR_TYPE_JACKALLESS">
+			<summary>
+			Our Method compression is used. It is optimized for compressing 2D and 3D textures and provides better results than LZ4 and Zlib without deteriorating the quality.
+		</summary>
+		</member>
+		<member name="F:Unigine.LandscapeMapFileCompression.COMPRESSOR_TYPE_LZ4">
+			<summary>
+			LZ4 compression is used (temporary option, planned to be removed in the upcoming releases).
+		</summary>
+		</member>
+		<member name="F:Unigine.LandscapeMapFileCompression.COMPRESSOR_TYPE_ZLIB">
+			<summary>
+			Zlib compression (can provide up to 2 times higher compression ratio, but takes up to 20 times longer).
+		</summary>
+		</member>
 		<member name="M:Unigine.LandscapeMapFileSettings.#ctor">
 			<summary>
 			The LandscapeMapFileSettings constructor.
@@ -4235,7 +4520,7 @@
 			</summary> 
 			<param name="blending"> Blending mode to be used for heights data. One of the following values:0 - Alpha Blend1 - Additive </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.getHeightBlending">
+		<member name="M:Unigine.LandscapeMapFileSettings.getHeightBlending const">
 			<summary>
 			Returns the current blending mode used for heights data of the landscape map.
 			</summary>  
@@ -4247,7 +4532,7 @@
 			</summary> 
 			<param name="blending"> Blending mode to be used for albedo data. One of the following values:0 - Alpha Blend1 - Additive2 - Overlay3 - Multiplicative </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.getAlbedoBlending">
+		<member name="M:Unigine.LandscapeMapFileSettings.getAlbedoBlending const">
 			<summary>
 			Returns the current blending mode used for albedo data of the landscape map.
 			</summary>  
@@ -4260,7 +4545,7 @@
 			<param name="mask"> Detail mask number in the [0; 19] range. </param>
 			<param name="blend"> Blending mode used for the data of the specified detail mask. One of the following values:0 - Alpha Blend1 - Additive2 - Overlay3 - Multiplicative </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.getMaskBlending(int)">
+		<member name="M:Unigine.LandscapeMapFileSettings.getMaskBlending(int) const">
 			<summary>
 			Returns the current blending mode used for the data of the specified detail mask.
 			</summary> 
@@ -4273,7 +4558,7 @@
 			</summary> 
 			<param name="height"> true to enable using heights data of the landscape layer map, false - to disable it. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledHeight">
+		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledHeight const">
 			<summary>
 			Returns a value indicating if heights data of the landscape layer map is to be used.
 			</summary>  
@@ -4285,7 +4570,7 @@
 			</summary> 
 			<param name="albedo"> true to enable using albedo data of the landscape layer map, false - to disable it. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledAlbedo">
+		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledAlbedo const">
 			<summary>
 			Returns a value indicating if albedo data of the landscape layer map is to be used.
 			</summary>  
@@ -4298,7 +4583,7 @@
 			<param name="mask"> Detail mask number in the [0; 19] range. </param>
 			<param name="enabled"> true to enable using the data of the specified detail mask, false - to disable it. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledMask(int)">
+		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledMask(int) const">
 			<summary>
 			Returns a value indicating if the data of the detail mask with the specified number is to be used.
 			</summary> 
@@ -4311,7 +4596,7 @@
 			</summary> 
 			<param name="height"> true to enable using opacity information for heights data of the landscape layer map, false - to disable it. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledOpacityHeight">
+		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledOpacityHeight const">
 			<summary>
 			Returns a value indicating if opacity information for heights data of the landscape layer map is to be used. Opacity information is required to blend data of several landscape layer maps.
 			</summary>  
@@ -4323,7 +4608,7 @@
 			</summary> 
 			<param name="albedo"> true to enable using opacity information for albedo data of the landscape layer map, false - to disable it. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledOpacityAlbedo">
+		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledOpacityAlbedo const">
 			<summary>
 			Returns a value indicating if opacity information for the albedo data of the landscape layer map is to be used. Opacity information is required to blend data of several landscape layer maps.
 			</summary>  
@@ -4336,32 +4621,32 @@
 			<param name="mask"> Detail mask number in the [0; 19] range. </param>
 			<param name="enabled"> true to enable using opacity information for the data of the specified detail mask, false - to disable it. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledOpacityMask(int)">
+		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledOpacityMask(int) const">
 			<summary>
 			Returns a value indicating if opacity information for the data of the detail mask with the specified number is to be used. Opacity information is required to blend data of several landscape layer maps.
 			</summary> 
 			<param name="mask"> Detail mask number in the [0; 19] range. </param> 
 			<returns>true if opacity information for the data of the detail mask with the specified number is to be used; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.getTilesSize">
+		<member name="M:Unigine.LandscapeMapFileSettings.getTilesSize const">
 			<summary>
 			Returns the size of the landscape map tiles.
 			</summary>  
 			<returns>Two-component vector (X, Y) representing the number of tiles in the landscape layer map along X and Y axes.</returns>
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.getResolution">
+		<member name="M:Unigine.LandscapeMapFileSettings.getResolution const">
 			<summary>
 			Returns the landscape layer map resolution.
 			</summary>  
 			<returns>Two-component vector (X, Y) representing landscape layer map resolution along X and Y axes, in pixels.</returns>
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.getGUID">
+		<member name="M:Unigine.LandscapeMapFileSettings.getGUID const">
 			<summary>
 			Returns a GUID of the .lmap file containing landscape map data.
 			</summary>  
 			<returns>GUID of the .lmap file.</returns>
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.isLoaded">
+		<member name="M:Unigine.LandscapeMapFileSettings.isLoaded const">
 			<summary>
 			Returns a value indicating if the landscape map file (.lmap) is loaded.
 			</summary>  
@@ -4379,6 +4664,44 @@
 			Applies all settings stored in the landscape map file (.lmap).
 			</summary>  
 			<returns>true if landscape map file settings were successfully applied; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.setHeightFadeAttenuation(Unigine.Math.vec2)">
+			<summary>
+			Sets a new fade attenuation to be used for heights data of the landscape map. This parameter defines the distance of the transparency attenuation, starting from the edge of the map.
+			</summary> 
+			<param name="attenuation"> Two-component vector (X, Y) defining the fade attenuation of the height data along X and Y axes. </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.getHeightFadeAttenuation const">
+			<summary>
+			Returns the current fade attenuation for heights data of the landscape map. This parameter defines the distance of the transparency attenuation, starting from the edge of the map.
+			</summary>  
+			<returns>Two-component vector (X, Y) defining the fade attenuation of the height data along X and Y axes.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.setAlbedoFadeAttenuation(Unigine.Math.vec2)">
+			<summary>
+			Sets a new fade attenuation to be used for albedo data of the landscape map. This parameter defines the distance of the transparency attenuation, starting from the edge of the map.
+			</summary> 
+			<param name="attenuation"> Two-component vector (X, Y) defining the fade attenuation of the albedo data along X and Y axes. </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.getAlbedoFadeAttenuation const">
+			<summary>
+			Returns the current fade attenuation for albedo data of the landscape map. This parameter defines the distance of the transparency attenuation, starting from the edge of the map.
+			</summary>  
+			<returns>Two-component vector (X, Y) defining the fade attenuation of the albedo data along X and Y axes.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.setMaskFadeAttenuation(int,Unigine.Math.vec2)">
+			<summary>
+			Sets a new fade attenuation to be used for the data of the specified detail mask. This parameter defines the distance of the transparency attenuation, starting from the edge of the map.
+			</summary> 
+			<param name="mask"> Mask number. </param>
+			<param name="fade_attenuation"> Two-component vector (X, Y) defining the fade attenuation of the detail mask data along X and Y axes. </param> 
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.getMaskFadeAttenuation(int) const">
+			<summary>
+			Returns the current fade attenuation for the data of the specified detail mask. This parameter defines the distance of the transparency attenuation, starting from the edge of the map.
+			</summary> 
+			<param name="mask"> Mask number. </param> 
+			<returns>Two-component vector (X, Y) defining the fade attenuation of the detail mask data along X and Y axes.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeFetch.#ctor">
 			<summary>
@@ -4550,10 +4873,25 @@
 			</summary>  
 			<returns>true if terrain data was successfully obtained for the specified point; otherwise, false.</returns>
 		</member>
+		<member name="M:Unigine.LandscapeFetch.fetchForce(Unigine.Math.Vec2)">
+			<summary>
+			Fetches terrain data in forced mode for the specified point. You can use the fetchAsync() method to reduce load, when an instant result is not required.
+			</summary> 
+			<param name="position"> Coordinates of the point. </param> 
+			<returns>true if terrain data was successfully obtained for the specified point; otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.LandscapeFetch.intersectionForce">
 			<summary>
 			Performs tracing along the line from the p0 point specified by the setIntersectionPositionBegin() to the p1 point specified by the setIntersectionPositionEnd() to find an intersection with the terrain in forced mode. You can use the intersectionAsync() method to reduce load, when an instant result is not required.
 			</summary>  
+			<returns>true if an intersection with the terrain was found; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeFetch.intersectionForce(Unigine.Math.Vec3,Unigine.Math.Vec3)">
+			<summary>
+			Performs tracing along the line from the p0 point to the p1 point to find an intersection with the terrain in forced mode. You can use the intersectionAsync() method to reduce load, when an instant result is not required.
+			</summary> 
+			<param name="p0"> Coordinates of the p0 point. </param>
+			<param name="p1"> Coordinates of the p1 point. </param> 
 			<returns>true if an intersection with the terrain was found; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeFetch.fetchAsync(bool)">
@@ -4562,10 +4900,25 @@
 			</summary> 
 			<param name="critical"> true to set high priority for the fetch task, false - to set normal priority. </param> 
 		</member>
+		<member name="M:Unigine.LandscapeFetch.fetchAsync(Unigine.Math.Vec2,bool)">
+			<summary>
+			Fetches terrain data for the specified point in asynchronous mode (the corresponding task shall be put to the queue, to wait until the result is obtained use the wait() method). For an instant result use the fetchForce() method.
+			</summary> 
+			<param name="position"> Coordinates of the point. </param>
+			<param name="critical"> true to set high priority for the fetch task, false - to set normal priority. </param> 
+		</member>
 		<member name="M:Unigine.LandscapeFetch.intersectionAsync(bool)">
 			<summary>
 			Performs tracing along the line from the p0 point specified by the setIntersectionPositionBegin() to the p1 point specified by the setIntersectionPositionEnd() to find an intersection with the terrain in asynchronous mode (the corresponding task shall be put to the queue, to wait until the result is obtained use the wait() method). For an instant result use the intersectionForce() method.
 			</summary> 
+			<param name="critical"> true to set high priority for the intersection task, false - to set normal priority. </param> 
+		</member>
+		<member name="M:Unigine.LandscapeFetch.intersectionAsync(Unigine.Math.Vec3,Unigine.Math.Vec3,bool)">
+			<summary>
+			Performs tracing along the line from the p0 point to the p1 point to find an intersection with the terrain in asynchronous mode (the corresponding task shall be put to the queue, to wait until the result is obtained use the wait() method). For an instant result use the intersectionForce() method.
+			</summary> 
+			<param name="p0"> Coordinates of the p0 point. </param>
+			<param name="p1"> Coordinates of the p1 point. </param>
 			<param name="critical"> true to set high priority for the intersection task, false - to set normal priority. </param> 
 		</member>
 		<member name="M:Unigine.LandscapeFetch.fetchForce(Unigine.Vector{Unigine.Ptr{Unigine.LandscapeFetch},int,Unigine.VectorAllocator})">
@@ -5486,30 +5839,45 @@
 			<summary>
 			Removes cluster meshes, found within the specified bounding box, from the cluster.
 			</summary> 
-			<param name="bb"> Bounding box, defining the area, within which the cluster meshes are to be removed from the cluster. </param> 
+			<param name="bb"> Bounding box defining the area, within which the cluster meshes are to be removed from the cluster. </param> 
 			<returns>true if cluster meshes, found within the specified bounding box are successfully removed; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.removeClusterTransformsFromSphere(Unigine.Math.WorldBoundSphere)">
+			<summary>
+			Removes cluster meshes, found within the specified bounding sphere, from the cluster.
+			</summary> 
+			<param name="bb"> Bounding sphere defining the area, for which the transformations of cluster meshes are to be collected. </param> 
+			<returns>true if cluster meshes, found within the specified bounding sphere are successfully removed; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.detachClusterTransforms(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
 			<summary>
-			Detaches cluster meshes, found within the area specified by the given bounding box, from the cluster and puts their transformations (local coordinates) to the specified buffer.
+			Detaches cluster meshes found within the area specified by the given bounding box from the cluster and puts their transformations (local coordinates) to the specified buffer.
 			</summary> 
-			<param name="bb"> Bounding box, defining the area, within which the cluster meshes are to be detached from the cluster. </param>
+			<param name="bb"> Bounding box defining the area, within which the cluster meshes are to be detached from the cluster. </param>
 			<param name="transforms"> Buffer to store transformations of detached cluster meshes. </param> 
-			<returns>Number of cluster meshes detached from the cluster; or 0, if there are no cluster meshes found within the specified bounding box.</returns>
+			<returns>true if cluster meshes have been detached from the cluster; otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.detachClusterWorldTransforms(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator})">
 			<summary>
-			Detaches cluster meshes, found within the area specified by the given bounding box, from the cluster and puts their transformations (world coordinates) to the specified buffer.
+			Detaches cluster meshes found within the area specified by the given bounding box from the cluster and puts their transformations (world coordinates) to the specified buffer.
 			</summary> 
-			<param name="bb"> Bounding box, defining the area, within which the cluster meshes are to be detached from the cluster. </param>
+			<param name="bb"> Bounding box defining the area, within which the cluster meshes are to be detached from the cluster. </param>
 			<param name="transforms"> Buffer to store transformations of detached cluster meshes. </param> 
-			<returns>Number of cluster meshes detached from the cluster; or 0, if there are no cluster meshes found within the specified bounding box.</returns>
+			<returns>true if cluster meshes have been detached from the cluster; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.detachClusterWorldTransformsFromSphere(Unigine.Math.WorldBoundSphere,Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator})">
+			<summary>
+			Detaches cluster meshes found within the area specified by the given bounding box from the cluster and puts their transformations (world coordinates) to the specified buffer.
+			</summary> 
+			<param name="bb"> Bounding sphere defining the area, for which the transformations of cluster meshes are to be collected. </param>
+			<param name="transforms"> Buffer to store transformations of cluster meshes, in world coordinates. </param> 
+			<returns>true if cluster meshes have been detached from the cluster; otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.getClusterTransforms(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
 			<summary>
 			Collects transformations (local coordinates) for all cluster meshes within the area specified by the given bounding box and puts them to the specified buffer.
 			</summary> 
-			<param name="bounds"> Bounding box, defining the area, for which the transformations of cluster meshes are to be collected. </param>
+			<param name="bounds"> Bounding box defining the area, for which the transformations of cluster meshes are to be collected. </param>
 			<param name="transforms"> Buffer to store transformations of cluster meshes. </param> 
 			<returns>true, if there are transformations of cluster meshes; or false, if there are no transformations of cluster meshes found.</returns>
 		</member>
@@ -5517,9 +5885,25 @@
 			<summary>
 			Collects transformations (world coordinates) for all cluster meshes within the area specified by the given bounding box and puts them to the specified buffer.
 			</summary> 
-			<param name="bounds"> Bounding box, defining the area, for which the transformations of cluster meshes are to be collected. </param>
+			<param name="bounds"> Bounding box defining the area, for which the transformations of cluster meshes are to be collected. </param>
 			<param name="transforms"> Buffer to store transformations of cluster meshes, in world coordinates. </param> 
 			<returns>true, if there are transformations of cluster meshes; or false, if there are no transformations of cluster meshes within the specified area.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.getClusterWorldTransformsFromSphere(Unigine.Math.WorldBoundSphere,Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator})">
+			<summary>
+			Collects transformations (world coordinates) for all cluster meshes within the area specified by the given bounding sphere and puts them to the specified buffer.
+			</summary> 
+			<param name="bounds"> Bounding sphere defining the area, for which the transformations of cluster meshes are to be collected. </param>
+			<param name="transforms"> Buffer to store transformations of cluster meshes, in world coordinates. </param> 
+			<returns>true, if there are transformations of cluster meshes; or false, if there are no transformations of cluster meshes within the specified area.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.getInstancesFromSphere(Unigine.Math.WorldBoundSphere,Unigine.Vector{int,int,Unigine.VectorAllocator})">
+			<summary>
+			Returns the indices of instances inside the bounding sphere.
+			</summary> 
+			<param name="bb"> Bounding sphere defining the area within which instances are to be collected. </param>
+			<param name="instances"> Vector containing instance indices. </param> 
+			<returns>true, if there is at least one instance inside the bounding sphere; or false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.#ctor(char,bool)">
 			<summary>
@@ -6474,6 +6858,7 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshDynamic.updateTangents">
 			<summary>
+			Updates tangent vectors of the mesh vertices.
 			</summary>  
 			<returns>true if the tangents are updated successfully; otherwise, false.</returns>
 		</member>
@@ -6536,6 +6921,36 @@
 			Makes the mesh used by the object unique (different from the one shared by other Dynamic Mesh objects in the world by default).
 			</summary>  
 		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.DYNAMIC_ALL">
+			<summary>
+			A flag indicating both dynamic indices and vertices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.DYNAMIC_INDICES">
+			<summary>
+			A flag indicating dynamic indices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.DYNAMIC_VERTEX">
+			<summary>
+			A flag indicating dynamic vertices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.IMMUTABLE_ALL">
+			<summary>
+			A flag indicating both immutable indices and vertices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.IMMUTABLE_INDICES">
+			<summary>
+			A flag indicating immutable indices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.IMMUTABLE_VERTEX">
+			<summary>
+			A flag indicating immutable vertices.
+		</summary>
+		</member>
 		<member name="F:Unigine.ObjectMeshDynamic.MODE_LINES">
 			<summary>
 			Mode to render lines.
@@ -6546,9 +6961,44 @@
 			Mode to render points.
 		</summary>
 		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.MODE_QUAD_PATCHES">
+			<summary>
+			Mode to render the quad patches.
+		</summary>
+		</member>
 		<member name="F:Unigine.ObjectMeshDynamic.MODE_TRIANGLES">
 			<summary>
 			Mode to render triangles (to create meshes).
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.MODE_TRIANGLE_PATCHES">
+			<summary>
+			Mode to render the triangle patches.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.TYPE_DOUBLE">
+			<summary>
+			Double type to store vertices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.TYPE_FLOAT">
+			<summary>
+			Float type to store vertices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.TYPE_HALF">
+			<summary>
+			Half-float type to store vertices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.TYPE_UCHAR">
+			<summary>
+			Unsigned char type to store vertices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.TYPE_USHORT">
+			<summary>
+			Unsigned short type to store vertices.
 		</summary>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.#ctor(Unigine.Ptr{Unigine.Mesh})">
@@ -7500,7 +7950,7 @@
 			<summary>
 			Saves the mesh to .mesh or .anim format.
 			</summary> 
-			<param name="path"> Path to the .mesh file. </param> 
+			<param name="path"> Path to the file including the file name and extension — *.mesh or *.anim. </param> 
 			<returns>1 if the mesh is saved successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.stop">
@@ -10892,34 +11342,6 @@
 			Constructor. Creates a new global water object.
 			</summary>  
 		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.getHeight(Unigine.Math.Vec3) const">
-			<summary>
-			Returns a height offset of a given point relatively to the water surface.
-			</summary> 
-			<param name="position"> Point position coordinates. </param> 
-			<returns>Height offset of the point.</returns>
-		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.getNormal(Unigine.Math.Vec3) const">
-			<summary>
-			Returns a normal vector of a given point (to orient objects along the waves normals).
-			</summary> 
-			<param name="position"> Normal vector. </param> 
-			<returns>Normal vector.</returns>
-		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.setOctaveCurrentOffset(int,Unigine.Math.vec3)">
-			<summary>
-			Sets new offset for an octave (heightmap sample) with given index. Global Water object can have up to 3 octaves.
-			</summary> 
-			<param name="index"> The index of the octave (a heightmap sample). </param>
-			<param name="offset"> An offset vector. </param> 
-		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.getOctaveCurrentOffset(int) const">
-			<summary>
-			Returns an offset vector for an octave (heightmap sample) with given index. Global Water object can have up to 3 octaves.
-			</summary> 
-			<param name="index"> The index of the octave (a heightmap sample). </param> 
-			<returns>An offset vector.</returns>
-		</member>
 		<member name="M:Unigine.ObjectWaterGlobal.getPhysicsFieldMask const">
 			<summary>
 			Returns the FieldHeight physics mask of the assigned material on the Global Water.
@@ -10932,61 +11354,1593 @@
 			</summary>  
 			<returns>The FieldHeight visual mask.</returns>
 		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.getWaterFieldHeightInteraction const">
-			<summary>
-			Checks if the assigned material on the Global Water object has enabled FieldHeight interaction option.
-			</summary>  
-			<returns>1 if the FieldHeight interaction option is enabled, otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.getWaterLevel const">
+		<member name="M:Unigine.ObjectWaterGlobal.getMeanLevel const">
 			<summary>
 			Returns the average Z coordinate of the water object.
 			</summary>  
 			<returns>The Z coordinate value.</returns>
 		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.getWaterLevelMax const">
+		<member name="M:Unigine.ObjectWaterGlobal.setAnimationTime(float)">
 			<summary>
-			Returns the maximum Z coordinate of the water object.
-			</summary>  
-			<returns>The Z coordinate value.</returns>
-		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.getWaterLevelMin const">
-			<summary>
-			Returns the minimum Z coordinate of the water object.
-			</summary>  
-			<returns>The Z coordinate value.</returns>
-		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.getWaterProceduralLevelMax(Unigine.Math.Vec3) const">
-			<summary>
-			Returns the maximum Z coordinate value of the water object including bounds of additional fields of other objects that affected Global Water heights in a given position.
+								Sets water animation time value for water synchronization. It is used for effects, such as normals, caustics, and foam.
 			</summary> 
-			<param name="position"> A position vector of additional fields. </param> 
+			<param name="time"> Water animation time value. </param> 
 		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.getWaterProceduralLevelMin(Unigine.Math.Vec3) const">
+		<member name="M:Unigine.ObjectWaterGlobal.getAnimationTime const">
 			<summary>
-			Returns the minimum Z coordinate value of the water object including bounds of additional fields of other objects that affected Global Water heights in a given position.
-			</summary> 
-			<param name="position"> A position vector of additional fields. </param> 
-		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.setWaterTime(float)">
-			<summary>
-			Sets water time value for water synchronization.
-			</summary> 
-			<param name="time"> Water time value. </param> 
-		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.getWaterTime const">
-			<summary>
-			Returns water time value for water synchronization.
+			Returns water animation time value for water synchronization.
 			</summary>  
-			<returns>Water time value.</returns>
+			<returns>Water animation time value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setLayerName(int,char)">
+			<summary>
+			Sets a new name for the wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param>
+			<param name="value"> Name of the layer. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getLayerName(int) const">
+			<summary>
+			Returns the name of the wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param> 
+			<returns>Name of the layer</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setLayerWeight(int,float)">
+			<summary>
+			Sets a weight for a given wave layer. This value determines how much the given layer affects the final wave form. It can be used for smooth transitions between the states of water. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param>
+			<param name="value"> Layer weight </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getLayerWeight(int) const">
+			<summary>
+			Returns the current weight of the wave layer. This value determines how much the given layer affects the final wave form. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param> 
+			<returns>Weight of the layer.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setLayerDirectionAngleVariance(int,float)">
+			<summary>
+			Sets a variance value of the wave direction angle for a given wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param>
+			<param name="value"> Variance value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getLayerDirectionAngleVariance(int) const">
+			<summary>
+			Returns the current variance value of the wave direction angle for a given wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param> 
+			<returns>Variance value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setLayerSteepnessScale(int,float)">
+			<summary>
+			Sets a steepness scale value for a given wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param>
+			<param name="value"> Steepness scale value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getLayerSteepnessScale(int) const">
+			<summary>
+			Returns the current steepness scale value for a given wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param> 
+			<returns>Steepness scale value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setLayerAmplitudeRange(int,Unigine.Math.vec2)">
+			<summary>
+			Sets a range of wave amplitudes for a given wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number. </param>
+			<param name="value"> Amplitude range. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getLayerAmplitudeRange(int) const">
+			<summary>
+			Returns the current range of wave amplitudes of a given wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number. </param> 
+			<returns>Amplitude range.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setLayerLengthRange(int,Unigine.Math.vec2)">
+			<summary>
+			Sets a range of wave lengths for a given wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param>
+			<param name="value"> Length range. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getLayerLengthRange(int) const">
+			<summary>
+			Returns the current range of wave lengths of a given wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param> 
+			<returns>Length range.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setLayerNumWaves(int,int)">
+			<summary>
+			Sets the number of waves for a given wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param>
+			<param name="num"> Number of waves. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getLayerNumWaves(int) const">
+			<summary>
+			Returns the number of waves on a given wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param> 
+			<returns>Number of waves.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isLayerEnabled(int) const">
+			<summary>
+			Returns a value indicating if a given wave layer is enabled. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param> 
+			<returns>1 if the layer is enabled; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setLayerEnabled(int,bool)">
+			<summary>
+			Enables or disables a given wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param>
+			<param name="enabled"> 1 to enable the layer, 0 to disable it. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.swapLayer(int,int)">
+			<summary>
+			Swaps two specified wave layers. Available when the Layers mode  is set.
+			</summary> 
+			<param name="num_0"> Layer1 number. </param>
+			<param name="num_1"> Layer2 number. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getNumLayers const">
+			<summary>
+			Returns the current number of wave layers. Available when the Layers mode  is set.
+			</summary>  
+			<returns>Number of wave layers.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.removeLayer(int)">
+			<summary>
+			Removes a given wave layer. Available when the Layers mode  is set.
+			</summary> 
+			<param name="layer"> Layer number </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.addLayer">
+			<summary>
+			Appends a new wave layer. Available when the Layers mode  is set.
+			</summary>  
+			<returns>Number of the new added layer.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setWavePhaseOffset(int,float)">
+			<summary>
+			Sets the phase offset parameter for a given wave. Available when the Manual mode  is set.
+			</summary> 
+			<param name="index"> Wave number. </param>
+			<param name="value"> Phase offset parameter value in radians in range [0; 2pi]. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getWavePhaseOffset(int) const">
+			<summary>
+			Returns the value of the Phase Offset parameter of a wave. Available when the Manual mode  is set.
+			</summary> 
+			<param name="index"> Wave number. </param> 
+			<returns>Phase offset parameter value in radians in range [0; 2pi].</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setWaveDirectionAngle(int,float)">
+			<summary>
+			Sets direction (angle of spreading) for a given wave:											If 0 is specified, the wave spreads along the Y axis and is parallel to the X axis.						If a positive value is specified, the wave direction is slanted counterclockwise relative to its initial spread.						If a negative value is specified, the wave is rotated clockwise.										Available when the Manual mode  is set.
+			</summary> 
+			<param name="index"> Wave number. </param>
+			<param name="value"> Angle, in degrees. Both positive and negative values are acceptable. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getWaveDirectionAngle(int) const">
+			<summary>
+			Returns direction (angle of spreading) of a given wave. Available when the Manual mode  is set.
+			</summary> 
+			<param name="index"> Wave number. </param> 
+			<returns>Angle, in degrees.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setWaveSteepness(int,float)">
+			<summary>
+			Sets the steepness value for a given wave. Available when the Manual mode  is set.
+			</summary> 
+			<param name="index"> Wave number. </param>
+			<param name="value"> Steepness value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getWaveSteepness(int) const">
+			<summary>
+			Returns the current steepness value of the given wave. Available when the Manual mode  is set.
+			</summary> 
+			<param name="index"> Wave number. </param> 
+			<returns>Steepness value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setWaveAmplitude(int,float)">
+			<summary>
+			Sets the distance between the highest and the lowest peaks for a given wave. It sets the wave form along with the setWaveLength() function. The higher the value is, the higher the waves are. Available when the Manual mode  is set.
+			</summary> 
+			<param name="index"> Wave number. </param>
+			<param name="value"> Amplitude, in units. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getWaveAmplitude(int) const">
+			<summary>
+			Returns the distance between the highest and the lowest peaks for the given wave. Available when the Manual mode  is set.
+			</summary> 
+			<param name="index"> Wave number. </param> 
+			<returns>Amplitude, in units.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setWaveLength(int,float)">
+			<summary>
+			Sets the distance between successive crests for a given wave. The higher the length value is, the broader the waves are. Available when the Manual mode  is set.
+			</summary> 
+			<param name="index"> Wave number. </param>
+			<param name="value"> Length, in units. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getWaveLength(int) const">
+			<summary>
+			Returns the distance between successive crests of the given wave. Available when the Manual mode  is set.
+			</summary> 
+			<param name="index"> Wave number. </param> 
+			<returns>Length, in units.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getNumWaves const">
+			<summary>
+			Returns the current number of simulated waves. Available when the Manual mode  is set.
+			</summary>  
+			<returns>Number of waves.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.removeWave(int)">
+			<summary>
+			Removes the wave having a specified number. Available when the Manual mode  is set.
+			</summary> 
+			<param name="index"> Wave number. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.addWave(float,float,float,float,float)">
+			<summary>
+			Adds a wave if the Manual mode  is set.
+			</summary> 
+			<param name="length"> Wave length. </param>
+			<param name="amplitude"> Wave amplitude. </param>
+			<param name="steepness"> Wave steepness. </param>
+			<param name="direction_angle"> Angle of the wave direction in degrees. At 0 angle the wave will be directed along the X-axis. </param>
+			<param name="phase"> Phase offset of the wave in radians (0 to 2pi). </param> 
+			<returns>Number of the added wave.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getWindAffect const">
+			<summary>
+			Returns the current value determining how much the wind direction affects the waves.
+			</summary>  
+			<returns>Wind influence value in range [0;1].</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setWindAffect(float)">
+			<summary>
+			Sets how much the wind direction affects the waves.
+			</summary> 
+			<param name="affect"> Wind influence in range [0;1]. If you set it to 1, all waves will be directed along the wind direction. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getWindDirectionAngle const">
+			<summary>
+			Returns the angle that determines the wind direction.
+			</summary>  
+			<returns>Angle, in degrees.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setWindDirectionAngle(float)">
+			<summary>
+			Sets the angle that determines the wind direction.
+			</summary> 
+			<param name="angle"> Wind direction angle, in degrees. </param> 
 		</member>
 		<member name="M:Unigine.ObjectWaterGlobal.type">
 			<summary>
+			Returns the type of the node.
 			</summary>  
+			<returns>Object type identifier.</returns>
 		</member>
-		<member name="F:Unigine.ObjectWaterGlobal.SEA_OCTAVES_COUNT">
+		<member name="M:Unigine.ObjectWaterGlobal.setActiveWater(bool)">
 			<summary>
-			Octaves counter. Specifies, how many octaves (heightmap samples) are used for a Global Water object.
+			Sets a value indicating if the global water object is active. If there are more than one global water nodes in the scene, only the active one will be rendered.
+			</summary> 
+			<param name="water"> true to set the global water object as active, false - to set it as inactive. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isActiveWater const">
+			<summary>
+			Returns a value indicating if the global water object is active.
+			</summary>  
+			<returns>true if the global water object is active, false - if it is inactive.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.fetchHeight(Unigine.Math.Vec3) const">
+			<summary>
+			Returns a height offset of the specified point relative to the current water level calculated at this point. E.g. in case the specified point is (0, 0, -3) and the current water level calculated for this point is equal to 5, the function shall return 8.								In case of higher Beaufort levels (resulting in significant wave steepness and height differences on the water surface), calculation results may differ from visual representation (e.g. calculated water level may be greater the actual value). To avoid it and increase precision, adjust calculation quality.
+			</summary> 
+			<param name="position"> Point position coordinates. </param> 
+			<returns>Height offset of the specified point relative to the current water level calculated at this point, in meters.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.fetchNormal(Unigine.Math.Vec3) const">
+			<summary>
+			Returns a normal vector to the water surface at the specified point (to orient objects along the waves normals).In case of higher Beaufort levels (resulting in significant wave steepness and height differences on the water surface), calculation results may differ from visual representation (e.g. calculated water level may be greater the actual value). To avoid it and increase precision, adjust calculation quality.
+			</summary> 
+			<param name="position"> Point position coordinates. </param> 
+			<returns>Normal vector.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFetchAmplitudeThreshold(float)">
+			<summary>
+			Sets the threshold for amplitude values that will not participate in height and normal calculations. The more you cut off, the less accurate the height value you get, but the faster are the calculations.
+			</summary> 
+			<param name="threshold"> Amplitude threshold. The default value is 0.1f. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFetchAmplitudeThreshold const">
+			<summary>
+			Returns the current threshold for amplitude values that will not participate in height and normal calculations.
+			</summary>  
+			<returns>Amplitude threshold.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFetchSteepnessQuality(ObjectWaterGlobal::STEEPNESS_QUALITY)">
+			<summary>
+			Sets the wave steepness calculation quality used in height and normal calculations. Low quality is usually sufficient for calm water and large floating objects. If the waves are big, or you want to simulate small floating objects, you may need to increase the quality. Higher quality gives a more precise result but affects performance.
+			</summary> 
+			<param name="quality"> Quality value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFetchSteepnessQuality const">
+			<summary>
+			Returns the wave steepness calculation quality used in height and normal calculations.
+			</summary>  
+			<returns>Steepness quality. The default is STEEPNESS_QUALITY_LOW.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getIntersectionAmplitudeThreshold const">
+			<summary>
+			Returns the current threshold of amplitude values that will not participate in intersection calculations.
+			</summary>  
+			<returns>Amplitude threshold.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setIntersectionAmplitudeThreshold(float)">
+			<summary>
+			Sets the threshold for amplitude values that will not participate in intersection calculations. The default value is 0.1f.
+			</summary> 
+			<param name="threshold"> Amplitude threshold. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setIntersectionPrecision(float)">
+			<summary>
+			Sets an intersection precision which represents an error between the real value of the water intersection point and the calculated value. The default value is 0.25.
+			</summary> 
+			<param name="precision"> Precision for intersection detection. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getIntersectionPrecision const">
+			<summary>
+			Returns current intersection precision which represents an error between the real value of the water intersection point and the calculated value.
+			</summary>  
+			<returns>Precision for intersection detection.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setIntersectionSteepnessQuality(ObjectWaterGlobal::STEEPNESS_QUALITY)">
+			<summary>
+			Sets the wave steepness calculation quality used in intersection calculations. Low quality is usually sufficient for calm water and large floating objects. If the waves are big, or you want to simulate small floating objects, you may need to increase the quality. Higher quality gives a more precise result but affects performance.
+			</summary> 
+			<param name="quality"> Steepness quality. The default is STEEPNESS_QUALITY_LOW. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getIntersectionSteepnessQuality const">
+			<summary>
+			Returns the wave steepness calculation quality used in intersection calculations. Low quality is usually sufficient for calm water and large floating objects. If the waves are big, or you want to simulate small floating objects, you may need to increase the quality. Higher quality gives a more precise result but affects performance.
+			</summary>  
+			<returns>Steepness quality.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setSoftIntersection(float)">
+			<summary>
+			Sets soft intersection of water with the shoreline and surfaces of objects.
+			</summary> 
+			<param name="intersection"> Soft intersection value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getSoftIntersection const">
+			<summary>
+			Returns the current soft intersection of water with the shoreline and surfaces of objects.
+			</summary>  
+			<returns>Soft intersection value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.takeSyncData(Unigine.Ptr{Unigine.Stream})">
+			<summary>
+			Writes wave synchronization data to the specified stream.
+			</summary> 
+			<param name="stream"> Stream to which wave synchronization data is to be written. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.applySyncData(Unigine.Ptr{Unigine.Stream})">
+			<summary>
+			Reads wave synchronization data from the specified stream and applies it to the wave system.
+			</summary> 
+			<param name="stream"> Stream with wave synchronization data to be applied. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setWavesMode(ObjectWaterGlobal::WAVES_MODE)">
+			<summary>
+			Sets the wave generation mode.
+			</summary> 
+			<param name="mode"> A desired wave mode. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getWavesMode const">
+			<summary>
+			Returns the current wave generation mode.
+			</summary>  
+			<returns>Wave mode.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setBeaufort(float)">
+			<summary>
+			Sets the Beaufort wind force scale value.
+			</summary> 
+			<param name="beaufort"> Beaufort value from 0 (Calm) to 12 (Hurricane). Available when the Beauforts mode  is set. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getBeaufort const">
+			<summary>
+			Returns the current Beaufort wind force scale value. Available when the Beauforts mode  is set.
+			</summary>  
+			<returns>Beaufort value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setGeometryNormalIntensity(float)">
+			<summary>
+			Sets the intensity of normals of the waves.
+			</summary> 
+			<param name="intensity"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getGeometryNormalIntensity const">
+			<summary>
+			Returns the current intensity of normals of the waves.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setTextureNormalBlur(float)">
+			<summary>
+			Sets the blurring ratio for the procedurally generated normals. This parameter enables you to reduce pixelation of the normal map, and make it less pronounced. It is recommended to use small values for correction, when necessary. This affects the normals generated for Field Height and Field Shoreline.
+			</summary> 
+			<param name="blur"> Normal blur value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getTextureNormalBlur const">
+			<summary>
+			Returns the current blurring ratio for the procedurally generated normals. This parameter enables you to reduce pixelation of the normal map, and make it less pronounced. It is recommended to use small values for correction, when necessary. This affects the normals generated for Field Height and Field Shoreline.
+			</summary>  
+			<returns>Normal blur value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setTextureNormalIntensity(float)">
+			<summary>
+			Sets the intensity of procedurally generated normals. This affects the normals generated for Field Height and Field Shoreline.
+			</summary> 
+			<param name="intensity"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getTextureNormalIntensity const">
+			<summary>
+			Returns the current intensity of procedurally generated normals. This affects the normals generated for Field Height and Field Shoreline.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDetailTexturePath(char)">
+			<summary>
+			Sets a path to the location of a normal detail texture.
+			</summary> 
+			<param name="path"> Detail texture path. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDetailTexturePath const">
+			<summary>
+			Returns the current path to the location of a normal detail texture.
+			</summary>  
+			<returns>Detail texture path.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDetail0UVSize(Unigine.Math.vec2)">
+			<summary>
+			Sets the size of the first sample of the normal detail texture.
+			</summary> 
+			<param name="size"> Size value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDetail0UVSize const">
+			<summary>
+			Returns the current size of the first sample of the normal detail texture.
+			</summary>  
+			<returns>Size value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDetail0UVSpeed(Unigine.Math.vec2)">
+			<summary>
+			Sets the speed of the first sample of the normal detail texture.
+			</summary> 
+			<param name="speed"> Speed value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDetail0UVSpeed const">
+			<summary>
+			Returns the current speed of the first sample of the normal detail texture.
+			</summary>  
+			<returns>Speed value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDetail0Intensity(float)">
+			<summary>
+			Sets the intensity of the first sample of the normal detail texture.
+			</summary> 
+			<param name="intensity"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDetail0Intensity const">
+			<summary>
+			Returns the current intensity of the first sample of the normal detail texture.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDetail1UVSize(Unigine.Math.vec2)">
+			<summary>
+			Sets the size of the second sample of the normal detail texture.
+			</summary> 
+			<param name="size"> Size value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDetail1UVSize const">
+			<summary>
+			Returns the current size of the second sample of the normal detail texture.
+			</summary>  
+			<returns>Size value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDetail1UVSpeed(Unigine.Math.vec2)">
+			<summary>
+			Sets the speed of the second sample of the normal detail texture.
+			</summary> 
+			<param name="speed"> Speed of the detail texture. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDetail1UVSpeed const">
+			<summary>
+			Returns the current speed of the second sample of the normal detail texture.
+			</summary>  
+			<returns>Speed value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDetail1Intensity(float)">
+			<summary>
+			Sets the intensity of the second sample of the normal detail texture.
+			</summary> 
+			<param name="intensity"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDetail1Intensity const">
+			<summary>
+			Returns the current intensity of the first sample of the normal detail texture.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDistantWavesTexturePath(char)">
+			<summary>
+			Sets the path to the normal map of the distant waves.
+			</summary> 
+			<param name="path"> Path to the normal map. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDistantWavesTexturePath const">
+			<summary>
+			Returns the current path to the normal map of the distant waves.
+			</summary>  
+			<returns>Path to the normal map.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDistantWavesUVTransform(Unigine.Math.vec4)">
+			<summary>
+			Specifies the UV transform for the distant waves normal map.
+			</summary> 
+			<param name="transform"> The first two values (x, y) represent the scale texture coordinates along the X and Y axes. The third and forth (z, w) specify the speed of movement animation. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDistantWavesUVTransform const">
+			<summary>
+			Returns the current UV transform for the distant waves normal map.
+			</summary>  
+			<returns>The first two values (x, y) represent the scale texture coordinates along the X and Y axes. The third and forth (z, w) specify the speed of movement animation.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDistantWavesIntensity(float)">
+			<summary>
+			Sets the intensity for distant waves.Unavailable for modes with Beaufort levels blending.
+			</summary> 
+			<param name="scale"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDistantWavesIntensity const">
+			<summary>
+			Returns the current intensity value for distant waves.Unavailable for modes with Beaufort levels blending.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDistantWavesBlendDistanceStart(float)">
+			<summary>
+			Sets the fade-in start distance for distant waves.
+			</summary> 
+			<param name="start"> Fade-in start distance. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDistantWavesBlendDistanceStart const">
+			<summary>
+			Returns the current fade-in start distance for distant waves.
+			</summary>  
+			<returns>Fade-in start distance.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDistantWavesBlendDistanceEnd(float)">
+			<summary>
+			Sets the fade-in end distance for distant waves.
+			</summary> 
+			<param name="end"> Fade-in end distance. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDistantWavesBlendDistanceEnd const">
+			<summary>
+			Returns the current fade-in end distance for distant waves.
+			</summary>  
+			<returns>Fade end distance.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDistantWavesBlendMax(float)">
+			<summary>
+			Sets the value representing the maximum amount of distant waves in the crossfade zone where the main geometry waves fade out and distant waves fade in.
+			</summary> 
+			<param name="value"> A value representing the maximum amount of distant waves. Range: [0; 1], the default value is 0. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDistantWavesBlendMax const">
+			<summary>
+			Returns the current value representing the maximum amount of distant waves in the crossfade zone where the main geometry waves fade out and distant waves fade in.
+			</summary>  
+			<returns>A value representing the maximum amount of distant waves.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDistantWavesBlendMin(float)">
+			<summary>
+			Sets the value representing the minimum amount of distant waves in the crossfade zone where the main geometry waves fade out and distant waves fade in.
+			</summary> 
+			<param name="value"> A value representing the minimum amount of distant waves. Range: [0; 1], the default value is 0. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDistantWavesBlendMin const">
+			<summary>
+			Returns the current value representing the minimum amount of distant waves in the crossfade zone where the main geometry waves fade out and distant waves fade in.
+			</summary>  
+			<returns>A value representing the minimum amount of distant waves.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFoamTexturePath(char)">
+			<summary>
+			Sets the path to the foam texture.
+			</summary> 
+			<param name="path"> Path to the foam texture. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFoamTexturePath const">
+			<summary>
+			Returns the current path to the foam texture.
+			</summary>  
+			<returns>Path to the foam texture.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFoam0UVScale(float)">
+			<summary>
+			Sets the UV scale for the first sample of the foam texture.
+			</summary> 
+			<param name="scale"> Scale value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFoam0UVScale const">
+			<summary>
+			Returns the current UV scale for the first sample of the foam texture.
+			</summary>  
+			<returns>Scale value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFoam0UVSpeed(float)">
+			<summary>
+			Sets the speed for the first sample of the foam texture.
+			</summary> 
+			<param name="speed"> Speed value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFoam0UVSpeed const">
+			<summary>
+			Returns the current speed for the first sample of the foam texture.
+			</summary>  
+			<returns>Speed value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFoam1UVScale(float)">
+			<summary>
+			Sets the UV scale for the second sample of the foam texture.
+			</summary> 
+			<param name="scale"> Scale value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFoam1UVScale const">
+			<summary>
+			Returns the current UV scale for the second sample of the foam texture.
+			</summary>  
+			<returns>Scale value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFoam1UVSpeed(float)">
+			<summary>
+			Sets the speed for the second sample of the foam texture.
+			</summary> 
+			<param name="speed"> Speed value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFoam1UVSpeed const">
+			<summary>
+			Returns the current speed for the second sample of the foam texture.
+			</summary>  
+			<returns>Speed value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFoamPeakContrast(float)">
+			<summary>
+			Sets the foam contrast on the wave peaks.
+			</summary> 
+			<param name="contrast"> Contrast value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFoamPeakContrast const">
+			<summary>
+			Returns the current foam contrast on the wave peaks.
+			</summary>  
+			<returns>Contrast value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFoamPeakIntensity(float)">
+			<summary>
+			Sets the foam intensity on the wave peaks.
+			</summary> 
+			<param name="intensity"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFoamPeakIntensity const">
+			<summary>
+			Returns the current foam intensity on the wave peaks.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFoamWhitecapContrast(float)">
+			<summary>
+			Sets the foam contrast on the white caps.
+			</summary> 
+			<param name="contrast"> Contrast value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFoamWhitecapContrast const">
+			<summary>
+			Returns the current foam contrast on the white caps.
+			</summary>  
+			<returns>Contrast value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFoamWhitecapIntensity(float)">
+			<summary>
+			Sets the foam intensity on the white caps.
+			</summary> 
+			<param name="intensity"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFoamWhitecapIntensity const">
+			<summary>
+			Returns the current foam intensity on the white caps.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFoamWindContrast(float)">
+			<summary>
+			Sets the contrast for the foam generated based on the wind direction.
+			</summary> 
+			<param name="contrast"> Contrast value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFoamWindContrast const">
+			<summary>
+			Returns the current contrast for the foam generated based on the wind direction.
+			</summary>  
+			<returns>Contrast value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFoamWindIntensity(float)">
+			<summary>
+			Sets the intensity for the foam generated based on the wind direction.
+			</summary> 
+			<param name="intensity"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFoamWindIntensity const">
+			<summary>
+			Returns the current intensity for the foam generated based on the wind direction.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldHeightFoamContrast(float)">
+			<summary>
+			Sets the contrast of the foam generated from the FieldHeight objects placed in Global Water.
+			</summary> 
+			<param name="contrast"> Contrast value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldHeightFoamContrast const">
+			<summary>
+			Returns the current contrast of the foam generated from the FieldHeight objects placed in Global Water.
+			</summary>  
+			<returns>Contrast value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldHeightFoamIntensity(float)">
+			<summary>
+			Sets the intensity of the foam generated from the FieldHeight objects placed in Global Water.
+			</summary> 
+			<param name="intensity"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldHeightFoamIntensity const">
+			<summary>
+			Returns the current intensity of the foam generated from the FieldHeight objects placed in Global Water.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFoamContactIntensity(float)">
+			<summary>
+			Sets the foam intensity near shores or different objects in water.
+			</summary> 
+			<param name="intensity"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFoamContactIntensity const">
+			<summary>
+			Returns the current foam intensity near shores or different objects in water.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFoamTextureAffect(float)">
+			<summary>
+			Sets the visibility of the foam texture. It can be used to create additional effects, e.g., foam bubbles.
+			</summary> 
+			<param name="affect"> Texture affect value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFoamTextureAffect const">
+			<summary>
+			Sets the visibility of the foam texture.
+			</summary>  
+			<returns>Texture affect value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setSubsurfaceColor(Unigine.Math.vec4)">
+			<summary>
+			Sets the water subsurface scattering (SSS) color.
+			</summary> 
+			<param name="color"> Color value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getSubsurfaceColor const">
+			<summary>
+			Returns the current water subsurface scattering (SSS) color.
+			</summary>  
+			<returns>Color value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setSubsurfaceAmbientIntensity(float)">
+			<summary>
+			Sets the intensity of subsurface scattering for ambient lighting.
+			</summary> 
+			<param name="intensity"> Intensity value. The lower the value, the faster the light rays dissipate in water. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getSubsurfaceAmbientIntensity const">
+			<summary>
+			Returns the current intensity of subsurface scattering for ambient lighting.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setSubsurfaceWaveIntensity(float)">
+			<summary>
+			Sets the intensity of light rays passing through waves.
+			</summary> 
+			<param name="intensity"> Intensity value. The lower the value, the faster the light rays dissipate in water. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getSubsurfaceWaveIntensity const">
+			<summary>
+			Returns the current intensity of light rays passing through waves.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setSubsurfaceWaveFoamIntensity(float)">
+			<summary>
+			Sets the intensity of subsurface scattering near the foam areas.
+			</summary> 
+			<param name="intensity"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getSubsurfaceWaveFoamIntensity const">
+			<summary>
+			Returns the current intensity of subsurface scattering near the foam areas.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setSubsurfaceDiffuseIntensity(float)">
+			<summary>
+			Sets the intensity of subsurface scattering for diffuse lighting.
+			</summary> 
+			<param name="intensity"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getSubsurfaceDiffuseIntensity const">
+			<summary>
+			Returns the current intensity of subsurface scattering for diffuse lighting.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDepthLUTTexturePath(char)">
+			<summary>
+			Sets the path to the LUT texture that shows the color of the bottom.
+			</summary> 
+			<param name="path"> Path to the texture. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDepthLUTTexturePath const">
+			<summary>
+			Returns the current path to the LUT texture that shows the color of the bottom.
+			</summary>  
+			<returns>Path to the texture.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setUnderwaterFogColor(Unigine.Math.vec4)">
+			<summary>
+			Sets the underwater fog color. The Sun and Environment lighting affect this parameter to create the final underwater fog color.
+			</summary> 
+			<param name="color"> Color value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getUnderwaterFogColor const">
+			<summary>
+			Returns the current underwater fog color.
+			</summary>  
+			<returns>Color value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setUnderwaterFogTransparency(float)">
+			<summary>
+			Sets the transparency of the underwater fog.
+			</summary> 
+			<param name="transparency"> Transparency value. The higher the value, the more transparent the underwater fog is. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getUnderwaterFogTransparency const">
+			<summary>
+			Returns the current transparency of the underwater fog.
+			</summary>  
+			<returns>Transparency value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setUnderwaterFogDepth(float)">
+			<summary>
+			Sets the distance from the water surface up to which the light affects the underwater color.
+			</summary> 
+			<param name="depth"> Depth value, in units. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getUnderwaterFogDepth const">
+			<summary>
+			Returns the current distance from the water surface up to which the light affects the underwater color.
+			</summary>  
+			<returns>Depth value, in units.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setUnderwaterFogOffset(float)">
+			<summary>
+			Sets the height offset for lighting.
+			</summary> 
+			<param name="offset"> Offset value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getUnderwaterFogOffset const">
+			<summary>
+			Returns the current height offset for lighting.
+			</summary>  
+			<returns>Offset value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setUnderwaterFogEnvironmentInfluence(float)">
+			<summary>
+			Sets the degree of impact of the environment lighting on the final underwater color.
+			</summary> 
+			<param name="influence"> Influence value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getUnderwaterFogEnvironmentInfluence const">
+			<summary>
+			Returns the current degree of impact of the environment lighting on the final underwater color.
+			</summary>  
+			<returns>Influence value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setUnderwaterFogSunInfluence(float)">
+			<summary>
+			Sets the degree of impact of the sun lighting on the final underwater color.
+			</summary> 
+			<param name="influence"> Influence value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getUnderwaterFogSunInfluence const">
+			<summary>
+			Returns the current degree of impact of the sun lighting on the final underwater color.
+			</summary>  
+			<returns>Influence value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setUnderwaterShaftIntensity(float)">
+			<summary>
+			Sets the intensity of the underwater sun shafts.
+			</summary> 
+			<param name="intensity"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getUnderwaterShaftIntensity const">
+			<summary>
+			Returns the current intensity of the underwater sun shafts.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setWaterlineSize(float)">
+			<summary>
+			Sets the size of the borderline between the overwater and underwater environments.
+			</summary> 
+			<param name="size"> Waterline size. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getWaterlineSize const">
+			<summary>
+			Returns the current size of the borderline between the overwater and underwater environments.
+			</summary>  
+			<returns>Waterline size.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setUnderwaterDofDistance(float)">
+			<summary>
+			Sets the focal distance for the underwater DOF effect.
+			</summary> 
+			<param name="distance"> Focal distance. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getUnderwaterDofDistance const">
+			<summary>
+			Returns the current focal distance for the underwater DOF effect.
+			</summary>  
+			<returns>Focal distance.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setPlanarReflectionDistance(float)">
+			<summary>
+			Sets the distance from the reflection viewport camera to the reflected object. This distance sums up to the distance from the camera to the reflective surface plus the distance from object to reflective surface.
+			</summary> 
+			<param name="distance"> Distance, in units. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getPlanarReflectionDistance const">
+			<summary>
+			Returns the current distance from the reflection viewport camera to the reflected object. This distance sums up to the distance from the camera to the reflective surface plus the distance from object to reflective surface.
+			</summary>  
+			<returns>Distance, in units.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setPlanarReflectionPivotOffset(Unigine.Math.vec3)">
+			<summary>
+			Sets the position of the reflection pivot point.
+			</summary> 
+			<param name="offset"> Pivot point offset. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getPlanarReflectionPivotOffset const">
+			<summary>
+			Returns the current position of the reflection pivot point.
+			</summary>  
+			<returns>Pivot point offset.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setReflectionRoughness(float)">
+			<summary>
+			Sets the environment reflection roughness of the water surface. This parameter helps to tweak reflections on the water surface relative to the environment.
+			</summary> 
+			<param name="roughness"> Roughness value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getReflectionRoughness const">
+			<summary>
+			Returns the current environment reflection roughness of the water surface. This parameter helps to tweak reflections on the water surface relative to the environment.
+			</summary>  
+			<returns>Roughness value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setReflectionOcclusion(float)">
+			<summary>
+			Sets the occlusion factor for environment reflections on parts of the water surface with negative normals. Using this parameter enables simulation of reflection of waves on the water surface removing too bright areas on waves close to the horizon.
+			</summary> 
+			<param name="occlusion"> Occlusion value. Minimum value is 0 - no occlusion. By the higher values, occlusion is performed for reflections on parts of the water surface with negative normals that have a certain slope. The higher the value, the less intensive reflections are on the surface parts with negative normals. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getReflectionOcclusion const">
+			<summary>
+			Returns the current occlusion factor for environment reflections on parts of the water surface with negative normals. Using this parameter enables simulation of reflection of waves on the water surface removing too bright areas on waves close to the horizon.
+			</summary>  
+			<returns>Occlusion value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setReflectionOcclusionSlope(float)">
+			<summary>
+			Sets the slope of negative normals of the water surface, at which occlusion is performed for wave reflections.
+			</summary> 
+			<param name="slope"> Slope value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getReflectionOcclusionSlope const">
+			<summary>
+			Returns the current slope of negative normals of the water surface, at which occlusion is performed for wave reflections.
+			</summary>  
+			<returns>Slope value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setCausticsTexturePath(char)">
+			<summary>
+			Sets the path to the 3D Caustic texture which determines the pattern of light rays refracted by the water surface. The texture is 1-channeled: R value defines the caustics pattern.
+			</summary> 
+			<param name="path"> Path to the texture. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getCausticsTexturePath const">
+			<summary>
+			Returns the current path to the 3D Caustic texture which determines the pattern of light rays refracted by the water surface.
+			</summary>  
+			<returns>Path to the texture.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setCausticUVTransform(Unigine.Math.vec4)">
+			<summary>
+			Sets the UV Transform coordinates for the caustic texture.
+			</summary> 
+			<param name="transform"> Transform coordinates. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getCausticUVTransform const">
+			<summary>
+			Returns the current UV Transform coordinates for the caustic texture.
+			</summary>  
+			<returns>Transform coordinates.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setCausticDistanceFade(float)">
+			<summary>
+			Sets the distance from the water surface downwards, at which light shapes fade.
+			</summary> 
+			<param name="fade"> Distance, in units. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getCausticDistanceFade const">
+			<summary>
+			Returns the current distance from the water surface downwards, at which light shapes fade.
+			</summary>  
+			<returns>Distance, in units.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setCausticAnimationSpeed(float)">
+			<summary>
+			Sets the movement speed of the light patterns.
+			</summary> 
+			<param name="speed"> Speed value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getCausticAnimationSpeed const">
+			<summary>
+			Returns the current movement speed of the light patterns.
+			</summary>  
+			<returns>Speed value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setCausticBrightness(float)">
+			<summary>
+			Sets the brightness of the light shapes.
+			</summary> 
+			<param name="brightness"> Brightness value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getCausticBrightness const">
+			<summary>
+			Returns the current brightness of the light shapes.
+			</summary>  
+			<returns>Brightness value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineLUTTexturePath(char)">
+			<summary>
+			Sets the path to the LUT texture used for shoreline wetness effect.
+			</summary> 
+			<param name="path"> Path to the texture. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldShorelineLUTTexturePath const">
+			<summary>
+			Returns the current path to the LUT texture used for shoreline wetness effect.
+			</summary>  
+			<returns>Path to the texture.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineWaveSpeed(float)">
+			<summary>
+			Sets the speed of tidal waves.
+			</summary> 
+			<param name="speed"> Wave speed value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldShorelineWaveSpeed const">
+			<summary>
+			Returns the current speed of tidal waves.
+			</summary>  
+			<returns>Wave speed value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineWaveTiling(float)">
+			<summary>
+			Sets the frequency of tidal waves.
+			</summary> 
+			<param name="tiling"> Tiling value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldShorelineWaveTiling const">
+			<summary>
+			Returns the current frequency of tidal waves.
+			</summary>  
+			<returns>Tiling value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineWaveHeight(float)">
+			<summary>
+			Sets the height of oncoming tidal waves.
+			</summary> 
+			<param name="height"> Height value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldShorelineWaveHeight const">
+			<summary>
+			Returns the current height of oncoming tidal waves.
+			</summary>  
+			<returns>Height value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineWaveFalloff(float)">
+			<summary>
+			Sets the visibility gradient of waves coming from sea to the shore.
+			</summary> 
+			<param name="falloff"> Falloff value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldShorelineWaveFalloff const">
+			<summary>
+			Returns the current visibility gradient of waves coming from sea to the shore.
+			</summary>  
+			<returns>Falloff value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineWaveExponent(float)">
+			<summary>
+			Sets the nonlinearity of tidal waves frequency and movement speed depending on their distance from the shoreline.
+			</summary> 
+			<param name="exponent"> Exponent value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldShorelineWaveExponent const">
+			<summary>
+			Returns the current nonlinearity of tidal waves frequency and movement speed.
+			</summary>  
+			<returns>Exponent value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineWaveFrontExponent(float)">
+			<summary>
+			Sets the semi-transparency of the foam at an angle to the wind direction. Allows making the foam visible only on the windward side.
+			</summary> 
+			<param name="exponent"> Exponent value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldShorelineWaveFrontExponent const">
+			<summary>
+			Returns the current semi-transparency of the foam at an angle to the wind direction. Allows making the foam visible only on the windward side.
+			</summary>  
+			<returns>Exponent value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineFoamStretching(float)">
+			<summary>
+			Sets the width of the Shoreline LUT texture that creates a tidal wave.
+			</summary> 
+			<param name="stretching"> Stretching value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldShorelineFoamStretching const">
+			<summary>
+			Returns the current width of the Shoreline LUT texture that creates a tidal wave.
+			</summary>  
+			<returns>Stretching value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineFoamIntensity(float)">
+			<summary>
+			Sets the degree of foam intensity along the shoreline.
+			</summary> 
+			<param name="intensity"> Intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldShorelineFoamIntensity const">
+			<summary>
+			Returns the current degree of foam intensity along the shoreline.
+			</summary>  
+			<returns>Intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineFoamExponent(float)">
+			<summary>
+			Sets the visibility of the foam texture pattern.
+			</summary> 
+			<param name="exponent"> Exponent value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldShorelineFoamExponent const">
+			<summary>
+			Returns the current visibility of the foam texture pattern.
+			</summary>  
+			<returns>Exponent value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineMaskTiling(float)">
+			<summary>
+			Sets a size of the foam procedural pattern used to reduce the foam tiling effect when seen from above.
+			</summary> 
+			<param name="tiling"> Tiling value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldShorelineMaskTiling const">
+			<summary>
+			Returns the current size of the foam procedural pattern used to reduce the foam tiling effect.
+			</summary>  
+			<returns>Tiling value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineBeaufortFalloff(float)">
+			<summary>
+			Sets the Beaufort falloff value that provides height control of main geometry waves near the shoreline.
+			</summary> 
+			<param name="falloff"> Falloff value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldShorelineBeaufortFalloff const">
+			<summary>
+			Returns the current Beaufort falloff value that provides height control of main geometry waves near the shoreline.
+			</summary>  
+			<returns>Falloff value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setShorelineWetnessIntensity(float)">
+			<summary>
+			Sets the intensity of the wetness effect along the shoreline.
+			</summary> 
+			<param name="intensity"> Wetness intensity value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getShorelineWetnessIntensity const">
+			<summary>
+			Returns the current intensity of the wetness effect along the shoreline.
+			</summary>  
+			<returns>Wetness intensity value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setShorelineWetnessDistance(float)">
+			<summary>
+			Sets the spread of the wetness area along the shoreline.
+			</summary> 
+			<param name="distance"> Wetness distance value, in units. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getShorelineWetnessDistance const">
+			<summary>
+			Returns the current spread of the wetness area along the shoreline.
+			</summary>  
+			<returns>Wetness distance value, in units.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setShorelineWetnessOffset(float)">
+			<summary>
+			Sets the offset of the wetness area from the water.
+			</summary> 
+			<param name="offset"> Wetness offset value, in units. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getShorelineWetnessOffset const">
+			<summary>
+			Returns the current offset of the wetness area from the water.
+			</summary>  
+			<returns>Wetness offset value, in units.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setAuxiliaryColor(Unigine.Math.vec4)">
+			<summary>
+			Sets the color that goes into the auxiliary buffer. Alpha is the blend factor.
+			</summary> 
+			<param name="color"> Auxiliary color. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getAuxiliaryColor const">
+			<summary>
+			Returns the current color that goes into the auxiliary buffer.
+			</summary>  
+			<returns>Auxiliary color.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setRefractionScale(float)">
+			<summary>
+			Sets the scale of the water refraction.
+			</summary> 
+			<param name="scale"> Refraction scale value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getRefractionScale const">
+			<summary>
+			Returns the current scale of the water refraction.
+			</summary>  
+			<returns>Refraction scale value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDiffuseDistortion(float)">
+			<summary>
+			Distortion of decals projected onto water.
+			</summary> 
+			<param name="distortion"> Distortion value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDiffuseDistortion const">
+			<summary>
+			Returns the current distortion of decals projected onto water.
+			</summary>  
+			<returns>Distortion value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldHeightSteepness(float)">
+			<summary>
+			Sets the sharpness of the crests for the waves generated from the FieldHeight objects placed in Global Water.
+			</summary> 
+			<param name="steepness"> Steepness value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getFieldHeightSteepness const">
+			<summary>
+			Returns the current sharpness of the crests for the waves generated from the FieldHeight objects placed in Global Water.
+			</summary>  
+			<returns>Steepness value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setUnderwaterDOF(bool)">
+			<summary>
+			Enables/disables the underwater DOF effect.
+			</summary> 
+			<param name="underwaterdof"> true to enable underwater DOF effect, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isUnderwaterDOF const">
+			<summary>
+			Returns a value indicating if the underwater DOF effect is enabled.
+			</summary>  
+			<returns>true if underwater DOF effect is enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setPlanarReflection(bool)">
+			<summary>
+			Enables/disables the use of planar reflections on the water surface instead of SSR. It is better to use this option for undisturbed water (0-2 Beaufort). Enabling the option activates Planar Reflection MapSize  and Planar Reflection parameters.
+			</summary> 
+			<param name="reflection"> true to enable planar reflections, false to disable them. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isPlanarReflection const">
+			<summary>
+			Returns a value indicating if the planar reflections option is enabled.
+			</summary>  
+			<returns>true if planar reflections option is enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setPlanarReflectionMapSizeType(ObjectWaterGlobal::PLANAR_REFLECTION_SIZE)">
+			<summary>
+			Sets the size of the planar reflection map. The higher the value, the better the quality is.
+			</summary> 
+			<param name="type"> Size of the planar reflection map. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getPlanarReflectionMapSizeType const">
+			<summary>
+			Returns the current size of the planar reflection map.
+			</summary>  
+			<returns>Size of the planar reflection map.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setPlanarReflectionViewportMask(int)">
+			<summary>
+			Sets the viewport mask of the reflection camera. A surface has its reflection rendered, if its viewport mask and its material's viewport mask match this mask.
+			</summary> 
+			<param name="mask"> Viewport mask. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getPlanarReflectionViewportMask const">
+			<summary>
+			Returns the current viewport mask of the reflection camera. A surface has its reflection rendered, if its viewport mask and its material's viewport mask match this mask.
+			</summary>  
+			<returns>Viewport mask.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setCaustics(bool)">
+			<summary>
+			Enables/disables the effect of light rays refraction by the water surface.
+			</summary> 
+			<param name="caustics"> true to enable the caustics, false to disable them. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isCaustics const">
+			<summary>
+			Returns a value indicating if the caustics effect is enabled.
+			</summary>  
+			<returns>true if the caustics effect is enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setCausticsDistortion(bool)">
+			<summary>
+			Enables/disables the caustics distortion option. This effect removes pixelation and makes caustics look smoother. When smoothing is not required, you can disable this option to gain performance.
+			</summary> 
+			<param name="distortion"> true to enable caustics distortion, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isCausticsDistortion const">
+			<summary>
+			Returns a value indicating if the caustics distortion effect is enabled.
+			</summary>  
+			<returns>true if caustics distortion is enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineEnabled(bool)">
+			<summary>
+			Enables/disables the effect of the FieldShoreline object on the Global Water object. Enabling this option makes available the group of Field Shoreline states.
+			</summary> 
+			<param name="enabled"> true to enable FieldShoreline, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isFieldShorelineEnabled const">
+			<summary>
+			Checks if the assigned material on the Global Water object has enabled FieldShoreline interaction option.
+			</summary>  
+			<returns>true if the FieldShoreline interaction option is enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineHighPrecision(bool)">
+			<summary>
+			Enables/disables improved interpolation between the adjacent pixels of the shoreline texture to reduce stepping artifacts. This can be noticed when looking at the waterline separating overwater and underwater. This option should be used only when geometry and/or normal states are enabled.
+			</summary> 
+			<param name="precision"> true to enable high precision, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isFieldShorelineHighPrecision const">
+			<summary>
+			Returns a value indicating if the high precision of the shoreline is enabled. If enabled, this option improves interpolation between the adjacent pixels of the shoreline texture to reduce stepping artifacts.
+			</summary>  
+			<returns>true if high precision is enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineNormal(bool)">
+			<summary>
+			Enables/disables calculation of normals for geometry of shoreline waves. This option significantly reduces performance and can be used in cases, when really large waves are required. Enabling just the geometry state to simulate distortion of the water surface by a shoreline wave is enough in most cases.
+			</summary> 
+			<param name="normal"> true to enable, false to disable. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isFieldShorelineNormal const">
+			<summary>
+			Returns a value indicating if calculation of normals for geometry of shoreline waves is enabled.
+			</summary>  
+			<returns>true if enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineGeometry(bool)">
+			<summary>
+			Enables/disables rendering of wave geometry for shoreline waves. If disabled, the water surface remains flat. Disabling this option in cases where wave geometry is hardly noticeable (e.g. a flight simulator) gives a performance gain.
+			</summary> 
+			<param name="geometry"> true to enable, false to disable. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isFieldShorelineGeometry const">
+			<summary>
+			Returns a value indicating if rendering of wave geometry for shoreline waves is enabled.
+			</summary>  
+			<returns>true if enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldShorelineFoam(bool)">
+			<summary>
+			Enables/disables rendering of foam for shoreline zones.
+			</summary> 
+			<param name="foam"> true to enable, false to disable. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isFieldShorelineFoam const">
+			<summary>
+			Returns a value indicating if rendering of foam for shoreline zones is enabled.
+			</summary>  
+			<returns>true if enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setAuxiliary(bool)">
+			<summary>
+			Enables/disables the auxiliary rendering pass for the material. Can be used for custom post-effects, such as thermal vision, night vision, etc. Enabling the option activates the Auxiliary Color parameter.
+			</summary> 
+			<param name="auxiliary"> true to enable, false to disable. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isAuxiliary const">
+			<summary>
+			Returns a value indicating if the auxiliary rendering pass for the material is enabled.
+			</summary>  
+			<returns>true if enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldHeightEnabled(bool)">
+			<summary>
+			Enables/disables the effect of FieldHeight object on the Global Water object.
+			</summary> 
+			<param name="enabled"> true to enable, false to disable. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isFieldHeightEnabled const">
+			<summary>
+			Checks if the assigned material on the Global Water object has enabled FieldHeight interaction option.
+			</summary>  
+			<returns>true if the FieldHeight interaction option is enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setFieldSpacerEnabled(bool)">
+			<summary>
+			Enables/disables the effect of FieldSpacer object on the Global Water object.
+			</summary> 
+			<param name="enabled"> true to enable, false to disable. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.isFieldSpacerEnabled const">
+			<summary>
+			Returns a value indicating if the effect of FieldSpacer object on the Global Water object is enabled.
+			</summary>  
+			<returns>true if enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setWavesSpeedScale(float)">
+			<summary>
+			Sets a scale value that affects the speed of all the waves. The resulting wave speed is calculated as  sqrt(gravity * 2 * pi / wave_length) * waves_speed_scale, where gravity = 9.81 m/s2.
+			</summary> 
+			<param name="scale"> Scale value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getWavesSpeedScale const">
+			<summary>
+			Returns the current scale value that affects the speed of all the waves.
+			</summary>  
+			<returns>Scale value.</returns>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.WAVES_MODE_BEAUFORTS">
+			<summary>
+			Beaufort scale mode of wave generation.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.WAVES_MODE_LAYERS">
+			<summary>
+			Layer mode of wave generation.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.WAVES_MODE_MANUAL">
+			<summary>
+			Manual mode of wave generation.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.STEEPNESS_QUALITY_EXTREME">
+			<summary>
+			Extreme quality of wave steepness calculation. Significantly affects performance.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.STEEPNESS_QUALITY_ULTRA">
+			<summary>
+			Ultra quality of wave steepness calculation.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.STEEPNESS_QUALITY_HIGH">
+			<summary>
+			High quality of wave steepness calculation.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.STEEPNESS_QUALITY_MEDIUM">
+			<summary>
+			Medium quality of wave steepness calculation.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.STEEPNESS_QUALITY_LOW">
+			<summary>
+			Default. Low quality of wave steepness calculation.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.PLANAR_REFLECTION_SIZE_RESOLUTION_HEIGHT">
+			<summary>
+			Reflection image with the resolution height x height, where height is an application window height.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.PLANAR_REFLECTION_SIZE_RESOLUTION_HEIGHT_HALF">
+			<summary>
+			Reflection image with the resolution height/2 x height/2, where height is an application window height.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.PLANAR_REFLECTION_SIZE_RESOLUTION_HEIGHT_QUART">
+			<summary>
+			Reflection image with the resolution height/4 x height/4, where height is an application window height.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.PLANAR_REFLECTION_SIZE_RESOLUTION_4096">
+			<summary>
+			Reflection image with 4096x4096 resolution.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.PLANAR_REFLECTION_SIZE_RESOLUTION_2048">
+			<summary>
+			Reflection image with 2048x2048 resolution.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.PLANAR_REFLECTION_SIZE_RESOLUTION_1024">
+			<summary>
+			Reflection image with 1024x1024 resolution.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.PLANAR_REFLECTION_SIZE_RESOLUTION_512">
+			<summary>
+			Reflection image with 512x512 resolution.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.PLANAR_REFLECTION_SIZE_RESOLUTION_256">
+			<summary>
+			Reflection image with 256x256 resolution.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectWaterGlobal.PLANAR_REFLECTION_SIZE_RESOLUTION_128">
+			<summary>
+			Reflection image with 128x128 resolution.
 		</summary>
 		</member>
 	</members>

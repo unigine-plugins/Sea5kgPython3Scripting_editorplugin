@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -16,12 +16,13 @@
 
 #include <UnigineHash.h>
 #include <UniginePair.h>
+#include "UniginePool.h"
 
 namespace Unigine
 {
 
 template<typename Key, typename Type, typename HashType>
-struct HashMapData
+struct HashMapData : InstancePool<HashMapData<Key, Type, HashType>>
 {
 	const HashType hash;
 	const Key key;
@@ -48,10 +49,6 @@ struct HashMapData
 		, key(std::move(k))
 		, data(std::forward<Args>(args)...)
 	{}
-
-	static UNIGINE_INLINE void *operator new(size_t size) { return Memory::allocate(size); }
-	static UNIGINE_INLINE void operator delete(void *ptr) { Memory::deallocate(ptr); }
-	static UNIGINE_INLINE void operator delete(void *ptr, size_t size) { Memory::deallocate(ptr,size); }
 
 };
 
@@ -82,13 +79,14 @@ public:
 			return;
 		for (Counter i = 0; i < Parent::capacity; ++i)
 			delete Parent::data[i];
-		delete [] Parent::data;
+		Memory::deallocate(Parent::data);
 	}
 	HashMap(std::initializer_list<Pair<Key, Type>> list)
 	{
 		Parent::data = nullptr;
 		Parent::length = 0;
 		Parent::capacity = 0;
+		Parent::reserve(static_cast<Counter>(list.size()));
 		for (const auto &it : list)
 			do_emplace(it.first, it.second);
 	}
@@ -130,7 +128,7 @@ public:
 			return *this;
 		for (Counter i = 0; i < Parent::capacity; ++i)
 			delete Parent::data[i];
-		delete [] Parent::data;
+		Memory::deallocate(Parent::data);
 		Parent::length = o.length;
 		Parent::capacity = o.capacity;
 		Parent::data = o.data;
@@ -187,14 +185,16 @@ public:
 	UNIGINE_INLINE Type &get(Key &&key) { return Parent::do_append(std::move(key))->data; }
 	UNIGINE_INLINE Type &get(const Key &key) { return Parent::do_append(key)->data; }
 
-	UNIGINE_INLINE const Type &get(const Key &key) const
+	template <typename T>
+	UNIGINE_INLINE const Type &get(const T &key) const
 	{
 		const Data * const *d = Parent::do_find(key);
 		assert(d != nullptr && "Hash::get() const : bad key.");
 		return (*d)->data;
 	}
 	
-	UNIGINE_INLINE const Type &get(const Key &key, const Type &value) const
+	template <typename T>
+	UNIGINE_INLINE const Type &get(const T &key, const Type &value) const
 	{
 		const Data *const *d = Parent::do_find(key);
 		if (!d)
@@ -202,8 +202,10 @@ public:
 		return (*d)->data;
 	}
 
-	UNIGINE_INLINE bool contains(const Key &key) const { return Parent::contains(key); }
-	UNIGINE_INLINE bool contains(const Key &key, const Type &value) const
+	using Parent::contains;
+
+	template <typename T>
+	UNIGINE_INLINE bool contains(const T &key, const Type &value) const
 	{
 		const Data * const *d = Parent::do_find(key);
 		return d != nullptr && (*d)->data == value;
@@ -227,19 +229,22 @@ public:
 		return end_it;
 	}
 
-	UNIGINE_INLINE Type value(const Key &key) const
+	template<typename T>
+	UNIGINE_INLINE Type value(const T &key) const
 	{
 		const Data * const *d = Parent::do_find(key);
-		return d == nullptr ? Type() : (*d)->data;
+		return d == nullptr ? Type{} : (*d)->data;
 	}
 
-	UNIGINE_INLINE Type value(const Key &key, const Type &def) const
+	template<typename T>
+	UNIGINE_INLINE Type value(const T &key, const Type &def) const
 	{
 		const Data * const *d = Parent::do_find(key);
 		return d == nullptr ? def : (*d)->data;
 	}
 
-	UNIGINE_INLINE const Type &valueRef(const Key &key, const Type &def) const
+	template<typename T>
+	UNIGINE_INLINE const Type &valueRef(const T &key, const Type &def) const
 	{
 		const Data * const *d = Parent::do_find(key);
 		return d == nullptr ? def : (*d)->data;
@@ -299,7 +304,7 @@ public:
 private:
 
 	template<typename ... Args>
-	UNIGINE_INLINE Data **do_emplace_hash(HashType hash, const Key &key, Args && ... args)
+	Data **do_emplace_hash(HashType hash, const Key &key, Args && ... args)
 	{
 		if (Parent::capacity == 0)
 			Parent::realloc();
@@ -330,7 +335,7 @@ private:
 	}
 
 	template<typename ... Args>
-	UNIGINE_INLINE Data **do_emplace_hash(HashType hash, Key &&key, Args && ... args)
+	Data **do_emplace_hash(HashType hash, Key &&key, Args && ... args)
 	{
 		if (Parent::capacity == 0)
 			Parent::realloc();
@@ -359,7 +364,7 @@ private:
 		return do_emplace_hash(Hasher<Key>::create(key), std::move(key), std::forward<Args>(args)...);
 	}
 
-	UNIGINE_INLINE Type do_take(HashType hash, const Key &key, Type def)
+	Type do_take(HashType hash, const Key &key, Type def)
 	{
 		if (Parent::length == 0)
 			return def;
@@ -375,7 +380,7 @@ private:
 		if (Parent::data[index] == nullptr)
 			return def;
 
-		Type ret = Parent::data[index]->data;
+		Type ret = std::move(Parent::data[index]->data);
 		delete Parent::data[index];
 		Parent::data[index] = nullptr;
 
@@ -384,7 +389,7 @@ private:
 		return ret;
 	}
 
-	UNIGINE_INLINE Type do_take(HashType hash, const Key &key)
+	Type do_take(HashType hash, const Key &key)
 	{
 		if (Parent::length == 0)
 			return Type();
@@ -400,7 +405,7 @@ private:
 		if (Parent::data[index] == nullptr)
 			return Type();
 
-		Type ret = Parent::data[index]->data;
+		Type ret = std::move(Parent::data[index]->data);
 		delete Parent::data[index];
 		Parent::data[index] = nullptr;
 

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -63,7 +63,7 @@ public:
 	static int type() { return Node::PHYSICAL_TRIGGER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<PhysicalTrigger> create(Shape::TYPE type, const Math::vec3 &size);
+	static Ptr<PhysicalTrigger> create(Shape::TYPE type, const Math::vec3& size);
 	Ptr<Body> getBody(int num);
 	void setCollisionMask(int mask);
 	int getCollisionMask() const;
@@ -83,7 +83,7 @@ public:
 	int getNumContacts() const;
 	void setShapeType(int type);
 	int getShapeType() const;
-	void setSize(const Math::vec3 &size);
+	void setSize(const Math::vec3& size);
 	Math::vec3 getSize() const;
 	void updateContacts();
 	void *addEnterCallback(Unigine::CallbackBase1< Ptr<Body> > *func);
@@ -103,7 +103,7 @@ public:
 	static int type() { return Node::PHYSICAL_WATER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<PhysicalWater> create(const Math::vec3 &size);
+	static Ptr<PhysicalWater> create(const Math::vec3& size);
 	void setAngularDamping(float damping);
 	float getAngularDamping() const;
 	Ptr<Body> getContactBody(int num) const;
@@ -116,9 +116,9 @@ public:
 	void setLinearDamping(float damping);
 	float getLinearDamping() const;
 	int getNumContacts() const;
-	void setSize(const Math::vec3 &size);
+	void setSize(const Math::vec3& size);
 	Math::vec3 getSize() const;
-	void setVelocity(const Math::vec3 &velocity);
+	void setVelocity(const Math::vec3& velocity);
 	Math::vec3 getVelocity() const;
 };
 typedef Ptr<PhysicalWater> PhysicalWaterPtr;
@@ -131,16 +131,16 @@ public:
 	static int type() { return Node::PHYSICAL_WIND; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<PhysicalWind> create(const Math::vec3 &size);
+	static Ptr<PhysicalWind> create(const Math::vec3& size);
 	void setAngularDamping(float damping);
 	float getAngularDamping() const;
 	void setLinearDamping(float damping);
 	float getLinearDamping() const;
-	void setSize(const Math::vec3 &size);
+	void setSize(const Math::vec3& size);
 	Math::vec3 getSize() const;
-	void setThreshold(const Math::vec3 &threshold);
+	void setThreshold(const Math::vec3& threshold);
 	Math::vec3 getThreshold() const;
-	void setVelocity(const Math::vec3 &velocity);
+	void setVelocity(const Math::vec3& velocity);
 	Math::vec3 getVelocity() const;
 };
 typedef Ptr<PhysicalWind> PhysicalWindPtr;
@@ -153,7 +153,7 @@ public:
 	static int type() { return Node::PHYSICAL_NOISE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<PhysicalNoise> create(const Math::vec3 &size);
+	static Ptr<PhysicalNoise> create(const Math::vec3& size);
 	Ptr<Image> getImage() const;
 	void setForce(float force);
 	float getForce() const;
@@ -161,15 +161,15 @@ public:
 	int getFrequency() const;
 	void setImageSize(int size);
 	int getImageSize() const;
-	void setOffset(const Math::vec3 &offset);
+	void setOffset(const Math::vec3& offset);
 	Math::vec3 getOffset() const;
 	void setNoiseScale(float scale);
 	float getNoiseScale() const;
-	void setSize(const Math::vec3 &size);
+	void setSize(const Math::vec3& size);
 	Math::vec3 getSize() const;
-	void setStep(const Math::vec3 &step);
+	void setStep(const Math::vec3& step);
 	Math::vec3 getStep() const;
-	void setThreshold(const Math::vec3 &threshold);
+	void setThreshold(const Math::vec3& threshold);
 	Math::vec3 getThreshold() const;
 };
 typedef Ptr<PhysicalNoise> PhysicalNoisePtr;

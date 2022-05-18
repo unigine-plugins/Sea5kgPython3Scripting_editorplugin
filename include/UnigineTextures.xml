@@ -90,13 +90,14 @@
 			<param name="slot"> Texture slot. </param> 
 			<returns>Unordered access texture if it exists, otherwise nullptr.</returns>
 		</member>
-		<member name="M:Unigine.RenderTarget.bindUnorderedAccessTexture(int,Unigine.Ptr{Unigine.Texture},int)">
+		<member name="M:Unigine.RenderTarget.bindUnorderedAccessTexture(int,Unigine.Ptr{Unigine.Texture},bool,bool)">
 			<summary>
 			Binds an unordered access texture to a device by the specified slot.
 			</summary> 
 			<param name="slot"> Texture slot. </param>
 			<param name="texture"> Unordered access texture to be bound. </param>
-			<param name="writeonly"> Access flag. 1 to use the texture for writing only, otherwise 0. </param> 
+			<param name="writeonly"> Access flag. true to use the texture for writing only, otherwise false. </param>
+			<param name="atomic"> Set true to bind the texture with the GL_32UI format; otherwise - false. This flag is to be set for OpenGL only. </param> 
 		</member>
 		<member name="M:Unigine.RenderTarget.unbindUnorderedAccessTexture(int)">
 			<summary>
@@ -979,32 +980,37 @@
 		</member>
 		<member name="F:Unigine.Texture.ANISOTROPY_1">
 			<summary>
-			Anisotropic filtering.
+			Anisotropic filtering (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.ANISOTROPY_2">
 			<summary>
-			2x Anisotropic filtering.
+			2x Anisotropic filtering (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.ANISOTROPY_4">
 			<summary>
-			4x Anisotropic filtering.
+			4x Anisotropic filtering. (sampler flag)
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.ANISOTROPY_8">
 			<summary>
-			8x Anisotropic filtering.
+			8x Anisotropic filtering (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.ANISOTROPY_16">
 			<summary>
-			16x Anisotropic filtering.
+			16x Anisotropic filtering (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.DEFAULT_FLAGS">
 			<summary>
-			A flag that sets default flags (linear filtering).
+			A flag that sets default (sampler flags) (linear filtering).
+		</summary>
+		</member>
+		<member name="F:Unigine.Texture.SAMPLER_FLAGS">
+			<summary>
+			Sampler flags based on mask variables.
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.FILTER_MASK">
@@ -1014,22 +1020,22 @@
 		</member>
 		<member name="F:Unigine.Texture.FILTER_BILINEAR">
 			<summary>
-			Bilinear filtering.
+			Bilinear filtering (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.FILTER_LINEAR">
 			<summary>
-			Linear filtering.
+			Linear filtering (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.FILTER_POINT">
 			<summary>
-			Point filtering.
+			Point filtering (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.FILTER_TRILINEAR">
 			<summary>
-			Trilinear filtering.
+			Trilinear filtering (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.FORMAT_MASK">
@@ -1069,12 +1075,12 @@
 		</member>
 		<member name="F:Unigine.Texture.FORMAT_D32FS8">
 			<summary>
-			D32F texture format (depth texture).
+			D32FS8 texture format (depth texture).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.FORMAT_DXT1">
 			<summary>
-			D32FS8 texture format (compressed texture).
+			DXT1 texture format (compressed texture).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.FORMAT_DXT3">
@@ -1259,32 +1265,22 @@
 		</member>
 		<member name="F:Unigine.Texture.MULTISAMPLE_2">
 			<summary>
-			2x multisample texture.
+			2x multisample texture (format flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.MULTISAMPLE_4">
 			<summary>
-			4x multisample texture.
+			4x multisample texture (format flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.MULTISAMPLE_8">
 			<summary>
-			8x multisample texture.
+			8x multisample texture (format flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.MULTISAMPLE_16">
 			<summary>
-			16x multisample texture.
-		</summary>
-		</member>
-		<member name="F:Unigine.Texture.SHADOW_MASK">
-			<summary>
-			Mask used for SHADOW_* variables.
-		</summary>
-		</member>
-		<member name="F:Unigine.Texture.SHADOW_COMPARE">
-			<summary>
-			Shadow texture flag (Use corresponding INIT_TEXTURE_SHADOW() and TEXTURE_SHADOW() UUSL functions).
+			16x multisample texture (format flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.TEXTURE_2D">
@@ -1332,29 +1328,34 @@
 			Mask used for USAGE_* variables.
 		</summary>
 		</member>
+		<member name="F:Unigine.Texture.FORMAT_FLAGS">
+			<summary>
+			Format flags based on mask variables.
+		</summary>
+		</member>
 		<member name="F:Unigine.Texture.USAGE_DYNAMIC">
 			<summary>
-			Dynamic texture flag.
+			Dynamic texture format flag.
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.USAGE_IMMUTABLE">
 			<summary>
-			Immutable texture flag.
+			Immutable texture format flag.
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.USAGE_READWRITE">
 			<summary>
-			RW texture flag.
+			RW texture format flag.
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.USAGE_RENDER">
 			<summary>
-			Buffer render texture (RT) flag.
+			Buffer render texture (RT) format flag.
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.USAGE_STAGING">
 			<summary>
-			Staging texture flag.
+			Staging texture format flag.
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.WRAP_MASK">
@@ -1364,7 +1365,7 @@
 		</member>
 		<member name="F:Unigine.Texture.WRAP_BORDER">
 			<summary>
-			Wrapping to border color flag.
+			Wrapping to border color (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.WRAP_BORDER_W">
@@ -1374,37 +1375,42 @@
 		</member>
 		<member name="F:Unigine.Texture.WRAP_BORDER_X">
 			<summary>
-			Wrapping to border color along X axis flag.
+			Wrapping to border color along X axis (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.WRAP_BORDER_Y">
 			<summary>
-			Wrapping to border color along Y axis flag.
+			Wrapping to border color along Y axis (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.WRAP_BORDER_Z">
 			<summary>
-			Wrapping to border color along Z axis flag.
+			Wrapping to border color along Z axis (sampler flag).
+		</summary>
+		</member>
+		<member name="F:Unigine.Texture.WRAP_BORDER_ONE">
+			<summary>
+			Wrapping to border color (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.WRAP_CLAMP">
 			<summary>
-			Wrapping to clamped color flag.
+			Wrapping to clamped color flag (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.WRAP_CLAMP_X">
 			<summary>
-			Wrapping to clamped color along X axis flag.
+			Wrapping to clamped color along X axis (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.WRAP_CLAMP_Y">
 			<summary>
-			Wrapping to clamped color along Y axis flag.
+			Wrapping to clamped color along Y axis (sampler flag).
 		</summary>
 		</member>
 		<member name="F:Unigine.Texture.WRAP_CLAMP_Z">
 			<summary>
-			Wrapping to clamped color along Z axis flag.
+			Wrapping to clamped color along Z axis (sampler flag).
 		</summary>
 		</member>
 		<member name="M:Unigine.TextureCurve.#ctor(int,int,int)">

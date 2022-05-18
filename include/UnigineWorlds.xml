@@ -911,10 +911,10 @@
 		</member>
 		<member name="M:Unigine.WorldSplineGraph.splitSplineSegment(Unigine.Ptr{SplineSegment},float)">
 			<summary>
-			Splits the specified spline segment into two parts by inserting a new point placed at the specified distance from the segment's start point.
+			Splits the specified spline segment into two parts by inserting a new point placed at the parametrically specified point on the T (times axis) in the [0.0f, 1.0f] range from the segment's start point.
 			</summary> 
 			<param name="segment"> Spline segment to be split. </param>
-			<param name="new_point_t"> Relative distance from the start point as a fraction of the segment's length in the [0.0f, 1.0f] range. </param> 
+			<param name="new_point_t"> Coordinate of the splitting point of the segment along the horizontal T (times) axis in the range [0.0f, 1.0f]. </param> 
 		</member>
 		<member name="M:Unigine.WorldSplineGraph.breakSplinePoint(Unigine.Ptr{SplinePoint})">
 			<summary>
@@ -934,6 +934,15 @@
 			</summary> 
 			<param name="point"> Spline point to be checked. </param> 
 			<returns>1 if the specified spline point is linked to any spline segment; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.WorldSplineGraph.getPointNodeMesh(Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{SplinePoint},int,bool)">
+			<summary>
+			Exports a mesh with the specified index placed as the specified spline point to the specified target mesh.				Due to the nature of the mesh, there will be visual artifacts connected with the float precision, in case an exported node is located very far from the origin (around 10,000 m and further). In this case we advise exporting it without baking transformation.
+			</summary> 
+			<param name="mesh"> Target mesh to store the desired mesh placed at the specified spline point. </param>
+			<param name="point"> Spline point for which a mesh is to be retrieved. </param>
+			<param name="node_index"> Number of the desired node in a row of nodes placed at the specified point, in the range from 0 to the total number of nodes placed at the point.The node must be an ObjectMeshStatic or an ObjectMeshSkinned, otherwise an error occurs. </param>
+			<param name="bake_transform"> Bake Transform flag: true - to export the mesh preserving the current coordinates (can be useful when splitting large WorldSplineGraph objects to keep relative positions of meshes); or false - to reset the position of the exported mesh to origin (0,0,0) with zero-rotation. </param> 
 		</member>
 		<member name="M:Unigine.SplinePoint.setEnabled(bool,bool)">
 			<summary>
@@ -1048,6 +1057,19 @@
 			<param name="position"> Vector to store the position of the junction source node's link (bone) corresponding to the specified spline segment. </param> 
 			<returns>1 if the current position of the junction source node's link (bone) corresponding to the specified spline segment was obtained successfully; otherwise 0.</returns>
 		</member>
+		<member name="M:Unigine.SplinePoint.getNode(int)">
+			<summary>
+			Returns a node assigned to the point by its number.
+			</summary> 
+			<param name="index"> Number of the desired node in a row of nodes placed at this point, in the range from 0 to the total number of nodes placed at the point. </param> 
+			<returns>Node placed at this point at the specified position (number).</returns>
+		</member>
+		<member name="M:Unigine.SplinePoint.getNumNodes const">
+			<summary>
+			Returns the total number of nodes placed at this spline point.
+			</summary>  
+			<returns>Total number of nodes placed at this spline point.</returns>
+		</member>
 		<member name="M:Unigine.SplineSegment.setStartPoint(Unigine.Ptr{SplinePoint})">
 			<summary>
 			Sets the specified spline point as a start point of the segment.
@@ -1135,31 +1157,31 @@
 		</member>
 		<member name="M:Unigine.SplineSegment.calcPoint(float) const">
 			<summary>
-			Returns the coordinates of the point at the specified position on the segment.
+			Returns the coordinates of the point at the parametrically specified position on the segment (along the T axis).
 			</summary> 
-			<param name="t"> Position of the point on the segment, in increments of the segment's length normalized to 1. </param> 
+			<param name="t"> Position of the point on the segment, specified parametrically along the T (times axis) in the [0.0f, 1.0f] range. </param> 
 			<returns>Coordinates of the point.</returns>
 		</member>
 		<member name="M:Unigine.SplineSegment.calcTangent(float) const">
 			<summary>
-			Returns the tangent coordinates for the point at the specified position on the segment.
+			Returns the tangent coordinates for the point at the parametrically specified position on the segment (along the T axis).
 			</summary> 
-			<param name="t"> Position of the point on the segment, in increments of the segment's length normalized to 1. </param> 
+			<param name="t"> Position of the point on the segment, specified parametrically along the T (times axis) in the [0.0f, 1.0f] range. </param> 
 			<returns>Tangent coordinates for the point at the specified position on the segment.</returns>
 		</member>
 		<member name="M:Unigine.SplineSegment.calcUpVector(float) const">
 			<summary>
-			Returns the "up" vector coordinates for the point at the specified position on the segment.
+			Returns the "up" vector coordinates for the point at the parametrically specified position on the segment (along the T axis).
 			</summary> 
-			<param name="t"> Position of the point on the segment, in increments of the segment's length normalized to 1. </param> 
+			<param name="t"> Position of the point on the segment, specified parametrically along the T (times axis) in the [0.0f, 1.0f] range. </param> 
 			<returns>Coordinates of the "up" vector for the point at the specified position on the segment.</returns>
 		</member>
 		<member name="M:Unigine.SplineSegment.linearToParametric(float) const">
 			<summary>
-			Performs conversion of linear position in accordance with the spline segment's length to parametric position.
+			Performs conversion of linear position in accordance with the spline segment's length to parametric position (along the T axis).
 			</summary> 
 			<param name="l"> Linear position on the spline segment in the range [0.0f, 1.0f]. </param> 
-			<returns>Parametric position of the point on the segment, in increments of the segment's length normalized to 1.</returns>
+			<returns>Parametric position of the point on the segment, along the T (times axis) in the [0.0f, 1.0f] range.</returns>
 		</member>
 		<member name="M:Unigine.SplineSegment.getLength const">
 			<summary>
@@ -1286,6 +1308,13 @@
 			</summary> 
 			<param name="name"> Source node name. </param> 
 			<returns>Forward axis for the source node. One of the FORWARD_ variables.</returns>
+		</member>
+		<member name="M:Unigine.SplineSegment.getNode(int)">
+			<summary>
+			Returns a node assigned to the segment by its number.
+			</summary> 
+			<param name="index"> Number of the desired node in a row of nodes placed along the segment in the range from 0 to the total number of nodes placed along the segment. </param> 
+			<returns>Node placed along the segment at the specified position (number).</returns>
 		</member>
 		<member name="F:Unigine.SplineSegment.FORWARD_X">
 			<summary>

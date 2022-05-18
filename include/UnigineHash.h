@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -19,7 +19,7 @@
 namespace Unigine
 {
 
-UNIGINE_INLINE uint32_t murmur3Mixer(uint32_t value)
+UNIGINE_INLINE unsigned int murmur3Mixer(unsigned int value)
 {
 	value ^= value >> 16;
 	value *= 0x85ebca6b;
@@ -29,7 +29,7 @@ UNIGINE_INLINE uint32_t murmur3Mixer(uint32_t value)
 	return value;
 }
 
-UNIGINE_INLINE uint64_t murmur3Mixer(uint64_t value)
+UNIGINE_INLINE unsigned long long murmur3Mixer(unsigned long long value)
 {
 	value ^= value >> 33;
 	value *= 0xff51afd7ed558ccdULL;
@@ -39,13 +39,13 @@ UNIGINE_INLINE uint64_t murmur3Mixer(uint64_t value)
 	return value;
 }
 
-template<bool IsBig> struct HashTypeDispatch { using Type = uint32_t; };
-template<> struct HashTypeDispatch<true> { using Type = uint64_t; };
+template<bool IsBig> struct HashTypeDispatch { using Type = unsigned int; };
+template<> struct HashTypeDispatch<true> { using Type = unsigned long long; };
 
 template<typename Type>
 struct Hasher
 {
-	using HashType = unsigned long long int;
+	using HashType = uintptr_t;
 	UNIGINE_INLINE static HashType create(const Type &t)
 	{
 		static_assert(sizeof(Type) == 0 && false, "Hash function undefined.");
@@ -56,15 +56,15 @@ struct Hasher
 template<typename Type>
 struct Hasher <Type *>
 {
-	using HashType = uintptr_t;
-	UNIGINE_INLINE static HashType create(Type *t) { return HashType(murmur3Mixer(HashType(t))); }
+	using HashType = unsigned long long;
+	UNIGINE_INLINE static HashType create(Type *t) { return murmur3Mixer(reinterpret_cast<unsigned long long>(t)); }
 };
 
 template<typename Type>
 struct Hasher <const Type *>
 {
-	using HashType = uintptr_t;
-	UNIGINE_INLINE static HashType create(const Type *t) { return HashType(murmur3Mixer(HashType(t))); }
+	using HashType = unsigned long long;
+	UNIGINE_INLINE static HashType create(const Type *t) { return murmur3Mixer(reinterpret_cast<unsigned long long>(t)); }
 };
 
 #define DECLARE_DEFAULT_HASHER(TYPE) \
@@ -159,7 +159,7 @@ public:
 
 public:
 
-	void swap(Hash &hash)
+	UNIGINE_INLINE void swap(Hash &hash)
 	{
 		if (data == hash.data)
 			return;
@@ -188,11 +188,13 @@ public:
 		ret += capacity * sizeof(Data *);
 		return ret;
 	}
-	UNIGINE_INLINE Counter empty() const { return length == 0; }
+	UNIGINE_INLINE bool empty() const { return length == 0; }
 
-	UNIGINE_INLINE bool contains(const Key &key) const { return length != 0 && do_find(key) != nullptr; }
+	template<typename T>
+	UNIGINE_INLINE bool contains(const T &key) const { return length != 0 && do_find(key) != nullptr; }
 
-	UNIGINE_INLINE Iterator find(const Key &key)
+	template<typename T>
+	UNIGINE_INLINE Iterator find(const T &key)
 	{
 		if (length == 0)
 			return end();
@@ -201,9 +203,11 @@ public:
 		return d == nullptr ? Iterator(e, e) : Iterator(d, e);
 	}
 
-	UNIGINE_INLINE Data **findFast(const Key &key) const { return do_find(key); }
+	template<typename T>
+	UNIGINE_INLINE Data **findFast(const T &key) const { return do_find(key); }
 
-	UNIGINE_INLINE ConstIterator find(const Key &key) const
+	template<typename T>
+	UNIGINE_INLINE ConstIterator find(const T &key) const
 	{
 		if (length == 0)
 			return end();
@@ -265,13 +269,13 @@ public:
 		for (Counter i = 0; i < capacity; ++i)
 			delete data[i];
 
-		delete [] data;
+		Memory::deallocate(data);
 		data = nullptr;
 		length = 0;
 		capacity = 0;
 	}
 
-	void reserve(Counter size)
+	UNIGINE_INLINE void reserve(Counter size)
 	{
 		Counter v = static_cast<Counter>(float(size) / HASH_LOAD_FACTOR + 0.5f);
 		if (v <= capacity)
@@ -279,7 +283,7 @@ public:
 		rehash(round_up(v));
 	}
 
-	void shrink()
+	UNIGINE_INLINE void shrink()
 	{
 		if (capacity == 0)
 			return;
@@ -345,9 +349,9 @@ protected:
 
 	UNIGINE_INLINE void realloc(Counter *index = nullptr) { rehash(capacity == 0 ? 8 : capacity << 1, index); }
 
-	UNIGINE_INLINE void rehash(Counter new_capacity, Counter *index = nullptr)
+	void rehash(Counter new_capacity, Counter *index = nullptr)
 	{
-		Data **new_data = new Data*[new_capacity];
+		Data **new_data = (Data **)Memory::allocate(new_capacity * sizeof(Data *));
 		memset(new_data, 0, new_capacity * sizeof(Data *));
 		
 		if (data != nullptr)
@@ -368,14 +372,15 @@ protected:
 					index = nullptr;
 				}
 			}
-			delete [] data;
+			Memory::deallocate(data);
 		}
 
 		data = new_data;
 		capacity = new_capacity;
 	}
 
-	UNIGINE_INLINE Data **do_find(const Key &key) const
+	template<typename T>
+	Data **do_find(const T &key) const
 	{
 		if (length == 0)
 			return nullptr;
@@ -391,7 +396,7 @@ protected:
 		return nullptr;
 	}
 
-	UNIGINE_INLINE Data *do_append(HashType hash, const Key &key)
+	Data *do_append(HashType hash, const Key &key)
 	{
 		if (capacity == 0)
 			realloc();
@@ -411,7 +416,7 @@ protected:
 		return d;
 	}
 
-	UNIGINE_INLINE Data *do_append(const Key &key)
+	Data *do_append(const Key &key)
 	{
 		if (capacity == 0)
 			realloc();
@@ -433,7 +438,7 @@ protected:
 		return d;
 	}
 
-	UNIGINE_INLINE Data *do_append(Key &&key)
+	Data *do_append(Key &&key)
 	{
 		if (capacity == 0)
 			realloc();
@@ -455,7 +460,7 @@ protected:
 		return d;
 	}
 
-	UNIGINE_INLINE bool do_remove(HashType hash, const Key &key)
+	bool do_remove(HashType hash, const Key &key)
 	{
 		if (length == 0)
 			return false;
@@ -479,7 +484,7 @@ protected:
 		return true;
 	}
 
-	UNIGINE_INLINE void rehash_data(Counter index)
+	void rehash_data(Counter index)
 	{
 		Counter mask = (capacity - 1);
 		index = (index + 1) & mask;

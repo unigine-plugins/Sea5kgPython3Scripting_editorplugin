@@ -1,0 +1,260 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.BiMap.#ctor">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.#ctor(std::initializer_list{Pair{Key,Type}})">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.#ctor(BiMap)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.#ctor(BiMap)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.operator=(BiMap)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.operator=(BiMap)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.swap(BiMap)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.clear">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.getMemoryUsage const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.insert(Key,Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.insert(Key,Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.insert(Key,Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.insert(Key,Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.insert(BiMap)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.insert(BiMap)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.append(Key,Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.append(Key,Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.append(Key,Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.append(Key,Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.append(BiMap)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.append(BiMap)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.emplace(Key,Args)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.emplace(Key,Args)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.appendFast(Key,Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.appendFast(Key,Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.appendFast(Key,Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.appendFast(Key,Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.appendFast(BiMap)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.appendFast(BiMap)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.emplaceFast(Key,Args)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.emplaceFast(Key,Args)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.contains(T) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.contains(TypeKey,Type) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.replace(TypeKey,TypeValue)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.replaceData(TypeKey,TypeValue)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.operator[](Key) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.get(Key) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.getKey(Type) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.findData(T)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.findData(T) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.containsData(T) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.remove(Key)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.remove(Iterator)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.remove(ConstIterator)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.erase(Key)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.erase(Iterator)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.erase(ConstIterator)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.removeData(Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.take(Key)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.take(Key,Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.takeData(Type)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.takeData(Type,Key)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.value(Key) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.value(Key,Type) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.valueRef(Key,Type) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.key(Type) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.key(Type,Key) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.keyRef(Type,Key) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.values const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.getValues(Unigine.Vector{Type,int,Unigine.VectorAllocator}) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.getPairs(Unigine.Vector{Pair{Key,Type},int,Unigine.VectorAllocator}) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.operator==(BiMap) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.BiMap.operator!=(BiMap) const">
+			<summary>
+			</summary>  
+		</member>
+	</members>
+</doc>

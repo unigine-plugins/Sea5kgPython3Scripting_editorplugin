@@ -172,11 +172,12 @@
 			Disables Ffp rendering.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Ffp.enable(int)">
+		<member name="M:Unigine.Ffp.enable(int,int)">
 			<summary>
 			Enables Ffp rendering.
 			</summary> 
-			<param name="mode"> Ffp mode. </param> 
+			<param name="mode"> Ffp mode. </param>
+			<param name="texture_sample"> Texture sampler flag to be set. One of the TEXTURE_SAMPLE_* values. </param> 
 		</member>
 		<member name="M:Unigine.Ffp.endLines">
 			<summary>
@@ -192,6 +193,18 @@
 			<summary>
 			Renderers a full screen quad. It should be used when rendering post effects.
 			</summary>  
+		</member>
+		<member name="M:Unigine.Ffp.setTextureSample(int)">
+			<summary>
+			Sets a new texture sample flag.
+			</summary> 
+			<param name="sample"> Texture sample flag to be set, one of the TEXTURE_SAMPLE_* values. </param> 
+		</member>
+		<member name="M:Unigine.Ffp.getTextureSample const">
+			<summary>
+			Returns the current texture sample flag.
+			</summary>  
+			<returns>Current texture sample flag used, one of the TEXTURE_SAMPLE_* values.</returns>
 		</member>
 		<member name="F:Unigine.Ffp.COLOR_BLACK">
 			<summary>
@@ -218,44 +231,14 @@
 			White color value: 0xffffffffu
 		</summary>
 		</member>
-		<member name="F:Unigine.Ffp.MODE_CUBE">
-			<summary>
-			Cubemap rendering mode.
-		</summary>
-		</member>
 		<member name="F:Unigine.Ffp.MODE_DEFAULT">
 			<summary>
 			Default rendering mode.
 		</summary>
 		</member>
-		<member name="F:Unigine.Ffp.MODE_GRAD">
+		<member name="F:Unigine.Ffp.MODE_LOADING_SCREEN">
 			<summary>
-			Gradient rendering mode.
-		</summary>
-		</member>
-		<member name="F:Unigine.Ffp.MODE_MULTISAMPLE_16">
-			<summary>
-			Multisampling (x16) rendering mode.
-		</summary>
-		</member>
-		<member name="F:Unigine.Ffp.MODE_MULTISAMPLE_2">
-			<summary>
-			Multisampling (x2) rendering mode.
-		</summary>
-		</member>
-		<member name="F:Unigine.Ffp.MODE_MULTISAMPLE_4">
-			<summary>
-			Multisampling (x4) rendering mode.
-		</summary>
-		</member>
-		<member name="F:Unigine.Ffp.MODE_MULTISAMPLE_8">
-			<summary>
-			Multisampling (x8) rendering mode.
-		</summary>
-		</member>
-		<member name="F:Unigine.Ffp.MODE_SHADOW">
-			<summary>
-			Shadow rendering mode.
+			Loading screen rendering mode.
 		</summary>
 		</member>
 		<member name="F:Unigine.Ffp.MODE_SOLID">
@@ -263,9 +246,9 @@
 			Solid rendering mode.
 		</summary>
 		</member>
-		<member name="F:Unigine.Ffp.MODE_SPLASH">
+		<member name="F:Unigine.Ffp.MODE_YUV">
 			<summary>
-			Splash screen rendering mode.
+			YUV rendering mode.
 		</summary>
 		</member>
 		<member name="F:Unigine.Ffp.MODE_SRGB">
@@ -273,24 +256,44 @@
 			SRGB correction rendering mode.
 		</summary>
 		</member>
-		<member name="F:Unigine.Ffp.MODE_YUV">
+		<member name="F:Unigine.Ffp.NUM_MODES">
 			<summary>
-			YUV rendering mode.
+			Number of FFP rendering modes.
 		</summary>
 		</member>
-		<member name="F:Unigine.Ffp.MODE_INTEGER">
+		<member name="F:Unigine.Ffp.TEXTURE_SAMPLE_2D">
 			<summary>
-			Integer texture rendering mode.
+			2D texture sampler flag.
 		</summary>
 		</member>
-		<member name="F:Unigine.Ffp.MODE_ARRAY">
+		<member name="F:Unigine.Ffp.TEXTURE_SAMPLE_3D">
 			<summary>
-			Texture array rendering mode.
+			3D texture sampler flag.
 		</summary>
 		</member>
-		<member name="F:Unigine.Ffp.MODE_POLYGON_OFFSET">
+		<member name="F:Unigine.Ffp.TEXTURE_SAMPLE_CUBE">
 			<summary>
-			Polygon offset rendering mode.
+			Cubemap texture sampler flag.
+		</summary>
+		</member>
+		<member name="F:Unigine.Ffp.TEXTURE_SAMPLE_ARRAY">
+			<summary>
+			Texture array sampler flag.
+		</summary>
+		</member>
+		<member name="F:Unigine.Ffp.TEXTURE_SAMPLE_SHADOW">
+			<summary>
+			Shadowmap texture sampler flag.
+		</summary>
+		</member>
+		<member name="F:Unigine.Ffp.TEXTURE_SAMPLE_INTEGER">
+			<summary>
+			Integer texture sampler flag.
+		</summary>
+		</member>
+		<member name="F:Unigine.Ffp.NUM_TEXTURES_SAMPLE">
+			<summary>
+			Number of texture sampler flags.
 		</summary>
 		</member>
 	</members>

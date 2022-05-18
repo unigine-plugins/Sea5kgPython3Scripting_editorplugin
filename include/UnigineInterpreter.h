@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -112,6 +112,7 @@ public:
 		QUAT,
 		STRING,
 		GUID,
+		PALETTE,
 		USER_CLASS,
 		EXTERN_CLASS,
 	};
@@ -136,6 +137,7 @@ public:
 	explicit Variable(const Math::quat &q);
 	explicit Variable(const char *s);
 	explicit Variable(const UGUID &g);
+	explicit Variable(const Palette &p);
 
 	Variable(void *interpreter, const char *type_name, void *object, int append = 0, int manage = 0);
 	Variable(void *interpreter, const TypeInfo &type_info, void *object, int append = 0, int manage = 0);
@@ -251,6 +253,10 @@ public:
 	void setGUID(const UGUID &g);
 	const UGUID &getGUID() const;
 	UNIGINE_INLINE int isGUID() const { return (getType() == GUID); }
+
+	void setPalette(const Palette &p);
+	const Palette &getPalette() const;
+	UNIGINE_INLINE int isPalette() const { return (getType() == PALETTE); }
 
 	void setUserClass(int type, int number, int instance);
 	int getUserClassType() const;
@@ -728,6 +734,8 @@ DECLARE_VARIABLE_TO_TYPE(const String &, String, getString, )
 DECLARE_VARIABLE_TO_TYPE(const char *, const char *, getString, )
 DECLARE_VARIABLE_TO_TYPE(UGUID, UGUID, getGUID, )
 DECLARE_VARIABLE_TO_TYPE(const UGUID &, UGUID, getGUID, )
+DECLARE_VARIABLE_TO_TYPE(Palette, Palette, getPalette, )
+DECLARE_VARIABLE_TO_TYPE(const Palette &, Palette, getPalette, )
 
 #undef DECLARE_VARIABLE_TO_TYPE
 
@@ -900,6 +908,8 @@ DECLARE_TYPE_TO_VARIABLE_STACK(const Math::quat&, setQuat, )
 DECLARE_TYPE_TO_VARIABLE_STACK(const char *, setString, )
 DECLARE_TYPE_TO_VARIABLE_REF(UGUID, setGUID, )
 DECLARE_TYPE_TO_VARIABLE_STACK(const UGUID&, setGUID, )
+DECLARE_TYPE_TO_VARIABLE_REF(Palette, setPalette, )
+DECLARE_TYPE_TO_VARIABLE_STACK(const Palette&, setPalette, )
 
 #undef DECLARE_TYPE_TO_VARIABLE_REF
 #undef DECLARE_TYPE_TO_VARIABLE_STACK
@@ -967,6 +977,8 @@ DECLARE_TYPE_TO_NAME(const String &, "string")
 DECLARE_TYPE_TO_NAME(const char *, "string")
 DECLARE_TYPE_TO_NAME(UGUID, "guid")
 DECLARE_TYPE_TO_NAME(const UGUID &, "guid")
+DECLARE_TYPE_TO_NAME(Palette, "palette")
+DECLARE_TYPE_TO_NAME(const Palette &, "palette")
 
 #undef DECLARE_TYPE_TO_NAME
 

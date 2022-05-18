@@ -671,6 +671,11 @@
 			Spinbox. See also: WidgetSpinBox.
 		</summary>
 		</member>
+		<member name="F:Unigine.Widget.WIDGET_SPIN_BOX_DOUBLE">
+			<summary>
+			Spinbox with double values. See also: WidgetSpinBoxDouble.
+		</summary>
+		</member>
 		<member name="F:Unigine.Widget.WIDGET_SPRITE">
 			<summary>
 			Sprite. See also: WidgetSprite.
@@ -874,6 +879,30 @@
 			Returns the current color for the button.
 			</summary>  
 			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+		</member>
+		<member name="M:Unigine.WidgetButton.setStyleImage(Unigine.Ptr{Unigine.Image})">
+			<summary>
+			Sets a button skin image.
+			</summary> 
+			<param name="image"> Image to set. </param> 
+		</member>
+		<member name="M:Unigine.WidgetButton.getStyleImage const">
+			<summary>
+			Returns the button skin image.
+			</summary>  
+			<returns>Button skin image.</returns>
+		</member>
+		<member name="M:Unigine.WidgetButton.setStyleTexture(char)">
+			<summary>
+			Sets a button skin texture.
+			</summary> 
+			<param name="texture"> Path to a texture file. </param> 
+		</member>
+		<member name="M:Unigine.WidgetButton.getStyleTexture const">
+			<summary>
+			Returns the path to the button skin texture.
+			</summary>  
+			<returns>Path to a texture file.</returns>
 		</member>
 		<member name="M:Unigine.WidgetCanvas.#ctor(Unigine.Ptr{Gui})">
 			<summary>
@@ -1370,6 +1399,30 @@
 			<param name="point"> Segment point coordinates. </param> 
 			<returns>Number of the added line segment point.</returns>
 		</member>
+		<member name="M:Unigine.WidgetCanvas.addLinePoint(int,Unigine.Math.vec2)">
+			<summary>
+			Adds a new segment to the line in the canvas widget.
+			</summary> 
+			<param name="line"> Canvas element ID of the line. </param>
+			<param name="point"> Segment point coordinates. </param> 
+			<returns>Number of the added line segment point.</returns>
+		</member>
+		<member name="M:Unigine.WidgetCanvas.setLinePoint(int,int,Unigine.Math.vec3)">
+			<summary>
+			Sets a line segment in the canvas widget.
+			</summary> 
+			<param name="line"> Canvas element ID of the line. </param>
+			<param name="num"> Index of the point in the array of line points. </param>
+			<param name="point"> Line point coordinates. </param> 
+		</member>
+		<member name="M:Unigine.WidgetCanvas.setLinePoint(int,int,Unigine.Math.vec2)">
+			<summary>
+			Sets a line segment in the canvas widget.
+			</summary> 
+			<param name="line"> Canvas element ID of the line. </param>
+			<param name="num"> Index of the point in the array of line points. </param>
+			<param name="point"> Line point coordinates. </param> 
+		</member>
 		<member name="M:Unigine.WidgetCanvas.addPolygon(int)">
 			<summary>
 			Adds a new polygon to the canvas widget. By default, it is rendered in white color. Texture tiling mode is disabled.
@@ -1474,6 +1527,62 @@
 			Removes the text from the canvas widget.
 			</summary> 
 			<param name="text"> Canvas element ID of the text string. </param> 
+		</member>
+		<member name="M:Unigine.WidgetCanvas.setPolygonGPUTexture(int,Unigine.Ptr{Unigine.Texture})">
+			<summary>
+			Sets a GPU texture for the given polygon.
+			</summary> 
+			<param name="polygon"> Canvas element ID of the polygon. </param>
+			<param name="texture"> GPU texture </param> 
+		</member>
+		<member name="M:Unigine.WidgetCanvas.getPolygonGPUTexture(int) const">
+			<summary>
+			Returns the current GPU texture for the given polygon.
+			</summary> 
+			<param name="polygon"> Canvas element ID of the polygon. </param> 
+			<returns>GPU texture</returns>
+		</member>
+		<member name="M:Unigine.WidgetCanvas.setTextPixelPerfect(int,bool)">
+			<summary>
+			Sets the text with the given ID as pixel perfect.
+			</summary> 
+			<param name="text"> ID of the text. </param>
+			<param name="pixel_perfect"> true to make the text pixel perfect, otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.WidgetCanvas.getTextPixelPerfect(int) const">
+			<summary>
+			Returns a value indicating if the text with the given ID is pixel perfect.
+			</summary> 
+			<param name="text"> ID of the text. </param> 
+			<returns>true if the text is pixel perfect, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.WidgetCanvas.setPolygonIntersection(int,bool)">
+			<summary>
+			Specifies whether the polygon with the given ID will participate in the intersection check.
+			</summary> 
+			<param name="polygon"> ID of the polygon. </param>
+			<param name="intersection"> true to make the polygon participate in the intersection check, otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.WidgetCanvas.isPolygonIntersection(int) const">
+			<summary>
+			Returns a value indicating if the polygon with the given ID participates in the intersection check.
+			</summary> 
+			<param name="polygon"> ID of the polygon. </param> 
+			<returns>true if the polygon participates in the intersection check, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.WidgetCanvas.setPolygonRender(int,bool)">
+			<summary>
+			Sets the rendering state for the polygon with the given ID.
+			</summary> 
+			<param name="polygon"> ID of the polygon. </param>
+			<param name="render"> true to render the polygon, otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.WidgetCanvas.isPolygonRender(int) const">
+			<summary>
+			Returns a value indicating if the polygon with the given ID is rendered.
+			</summary> 
+			<param name="polygon"> ID of the polygon. </param> 
+			<returns>true if the polygon is rendered, otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetCheckBox.#ctor(Unigine.Ptr{Gui},char)">
 			<summary>
@@ -1721,6 +1830,73 @@
 			Returns the current color for the widget's button.
 			</summary>  
 			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+		</member>
+		<member name="M:Unigine.WidgetComboBox.findItemByText(char) const">
+			<summary>
+			Returns the number of the item the text of which is the same as in the argument.
+			</summary> 
+			<param name="str"> Item text. </param> 
+			<returns>Number of the item with the matching text.</returns>
+		</member>
+		<member name="M:Unigine.WidgetComboBox.setStyleTextureIcon(char)">
+			<summary>
+			Sets a skin to be used for icons.
+			</summary> 
+			<param name="icon"> Path to a texture file. </param> 
+		</member>
+		<member name="M:Unigine.WidgetComboBox.getStyleTextureIcon const">
+			<summary>
+			Returns the path to the skin used for icons.
+			</summary>  
+			<returns>Path to the texture file.</returns>
+		</member>
+		<member name="M:Unigine.WidgetComboBox.setStyleTextureButton(char)">
+			<summary>
+			Sets a skin to be used for buttons.
+			</summary> 
+			<param name="button"> Path to a texture file. </param> 
+		</member>
+		<member name="M:Unigine.WidgetComboBox.getStyleTextureButton const">
+			<summary>
+			Returns the path to the skin used for buttons.
+			</summary>  
+			<returns>Path to a texture file.</returns>
+		</member>
+		<member name="M:Unigine.WidgetComboBox.setStyleTextureSelection(char)">
+			<summary>
+			Sets a skin used to highlight the current selection for the widget.
+			</summary> 
+			<param name="selection"> Path to a texture file. </param> 
+		</member>
+		<member name="M:Unigine.WidgetComboBox.getStyleTextureSelection const">
+			<summary>
+			Returns the skin used to highlight the current selection for the widget.
+			</summary>  
+			<returns>Path to a texture file.</returns>
+		</member>
+		<member name="M:Unigine.WidgetComboBox.setStyleTextureBackground(char)">
+			<summary>
+			Sets a skin to be used for the widget's background.
+			</summary> 
+			<param name="background"> Path to a texture file. </param> 
+		</member>
+		<member name="M:Unigine.WidgetComboBox.getStyleTextureBackground const">
+			<summary>
+			Returns the skin used for the widget's background.
+			</summary>  
+			<returns>Path to a texture file.</returns>
+		</member>
+		<member name="M:Unigine.WidgetComboBox.setStyleTextureBorder(char)">
+			<summary>
+			Sets a skin to be used for the widget's border.
+			</summary> 
+			<param name="border"> Path to a texture file. </param> 
+		</member>
+		<member name="M:Unigine.WidgetComboBox.getStyleTextureBorder const">
+			<summary>
+			Returns the skin used for the widget's border.
+			</summary>  
+			<returns>Path to a texture file.</returns>
 		</member>
 		<member name="M:Unigine.WidgetDialog.#ctor(Unigine.Ptr{Gui},char,int,int)">
 			<summary>
@@ -2360,6 +2536,18 @@
 		<member name="M:Unigine.WidgetEditText.getSelectionColor const">
 			<summary>
 			Returns the current color used to highlight the current selection for the widget.
+			</summary>  
+			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+		</member>
+		<member name="M:Unigine.WidgetEditText.setNumberColor(Unigine.Math.vec4)">
+			<summary>
+			Sets a color for numbers.
+			</summary> 
+			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
+		</member>
+		<member name="M:Unigine.WidgetEditText.getNumberColor const">
+			<summary>
+			Returns a color which is used for numbers.
 			</summary>  
 			<returns>Four-component vector specifying the color in the RGBA format.</returns>
 		</member>
@@ -3017,6 +3205,56 @@
 			Returns the current color used to highlight the current selection for the widget.
 			</summary>  
 			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+		</member>
+		<member name="M:Unigine.WidgetListBox.setIconsEnabled(bool)">
+			<summary>
+			Enables the icons display next to the items.
+			</summary> 
+			<param name="enabled"> true to enable the icons, otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.WidgetListBox.isIconsEnabled const">
+			<summary>
+			Returns a value indicating if the icons display is enabled.
+			</summary>  
+			<returns>true if the icons are enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.WidgetListBox.setIconsAlphaEnabled(bool)">
+			<summary>
+			Enables the alpha channel of the icons.
+			</summary> 
+			<param name="enabled"> true to enable the alpha channel, otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.WidgetListBox.isIconsAlphaEnabled const">
+			<summary>
+			Returns a value indicating if the alpha channel of the icons is enabled.
+			</summary>  
+			<returns>true if the alpha channel is enabled, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.WidgetListBox.setIconsResolution(int)">
+			<summary>
+			Sets the resolution of the icons.
+			</summary> 
+			<param name="resolution"> Desired resolution. </param> 
+		</member>
+		<member name="M:Unigine.WidgetListBox.getIconsResolution const">
+			<summary>
+			Returns the current resolution of the icons.
+			</summary>  
+			<returns>Icon resolution.</returns>
+		</member>
+		<member name="M:Unigine.WidgetListBox.setItemIcon(int,Unigine.Ptr{Unigine.Texture})">
+			<summary>
+			Sets the icon for a given list item.
+			</summary> 
+			<param name="item"> Item number in range from 0 to the total number of items. </param>
+			<param name="texture"> Icon to be set. </param> 
+		</member>
+		<member name="M:Unigine.WidgetListBox.getItemIcon(int) const">
+			<summary>
+			Returns the icon for a given list item.
+			</summary> 
+			<param name="item"> Item number in range from 0 to the total number of items. </param> 
+			<returns>Icon of the item.</returns>
 		</member>
 		<member name="M:Unigine.WidgetManipulator.#ctor(Unigine.Ptr{Gui})">
 			<summary>
@@ -3839,6 +4077,18 @@
 			</summary>  
 			<returns>Four-component vector specifying the color in the RGBA format.</returns>
 		</member>
+		<member name="M:Unigine.WidgetScroll.setSliderButton(bool)">
+			<summary>
+			Sets the display of slider buttons.
+			</summary> 
+			<param name="button"> true to display slider buttons, otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.WidgetScroll.isSliderButton const">
+			<summary>
+			Returns a value indicating if slider buttons are displayed.
+			</summary>  
+			<returns>true if slider buttons are displayed, otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.WidgetScrollBox.#ctor(Unigine.Ptr{Gui},int,int)">
 			<summary>
 			Constructor. Creates a box with scrolling based on given parameters and adds it to the specified GUI.
@@ -4082,11 +4332,27 @@
 		</member>
 		<member name="M:Unigine.WidgetScrollBox.setBackground(int)">
 			<summary>
-			</summary>  
+			Sets a value indicating if a background should be rendered.
+			</summary> 
+			<param name="background"> 1 to render a background, 0 not to render. </param> 
 		</member>
 		<member name="M:Unigine.WidgetScrollBox.getBackground const">
 			<summary>
+			Returns a value indicating if the background is rendered.
 			</summary>  
+			<returns>1 if the background is rendered, 0 if not.</returns>
+		</member>
+		<member name="M:Unigine.WidgetScrollBox.getVScroll const">
+			<summary>
+			Returns the vetical scroller object.
+			</summary>  
+			<returns>Vetical scroller.</returns>
+		</member>
+		<member name="M:Unigine.WidgetScrollBox.getHScroll const">
+			<summary>
+			Returns the horizontal scroller object.
+			</summary>  
+			<returns>Horizontal scroller.</returns>
 		</member>
 		<member name="M:Unigine.WidgetSlider.#ctor(Unigine.Ptr{Gui},int,int,int)">
 			<summary>
@@ -4835,17 +5101,17 @@
 			<param name="width"> Width of the sprite. </param>
 			<param name="height"> Height of the sprite. </param> 
 		</member>
-		<member name="M:Unigine.WidgetSpriteNode.setAspectCorrection(int)">
+		<member name="M:Unigine.WidgetSpriteNode.setAspectCorrection(bool)">
 			<summary>
-			Sets the aspect correction for the WidgetSpriteNode. 1 enables correction, 0 disables.
+			Sets the aspect correction for the WidgetSpriteNode. true enables correction, false disables.
 			</summary> 
-			<param name="correction"> 1 to enable aspect correction, 0 to disable. </param> 
+			<param name="correction"> true to enable aspect correction, false to disable. </param> 
 		</member>
-		<member name="M:Unigine.WidgetSpriteNode.getAspectCorrection const">
+		<member name="M:Unigine.WidgetSpriteNode.isAspectCorrection const">
 			<summary>
 			Returns the value indicating if the aspect correction enabled for WidgetSpriteNode.
 			</summary>  
-			<returns>1 if the aspect correction enabled, otherwise 0.</returns>
+			<returns>true if the aspect correction enabled, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetSpriteNode.setCamera(Unigine.Ptr{Unigine.Camera})">
 			<summary>
@@ -4859,17 +5125,17 @@
 			</summary>  
 			<returns>Camera instance.</returns>
 		</member>
-		<member name="M:Unigine.WidgetSpriteNode.setEnvironmentTextureName(char)">
+		<member name="M:Unigine.WidgetSpriteNode.setEnvironmentTexturePath(char)">
 			<summary>
-			Sets the given name for Environment texture.
+			Sets the given path for Environment texture.
 			</summary> 
-			<param name="name"> Texture name to be set. </param> 
+			<param name="path"> Texture path to be set. </param> 
 		</member>
-		<member name="M:Unigine.WidgetSpriteNode.getEnvironmentTextureName const">
+		<member name="M:Unigine.WidgetSpriteNode.getEnvironmentTexturePath const">
 			<summary>
-			Returns the name of the Environment texture.
+			Returns the path of the Environment texture.
 			</summary>  
-			<returns>Texture name.</returns>
+			<returns>Texture path.</returns>
 		</member>
 		<member name="M:Unigine.WidgetSpriteNode.setIFps(float)">
 			<summary>
@@ -4918,18 +5184,6 @@
 			Returns the current node set for displaying.
 			</summary>  
 			<returns>The node.</returns>
-		</member>
-		<member name="M:Unigine.WidgetSpriteNode.setPostMaterials(char)">
-			<summary>
-			Sets post postprocess materials that are applied after all other postprocess are rendered. They are used after engine.render.setPostMaterials(), if any.
-			</summary> 
-			<param name="materials"> Comma-separated names of postprocess materials. </param> 
-		</member>
-		<member name="M:Unigine.WidgetSpriteNode.getPostMaterials const">
-			<summary>
-			Returns names of the current post postprocess materials that are applied after all other postprocess are rendered. They are used after engine.render.getPostMaterials(), if any.
-			</summary>  
-			<returns>Name of the current post postprocess materials.</returns>
 		</member>
 		<member name="M:Unigine.WidgetSpriteNode.setProjection(Unigine.Math.mat4)">
 			<summary>
@@ -4990,6 +5244,18 @@
 			Returns the width of the texture buffer used for a widget that affects the widget size.
 			</summary>  
 			<returns>Width of the texture buffer size.</returns>
+		</member>
+		<member name="M:Unigine.WidgetSpriteNode.setUseTAAOffset(bool)">
+			<summary>
+			Sets a value indicating if skipping render mode check is enabled for using TAA. Can be used to ensure proper TAA calculation when rendering mode for the Viewport is set to RENDER_DEPTH.
+			</summary> 
+			<param name="offset"> true to enable skipping render mode check and use TAA; otherwise false. </param> 
+		</member>
+		<member name="M:Unigine.WidgetSpriteNode.isUseTAAOffset const">
+			<summary>
+			Returns a value indicating if skipping render mode check is enabled for using TAA. Can be used to ensure proper TAA calculation when rendering mode for the Viewport is set to RENDER_DEPTH.
+			</summary>  
+			<returns>true if skipping render mode check is enabled for using TAA; otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetSpriteNode.setViewportMask(int)">
 			<summary>
@@ -5165,17 +5431,17 @@
 			<param name="width"> Width of the sprite. </param>
 			<param name="height"> Height of the sprite. </param> 
 		</member>
-		<member name="M:Unigine.WidgetSpriteViewport.setAspectCorrection(int)">
+		<member name="M:Unigine.WidgetSpriteViewport.setAspectCorrection(bool)">
 			<summary>
-			Sets the aspect correction for the WidgetSpriteViewport. 1 enables correction, 0 disables.
+			Sets the aspect correction for the WidgetSpriteViewport. true enables correction, false disables.
 			</summary> 
-			<param name="correction"> 1 to enable aspect correction, 0 to disable. </param> 
+			<param name="correction"> true to enable aspect correction, false to disable. </param> 
 		</member>
-		<member name="M:Unigine.WidgetSpriteViewport.getAspectCorrection const">
+		<member name="M:Unigine.WidgetSpriteViewport.isAspectCorrection const">
 			<summary>
 			Returns the value indicating if the aspect correction enabled for WidgetSpriteViewport.
 			</summary>  
-			<returns>1 if the aspect correction enabled, otherwise 0.</returns>
+			<returns>true if the aspect correction enabled, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetSpriteViewport.setCamera(Unigine.Ptr{Unigine.Camera})">
 			<summary>
@@ -5212,18 +5478,6 @@
 			Returns the current model-view matrix of the associated camera.
 			</summary>  
 			<returns>Model-view matrix.</returns>
-		</member>
-		<member name="M:Unigine.WidgetSpriteViewport.setPostMaterials(char)">
-			<summary>
-			Sets post postprocess materials that are applied after all other postprocess are rendered. They are used after engine.render.setPostMaterials(), if any.
-			</summary> 
-			<param name="materials"> Comma-separated names of postprocess materials. </param> 
-		</member>
-		<member name="M:Unigine.WidgetSpriteViewport.getPostMaterials const">
-			<summary>
-			Returns names of the current post postprocess materials that are applied after all other postprocess are rendered. They are used after engine.render.getPostMaterials(), if any.
-			</summary>  
-			<returns>Name of the current post postprocess materials.</returns>
 		</member>
 		<member name="M:Unigine.WidgetSpriteViewport.setProjection(Unigine.Math.mat4)">
 			<summary>
@@ -5347,6 +5601,18 @@
 			Returns the pointer to the texture that is currently set for the first (bottom) layer of the sprite.					This method is valid only for the base WidgetSprite class. It cannot be used for the WidgetSpriteViewport!
 			</summary>  
 			<returns>Pointer to the texture.</returns>
+		</member>
+		<member name="M:Unigine.WidgetSpriteViewport.setUseTAAOffset(bool)">
+			<summary>
+			Sets a value indicating if skipping render mode check is enabled for using TAA. Can be used to ensure proper TAA calculation when rendering mode for the Viewport is set to RENDER_DEPTH.
+			</summary> 
+			<param name="offset"> true to enable skipping render mode check and use TAA; otherwise false. </param> 
+		</member>
+		<member name="M:Unigine.WidgetSpriteViewport.isUseTAAOffset const">
+			<summary>
+			Returns a value indicating if skipping render mode check is enabled for using TAA. Can be used to ensure proper TAA calculation when rendering mode for the Viewport is set to RENDER_DEPTH.
+			</summary>  
+			<returns>true if skipping render mode check is enabled for using TAA; otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetTabBox.#ctor(Unigine.Ptr{Gui},int,int)">
 			<summary>
@@ -5902,6 +6168,12 @@
 			</summary>  
 			<returns>Four-component vector specifying the color in the RGBA format.</returns>
 		</member>
+		<member name="M:Unigine.WidgetTreeBox.getItemUnderCursor const">
+			<summary>
+			Returns the ID of the item, over which the cursor is currently hovering.
+			</summary>  
+			<returns>Item ID in range from 0 to the total number of items.</returns>
+		</member>
 		<member name="M:Unigine.WidgetVBox.#ctor(Unigine.Ptr{Gui},int,int)">
 			<summary>
 			Constructor. Creates a vertical box with given parameters and adds it to the specified GUI.
@@ -6016,6 +6288,18 @@
 			Returns the current background color used for the widget.
 			</summary>  
 			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+		</member>
+		<member name="M:Unigine.WidgetVBox.setBorder(bool)">
+			<summary>
+			Sets the border display state for the widget.
+			</summary> 
+			<param name="border"> true to display the border, otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.WidgetVBox.isBorder const">
+			<summary>
+			Returns the current value indicating if the border is displayed.
+			</summary>  
+			<returns>true if the border is displayed, otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetVPaned.#ctor(Unigine.Ptr{Gui})">
 			<summary>

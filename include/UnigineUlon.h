@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -66,6 +66,7 @@ class UNIGINE_API UlonNode : public APIInterface
 public:
 	static Ptr<UlonNode> create();
 	bool load(const char *path);
+	bool parse(const char *str);
 	Vector< Ptr<UlonNode> >  getChildren() const;
 	const char *getType() const;
 	const char *getName() const;

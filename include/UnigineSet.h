@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -137,7 +137,7 @@ public:
 
 	Set &operator=(Set &&o)
 	{
-		if(Parent::root == o.root)
+		if (Parent::root == o.root)
 			return *this;
 		delete Parent::root;
 		Parent::root = o.root;
@@ -153,14 +153,14 @@ public:
 	UNIGINE_INLINE void append(const Set &s)
 	{
 		ConstIterator end_it = s.end();
-		for(ConstIterator it = s.begin(); it != end_it; ++it)
+		for (ConstIterator it = s.begin(); it != end_it; ++it)
 			append(it->key);
 	}
 
 	UNIGINE_INLINE void append(Set &&s)
 	{
 		Iterator end_it = s.end();
-		for(Iterator it = s.begin(); it != end_it; ++it)
+		for (Iterator it = s.begin(); it != end_it; ++it)
 			append(std::move(it->key));
 		s.clear();
 	}

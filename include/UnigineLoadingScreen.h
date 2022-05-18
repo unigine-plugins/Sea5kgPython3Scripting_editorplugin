@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -37,9 +37,9 @@ public:
 	static void setTexturePath(const char *path);
 	static const char *getTexturePath();
 	static void setImage(const Ptr<Image> &image);
-	static void setTransform(const Math::vec4 &transform);
+	static void setTransform(const Math::vec4& transform);
 	static Math::vec4 getTransform();
-	static void setBackgroundColor(const Math::vec4 &color);
+	static void setBackgroundColor(const Math::vec4& color);
 	static Math::vec4 getBackgroundColor();
 	static void setText(const char *text);
 	static const char *getText();

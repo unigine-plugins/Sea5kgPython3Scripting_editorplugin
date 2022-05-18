@@ -510,5 +510,81 @@
 			Destructor.
 			</summary>  
 		</member>
+		<member name="M:Unigine.VectorStack.#ctor">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.#ctor(std::initializer_list{Type})">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.#ctor(VectorStack)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.#ctor(VectorStack)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.#ctor(size_t)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.#ctor(Type,size_t)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.#ctor(Type,size_t)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.VectorStack&lt;Type, Capacity, Counter&gt;(VectorStack{Type,OtherCapacity,OtherCounter})">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.VectorStack&lt;Type, Capacity, Counter&gt;(VectorStack{Type,OtherCapacity,OtherCounter})">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.VectorStack&lt;Type, Capacity, Counter&gt;(Unigine.Vector{Type,OtherCounter,int,Unigine.VectorAllocator})">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.VectorStack&lt;Type, Capacity, Counter&gt;(Unigine.Vector{Type,OtherCounter,int,Unigine.VectorAllocator})">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.operator=(VectorStack)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.operator=(VectorStack)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.operator=(VectorStack{Type,OtherCapacity,OtherCounter})">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.operator=(VectorStack{Type,OtherCapacity,OtherCounter})">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.operator=(Unigine.Vector{Type,OtherCounter,int,Unigine.VectorAllocator})">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.operator=(Unigine.Vector{Type,OtherCounter,int,Unigine.VectorAllocator})">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.getMemoryUsage const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.VectorStack.destroy">
+			<summary>
+			</summary>  
+		</member>
 	</members>
 </doc>

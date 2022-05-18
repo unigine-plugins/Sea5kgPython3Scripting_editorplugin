@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -16,8 +16,6 @@
 
 #include <UnigineFactory.h>
 #include <UnigineInterpreter.h>
-
-#include <UnigineBounds.h>
 
 namespace Unigine
 {
@@ -75,19 +73,28 @@ struct ImportMaterial
 {
 	String name;
 	String filepath;
+
+	HashMap<String, Math::vec4> parameters;
+	const Math::vec4 &getParameter(const char *name) const { return parameters.valueRef(name, Math::vec4_one); }
+
+	HashMap<String, ImportTexture *> textures;
+	ImportTexture *getTexture(const char *name) const { return textures.value(name); }
+
 	void *data = nullptr;
 };
 
 struct ImportSurface
 {
 	String name;
-	float min_visible_distance = -UNIGINE_INFINITY;
-	float max_visible_distance = UNIGINE_INFINITY;
+	float min_visible_distance = -Math::Consts::INF;
+	float max_visible_distance = Math::Consts::INF;
+	float min_fade_distance = 0.0f;
+	float max_fade_distance = 0.0f;
 	ImportMaterial *material = nullptr;
 	void *data = nullptr;
 	int source_index = -1;
 	int target_surface = -1;
-	UNIGINE_BOUND_BOX bound_box;
+	Math::WorldBoundBox bound_box;
 
 	ImportSurface() {}
 
@@ -179,7 +186,7 @@ struct ImportGeometry
 	void *data;
 	Vector<ImportSurface> surfaces;
 	Math::dmat4 transform;
-	UNIGINE_BOUND_BOX bound_box;
+	Math::WorldBoundBox bound_box;
 
 	ImportGeometry() 
 		: data(nullptr)
@@ -420,7 +427,7 @@ public:
 	bool importNode(ImportProcessor *processor, NodePtr &node, ImportNode *import_node);
 	bool postprocess();
 
-	static bool getBasis(Axis up_axis, Axis front_axis, Math::dmat4& ret);
+	static bool getBasis(Axis up_axis, Axis front_axis, Math::dmat4 &ret);
 
 protected:
 	virtual bool onComputeBoundBox(ImportMesh *import_mesh);

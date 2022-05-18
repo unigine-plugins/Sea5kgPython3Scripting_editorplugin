@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -18,7 +18,6 @@
 #include "UnigineMathLib.h"
 #include "UnigineMesh.h"
 #include "UniginePtr.h"
-#include "UnigineBounds.h"
 #include "UnigineVector.h"
 #include "UnigineStreams.h"
 
@@ -66,30 +65,30 @@ public:
 	const char *getSurfaceTargetName(int surface, int target) const;
 	int findSurfaceTarget(const char *name, int surface) const;
 	void updateSurfaceBounds(int surface = -1);
-	void setSurfaceTransform(const Math::mat4 &transform, int surface, int target = -1);
+	void setSurfaceTransform(const Math::mat4& transform, int surface, int target = -1);
 	int addMeshSurface(const char *name, const Ptr<Mesh> &mesh, int surface, int target = -1);
 	int addMeshSurface(const char *name, const Ptr<MeshStatic> &mesh, int surface, int target = -1);
 	int addMeshSurface(int dest_surface, const Ptr<MeshStatic> &mesh, int surface, int target = -1);
 	int getMeshSurface(Ptr<Mesh> &mesh, int surface, int target = -1) const;
 	int addEmptySurface(const char *name, int num_vertex, int num_indices);
 	int addSurfaceTarget(int surface, const char *name);
-	int getCollision(const BoundBox & bb, Vector< int > &surfaces);
-	int getCollision(const BoundFrustum & bf, Vector< int > &surfaces);
-	int getCollision(const Math::vec3 &p0, const Math::vec3 &p1, Vector< int > &surfaces);
-	int getCollision(const BoundBox & bb, Vector< int > &triangles, int surface);
-	int getCollision(const BoundFrustum & bf, Vector< int > &triangles, int surface);
-	int getCollision(const Math::vec3 &p0, const Math::vec3 &p1, Vector< int > &triangles, int surface);
+	int getCollision(const Math::BoundBox& bb, Vector< int > &surfaces);
+	int getCollision(const Math::BoundFrustum& bf, Vector< int > &surfaces);
+	int getCollision(const Math::vec3& p0, const Math::vec3& p1, Vector< int > &surfaces);
+	int getCollision(const Math::BoundBox& bb, Vector< int > &triangles, int surface);
+	int getCollision(const Math::BoundFrustum& bf, Vector< int > &triangles, int surface);
+	int getCollision(const Math::vec3& p0, const Math::vec3& p1, Vector< int > &triangles, int surface);
 	Vector< char > &getEdges(int surface);
-	int getIntersection(const Math::vec3 &p0, const Math::vec3 &p1, Math::vec3 * ret_point, Math::vec3 * ret_normal, Math::vec4 * ret_texcoord, int * ret_index, int surface, int target = 0);
-	int getIntersection(const Math::dvec3 &p0, const Math::dvec3 &p1, Math::dvec3 * ret_point_, Math::vec3 * ret_normal, Math::vec4 * ret_texcoord, int * ret_index, int surface, int target = 0);
-	void setBoundBox(const BoundBox & bb, int surface);
-	void setBoundSphere(const BoundSphere & bs, int surface);
-	BoundBox getBoundBox(int surface) const;
-	BoundSphere getBoundSphere(int surface) const;
-	void setBoundBox(const BoundBox & bb);
-	void setBoundSphere(const BoundSphere & bs);
-	BoundBox getBoundBox() const;
-	BoundSphere getBoundSphere() const;
+	int getIntersection(const Math::vec3& p0, const Math::vec3& p1, Math::vec3 * ret_point, Math::vec3 * ret_normal, Math::vec4 * ret_texcoord, int * ret_index, int surface, int target = 0);
+	int getIntersection(const Math::dvec3& p0, const Math::dvec3& p1, Math::dvec3 * ret_point_, Math::vec3 * ret_normal, Math::vec4 * ret_texcoord, int * ret_index, int surface, int target = 0);
+	void setBoundBox(const Math::BoundBox& bb, int surface);
+	void setBoundSphere(const Math::BoundSphere& bs, int surface);
+	Math::BoundBox getBoundBox(int surface) const;
+	Math::BoundSphere getBoundSphere(int surface) const;
+	void setBoundBox(const Math::BoundBox& bb);
+	void setBoundSphere(const Math::BoundSphere& bs);
+	Math::BoundBox getBoundBox() const;
+	Math::BoundSphere getBoundSphere() const;
 	Vector< Math::vec3 > &getVertex(int surface, int target = 0);
 	Vector< Math::hvec4 > &getTangents(int surface, int target = 0);
 	Vector< Math::vec2 > &getTexCoords0(int surface);

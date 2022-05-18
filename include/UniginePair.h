@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -40,6 +40,11 @@ public:
 	Pair(Pair<OtherFirst, OtherSecond> &&o)
 		: first(std::forward<OtherFirst>(o.first))
 		, second(std::forward<OtherSecond>(o.second))
+	{}
+
+	Pair(const TypeFirst &f, const TypeSecond &s)
+		: first(f)
+		, second(s)
 	{}
 
 	template<typename OtherFirst, typename OtherSecond>

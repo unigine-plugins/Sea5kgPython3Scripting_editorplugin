@@ -104,16 +104,18 @@
 			</summary>  
 			<returns>true if interaction with WorldTrigger nodes is enabled; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Node.setData(char)">
+		<member name="M:Unigine.Node.setData(char,char)">
 			<summary>
 			Sets user data associated with the node.											If the node was loaded from the *.node file, data is saved directly into the data tag of this file.						If the node is loaded from the *.world file, data is saved into the Node data tag of the *.world file.						If the node is loaded from the *.world file as a NodeReference, data will be saved to the NodeReference data tag of the *.world file.
 			</summary> 
+			<param name="name"> String containing a key identifying user data to be stored in the *.node file.The "editor_data" key is reserved for the UnigineEditor. </param>
 			<param name="data"> New user data. Data can contain an XML formatted string. </param> 
 		</member>
-		<member name="M:Unigine.Node.getData">
+		<member name="M:Unigine.Node.getData(char)">
 			<summary>
 			Returns user data associated with the node.											If the node was loaded from the *.node file, data from the data tag of this file is returned.						If the node is loaded from the *.world file, data from the Node data tag of the *.world file is returned.						If the node is loaded from the *.world file as a NodeReference, data from the NodeReference data tag of the *.world file is returned.
-			</summary>  
+			</summary> 
+			<param name="name"> String containing a key identifying user data stored in the *.node file.The "editor_data" key is reserved for the UnigineEditor. </param> 
 			<returns>User string data. Data can be an xml formatted string.</returns>
 		</member>
 		<member name="M:Unigine.Node.isDecal const">
@@ -1106,13 +1108,13 @@
 			<summary>
 			Returns a bounding box with local coordinates that takes children into account, but doesn't participate in physics calculations. Exclusion of objects from the spatial tree significantly reduces the size of the tree and improves performance due to saving time on bounding box recalculation when transforming nodes.
 			</summary>  
-			<returns>The bounding box with local coordinates.</returns>
+			<returns>The bounding box with world coordinates.</returns>
 		</member>
 		<member name="M:Unigine.Node.getHierarchyBoundSphere">
 			<summary>
 			Returns a bounding sphere with local coordinates that takes children into account, but doesn't participate in physics calculations. Exclusion of objects from the spatial tree significantly reduces the size of the tree and improves performance due to saving time on bounding sphere recalculation when transforming nodes.
 			</summary>  
-			<returns>The bounding sphere with local coordinates.</returns>
+			<returns>The bounding sphere with world coordinates.</returns>
 		</member>
 		<member name="M:Unigine.Node.getHierarchyWorldBoundBox">
 			<summary>

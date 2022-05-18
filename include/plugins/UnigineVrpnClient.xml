@@ -4,6 +4,45 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
+		<member name="M:Unigine.Plugins.VrpnClient.createAnalogDevice(char)">
+			<summary>
+			Creates an object that allows receiving data about input device sticks (for example, game-pad sticks).
+			</summary> 
+			<param name="name"> Path to the device in the format device_name@server_address. </param> 
+			<returns>Newly created VrpnAnalogDevice.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnClient.deleteAnalogDevice(VrpnAnalogDeviceInterface)">
+			<summary>
+			Deletes the VrpnAnalogDevice object.
+			</summary> 
+			<param name="device"> VrpnAnalogDevice to be deleted. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.VrpnClient.createButtonDevice(char)">
+			<summary>
+			Creates an object that allows receiving data about states of input device buttons.
+			</summary> 
+			<param name="name"> Path to the device in the format device_name@server_address. </param> 
+			<returns>Newly created VrpnButtonDevice.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnClient.deleteButtonDevice(VrpnButtonDeviceInterface)">
+			<summary>
+			Deletes the VrpnButtonDevice object.
+			</summary> 
+			<param name="device"> VrpnButtonDevice to be deleted. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.VrpnClient.createTrackerDevice(char)">
+			<summary>
+			Creates an object that allows receiving data about position, orientation, velocity and acceleration of tracked objects from 3D tracking sensors.
+			</summary> 
+			<param name="name"> Path to the device in the format device_name@server_address. </param> 
+			<returns>Newly created VrpnTrackerDevice.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnClient.deleteTrackerDevice(VrpnTrackerDeviceInterface)">
+			<summary>
+			Deletes the VrpnTrackerDevice object.
+			</summary> 
+			<param name="device"> VrpnTrackerDevice to be deleted. </param> 
+		</member>
 		<member name="M:Unigine.Plugins.VrpnAnalogDevice.setAnalogCallback(char)">
 			<summary>
 			Sets the world script callback function that receives data about input device sticks.					The callback function should be defined in the world script and receive 1 argument - an instance of the VrpnAnalogDevice class.

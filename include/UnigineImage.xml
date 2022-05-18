@@ -35,13 +35,18 @@
 		</member>
 		<member name="M:Unigine.Image.set(int,Unigine.Math.dvec4)">
 			<summary>
-			Sets a value for a given image channel. Compressed and combined image formats are not supported.
-			</summary>  
+			Sets a value for a pixel by its id. Compressed and combined image formats are not supported.
+			The code below sets the specified color value for all image pixels:
+			</summary> 
+			<param name="id"> Pixel ID: id = image_width * Y + X,  (0 , 0) - top left corner of the image. </param>
+			<param name="value"> RGBA color of a pixel with the specified ID. </param> 
 		</member>
 		<member name="M:Unigine.Image.get(int,Unigine.Math.dvec4) const">
 			<summary>
-			Returns a value for a given image channel.
-			</summary>  
+			Gens a value for a pixel by its id and puts it to value.
+			</summary> 
+			<param name="id"> Pixel ID: id = image_width * Y + X,  (0 , 0) - top left corner of the image. </param>
+			<param name="value"> RGBA color of a pixel with the specified ID. </param> 
 		</member>
 		<member name="M:Unigine.Image.get(Unigine.Math.ivec2,int) const">
 			<summary>
@@ -117,6 +122,13 @@
 			<param name="color"> Color. It can be a vector of 4 float or integer components (vec4 or ivec4) or a scalar (for images with a single channel). </param>
 			<param name="p"> Pixel color represented by a Pixel structure. </param> 
 		</member>
+		<member name="M:Unigine.Image.set2D(Unigine.Math.ivec2,Image::Pixel)">
+			<summary>
+			Sets a color for a given pixel of a 2D image. Compressed formats are not supported.
+			</summary> 
+			<param name="coord"> Integer coordinates of a pixel in the following ranges: X - [0; width], Y - [0; height]. </param>
+			<param name="p"> Pixel color represented by a Pixel structure. </param> 
+		</member>
 		<member name="M:Unigine.Image.get2D(int,int) const">
 			<summary>
 			Returns a color of a given pixel of a 2D image. Compressed formats are not supported.
@@ -142,6 +154,28 @@
 			<param name="skip_pixel"> Skip pixel color represented by a Pixel structure. </param> 
 			<returns>Pixel color represented by a Pixel structure.</returns>
 		</member>
+		<member name="M:Unigine.Image.get2D(Unigine.Math.ivec2) const">
+			<summary>
+			Returns a color of a given pixel of a 2D image. Compressed formats are not supported.
+			</summary> 
+			<param name="coord"> Integer coordinates of a pixel in the following ranges: X - [0; width], Y - [0; height]. </param> 
+			<returns>Pixel color represented by a Pixel structure.</returns>
+		</member>
+		<member name="M:Unigine.Image.get2D(Unigine.Math.vec2) const">
+			<summary>
+			Returns a color of a given pixel of a 2D image. Linear interpolation is used to get a color sample. Compressed formats are not supported.
+			</summary> 
+			<param name="uv"> Float coordinates of a pixel in range [0.0f; 1.0f]. </param> 
+			<returns>Pixel color represented by a Pixel structure.</returns>
+		</member>
+		<member name="M:Unigine.Image.get2D(Unigine.Math.vec2,Image::Pixel) const">
+			<summary>
+			Returns a color of a given pixel of a 2D image. Linear interpolation is used to get a color sample. Compressed formats are not supported.					If at least one of four interpolated pixels is equal to skip_pixel, the method will return skip_pixel.
+			</summary> 
+			<param name="uv"> Float coordinates of a pixel in range [0.0f; 1.0f]. </param>
+			<param name="skip_pixel"> Skip pixel color represented by a Pixel structure. </param> 
+			<returns>Pixel color represented by a Pixel structure.</returns>
+		</member>
 		<member name="M:Unigine.Image.set2DArray(int,int,int,Image::Pixel)">
 			<summary>
 			Sets a color of a given pixel. The image must be a 2D image array. Compressed formats are not supported.
@@ -151,13 +185,21 @@
 			<param name="layer"> Image layer number. </param>
 			<param name="p"> Pixel color represented by a Pixel structure. </param> 
 		</member>
+		<member name="M:Unigine.Image.set2DArray(Unigine.Math.ivec2,int,Image::Pixel)">
+			<summary>
+			Sets a color of a given pixel. The image must be a 2D texture array. Compressed formats are not supported.
+			</summary> 
+			<param name="coord"> Coordinates of a pixel. </param>
+			<param name="layer"> Image layer number. </param>
+			<param name="p"> Pixel color represented by a Pixel structure. </param> 
+		</member>
 		<member name="M:Unigine.Image.get2DArray(int,int,int) const">
 			<summary>
 			Returns a color of a given pixel. The image must be a 2D texture array. Compressed formats are not supported.
 			</summary> 
-			<param name="x"> Y integer coordinate of a pixel in range [0; height]. </param>
+			<param name="x"> X integer coordinate of a pixel in range [0; width]. </param>
 			<param name="y"> Y integer coordinate of a pixel in range [0; height]. </param>
-			<param name="layer"> X integer coordinate of a pixel in range [0; width]. </param> 
+			<param name="layer"> Image layer number. </param> 
 			<returns>Pixel color represented by a Pixel structure.</returns>
 		</member>
 		<member name="M:Unigine.Image.get2DArray(float,float,int) const">
@@ -166,6 +208,22 @@
 			</summary> 
 			<param name="x"> X float coordinate of a pixel in range [0.0f; 1.0f]. </param>
 			<param name="y"> Y float coordinate of a pixel in range [0.0f; 1.0f]. </param>
+			<param name="layer"> Image layer number. </param> 
+			<returns>Pixel color represented by a Pixel structure.</returns>
+		</member>
+		<member name="M:Unigine.Image.get2DArray(Unigine.Math.ivec2,int) const">
+			<summary>
+			Returns a color of a given pixel. The image must be a 2D texture array. Compressed formats are not supported.
+			</summary> 
+			<param name="coord"> Coordinates of a pixel. </param>
+			<param name="layer"> Image layer number. </param> 
+			<returns>Pixel color represented by a Pixel structure.</returns>
+		</member>
+		<member name="M:Unigine.Image.get2DArray(Unigine.Math.vec2,int) const">
+			<summary>
+			Returns a color of a given pixel. The image must be a 2D texture array. Compressed formats are not supported.
+			</summary> 
+			<param name="uv"> UV coordinates of a pixel. </param>
 			<param name="layer"> Image layer number. </param> 
 			<returns>Pixel color represented by a Pixel structure.</returns>
 		</member>
@@ -188,6 +246,13 @@
 			<param name="a"> Alpha component of a color normalized in range from 0 to 1. </param>
 			<param name="p"> Pixel color represented by a Pixel structure. </param> 
 		</member>
+		<member name="M:Unigine.Image.set3D(Unigine.Math.ivec3,Image::Pixel)">
+			<summary>
+			Sets a color of a given pixel of a 3D image. Compressed formats are not supported.
+			</summary> 
+			<param name="coord"> Integer coordinates of a pixel in the following ranges: X - [0; width], Y - [0; height], Z - [0; depth]. </param>
+			<param name="p"> Pixel color represented by a Pixel structure. </param> 
+		</member>
 		<member name="M:Unigine.Image.get3D(float,float,float) const">
 			<summary>
 			Returns a color of a given pixel of a 3D image. Linear interpolation is used to get a color sample. Compressed formats are not supported.
@@ -206,6 +271,20 @@
 			<param name="z"> Z integer coordinate of a pixel in range [0; depth]. </param> 
 			<returns>Pixel color represented by a Pixel structure.</returns>
 		</member>
+		<member name="M:Unigine.Image.get3D(Unigine.Math.ivec3) const">
+			<summary>
+			Returns a color of a given pixel of a 3D image. Compressed formats are not supported.
+			</summary> 
+			<param name="coord"> Integer coordinates of a pixel in the following ranges: X - [0; width], Y - [0; height], Z - [0; depth]. </param> 
+			<returns>Pixel color represented by a Pixel structure.</returns>
+		</member>
+		<member name="M:Unigine.Image.get3D(Unigine.Math.vec3) const">
+			<summary>
+			Returns a color of a given pixel of a 3D image. Linear interpolation is used to get a color sample. Compressed formats are not supported.
+			</summary> 
+			<param name="uvw"> Float coordinates of a pixel in range [0.0f; 1.0f]. </param> 
+			<returns>Pixel color represented by a Pixel structure.</returns>
+		</member>
 		<member name="M:Unigine.Image.get3DSmooth(float,float,float) const">
 			<summary>
 			Returns a color of a given pixel obtained using linear interpolation. Compressed formats are not supported.					This method returns pixel color with float components in the range [0.0f, 1.0f] regardless of the image format.
@@ -213,6 +292,13 @@
 			<param name="x"> X float coordinate of a pixel in range [0.0f; 1.0f]. </param>
 			<param name="y"> Y float coordinate of a pixel in range [0.0f; 1.0f]. </param>
 			<param name="z"> Z float coordinate of a pixel in range [0.0f; 1.0f]. </param> 
+			<returns>Pixel color represented by a Pixel structure with float components in the range [0.0f, 1.0f].</returns>
+		</member>
+		<member name="M:Unigine.Image.get3DSmooth(Unigine.Math.vec3) const">
+			<summary>
+			Returns a color of a given pixel obtained using linear interpolation. Compressed formats are not supported.					This method returns pixel color with float components in the range [0.0f, 1.0f] regardless of the image format.
+			</summary> 
+			<param name="uvw"> Float coordinates of a pixel in the range [0.0f; 1.0f]. </param> 
 			<returns>Pixel color represented by a Pixel structure with float components in the range [0.0f, 1.0f].</returns>
 		</member>
 		<member name="M:Unigine.Image.is3DType const">
@@ -294,12 +380,37 @@
 			<param name="direction"> Direction vector used for color sampling. </param> 
 			<returns>Pixel color represented by a Pixel structure.</returns>
 		</member>
+		<member name="M:Unigine.Image.getCube(Unigine.Math.ivec2,int) const">
+			<summary>
+			Returns a color of a given pixel. The image must be of the Cube type. Compressed formats are not supported.
+			</summary> 
+			<param name="coord"> Coordinates of a pixel. </param>
+			<param name="face"> Face number in range from 0 to 5. </param> 
+			<returns>Pixel color represented by a Pixel structure.</returns>
+		</member>
+		<member name="M:Unigine.Image.getCube(Unigine.Math.vec2,int) const">
+			<summary>
+			Returns a color of a given pixel. The image must be of the Cube type. Compressed formats are not supported.
+			</summary> 
+			<param name="uv"> UV coordinates of a pixel. </param>
+			<param name="face"> Face number in range from 0 to 5. </param> 
+			<returns>Pixel color represented by a Pixel structure.</returns>
+		</member>
 		<member name="M:Unigine.Image.setCubeArray(int,int,int,int,Image::Pixel)">
 			<summary>
 			Sets a color of a given pixel. The image must be of the Cube Array type. Compressed formats are not supported.
 			</summary> 
 			<param name="x"> X integer coordinate of a pixel in range [0; width]. </param>
 			<param name="y"> Y integer coordinate of a pixel in range [0; height]. </param>
+			<param name="face"> Face number in range from 0 to 5. </param>
+			<param name="layer"> Image layer number. </param>
+			<param name="p"> Pixel color represented by a Pixel structure. </param> 
+		</member>
+		<member name="M:Unigine.Image.setCubeArray(Unigine.Math.ivec2,int,int,Image::Pixel)">
+			<summary>
+			Sets a color of a given pixel. The image must be of the Cube Array type. Compressed formats are not supported.
+			</summary> 
+			<param name="coord"> Coordinates of a pixel. </param>
 			<param name="face"> Face number in range from 0 to 5. </param>
 			<param name="layer"> Image layer number. </param>
 			<param name="p"> Pixel color represented by a Pixel structure. </param> 
@@ -328,6 +439,24 @@
 			</summary> 
 			<param name="v1"> X integer coordinate of a pixel in range [0;width]. </param>
 			<param name="v2"> Y integer coordinate of a pixel in range [0;height]. </param>
+			<param name="face"> Face number in range from 0 to 5. </param>
+			<param name="layer"> Image layer number. </param> 
+			<returns>Pixel color represented by a Pixel structure.</returns>
+		</member>
+		<member name="M:Unigine.Image.getCubeArray(Unigine.Math.ivec2,int,int) const">
+			<summary>
+			Returns a color of a given pixel. The image must be of the Cube Array type. Compressed formats are not supported.
+			</summary> 
+			<param name="coord"> Coordinates of a pixel. </param>
+			<param name="face"> Face number in range from 0 to 5. </param>
+			<param name="layer"> Image layer number. </param> 
+			<returns>Pixel color represented by a Pixel structure.</returns>
+		</member>
+		<member name="M:Unigine.Image.getCubeArray(Unigine.Math.vec2,int,int) const">
+			<summary>
+			Returns a color of a given pixel. The image must be of the Cube Array type. Compressed formats are not supported.
+			</summary> 
+			<param name="uv"> UV coordinates of a pixel. </param>
 			<param name="face"> Face number in range from 0 to 5. </param>
 			<param name="layer"> Image layer number. </param> 
 			<returns>Pixel color represented by a Pixel structure.</returns>
@@ -488,6 +617,7 @@
 		<member name="M:Unigine.Image.getPixels const">
 			<summary>
 			Returns the pointer to the array of pixels.
+			The code below fills the specified channel of the image with the specified value:
 			</summary>  
 			<returns>Pointer to the array of pixels.</returns>
 		</member>
@@ -1165,6 +1295,26 @@
 			Flips the cubemap image along the Z axis.
 			</summary>  
 			<returns>true if the cubemap is flipped successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Image.getSupportedExtensions">
+			<summary>
+			Returns a list of supported file extensions.
+			</summary>  
+			<returns>Vector of supported file extensions.</returns>
+		</member>
+		<member name="M:Unigine.Image.isSupportedExtension(char)">
+			<summary>
+			Returns a value indicating if the file extension is supported.
+			</summary> 
+			<param name="ext"> File extension. </param> 
+			<returns>true if the file extension is supported; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Image.isSupported(char)">
+			<summary>
+			Returns a value indicating if the extension of a file provided by path is supported.
+			</summary> 
+			<param name="path"> Path to the file. </param> 
+			<returns>true if the file extension is supported; otherwise, false.</returns>
 		</member>
 		<member name="F:Unigine.Image.FILTER_POINT">
 			<summary>

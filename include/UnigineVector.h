@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -463,7 +463,7 @@ public:
 			return;
 		}
 
-		appendFast(v);
+		construct(data, length++);
 		insert_internal(Counter(pos));
 		*(reinterpret_cast<Type *>(data) + pos) = v;
 	}
@@ -491,10 +491,30 @@ public:
 			return;
 		}
 
-		for (Counter i = length - 1; i >= Counter(pos); --i)
-			*(reinterpret_cast<Type *>(data) + i + v.length) = std::move(*(reinterpret_cast<Type *>(data) + i));
+		Counter construct_own_tail_size = length - Counter(pos);
+		if (construct_own_tail_size > v.length)
+			construct_own_tail_size = v.length;
 
-		copy(reinterpret_cast<Type *>(data) + pos, v.get(), v.length);
+		for (Counter i = 0; i < construct_own_tail_size; ++i)
+		{
+			construct(data, length + v.length - i - 1,
+				std::move(*(reinterpret_cast<Type *>(data) + length - i - 1)));
+		}
+
+		Counter construct_tail_size = v.length - construct_own_tail_size;
+		for (Counter i = 0; i < construct_tail_size; ++i)
+		{
+			construct(data, length + i,
+				*(reinterpret_cast<Type *>(v.data) + i + construct_own_tail_size));
+		}
+
+		for (Counter i = length - v.length - 1; i >= Counter(pos); --i)
+		{
+			*(reinterpret_cast<Type *>(data) + i + v.length) =
+				std::move(*(reinterpret_cast<Type *>(data) + i));
+		}
+
+		copy(reinterpret_cast<Type *>(data) + pos, v.get(), v.length - construct_tail_size);
 
 		length += v.size();
 	}
@@ -523,10 +543,27 @@ public:
 			return;
 		}
 
-		for (Counter i = length - 1; i >= Counter(pos); --i)
-			*(reinterpret_cast<Type *>(data) + i + v.length) = std::move(*(reinterpret_cast<Type *>(data) + i));
+		Counter construct_own_tail_size = std::min(v.length, length - Counter(pos));
+		for (Counter i = 0; i < construct_own_tail_size; ++i)
+		{
+			construct(data, length + v.length - i - 1,
+				std::move(*(reinterpret_cast<Type *>(data) + length - i - 1)));
+		}
 
-		move(reinterpret_cast<Type *>(data) + pos, v.get(), v.length);
+		Counter construct_tail_size = v.length - construct_own_tail_size;
+		for (Counter i = 0; i < construct_tail_size; ++i)
+		{
+			construct(data, length + i,
+				std::move(*(reinterpret_cast<Type *>(v.data) + i + construct_own_tail_size)));
+		}
+
+		for (Counter i = length - v.length - 1; i >= Counter(pos); --i)
+		{
+			*(reinterpret_cast<Type *>(data) + i + v.length) =
+				std::move(*(reinterpret_cast<Type *>(data) + i));
+		}
+
+		move(reinterpret_cast<Type *>(data) + pos, v.get(), v.length - construct_tail_size);
 
 		length += v.size();
 		v.clear();
@@ -554,9 +591,31 @@ public:
 			return;
 		}
 
-		appendFast(v);
+		construct(data, length++);
 		insert_internal(Counter(pos));
 		*(reinterpret_cast<Type *>(data) + pos) = std::move(v);
+	}
+
+	template<typename C, typename A>
+	UNIGINE_INLINE void prepend(const Vector<Type, C, A> &v)
+	{
+		append(0, v);
+	}
+
+	template<typename C, typename A>
+	UNIGINE_INLINE void prepend(Vector<Type, C, A> &&v)
+	{
+		append(0, std::move(v));
+	}
+
+	UNIGINE_INLINE void prepend(const Type &v)
+	{
+		append(0, v);
+	}
+
+	UNIGINE_INLINE void prepend(Type &&v)
+	{
+		append(0, std::move(v));
 	}
 
 	template<typename ... Args>
@@ -1032,7 +1091,7 @@ public:
 		return *(reinterpret_cast<const Type*>(data) + index);
 	}
 
-	UNIGINE_INLINE Type value(size_t index) const { return (index >= size_t(length)) ? Type() : *(reinterpret_cast<Type*>(data) + index); }
+	UNIGINE_INLINE Type value(size_t index) const { return (index >= size_t(length)) ? Type{} : *(reinterpret_cast<Type*>(data) + index); }
 	UNIGINE_INLINE Type value(size_t index, const Type &def) const { return (index >= size_t(length)) ? def : *(reinterpret_cast<Type*>(data) + index); }
 	UNIGINE_INLINE const Type &valueRef(size_t index, const Type &def) const { return (index >= size_t(length)) ? def : *(reinterpret_cast<Type*>(data) + index); }
 
@@ -1065,6 +1124,8 @@ public:
 
 	UNIGINE_INLINE Type &random() { return *(reinterpret_cast<Type *>(data) + std::rand() % length); }
 	UNIGINE_INLINE const Type &random() const { return *(reinterpret_cast<const Type *>(data) + std::rand() % length); }
+
+	UNIGINE_INLINE Counter randomIndex() const { return (length == 0) ? 0 : (std::rand() % length); }
 
 private:
 
@@ -1154,7 +1215,7 @@ private:
 	UNIGINE_INLINE char *alloc(size_t size) { return (char *)Allocator::allocate(size); }
 	UNIGINE_INLINE void dealloc(char *ptr)
 	{
-		if(is_dynamic())
+		if (is_dynamic())
 			Allocator::deallocate(ptr);
 	}
 
@@ -1370,6 +1431,17 @@ public:
 		Parent::length = Counter(list.size());
 	}
 
+	explicit VectorStack(const VectorStack &o)
+		: Parent(stack_data.data, 0, Capacity)
+	{
+		Parent::append(o);
+	}
+
+	VectorStack(VectorStack &&o)
+	{
+		do_move_construct(std::move(o));
+	}
+
 	template<int OtherCapacity, typename OtherCounter>
 	explicit VectorStack(const VectorStack<Type, OtherCapacity, OtherCounter> &o)
 		: Parent(stack_data.data, 0, Capacity)
@@ -1380,26 +1452,7 @@ public:
 	template<int OtherCapacity, typename OtherCounter>
 	VectorStack(VectorStack<Type, OtherCapacity, OtherCounter> &&o)
 	{
-		if (o.is_dynamic())
-		{
-			Parent::length = o.length;
-			Parent::capacity = o.capacity;
-			Parent::data = o.data;
-
-			o.length = 0;
-			o.capacity = 0;
-			o.data = nullptr;
-			o.destroy();
-		} else
-		{
-			Parent::length = 0;
-			Parent::capacity = Capacity;
-			Parent::data = stack_data.data;
-			Parent::allocate(o.length);
-			Parent::move(reinterpret_cast<Type *>(Parent::data), reinterpret_cast<Type *>(o.data), o.length);
-			Parent::length = o.length;
-			o.clear();
-		}
+		do_move_construct(std::move(o));
 	}
 
 	template<typename OtherCounter>
@@ -1436,45 +1489,37 @@ public:
 
 	~VectorStack() {}
 
-	template<int OtherCapacity, typename OtherCounter>
-	VectorStack<Type, OtherCapacity, OtherCounter> &operator=(const VectorStack<Type, OtherCapacity, OtherCounter> &v)
+	VectorStack &operator=(const VectorStack &v)
 	{
 		if (this == &v)
 			return *this;
-		Parent::clear();
-		Parent::allocate(v.size());
-		Parent::copy(reinterpret_cast<Type *>(Parent::data), reinterpret_cast<const Type *>(v.get()), v.size());
-		Parent::length = v.length;
-		return *this;
+		return do_copy_assign(v);
+	}
+
+	VectorStack &operator=(VectorStack &&v)
+	{
+		if (this == &v)
+			return *this;
+		return do_move_assign(std::move(v));
+	}
+
+
+	template<int OtherCapacity, typename OtherCounter>
+	VectorStack &operator=(const VectorStack<Type, OtherCapacity, OtherCounter> &v)
+	{
+		// Don't need this check because object of different type cannot have same address.
+		//if (this == &v)
+		//	return *this;
+		return do_copy_assign(v);
 	}
 
 	template<int OtherCapacity, typename OtherCounter>
-	VectorStack<Type, OtherCapacity, OtherCounter> &operator=(VectorStack<Type, OtherCapacity, OtherCounter> &&v)
+	VectorStack &operator=(VectorStack<Type, OtherCapacity, OtherCounter> &&v)
 	{
-		if (this == &v)
-			return *this;
-		if (v.is_dynamic())
-		{
-			Parent::destruct();
-			Parent::dealloc(Parent::data);
-
-			Parent::length = v.length;
-			Parent::capacity = v.capacity;
-			Parent::data = v.data;
-
-			v.length = 0;
-			v.capacity = 0;
-			v.data = nullptr;
-			v.destroy();
-		} else
-		{
-			Parent::clear();
-			Parent::allocate(v.length);
-			Parent::move(reinterpret_cast<Type *>(Parent::data), reinterpret_cast<Type *>(v.data), v.length);
-			Parent::length = v.length;
-			v.clear();
-		}
-		return *this;
+		// Don't need this check because object of different type cannot have same address.
+		//if (this == &v)
+		//	return *this;
+		return do_move_assign(std::move(v));
 	}
 
 	template<typename OtherCounter>
@@ -1523,6 +1568,68 @@ public:
 
 private:
 
+	template<int OtherCapacity, typename OtherCounter>
+	void do_move_construct(VectorStack<Type, OtherCapacity, OtherCounter> &&o)
+	{
+		if (o.is_dynamic())
+		{
+			Parent::length = o.length;
+			Parent::capacity = o.capacity;
+			Parent::data = o.data;
+
+			o.length = 0;
+			o.capacity = 0;
+			o.data = nullptr;
+			o.destroy();
+		} else
+		{
+			Parent::length = 0;
+			Parent::capacity = Capacity;
+			Parent::data = stack_data.data;
+			Parent::allocate(o.length);
+			Parent::move(reinterpret_cast<Type *>(Parent::data), reinterpret_cast<Type *>(o.data), o.length);
+			Parent::length = o.length;
+			o.clear();
+		}
+	}
+
+	template<int OtherCapacity, typename OtherCounter>
+	VectorStack &do_copy_assign(const VectorStack<Type, OtherCapacity, OtherCounter> &v)
+	{
+		Parent::clear();
+		Parent::allocate(v.size());
+		Parent::copy(reinterpret_cast<Type *>(Parent::data), reinterpret_cast<const Type *>(v.get()), v.size());
+		Parent::length = v.length;
+		return *this;
+	}
+
+	template<int OtherCapacity, typename OtherCounter>
+	VectorStack &do_move_assign(VectorStack<Type, OtherCapacity, OtherCounter> &&v)
+	{
+		if (v.is_dynamic())
+		{
+			Parent::destruct();
+			Parent::dealloc(Parent::data);
+
+			Parent::length = v.length;
+			Parent::capacity = v.capacity;
+			Parent::data = v.data;
+
+			v.length = 0;
+			v.capacity = 0;
+			v.data = nullptr;
+			v.destroy();
+		} else
+		{
+			Parent::clear();
+			Parent::allocate(v.length);
+			Parent::move(reinterpret_cast<Type *>(Parent::data), reinterpret_cast<Type *>(v.data), v.length);
+			Parent::length = v.length;
+			v.clear();
+		}
+		return *this;
+	}
+
 	template<typename T>
 	struct GetAlign
 	{
@@ -1531,20 +1638,31 @@ private:
 		T t3;
 	};
 
+	struct DisableCopyMove
+	{
+		DisableCopyMove() = default;
+
+		DisableCopyMove(const DisableCopyMove &) = delete;
+		DisableCopyMove(DisableCopyMove &&) = delete;
+
+		DisableCopyMove &operator=(const DisableCopyMove &) = delete;
+		DisableCopyMove &operator=(DisableCopyMove &&) = delete;
+	};
+
 	template<typename T, int C, int>
-	struct Data { char data[C * sizeof(T)]; };
+	struct Data : private DisableCopyMove { char data[C * sizeof(T)]; };
 
 	template<typename T, int C>
-	struct Data<T, C, 4> { UNIGINE_ALIGNED4(char) data[C * sizeof(T)]; };
+	struct alignas(4) Data<T, C, 4> : private DisableCopyMove { char data[C * sizeof(T)]; };
 
 	template<typename T, int C>
-	struct Data<T, C, 8> { UNIGINE_ALIGNED8(char) data[C * sizeof(T)]; };
+	struct alignas(8) Data<T, C, 8> : private DisableCopyMove { char data[C * sizeof(T)]; };
 
 	template<typename T, int C>
-	struct Data<T, C, 16> { UNIGINE_ALIGNED16(char) data[C * sizeof(T)]; };
+	struct alignas(16) Data<T, C, 16> : private DisableCopyMove { char data[C * sizeof(T)]; };
 
 	template<typename T, int C>
-	struct Data<T, C, 128> { UNIGINE_ALIGNED128(char) data[C * sizeof(T)]; };
+	struct alignas(128) Data<T, C, 128> : private DisableCopyMove { char data[C * sizeof(T)]; };
 
 	Data<Type, Capacity, sizeof(GetAlign<Type>) - 2 * sizeof(Type)> stack_data;
 

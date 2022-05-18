@@ -107,18 +107,6 @@
 			</summary>  
 			<returns>Camera position in the world space.</returns>
 		</member>
-		<member name="M:Unigine.Camera.setPostMaterials(char)">
-			<summary>
-			Sets post postprocess materials that are applied after all other postprocess are rendered. They are used after engine.render.setPostMaterials(), if any.
-			</summary> 
-			<param name="materials"> Comma-separated names of postprocess materials. </param> 
-		</member>
-		<member name="M:Unigine.Camera.getPostMaterials const">
-			<summary>
-			Returns names of the current post postprocess materials that are applied after all other postprocess are rendered. They are used after engine.render.getPostMaterials(), if any.
-			</summary>  
-			<returns>Name of the current post postprocess materials.</returns>
-		</member>
 		<member name="M:Unigine.Camera.setProjection(Unigine.Math.mat4)">
 			<summary>
 			Updates the current projection matrix.					It is not recommended to use this method for setting obliqueness of the near clipping plane of the frustum, as in this case a number of features (such as clouds, shadows, TAA, a number of engine optimizations, etc.) will not function properly. Please, use the setObliqueFrustum() method instead.					This method allows you to set your camera to use perspective or orthographic projection, depending on your project's requirements.					For example, you can use the following code to set up orthographic projection or perspective projection for your camera depending on a flag value:
@@ -363,6 +351,19 @@
 			<summary>
 			Clears all scriptable materials attached to the camera.
 			</summary>  
+		</member>
+		<member name="M:Unigine.Camera.copy(Unigine.Ptr{Unigine.Camera}) const">
+			<summary>
+			Copies the parameters from the source camera to this camera instance.
+			</summary> 
+			<param name="camera"> Smart pointer to the source camera. </param> 
+			<returns>Smart pointer to this camera.</returns>
+		</member>
+		<member name="M:Unigine.Camera.swap(Unigine.Ptr{Unigine.Camera})">
+			<summary>
+			Swaps the parameters between the specified camera and this camera instance.
+			</summary> 
+			<param name="camera"> Camera smart pointer. </param> 
 		</member>
 		<member name="F:Unigine.Camera.FOV_MODE_PHYSICALLY_BASED_CAMERA">
 			<summary>

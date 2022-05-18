@@ -251,7 +251,7 @@
 		</member>
 		<member name="M:Unigine.ComponentSystem.getComponents(NodePtr,Unigine.Vector{C*,int,Unigine.VectorAllocator},int)">
 			<summary>
-			Searches for all components of the specified type down the hierarchy of the specified node and puts them to the given buffer vector.
+			Searches for all components of the specified type assigned to the specified node and puts them to the given buffer vector.
 			</summary> 
 			<param name="node"> Node, for which the components of the specified type are to be found. </param>
 			<param name="out_components"> Buffer vector, to which all found components of the specified type will be added. </param>
@@ -294,38 +294,6 @@
 			<param name="node"> Node, from which the component is to be removed. </param> 
 			<returns>1 if the component was successfully removed from the specified node; otherwise 0.</returns>
 		</member>
-		<member name="M:Unigine.ComponentSystem.init">
-			<summary>
-			Engine calls this function on world initialization. Put you code for resources initialization during the world start here. This function is called by the world script's init() function.
-			</summary>  
-		</member>
-		<member name="M:Unigine.ComponentSystem.update">
-			<summary>
-			Engine calls this function before updating each render frame. You can specify here all logic-related functions you want to be called every frame while your application executes. This function is called by the world script's update() function.
-			</summary>  
-		</member>
-		<member name="M:Unigine.ComponentSystem.postUpdate">
-			<summary>
-			Engine calls this function before rendering each render frame. You can correct behavior after the state of the node has been updated. This function is called by the world script's postUpdate() function.
-			</summary>  
-		</member>
-		<member name="M:Unigine.ComponentSystem.updatePhysics">
-			<summary>
-			Engine calls this function before updating each physics frame. This function is used to control physics. The engine calls updatePhysics() with the fixed rate (60 times per second by default) regardless of the fps number. This function is called by the world script's updatePhysics() function.
-			</summary>  
-		</member>
-		<member name="M:Unigine.ComponentSystem.shutdown">
-			<summary>
-			Engine calls this function on world shutdown. Here you can delete resources that were created during world script execution to avoid memory leaks.  This function is called by the world script's shutdown() function.
-			</summary>  
-		</member>
-		<member name="M:Unigine.ComponentSystem.mkdir(char)">
-			<summary>
-			Creates a new directory.
-			</summary> 
-			<param name="name"> Path for a new directory to be created. </param> 
-			<returns>1 if the directory is created successfully; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.ComponentSystem.setWarningLevel(int)">
 			<summary>
 			Sets the warning level for C++ Component System. Warnings can be very useful when debugging your application, e.g. to investigate Null Reference Exception cases.
@@ -337,6 +305,25 @@
 			Returns the current warning level for C++ Component System. Warnings can be very useful when debugging your application, e.g. to investigate Null Reference Exception cases.
 			</summary>  
 			<returns>Current warning level. One of the following values:WARNING_LEVEL::NONE - warning messages are disabled.WARNING_LEVEL::LOW - warning messages are generated only for serious cases.WARNING_LEVEL::HIGH - warning messages are generated for all cases including potential ones. At this level, for example, all Node/Property/Material parameters, that are empty at startup, will be reported.</returns>
+		</member>
+		<member name="M:Unigine.ComponentVariable.getParameter const">
+			<summary>
+			Returns the pointer to the corresponding property parameter.
+			</summary>  
+			<returns>Pointer to the property parameter.</returns>
+		</member>
+		<member name="M:Unigine.ComponentVariable.size">
+			<summary>
+			Returns the number of elements in the array.						This method is for the array and array structure component parameters.
+			</summary>  
+			<returns>Number of elements in the array.</returns>
+		</member>
+		<member name="M:Unigine.ComponentVariable.operator[](int)">
+			<summary>
+			Returns the reference to the requested element.						This method is for the array and array structure component parameters.
+			</summary> 
+			<param name="index"> Position of the element to return. </param> 
+			<returns>Reference to the requested element.</returns>
 		</member>
 	</members>
 </doc>

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2021, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
  *
  * This file is a part of the UNIGINE 2 SDK.
  *
@@ -36,10 +36,10 @@ public:
 	static int type() { return Node::WORLD_TRIGGER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<WorldTrigger> create(const Math::vec3 &size);
+	static Ptr<WorldTrigger> create(const Math::vec3& size);
 	void setTouch(bool touch);
 	bool isTouch() const;
-	void setSize(const Math::vec3 &size);
+	void setSize(const Math::vec3& size);
 	Math::vec3 getSize() const;
 	void setTargetNodes(const Set< Ptr<Node> > &nodes);
 	Set< Ptr<Node> >  getTargetNodes() const;
@@ -115,7 +115,7 @@ public:
 	void setOffset(float mean, float spread);
 	float getOffsetMean() const;
 	float getOffsetSpread() const;
-	void setNodesRotation(const Math::vec3 &mean, const Math::vec3 &spread);
+	void setNodesRotation(const Math::vec3& mean, const Math::vec3& spread);
 	Math::vec3 getNodesRotationMean() const;
 	Math::vec3 getNodesRotationSpread() const;
 	int setMaskImage(const Ptr<Image> &image, bool invalidate = true);
@@ -141,7 +141,7 @@ public:
 	void setCutoutInverse(int inverse);
 	int getCutoutInverse() const;
 	void invalidate();
-	void invalidate(const UNIGINE_BOUND_BOX & bounds);
+	void invalidate(const Math::WorldBoundBox& bounds);
 	bool saveStateReferences(const Ptr<Stream> &stream) const;
 	bool restoreStateReferences(const Ptr<Stream> &stream);
 };
@@ -155,10 +155,10 @@ public:
 	static int type() { return Node::WORLD_OCCLUDER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<WorldOccluder> create(const Math::vec3 &size);
+	static Ptr<WorldOccluder> create(const Math::vec3& size);
 	void setBackFace(bool face);
 	bool isBackFace() const;
-	void setSize(const Math::vec3 &size);
+	void setSize(const Math::vec3& size);
 	Math::vec3 getSize() const;
 	void setDistance(float distance);
 	float getDistance() const;
@@ -275,7 +275,7 @@ class UNIGINE_API SplinePoint : public APIInterface
 public:
 	void setEnabled(bool enable, bool with_segments = true);
 	bool isEnabled() const;
-	void setPosition(const Math::Vec3 & position);
+	void setPosition(const Math::Vec3& position);
 	Math::Vec3 getPosition() const;
 	int getLinkWorldPosition(const Ptr<SplineSegment> &segment, Math::Vec3 & position) const;
 	Ptr<WorldSplineGraph> getParent() const;
@@ -291,6 +291,8 @@ public:
 	int getLinkVariant(const char *name) const;
 	void copy(const Ptr<SplinePoint> &src);
 	Ptr<SplinePoint> clone();
+	Ptr<Node> getNode(int index);
+	int getNumNodes() const;
 };
 typedef Ptr<SplinePoint> SplinePointPtr;
 
@@ -302,13 +304,13 @@ public:
 	Ptr<SplinePoint> getStartPoint() const;
 	void setEndPoint(const Ptr<SplinePoint> &point);
 	Ptr<SplinePoint> getEndPoint() const;
-	void setStartTangent(const Math::vec3 &tangent);
+	void setStartTangent(const Math::vec3& tangent);
 	Math::vec3 getStartTangent() const;
-	void setStartUp(const Math::vec3 &up);
+	void setStartUp(const Math::vec3& up);
 	Math::vec3 getStartUp() const;
-	void setEndTangent(const Math::vec3 &tangent);
+	void setEndTangent(const Math::vec3& tangent);
 	Math::vec3 getEndTangent() const;
-	void setEndUp(const Math::vec3 &up);
+	void setEndUp(const Math::vec3& up);
 	Math::vec3 getEndUp() const;
 	void setEnabled(bool enable, bool with_points = true);
 	bool isEnabled() const;
@@ -346,6 +348,7 @@ public:
 	float getAdaptiveAngleThreshold(const char *name) const;
 	void setGap(const char *name, float gap = 0.0f);
 	float getGap(const char *name) const;
+	Ptr<Node> getNode(int index);
 	int getNumNodes() const;
 	void copy(const Ptr<SplineSegment> &src, int copy_endpoints_data = 1);
 	Ptr<SplineSegment> clone(int clone_points = 0);
@@ -369,14 +372,15 @@ public:
 	const char *getSplineGraphName() const;
 	void loadSegmentNodes(int segment_index = -1);
 	void getSegmentNodeMesh(const Ptr<Mesh> &mesh, const Ptr<SplineSegment> &segment, int node_index, bool bake_transform = false);
+	void getPointNodeMesh(const Ptr<Mesh> &mesh, const Ptr<SplinePoint> &point, int node_index, bool bake_transform = false);
 	void makeCurved();
 	void makeFlat();
 	bool isCurved() const;
-	Ptr<SplinePoint> createSplinePoint(const Math::Vec3 & position);
+	Ptr<SplinePoint> createSplinePoint(const Math::Vec3& position);
 	void removeSplinePoint(const Ptr<SplinePoint> &point, bool merge = false);
 	int getNumSplinePoints() const;
 	void getSplinePoints(Vector< Ptr<SplinePoint> > &points) const;
-	Ptr<SplineSegment> createSplineSegment(const Ptr<SplinePoint> &start_point, const Math::vec3 &start_tangent, const Math::vec3 &start_up, const Ptr<SplinePoint> &end_point, const Math::vec3 &end_tangent, const Math::vec3 &end_up);
+	Ptr<SplineSegment> createSplineSegment(const Ptr<SplinePoint> &start_point, const Math::vec3& start_tangent, const Math::vec3& start_up, const Ptr<SplinePoint> &end_point, const Math::vec3& end_tangent, const Math::vec3& end_up);
 	void removeSplineSegment(const Ptr<SplineSegment> &segment, bool with_points = false);
 	int getNumSplineSegments() const;
 	void getSplineSegments(Vector< Ptr<SplineSegment> > &segments) const;

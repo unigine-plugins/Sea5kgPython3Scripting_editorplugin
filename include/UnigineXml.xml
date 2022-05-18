@@ -900,7 +900,7 @@
 		</member>
 		<member name="M:Unigine.Xml.save(char,bool,char) const">
 			<summary>
-			Formats the tree of the current node and writes is to the specified file in the specified format.
+			Formats the tree of the current node and writes it to the specified file in the specified format. Creates the given file path if it doesn’t exist yet (including subdirectories).
 			</summary> 
 			<param name="name"> Path to the file. </param>
 			<param name="binary"> Binary format flag: use true to save data to a binary file, or false - to save it to a text file. </param>
@@ -1055,6 +1055,13 @@
 			<param name="value"> Content to set. </param> 
 			<returns>true if the content is set successfully; otherwise, false.</returns>
 		</member>
+		<member name="M:Unigine.Xml.setData(Palette)">
+			<summary>
+			Sets a palette content for the node.
+			</summary> 
+			<param name="value"> Content to set. </param> 
+			<returns>true if the content is set successfully; otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.Xml.readChildData(char,bool) const">
 			<summary>
 			Reads a boolean interpretation of the data stored in the node with the specified name and puts it to the specified target variable.
@@ -1160,6 +1167,13 @@
 			<param name="name"> Child node name. </param>
 			<param name="value"> Target ivec4 variable. </param> 
 		</member>
+		<member name="M:Unigine.Xml.readChildData(char,Palette) const">
+			<summary>
+			Reads a palette interpretation of the data stored in the node with the specified name and puts it to the specified target variable.
+			</summary> 
+			<param name="name"> Child node name. </param>
+			<param name="value"> Target palette variable. </param> 
+		</member>
 		<member name="M:Unigine.Xml.readArg(char,bool) const">
 			<summary>
 			Reads a boolean interpretation of the argument in the node with specified name and puts it to the specified target variable.
@@ -1257,6 +1271,40 @@
 			</summary> 
 			<param name="name"> Name of the target argument. </param>
 			<param name="value"> Target ivec4 variable. </param> 
+		</member>
+		<member name="M:Unigine.Xml.readArg(char,Palette) const">
+			<summary>
+			Reads a palette interpretation of the argument in the node with specified name and puts it to the specified target variable.
+			</summary> 
+			<param name="name"> Name of the target argument. </param>
+			<param name="value"> Target palette variable. </param> 
+		</member>
+		<member name="M:Unigine.Xml.setPaletteArg(char,Palette)">
+			<summary>
+			Sets a palette value of a given argument.
+			</summary> 
+			<param name="name"> The argument name. </param>
+			<param name="value"> The argument value. </param> 
+			<returns>Always 1.</returns>
+		</member>
+		<member name="M:Unigine.Xml.getPaletteArg(char) const">
+			<summary>
+			Returns a palette value of a specified argument.
+			</summary> 
+			<param name="name"> The argument name. </param> 
+			<returns>Value of the argument, if it is found; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Xml.setPaletteData(Palette)">
+			<summary>
+			Sets a palette content for the node. This can be done only for nodes with no children.
+			</summary> 
+			<param name="data"> Content to set. </param> 
+		</member>
+		<member name="M:Unigine.Xml.getPaletteData const">
+			<summary>
+			Returns a palette interpretation of data stored in the node.
+			</summary>  
+			<returns>Data stored in the node.</returns>
 		</member>
 	</members>
 </doc>

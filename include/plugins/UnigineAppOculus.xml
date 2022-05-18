@@ -137,7 +137,7 @@
 		</member>
 		<member name="M:Unigine.Plugins.AppOculus.getHmdType const">
 			<summary>
-			Returns the type of the HMD. Returned values correspond to HMD types listed in OCULUS_HMD.
+			Returns the OpenVR type of the HMD.
 			</summary>  
 			<returns>HMD type.</returns>
 		</member>
@@ -366,61 +366,6 @@
 			Returns a value indicating if the process has VR focus and thus is visible in HMD.
 			</summary>  
 			<returns>true if the information about the HMD session status is visible; otherwise, false.</returns>
-		</member>
-		<member name="F:Unigine.Plugins.AppOculus.OCULUS_HMD_None">
-			<summary>
-			Absence of a HMD type
-		</summary>
-		</member>
-		<member name="F:Unigine.Plugins.AppOculus.OCULUS_HMD_DK1">
-			<summary>
-			The type of the HMD is Oculus Rift DK1 (Developer Kit 1).
-		</summary>
-		</member>
-		<member name="F:Unigine.Plugins.AppOculus.OCULUS_HMD_DKHD">
-			<summary>
-			The type of the HMD is Oculus Rift HD prototype.
-		</summary>
-		</member>
-		<member name="F:Unigine.Plugins.AppOculus.OCULUS_HMD_DK2">
-			<summary>
-			The type of the HMD is Oculus Rift DK2 (Developer Kit 2).
-		</summary>
-		</member>
-		<member name="F:Unigine.Plugins.AppOculus.OCULUS_HMD_CB">
-			<summary>
-			The type of the HMD is Crescent Bay prototype. Used by Oculus internally..
-		</summary>
-		</member>
-		<member name="F:Unigine.Plugins.AppOculus.OCULUS_HMD_Other">
-			<summary>
-			The type of the HMD is unknown type.
-		</summary>
-		</member>
-		<member name="F:Unigine.Plugins.AppOculus.OCULUS_HMD_E3_2015">
-			<summary>
-			The type of the HMD demoed at E3 2015. Used by Oculus internally..
-		</summary>
-		</member>
-		<member name="F:Unigine.Plugins.AppOculus.OCULUS_HMD_ES06">
-			<summary>
-			The type of the HMD is a Oculus Rift prototype. Used by Oculus internally.
-		</summary>
-		</member>
-		<member name="F:Unigine.Plugins.AppOculus.OCULUS_HMD_ES09">
-			<summary>
-			The type of the HMD is a Oculus Rift prototype. Used by Oculus internally.
-		</summary>
-		</member>
-		<member name="F:Unigine.Plugins.AppOculus.OCULUS_HMD_ES11">
-			<summary>
-			The type of the HMD is a Oculus Rift prototype. Used by Oculus internally.
-		</summary>
-		</member>
-		<member name="F:Unigine.Plugins.AppOculus.OCULUS_HMD_CV1">
-			<summary>
-			The type of the HMD is Oculus Rift CV1 (Consumer Version 1).
-		</summary>
 		</member>
 		<member name="F:Unigine.Plugins.AppOculus.DEVICE_HMD">
 			<summary>

@@ -1156,6 +1156,13 @@
 			<param name="timeout_usec"> The maximum time for to wait for the socket's response, in microseconds. By default, the timeout is 0 </param> 
 			<returns>1 if the socket is ready for reading data; otherwise, 0.</returns>
 		</member>
+		<member name="M:Unigine.Socket.isReadyToWrite(int) const">
+			<summary>
+			Returns a value indicating whether the socked is ready for writing data, waiting if necessary, to perform synchronous I/O.
+			</summary> 
+			<param name="timeout_usec"> The maximum time for to wait for the socket's response, in microseconds. By default, the timeout is 0 </param> 
+			<returns>1 if the socket is ready for writing data; otherwise, 0.</returns>
+		</member>
 		<member name="F:Unigine.Socket.SOCKET_DGRAM">
 			<summary>
 			Socket for UDP packets.
