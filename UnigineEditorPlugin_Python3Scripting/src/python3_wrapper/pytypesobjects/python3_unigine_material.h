@@ -1,4 +1,4 @@
-// this file automaticly generated from UnigineMaterial.h 
+// this file automaticly generated from UnigineMaterial.h 1 
 #pragma once
 
 #include "python3_pytypeobjects.h"

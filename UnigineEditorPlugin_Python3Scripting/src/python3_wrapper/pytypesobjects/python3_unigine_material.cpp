@@ -32,11 +32,11 @@ static int unigine_Material_init(unigine_Material *self, PyObject *args, PyObjec
     return 0;
 }
 
-static PyObject *unigine_Material_get_name(unigine_Material* self) {
+static PyObject *unigine_Material_get_manual_name(unigine_Material* self) {
     PyErr_Clear();
     // const char *sName = RUN_IN_MAIN_THREAD(self->unigine_object_ptr->getName())
 
-    PyObject *pName = Py_BuildValue("s", self->unigine_object_ptr->getName());
+    PyObject *pName = Py_BuildValue("s", self->unigine_object_ptr->getManualName());
     return PyUnicode_FromFormat("%S", pName);
 }
 
@@ -74,7 +74,7 @@ finally:
 
 static PyMethodDef unigine_Material_methods[] = {
     {
-        "get_name", (PyCFunction)unigine_Material_get_name, METH_NOARGS,
+        "get_manual_name", (PyCFunction)unigine_Material_get_manual_name, METH_NOARGS,
         "Return the name of material"
     },
     {
@@ -171,10 +171,6 @@ bool Python3UnigineMaterial::isReady() {
         unigine_MaterialType.tp_dict = PyDict_New();
 
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "OPTION_BLEND",
-            Py_BuildValue("i", Unigine::Material::OPTION_BLEND)
-        );
-        PyDict_SetItemString(
             unigine_MaterialType.tp_dict, "OPTION_ORDER",
             Py_BuildValue("i", Unigine::Material::OPTION_ORDER)
         );
@@ -203,16 +199,8 @@ bool Python3UnigineMaterial::isReady() {
             Py_BuildValue("i", Unigine::Material::OPTION_TWO_SIDED)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "OPTION_RECEIVE_SHADOW",
-            Py_BuildValue("i", Unigine::Material::OPTION_RECEIVE_SHADOW)
-        );
-        PyDict_SetItemString(
             unigine_MaterialType.tp_dict, "OPTION_CAST_PROJ_OMNI_SHADOW",
             Py_BuildValue("i", Unigine::Material::OPTION_CAST_PROJ_OMNI_SHADOW)
-        );
-        PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "OPTION_RECEIVE_WORLD_SHADOW",
-            Py_BuildValue("i", Unigine::Material::OPTION_RECEIVE_WORLD_SHADOW)
         );
         PyDict_SetItemString(
             unigine_MaterialType.tp_dict, "OPTION_CAST_WORLD_SHADOW",
@@ -251,224 +239,212 @@ bool Python3UnigineMaterial::isReady() {
             Py_BuildValue("i", Unigine::Material::STATE_INT)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_IMAGE",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_IMAGE)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_CURVE",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_CURVE)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_CURVE",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_CURVE)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_GBUFFER_ALBEDO",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_GBUFFER_ALBEDO)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_GBUFFER_ALBEDO",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_GBUFFER_ALBEDO)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_GBUFFER_SHADING",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_GBUFFER_SHADING)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_GBUFFER_SHADING",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_GBUFFER_SHADING)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_GBUFFER_NORMAL",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_GBUFFER_NORMAL)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_GBUFFER_NORMAL",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_GBUFFER_NORMAL)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_GBUFFER_VELOCITY",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_GBUFFER_VELOCITY)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_GBUFFER_VELOCITY",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_GBUFFER_VELOCITY)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_GBUFFER_MATERIAL_MASK",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_GBUFFER_MATERIAL_MASK)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_GBUFFER_MATERIAL_MASK",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_GBUFFER_MATERIAL_MASK)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_GBUFFER_FEATURES",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_GBUFFER_FEATURES)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_GBUFFER_FEATURES",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_GBUFFER_FEATURES)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_AUXILIARY",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_AUXILIARY)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_AUXILIARY",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_AUXILIARY)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_REFRACTION",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_REFRACTION)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_REFRACTION",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_REFRACTION)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_REFRACTION_MASK",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_REFRACTION_MASK)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_REFRACTION_MASK",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_REFRACTION_MASK)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_TRANSPARENT_BLUR",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_TRANSPARENT_BLUR)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_TRANSPARENT_BLUR",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_TRANSPARENT_BLUR)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_LIGHTS",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_LIGHTS)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_LIGHTS",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_LIGHTS)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_BENT_NORMAL",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_BENT_NORMAL)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_BENT_NORMAL",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_BENT_NORMAL)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_SSAO",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_SSAO)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_SSAO",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_SSAO)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_SSGI",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_SSGI)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_SSGI",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_SSGI)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_SSR",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_SSR)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_SSR",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_SSR)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_CURVATURE",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_CURVATURE)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_CURVATURE",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_CURVATURE)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_DOF_MASK",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_DOF_MASK)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_DOF_MASK",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_DOF_MASK)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_AUTO_EXPOSURE",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_AUTO_EXPOSURE)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_AUTO_EXPOSURE",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_AUTO_EXPOSURE)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_SCREEN_COLOR",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_SCREEN_COLOR)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_SCREEN_COLOR",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_SCREEN_COLOR)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_SCREEN_COLOR_OLD",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_SCREEN_COLOR_OLD)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_SCREEN_COLOR_OLD",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_SCREEN_COLOR_OLD)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_NORMAL_UNPACK",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_NORMAL_UNPACK)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_NORMAL_UNPACK",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_NORMAL_UNPACK)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_CURRENT_DEPTH",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_CURRENT_DEPTH)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_CURRENT_DEPTH",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_CURRENT_DEPTH)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_OPACITY_DEPTH",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_OPACITY_DEPTH)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_OPACITY_DEPTH",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_OPACITY_DEPTH)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_LINEAR_DEPTH",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_LINEAR_DEPTH)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_LINEAR_DEPTH",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_LINEAR_DEPTH)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_LIGHT_IMAGE",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_LIGHT_IMAGE)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_OPACITY_SCREEN",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_OPACITY_SCREEN)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_LIGHT_SHADOW_DEPTH",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_LIGHT_SHADOW_DEPTH)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_LIGHT_IMAGE",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_LIGHT_IMAGE)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_LIGHT_SHADOW_COLOR",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_LIGHT_SHADOW_COLOR)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_LIGHT_SHADOW_DEPTH",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_LIGHT_SHADOW_DEPTH)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_TRANSPARENT_ENVIRONMENT",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_TRANSPARENT_ENVIRONMENT)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_LIGHT_SHADOW_COLOR",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_LIGHT_SHADOW_COLOR)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_REFLECTION_2D",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_REFLECTION_2D)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_TRANSPARENT_ENVIRONMENT",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_TRANSPARENT_ENVIRONMENT)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_REFLECTION_CUBE",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_REFLECTION_CUBE)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_REFLECTION_2D",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_REFLECTION_2D)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_SCATTERING_SKY_LUT",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_SCATTERING_SKY_LUT)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_REFLECTION_CUBE",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_REFLECTION_CUBE)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_WBUFFER_CONSTANT_ID",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_WBUFFER_CONSTANT_ID)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_SCATTERING_SKY_LUT",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_SCATTERING_SKY_LUT)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_WBUFFER_DIFFUSE",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_WBUFFER_DIFFUSE)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_WBUFFER_CONSTANT_ID",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_WBUFFER_CONSTANT_ID)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_WBUFFER_NORMAL",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_WBUFFER_NORMAL)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_WBUFFER_DIFFUSE",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_WBUFFER_DIFFUSE)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_WBUFFER_WATER",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_WBUFFER_WATER)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_WBUFFER_NORMAL",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_WBUFFER_NORMAL)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_WBUFFER_SS_ENVIRONMENT",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_WBUFFER_SS_ENVIRONMENT)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_WBUFFER_WATER",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_WBUFFER_WATER)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_WBUFFER_WU_MASK",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_WBUFFER_WU_MASK)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_WBUFFER_SS_ENVIRONMENT",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_WBUFFER_SS_ENVIRONMENT)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_WBUFFER_PLANAR_REFLECTION",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_WBUFFER_PLANAR_REFLECTION)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_WBUFFER_WU_MASK",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_WBUFFER_WU_MASK)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_CLOUDS_SCREEN",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_CLOUDS_SCREEN)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_WBUFFER_PLANAR_REFLECTION",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_WBUFFER_PLANAR_REFLECTION)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_CLOUDS_STATIC_COVERAGE",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_CLOUDS_STATIC_COVERAGE)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_CLOUDS_SCREEN",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_CLOUDS_SCREEN)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_CLOUDS_DYNAMIC_COVERAGE",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_CLOUDS_DYNAMIC_COVERAGE)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_CLOUDS_STATIC_COVERAGE",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_CLOUDS_STATIC_COVERAGE)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_TERRAIN_GLOBAL_DEPTH",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_TERRAIN_GLOBAL_DEPTH)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_CLOUDS_DYNAMIC_COVERAGE",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_CLOUDS_DYNAMIC_COVERAGE)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_TERRAIN_GLOBAL_FLAT_POSITION",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_TERRAIN_GLOBAL_FLAT_POSITION)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_TERRAIN_GLOBAL_DEPTH",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_TERRAIN_GLOBAL_DEPTH)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_FIELD_HEIGHT_ARRAY",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_FIELD_HEIGHT_ARRAY)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_TERRAIN_GLOBAL_FLAT_POSITION",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_TERRAIN_GLOBAL_FLAT_POSITION)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_FIELD_SHORELINE_ARRAY",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_FIELD_SHORELINE_ARRAY)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_FIELD_HEIGHT_ARRAY",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_FIELD_HEIGHT_ARRAY)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_DECAL_DEPTH",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_DECAL_DEPTH)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_FIELD_SHORELINE_ARRAY",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_FIELD_SHORELINE_ARRAY)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_DECAL_ALBEDO",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_DECAL_ALBEDO)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_DECAL_DEPTH",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_DECAL_DEPTH)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_DECAL_NORMAL",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_DECAL_NORMAL)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_DECAL_ALBEDO",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_DECAL_ALBEDO)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_DECAL_SHADING",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_DECAL_SHADING)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_DECAL_NORMAL",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_DECAL_NORMAL)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_PROCEDURAL",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_PROCEDURAL)
         );
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_DECAL_SHADING",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_DECAL_SHADING)
-        );
-        PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_PROCEDURAL",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_PROCEDURAL)
-        );
-        PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_FILTER",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_FILTER)
-        );
-        PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_CUSTOM",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_CUSTOM)
+            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_CUSTOM",
+            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_CUSTOM)
         );
         PyDict_SetItemString(
             unigine_MaterialType.tp_dict, "PARAMETER_FLOAT",

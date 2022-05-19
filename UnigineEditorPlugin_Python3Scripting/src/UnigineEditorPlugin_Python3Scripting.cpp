@@ -335,19 +335,32 @@ void UnigineEditorPlugin_Python3Scripting::globalSelectionChanged() {
 	if (Editor::SelectorGUIDs* selector = Editor::Selection::getSelectorMaterials()) {
 		log_info("Selected materials");
 		switchMenuTo(MenuSelectedType::MST_MATERIALS);
-		m_vSelectedGuids.append(selector->guids());
+		Unigine::Vector<Unigine::UGUID> vGuids = selector->guids();
+		for(int i = 0; i < vGuids.size(); i++) {
+			m_vSelectedGuids.append(vGuids[i]);
+		}
 	} else if (auto selector = Editor::Selection::getSelectorRuntimes()) {
 		log_info("Selected runtimes");
 		switchMenuTo(MenuSelectedType::MST_RUNTIMES);
-		m_vSelectedGuids.append(selector->guids());
+		Unigine::Vector<Unigine::UGUID> vGuids = selector->guids();
+		for(int i = 0; i < vGuids.size(); i++) {
+			m_vSelectedGuids.append(vGuids[i]);
+		}
 	} else if (auto selector = Editor::Selection::getSelectorProperties()) {
 		log_info("Selected properties");
 		switchMenuTo(MenuSelectedType::MST_PROPERTIES);
-		m_vSelectedGuids.append(selector->guids());
+		Unigine::Vector<Unigine::UGUID> vGuids = selector->guids();
+		for(int i = 0; i < vGuids.size(); i++) {
+			m_vSelectedGuids.append(vGuids[i]);
+		}
+		// m_vSelectedGuids.append(selector->guids());
 	} else if (auto selector = Editor::Selection::getSelectorNodes()) {
 		log_info("Selected nodes");
 		switchMenuTo(MenuSelectedType::MST_NODES);
-		m_vSelectedNodes.append(selector->getNodes());
+		Unigine::Vector<Unigine::NodePtr> vNodes = selector->getNodes();
+		for(int i = 0; i < vNodes.size(); i++) {
+			m_vSelectedNodes.append(vNodes[i]);
+		}
 	} else {
 		log_info("Something else");
 		switchMenuTo(MenuSelectedType::MST_NONE);
@@ -480,7 +493,7 @@ bool UnigineEditorPlugin_Python3Scripting::rewriteExtensionsJson() {
 
 bool UnigineEditorPlugin_Python3Scripting::safeCreateMenuPython3Scripting() {
 	QString sMenuName = Constants::MM_TOOLS;
-	QMenu *pMenu = Editor::WindowManager::findMenu(sMenuName);
+	QMenu *pMenu = Editor::WindowManager::findMenu(sMenuName.toStdString().c_str());
 	if (pMenu == nullptr) {
 		log_error(" Not found menu: " + sMenuName);
 		return false;
@@ -686,7 +699,6 @@ ModelExtension *UnigineEditorPlugin_Python3Scripting::findModelExtensionByAction
 	ModelExtension *pExt = nullptr;
 	for (int i = 0; i < m_vScripts.size(); i++) {
 		if (m_vScripts[i]->getId() == sExtensionId) {
-			log_info("Found script");
 			return m_vScripts[i];
 		}
 	}
