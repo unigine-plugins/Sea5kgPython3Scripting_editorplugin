@@ -3,6 +3,36 @@ linux_UnigineEditorPlugin_Python3Scripting*
 windows_UnigineEditorPlugin_Python3Scripting*
 lib/
 
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Makefile
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Makefile.pre
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Misc/python-config.sh
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Misc/python-embed.pc
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Misc/python.pc
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Modules/Setup.local
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Modules/config.c
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Modules/ld_so_aix
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/PCbuild/.vs/
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/PCbuild/_elementtree.vcxproj.user
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/PCbuild/amd64/
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/PCbuild/obj/
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/PCbuild/python.vcxproj.user
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/PCbuild/python3dll.vcxproj.user
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/PCbuild/python_uwp.vcxproj.user
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/PCbuild/pythoncore.vcxproj.user
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/PCbuild/xxlimited.vcxproj.user
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Programs/_testembed
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/build/
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/config.log
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/config.status
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/externals/
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/pybuilddir.txt
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/pyconfig.h
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/python
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/python-config
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/python-config.py
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/python-gdb.py
+UnigineEditorPlugin_Python3Scripting/Python-3.10.1/python.bat
+
 # Prerequisites
 *.d
 

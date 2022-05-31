@@ -51,6 +51,7 @@ add_library(${proj_name} SHARED
 	${PROJECT_SOURCE_DIR}/src/run_python_in_thread.cpp
     ${PROJECT_SOURCE_DIR}/src/CollectorMenuSelected.cpp
     ${PROJECT_SOURCE_DIR}/src/ModelExtension.cpp
+	${PROJECT_SOURCE_DIR}/src/FileUnexpy3.cpp
 	${PROJECT_SOURCE_DIR}/src/dialogs/CreateExtensionDialog.cpp
 	${PROJECT_SOURCE_DIR}/src/dialogs/EditExtensionDialog.cpp
 	${PROJECT_SOURCE_DIR}/src/dialogs/ManageScriptsDialog.cpp
