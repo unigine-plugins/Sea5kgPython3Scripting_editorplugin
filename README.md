@@ -15,6 +15,22 @@ Pluging for scripting by python3 in Unigine Editor https://unigine.com/get-unigi
 
 ## Prebuilded versions here
 
-[here](https://sea-kg.com/files/unigine-plugins/UnigineEditorPlugin_Python3Scripting/v2.14.1.1/)
+[here](https://sea-kg.com/files/unigine-plugins/UnigineEditorPlugin_Python3Scripting/v2.15.1/)
 
 
+
+## Format of package `unexpy3`
+
+Meta:
+- `format-version` - version of format meta
+- `uuid` - unique identidifictor
+- `unigine-editor-version` - version of Unigine Editor
+- `title` - title of extension
+- `description` - description
+- `version` - specify version of extension
+- `tags` - list of tags for extension
+- `authors` - list of authors
+- `icon` - Image for extension
+- `screenshots` - Screens for extension
+- `url` - Uri to extsndion web-site / sourcecode and etc
+- `list-of-files` - List of files

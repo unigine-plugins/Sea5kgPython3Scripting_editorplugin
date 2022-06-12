@@ -7,6 +7,7 @@
 
 FileUnexpy3::FileUnexpy3(const QString &sScriptDir) {
     m_sScriptDir = sScriptDir;
+    m_nFormatVersion = 1;
 }
 
 FileUnexpy3::~FileUnexpy3() {
@@ -78,21 +79,70 @@ QJsonObject FileUnexpy3::toJsonObject() {
     return obj;
 }
 
-void FileUnexpy3::setId(const QString &sId) {
-    m_sExtensionId = sId;
+int FileUnexpy3::getFormatVersion() {
+    return m_nFormatVersion;
 }
 
-void FileUnexpy3::setName(const QString &sName) {
-    m_sExtensionName = sName;
+QString FileUnexpy3::getUuid() {
+    return m_sUuid;
 }
 
-void FileUnexpy3::setFor(const QString &sFor) {
-    m_sExtensionFor = sFor;
+QString FileUnexpy3::getVersionOfUnigineEditor() {
+    return m_sVersionOfUnigineEditor;
 }
 
-void FileUnexpy3::setEnabled(bool bEnabled) {
-    m_bEnabled = bEnabled;
+QString FileUnexpy3::getTitle() {
+    return m_sTitle;
 }
+
+QString FileUnexpy3::getDescription() {
+    return m_sDescription;
+}
+
+QString FileUnexpy3::getVersion() {
+    return m_sVersion;
+}
+
+QVector<QString> FileUnexpy3::getTags() {
+    return m_vTags;
+}
+
+QVector<QString> FileUnexpy3::getAuthors() {
+    return m_vAuthors;
+}
+
+QString FileUnexpy3::getIcon() {
+    return m_sIcon;
+}
+
+QVector<QString> FileUnexpy3::getScreenshots() {
+    return m_vScreenshots;
+}
+
+QString FileUnexpy3::getUrl() {
+    return m_sUrl;
+}
+
+QVector<QString> FileUnexpy3::getListOfFiles() {
+    return m_vListOfFiles;
+}
+
+
+// void FileUnexpy3::setId(const QString &sId) {
+//     m_sExtensionId = sId;
+// }
+
+// void FileUnexpy3::setName(const QString &sName) {
+//     m_sExtensionName = sName;
+// }
+
+// void FileUnexpy3::setFor(const QString &sFor) {
+//     m_sExtensionFor = sFor;
+// }
+
+// void FileUnexpy3::setEnabled(bool bEnabled) {
+//     m_bEnabled = bEnabled;
+// }
 
 QString FileUnexpy3::getId() {
     return m_sExtensionId;
