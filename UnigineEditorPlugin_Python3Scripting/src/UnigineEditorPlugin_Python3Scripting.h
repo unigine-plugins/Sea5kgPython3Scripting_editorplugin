@@ -81,7 +81,7 @@ private:
 	QString m_sPython3ScriptingDirPath;
 	QString m_sPython3ScriptingJsonFilePath;
 	QWidget *m_pMainWindow;
-	QMenu *m_pMenuPython3Scripting;
+	QMenu *m_pMenuPython3Extensions;
 	QMap<MenuSelectedType, CollectorMenuSelected *> m_mapCollectorMenuSelected;
 
 	QVector<ModelExtension *> m_vScripts;

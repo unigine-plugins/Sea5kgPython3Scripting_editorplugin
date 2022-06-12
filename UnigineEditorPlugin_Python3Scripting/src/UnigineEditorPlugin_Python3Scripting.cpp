@@ -45,7 +45,7 @@ bool UnigineEditorPlugin_Python3Scripting::init() {
 	m_pMenuExtensions = nullptr;
 	m_pEditScriptWindow = nullptr;
 	m_pScriptThread = nullptr;
-	m_pMenuPython3Scripting = nullptr;
+	m_pMenuPython3Extensions = nullptr;
 	m_pMainWindow = nullptr;
 	m_nLatestMenu = MenuSelectedType::MST_NONE;
 	m_mapCollectorMenuSelected[MenuSelectedType::MST_MATERIALS] = new CollectorMenuSelected(this, "Materials");
@@ -501,11 +501,14 @@ bool UnigineEditorPlugin_Python3Scripting::safeCreateMenuPython3Scripting() {
 	}
 	// log_info(" Found menu " + sMenuName);
 	// get main menu
-	if (m_pMenuPython3Scripting == nullptr) {
+	if (m_pMenuPython3Extensions == nullptr) {
 		QWidget* pMenuTools = dynamic_cast<QWidget*>(pMenu);
-		QMenuBar* pMenuBar = dynamic_cast<QMenuBar*>(pMenuTools->parentWidget());
-		m_pMenuPython3Scripting = pMenuBar->addMenu(tr("Python3Scripting"));
 		m_pMainWindow = pMenuTools->parentWidget()->parentWidget();
+		// QMenuBar* pMenuBar = dynamic_cast<QMenuBar*>(pMenuTools->parentWidget());
+		// m_pMenuPython3Extensions = pMenuBar->addMenu(tr("Python3Scripting"));
+
+		m_pMenuPython3Extensions = pMenu->addMenu(tr("Python3 Extensions"));
+		
 		QString sClassname  = m_pMainWindow->metaObject()->className();
 		log_info(" Found  " + sClassname);
 
@@ -531,7 +534,7 @@ bool UnigineEditorPlugin_Python3Scripting::reloadMenuForSelected() {
 
 	QMap<MenuSelectedType, CollectorMenuSelected *>::iterator i;
  	for (i = m_mapCollectorMenuSelected.begin(); i != m_mapCollectorMenuSelected.end(); ++i) {
-    	i.value()->initMenuSafe(m_pMenuPython3Scripting);
+    	i.value()->initMenuSafe(m_pMenuPython3Extensions);
 	}
 	switchMenuTo(m_nLatestMenu);
 
@@ -569,7 +572,7 @@ bool UnigineEditorPlugin_Python3Scripting::reloadMenuForSelected() {
 
 bool UnigineEditorPlugin_Python3Scripting::reloadMenuForExtensions() {
 	if (m_pMenuExtensions == nullptr) {
-		m_pMenuExtensions = m_pMenuPython3Scripting->addMenu(tr("Extensions"));
+		m_pMenuExtensions = m_pMenuPython3Extensions->addMenu(tr("Extensions"));
 	}
 	// remove previous submenus
 	for (int i = 0; i < m_vSubMenusExtensions.size(); i++) {
@@ -611,21 +614,21 @@ bool UnigineEditorPlugin_Python3Scripting::reloadMenuForExtensions() {
 bool UnigineEditorPlugin_Python3Scripting::initMenuForCreateExtension() {
 	m_pActionCreateNewExtension = new QAction(tr("Create new extension"), this);
 	connect(m_pActionCreateNewExtension, &QAction::triggered, this, &UnigineEditorPlugin_Python3Scripting::createNewExtension);
-	m_pMenuPython3Scripting->addAction(m_pActionCreateNewExtension);
+	m_pMenuPython3Extensions->addAction(m_pActionCreateNewExtension);
 	return true;
 }
 
 bool UnigineEditorPlugin_Python3Scripting::initMenuForManageScripts() {
 	m_pActionManageScripts = new QAction(tr("Manage scripts"), this);
 	connect(m_pActionManageScripts, &QAction::triggered, this, &UnigineEditorPlugin_Python3Scripting::manageScripts);
-	m_pMenuPython3Scripting->addAction(m_pActionManageScripts);
+	m_pMenuPython3Extensions->addAction(m_pActionManageScripts);
 	return true;
 }
 
 bool UnigineEditorPlugin_Python3Scripting::initMenuForAbout() {
 	m_pActionAbout = new QAction(tr("About Python3Scripting Plugin"), this);
 	connect(m_pActionAbout, &QAction::triggered, this, &UnigineEditorPlugin_Python3Scripting::about);
-	m_pMenuPython3Scripting->addAction(m_pActionAbout);
+	m_pMenuPython3Extensions->addAction(m_pActionAbout);
 	return true;
 }
 

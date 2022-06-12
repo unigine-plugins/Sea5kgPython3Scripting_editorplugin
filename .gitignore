@@ -2,6 +2,7 @@ UnigineEditorPlugin_Python3Scripting/python-bin*
 linux_UnigineEditorPlugin_Python3Scripting*
 windows_UnigineEditorPlugin_Python3Scripting*
 lib/
+other/
 
 UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Makefile
 UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Makefile.pre
