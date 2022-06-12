@@ -270,14 +270,14 @@ void UnigineEditorPlugin_Python3Scripting::manageScripts() {
     }
 }
 
-void UnigineEditorPlugin_Python3Scripting::about() {
+void UnigineEditorPlugin_Python3Scripting::menuClickAbout() {
 	QMessageBox msgBox;
     msgBox.setStyleSheet("QLabel{min-width: 700px;}");
     msgBox.setModal( true );
-    msgBox.setWindowTitle("Python3Scripting: About");
+    msgBox.setWindowTitle("About Python3 Extensions Plugin");
     msgBox.setTextFormat(Qt::RichText);
     msgBox.setText(
-        "<h2>Python3Scripting</h2> <br>"
+        "<h2>Python3Extensions</h2> <br>"
         "Version: " + QString(PYTHON3SCRIPTING_VERSION) + " <br>"
         "Source-code: <a href='https://github.com/unigine-plugins/unigine-editor-python3scripting'>https://github.com/unigine-plugins/unigine-editor-python3scripting</a> <br>"
         "<hr/>"
@@ -626,8 +626,8 @@ bool UnigineEditorPlugin_Python3Scripting::initMenuForManageScripts() {
 }
 
 bool UnigineEditorPlugin_Python3Scripting::initMenuForAbout() {
-	m_pActionAbout = new QAction(tr("About Python3Scripting Plugin"), this);
-	connect(m_pActionAbout, &QAction::triggered, this, &UnigineEditorPlugin_Python3Scripting::about);
+	m_pActionAbout = new QAction(tr("About Plugin"), this);
+	connect(m_pActionAbout, &QAction::triggered, this, &UnigineEditorPlugin_Python3Scripting::menuClickAbout);
 	m_pMenuPython3Extensions->addAction(m_pActionAbout);
 	return true;
 }

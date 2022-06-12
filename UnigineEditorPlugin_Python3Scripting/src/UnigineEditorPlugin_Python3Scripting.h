@@ -51,7 +51,7 @@ private slots:
 	void disableExtension();
 	void enableExtension();
 	void removeExtension();
-	void about();
+	void menuClickAbout();
 
 	void globalSelectionChanged();
 
