@@ -18,6 +18,12 @@ Pluging for scripting by python3 in Unigine Editor https://unigine.com/get-unigi
 [here](https://sea-kg.com/files/unigine-plugins/UnigineEditorPlugin_Python3Scripting/v2.15.1/)
 
 
+## Build on linux 
+
+```
+$ docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:latest ./build_plugin.py
+```
+
 
 ## Format of package `unexpy3`
 

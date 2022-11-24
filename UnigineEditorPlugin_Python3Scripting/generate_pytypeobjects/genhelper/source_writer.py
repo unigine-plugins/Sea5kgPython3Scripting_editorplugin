@@ -156,12 +156,13 @@ class SourceWriter:
             f_source.write("        unigine_" + self.__classname + "Type.tp_dict = PyDict_New();\n")
             f_source.write("\n")
 
-            for p in enums:
-                for en in p['values']:
+            for enum_typename in enums:
+                for _enum_item_name in enums[enum_typename]:
                     # print("en", en)
+                    f_source.write("        // enum_typename: " + enum_typename + " \n")
                     f_source.write("        PyDict_SetItemString(\n")
-                    f_source.write("            unigine_" + self.__classname + "Type.tp_dict, \"" + en['name'] + "\",\n")
-                    f_source.write("            Py_BuildValue(\"i\", Unigine::" + self.__classname + "::" + en['name'] + ")\n")
+                    f_source.write("            unigine_" + self.__classname + "Type.tp_dict, \"" + _enum_item_name + "\",\n")
+                    f_source.write("            Py_BuildValue(\"i\", Unigine::" + self.__classname + "::" + _enum_item_name + ")\n")
                     f_source.write("        );\n")
             f_source.write("    }\n")
             f_source.write("    if (PyType_Ready(&unigine_" + self.__classname + "Type) < 0) {\n")
