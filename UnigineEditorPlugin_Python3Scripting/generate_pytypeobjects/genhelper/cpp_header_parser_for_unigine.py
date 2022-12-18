@@ -11,6 +11,8 @@ class CppHeaderParserForUnigineClass:
         self.__inherit_classname = _inherit_classname
         self.__filename = _filename
         self.__enums = {}
+        self.__static_methods = []
+        self.__public_methods = []
     
     def get_filename(self):
         return self.__filename
@@ -31,6 +33,9 @@ class CppHeaderParserForUnigineClass:
 
     def get_enums(self):
         return self.__enums
+    
+    def add_public_method(self, _method):
+        self.__public_methods.append(_method)
 
 class CppHeaderParserForUnigine:
     
@@ -159,19 +164,23 @@ class CppHeaderParserForUnigine:
             if _res: continue
             _line_number, _res = self.__is_enum(_lines, _line_number)
             if _res: continue
+            _line_number, _res = self.__is_method(_lines, _line_number)
+            if _res: continue
             _line = _lines[_line_number]
             if _line == '};':
                 self.__scopes.pop()
             _line_number += 1 
+            if _line_number < len(_lines):
+                print("TODO: " + _lines[_line_number])
             continue # skip now
-            sys.exit("__is_class: Unknown line '" + _lines[_line_number] + "'")
+            # sys.exit("__is_class: Unknown line '" + _lines[_line_number] + "'")
         return _line_number, True
 
     def __is_class_public_section(self, _lines, _line_number):
         _line = _lines[_line_number]
         if _line != "public:":
             return _line_number, False
-        print("TODO public:")
+        # print("TODO public:")
         self.__scopes[-1]["visible_section"] = 'public'
         _line_number += 1
         return _line_number, True
@@ -201,6 +210,42 @@ class CppHeaderParserForUnigine:
         for _enum in _enums:
             self.__scopes[-1]["object"].add_enum(_enum_typename, _enum)
         return _line_number, True
+
+    def __is_method(self, _lines, _line_number):
+        _line = _lines[_line_number]
+        possible_ret = [
+            'const char *',
+            'UGUID ',
+            'Math::BoundSphere ',
+            'void ',
+            'bool ',
+            'int ',
+            'Ptr<GeodeticPivot> ',
+            'Math::WorldBoundSphere ',
+            'Math::vec3 ',
+            'Ptr<BodyRigid> '
+            'Math::Vec3 ',
+            'Math::vec4 ',
+            'Math::Vec4 ',
+            'Ptr<Node> ',
+        ]
+        for _ret in possible_ret:
+            if _line.startswith(_ret) and _line.endswith(';'):
+                if self.__scopes[-1]["visible_section"] != 'public':
+                    sys.exit("No public method")
+                if self.__scopes[-1]['scope'] != 'class':
+                    sys.exit("Expected class")
+                _classname = self.__scopes[-1]['name']
+                _method = {
+                    'original_line': _line,
+                    'ret': _ret,
+                }
+                self.classes[_classname].add_public_method(_method)
+
+                print("Found method", _method)
+                _line_number +=1 
+                return _line_number, True
+        return _line_number, False
 
     def __add_include(self, _include):
         """ add_include """
