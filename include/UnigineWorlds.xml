@@ -14,7 +14,7 @@
 			Invalidates all world clutter cells. All invalidated cells will be regenerated.
 			</summary>  
 		</member>
-		<member name="M:Unigine.WorldClutter.invalidate(UNIGINE_BOUND_BOX)">
+		<member name="M:Unigine.WorldClutter.invalidate(Unigine.Math.WorldBoundBox)">
 			<summary>
 			Invalidates all world clutter cells within the area specified by the given bounding box. All invalidated cells will be regenerated.
 			</summary> 
@@ -738,6 +738,15 @@
 			<param name="node_index"> Number of the node instance placed along the spline segment. </param>
 			<param name="bake_transform"> true to use baked mesh transformation, false - to use default (the mesh will be placed at the origin). The default value is false. </param> 
 		</member>
+		<member name="M:Unigine.WorldSplineGraph.getPointNodeMesh(Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{SplinePoint},int,bool)">
+			<summary>
+			Exports a mesh with the specified index placed as the specified spline point to the specified target mesh.				Due to the nature of the mesh, there will be visual artifacts connected with the float precision, in case an exported node is located very far from the origin (around 10,000 m and further). In this case we advise exporting it without baking transformation.
+			</summary> 
+			<param name="mesh"> Target mesh to store the desired mesh placed at the specified spline point. </param>
+			<param name="point"> Spline point for which a mesh is to be retrieved. </param>
+			<param name="node_index"> Number of the desired node in a row of nodes placed at the specified point, in the range from 0 to the total number of nodes placed at the point.The node must be an ObjectMeshStatic or an ObjectMeshSkinned, otherwise an error occurs. </param>
+			<param name="bake_transform"> Bake Transform flag: true - to export the mesh preserving the current coordinates (can be useful when splitting large WorldSplineGraph objects to keep relative positions of meshes); or false - to reset the position of the exported mesh to origin (0,0,0) with zero-rotation. </param> 
+		</member>
 		<member name="M:Unigine.WorldSplineGraph.createSplinePoint(Unigine.Math.Vec3)">
 			<summary>
 			Creates a new spline point with the specified parameters and attaches it to the world spline graph.
@@ -934,15 +943,6 @@
 			</summary> 
 			<param name="point"> Spline point to be checked. </param> 
 			<returns>1 if the specified spline point is linked to any spline segment; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.getPointNodeMesh(Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{SplinePoint},int,bool)">
-			<summary>
-			Exports a mesh with the specified index placed as the specified spline point to the specified target mesh.				Due to the nature of the mesh, there will be visual artifacts connected with the float precision, in case an exported node is located very far from the origin (around 10,000 m and further). In this case we advise exporting it without baking transformation.
-			</summary> 
-			<param name="mesh"> Target mesh to store the desired mesh placed at the specified spline point. </param>
-			<param name="point"> Spline point for which a mesh is to be retrieved. </param>
-			<param name="node_index"> Number of the desired node in a row of nodes placed at the specified point, in the range from 0 to the total number of nodes placed at the point.The node must be an ObjectMeshStatic or an ObjectMeshSkinned, otherwise an error occurs. </param>
-			<param name="bake_transform"> Bake Transform flag: true - to export the mesh preserving the current coordinates (can be useful when splitting large WorldSplineGraph objects to keep relative positions of meshes); or false - to reset the position of the exported mesh to origin (0,0,0) with zero-rotation. </param> 
 		</member>
 		<member name="M:Unigine.SplinePoint.setEnabled(bool,bool)">
 			<summary>

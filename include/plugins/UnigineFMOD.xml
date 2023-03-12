@@ -88,6 +88,16 @@
 			Cleans up used resources.
 			</summary>  
 		</member>
+		<member name="M:Unigine.Plugins.FMOD.Bank.getPath const">
+			<summary>
+			Returns the object's path.
+			</summary>  
+			<returns>Object's path.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Bank.isValid const">
+			<summary>
+			</summary>  
+		</member>
 		<member name="M:Unigine.Plugins.FMOD.Bus.setPaused(bool)">
 			<summary>
 			Sets the pause state for the bus.
@@ -134,16 +144,27 @@
 			Releases the bus object.
 			</summary>  
 		</member>
+		<member name="M:Unigine.Plugins.FMOD.Bus.getPath const">
+			<summary>
+			Returns the bus object's path.
+			</summary>  
+			<returns>Object's path.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Bus.isValid const">
+			<summary>
+			</summary>  
+		</member>
 		<member name="M:Unigine.Plugins.FMOD.Channel.setPaused(bool)">
 			<summary>
 			Sets the pause state for the channel.
 			</summary> 
-			<param name="value"> true to pause the channel, false to unpause it. </param> 
+			<param name="paused"> true to pause the channel, false to unpause it. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.FMOD.Channel.getPaused">
+		<member name="M:Unigine.Plugins.FMOD.Channel.isPaused const">
 			<summary>
 			Returns the pause state of the channel.
 			</summary>  
+			<returns>true if the channel is paused; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.FMOD.Channel.setVolume(float)">
 			<summary>
@@ -151,13 +172,13 @@
 			</summary> 
 			<param name="volume"> Volume level in range [-inf; inf]. 0 = silent, 1 = full. Negative level inverts the signal. Values larger than 1 amplify the signal. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.FMOD.Channel.getVolume">
+		<member name="M:Unigine.Plugins.FMOD.Channel.getVolume const">
 			<summary>
 			Returns the current volume level.
 			</summary>  
 			<returns>Volume level.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.FMOD.Channel.isPlaying">
+		<member name="M:Unigine.Plugins.FMOD.Channel.isPlaying const">
 			<summary>
 			Returns the playing state.
 			</summary>  
@@ -226,6 +247,96 @@
 			</summary> 
 			<param name="index"> Index of the DSP unit. </param> 
 			<returns>DSP unit at the specified index.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.setVolumeRamp(bool)">
+			<summary>
+			Sets whether volume changes are ramped or instantaneous. If not paused, volume changes are ramped to the target value to avoid a pop sound. This function allows you to override that setting and apply volume changes immediately.
+			</summary> 
+			<param name="ramp"> Ramp state. The true value means volume change is ramped. The false value means volume change is instantaeous. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.isVolumeRamp const">
+			<summary>
+			Returns a value indicating whether volume changes are ramped or instantaneous.
+			</summary>  
+			<returns>true if volume change is ramped; false if volume change is instantaeous.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.setMute(bool)">
+			<summary>
+			Sets the mute state. Mute is an additional control for volume, the effect of which is equivalent to setting the volume to zero.
+			</summary> 
+			<param name="mute"> Mute state. true for silent, false for audible. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.isMute const">
+			<summary>
+			Returns the value indicating whether the mute state is silent or audible.
+			</summary>  
+			<returns>Mute state. true for silent, false for audible.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.setFrequency(float)">
+			<summary>
+			Sets the frequency or playback rate. The default frequency is determined by the audio format of the Sound or DSP.
+			</summary> 
+			<param name="frequency"> Playback rate. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.getFrequency const">
+			<summary>
+			Returns the playback frequency or playback rate.
+			</summary>  
+			<returns>Playback frequency.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.setPitch(float)">
+			<summary>
+			Sets the relative pitch or playback rate. Scales the playback frequency of a Channel object.
+			</summary> 
+			<param name="pitch"> Pitch value: 0.5f represents half pitch (one octave down), 1.0f represents unmodified pitch and 2.0f represents double pitch (one octave up). </param> 
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.getPitch const">
+			<summary>
+			Returns the relative pitch or playback rate.
+			</summary>  
+			<returns>Pitch value: 0.5f represents half pitch (one octave down), 1.0f represents unmodified pitch and 2.0f represents double pitch (one octave up).</returns>
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.setPriority(int)">
+			<summary>
+			Sets the priority used for virtual voice ordering. The priority is used as a coarse grain control for the virtual voice system. Channels with the lower priority will always be stolen before Channels with the higher ones. For Channels of the equal priority, those with the quietest audibility value will be stolen first.
+			</summary> 
+			<param name="priority"> Priority: 0 means the most important, 256 means the least important. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.getPriority const">
+			<summary>
+			Returns the priority used for virtual voice ordering. The priority is used as a coarse grain control for the virtual voice system. Channels with the lower priority will always be stolen before Channels with the higher ones. For Channels of the equal priority, those with the quietest audibility value will be stolen first.
+			</summary>  
+			<returns>Priority: 0 means the most important, 256 means the least important.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.setLoopCount(int)">
+			<summary>
+			Sets the number of times to loop before stopping.
+			</summary> 
+			<param name="count"> Times to loop before stopping : 0 means oneshot, 1 means loop once then stop and -1 represents loop forever. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.getLoopCount const">
+			<summary>
+			Returns the number of times to loop before stopping.
+			</summary>  
+			<returns>Times to loop before stopping : 0 means oneshot, 1 means loop once then stop and -1 represents loop forever.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.getAudibility const">
+			<summary>
+			Returns an estimation of the output volume. The estimated volume is calculated based on 3D spatialization, occlusion, API volume levels and DSPs used. This value is used to determine which Channels should be audible and which Channels should be virtualized when resources are limited.
+			</summary>  
+			<returns>Estimated audibility.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.setPan(float)">
+			<summary>
+			Sets the left/right pan level.
+			</summary> 
+			<param name="pan"> Pan level: -1 represents the full left, 0 represents the center, 1 represents the full right. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.Channel.isVirtual const">
+			<summary>
+			Returns the value indicating whether the Channel is being emulated by the virtual voice system.
+			</summary>  
+			<returns>Virtual state. true means silent / emulated, false means audible / real.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.FMOD.ChannelGroup.getChannel(int)">
 			<summary>
@@ -556,6 +667,12 @@
 			Updates the position of the event instance in world space.
 			</summary>  
 		</member>
+		<member name="M:Unigine.Plugins.FMOD.EventDescription.getPath const">
+			<summary>
+			Returns the path to the event description.
+			</summary>  
+			<returns>Path.</returns>
+		</member>
 		<member name="M:Unigine.Plugins.FMOD.EventInstance.setPaused(bool)">
 			<summary>
 			Sets the pause state.
@@ -738,6 +855,30 @@
 			<summary>
 			Auxiliary function, not to be used.
 			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.EventInstance.setPriority(float)">
+			<summary>
+			Sets the priority in range [-1;256] on the Channels created by the current EventInstance.
+			</summary> 
+			<param name="priority"> Priority in range [-1;256]: 0 means the most important, 256 means the least important. The default is -1. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.EventInstance.getPriority const">
+			<summary>
+			Returns the priority of the Channels created by the current EventInstance.
+			</summary>  
+			<returns>&gt;Priority in range [-1;256]: 0 means the most important, 256 means the least important. The default is -1.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.EventInstance.isValid const">
+			<summary>
+			Checks if the EventInstance reference is valid or not.
+			</summary>  
+			<returns>true if the reference is valid; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.EventInstance.getDescriptionPath const">
+			<summary>
+			Returns the path for the EventDescription of the current EventInstance.
+			</summary>  
+			<returns>EventDescription path.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.FMOD.FMOD.getCore const">
 			<summary>
@@ -1491,6 +1632,11 @@
 			The length provided exceeds the allowable limit.
 		</summary>
 		</member>
+		<member name="F:Unigine.Plugins.FMOD.FMODEnums.RESULT_FORCEINT">
+			<summary>
+			
+		</summary>
+		</member>
 		<member name="F:Unigine.Plugins.FMOD.FMODEnums.UNKNOWN">
 			<summary>
 			Unknown or custom codec plugin.
@@ -1815,7 +1961,7 @@
 		</member>
 		<member name="M:Unigine.Plugins.FMOD.FMODStudio.initStudio">
 			<summary>
-			 Studio initialization.
+			Studio initialization.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Plugins.FMOD.FMODStudio.getBank(int)">
@@ -1912,6 +2058,16 @@
 			Releases bank objects.
 			</summary>  
 		</member>
+		<member name="M:Unigine.Plugins.FMOD.FMODStudio.useChannelsCount(int)">
+			<summary>
+			Updates the maximum number of Channels (both virtual and real) to be used in FMOD system.
+			</summary> 
+			<param name="count"> Number of Channels. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.FMODStudio.unloadBank(char)">
+			<summary>
+			</summary>  
+		</member>
 		<member name="M:Unigine.Plugins.FMOD.Sound.play">
 			<summary>
 			Starts playback of the sound.
@@ -1950,6 +2106,16 @@
 		<member name="M:Unigine.Plugins.FMOD.VCA.releaseFromStudio">
 			<summary>
 			Auxiliary function, not to be used.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.VCA.getPath const">
+			<summary>
+			Returns the VCA object's path.
+			</summary>  
+			<returns>Object's path.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.FMOD.VCA.isValid const">
+			<summary>
 			</summary>  
 		</member>
 	</members>

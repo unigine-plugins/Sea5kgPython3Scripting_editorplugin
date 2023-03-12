@@ -44,15 +44,15 @@ public:
 	static bool isActive();
 	static void setLock(int lock);
 	static int getLock();
-	static void setBackgroundColor(const Math::vec4& color);
+	static void setBackgroundColor(const Math::vec4 &color);
 	static Math::vec4 getBackgroundColor();
-	static void setMessageColor(const Math::vec4& color);
+	static void setMessageColor(const Math::vec4 &color);
 	static Math::vec4 getMessageColor();
-	static void setWarningColor(const Math::vec4& color);
+	static void setWarningColor(const Math::vec4 &color);
 	static Math::vec4 getWarningColor();
-	static void setErrorColor(const Math::vec4& color);
+	static void setErrorColor(const Math::vec4 &color);
 	static Math::vec4 getErrorColor();
-	static void setTextColor(const Math::vec4& color);
+	static void setTextColor(const Math::vec4 &color);
 	static Math::vec4 getTextColor();
 	static void setPrompt(const char *prompt);
 	static const char *getPrompt();
@@ -75,21 +75,21 @@ public:
 	static const char *getLastMessage();
 	static const char *getLastWarning();
 	static const char *getLastError();
-	static void getMessages(Vector< String > &messages, Vector< int > &levels, int limit);
-	static void getMessages(Vector< String > &messages, int limit);
-	static void getWarnings(Vector< String > &messages, int limit);
-	static void getErrors(Vector< String > &messages, int limit);
+	static void getMessages(Vector<String> &messages, Vector<int> &levels, int limit);
+	static void getMessages(Vector<String> &messages, int limit);
+	static void getWarnings(Vector<String> &messages, int limit);
+	static void getErrors(Vector<String> &messages, int limit);
 	static void write(const char *text);
-	static void write(const Math::vec4& color, const char *text);
+	static void write(const Math::vec4 &color, const char *text);
 	static void write(Console::LEVEL level, const char *text);
 	static void writeLine(const char *text);
-	static void writeLine(const Math::vec4& color, const char *text);
+	static void writeLine(const Math::vec4 &color, const char *text);
 	static void writeLine(Console::LEVEL level, const char *text);
 	static void onscreenWrite(const char *text);
-	static void onscreenWrite(const Math::vec4& color, const char *text);
+	static void onscreenWrite(const Math::vec4 &color, const char *text);
 	static void onscreenWrite(Console::LEVEL level, const char *text);
 	static void onscreenWriteLine(const char *text);
-	static void onscreenWriteLine(const Math::vec4& color, const char *text);
+	static void onscreenWriteLine(const Math::vec4 &color, const char *text);
 	static void onscreenWriteLine(Console::LEVEL level, const char *text);
 
 	static void message(const Unigine::Math::vec4 &color, const char *format, ...);
@@ -112,7 +112,7 @@ public:
 	static void onscreenWarningLine(const char *format, ...);
 	static void onscreenErrorLine(const char *format, ...);
 
-	static void *addOutputCallback(Unigine::CallbackBase2< const char *, Console::LEVEL > *func);
+	static void *addOutputCallback(CallbackBase2<const char *, Console::LEVEL> *func);
 	static bool removeOutputCallback(void *id);
 	static void clearOutputCallbacks();
 	static int getNumVariables();
@@ -134,25 +134,25 @@ public:
 	static float getFloatMin(const char *name);
 	static float getFloatMax(const char *name);
 	static bool isVec4(const char *name);
-	static void setVec4(const char *name, const Math::vec4& value);
+	static void setVec4(const char *name, const Math::vec4 &value);
 	static Math::vec4 getVec4(const char *name);
 	static bool isVec3(const char *name);
-	static void setVec3(const char *name, const Math::vec3& value);
+	static void setVec3(const char *name, const Math::vec3 &value);
 	static Math::vec3 getVec3(const char *name);
 	static bool isVec2(const char *name);
-	static void setVec2(const char *name, const Math::vec2& value);
+	static void setVec2(const char *name, const Math::vec2 &value);
 	static Math::vec2 getVec2(const char *name);
 	static bool isString(const char *name);
 	static void setString(const char *name, const char *value);
 	static const char *getString(const char *name);
 	static bool isPalette(const char *name);
-	static void setPalette(const char *name, const Palette& value);
+	static void setPalette(const char *name, const Palette &value);
 	static void setPalette(const char *name, int index, float value);
 	static void setPalette(const char *name, const char *color, float value);
 	static Palette getPalette(const char *name);
 	static void run(const char *command);
 	static void flush();
-	static int addCommand(const char *name, const char *desc, Unigine::CallbackBase2<int, char **> *func);
+	static int addCommand(const char *name, const char *desc, CallbackBase2<int, char **> *func);
 	static bool removeCommand(const char *name);
 };
 
@@ -161,10 +161,15 @@ class UNIGINE_API ConsoleVariableInt
 	public:
 		ConsoleVariableInt(const char *name, const char *desc, int save, int value, int min, int max);
 		~ConsoleVariableInt();
+		ConsoleVariableInt(const ConsoleVariableInt &) = delete;
+		ConsoleVariableInt &operator=(ConsoleVariableInt&) = delete;
 		UNIGINE_INLINE int operator=(int value) { set(value); return value; }
 		UNIGINE_INLINE operator int() const { return get(); }
 		void set(int value) const;
 		int get() const;
+
+		void setGetFunc(int(*func)());
+		void setSetFunc(void(*func)(int));
 	private:
 		void *data;
 };
@@ -174,10 +179,15 @@ class UNIGINE_API ConsoleVariableFloat
 	public:
 		ConsoleVariableFloat(const char *name, const char *desc, int save, float value, float min, float max);
 		~ConsoleVariableFloat();
+		ConsoleVariableFloat(const ConsoleVariableFloat &) = delete;
+		ConsoleVariableFloat &operator=(ConsoleVariableFloat&) = delete;
 		UNIGINE_INLINE float operator=(float value) { set(value); return value; }
 		UNIGINE_INLINE operator float() const { return get(); }
 		void set(float value) const;
 		float get() const;
+
+		void setGetFunc(float(*func)());
+		void setSetFunc(void(*func)(float));
 	private:
 		void *data;
 };
@@ -187,10 +197,15 @@ class UNIGINE_API ConsoleVariableVec4
 	public:
 		ConsoleVariableVec4(const char *name, const char *desc, int save, const Math::vec4 &value);
 		~ConsoleVariableVec4();
+		ConsoleVariableVec4(const ConsoleVariableVec4 &) = delete;
+		ConsoleVariableVec4 &operator=(ConsoleVariableVec4&) = delete;
 		UNIGINE_INLINE Math::vec4 operator=(const Math::vec4 &value) { set(value); return value; }
 		UNIGINE_INLINE operator Math::vec4() const { return get(); }
 		void set(const Math::vec4 &value) const;
 		Math::vec4 get() const;
+
+		void setGetFunc(Math::vec4(*func)());
+		void setSetFunc(void(*func)(Math::vec4));
 	private:
 		void *data;
 };
@@ -200,10 +215,15 @@ class UNIGINE_API ConsoleVariableVec3
 	public:
 		ConsoleVariableVec3(const char *name, const char *desc, int save, const Math::vec3 &value);
 		~ConsoleVariableVec3();
+		ConsoleVariableVec3(const ConsoleVariableVec3 &) = delete;
+		ConsoleVariableVec3 &operator=(ConsoleVariableVec3&) = delete;
 		UNIGINE_INLINE Math::vec3 operator=(const Math::vec3 &value) { set(value); return value; }
 		UNIGINE_INLINE operator Math::vec3() const { return get(); }
 		void set(const Math::vec3 &value) const;
 		Math::vec3 get() const;
+
+		void setGetFunc(Math::vec3(*func)());
+		void setSetFunc(void(*func)(Math::vec3));
 	private:
 		void *data;
 };
@@ -213,10 +233,15 @@ class UNIGINE_API ConsoleVariableVec2
 	public:
 		ConsoleVariableVec2(const char *name, const char *desc, int save, const Math::vec2 &value);
 		~ConsoleVariableVec2();
+		ConsoleVariableVec2(const ConsoleVariableVec2 &) = delete;
+		ConsoleVariableVec2 &operator=(ConsoleVariableVec2&) = delete;
 		UNIGINE_INLINE Math::vec2 operator=(const Math::vec2 &value) { set(value); return value; }
 		UNIGINE_INLINE operator Math::vec2() const { return get(); }
 		void set(const Math::vec2 &value) const;
 		Math::vec2 get() const;
+
+		void setGetFunc(Math::vec2(*func)());
+		void setSetFunc(void(*func)(Math::vec2));
 	private:
 		void *data;
 };
@@ -226,10 +251,15 @@ class UNIGINE_API ConsoleVariableString
 	public:
 		ConsoleVariableString(const char *name, const char *desc, int save, const char *value);
 		~ConsoleVariableString();
+		ConsoleVariableString(const ConsoleVariableString &) = delete;
+		ConsoleVariableString &operator=(ConsoleVariableString&) = delete;
 		UNIGINE_INLINE const char *operator=(const char *value) { set(value); return value; }
-		UNIGINE_INLINE operator const char*() const { return get(); }
+		UNIGINE_INLINE operator const char *() const { return get(); }
 		void set(const char *value) const;
 		const char *get() const;
+
+		void setGetFunc(String(*func)());
+		void setSetFunc(void(*func)(String));
 	private:
 		void *data;
 };

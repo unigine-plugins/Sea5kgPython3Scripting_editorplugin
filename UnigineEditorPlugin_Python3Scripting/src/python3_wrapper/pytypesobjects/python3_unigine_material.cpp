@@ -272,11 +272,6 @@ bool Python3UnigineMaterial::isReady() {
         );
         // enum_typename:  
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_CURVE",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_CURVE)
-        );
-        // enum_typename:  
-        PyDict_SetItemString(
             unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_PROCEDURAL",
             Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_PROCEDURAL)
         );
@@ -709,11 +704,6 @@ bool Python3UnigineMaterial::isReady() {
         PyDict_SetItemString(
             unigine_MaterialType.tp_dict, "WIDGET_TEXTURE_ASSET",
             Py_BuildValue("i", Unigine::Material::WIDGET_TEXTURE_ASSET)
-        );
-        // enum_typename: WIDGET 
-        PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "WIDGET_TEXTURE_CURVE",
-            Py_BuildValue("i", Unigine::Material::WIDGET_TEXTURE_CURVE)
         );
         // enum_typename: WIDGET 
         PyDict_SetItemString(

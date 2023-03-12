@@ -80,16 +80,31 @@ public:
 		WIDGET_MANIPULATOR_SCALER,
 		WIDGET_EXTERN,
 		WIDGET_ENGINE,
+		WIDGET_DRAG_AREA,
 		NUM_WIDGETS,
 	};
+
+	enum LIFETIME
+	{
+		LIFETIME_WORLD,
+		LIFETIME_WINDOW,
+		LIFETIME_ENGINE,
+		LIFETIME_MANUAL,
+	};
 	Widget::TYPE getType() const;
+	void setFlags(int flags);
+	int getFlags() const;
+	bool isExpanded() const;
+	bool isOverlapped() const;
+	bool isBackground() const;
+	bool isFixed() const;
+	bool isLayout() const;
 	const char *getTypeName() const;
+	void setGui(const Ptr<Gui> &gui);
 	Ptr<Gui> getGui() const;
 	Ptr<Gui> getParentGui() const;
 	void setParent(const Ptr<Widget> &parent);
 	Ptr<Widget> getParent() const;
-	void setFlags(int flags);
-	int getFlags() const;
 	void setEnabled(bool enabled);
 	bool isEnabled() const;
 	void setHidden(bool hidden);
@@ -98,6 +113,9 @@ public:
 	int getOrder() const;
 	void setData(const char *data);
 	const char *getData() const;
+	Widget::LIFETIME getLifetimeSelf() const;
+	void setLifetime(Widget::LIFETIME lifetime);
+	Widget::LIFETIME getLifetime() const;
 	void setFocus();
 	void setPermanentFocus();
 	void removeFocus();
@@ -113,7 +131,8 @@ public:
 	int getWidth() const;
 	void setHeight(int height);
 	int getHeight() const;
-	int getIntersection(int x, int y) const;
+	bool getIntersection(int local_pos_x, int local_pos_y) const;
+	Ptr<Widget> getHierarchyIntersection(int screen_pos_x, int screen_pos_y);
 	void setIntersectionEnabled(bool enabled);
 	bool isIntersectionEnabled() const;
 	int getMouseX() const;
@@ -123,7 +142,7 @@ public:
 	void setFont(const char *name);
 	void setFontSize(int size);
 	int getFontSize() const;
-	void setFontColor(const Math::vec4& color);
+	void setFontColor(const Math::vec4 &color);
 	Math::vec4 getFontColor() const;
 	void setFontPermanent(int permanent);
 	int getFontPermanent() const;
@@ -143,15 +162,15 @@ public:
 	int getFontWrap() const;
 	void setToolTip(const char *str, int reset = 0);
 	const char *getToolTip() const;
-	void *addCallback(Gui::CALLBACK_INDEX callback, Unigine::CallbackBase *func);
-	void *addCallback(Gui::CALLBACK_INDEX callback, Unigine::CallbackBase1< Ptr<Widget> > *func);
-	void *addCallback(Gui::CALLBACK_INDEX callback, Unigine::CallbackBase2< Ptr<Widget>, Ptr<Widget> > *func);
-	void *addCallback(Gui::CALLBACK_INDEX callback, Unigine::CallbackBase3< Ptr<Widget>, Ptr<Widget>, int > *func);
+	void *addCallback(Gui::CALLBACK_INDEX callback, CallbackBase *func);
+	void *addCallback(Gui::CALLBACK_INDEX callback, CallbackBase1<Ptr<Widget>> *func);
+	void *addCallback(Gui::CALLBACK_INDEX callback, CallbackBase2<Ptr<Widget>, Ptr<Widget>> *func);
+	void *addCallback(Gui::CALLBACK_INDEX callback, CallbackBase3<Ptr<Widget>, Ptr<Widget>, int> *func);
 	bool removeCallback(Gui::CALLBACK_INDEX callback, void *id);
 	void clearCallbacks(Gui::CALLBACK_INDEX callback);
 	bool isCallback(int callback) const;
 	void setCallbackAccel(int callback, unsigned int key, int ctrl, int alt, int shift);
-	bool getCallbackAccel(int callback, unsigned int & key, int & ctrl, int & alt, int & shift) const;
+	bool getCallbackAccel(int callback, unsigned int &key, int &ctrl, int &alt, int &shift) const;
 	int isCallbackAccel(unsigned int key, int ctrl, int alt, int shift) const;
 	void setCallbackEnabled(int callback, bool enabled);
 	int isCallbackEnabled(int callback) const;
@@ -199,9 +218,9 @@ public:
 	int getPaddingBottom() const;
 	void setStencil(int stencil);
 	int getStencil() const;
-	void setColor(const Math::vec4& color);
+	void setColor(const Math::vec4 &color);
 	Math::vec4 getColor() const;
-	void setBackgroundColor(const Math::vec4& color);
+	void setBackgroundColor(const Math::vec4 &color);
 	Math::vec4 getBackgroundColor() const;
 	void setBackground(int background);
 	int getBackground() const;
@@ -283,9 +302,9 @@ public:
 	void setSpace(int x, int y);
 	int getSpaceX() const;
 	int getSpaceY() const;
-	void setBackgroundColor(const Math::vec4& color);
+	void setBackgroundColor(const Math::vec4 &color);
 	Math::vec4 getBackgroundColor() const;
-	void setBorderColor(const Math::vec4& color);
+	void setBorderColor(const Math::vec4 &color);
 	Math::vec4 getBorderColor() const;
 	void setPadding(int l, int r, int t, int b);
 	int getPaddingLeft() const;
@@ -296,7 +315,7 @@ public:
 	int getBorder() const;
 	void setStencil(int stencil);
 	int getStencil() const;
-	void setColor(const Math::vec4& color);
+	void setColor(const Math::vec4 &color);
 	Math::vec4 getColor() const;
 	void setBackground(int background);
 	int getBackground() const;
@@ -324,9 +343,9 @@ public:
 	Ptr<Image> getImage() const;
 	void setTexture(const char *texture);
 	const char *getTexture() const;
-	void setButtonColor(const Math::vec4& color);
+	void setButtonColor(const Math::vec4 &color);
 	Math::vec4 getButtonColor() const;
-	void setBorderColor(const Math::vec4& color);
+	void setBorderColor(const Math::vec4 &color);
 	Math::vec4 getBorderColor() const;
 	void clear();
 	int addTab(const char *str, int texture = -1);
@@ -356,10 +375,12 @@ public:
 	static bool convertible(Widget *obj) { return obj && obj->getType() == Widget::WIDGET_SCROLL; }
 	static Ptr<WidgetScroll> create(const Ptr<Gui> &gui, int object = 100, int frame = 10, int step = 1, int value = 0);
 	static Ptr<WidgetScroll> create(int object = 100, int frame = 10, int step = 1, int value = 0);
-	void setScrollColor(const Math::vec4& color);
+	void setScrollColor(const Math::vec4 &color);
 	Math::vec4 getScrollColor() const;
 	void setOrientation(int orientation);
 	int getOrientation() const;
+	void setMouseWheelOrientation(int orientation);
+	int getMouseWheelOrientation() const;
 	void setObjectSize(int size);
 	int getObjectSize() const;
 	void setFrameSize(int size);
@@ -391,13 +412,13 @@ public:
 	void setSpace(int x, int y);
 	int getSpaceX() const;
 	int getSpaceY() const;
-	void setBorderColor(const Math::vec4& color);
+	void setBorderColor(const Math::vec4 &color);
 	Math::vec4 getBorderColor() const;
-	void setBackgroundColor(const Math::vec4& color);
+	void setBackgroundColor(const Math::vec4 &color);
 	Math::vec4 getBackgroundColor() const;
-	void setHscrollColor(const Math::vec4& color);
+	void setHscrollColor(const Math::vec4 &color);
 	Math::vec4 getHscrollColor() const;
-	void setVscrollColor(const Math::vec4& color);
+	void setVscrollColor(const Math::vec4 &color);
 	Math::vec4 getVscrollColor() const;
 	void setPadding(int l, int r, int t, int b);
 	int getPaddingLeft() const;
@@ -470,7 +491,7 @@ public:
 	int addLayer();
 	void removeLayer(int layer);
 	int getNumLayers() const;
-	void setColor(const Math::vec4& color);
+	void setColor(const Math::vec4 &color);
 	Math::vec4 getColor() const;
 	void setWrapRepeat(int repeat);
 	int getWrapRepeat() const;
@@ -479,9 +500,9 @@ public:
 	void setBlendFunc(int src, int dest);
 	int getBlendSrcFunc() const;
 	int getBlendDestFunc() const;
-	void setTexCoord(const Math::vec4& coord);
+	void setTexCoord(const Math::vec4 &coord);
 	Math::vec4 getTexCoord() const;
-	void setTransform(const Math::mat4& transform);
+	void setTransform(const Math::mat4 &transform);
 	Math::mat4 getTransform() const;
 	void setImage(const Ptr<Image> &image, int dynamic = 0);
 	Ptr<Image> getImage() const;
@@ -493,7 +514,7 @@ public:
 	int isLayerEnabled(int layer) const;
 	int getLayerWidth(int layer) const;
 	int getLayerHeight(int layer) const;
-	void setLayerColor(int layer, const Math::vec4& color);
+	void setLayerColor(int layer, const Math::vec4 &color);
 	Math::vec4 getLayerColor(int layer) const;
 	void setLayerWrapRepeat(int layer, int repeat);
 	int getLayerWrapRepeat(int layer) const;
@@ -502,9 +523,9 @@ public:
 	void setLayerBlendFunc(int layer, int src, int dest);
 	int getLayerBlendSrcFunc(int layer) const;
 	int getLayerBlendDestFunc(int layer) const;
-	void setLayerTexCoord(int layer, const Math::vec4& texcoord);
+	void setLayerTexCoord(int layer, const Math::vec4 &texcoord);
 	Math::vec4 getLayerTexCoord(int layer) const;
-	void setLayerTransform(int layer, const Math::mat4& transform);
+	void setLayerTransform(int layer, const Math::mat4 &transform);
 	Math::mat4 getLayerTransform(int layer) const;
 	void setLayerImage(int layer, const Ptr<Image> &image, int dynamic = 0);
 	Ptr<Image> getLayerImage(int layer) const;
@@ -517,7 +538,7 @@ public:
 	Ptr<Image> getIntersectionImage() const;
 	void setIntersectionImage(const Ptr<Image> &image);
 	void setIntersectionImageName(const char *name);
-	void setIntersectionImageTransform(const Math::mat4& transform);
+	void setIntersectionImageTransform(const Math::mat4 &transform);
 	Math::mat4 getIntersectionImageTransform() const;
 	void setIntersectionImageThreshold(float threshold);
 	float getIntersectionImageThreshold() const;
@@ -581,9 +602,9 @@ public:
 	int getViewportMask() const;
 	void setReflectionViewportMask(int mask);
 	int getReflectionViewportMask() const;
-	void setProjection(const Math::mat4& projection);
+	void setProjection(const Math::mat4 &projection);
 	Math::mat4 getProjection() const;
-	void setModelview(const Math::Mat4& modelview);
+	void setModelview(const Math::Mat4 &modelview);
 	Math::Mat4 getModelview() const;
 	void setSkipFlags(int flags);
 	int getSkipFlags() const;
@@ -617,9 +638,9 @@ public:
 	int getViewportMask() const;
 	void setReflectionViewportMask(int mask);
 	int getReflectionViewportMask() const;
-	void setProjection(const Math::mat4& projection);
+	void setProjection(const Math::mat4 &projection);
 	Math::mat4 getProjection() const;
-	void setModelview(const Math::Mat4& modelview);
+	void setModelview(const Math::Mat4 &modelview);
 	Math::Mat4 getModelview() const;
 	void setEnvironmentTexturePath(const char *path);
 	const char *getEnvironmentTexturePath() const;
@@ -649,9 +670,9 @@ public:
 	Ptr<Image> getImage() const;
 	void setTexture(const char *texture);
 	const char *getTexture() const;
-	void setColor(const Math::vec4& color);
+	void setColor(const Math::vec4 &color);
 	Math::vec4 getColor() const;
-	void setTransform(const Math::mat4& transform);
+	void setTransform(const Math::mat4 &transform);
 	Math::mat4 getTransform() const;
 	void clear();
 	int addText(int order = 0);
@@ -663,20 +684,22 @@ public:
 	int getTextOrder(int text) const;
 	void setTextSize(int text, int size);
 	int getTextSize(int text) const;
-	void setTextColor(int text, const Math::vec4& color);
+	void setTextColor(int text, const Math::vec4 &color);
 	Math::vec4 getTextColor(int text) const;
 	void setTextOutline(int text, int outline);
 	int getTextOutline(int text) const;
 	void setTextPixelPerfect(int text, bool pixel_perfect);
 	bool getTextPixelPerfect(int text) const;
-	void setTextPosition(int text, const Math::vec2& position);
+	void setTextPosition(int text, const Math::vec2 &position);
 	Math::vec2 getTextPosition(int text) const;
-	void setTextTransform(int text, const Math::mat4& transform);
+	void setTextTransform(int text, const Math::mat4 &transform);
 	Math::mat4 getTextTransform(int text) const;
 	void setTextText(int text, const char *str);
 	const char *getTextText(int text) const;
 	int getTextWidth(int text) const;
 	int getTextHeight(int text) const;
+	void setTextAlign(int text, int align);
+	int getTextAlign(int text) const;
 	int addLine(int order = 0);
 	void removeLine(int line);
 	int getNumLines() const;
@@ -684,17 +707,17 @@ public:
 	int getLineIntersection(int x, int y, float distance) const;
 	void setLineOrder(int line, int order);
 	int getLineOrder(int line) const;
-	void setLineColor(int line, const Math::vec4& color);
+	void setLineColor(int line, const Math::vec4 &color);
 	Math::vec4 getLineColor(int line) const;
-	void setLineTransform(int line, const Math::mat4& transform);
+	void setLineTransform(int line, const Math::mat4 &transform);
 	Math::mat4 getLineTransform(int line) const;
 	void clearLinePoints(int line);
 	int getNumLinePoints(int line) const;
 	void removeLinePoint(int line, int num);
-	int addLinePoint(int line, const Math::vec3& point);
-	int addLinePoint(int line, const Math::vec2& point);
-	void setLinePoint(int line, int num, const Math::vec3& point);
-	void setLinePoint(int line, int num, const Math::vec2& point);
+	int addLinePoint(int line, const Math::vec3 &point);
+	int addLinePoint(int line, const Math::vec2 &point);
+	void setLinePoint(int line, int num, const Math::vec3 &point);
+	void setLinePoint(int line, int num, const Math::vec2 &point);
 	Math::vec3 getLinePoint(int line, int num) const;
 	void clearLineIndices(int line);
 	int getNumLineIndices(int line) const;
@@ -710,14 +733,14 @@ public:
 	int getPolygonOrder(int polygon) const;
 	void setPolygonTwoSided(int polygon, int two_sided);
 	int getPolygonTwoSided(int polygon) const;
-	void setPolygonColor(int polygon, const Math::vec4& color);
+	void setPolygonColor(int polygon, const Math::vec4 &color);
 	Math::vec4 getPolygonColor(int polygon) const;
 	void setPolygonWrapRepeat(int polygon, int repeat);
 	int getPolygonWrapRepeat(int polygon) const;
 	void setPolygonBlendFunc(int polygon, int src, int dest);
 	int getPolygonBlendSrcFunc(int polygon) const;
 	int getPolygonBlendDestFunc(int polygon) const;
-	void setPolygonTransform(int polygon, const Math::mat4& transform);
+	void setPolygonTransform(int polygon, const Math::mat4 &transform);
 	Math::mat4 getPolygonTransform(int polygon) const;
 	void setPolygonIntersection(int polygon, bool intersection);
 	bool isPolygonIntersection(int polygon) const;
@@ -729,12 +752,14 @@ public:
 	Ptr<Texture> getPolygonGPUTexture(int polygon) const;
 	void setPolygonTexture(int polygon, const char *name);
 	const char *getPolygonTexture(int polygon) const;
+	int getPolygonTextureWidth(int polygon) const;
+	int getPolygonTextureHeight(int polygon) const;
 	void clearPolygonPoints(int polygon);
 	int getNumPolygonPoints(int polygon) const;
 	void removePolygonPoint(int polygon, int num);
-	int addPolygonPoint(int polygon, const Math::vec3& point);
+	int addPolygonPoint(int polygon, const Math::vec3 &point);
 	Math::vec3 getPolygonPoint(int polygon, int num) const;
-	void setPolygonTexCoord(int polygon, const Math::vec2& texcoord);
+	void setPolygonTexCoord(int polygon, const Math::vec2 &texcoord);
 	Math::vec2 getPolygonTexCoord(int polygon, int num) const;
 	void clearPolygonIndices(int polygon);
 	int getNumPolygonIndices(int polygon) const;
@@ -781,7 +806,7 @@ public:
 	bool isToggled() const;
 	void setImage(const Ptr<Image> &image);
 	Ptr<Image> getImage() const;
-	void setButtonColor(const Math::vec4& color);
+	void setButtonColor(const Math::vec4 &color);
 	Math::vec4 getButtonColor() const;
 	void setTexture(const char *texture);
 	const char *getTexture() const;
@@ -803,9 +828,9 @@ public:
 	static bool convertible(Widget *obj) { return obj && obj->getType() == Widget::WIDGET_CHECK_BOX; }
 	static Ptr<WidgetCheckBox> create(const Ptr<Gui> &gui, const char *str = 0);
 	static Ptr<WidgetCheckBox> create(const char *str = 0);
-	void setCheckedColor(const Math::vec4& color);
+	void setCheckedColor(const Math::vec4 &color);
 	Math::vec4 getCheckedColor() const;
-	void setUncheckedColor(const Math::vec4& color);
+	void setUncheckedColor(const Math::vec4 &color);
 	Math::vec4 getUncheckedColor() const;
 	void setChecked(bool checked);
 	bool isChecked() const;
@@ -823,15 +848,15 @@ public:
 	static Ptr<WidgetComboBox> create();
 	void setImage(const Ptr<Image> &image);
 	Ptr<Image> getImage() const;
-	void setMainBackgroundColor(const Math::vec4& color);
+	void setMainBackgroundColor(const Math::vec4 &color);
 	Math::vec4 getMainBackgroundColor() const;
-	void setListBackgroundColor(const Math::vec4& color);
+	void setListBackgroundColor(const Math::vec4 &color);
 	Math::vec4 getListBackgroundColor() const;
-	void setSelectionColor(const Math::vec4& color);
+	void setSelectionColor(const Math::vec4 &color);
 	Math::vec4 getSelectionColor() const;
-	void setBorderColor(const Math::vec4& color);
+	void setBorderColor(const Math::vec4 &color);
 	Math::vec4 getBorderColor() const;
-	void setButtonColor(const Math::vec4& color);
+	void setButtonColor(const Math::vec4 &color);
 	Math::vec4 getButtonColor() const;
 	void setTexture(const char *texture);
 	const char *getTexture() const;
@@ -875,13 +900,13 @@ public:
 	int getSpaceY() const;
 	void setImage(const Ptr<Image> &image);
 	Ptr<Image> getImage() const;
-	void setBackgroundColor(const Math::vec4& color);
+	void setBackgroundColor(const Math::vec4 &color);
 	Math::vec4 getBackgroundColor() const;
-	void setSelectionColor(const Math::vec4& color);
+	void setSelectionColor(const Math::vec4 &color);
 	Math::vec4 getSelectionColor() const;
-	void setCurrentItemColor(const Math::vec4& color);
+	void setCurrentItemColor(const Math::vec4 &color);
 	Math::vec4 getCurrentItemColor() const;
-	void setBorderColor(const Math::vec4& color);
+	void setBorderColor(const Math::vec4 &color);
 	Math::vec4 getBorderColor() const;
 	void setTexture(const char *texture);
 	const char *getTexture() const;
@@ -928,7 +953,7 @@ public:
 	int getSpaceX() const;
 	int getSpaceY() const;
 	void clear();
-	void setSelectionColor(const Math::vec4& color);
+	void setSelectionColor(const Math::vec4 &color);
 	Math::vec4 getSelectionColor() const;
 	int addItem(const char *str);
 	int addItem(const char *str, const Ptr<WidgetMenuBox> &menu);
@@ -960,7 +985,7 @@ public:
 	Ptr<Image> getImage() const;
 	void setTexture(const char *texture);
 	const char *getTexture() const;
-	void setSelectionColor(const Math::vec4& color);
+	void setSelectionColor(const Math::vec4 &color);
 	Math::vec4 getSelectionColor() const;
 	void setIconsEnabled(bool enabled);
 	bool isIconsEnabled() const;
@@ -976,7 +1001,7 @@ public:
 	const char *getItemText(int item) const;
 	void setItemData(int item, const char *str);
 	const char *getItemData(int item) const;
-	void setItemColor(int item, const Math::vec4& color);
+	void setItemColor(int item, const Math::vec4 &color);
 	Math::vec4 getItemColor(int item) const;
 	void setItemTexture(int item, int texture);
 	int getItemTexture(int item) const;
@@ -1010,13 +1035,13 @@ public:
 	bool isMultiSelection() const;
 	void setImage(const Ptr<Image> &image);
 	Ptr<Image> getImage() const;
-	void setSelectionColor(const Math::vec4& color);
+	void setSelectionColor(const Math::vec4 &color);
 	Math::vec4 getSelectionColor() const;
 	void setTexture(const char *texture);
 	const char *getTexture() const;
 	void clear();
 	int addItem(const char *str, int texture = -1);
-	void getItems(Vector< int > &items) const;
+	void getItems(Vector<int> &items) const;
 	void removeItem(int item);
 	int getNumItems() const;
 	int getItem(int num) const;
@@ -1024,7 +1049,7 @@ public:
 	const char *getItemText(int item) const;
 	void setItemData(int item, const char *str);
 	const char *getItemData(int item) const;
-	void setItemColor(int item, const Math::vec4& color);
+	void setItemColor(int item, const Math::vec4 &color);
 	Math::vec4 getItemColor(int item) const;
 	void setItemTexture(int item, int texture);
 	int getItemTexture(int item) const;
@@ -1052,6 +1077,8 @@ public:
 	int isItemSelected(int item) const;
 	void clearSelection();
 	void showItem(int item);
+	void setNeedSortChildren(bool children);
+	bool isNeedSortChildren() const;
 };
 typedef Ptr<WidgetTreeBox> WidgetTreeBoxPtr;
 
@@ -1074,9 +1101,9 @@ public:
 	static bool convertible(Widget *obj) { return obj && obj->getType() == Widget::WIDGET_SLIDER; }
 	static Ptr<WidgetSlider> create(const Ptr<Gui> &gui, int min = 0, int max = 100, int value = 0);
 	static Ptr<WidgetSlider> create(int min = 0, int max = 100, int value = 0);
-	void setBackgroundColor(const Math::vec4& color);
+	void setBackgroundColor(const Math::vec4 &color);
 	Math::vec4 getBackgroundColor() const;
-	void setButtonColor(const Math::vec4& color);
+	void setButtonColor(const Math::vec4 &color);
 	Math::vec4 getButtonColor() const;
 	void setOrientation(int orientation);
 	int getOrientation() const;
@@ -1104,7 +1131,7 @@ public:
 	static bool convertible(Widget *obj) { return obj && obj->getType() == Widget::WIDGET_SPIN_BOX; }
 	static Ptr<WidgetSpinBox> create(const Ptr<Gui> &gui, int min = 0, int max = 100, int value = 0, int step = 1);
 	static Ptr<WidgetSpinBox> create(int min = 0, int max = 100, int value = 0, int step = 1);
-	void setButtonColor(const Math::vec4& color);
+	void setButtonColor(const Math::vec4 &color);
 	Math::vec4 getButtonColor() const;
 	void setMinValue(int value);
 	int getMinValue() const;
@@ -1128,7 +1155,7 @@ public:
 	static bool convertible(Widget *obj) { return obj && obj->getType() == Widget::WIDGET_SPIN_BOX_DOUBLE; }
 	static Ptr<WidgetSpinBoxDouble> create(const Ptr<Gui> &gui, double min = 0.0, double max = 100.0, double value = 0.0, double step = 1.0);
 	static Ptr<WidgetSpinBoxDouble> create(double min = 0.0, double max = 100.0, double value = 0.0, double step = 1.0);
-	void setButtonColor(const Math::vec4& color);
+	void setButtonColor(const Math::vec4 &color);
 	Math::vec4 getButtonColor() const;
 	void setMinValue(double value);
 	double getMinValue() const;
@@ -1152,11 +1179,11 @@ public:
 	static bool convertible(Widget *obj) { return obj && obj->getType() == Widget::WIDGET_EDIT_LINE; }
 	static Ptr<WidgetEditLine> create(const Ptr<Gui> &gui, const char *str = 0);
 	static Ptr<WidgetEditLine> create(const char *str = 0);
-	void setBackgroundColor(const Math::vec4& color);
+	void setBackgroundColor(const Math::vec4 &color);
 	Math::vec4 getBackgroundColor() const;
-	void setSelectionColor(const Math::vec4& color);
+	void setSelectionColor(const Math::vec4 &color);
 	Math::vec4 getSelectionColor() const;
-	void setBorderColor(const Math::vec4& color);
+	void setBorderColor(const Math::vec4 &color);
 	Math::vec4 getBorderColor() const;
 	void setEditable(bool editable);
 	bool isEditable() const;
@@ -1190,14 +1217,14 @@ public:
 	bool isEditable() const;
 	void setBackground(int background);
 	int getBackground() const;
-	void setTokenColor(const char *token, const Math::vec4& color);
-	void setTokensColor(const char *tokens, const Math::vec4& color);
+	void setTokenColor(const char *token, const Math::vec4 &color);
+	void setTokensColor(const char *tokens, const Math::vec4 &color);
 	Math::vec4 getTokenColor(const char *token) const;
-	void setBackgroundColor(const Math::vec4& color);
+	void setBackgroundColor(const Math::vec4 &color);
 	Math::vec4 getBackgroundColor() const;
-	void setSelectionColor(const Math::vec4& color);
+	void setSelectionColor(const Math::vec4 &color);
 	Math::vec4 getSelectionColor() const;
-	void setNumberColor(const Math::vec4& color);
+	void setNumberColor(const Math::vec4 &color);
 	Math::vec4 getNumberColor() const;
 	void setCursor(int position, int line);
 	int getCursorPosition() const;
@@ -1251,13 +1278,13 @@ public:
 	bool isFloatable() const;
 	void setSnapDistance(int distance);
 	int getSnapDistance() const;
-	void setColor(const Math::vec4& color);
+	void setColor(const Math::vec4 &color);
 	Math::vec4 getColor() const;
-	void setBackgroundColor(const Math::vec4& color);
+	void setBackgroundColor(const Math::vec4 &color);
 	Math::vec4 getBackgroundColor() const;
-	void setBorderColor(const Math::vec4& color);
+	void setBorderColor(const Math::vec4 &color);
 	Math::vec4 getBorderColor() const;
-	void setTransform(const Math::mat4& transform);
+	void setTransform(const Math::mat4 &transform);
 	Math::mat4 getTransform() const;
 	void setMaxWidth(int width);
 	int getMaxWidth() const;
@@ -1271,6 +1298,17 @@ public:
 	int getPaddingRight() const;
 	int getPaddingTop() const;
 	int getPaddingBottom() const;
+	void setDragAreaEnabled(bool enabled);
+	bool isDragAreaEnabled() const;
+	void setDragAreaBackground(int background);
+	int getDragAreaBackground() const;
+	void setDragAreaBackgroundColor(const Math::vec4 &color);
+	Math::vec4 getDragAreaBackgroundColor() const;
+	void setDragAreaPadding(int l, int r, int t, int b);
+	int getDragAreaPaddingLeft() const;
+	int getDragAreaPaddingRight() const;
+	int getDragAreaPaddingTop() const;
+	int getDragAreaPaddingBottom() const;
 	void setTextAlign(int align);
 	int getTextAlign() const;
 	void setText(const char *text);
@@ -1327,7 +1365,7 @@ public:
 	bool isMessageHidden() const;
 	void setMessageFont(const char *name);
 	void setMessageFontSize(int size);
-	void setMessageFontColor(const Math::vec4& color);
+	void setMessageFontColor(const Math::vec4 &color);
 	void setMessageFontRich(int rich);
 	void setMessageText(const char *text);
 	const char *getMessageText() const;
@@ -1359,7 +1397,7 @@ public:
 	static bool convertible(Widget *obj) { return obj && obj->getType() == Widget::WIDGET_DIALOG_COLOR; }
 	static Ptr<WidgetDialogColor> create(const Ptr<Gui> &gui, const char *str = 0);
 	static Ptr<WidgetDialogColor> create(const char *str = 0);
-	void setColor(const Math::vec4& color);
+	void setColor(const Math::vec4 &color);
 	Math::vec4 getColor() const;
 	void setWebColor(const char *color);
 	const char *getWebColor() const;
@@ -1404,6 +1442,7 @@ public:
 	static Ptr<WidgetManipulator> create();
 	int getFocusedAxis() const;
 	bool isFocusAxis() const;
+	bool isHoverAxis() const;
 	void setRenderGui(const Ptr<Gui> &gui);
 	Ptr<Gui> getRenderGui() const;
 	void setMask(int mask);
@@ -1412,15 +1451,15 @@ public:
 	float getStep() const;
 	void setSize(int size);
 	int getSize() const;
-	void setColor(const Math::vec4& color);
+	void setColor(const Math::vec4 &color);
 	Math::vec4 getColor() const;
-	void setBasis(const Math::Mat4& basis);
+	void setBasis(const Math::Mat4 &basis);
 	Math::Mat4 getBasis() const;
-	void setTransform(const Math::Mat4& transform);
+	void setTransform(const Math::Mat4 &transform);
 	Math::Mat4 getTransform() const;
-	void setProjection(const Math::mat4& projection);
+	void setProjection(const Math::mat4 &projection);
 	Math::mat4 getProjection() const;
-	void setModelview(const Math::Mat4& modelview);
+	void setModelview(const Math::Mat4 &modelview);
 	Math::Mat4 getModelview() const;
 
 	enum
@@ -1495,6 +1534,20 @@ public:
 };
 typedef Ptr<WidgetManipulatorScaler> WidgetManipulatorScalerPtr;
 
+
+class UNIGINE_API WidgetDragArea : public Widget
+{
+public:
+	static bool convertible(Widget *obj) { return obj && obj->getType() == Widget::WIDGET_DRAG_AREA; }
+	static Ptr<WidgetDragArea> create(const Ptr<Gui> &gui);
+	static Ptr<WidgetDragArea> create();
+	void setBackground(int background);
+	int getBackground() const;
+	void setBackgroundColor(const Math::vec4 &color);
+	Math::vec4 getBackgroundColor() const;
+};
+typedef Ptr<WidgetDragArea> WidgetDragAreaPtr;
+
 class WidgetExternBase;
 
 class UNIGINE_API WidgetExtern : public Widget
@@ -1525,12 +1578,14 @@ public:
 	virtual void update(float ifps);
 	virtual void checkCallbacks(int x, int y);
 	virtual void keyPress(unsigned int key);
+	virtual void textPress(unsigned int unicode);
 	virtual int getKeyActivity(unsigned int key);
 	virtual void arrange();
 	virtual void expand(int width, int height);
+	virtual void updatePositions();
 	virtual void destroy();
 	virtual void render();
-	protected:
+protected:
 	int get_position_x() const;
 	int get_position_y() const;
 	int get_default_width() const;
@@ -1566,7 +1621,7 @@ public:
 	void set_translate(int x, int y) const;
 	void set_scale(float x, float y) const;
 	void set_blend_func(int src, int dest) const;
-	private:
+private:
 	template <class Type> static WidgetExternBase *constructor(void *widget) { return new Type(widget); }
 	struct WidgetExternData;
 	WidgetExternData *data;

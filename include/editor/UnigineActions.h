@@ -14,13 +14,16 @@
 #pragma once
 
 
-#include <editor/Undo.h>
+#include <editor/UnigineUndo.h>
 
 #include <UnigineNode.h>
 #include <UnigineVector.h>
 
 
-namespace Editor
+////////////////////////////////////////////////////////////////////////////////
+// Forward decl.
+////////////////////////////////////////////////////////////////////////////////
+namespace UnigineEditor
 {
 class Selector;
 class SelectionActionPrivate;
@@ -33,11 +36,11 @@ class EnableNodeActionPrivate;
 }
 
 
-namespace Editor
+namespace UnigineEditor
 {
 
 /// <summary>This class is used to represent any user's selection action.</summary>
-class EDITOR_API SelectionAction : public Action
+class UNIGINE_EDITOR_API SelectionAction : public Action
 {
 public:
 	/// <summary>Creates a new selection action for the specified selector.</summary>
@@ -74,11 +77,11 @@ public:
 	static void refreshSelection(bool expand = false);
 
 public:
-	SelectionActionPrivate *d;
+	::UnigineEditor::SelectionActionPrivate *const d;
 };
 
 /// <summary>This class is used to represent any user's action creating nodes.</summary>
-class EDITOR_API CreateNodesAction : public Action
+class UNIGINE_EDITOR_API CreateNodesAction : public Action
 {
 public:
 	/// <summary>Creates a new create action for the specified node.</summary>
@@ -99,11 +102,11 @@ public:
 	Unigine::Vector<Unigine::NodePtr> getNodes() const;
 
 private:
-	CreateNodesActionPrivate *d;
+	::UnigineEditor::CreateNodesActionPrivate *const d;
 };
 
 /// <summary>This class is used to represent any user's action removing nodes.</summary>
-class EDITOR_API RemoveNodesAction : public Action
+class UNIGINE_EDITOR_API RemoveNodesAction : public Action
 {
 public:
 	/// <summary>Creates a new remove action for the specified node.</summary>
@@ -132,11 +135,11 @@ public:
 	Unigine::Vector<Unigine::NodePtr> getNodes() const;
 
 private:
-	RemoveNodesActionPrivate *d;
+	::UnigineEditor::RemoveNodesActionPrivate *const d;
 };
 
 /// <summary>This class is used to represent any user's action setting node transforms.</summary>
-class EDITOR_API SetNodeTransformAction : public Action
+class UNIGINE_EDITOR_API SetNodeTransformAction : public Action
 {
 public:
 	/// <summary>Creates a new set node transform action for the specified node.</summary>
@@ -163,17 +166,17 @@ public:
 	Unigine::NodePtr getNode() const;
 
 private:
-	SetNodeTransformActionPrivate *d;
+	::UnigineEditor::SetNodeTransformActionPrivate *const d;
 };
 
 /// <summary>This class is used to represent any user's action changing nodes parents.</summary>
-class EDITOR_API ReparentNodesAction final : public Action
+class UNIGINE_EDITOR_API ReparentNodesAction final : public Action
 {
 public:
-    /// <summary>Creates a new reparent action for the specified nodes.</summary>
+	/// <summary>Creates a new reparent action for the specified nodes.</summary>
 	/// <param name="nodes">Nodes affected by the reparent action.</param>
 	/// <param name="new_parent">New parent to be set for the specified nodes.</param>
-    /// <param name="new_index">Index of the new parent node's child after which the specified nodes are to be added. The default <b>-1</b> value adds nodes after the last child.</param>
+	/// <param name="new_index">Index of the new parent node's child after which the specified nodes are to be added. The default <b>-1</b> value adds nodes after the last child.</param>
 	explicit ReparentNodesAction(const Unigine::Vector<Unigine::NodePtr> &nodes,
 		const Unigine::NodePtr &new_parent,
 		int new_index = -1);
@@ -187,11 +190,11 @@ public:
 	void redo() override;
 
 private:
-	ReparentNodesActionPrivate *d;
+	::UnigineEditor::ReparentNodesActionPrivate *const d;
 };
 
 /// <summary>This class is used to represent any user's action changing node's name.</summary>
-class EDITOR_API RenameNodeAction : public Action
+class UNIGINE_EDITOR_API RenameNodeAction : public Action
 {
 public:
 	/// <summary>Creates a new rename action for the specified node.</summary>
@@ -215,11 +218,11 @@ public:
 	bool validate() override;
 
 private:
-	RenameNodeActionPrivate *d;
+	::UnigineEditor::RenameNodeActionPrivate *const d;
 };
 
 /// <summary>This class is used to represent any user's action changing node's enabled state.</summary>
-class EDITOR_API EnableNodeAction : public Action
+class UNIGINE_EDITOR_API EnableNodeAction : public Action
 {
 public:
 	/// <summary>Creates a new enable node action for the specified node.</summary>
@@ -247,8 +250,7 @@ public:
 	bool validate() override;
 
 private:
-	EnableNodeActionPrivate *d;
+	::UnigineEditor::EnableNodeActionPrivate *const d;
 };
 
-
-} // namespace Editor
+} // namespace UnigineEditor

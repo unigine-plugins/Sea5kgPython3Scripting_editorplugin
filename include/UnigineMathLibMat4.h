@@ -23,6 +23,11 @@
 #include "UnigineMathLibMat2.h"
 #include "UnigineMathLibMat3.h"
 
+#ifdef __GNUC__
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wreorder"
+#endif
+
 namespace Unigine
 {
 namespace Math
@@ -2008,3 +2013,7 @@ UNIGINE_INLINE mat4 lerp(const mat4 &m0, const mat4 &m1, float k)
 
 }
 }
+
+#ifdef __GNUC__
+	#pragma GCC diagnostic pop
+#endif

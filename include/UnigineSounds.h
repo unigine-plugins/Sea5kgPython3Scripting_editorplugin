@@ -199,7 +199,7 @@ public:
 	static int type() { return Node::SOUND_REVERB; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<SoundReverb> create(const Math::vec3& arg1);
+	static Ptr<SoundReverb> create(const Math::vec3 &arg1);
 	void setReverbMask(int mask);
 	int getReverbMask() const;
 	void setRoomRolloff(float rolloff);
@@ -238,9 +238,9 @@ public:
 	float getReflectionDelay() const;
 	void setReflectionGain(float gain);
 	float getReflectionGain() const;
-	void setSize(const Math::vec3& size);
+	void setSize(const Math::vec3 &size);
 	Math::vec3 getSize() const;
-	void setThreshold(const Math::vec3& threshold);
+	void setThreshold(const Math::vec3 &threshold);
 	Math::vec3 getThreshold() const;
 };
 typedef Ptr<SoundReverb> SoundReverbPtr;

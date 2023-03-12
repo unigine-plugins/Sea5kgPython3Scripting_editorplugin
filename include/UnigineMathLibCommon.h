@@ -13,9 +13,11 @@
 
 #pragma once
 
-#pragma warning( disable : 4458)
-#pragma warning( disable : 4457)
-#pragma warning( disable : 4456)
+#ifdef _MSC_VER
+	#pragma warning( disable : 4458)
+	#pragma warning( disable : 4457)
+	#pragma warning( disable : 4456)
+#endif
 
 #include "UnigineBase.h"
 #include "UniginePair.h"
@@ -26,9 +28,6 @@
 
 #ifndef USE_SSE
 	#define USE_SSE
-#endif
-#ifndef USE_SSE2
-	#define USE_SSE2
 #endif
 
 #ifdef USE_SSE
@@ -394,6 +393,17 @@ UNIGINE_INLINE unsigned long long toULong(half value) { return static_cast<unsig
 UNIGINE_INLINE unsigned long long toULong(const String &value) { return toULong(value.getInt()); }
 UNIGINE_INLINE unsigned long long toULong(const char *value) { return toULong(String::atoi(value)); }
 
+UNIGINE_INLINE constexpr long long toLong(float value) { return static_cast<long long>(value); }
+UNIGINE_INLINE constexpr long long toLong(double value) { return static_cast<long long>(value); }
+UNIGINE_INLINE constexpr long long toLong(char value) { return static_cast<long long>(value); }
+UNIGINE_INLINE constexpr long long toLong(int value) { return static_cast<long long>(value); }
+UNIGINE_INLINE constexpr long long toLong(unsigned long long value) { return static_cast<long long>(value); }
+UNIGINE_INLINE constexpr long long toLong(unsigned char value) { return static_cast<long long>(value); }
+UNIGINE_INLINE constexpr long long toLong(bool value) { return value ? 1 : 0; }
+UNIGINE_INLINE long long toLong(half value) { return static_cast<long long>(value.getFloat()); }
+UNIGINE_INLINE long long toLong(const String &value) { return toLong(value.getInt()); }
+UNIGINE_INLINE long long toLong(const char *value) { return toLong(String::atoi(value)); }
+
 UNIGINE_INLINE constexpr bool toBool(float value) { return toInt(value) != 0; }
 UNIGINE_INLINE constexpr bool toBool(double value) { return toInt(value) != 0.0; }
 UNIGINE_INLINE constexpr bool toBool(int value) { return value != 0; }
@@ -734,8 +744,14 @@ UNIGINE_INLINE int roundFast(float v)
 UNIGINE_INLINE float ceil(float v) { return ::ceilf(v); }
 UNIGINE_INLINE double ceil(double v) { return ::ceil(v); }
 
+UNIGINE_INLINE int ceilInt(float v) { return toInt(::ceilf(v)); }
+UNIGINE_INLINE int ceilInt(double v) { return toInt(::ceil(v)); }
+
 UNIGINE_INLINE float floor(float v) { return ::floorf(v); }
 UNIGINE_INLINE double floor(double v) { return ::floor(v); }
+
+UNIGINE_INLINE int floorInt(float v) { return toInt(::floorf(v)); }
+UNIGINE_INLINE int floorInt(double v) { return toInt(::floor(v)); }
 
 UNIGINE_INLINE float frac(float v) { return v - ::floorf(v); }
 UNIGINE_INLINE double frac(double v) { return v - ::floor(v); }
@@ -877,6 +893,12 @@ UNIGINE_INLINE int compare(double v0, double v1, double epsilon = Consts::EPS) {
 UNIGINE_INLINE int compare(int v0, int v1) { return v0 == v1; }
 UNIGINE_INLINE int compare(long long v0, long long v1) { return v0 == v1; }
 
+template <typename T>
+UNIGINE_INLINE int compare(const Pair<T, T> &p0, const Pair<T, T> &p1)
+{
+	return compare(p0.first, p1.first) && compare(p0.second, p1.second);
+}
+
 UNIGINE_INLINE float min(float v0, float v1) { return (v0 < v1) ? v0 : v1; }
 UNIGINE_INLINE double min(double v0, double v1) { return (v0 < v1) ? v0 : v1; }
 UNIGINE_INLINE int min(int v0, int v1) { return (v0 < v1) ? v0 : v1; }
@@ -915,7 +937,9 @@ UNIGINE_INLINE long long lerp(long long v0, long long v1, long long k) { return 
 UNIGINE_INLINE float inverseLerp(float v0, float v1, float v) { return saturate((v - v0) / (v1 - v0)); }
 UNIGINE_INLINE double inverseLerp(double v0, double v1, double v) { return saturate((v - v0) / (v1 - v0)); }
 
-UNIGINE_INLINE float overlay(float a, float b, float x) { return max(a * lerp(1.0f, b * 2.0f, x), 1.0f); }
+UNIGINE_INLINE bool step(float a, float b) { return a >= b; }
+
+UNIGINE_INLINE float overlay(float a, float b, float x) { return max(lerp(a, lerp(1.0f - 2.0f * (1.0f - a) * (1.0f - b), 2.0f * a * b, toFloat(step(a, 0.5f))), x), 0.0f); }
 
 UNIGINE_INLINE float smoothstep(float x) { return x * x * (3.0f - 2.0f * x); }
 UNIGINE_INLINE double smoothstep(double x) { return x * x * (3.0 - 2.0 * x); }
@@ -1120,8 +1144,9 @@ UNIGINE_INLINE double bezier(const float *times, const double *values, float tim
 }
 
 // 32bit hash
-UNIGINE_INLINE unsigned int hashMurmur3(unsigned int v)
+UNIGINE_INLINE unsigned int hashInteger(unsigned int v)
 {
+	v ^= 0xdeadbeef;
 	v ^= v >> 16;
 	v *= 0x85ebca6b;
 	v ^= v >> 13;
@@ -1129,22 +1154,27 @@ UNIGINE_INLINE unsigned int hashMurmur3(unsigned int v)
 	v ^= v >> 16;
 	return v;
 }
-UNIGINE_INLINE unsigned int hashCombine(unsigned int a, unsigned int v)
+
+UNIGINE_INLINE unsigned int hashMixer(unsigned int hash_0, unsigned int hash_1)
 {
-	return a ^ (hashMurmur3(v) + 0x9e3779b9 + (v << 6) + (v >> 2));
+	hash_0 ^= 0x85ebca6b;
+	hash_0 = hash_0 ^ ((hash_1 ^ 0xc2b2ae35) + 0x9e3779b9 + ((hash_1 ^ 0x85ebca6b) << 16) + (hash_1 >> 12));
+	hash_0 = hash_0 * 1664525 + 1013904223;
+	return hash_0;
 }
-UNIGINE_INLINE unsigned int hashMixer(unsigned int a, unsigned int v)
+UNIGINE_INLINE unsigned int hashCombine(unsigned int hash, unsigned int value)
 {
-	return a ^ (v + 0x9e3779b9 + (v << 6) + (v >> 2));
+	return hashMixer(hash, hashInteger(value));
 }
-UNIGINE_INLINE unsigned int hashMurmur3(float v) { return hashMurmur3(floatToUIntBits(v)); }
-UNIGINE_INLINE unsigned int hashCombine(unsigned int a, float v) { return hashCombine(a, floatToUIntBits(v)); }
-UNIGINE_INLINE unsigned int hashMurmur3(int v) { return hashMurmur3(toUInt(v)); }
-UNIGINE_INLINE unsigned int hashCombine(unsigned int a, int v) { return hashCombine(a, toUInt(v)); }
+UNIGINE_INLINE unsigned int hashInteger(float value) { return hashInteger(floatToUIntBits(value)); }
+UNIGINE_INLINE unsigned int hashCombine(unsigned int hash, float value) { return hashCombine(hash, floatToUIntBits(value)); }
+UNIGINE_INLINE unsigned int hashInteger(int value) { return hashInteger(toUInt(value)); }
+UNIGINE_INLINE unsigned int hashCombine(unsigned int hash, int value) { return hashCombine(hash, toUInt(value)); }
 
 // 64bit hash
-UNIGINE_INLINE unsigned long long hashMurmur3(unsigned long long v)
+UNIGINE_INLINE unsigned long long hashInteger(unsigned long long v)
 {
+	v ^= 0x2127599bf4325c37ULL;
 	v ^= v >> 33;
 	v *= 0xff51afd7ed558ccdULL;
 	v ^= v >> 33;
@@ -1152,20 +1182,31 @@ UNIGINE_INLINE unsigned long long hashMurmur3(unsigned long long v)
 	v ^= v >> 33;
 	return v;
 }
-UNIGINE_INLINE unsigned long long hashCombine(unsigned long long a, unsigned long long v)
+UNIGINE_INLINE unsigned long long hashMixer(unsigned long long hash_0, unsigned long long hash_1)
 {
-	return a ^ (hashMurmur3(v) + 0x9ddfea08eb382d69ULL + (v << 16) + (v >> 12));
+	hash_0 ^= 0xc4ceb9fe1a85ec53ULL;
+	hash_0 = hash_0 ^ ((hash_1 ^ 0xff51afd7ed558ccdULL) + 0x9ddfea08eb382d69ULL + ((hash_1 ^ 0x2127599bf4325c37ULL) << 16) + (hash_1 >> 12));
+	return hash_0 * 1664525 + 1013904223;
 }
-UNIGINE_INLINE unsigned long long hashMixer(unsigned long long a, unsigned long long v)
+UNIGINE_INLINE unsigned long long hashCombine(unsigned long long hash, unsigned long long value)
 {
-	return a ^ (v + 0x9ddfea08eb382d69ULL + (v << 16) + (v >> 12));
+	return hashMixer(hash, hashInteger(value));
 }
-UNIGINE_INLINE unsigned long long hashMurmur3(double v) { return hashMurmur3(floatToULongBits(v)); }
-UNIGINE_INLINE unsigned long long hashCombine(unsigned long long a, double v) { return hashCombine(a, floatToULongBits(v)); }
-UNIGINE_INLINE unsigned long long hashMurmur3(long long v) { return hashMurmur3(toULong(v)); }
-UNIGINE_INLINE unsigned long long hashCombine(unsigned long long a, long long v) { return hashCombine(a, toULong(v)); }
+UNIGINE_INLINE unsigned long long hashInteger(double value) { return hashInteger(floatToULongBits(value)); }
+UNIGINE_INLINE unsigned long long hashCombine(unsigned long long hash, double value) { return hashCombine(hash, floatToULongBits(value)); }
+UNIGINE_INLINE unsigned long long hashInteger(long long value) { return hashInteger(toULong(value)); }
+UNIGINE_INLINE unsigned long long hashCombine(unsigned long long hash, long long value) { return hashCombine(hash, toULong(value)); }
 
-UNIGINE_INLINE unsigned int hashCast64To32(unsigned long long v) { return static_cast<unsigned int>(v % UINT_MAX); }
+UNIGINE_INLINE unsigned int hashCast64To32(unsigned long long value) { return static_cast<unsigned int>(value % UINT_MAX); }
+
+// alignment
+template<class A, class B>
+inline A makeAligned(A location, B align_value)
+{
+	UNIGINE_ASSERT((align_value & (align_value - 1)) == 0);
+	UNIGINE_ASSERT(align_value != 0);
+	return ((location + (align_value - 1)) & ~(align_value - 1));
+}
 
 // SSE
 #ifdef USE_SSE

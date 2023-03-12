@@ -37,6 +37,12 @@
 #define UNIGINE_CONCATENATE_IMPL(A, B) A ## B
 #define UNIGINE_CONCATENATE(A, B) UNIGINE_CONCATENATE_IMPL(A, B)
 
+#ifdef _WIN32
+	#ifndef NOMINMAX
+		#define NOMINMAX
+	#endif
+#endif
+
  /*
  */
 #ifdef _WIN32

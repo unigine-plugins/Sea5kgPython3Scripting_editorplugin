@@ -88,6 +88,12 @@
 			</summary>  
 			<returns>Name of the property.If the property is internal and has a parent, the parent's name will be returned.</returns>
 		</member>
+		<member name="M:Unigine.Property.getTooltip const">
+			<summary>
+			Returns the property tooltip.
+			</summary>  
+			<returns>Tooltip for the property.</returns>
+		</member>
 		<member name="M:Unigine.Property.getNumChildren">
 			<summary>
 			Returns the number of children of the current property.

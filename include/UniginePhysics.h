@@ -45,7 +45,7 @@ public:
 	PhysicsIntersection::TYPE getType() const;
 	const char *getTypeName() const;
 	static Ptr<PhysicsIntersection> create();
-	void setPoint(const Math::Vec3& point);
+	void setPoint(const Math::Vec3 &point);
 	Math::Vec3 getPoint() const;
 	void setSurface(int surface);
 	int getSurface() const;
@@ -60,7 +60,7 @@ class UNIGINE_API PhysicsIntersectionNormal : public PhysicsIntersection
 public:
 	static bool convertible(PhysicsIntersection *obj) { return obj && obj->getType() == PhysicsIntersection::PHYSICS_INTERSECTION_NORMAL; }
 	static Ptr<PhysicsIntersectionNormal> create();
-	void setNormal(const Math::vec3& normal);
+	void setNormal(const Math::vec3 &normal);
 	Math::vec3 getNormal() const;
 };
 typedef Ptr<PhysicsIntersectionNormal> PhysicsIntersectionNormalPtr;
@@ -120,7 +120,7 @@ public:
 	static float getPenetrationFactor();
 	static void setPenetrationTolerance(float tolerance);
 	static float getPenetrationTolerance();
-	static void setGravity(const Math::vec3& gravity);
+	static void setGravity(const Math::vec3 &gravity);
 	static Math::vec3 getGravity();
 	static void setData(const char *data); ///< world user data, stored as is in a "data" element in .world XML
 	static const char *getData();
@@ -145,10 +145,10 @@ public:
 	static bool saveWorld(const Ptr<Xml> &xml, int force = 0);
 	static bool saveState(const Ptr<Stream> &stream);
 	static bool restoreState(const Ptr<Stream> &stream);
-	static Ptr<Object> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Ptr<PhysicsIntersection> &intersection);
-	static Ptr<Object> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Ptr<PhysicsIntersectionNormal> &intersection);
-	static Ptr<Object> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Vector< Ptr<Node> > &exclude, const Ptr<PhysicsIntersection> &intersection);
-	static Ptr<Object> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Vector< Ptr<Node> > &exclude, const Ptr<PhysicsIntersectionNormal> &intersection);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<PhysicsIntersection> &intersection);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<PhysicsIntersectionNormal> &intersection);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Vector<Ptr<Node>> &exclude, const Ptr<PhysicsIntersection> &intersection);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Vector<Ptr<Node>> &exclude, const Ptr<PhysicsIntersectionNormal> &intersection);
 	static bool isBody(int id);
 	static Ptr<Body> getBody(int id);
 	static bool isJoint(int id);
@@ -156,7 +156,7 @@ public:
 	static bool isShape(int id);
 	static Ptr<Shape> getShape(int id);
 	static void addUpdateNode(const Ptr<Node> &node);
-	static void addUpdateNodes(const Vector< Ptr<Node> > &nodes);
+	static void addUpdateNodes(const Vector<Ptr<Node>> &nodes);
 };
 
 
@@ -164,17 +164,17 @@ class UNIGINE_API ShapeContact : public APIInterface
 {
 public:
 	static Ptr<ShapeContact> create();
-	void setId(int id);
-	int getId() const;
+	void setID(int id);
+	int getID() const;
 	void setSurface(int surface);
 	int getSurface() const;
 	void setTime(float time);
 	float getTime() const;
 	void setDepth(float depth);
 	float getDepth() const;
-	void setPoint(const Math::Vec3& point);
+	void setPoint(const Math::Vec3 &point);
 	Math::Vec3 getPoint() const;
-	void setNormal(const Math::vec3& normal);
+	void setNormal(const Math::vec3 &normal);
 	Math::vec3 getNormal() const;
 	void setShape0(const Ptr<Shape> &shape0);
 	Ptr<Shape> getShape0() const;
@@ -235,21 +235,21 @@ public:
 	float getVolume() const;
 	Math::mat3 getInertia() const;
 	Math::vec3 getCenterOfMass() const;
-	void setTransform(const Math::Mat4& transform);
+	void setTransform(const Math::Mat4 &transform);
 	Math::Mat4 getTransform() const;
-	void setBodyShapeTransform(const Math::mat4& transform);
+	void setBodyShapeTransform(const Math::mat4 &transform);
 	Math::mat4 getBodyShapeTransform() const;
-	void setPosition(const Math::Vec3& position);
+	void setPosition(const Math::Vec3 &position);
 	Math::Vec3 getPosition() const;
 	bool isIdentity() const;
-	void setVelocity(const Math::vec3& velocity, float ifps);
+	void setVelocity(const Math::vec3 &velocity, float ifps);
 	Math::vec3 getVelocity() const;
-	int getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, Math::Vec3 * ret_point, Math::vec3 * ret_normal) const;
-	int getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, const Ptr<PhysicsIntersection> &intersection) const;
-	int getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, const Ptr<PhysicsIntersectionNormal> &intersection) const;
-	int getCollision(Vector< Ptr<ShapeContact> > &contacts, float ifps = 0.0f) const;
-	int getCollision(const Ptr<Object> &object, Vector< Ptr<ShapeContact> > &contacts, float ifps = 0.0f) const;
-	void renderVisualizer(const Math::vec4& color);
+	int getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, Math::Vec3 *ret_point, Math::vec3 *ret_normal) const;
+	int getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, const Ptr<PhysicsIntersection> &intersection) const;
+	int getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, const Ptr<PhysicsIntersectionNormal> &intersection) const;
+	int getCollision(Vector<Ptr<ShapeContact>> &contacts, float ifps = 0.0f) const;
+	int getCollision(const Ptr<Object> &object, Vector<Ptr<ShapeContact>> &contacts, float ifps = 0.0f) const;
+	void renderVisualizer(const Math::vec4 &color);
 	Ptr<Shape> clone() const;
 	void swap(const Ptr<Shape> &shape);
 	int saveState(const Ptr<Stream> &stream) const;
@@ -267,7 +267,7 @@ public:
 	static Ptr<ShapeSphere> create(const Ptr<Body> &body, float radius);
 	void setRadius(float radius);
 	float getRadius() const;
-	void setCenter(const Math::Vec3& center);
+	void setCenter(const Math::Vec3 &center);
 	Math::Vec3 getCenter() const;
 };
 typedef Ptr<ShapeSphere> ShapeSpherePtr;
@@ -310,9 +310,9 @@ class UNIGINE_API ShapeBox : public Shape
 public:
 	static bool convertible(Shape *obj) { return obj && obj->getType() == Shape::SHAPE_BOX; }
 	static Ptr<ShapeBox> create();
-	static Ptr<ShapeBox> create(const Math::vec3& size);
-	static Ptr<ShapeBox> create(const Ptr<Body> &body, const Math::vec3& size);
-	void setSize(const Math::vec3& size);
+	static Ptr<ShapeBox> create(const Math::vec3 &size);
+	static Ptr<ShapeBox> create(const Ptr<Body> &body, const Math::vec3 &size);
+	void setSize(const Math::vec3 &size);
 	Math::vec3 getSize() const;
 };
 typedef Ptr<ShapeBox> ShapeBoxPtr;
@@ -390,16 +390,16 @@ public:
 	float getLinearSoftness() const;
 	void setAngularSoftness(float softness);
 	float getAngularSoftness() const;
-	void setAnchor0(const Math::Vec3& anchor);
+	void setAnchor0(const Math::Vec3 &anchor);
 	Math::Vec3 getAnchor0() const;
-	void setAnchor1(const Math::Vec3& anchor);
+	void setAnchor1(const Math::Vec3 &anchor);
 	Math::Vec3 getAnchor1() const;
-	void setWorldAnchor(const Math::Vec3& anchor);
+	void setWorldAnchor(const Math::Vec3 &anchor);
 	Math::Vec3 getWorldAnchor() const;
-	void *addBrokenCallback(Unigine::CallbackBase1< Ptr<Joint> > *func);
+	void *addBrokenCallback(CallbackBase1<Ptr<Joint>> *func);
 	bool removeBrokenCallback(void *id);
 	void clearBrokenCallbacks();
-	void renderVisualizer(const Math::vec4& color);
+	void renderVisualizer(const Math::vec4 &color);
 	Ptr<Joint> clone() const;
 	void swap(const Ptr<Joint> &joint);
 	int saveState(const Ptr<Stream> &stream) const;
@@ -414,12 +414,12 @@ public:
 	static bool convertible(Joint *obj) { return obj && obj->getType() == Joint::JOINT_FIXED; }
 	static Ptr<JointFixed> create();
 	static Ptr<JointFixed> create(const Ptr<Body> &body0, const Ptr<Body> &body1);
-	static Ptr<JointFixed> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3& anchor);
-	void setRotation0(const Math::mat3& rotation0);
+	static Ptr<JointFixed> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3 & anchor);
+	void setRotation0(const Math::mat3 &rotation0);
 	Math::mat3 getRotation0() const;
-	void setRotation1(const Math::mat3& rotation1);
+	void setRotation1(const Math::mat3 &rotation1);
 	Math::mat3 getRotation1() const;
-	void setWorldRotation(const Math::mat3& rotation);
+	void setWorldRotation(const Math::mat3 &rotation);
 	Math::mat3 getWorldRotation() const;
 };
 typedef Ptr<JointFixed> JointFixedPtr;
@@ -431,11 +431,11 @@ public:
 	static bool convertible(Joint *obj) { return obj && obj->getType() == Joint::JOINT_BALL; }
 	static Ptr<JointBall> create();
 	static Ptr<JointBall> create(const Ptr<Body> &body0, const Ptr<Body> &body1);
-	static Ptr<JointBall> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3& anchor);
-	static Ptr<JointBall> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3& anchor, const Math::vec3& axis);
-	void setAxis0(const Math::vec3& axis0);
+	static Ptr<JointBall> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3 & anchor);
+	static Ptr<JointBall> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3 & anchor, const Math::vec3 &axis);
+	void setAxis0(const Math::vec3 &axis0);
 	Math::vec3 getAxis0() const;
-	void setAxis1(const Math::vec3& axis1);
+	void setAxis1(const Math::vec3 &axis1);
 	Math::vec3 getAxis1() const;
 	void setAngularDamping(float damping);
 	float getAngularDamping() const;
@@ -445,7 +445,7 @@ public:
 	float getAngularLimitFrom() const;
 	void setAngularLimitTo(float to);
 	float getAngularLimitTo() const;
-	void setWorldAxis(const Math::vec3& axis);
+	void setWorldAxis(const Math::vec3 &axis);
 	Math::vec3 getWorldAxis() const;
 };
 typedef Ptr<JointBall> JointBallPtr;
@@ -457,12 +457,12 @@ public:
 	static bool convertible(Joint *obj) { return obj && obj->getType() == Joint::JOINT_CYLINDRICAL; }
 	static Ptr<JointCylindrical> create();
 	static Ptr<JointCylindrical> create(const Ptr<Body> &body0, const Ptr<Body> &body1);
-	static Ptr<JointCylindrical> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3& anchor, const Math::vec3& axis);
-	void setAxis0(const Math::vec3& axis0);
+	static Ptr<JointCylindrical> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3 & anchor, const Math::vec3 &axis);
+	void setAxis0(const Math::vec3 &axis0);
 	Math::vec3 getAxis0() const;
-	void setAxis1(const Math::vec3& axis1);
+	void setAxis1(const Math::vec3 &axis1);
 	Math::vec3 getAxis1() const;
-	void setWorldAxis(const Math::vec3& axis);
+	void setWorldAxis(const Math::vec3 &axis);
 	Math::vec3 getWorldAxis() const;
 	void setAngularAngle(float angle);
 	float getAngularAngle() const;
@@ -506,12 +506,12 @@ public:
 	static bool convertible(Joint *obj) { return obj && obj->getType() == Joint::JOINT_HINGE; }
 	static Ptr<JointHinge> create();
 	static Ptr<JointHinge> create(const Ptr<Body> &body0, const Ptr<Body> &body1);
-	static Ptr<JointHinge> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3& anchor, const Math::vec3& axis);
-	void setAxis0(const Math::vec3& axis0);
+	static Ptr<JointHinge> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3 & anchor, const Math::vec3 &axis);
+	void setAxis0(const Math::vec3 &axis0);
 	Math::vec3 getAxis0() const;
-	void setAxis1(const Math::vec3& axis1);
+	void setAxis1(const Math::vec3 &axis1);
 	Math::vec3 getAxis1() const;
-	void setWorldAxis(const Math::vec3& axis);
+	void setWorldAxis(const Math::vec3 &axis);
 	Math::vec3 getWorldAxis() const;
 	void setAngularAngle(float angle);
 	float getAngularAngle() const;
@@ -539,8 +539,8 @@ public:
 	static bool convertible(Joint *obj) { return obj && obj->getType() == Joint::JOINT_PARTICLES; }
 	static Ptr<JointParticles> create();
 	static Ptr<JointParticles> create(const Ptr<Body> &body0, const Ptr<Body> &body1);
-	static Ptr<JointParticles> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3& anchor, const Math::vec3& size);
-	void setSize(const Math::vec3& size);
+	static Ptr<JointParticles> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3 & anchor, const Math::vec3 &size);
+	void setSize(const Math::vec3 &size);
 	Math::vec3 getSize() const;
 	void setThreshold(float threshold);
 	float getThreshold() const;
@@ -558,16 +558,16 @@ public:
 	static bool convertible(Joint *obj) { return obj && obj->getType() == Joint::JOINT_PATH; }
 	static Ptr<JointPath> create();
 	static Ptr<JointPath> create(const Ptr<Body> &body0, const Ptr<Body> &body1);
-	static Ptr<JointPath> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3& anchor);
+	static Ptr<JointPath> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3 & anchor);
 	void setLinearDamping(float damping);
 	float getLinearDamping() const;
 	void setLinearForce(float force);
 	float getLinearForce() const;
 	void setLinearVelocity(float velocity);
 	float getLinearVelocity() const;
-	void setRotation0(const Math::mat3& rotation0);
+	void setRotation0(const Math::mat3 &rotation0);
 	Math::mat3 getRotation0() const;
-	void setWorldRotation(const Math::mat3& rotation);
+	void setWorldRotation(const Math::mat3 &rotation);
 	Math::mat3 getWorldRotation() const;
 	float getCurrentLinearVelocity() const;
 };
@@ -580,10 +580,10 @@ public:
 	static bool convertible(Joint *obj) { return obj && obj->getType() == Joint::JOINT_PRISMATIC; }
 	static Ptr<JointPrismatic> create();
 	static Ptr<JointPrismatic> create(const Ptr<Body> &body0, const Ptr<Body> &body1);
-	static Ptr<JointPrismatic> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3& anchor, const Math::vec3& size);
-	void setAxis0(const Math::vec3& axis0);
+	static Ptr<JointPrismatic> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3 & anchor, const Math::vec3 &size);
+	void setAxis0(const Math::vec3 &axis0);
 	Math::vec3 getAxis0() const;
-	void setWorldAxis(const Math::vec3& axis);
+	void setWorldAxis(const Math::vec3 &axis);
 	Math::vec3 getWorldAxis() const;
 	void setLinearDamping(float damping);
 	float getLinearDamping() const;
@@ -599,11 +599,11 @@ public:
 	float getLinearSpring() const;
 	void setLinearVelocity(float velocity);
 	float getLinearVelocity() const;
-	void setRotation0(const Math::mat3& rotation0);
+	void setRotation0(const Math::mat3 &rotation0);
 	Math::mat3 getRotation0() const;
-	void setRotation1(const Math::mat3& rotation1);
+	void setRotation1(const Math::mat3 &rotation1);
 	Math::mat3 getRotation1() const;
-	void setWorldRotation(const Math::mat3& rotation);
+	void setWorldRotation(const Math::mat3 &rotation);
 	Math::mat3 getWorldRotation() const;
 	float getCurrentLinearDistance() const;
 	float getCurrentLinearVelocity() const;
@@ -617,16 +617,16 @@ public:
 	static bool convertible(Joint *obj) { return obj && obj->getType() == Joint::JOINT_SUSPENSION; }
 	static Ptr<JointSuspension> create();
 	static Ptr<JointSuspension> create(const Ptr<Body> &body0, const Ptr<Body> &body1);
-	static Ptr<JointSuspension> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3& anchor, const Math::vec3& axis0, const Math::vec3& axis1);
-	void setAxis00(const Math::vec3& axis00);
+	static Ptr<JointSuspension> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3 & anchor, const Math::vec3 &axis0, const Math::vec3 &axis1);
+	void setAxis00(const Math::vec3 &axis00);
 	Math::vec3 getAxis00() const;
-	void setAxis10(const Math::vec3& axis10);
+	void setAxis10(const Math::vec3 &axis10);
 	Math::vec3 getAxis10() const;
-	void setAxis11(const Math::vec3& axis11);
+	void setAxis11(const Math::vec3 &axis11);
 	Math::vec3 getAxis11() const;
-	void setWorldAxis0(const Math::vec3& axis0);
+	void setWorldAxis0(const Math::vec3 &axis0);
 	Math::vec3 getWorldAxis0() const;
-	void setWorldAxis1(const Math::vec3& axis1);
+	void setWorldAxis1(const Math::vec3 &axis1);
 	Math::vec3 getWorldAxis1() const;
 	void setLinearDamping(float damping);
 	float getLinearDamping() const;
@@ -656,16 +656,16 @@ public:
 	static bool convertible(Joint *obj) { return obj && obj->getType() == Joint::JOINT_WHEEL; }
 	static Ptr<JointWheel> create();
 	static Ptr<JointWheel> create(const Ptr<Body> &body0, const Ptr<Body> &body1);
-	static Ptr<JointWheel> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3& anchor, const Math::vec3& axis0, const Math::vec3& axis1);
-	void setAxis00(const Math::vec3& axis00);
+	static Ptr<JointWheel> create(const Ptr<Body> &body0, const Ptr<Body> &body1, const Math::Vec3 & anchor, const Math::vec3 &axis0, const Math::vec3 &axis1);
+	void setAxis00(const Math::vec3 &axis00);
 	Math::vec3 getAxis00() const;
-	void setAxis10(const Math::vec3& axis10);
+	void setAxis10(const Math::vec3 &axis10);
 	Math::vec3 getAxis10() const;
-	void setAxis11(const Math::vec3& axis11);
+	void setAxis11(const Math::vec3 &axis11);
 	Math::vec3 getAxis11() const;
-	void setWorldAxis0(const Math::vec3& axis0);
+	void setWorldAxis0(const Math::vec3 &axis0);
 	Math::vec3 getWorldAxis0() const;
-	void setWorldAxis1(const Math::vec3& axis1);
+	void setWorldAxis1(const Math::vec3 &axis1);
 	Math::vec3 getWorldAxis1() const;
 	void setPhysicsIntersectionMask(int mask);
 	int getPhysicsIntersectionMask() const;
@@ -754,16 +754,16 @@ public:
 	const char *getName() const;
 	void setPhysicalMask(int mask);
 	int getPhysicalMask() const;
-	void setTransform(const Math::Mat4& transform);
+	void setTransform(const Math::Mat4 &transform);
 	Math::Mat4 getTransform() const;
-	void setPreserveTransform(const Math::Mat4& transform);
-	void setVelocityTransform(const Math::Mat4& transform);
+	void setPreserveTransform(const Math::Mat4 &transform);
+	void setVelocityTransform(const Math::Mat4 &transform);
 	void flushTransform() const;
-	void setPosition(const Math::Vec3& pos);
+	void setPosition(const Math::Vec3 &pos);
 	Math::Vec3 getPosition() const;
-	void setRotation(const Math::quat& rot);
+	void setRotation(const Math::quat &rot);
 	Math::quat getRotation() const;
-	void setDirection(const Math::vec3& dir, const Math::vec3& up);
+	void setDirection(const Math::vec3 &dir, const Math::vec3 &up);
 	Math::vec3 getDirection() const;
 	Ptr<Body> getParent() const;
 	int isChild(const Ptr<Body> &body) const;
@@ -771,9 +771,9 @@ public:
 	int findChild(const char *name) const;
 	Ptr<Body> getChild(int num) const;
 	void addShape(const Ptr<Shape> &shape);
-	void addShape(const Ptr<Shape> &shape, const Math::mat4& transform);
+	void addShape(const Ptr<Shape> &shape, const Math::mat4 &transform);
 	bool insertShape(int pos, const Ptr<Shape> &shape);
-	bool insertShape(int pos, const Ptr<Shape> &shape, const Math::mat4& transform);
+	bool insertShape(int pos, const Ptr<Shape> &shape, const Math::mat4 &transform);
 	void removeShape(const Ptr<Shape> &shape, bool destroy = false);
 	void removeShape(int num, bool destroy = false);
 	void clearShapes(int destroy = 0);
@@ -781,10 +781,10 @@ public:
 	int getNumShapes() const;
 	int findShape(const char *name) const;
 	Ptr<Shape> getShape(int num) const;
-	void setShapeTransform(int num, const Math::mat4& transform);
+	void setShapeTransform(int num, const Math::mat4 &transform);
 	Math::mat4 getShapeTransform(int num) const;
 	void updateShapes();
-	Ptr<Shape> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, Math::Vec3 * ret_point, Math::vec3 * ret_normal);
+	Ptr<Shape> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, Math::Vec3 *ret_point, Math::vec3 *ret_normal);
 	void addJoint(const Ptr<Joint> &joint);
 	void insertJoint(const Ptr<Joint> &joint, int num);
 	void removeJoint(const Ptr<Joint> &joint);
@@ -814,19 +814,19 @@ public:
 	Ptr<Shape> getContactShape1(int num) const;
 	Ptr<Object> getContactObject(int num) const;
 	int getContactSurface(int num) const;
-	void *addFrozenCallback(Unigine::CallbackBase1< Ptr<Body> > *func);
+	void *addFrozenCallback(CallbackBase1<Ptr<Body>> *func);
 	bool removeFrozenCallback(void *id);
 	void clearFrozenCallbacks();
-	void *addPositionCallback(Unigine::CallbackBase1< Ptr<Body> > *func);
+	void *addPositionCallback(CallbackBase1<Ptr<Body>> *func);
 	bool removePositionCallback(void *id);
 	void clearPositionCallbacks();
-	void *addContactEnterCallback(Unigine::CallbackBase2< Ptr<Body>, int > *func);
+	void *addContactEnterCallback(CallbackBase2<Ptr<Body>, int> *func);
 	bool removeContactEnterCallback(void *id);
 	void clearContactEnterCallbacks();
-	void *addContactLeaveCallback(Unigine::CallbackBase2< Ptr<Body>, int > *func);
+	void *addContactLeaveCallback(CallbackBase2<Ptr<Body>, int> *func);
 	bool removeContactLeaveCallback(void *id);
 	void clearContactLeaveCallbacks();
-	void *addContactsCallback(Unigine::CallbackBase1< Ptr<Body> > *func);
+	void *addContactsCallback(CallbackBase1<Ptr<Body>> *func);
 	bool removeContactsCallback(void *id);
 	void clearContactsCallbacks();
 	void renderShapes();
@@ -868,15 +868,15 @@ public:
 	void setMass(float mass);
 	float getMass() const;
 	float getIMass() const;
-	void setInertia(const Math::mat3& inertia);
+	void setInertia(const Math::mat3 &inertia);
 	Math::mat3 getInertia() const;
 	Math::mat3 getIWorldInertia() const;
-	void setCenterOfMass(const Math::vec3& center);
+	void setCenterOfMass(const Math::vec3 &center);
 	Math::vec3 getCenterOfMass() const;
 	Math::Vec3 getWorldCenterOfMass() const;
-	void setLinearScale(const Math::vec3& scale);
+	void setLinearScale(const Math::vec3 &scale);
 	Math::vec3 getLinearScale() const;
-	void setAngularScale(const Math::vec3& scale);
+	void setAngularScale(const Math::vec3 &scale);
 	Math::vec3 getAngularScale() const;
 	void setLinearDamping(float damping);
 	float getLinearDamping() const;
@@ -890,22 +890,22 @@ public:
 	float getFrozenLinearVelocity() const;
 	void setFrozenAngularVelocity(float velocity);
 	float getFrozenAngularVelocity() const;
-	void setLinearVelocity(const Math::vec3& velocity);
+	void setLinearVelocity(const Math::vec3 &velocity);
 	Math::vec3 getLinearVelocity() const;
-	void setAngularVelocity(const Math::vec3& velocity);
+	void setAngularVelocity(const Math::vec3 &velocity);
 	Math::vec3 getAngularVelocity() const;
-	void addForce(const Math::vec3& force);
-	void addTorque(const Math::vec3& torque);
-	void addForce(const Math::vec3& radius, const Math::vec3& force);
-	void addTorque(const Math::vec3& radius, const Math::vec3& torque);
-	void addImpulse(const Math::vec3& radius, const Math::vec3& impulse);
-	Math::vec3 getVelocity(const Math::vec3& radius) const;
-	void addWorldForce(const Math::Vec3& point, const Math::vec3& force);
-	void addWorldTorque(const Math::Vec3& point, const Math::vec3& torque);
-	void addWorldImpulse(const Math::Vec3& point, const Math::vec3& impulse);
-	Math::vec3 getWorldVelocity(const Math::Vec3& point) const;
-	void addLinearImpulse(const Math::vec3& impulse);
-	void addAngularImpulse(const Math::vec3& impulse);
+	void addForce(const Math::vec3 &force);
+	void addTorque(const Math::vec3 &torque);
+	void addForce(const Math::vec3 &radius, const Math::vec3 &force);
+	void addTorque(const Math::vec3 &radius, const Math::vec3 &torque);
+	void addImpulse(const Math::vec3 &radius, const Math::vec3 &impulse);
+	Math::vec3 getVelocity(const Math::vec3 &radius) const;
+	void addWorldForce(const Math::Vec3 &point, const Math::vec3 &force);
+	void addWorldTorque(const Math::Vec3 &point, const Math::vec3 &torque);
+	void addWorldImpulse(const Math::Vec3 &point, const Math::vec3 &impulse);
+	Math::vec3 getWorldVelocity(const Math::Vec3 &point) const;
+	void addLinearImpulse(const Math::vec3 &impulse);
+	void addAngularImpulse(const Math::vec3 &impulse);
 	int createShapes(int depth = 4, float error = 0.01, float threshold = 0.01);
 };
 typedef Ptr<BodyRigid> BodyRigidPtr;
@@ -954,23 +954,23 @@ public:
 	const char *getSurfaceProperty() const;
 	void setMaterialPath(const char *path);
 	const char *getMaterialPath() const;
-	void setMaterialGUID(const UGUID& materialguid);
+	void setMaterialGUID(const UGUID &materialguid);
 	UGUID getMaterialGUID() const;
 	void setMaterial(const Ptr<Material> &material);
 	Ptr<Material> getMaterial() const;
-	void addForce(const Math::vec3& force) const;
-	void addTorque(const Math::vec3& torque) const;
-	void addForce(const Math::vec3& radius, const Math::vec3& force) const;
-	void addTorque(const Math::vec3& radius, const Math::vec3& torque) const;
-	void addImpulse(const Math::vec3& radius, const Math::vec3& impulse);
-	Math::vec3 getVelocity(const Math::vec3& radius) const;
-	void addWorldForce(const Math::Vec3& point, const Math::vec3& force);
-	void addWorldTorque(const Math::Vec3& point, const Math::vec3& torque);
-	void addWorldImpulse(const Math::Vec3& point, const Math::vec3& impulse);
-	Math::vec3 getWorldVelocity(const Math::Vec3& point) const;
-	int createCrackPieces(const Math::Vec3& point, const Math::vec3& normal, int num_cuts, int num_rings, float step);
+	void addForce(const Math::vec3 &force) const;
+	void addTorque(const Math::vec3 &torque) const;
+	void addForce(const Math::vec3 &radius, const Math::vec3 &force) const;
+	void addTorque(const Math::vec3 &radius, const Math::vec3 &torque) const;
+	void addImpulse(const Math::vec3 &radius, const Math::vec3 &impulse);
+	Math::vec3 getVelocity(const Math::vec3 &radius) const;
+	void addWorldForce(const Math::Vec3 &point, const Math::vec3 &force);
+	void addWorldTorque(const Math::Vec3 &point, const Math::vec3 &torque);
+	void addWorldImpulse(const Math::Vec3 &point, const Math::vec3 &impulse);
+	Math::vec3 getWorldVelocity(const Math::Vec3 &point) const;
+	int createCrackPieces(const Math::Vec3 &point, const Math::vec3 &normal, int num_cuts, int num_rings, float step);
 	int createShatterPieces(int num_pieces);
-	int createSlicePieces(const Math::Vec3& point, const Math::vec3& normal);
+	int createSlicePieces(const Math::Vec3 &point, const Math::vec3 &normal);
 };
 typedef Ptr<BodyFracture> BodyFracturePtr;
 
@@ -981,8 +981,8 @@ public:
 	static bool convertible(Body *obj) { return obj && obj->getType() == Body::BODY_PATH; }
 	static Ptr<BodyPath> create();
 	static Ptr<BodyPath> create(const Ptr<Object> &object);
-	Math::Vec3 getClosestPosition(const Math::Vec3& position) const;
-	Math::quat getClosestRotation(const Math::Vec3& position) const;
+	Math::Vec3 getClosestPosition(const Math::Vec3 &position) const;
+	Math::quat getClosestRotation(const Math::Vec3 &position) const;
 	const char *getPathName() const;
 	void setPathName(const char *name, int unique = 0);
 	Ptr<Path> getPath() const;
@@ -1024,10 +1024,10 @@ public:
 	using Body::getIntersection;
 	static Ptr<BodyWater> create();
 	static Ptr<BodyWater> create(const Ptr<Object> &object);
-	void addParticleHeight(const Math::vec3& position, float height);
-	void addParticleVelocity(const Math::vec3& position, const Math::vec3& velocity);
-	float getParticleHeight(const Math::vec3& position) const;
-	Math::vec3 getParticleVelocity(const Math::vec3& position) const;
+	void addParticleHeight(const Math::vec3 &position, float height);
+	void addParticleVelocity(const Math::vec3 &position, const Math::vec3 &velocity);
+	float getParticleHeight(const Math::vec3 &position) const;
+	Math::vec3 getParticleVelocity(const Math::vec3 &position) const;
 	void setAbsorption(int absorption);
 	int getAbsorption() const;
 	void setDensity(float density);
@@ -1071,8 +1071,8 @@ public:
 		ITERATIONS_MODE_OVERRIDE = 0,
 		ITERATIONS_MODE_MULTIPLICATION,
 	};
-	void addParticleForce(int num, const Math::vec3& force);
-	void addParticleImpulse(int num, const Math::vec3& impulse);
+	void addParticleForce(int num, const Math::vec3 &force);
+	void addParticleImpulse(int num, const Math::vec3 &impulse);
 	void setAngularRestitution(float restitution);
 	float getAngularRestitution() const;
 	void setAngularThreshold(float threshold);
@@ -1108,9 +1108,9 @@ public:
 	int getNumParticles() const;
 	void setParticleMass(int num, float mass);
 	float getParticleMass(int num) const;
-	void setParticlePosition(int num, const Math::Vec3& position);
+	void setParticlePosition(int num, const Math::Vec3 &position);
 	Math::Vec3 getParticlePosition(int num) const;
-	void setParticleVelocity(int num, const Math::vec3& velocity);
+	void setParticleVelocity(int num, const Math::vec3 &velocity);
 	Math::vec3 getParticleVelocity(int num) const;
 };
 typedef Ptr<BodyParticles> BodyParticlesPtr;

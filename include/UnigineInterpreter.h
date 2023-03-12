@@ -25,6 +25,7 @@
 #include "UniginePlayers.h"
 #include "UnigineDecals.h"
 #include "UnigineImage.h"
+#include "UnigineTextures.h"
 #include "UnigineStreams.h"
 #include "UnigineControls.h"
 #include "UnigineInput.h"
@@ -81,6 +82,10 @@ public:
 	static UNIGINE_API Variable popStack();
 
 	static UNIGINE_API void error(const char *format, ...) UNIGINE_PRINTF(1, 2);
+
+	static UNIGINE_API int runScript(const char *filepath, const Vector<String> &arguments = {},
+		const Vector<String> &defines = {}, const Vector<String> &include_paths = {},
+		const char *entry_point = "main", bool silent = false);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -462,32 +467,32 @@ public:
 	~Reflection();
 	int reflect(void *interpreter, const Variable &v);
 
-	String getName() const;
-	String getBaseName() const;
-	String getAttribute() const;
+	const char *getName() const;
+	const char *getBaseName() const;
+	const char *getAttribute() const;
 	int getNumNameSpaces() const;
-	String getNameSpaceName(int num) const;
-	String getNameSpaceAttribute(int num) const;
+	const char *getNameSpaceName(int num) const;
+	const char *getNameSpaceAttribute(int num) const;
 	int getNumVariables() const;
-	String getVariableName(int num) const;
-	String getVariableAttribute(int num) const;
+	const char *getVariableName(int num) const;
+	const char *getVariableAttribute(int num) const;
 	int getNumArrays() const;
-	String getArrayName(int num) const;
-	String getArrayAttribute(int num) const;
+	const char *getArrayName(int num) const;
+	const char *getArrayAttribute(int num) const;
 	int getNumFunctions() const;
 	int getFunctionID(int num) const;
-	String getFunctionName(int num) const;
-	String getFunctionType(int num) const;
-	String getFunctionAttribute(int num) const;
+	const char *getFunctionName(int num) const;
+	const char *getFunctionType(int num) const;
+	const char *getFunctionAttribute(int num) const;
 	int getNumFunctionArgs(int num) const;
 	int getNumFunctionDefaultArgs(int num) const;
-	String getFunctionArgName(int num, int arg) const;
-	String getFunctionArgType(int num, int arg) const;
+	const char *getFunctionArgName(int num, int arg) const;
+	const char *getFunctionArgType(int num, int arg) const;
 	int getNumClasses() const;
-	String getClassName(int num) const;
-	String getClassAttribute(int num) const;
+	const char *getClassName(int num) const;
+	const char *getClassAttribute(int num) const;
 	int getNumConstants() const;
-	String getConstantName(int num) const;
+	const char *getConstantName(int num) const;
 	Variable getConstantValue(int num) const;
 
 	// Variable *args
@@ -513,6 +518,7 @@ public:
 	Variable callExternClassFunction(Variable object, int function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6);
 	Variable callExternClassFunction(Variable object, int function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6, const Variable &arg7);
 	Variable callExternClassFunction(Variable object, int function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6, const Variable &arg7, const Variable &arg8);
+	Variable callExternClassFunction(Variable object, int function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6, const Variable &arg7, const Variable &arg8, const Variable &arg9);
 	Variable callExternClassFunction(Variable object, const char *function);
 	Variable callExternClassFunction(Variable object, const char *function, const Variable &arg0);
 	Variable callExternClassFunction(Variable object, const char *function, const Variable &arg0, const Variable &arg1);
@@ -523,6 +529,7 @@ public:
 	Variable callExternClassFunction(Variable object, const char *function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6);
 	Variable callExternClassFunction(Variable object, const char *function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6, const Variable &arg7);
 	Variable callExternClassFunction(Variable object, const char *function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6, const Variable &arg7, const Variable &arg8);
+	Variable callExternClassFunction(Variable object, const char *function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6, const Variable &arg7, const Variable &arg8, const Variable &arg9);
 	Variable callExternFunction(int function);
 	Variable callExternFunction(int function, const Variable &arg0);
 	Variable callExternFunction(int function, const Variable &arg0, const Variable &arg1);
@@ -533,6 +540,7 @@ public:
 	Variable callExternFunction(int function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6);
 	Variable callExternFunction(int function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6, const Variable &arg7);
 	Variable callExternFunction(int function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6, const Variable &arg7, const Variable &arg8);
+	Variable callExternFunction(int function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6, const Variable &arg7, const Variable &arg8, const Variable &arg9);
 	Variable callExternFunction(const char *function);
 	Variable callExternFunction(const char *function, const Variable &arg0);
 	Variable callExternFunction(const char *function, const Variable &arg0, const Variable &arg1);
@@ -543,6 +551,7 @@ public:
 	Variable callExternFunction(const char *function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6);
 	Variable callExternFunction(const char *function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6, const Variable &arg7);
 	Variable callExternFunction(const char *function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6, const Variable &arg7, const Variable &arg8);
+	Variable callExternFunction(const char *function, const Variable &arg0, const Variable &arg1, const Variable &arg2, const Variable &arg3, const Variable &arg4, const Variable &arg5, const Variable &arg6, const Variable &arg7, const Variable &arg8, const Variable &arg9);
 
 private:
 	void *obj;
@@ -663,6 +672,7 @@ DECLARE_VARIABLE_TO_TYPE(Decal)
 DECLARE_VARIABLE_TO_TYPE(Object)
 DECLARE_VARIABLE_TO_TYPE(Player)
 DECLARE_VARIABLE_TO_TYPE(Image)
+DECLARE_VARIABLE_TO_TYPE(Texture)
 DECLARE_VARIABLE_TO_TYPE(Stream)
 DECLARE_VARIABLE_TO_TYPE(Controls)
 DECLARE_VARIABLE_TO_TYPE(Material)
@@ -831,6 +841,7 @@ DECLARE_TYPE_TO_VARIABLE(Decal)
 DECLARE_TYPE_TO_VARIABLE(Object)
 DECLARE_TYPE_TO_VARIABLE(Player)
 DECLARE_TYPE_TO_VARIABLE(Image)
+DECLARE_TYPE_TO_VARIABLE(Texture)
 DECLARE_TYPE_TO_VARIABLE(Stream)
 DECLARE_TYPE_TO_VARIABLE(Controls)
 DECLARE_TYPE_TO_VARIABLE(Material)

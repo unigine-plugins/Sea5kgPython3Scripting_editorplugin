@@ -15,15 +15,17 @@
 
 #pragma once
 
-#include <UnigineNode.h>
-#include <UnigineMathLib.h>
-#include <UnigineVector.h>
 #include <UnigineEngine.h>
+#include <UnigineMathLib.h>
+#include <UnigineNode.h>
+#include <UnigineVector.h>
 
 namespace Unigine
 {
 namespace Plugins
 {
+
+
 namespace FMOD
 {
 
@@ -350,24 +352,40 @@ protected:
 	virtual ~Channel(){}
 public:
 	virtual void unregisterDSP(void *fmod_dsp) = 0;
-	virtual bool containsDSP(void *fmod_dsp) = 0;
+	virtual bool containsDSP(void *fmod_dsp) const = 0;
 	virtual Unigine::Plugins::FMOD::DSP* getDSP(void *fmod_dsp) = 0;
 	virtual void addDSP(Unigine::Plugins::FMOD::DSP* fmod_dsp) = 0;
-	virtual void setPaused(bool value) = 0;
-	virtual bool getPaused() = 0;
+	virtual void setPaused(bool paused) = 0;
+	virtual bool isPaused() const = 0;
 	virtual void setVolume(float volume) = 0;
-	virtual float getVolume() = 0;
-	virtual bool isPlaying() = 0;
+	virtual float getVolume() const = 0;
+	virtual void setVolumeRamp(bool ramp) = 0;
+	virtual bool isVolumeRamp() const = 0;
+	virtual void setMute(bool mute) = 0;
+	virtual bool isMute() const = 0;
+	virtual bool isPlaying() const = 0;
 	virtual void stop() = 0;
 	virtual void setMinMaxDistance(float min, float max) = 0;
-	virtual void setPosition(const Math::Vec3& position) = 0;
+	virtual void setPosition(const Math::Vec3 &position) = 0;
 	virtual void setPositionTimeLine(unsigned int position, FMODEnums::TIME_UNIT time_unit) = 0;
-	virtual void getPositionTimeLine(unsigned int & position, FMODEnums::TIME_UNIT time_unit) = 0;
+	virtual void getPositionTimeLine(unsigned int &position, FMODEnums::TIME_UNIT time_unit) = 0;
 	virtual void release() = 0;
-	virtual void setVelocity(const Math::Vec3& velocity) = 0;
+	virtual void setVelocity(const Math::Vec3 &velocity) = 0;
 	virtual DSP * addDSP(int index, DSPType::TYPE dsp_type) = 0;
 	virtual void removeDSP(int index) = 0;
 	virtual DSP * getDSP(int index) = 0;
+	virtual void setFrequency(float frequency) = 0;
+	virtual float getFrequency() const = 0;
+	virtual void setPitch(float pitch) = 0;
+	virtual float getPitch() const = 0;
+	virtual void setPriority(int priority) = 0;
+	virtual int getPriority() const = 0;
+	virtual void setLoopCount(int count) = 0;
+	virtual int getLoopCount() const = 0;
+	virtual float getAudibility() const = 0;
+	virtual void setPan(float pan) = 0;
+	virtual bool isSoundOnChannel(void *sound) const = 0;
+	virtual bool isVirtual() const = 0;
 	virtual void* getFMOD() = 0;
 };
 
@@ -380,7 +398,7 @@ public:
 	virtual Channel * getChannel(int id) = 0;
 	virtual int getChannelCount() = 0;
 	virtual void setVolume(float volume) = 0;
-	virtual void addChannel(Channel * channel) = 0;
+	virtual void addChannel(Channel *channel) = 0;
 	virtual void* getFMOD() = 0;
 };
 
@@ -408,9 +426,9 @@ public:
 	virtual void initCore(int max_channels, FMODEnums::INIT_FLAGS flags) = 0;
 	virtual Sound * createSound(const char *name_of_data, FMODEnums::FMOD_MODE mode) = 0;
 	virtual Sound * createStream(const char *url) = 0;
-	virtual Channel * playSound(Sound * sound, ChannelGroup * channel_group, bool paused) = 0;
-	virtual void setListener3DAttributes(int listener, const Math::Vec3 & position, const Math::Vec3 & up, const Math::Vec3 & forward, const Math::Vec3 & velocity) = 0;
-	virtual void getListener3DAttributes(int listener, Math::Vec3 & position, Math::Vec3 & up, Math::Vec3 & forward, Math::Vec3 & velocity) = 0;
+	virtual Channel * playSound(Sound *sound, ChannelGroup *channel_group, bool paused) = 0;
+	virtual void setListener3DAttributes(int listener, const Math::Vec3 &position, const Math::Vec3 &up, const Math::Vec3 &forward, const Math::Vec3 &velocity) = 0;
+	virtual void getListener3DAttributes(int listener, Math::Vec3 &position, Math::Vec3 &up, Math::Vec3 &forward, Math::Vec3 &velocity) = 0;
 	virtual Channel * getChannel(int index) = 0;
 	virtual void* getFMOD() = 0;
 	virtual Unigine::Plugins::FMOD::Sound* getSound(void* fmod_sound) = 0;
@@ -432,26 +450,30 @@ public:
 	virtual float getMaxDistance() const = 0;
 	virtual void setMinDistance(float distance) = 0;
 	virtual float getMinDistance() const = 0;
+	virtual void setPriority(float priority) = 0;
+	virtual float getPriority() const = 0;
 	virtual void setTimeLinePosition(int position) = 0;
 	virtual int getTimeLinePosition() const = 0;
-	virtual void set3DAttributes(const Math::Vec3 & position, const Math::Vec3 & up, const Math::Vec3 & forward, const Math::Vec3 & velocity) = 0;
-	virtual void get3DAttributes(Math::Vec3 & position, Math::Vec3 & up, Math::Vec3 & forward, Math::Vec3 & velocity) = 0;
-	virtual void setVelocity(const Math::Vec3 & velocity) = 0;
+	virtual void set3DAttributes(const Math::Vec3 &position, const Math::Vec3 &up, const Math::Vec3 &forward, const Math::Vec3 &velocity) = 0;
+	virtual void get3DAttributes(Math::Vec3 &position, Math::Vec3 &up, Math::Vec3 &forward, Math::Vec3 &velocity) = 0;
+	virtual void setVelocity(const Math::Vec3 &velocity) = 0;
 	virtual bool isVirtual() const = 0;
 	virtual bool isStarting() const = 0;
 	virtual bool isStopping() const = 0;
 	virtual bool isStopped() const = 0;
 	virtual bool isSustaining() const = 0;
 	virtual bool isPlaying() const = 0;
+	virtual bool isValid() const = 0;
 	virtual void play() = 0;
 	virtual void stop() = 0;
 	virtual void release() = 0;
 	virtual void update() = 0;
 	virtual void setParameter(const char *name, float value) = 0;
 	virtual float getParameter(const char *name) = 0;
-	virtual void setTransform(const Math::Mat4& transform) = 0;
+	virtual void setTransform(const Math::Mat4 &transform) = 0;
 	virtual void setParent(const Ptr<Node> &parent) = 0;
 	virtual void releaseFromDefinition() = 0;
+	virtual String getDescriptionPath() const = 0;
 	virtual void* getFMOD() = 0;
 };
 
@@ -477,6 +499,7 @@ public:
 	virtual void release() = 0;
 	virtual void releaseFromStudio() = 0;
 	virtual void update() = 0;
+	virtual String getPath() const = 0;
 	virtual void* getFMOD() = 0;
 };
 
@@ -492,8 +515,10 @@ public:
 	virtual float getVolume() const = 0;
 	virtual void setMuted(bool muted) = 0;
 	virtual bool isMuted() const = 0;
+	virtual bool isValid() const = 0;
 	virtual void stopAllEvents() = 0;
 	virtual void release() = 0;
+	virtual String getPath() const = 0;
 	virtual void* getFMOD() = 0;
 };
 
@@ -507,6 +532,8 @@ public:
 	virtual float getVolume() const = 0;
 	virtual void release() = 0;
 	virtual void releaseFromStudio() = 0;
+	virtual bool isValid() const = 0;
+	virtual String getPath() const = 0;
 	virtual void* getFMOD() = 0;
 };
 
@@ -521,6 +548,7 @@ public:
 	virtual bool isLoading() const = 0;
 	virtual bool isLoaded() const = 0;
 	virtual bool isError() const = 0;
+	virtual bool isValid() const = 0;
 	virtual EventDescription * getEventDescription(int index) = 0;
 	virtual Bus * getBus(int index) = 0;
 	virtual VCA * getVCA(int index) = 0;
@@ -530,6 +558,7 @@ public:
 	virtual void loadSampleData() = 0;
 	virtual void unloadSampleData() = 0;
 	virtual void release() = 0;
+	virtual String getPath() const = 0;
 	virtual void* getFMOD() = 0;
 };
 
@@ -573,19 +602,22 @@ public:
 	};
 
 	virtual Bank * loadBank(const char *path) = 0;
+	virtual bool unloadBank(Bank *bank) = 0;
+	virtual bool unloadBank(const char *path) = 0;
 	virtual VCA * getVCA(const char *path) = 0;
 	virtual Bus * getBus(const char *path) = 0;
 	virtual EventInstance * getEvent(const char *path) = 0;
 	virtual EventDescription * getEventDescription(const char *path) = 0;
-	virtual void setListener3DAttributes(int listener, const Math::Vec3 & position, const Math::Vec3 & up, const Math::Vec3 & forward, const Math::Vec3 & velocity) = 0;
-	virtual void getListener3DAttributes(int listener, Math::Vec3 & position, Math::Vec3 & up, Math::Vec3 & forward, Math::Vec3 & velocity) = 0;
-	virtual void setListenerVelocity(const Math::Vec3 & velocity) = 0;
-	virtual void setListenerTransform(const Math::Mat4& transform) = 0;
+	virtual void setListener3DAttributes(int listener, const Math::Vec3 &position, const Math::Vec3 &up, const Math::Vec3 &forward, const Math::Vec3 &velocity) = 0;
+	virtual void getListener3DAttributes(int listener, Math::Vec3 &position, Math::Vec3 &up, Math::Vec3 &forward, Math::Vec3 &velocity) = 0;
+	virtual void setListenerVelocity(const Math::Vec3 &velocity) = 0;
+	virtual void setListenerTransform(const Math::Mat4 &transform) = 0;
 	virtual void setParentForListener(const Ptr<Node> &parent) = 0;
 	virtual void useStudioLiveUpdateFlag() = 0;
 	virtual void useStudioSyncUpdateFlag() = 0;
 	virtual void useStudioLoadFromUpdateFlag() = 0;
 	virtual void useCoreStreamFromUpdateFlag() = 0;
+	virtual void useChannelsCount(int count) = 0;
 	virtual void update() = 0;
 	virtual void initStudio() = 0;
 	virtual Bank * getBank(int id) = 0;
@@ -599,8 +631,9 @@ public:
 	virtual FMODStudio::BufferUsage getBufferUsage() = 0;
 	virtual void resetBufferUsage() = 0;
 	virtual FMODStudio::CPUUsageTotal getCPUUsageTotal() = 0;
-	virtual void getMemoryUsage(int & exclusive, int & inclusive, int & sample_data) = 0;
+	virtual void getMemoryUsage(int &exclusive, int &inclusive, int &sample_data) = 0;
 	virtual void unregisterDescription(void *fmod_description) = 0;
+	virtual void unregisterBus(void *fmod_bus) = 0;
 	virtual void unregisterVCA(void *fmod_vca) = 0;
 	virtual bool containsBank(void *fmod_bank) = 0;
 	virtual bool containsBus(void *fmod_bus) = 0;
@@ -610,16 +643,13 @@ public:
 	virtual Unigine::Plugins::FMOD::Bus* getBus(void *fmod_bus) = 0;
 	virtual Unigine::Plugins::FMOD::VCA* getVCA(void *fmod_vca) = 0;
 	virtual Unigine::Plugins::FMOD::EventDescription* getEventDescription(void *fmod_event_description) = 0;
-	virtual void addBank(Unigine::Plugins::FMOD::Bank* bank) = 0;
-	virtual void addBus(Unigine::Plugins::FMOD::Bus* bus) = 0;
-	virtual void addVCA(Unigine::Plugins::FMOD::VCA* vca) = 0;
-	virtual void addEventDescription(Unigine::Plugins::FMOD::EventDescription* description) = 0;
 	virtual void *getFMOD() = 0;
 	virtual void release() = 0;
 	virtual void releaseBuses() = 0;
 	virtual void releaseVCAs() = 0;
 	virtual void releaseEventDescriptions() = 0;
 	virtual void releaseBanks() = 0;
+	virtual FMODCore *getCore() = 0;
 };
 
 
@@ -632,8 +662,8 @@ public:
 	virtual FMODCore * getCore() const = 0;
 	virtual FMODStudio * getStudio() const = 0;
 	virtual void update() = 0;
-	virtual bool hasErrors(int & error_type) = 0;
-	public:
+	virtual bool hasErrors(int &error_type) = 0;
+public:
 	static void checkPlugin(FMOD* plugin)
 	{
 	if (!plugin)

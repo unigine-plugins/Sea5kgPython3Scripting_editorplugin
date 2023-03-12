@@ -79,7 +79,7 @@ public:
 	static void enable(int mode = 0, int texture_sample = 0);
 	static void disable();
 	static void setOrtho(int width, int height);
-	static void setTransform(const Math::mat4& transform);
+	static void setTransform(const Math::mat4 &transform);
 	static Math::mat4 getTransform();
 	static void beginLines();
 	static void endLines();
@@ -87,7 +87,7 @@ public:
 	static void endTriangles();
 	static void renderScreen();
 	static int getNumVertex();
-	static void addVertex(const Ffp::Vertex& vertex);
+	static void addVertex(const Ffp::Vertex &vertex);
 	static void addVertex(const Ffp::Vertex *vertex, int vertex_size);
 	static void addVertex(float x, float y, float z = 0.0f);
 	static void setTexCoord(float x, float y, float z = 0.0f, float w = 1.0f);

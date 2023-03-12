@@ -248,6 +248,132 @@
 			<param name="size"> Size of the buffer, in bytes. </param> 
 			<returns>The number of read bytes.</returns>
 		</member>
+		<member name="M:Unigine.Stream.read(char) const">
+			<summary>
+			Reads a ASCII character in a binary format (1 byte) from the stream.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(short) const">
+			<summary>
+			Reads a signed short integer from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(unsignedshort) const">
+			<summary>
+			Reads a unsigned short integer from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(bool) const">
+			<summary>
+			Reads a boolean value from the stream.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(int) const">
+			<summary>
+			Reads a signed integer from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(unsignedint) const">
+			<summary>
+			Reads a unsigned integer from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(longlong) const">
+			<summary>
+			Reads a signed long from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(float) const">
+			<summary>
+			Reads a floating-point number from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(double) const">
+			<summary>
+			Reads a double floating-point number from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(Unigine.Math.vec2) const">
+			<summary>
+			Reads a 2-component vector from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(Unigine.Math.vec3) const">
+			<summary>
+			Reads a 3-component vector from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(Unigine.Math.vec4) const">
+			<summary>
+			Reads a 4-component vector from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(Unigine.Math.dvec2) const">
+			<summary>
+			Reads a 2-component double vector from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(Unigine.Math.dvec3) const">
+			<summary>
+			Reads a 3-component double vector from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(Unigine.Math.dvec4) const">
+			<summary>
+			Reads a 4-component double vector from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(Unigine.Math.ivec2) const">
+			<summary>
+			Reads a 2-component integer vector from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(Unigine.Math.ivec3) const">
+			<summary>
+			Reads a 3-component integer vector from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(Unigine.Math.ivec4) const">
+			<summary>
+			Reads a 4-component integer vector from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(Unigine.Math.mat4) const">
+			<summary>
+			Reads a matrix from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(Unigine.Math.dmat4) const">
+			<summary>
+			Reads a double matrix from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
+		<member name="M:Unigine.Stream.read(Unigine.Math.quat) const">
+			<summary>
+			Reads a quaternion from the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Variable to which the read value is saved. </param> 
+		</member>
 		<member name="M:Unigine.Stream.readBool">
 			<summary>
 			Reads a boolean value from the stream.
@@ -280,19 +406,19 @@
 		</member>
 		<member name="M:Unigine.Stream.readDVec2">
 			<summary>
-			Reads a 2 component double vector from the stream in accordance with the little-endian order.
+			Reads a 2-component double vector from the stream in accordance with the little-endian order.
 			</summary>  
 			<returns>Vector value.</returns>
 		</member>
 		<member name="M:Unigine.Stream.readDVec3">
 			<summary>
-			Reads a 3 component double vector from the stream in accordance with the little-endian order.
+			Reads a 3-component double vector from the stream in accordance with the little-endian order.
 			</summary>  
 			<returns>Vector value.</returns>
 		</member>
 		<member name="M:Unigine.Stream.readDVec4">
 			<summary>
-			Reads a 4 component double vector from the stream in accordance with the little-endian order.
+			Reads a 4-component double vector from the stream in accordance with the little-endian order.
 			</summary>  
 			<returns>Vector value.</returns>
 		</member>
@@ -328,19 +454,19 @@
 		</member>
 		<member name="M:Unigine.Stream.readIVec2">
 			<summary>
-			Reads a 2 component integer vector from the stream in accordance with the little-endian order.
+			Reads a 2-component integer vector from the stream in accordance with the little-endian order.
 			</summary>  
 			<returns>Vector value.</returns>
 		</member>
 		<member name="M:Unigine.Stream.readIVec3">
 			<summary>
-			Reads a 3 component integer vector from the stream in accordance with the little-endian order.
+			Reads a 3-component integer vector from the stream in accordance with the little-endian order.
 			</summary>  
 			<returns>Vector value.</returns>
 		</member>
 		<member name="M:Unigine.Stream.readIVec4">
 			<summary>
-			Reads a 4 component integer vector from the stream in accordance with the little-endian order.
+			Reads a 4-component integer vector from the stream in accordance with the little-endian order.
 			</summary>  
 			<returns>Vector value.</returns>
 		</member>
@@ -379,6 +505,12 @@
 			Reads the first 12 elements of 4x4 matrix from the current stream. The last 4 elements of the matrix are discarded.
 			</summary>  
 			<returns>4x4 matrix with 12 read elements (the last four elements are equal to 0 0 0 1).</returns>
+		</member>
+		<member name="M:Unigine.Stream.readPalette">
+			<summary>
+			Reads a palette from the current stream.
+			</summary>  
+			<returns>Palette value.</returns>
 		</member>
 		<member name="M:Unigine.Stream.readQuat">
 			<summary>
@@ -477,19 +609,19 @@
 		</member>
 		<member name="M:Unigine.Stream.readVec2">
 			<summary>
-			Reads a 2 component vector from the stream in accordance with the little-endian order.
+			Reads a 2-component vector from the stream in accordance with the little-endian order.
 			</summary>  
 			<returns>Vector value.</returns>
 		</member>
 		<member name="M:Unigine.Stream.readVec3">
 			<summary>
-			Reads a 3 component vector from the stream in accordance with the little-endian order.
+			Reads a 3-component vector from the stream in accordance with the little-endian order.
 			</summary>  
 			<returns>Vector value.</returns>
 		</member>
 		<member name="M:Unigine.Stream.readVec4">
 			<summary>
-			Reads a 4 component vector from the stream in accordance with the little-endian order.
+			Reads a 4-component vector from the stream in accordance with the little-endian order.
 			</summary>  
 			<returns>Vector value.</returns>
 		</member>
@@ -500,6 +632,160 @@
 			<param name="ptr"> Source buffer pointer. </param>
 			<param name="size"> Size of the buffer in bytes. </param> 
 			<returns>The number of written bytes.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(char) const">
+			<summary>
+			Writes an ASCII character in a binary format (1 byte) to the stream.
+			</summary> 
+			<param name="value"> ASCII code of a character to write. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(short) const">
+			<summary>
+			Writes a signed short integer to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> A short integer value to write. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(unsignedshort) const">
+			<summary>
+			Writes a unsigned short integer to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Unsigned short integer to write. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(bool) const">
+			<summary>
+			Writes the specified boolean value to the stream.
+			</summary> 
+			<param name="value"> Data value to be written. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(int) const">
+			<summary>
+			Writes a signed integer to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> An integer value to write. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(unsignedint) const">
+			<summary>
+			Writes a unsigned integer to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Data value. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(longlong) const">
+			<summary>
+			Writes a signed long to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> A long value to write. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(float) const">
+			<summary>
+			Writes a floating-point number to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> A float value to write. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(double) const">
+			<summary>
+			Writes a double floating-point number to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> A double value to write. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(char) const">
+			<summary>
+			Writes a string in a binary format to the stream. Each binary string should be preceded by its length (4 bytes defining the length of string + the string itself).
+			</summary> 
+			<param name="value"> String to write. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(Unigine.Math.vec2) const">
+			<summary>
+			Writes a 2-component vector to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Vector value. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(Unigine.Math.vec3) const">
+			<summary>
+			Writes a 3-component vector to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Vector value. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(Unigine.Math.vec4) const">
+			<summary>
+			Writes a 4-component vector to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Vector value. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(Unigine.Math.dvec2) const">
+			<summary>
+			Writes a 2-component double vector to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Vector value. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(Unigine.Math.dvec3) const">
+			<summary>
+			Writes a 3-component double vector to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Vector value. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(Unigine.Math.dvec4) const">
+			<summary>
+			Writes a 4-component double vector to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Vector value. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(Unigine.Math.ivec2) const">
+			<summary>
+			Writes a 2-component integer vector to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Vector value. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(Unigine.Math.ivec3) const">
+			<summary>
+			Writes a 3-component integer vector to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Vector value. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(Unigine.Math.ivec4) const">
+			<summary>
+			Writes a 4-component integer vector to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> Vector value. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(Unigine.Math.mat4) const">
+			<summary>
+			Writes a matrix to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> A matrix to write. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(Unigine.Math.dmat4) const">
+			<summary>
+			Writes a double matrix to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> A matrix to write. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Stream.write(Unigine.Math.quat) const">
+			<summary>
+			Writes a quaternion to the stream in accordance with the little-endian order.
+			</summary> 
+			<param name="value"> A quaternion to write. </param> 
+			<returns>true if a character is written successfully; otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeBool(bool)">
 			<summary>
@@ -513,21 +799,21 @@
 			Writes an ASCII character in a binary format (1 byte) to the stream.
 			</summary> 
 			<param name="value"> ASCII code of a character to write. </param> 
-			<returns>1 if a character is written successfully; otherwise 0.</returns>
+			<returns>true if a character is written successfully; otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeDMat4(Unigine.Math.dmat4)">
 			<summary>
 			Writes a double matrix to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Vector value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeDouble(double)">
 			<summary>
 			Writes a double floating-point number to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Data value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeDoubleArray(double[])">
 			<summary>
@@ -537,31 +823,31 @@
 		</member>
 		<member name="M:Unigine.Stream.writeDVec2(Unigine.Math.dvec2)">
 			<summary>
-			Writes a 2 component double vector to the stream in accordance with the little-endian order.
+			Writes a 2-component double vector to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Vector value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeDVec3(Unigine.Math.dvec3)">
 			<summary>
-			Writes a 3 component double vector to the stream in accordance with the little-endian order.
+			Writes a 3-component double vector to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Vector value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeDVec4(Unigine.Math.dvec4)">
 			<summary>
-			Writes a 4 component double vector to the stream in accordance with the little-endian order.
+			Writes a 4-component double vector to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Vector value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeFloat(float)">
 			<summary>
 			Writes a floating-point number to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Data value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeFloatArray(float[])">
 			<summary>
@@ -574,7 +860,7 @@
 			Writes a signed integer to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Data value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeInt2(int)">
 			<summary>
@@ -591,31 +877,31 @@
 		</member>
 		<member name="M:Unigine.Stream.writeIVec2(Unigine.Math.ivec2)">
 			<summary>
-			Writes a 2 component integer vector to the stream in accordance with the little-endian order.
+			Writes a 2-component integer vector to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Vector value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeIVec3(Unigine.Math.ivec3)">
 			<summary>
-			Writes a 3 component integer vector to the stream in accordance with the little-endian order.
+			Writes a 3-component integer vector to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Vector value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeIVec4(Unigine.Math.ivec4)">
 			<summary>
-			Writes a 4 component integer vector to the stream in accordance with the little-endian order.
+			Writes a 4-component integer vector to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Vector value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeLong(longlong)">
 			<summary>
 			Writes a signed long to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Data value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeLongArray(llong[])">
 			<summary>
@@ -628,7 +914,7 @@
 			Writes a matrix to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Vector value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeMat44(Unigine.Math.mat4)">
 			<summary>
@@ -637,19 +923,25 @@
 			<param name="value"> A 4x4 matrix. </param> 
 			<returns>1 if data is written successfully; otherwise, 0.</returns>
 		</member>
+		<member name="M:Unigine.Stream.writePalette(Palette)">
+			<summary>
+			Writes the palette to the stream.
+			</summary> 
+			<param name="value"> Palette value. </param> 
+		</member>
 		<member name="M:Unigine.Stream.writeQuat(Unigine.Math.quat)">
 			<summary>
 			Writes a quaternion to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Vector value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeShort(short)">
 			<summary>
 			Writes a signed short integer to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Data value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeShortArray(short[])">
 			<summary>
@@ -670,7 +962,7 @@
 			Writes a string in a binary format to the stream. Each binary string should be preceded by its length (4 bytes defining the length of string + the string itself).
 			</summary> 
 			<param name="str"> String to write. </param> 
-			<returns>1 if the string is written successfully; otherwise, 0.</returns>
+			<returns>true if the string is written successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeString2(char)">
 			<summary>
@@ -710,7 +1002,7 @@
 			Writes a unsigned short integer to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Data value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeUShortArray(ushort[])">
 			<summary>
@@ -720,196 +1012,24 @@
 		</member>
 		<member name="M:Unigine.Stream.writeVec2(Unigine.Math.vec2)">
 			<summary>
-			Writes a 2 component vector to the stream in accordance with the little-endian order.
+			Writes a 2-component vector to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Vector value. </param> 
 			<returns>1 if the operation was successful; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeVec3(Unigine.Math.vec3)">
 			<summary>
-			Writes a 3 component vector to the stream in accordance with the little-endian order.
+			Writes a 3-component vector to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Vector value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Stream.writeVec4(Unigine.Math.vec4)">
 			<summary>
-			Writes a 4 component vector to the stream in accordance with the little-endian order.
+			Writes a 4-component vector to the stream in accordance with the little-endian order.
 			</summary> 
 			<param name="value"> Vector value. </param> 
-			<returns>1 if the operation was successful; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Stream.read(char) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(char) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(short) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(short) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(unsignedshort) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(unsignedshort) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(bool) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(bool) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(int) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(int) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(unsignedint) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(unsignedint) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(longlong) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(longlong) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(float) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(float) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(double) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(double) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(char) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(Unigine.Math.vec2) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(Unigine.Math.vec2) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(Unigine.Math.vec3) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(Unigine.Math.vec3) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(Unigine.Math.vec4) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(Unigine.Math.vec4) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(Unigine.Math.dvec2) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(Unigine.Math.dvec2) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(Unigine.Math.dvec3) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(Unigine.Math.dvec3) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(Unigine.Math.dvec4) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(Unigine.Math.dvec4) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(Unigine.Math.ivec2) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(Unigine.Math.ivec2) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(Unigine.Math.ivec3) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(Unigine.Math.ivec3) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(Unigine.Math.ivec4) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(Unigine.Math.ivec4) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(Unigine.Math.mat4) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(Unigine.Math.mat4) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(Unigine.Math.dmat4) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(Unigine.Math.dmat4) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.read(Unigine.Math.quat) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Stream.write(Unigine.Math.quat) const">
-			<summary>
-			</summary>  
+			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
 		<member name="F:Unigine.Stream.BLOB">
 			<summary>

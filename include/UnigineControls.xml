@@ -16,7 +16,7 @@
 			</summary> 
 			<param name="mousedx"> Change of the X coordinate. </param> 
 		</member>
-		<member name="M:Unigine.Controls.getMouseDX">
+		<member name="M:Unigine.Controls.getMouseDX const">
 			<summary>
 			Returns a screen position change of the mouse pointer along the X axis during the previous frame.
 			</summary>  
@@ -28,7 +28,7 @@
 			</summary> 
 			<param name="mousedy"> Change of the Y coordinate. </param> 
 		</member>
-		<member name="M:Unigine.Controls.getMouseDY">
+		<member name="M:Unigine.Controls.getMouseDY const">
 			<summary>
 			Returns a screen position change of the mouse pointer along the Y axis during the previous frame.
 			</summary>  
@@ -41,20 +41,34 @@
 			<param name="state"> Control state number to update. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param>
 			<param name="value"> State value: positive value to "press" the control; 0 to release it. </param> 
 		</member>
-		<member name="M:Unigine.Controls.getState(int)">
+		<member name="M:Unigine.Controls.getState(int) const">
 			<summary>
 			Returns the state of a given control (pressed or unpressed).
 			</summary> 
 			<param name="state"> Control state number. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
-			<returns>1 if the control is pressed; otherwise, 0. </returns>
+			<returns>1 if the control is pressed; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Controls.getType">
+		<member name="M:Unigine.Controls.getStateByName(char) const">
+			<summary>
+			Returns the state of a given control (pressed or unpressed) by the control state name.
+			</summary> 
+			<param name="name"> Name of the control state. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
+			<returns>1 if the control is pressed; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Controls.getStateName(int) const">
+			<summary>
+			Returns the name of a given control state as a string.
+			</summary> 
+			<param name="state"> Control state number. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
+			<returns>Name of the control state.</returns>
+		</member>
+		<member name="M:Unigine.Controls.getType const">
 			<summary>
 			Returns the type of input controls.
 			</summary>  
-			<returns>Controls type (one of CONTROLS_* variables):CONTROLS_APP = 0CONTROLS_DUMMYCONTROLS_SIX_AXISCONTROLS_X_PAD360CONTROLS_JOYSTICK</returns>
+			<returns>Controls type (one of CONTROLS_* variables):CONTROLS_APP = 0CONTROLS_DUMMYCONTROLS_GAMEPADCONTROLS_JOYSTICK</returns>
 		</member>
-		<member name="M:Unigine.Controls.getTypeName">
+		<member name="M:Unigine.Controls.getTypeName const">
 			<summary>
 			Returns a type name of input controls.
 			</summary>  
@@ -67,7 +81,7 @@
 			<param name="state"> Control state number. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
 			<returns>Returns the state of the given control: 1 if the control is pressed; otherwise,0.</returns>
 		</member>
-		<member name="M:Unigine.Controls.saveState(Unigine.Ptr{Unigine.Stream})">
+		<member name="M:Unigine.Controls.saveState(Unigine.Ptr{Unigine.Stream}) const">
 			<summary>
 			Saves controls settings into the stream.					Example using saveState() and restoreState() methods:
 			</summary> 
@@ -83,7 +97,7 @@
 		</member>
 		<member name="F:Unigine.Controls.CONTROLS_APP">
 			<summary>
-			A ControlsApp instance.
+			ControlsApp instance.
 		</summary>
 		</member>
 		<member name="F:Unigine.Controls.CONTROLS_DUMMY">
@@ -96,14 +110,9 @@
 			Joystick as the input device.
 		</summary>
 		</member>
-		<member name="F:Unigine.Controls.CONTROLS_SIX_AXIS">
+		<member name="F:Unigine.Controls.CONTROLS_GAMEPAD">
 			<summary>
-			Sixaxis controller as the input device.
-		</summary>
-		</member>
-		<member name="F:Unigine.Controls.CONTROLS_X_PAD360">
-			<summary>
-			XBox 360 game pad as the input device.
+			Gamepad controller (e.g., XBox 360, Sixaxis, etc.) as the input device.
 		</summary>
 		</member>
 		<member name="F:Unigine.Controls.NUM_STATES">
@@ -331,17 +340,29 @@
 			</summary>  
 			<returns>1 if the mouse is enabled; otherwise, 0. </returns>
 		</member>
-		<member name="M:Unigine.ControlsApp.setMouseInverse(int)">
+		<member name="M:Unigine.ControlsApp.setMouseInverse(bool)">
 			<summary>
 			Sets back-and-forth movements of the mouse (by Y-axis) to be interpreted as inverted: when the mouse is moved upward, the camera looks downwards, and when the mouse is moved downwards, the camera looks upwards. This mode is available only to control the camera.
 			</summary> 
-			<param name="inverse"> Positive integer to inverse the mouse; otherwise, 0.  </param> 
+			<param name="inverse"> true to inverse the mouse; otherwise, false.  </param> 
 		</member>
-		<member name="M:Unigine.ControlsApp.getMouseInverse">
+		<member name="M:Unigine.ControlsApp.isMouseInverse">
 			<summary>
 			Returns a value indicating if back-and-forth movements of the mouse (by Y-axis) are inverted: when the mouse is moved upward, the camera looks downwards, and when the mouse is moved downwards, the camera looks upwards. This mode is available only to control the camera.
 			</summary>  
-			<returns>1 if the mouse is inverted; otherwise, 0. </returns>
+			<returns>true if the mouse is inverted; otherwise, false. </returns>
+		</member>
+		<member name="M:Unigine.ControlsApp.setMouseRawInput(bool)">
+			<summary>
+			Sets a value indicating which type of mouse data is used to control the camera — raw (Input::getMouseDeltaRaw()) or processed by the OS (Input::getMouseDeltaPosition()).
+			</summary> 
+			<param name="input"> true to use raw mouse data to control the camera; false to use the mouse data as processed by the OS (system acceleration, various user settings). </param> 
+		</member>
+		<member name="M:Unigine.ControlsApp.isMouseRawInput const">
+			<summary>
+			Returns a value indicating which type of mouse data is used to control the camera — raw (Input::getMouseDeltaRaw()) or processed by the OS (Input::getMouseDeltaPosition()).
+			</summary>  
+			<returns>true if raw mouse data are used to control the camera; false — the mouse data as processed by the OS (system acceleration, various user settings).</returns>
 		</member>
 		<member name="M:Unigine.ControlsApp.setMouseSensitivity(float)">
 			<summary>
@@ -369,25 +390,25 @@
 			<param name="state"> Control state number. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls  </param> 
 			<returns>State value: positive value means the control is "pressed"; 0 means the control is released.</returns>
 		</member>
-		<member name="M:Unigine.ControlsApp.setStateButton(int,int)">
+		<member name="M:Unigine.ControlsApp.setStateMouseButton(int,int)">
 			<summary>
 			Sets a mouse button that switches a given state on and off.
 			</summary> 
 			<param name="state"> State (one of CONTROLS_STATE_* variables). </param>
-			<param name="button"> Button that toggles the state (one of APP_BUTTON_* variables). </param> 
+			<param name="button"> Button that toggles the state (one of MOUSE_BUTTON* variables). </param> 
 		</member>
-		<member name="M:Unigine.ControlsApp.getStateButton(int)">
+		<member name="M:Unigine.ControlsApp.getStateMouseButton(int)">
 			<summary>
 			Returns a mouse button that switches a given state on and off.
 			</summary> 
 			<param name="state"> State (one of CONTROLS_STATE_* variables). </param> 
-			<returns>Button that toggles the state (one of APP_BUTTON_* variables).</returns>
+			<returns>Button that toggles the state (one of MOUSE_BUTTON* variables).</returns>
 		</member>
-		<member name="M:Unigine.ControlsApp.isStateButton(int)">
+		<member name="M:Unigine.ControlsApp.isStateMouseButton(int)">
 			<summary>
 			Returns a value indicating if the given button assigned to the state.
 			</summary> 
-			<param name="button"> Button that toggles the state (one of APP_BUTTON_* variables). </param> 
+			<param name="button"> Button that toggles the state (one of MOUSE_BUTTON* variables). </param> 
 			<returns>1 if the given button is assigned; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.ControlsApp.getStateEvent(int)">
@@ -407,20 +428,20 @@
 			Sets a key that toggles a given state on and off.
 			</summary> 
 			<param name="state"> State (one of CONTROLS_STATE_* variables). </param>
-			<param name="key"> Key that switches the state. It is a standard ASCII key code or one of the APP_KEY_* variables. </param> 
+			<param name="key"> Key that switches the state. It is a standard ASCII key code or one of the KEY* variables. </param> 
 		</member>
 		<member name="M:Unigine.ControlsApp.getStateKey(int)">
 			<summary>
 			Returns a key that toggles a given state on and off.
 			</summary> 
 			<param name="state"> State (one of CONTROLS_STATE_* variables). </param> 
-			<returns>Key that switches the state. It is a standard ASCII key code or one of the APP_KEY_* variables: KEY_ESC = 256KEY_TABKEY_BACKSPACEKEY_RETURNKEY_DELETEKEY_INSERTKEY_HOMEKEY_ENDKEY_PGUPKEY_PGDOWNKEY_LEFTKEY_RIGHTKEY_UPKEY_DOWNKEY_SHIFTKEY_CTRLKEY_ALTKEY_SCROLLKEY_CAPSKEY_NUMKEY_F1KEY_F2KEY_F3KEY_F4KEY_F5KEY_F6KEY_F7KEY_F8KEY_F9KEY_F10KEY_F11KEY_F12</returns>
+			<returns>Key that switches the state. It is a standard ASCII key code or one of the KEY* variables: KEY_ESC = 256KEY_TABKEY_BACKSPACEKEY_RETURNKEY_DELETEKEY_INSERTKEY_HOMEKEY_ENDKEY_PGUPKEY_PGDOWNKEY_LEFTKEY_RIGHTKEY_UPKEY_DOWNKEY_SHIFTKEY_CTRLKEY_ALTKEY_SCROLLKEY_CAPSKEY_NUMKEY_F1KEY_F2KEY_F3KEY_F4KEY_F5KEY_F6KEY_F7KEY_F8KEY_F9KEY_F10KEY_F11KEY_F12</returns>
 		</member>
 		<member name="M:Unigine.ControlsApp.isStateKey(int)">
 			<summary>
 			Checks if a given key already acts as an application control. This is useful to avoid collisions between application controls and hot keys.
 			</summary> 
-			<param name="key"> Key in one of the following formats:Character format (for example,'a')Standard ASCII key code (for example,97)One of APP_KEY_* variables </param> 
+			<param name="key"> Key in one of the following formats:Character format (for example,'a')Standard ASCII key code (for example,97)One of KEY* variables </param> 
 			<returns>1 if the key is assigned to a state; otherwise, 0. </returns>
 		</member>
 		<member name="M:Unigine.ControlsApp.getStateName(int)">
@@ -429,6 +450,13 @@
 			</summary> 
 			<param name="state"> The control state number in range from 0 to the total number of states. </param> 
 			<returns>Name of the given control state.</returns>
+		</member>
+		<member name="M:Unigine.ControlsApp.getStateInfo(int) const">
+			<summary>
+			Returns the information about the given control state.
+			</summary> 
+			<param name="state"> The control state number in range from 0 to the total number of states. </param> 
+			<returns>String containing information about the given control state.</returns>
 		</member>
 		<member name="M:Unigine.ControlsApp.clearState(int)">
 			<summary>
@@ -460,6 +488,18 @@
 			Returns the current path to the controls configuration file (default: configs/default.controls).
 			</summary>  
 			<returns>Current path to the controls configuration file.</returns>
+		</member>
+		<member name="M:Unigine.ControlsApp.setRemoveGrabKey(Input::KEY)">
+			<summary>
+			Sets a new key to be used to switch off the grab mode of the mouse pointer (mouse pointer is bound to the application window). See this example for more information on mouse pointer modes and customization.
+			</summary> 
+			<param name="key"> New key to be used to switch off the grab mode of the mouse pointer. </param> 
+		</member>
+		<member name="M:Unigine.ControlsApp.getRemoveGrabKey const">
+			<summary>
+			Returns the key currently used to switch off the grab mode of the mouse pointer (mouse pointer is bound to the application window). See this example for more information on mouse pointer modes and customization.
+			</summary>  
+			<returns>Current key used to switch off the grab mode of the mouse pointer.</returns>
 		</member>
 		<member name="M:Unigine.ControlsApp.setAutosave(bool)">
 			<summary>
@@ -496,34 +536,34 @@
 			</summary> 
 			<param name="num"> Joystick number. </param> 
 		</member>
-		<member name="M:Unigine.ControlsJoystick.isAvailable">
+		<member name="M:Unigine.ControlsJoystick.isAvailable const">
 			<summary>
 			Checks if the joystick is available.
 			</summary>  
 			<returns>1 if the joystick is available; otherwise, 0. </returns>
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getAxis(int)">
+		<member name="M:Unigine.ControlsJoystick.getAxis(int) const">
 			<summary>
 			Returns a state value of a given axis. It includes position of the joystick along the following axes: X, Y (two-axis joystick) and Z (three-axis joystick). When a joystick is in the center position, X and Y axes values are zero. Negative values indicate left or down; positive values indicate right or up.
 			</summary> 
 			<param name="axis"> Axis number. </param> 
 			<returns>Value in range [-1; 1]. </returns>
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getAxisName(int)">
+		<member name="M:Unigine.ControlsJoystick.getAxisName(int) const">
 			<summary>
 			Returns the name of a given axis.
 			</summary> 
 			<param name="axis"> Axis number. </param> 
 			<returns>Axis name.</returns>
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getButton(int)">
+		<member name="M:Unigine.ControlsJoystick.getButton(int) const">
 			<summary>
 			Returns a button state (pressed or not pressed).
 			</summary> 
 			<param name="button"> Button number. </param> 
 			<returns>1 if the button is pressed; otherwise, 0. </returns>
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getButtonName(int)">
+		<member name="M:Unigine.ControlsJoystick.getButtonName(int) const">
 			<summary>
 			Returns the name of a given button.
 			</summary> 
@@ -536,62 +576,50 @@
 			</summary> 
 			<param name="filter"> Filter value for interpolation between axis states. The provided value is clamped to a range [0;1].Filter value of 0 means there is no interpolation and the current value is not corrected.Filter value of 1 means the previous state is used instead of the current one. </param> 
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getFilter">
+		<member name="M:Unigine.ControlsJoystick.getFilter const">
 			<summary>
 			Returns a filter value used to correct the current state of the joystick axis relative to the previous one:											Filter value of 0 means there is no interpolation and the current value is not corrected.						Filter value of 1 means the previous state is used instead of the current one.
 			</summary>  
 			<returns>Filter value for interpolation between axis states.</returns>
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getGuidProduct const">
-			<summary>
-			Returns the GUID supplied by the device's manufacturer. This can be very useful in case your application uses non-standard custom input devices to ensure proper configuration  (dead zones, inverse flags, correction curves, etc.).
-			</summary>  
-			<returns>GUID supplied by the device's manufacturer.</returns>
-		</member>
-		<member name="M:Unigine.ControlsJoystick.getGuidInstance const">
-			<summary>
-			Returns the GUID of the joystick device. This can be very useful in case your application uses non-standard custom input devices to ensure proper configuration  (dead zones, inverse flags, correction curves, etc.).
-			</summary>  
-			<returns>GUID of the joystick device.</returns>
-		</member>
-		<member name="M:Unigine.ControlsJoystick.getName">
+		<member name="M:Unigine.ControlsJoystick.getName const">
 			<summary>
 			Returns the name of the joystick.
 			</summary>  
 			<returns>Joystick name.</returns>
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getNumAxes">
+		<member name="M:Unigine.ControlsJoystick.getNumAxes const">
 			<summary>
 			Returns the number of axes supported by the joystick.
 			</summary>  
 			<returns>The number of axes.</returns>
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getNumber">
+		<member name="M:Unigine.ControlsJoystick.getNumber const">
 			<summary>
-			Returns the joystick number.
+			Returns the joystick number. There can be several joysticks connected, this number is used to identify a particular one.
 			</summary>  
 			<returns>Joystick number.</returns>
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getNumButtons">
+		<member name="M:Unigine.ControlsJoystick.getNumButtons const">
 			<summary>
 			Returns the number of buttons supported by the joystick.
 			</summary>  
 			<returns>The number of buttons.</returns>
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getNumPovs">
+		<member name="M:Unigine.ControlsJoystick.getNumPovs const">
 			<summary>
 			Returns the number of POV hat switches supported by the joystick.
 			</summary>  
 			<returns>The number of POV hats.</returns>
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getPov(int)">
+		<member name="M:Unigine.ControlsJoystick.getPov(int) const">
 			<summary>
 			Returns a POV hat switch state. POV hats support the following positions: left, right, up and down.
 			</summary> 
 			<param name="pov"> POV pad number. </param> 
 			<returns>One of the following:-1  — not pressed 0  — pressed "up" 4500  — pressed "up" and "right" 9000  — pressed "right" 13500  — pressed "down" and "right" 18000  — pressed "down" 22500  — pressed "down" and "left" 27000  — pressed "left" 31500  — pressed "up" and "left" </returns>
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getPovName(int)">
+		<member name="M:Unigine.ControlsJoystick.getPovName(int) const">
 			<summary>
 			Returns the name of a given POV hat switch.
 			</summary> 
@@ -605,7 +633,7 @@
 			<param name="state"> State (one of the CONTROLS_STATE_* variables). </param>
 			<param name="button"> Button number. </param> 
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getStateButton(int)">
+		<member name="M:Unigine.ControlsJoystick.getStateButton(int) const">
 			<summary>
 			Returns a game pad button that switches a given state on and off.
 			</summary> 
@@ -618,13 +646,13 @@
 			</summary> 
 			<param name="state"> State (one of the CONTROLS_STATE_* variables), to which a button is going to be assigned. </param> 
 		</member>
-		<member name="M:Unigine.ControlsJoystick.isStateEvent">
+		<member name="M:Unigine.ControlsJoystick.isStateEvent const">
 			<summary>
 			Returns a value indicating if a joystick button is successfully assigned to a state.
 			</summary>  
 			<returns>1 if a button is already assigned; otherwise, 0. </returns>
 		</member>
-		<member name="M:Unigine.ControlsJoystick.getStateName(int)">
+		<member name="M:Unigine.ControlsJoystick.getStateName(int) const">
 			<summary>
 			Returns the name of a given state, that was assigned to one of controls.
 			</summary> 
@@ -638,7 +666,7 @@
 			<param name="button"> Button number. </param> 
 			<returns>1 if the button is pressed, and this function was not called previously in the current frame; otherwise, 0. </returns>
 		</member>
-		<member name="M:Unigine.ControlsJoystick.saveState(Unigine.Ptr{Unigine.Stream})">
+		<member name="M:Unigine.ControlsJoystick.saveState(Unigine.Ptr{Unigine.Stream}) const">
 			<summary>
 			Saves ControlsJoystick settings into the stream.					Example using saveState() and restoreState() methods:
 			</summary> 
@@ -658,548 +686,362 @@
 			</summary>  
 			<returns>0 if a joystick is not found or updateEvents() already has been called for the frame; otherwise 1.</returns>
 		</member>
-		<member name="M:Unigine.ControlsSixAxis.#ctor(int)">
+		<member name="M:Unigine.ControlsJoystick.getPlayerIndex const">
 			<summary>
-			Constructor. Creates a new Sixaxis controller.
+			Returns the index of player for the joystick. Some devices support connection of multiple players (e.g., XBox 360 supports up to four players connected through XBox 360 gamepads). This method enables you to get this index.
+			</summary>  
+			<returns>Player index for the joystick.</returns>
+		</member>
+		<member name="M:Unigine.ControlsJoystick.getDeviceType const">
+			<summary>
+			Returns a value indicating the type of the device (wheel, throttle, etc.).
+			</summary>  
+			<returns>Device type. One of the DEVICE_TYPE_* values of the Input class.</returns>
+		</member>
+		<member name="M:Unigine.ControlsJoystick.getAxisInitialValue(int) const">
+			<summary>
+			Returns an initial value for the specified axis.
 			</summary> 
-			<param name="num"> Sixaxis controller number. </param> 
+			<param name="axis"> Axis number. </param> 
+			<returns>Current initial value used for the specified axis.</returns>
 		</member>
-		<member name="M:Unigine.ControlsSixAxis.isAvailable">
+		<member name="M:Unigine.ControlsJoystick.getGuid const">
 			<summary>
-			Checks if the Sixaxis controller is available.
+			Returns the GUID created on the basis of vendor and product identifiers and product version number. It enables you to identify device model (Controller XBox One, etc.), however, it will be the same for two identical models.
 			</summary>  
-			<returns>1 if the Sixaxis controller is available; otherwise, 0.</returns>
+			<returns>Device model GUID.</returns>
 		</member>
-		<member name="M:Unigine.ControlsSixAxis.getButton(int)">
+		<member name="M:Unigine.ControlsJoystick.getVendor const">
 			<summary>
-			Returns a button state (pressed or not pressed).
+			Returns a unique identifier of the device manufacturer (vendor). This can be very useful in case your application uses non-standard custom input devices to ensure proper configuration (dead zones, inverse flags, correction curves, etc.).
+			</summary>  
+			<returns>Unique identifier of the device manufacturer (vendor).</returns>
+		</member>
+		<member name="M:Unigine.ControlsJoystick.getProduct const">
+			<summary>
+			Returns a unique identifier for the product (GUID). This identifier is established by the manufacturer of the device. This can be very useful in case your application uses non-standard custom input devices to ensure proper configuration (dead zones, inverse flags, correction curves, etc.).
+			</summary>  
+			<returns>Unique identifier for the product (GUID).</returns>
+		</member>
+		<member name="M:Unigine.ControlsJoystick.getProductVersion const">
+			<summary>
+			Returns the version of the product established by the manufacturer of the device. This can be very useful in case your application uses non-standard custom input devices to ensure proper configuration (dead zones, inverse flags, correction curves, etc.).
+			</summary>  
+			<returns>Version of the product established by the manufacturer of the device.</returns>
+		</member>
+		<member name="F:Unigine.ControlsJoystick.POV_UP_LEFT">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in left-up position.
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsJoystick.POV_LEFT">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in left position.
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsJoystick.POV_DOWN_LEFT">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in down-left position.
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsJoystick.POV_DOWN">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in down position.
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsJoystick.POV_DOWN_RIGHT">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in down-right position.
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsJoystick.POV_RIGHT">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in right position.
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsJoystick.POV_UP_RIGHT">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in right-up position.
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsJoystick.POV_UP">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in up position.
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsJoystick.POV_NOT_PRESSED">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) button is not pressed.
+		</summary>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.#ctor(int)">
+			<summary>
+			Constructor. Createas a ControlsGamepad with the specified number.
 			</summary> 
-			<param name="button"> Button number. </param> 
-			<returns>1 if the button is pressed; otherwise, 0.</returns>
+			<param name="num"> Game pad number. </param> 
 		</member>
-		<member name="M:Unigine.ControlsSixAxis.setFilter(float)">
-			<summary>
-			Sets a filter value used to correct the current state of the analog sticks of the Sixaxis controller relative to the previous one. Axis states are interpolated for analog sticks.
-			</summary> 
-			<param name="filter"> Filter value for interpolation between axis states. The provided value is clamped to a range [0;1].Filter value of 0 means there is no interpolation and the current value is not corrected.Filter value of 1 means the previous state is used instead of the current one. </param> 
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getFilter">
-			<summary>
-			Returns a filter value used to correct the current state of the analog axis of the Sixaxis controller relative to the previous one:											Filter value of 0 means there is no interpolation and the current value is not corrected.						Filter value of 1 means the previous state is used instead of the current one.
-			</summary>  
-			<returns>Filter value for interpolation between axis states.</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.setLargeMotor(float)">
-			<summary>
-			Sets the amount of vibration for the large motor.
-			</summary> 
-			<param name="speed"> Speed of motor rotation in range [0; 1] </param> 
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getLeftX">
-			<summary>
-			Returns a state value of the left analog stick along the X-axis. When the stick is in the center position, this value is zero. Negative values indicate left ; positive values indicate right.
-			</summary>  
-			<returns>Value in range [-1; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getLeftY">
-			<summary>
-			Returns a state value of the left analog stick along the Y-axis. When the stick is in the center position, this value is zero. Negative values indicate down ; positive values indicate up.
-			</summary>  
-			<returns>Value in range [-1; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getName">
-			<summary>
-			Returns the name of the Sixaxis controller.
-			</summary>  
-			<returns>Name of Sixaxis controller.</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getNumber">
-			<summary>
-			Returns the number of Sixaxis controllers.
-			</summary>  
-			<returns>Number of controllers.</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getPressCircle">
-			<summary>
-			Returns a state value of the circle button. 0 value means the button is not pressed; 1 means the button is pressed to the maximum.
-			</summary>  
-			<returns>Value in range [0; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getPressCross">
-			<summary>
-			Returns a state value of the cross button. 0 value means the button is not pressed; 1 means the button is pressed to the maximum.
-			</summary>  
-			<returns>Value in range [0; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getPressDown">
-			<summary>
-			Returns a state value of the down button. 0 value means the button is not pressed; 1 means the button is pressed to the maximum.
-			</summary>  
-			<returns>Value in range [0; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getPressL1">
-			<summary>
-			Returns a state value of the L1 button. 0 value means the button is not pressed; 1 means the button is pressed to the maximum.
-			</summary>  
-			<returns>Value in range [0; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getPressL2">
-			<summary>
-			Returns a state value of the L2 button. 0 value means the button is not pressed; 1 means the button is pressed to the maximum.
-			</summary>  
-			<returns>Value in range [0; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getPressLeft">
-			<summary>
-			Returns a state value of the left button. 0 value means the button is not pressed; 1 means the button is pressed to the maximum.
-			</summary>  
-			<returns>Value in range [0; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getPressR1">
-			<summary>
-			Returns a state value of the R1 button. 0 value means the button is not pressed; 1 means the button is pressed to the maximum.
-			</summary>  
-			<returns>Value in range [0; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getPressR2">
-			<summary>
-			Returns a state value of the R2 button. 0 value means the button is not pressed; 1 means the button is pressed to the maximum.
-			</summary>  
-			<returns>Value in range [0; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getPressRight">
-			<summary>
-			Returns a state value of the right button. 0 value means the button is not pressed; 1 means the button is pressed to the maximum.
-			</summary>  
-			<returns>Value in range [0; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getPressSquare">
-			<summary>
-			Returns a state value of the square button. 0 value means the button is not pressed; 1 means the button is pressed to the maximum.
-			</summary>  
-			<returns>Value in range [0; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getPressTriangle">
-			<summary>
-			Returns a state value of the triangle button. 0 value means the button is not pressed; 1 means the button is pressed to the maximum.
-			</summary>  
-			<returns>Value in range [0; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getPressUp">
-			<summary>
-			Returns a state value of the up button. 0 value means the button is not pressed; 1 means the button is pressed to the maximum.
-			</summary>  
-			<returns>Value in range [0; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getRightX">
-			<summary>
-			Returns a state value of the right analog stick along the X-axis. When the stick is in the center position, this value is zero. Negative values indicate left ; positive values indicate right.
-			</summary>  
-			<returns>Value in range [-1; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getRightY">
-			<summary>
-			Returns a state value of the right analog stick along the Y-axis. When the stick is in the center position, this value is zero. Negative values indicate down ; positive values indicate up.
-			</summary>  
-			<returns>Value in range [-1; 1].</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getSensorG">
-			<summary>
-			Returns a state value of the G-sensor.
-			</summary>  
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getSensorX">
-			<summary>
-			Returns a state value of the controller position along the X-axis.
-			</summary>  
-			<returns>The value along the X-axis.</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getSensorY">
-			<summary>
-			Returns a state value of the controller position along the Y-axis.
-			</summary>  
-			<returns>The value along the Y-axis.</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getSensorZ">
-			<summary>
-			Returns a state value of the controller position along the Z-axis.
-			</summary>  
-			<returns>The value along the Z-axis.</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.setSmallMotor(float)">
-			<summary>
-			Sets the amount of vibration for the small motor.
-			</summary> 
-			<param name="speed"> Speed of motor rotation in range [0; 1] </param> 
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.setStateButton(int,int)">
-			<summary>
-			Sets a Sixaxis controller button that switches a given state on and off.
-			</summary> 
-			<param name="state"> State (one of the CONTROLS_STATE_* variables). </param>
-			<param name="button"> Button that switches the state (one of the BUTTON_* variables). </param> 
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getStateButton(int)">
-			<summary>
-			Returns a Sixaxis controller button that switches a given state on and off.
-			</summary> 
-			<param name="state"> State (one of the CONTROLS_STATE_* variables). </param> 
-			<returns>Button that switches the state (one of the BUTTON_* variables)</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getStateEvent(int)">
-			<summary>
-			Lets the user assign a Sixaxis controller button to a given state.
-			</summary> 
-			<param name="state"> State (one of the CONTROLS_STATE_*) to which a button is going to be assigned. </param> 
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.isStateEvent">
-			<summary>
-			Returns a value indicating if a Sixaxis controller button is successfully assigned to a state.
-			</summary>  
-			<returns>1 if a button is already assigned; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.getStateName(int)">
-			<summary>
-			Returns the name of a given state.
-			</summary> 
-			<param name="state"> State (one of the CONTROLS_STATE_* variables). </param> 
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.clearButton(int)">
-			<summary>
-			Returns a button state and clears it to 0 (not pressed).
-			</summary> 
-			<param name="button"> Button that switches the state (one of the BUTTON_* variables) </param> 
-			<returns>1 if the button is pressed, and this function was not called previously in the current frame; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.saveState(Unigine.Ptr{Unigine.Stream})">
-			<summary>
-			Saves Sixaxis controller settings into the stream.					Example using saveState() and restoreState() methods:
-			</summary> 
-			<param name="stream"> Stream smart pointer. </param> 
-			<returns>true if the Sixaxis controller settings are saved successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.restoreState(Unigine.Ptr{Unigine.Stream})">
-			<summary>
-			Restores Sixaxis controller settings from the stream.					Example using saveState() and restoreState() methods:
-			</summary> 
-			<param name="stream"> Stream smart pointer. </param> 
-			<returns>true if the Sixaxis controller settings are restored successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ControlsSixAxis.updateEvents">
-			<summary>
-			Scans Sixaxis controller (synchronizes states of controller buttons with the controller). Should be called each frame
-			</summary>  
-			<returns>0 if a game pad is not found or updateEvents() already has been called for the frame; otherwise 1.</returns>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_CIRCLE">
-			<summary>
-			Circle button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_CROSS">
-			<summary>
-			Cross button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_DOWN">
-			<summary>
-			D-pad Down button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_L1">
-			<summary>
-			L1 button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_L2">
-			<summary>
-			L2 button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_L3">
-			<summary>
-			L3 button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_LEFT">
-			<summary>
-			D-pad Left button
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_R1">
-			<summary>
-			R1 button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_R2">
-			<summary>
-			R2 button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_R3">
-			<summary>
-			R3 button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_RIGHT">
-			<summary>
-			D-pad Right button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_SELECT">
-			<summary>
-			Select button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_SQUARE">
-			<summary>
-			Square button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_START">
-			<summary>
-			Start button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_TRIANGLE">
-			<summary>
-			Triangle button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.BUTTON_UP">
-			<summary>
-			D-pad Up button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsSixAxis.NUM_BUTTONS">
-			<summary>
-			Number of Sixasix controller buttons.
-		</summary>
-		</member>
-		<member name="M:Unigine.ControlsXPad360.#ctor(int)">
-			<summary>
-			Constructor. Creates a new XBox 360 game pad.
-			</summary> 
-			<param name="num"> Game pad number (up to four game pads are supported). </param> 
-		</member>
-		<member name="M:Unigine.ControlsXPad360.isAvailable">
-			<summary>
-			Checks if the game pad is available.
-			</summary>  
-			<returns>1 if the game pad is available; otherwise, 0. </returns>
-		</member>
-		<member name="M:Unigine.ControlsXPad360.getButton(int)">
-			<summary>
-			Returns a button state (pressed or not pressed).
-			</summary> 
-			<param name="button"> Button (one of the CONTROLS_XPAD360_BUTTON_* variables). </param> 
-			<returns>1 if the button is pressed; otherwise, 0. </returns>
-		</member>
-		<member name="M:Unigine.ControlsXPad360.setFilter(float)">
-			<summary>
-			Sets a filter value used to correct the current state of the analog axis relative to the previous one. Axis states are interpolated for thumbsticks and triggers.
-			</summary> 
-			<param name="filter"> Filter value for interpolation between axis states. The provided value is clamped to a range [0;1].Filter value of 0 means there is no interpolation and the current value is not corrected.Filter value of 1 means the previous state is used instead of the current one. </param> 
-		</member>
-		<member name="M:Unigine.ControlsXPad360.getFilter">
-			<summary>
-			Returns a filter value used to correct the current state of the analog axis (thumbsticks and triggers) relative to the previous one:											Filter value of 0 means there is no interpolation and the current value is not corrected.						Filter value of 1 means the previous state is used instead of the current one.
-			</summary>  
-			<returns>Filter value for interpolation between axis states.</returns>
-		</member>
-		<member name="M:Unigine.ControlsXPad360.setLeftMotor(float)">
-			<summary>
-			Sets the amount of vibration for the left motor (a low-frequency motor).
-			</summary> 
-			<param name="speed"> Speed of motor rotation in range [0; 1].  </param> 
-		</member>
-		<member name="M:Unigine.ControlsXPad360.getLeftTrigger">
-			<summary>
-			Returns an axis state value (the position) of the left trigger. Zero means the trigger is not pressed; 1 means the trigger is pressed to the maximum.
-			</summary>  
-			<returns>Value in range [0; 1]. </returns>
-		</member>
-		<member name="M:Unigine.ControlsXPad360.getLeftX">
-			<summary>
-			Returns a state value of the left thumbstick along the X-axis. When a thumbstick is in the center position, this value is zero. Negative values indicate left; positive values indicate right.
-			</summary>  
-			<returns>Value in range [-1; 1]. </returns>
-		</member>
-		<member name="M:Unigine.ControlsXPad360.getLeftY">
-			<summary>
-			Returns a state value of the left thumbstick along the Y-axis. When a thumbstick is in the center position, this value is zero. Negative values indicate down; positive values indicate up.
-			</summary>  
-			<returns>Value in range [-1; 1]. </returns>
-		</member>
-		<member name="M:Unigine.ControlsXPad360.getName">
-			<summary>
-			Returns the name of the game pad.
-			</summary>  
-			<returns>One of the following:GamePadWheelArcade StickFlight StickDance PadGuitarDrum KitUnknown</returns>
-		</member>
-		<member name="M:Unigine.ControlsXPad360.getNumber">
+		<member name="M:Unigine.ControlsGamepad.getNumber const">
 			<summary>
 			Returns the game pad number (up to four game pads are supported).
 			</summary>  
 			<returns>Game pad number.</returns>
 		</member>
-		<member name="M:Unigine.ControlsXPad360.setRightMotor(float)">
+		<member name="M:Unigine.ControlsGamepad.isAvailable const">
 			<summary>
-			Sets the amount of vibration for the right motor (a high-frequency motor).
-			</summary> 
-			<param name="speed"> Speed of motor rotation in range [0; 1].  </param> 
+			Checks if the game pad is available.
+			</summary>  
+			<returns>true if the game pad is available; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.ControlsXPad360.getRightTrigger">
+		<member name="M:Unigine.ControlsGamepad.getName const">
+			<summary>
+			Returns the name of the game pad.
+			</summary>  
+			<returns>User-friendly game pad name.</returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.getPlayerIndex const">
+			<summary>
+			Returns the index of player for the game pad. Some devices support connection of multiple players (e.g., XBox 360 supports up to four players connected through XBox 360 game pads). This method enables you to get this index.
+			</summary>  
+			<returns>Player index for the game pad.</returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.getDeviceType const">
+			<summary>
+			Returns a value indicating the type of the device (wheel, throttle, etc.).
+			</summary>  
+			<returns>Device type. One of the Input::DEVICE_TYPE_* values.</returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.getModelType const">
+			<summary>
+			Returns a value indicating the game pad model type.
+			</summary>  
+			<returns>Game pad model type identifier.</returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.setFilter(float)">
+			<summary>
+			Sets a filter value used to correct the current state of the game pad axis relative to the previous one.
+			</summary> 
+			<param name="filter"> Filter value for interpolation between axis states. The provided value is clamped to a range [0;1].Filter value of 0 means there is no interpolation and the current value is not corrected.Filter value of 1 means the previous state is used instead of the current one. </param> 
+		</member>
+		<member name="M:Unigine.ControlsGamepad.getFilter const">
+			<summary>
+			Returns a filter value used to correct the current state of the game pad axis relative to the previous one:											Filter value of 0 means there is no interpolation and the current value is not corrected.						Filter value of 1 means the previous state is used instead of the current one.
+			</summary>  
+			<returns>Filter value for interpolation between axis states.</returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.updateEvents">
+			<summary>
+			Scans the game pad controls (synchronizes game pad button states with the controller itself). Should be called each frame.						On Windows, in case a game pad is not connected, this function can substantially increase per-frame update time. (This happens due to calling							IDirectInput8::EnumDevices() method.)
+			</summary>  
+			<returns>0 if a game pad is not found or updateEvents() already has been called for the frame; otherwise 1.</returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.getLeftTrigger const">
+			<summary>
+			Returns an axis state value (the position) of the left trigger. Zero means the trigger is not pressed; 1 means the trigger is pressed to the maximum.
+			</summary>  
+			<returns>Value in range [0; 1]. </returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.getLeftX const">
+			<summary>
+			Returns a state value of the left thumbstick along the X-axis. When a thumbstick is in the center position, this value is zero. Negative values indicate left; positive values indicate right.
+			</summary>  
+			<returns>Value in range [-1; 1]. </returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.getLeftY const">
+			<summary>
+			Returns a state value of the left thumbstick along the Y-axis. When a thumbstick is in the center position, this value is zero. Negative values indicate down; positive values indicate up.
+			</summary>  
+			<returns>Value in range [-1; 1]. </returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.getRightTrigger const">
 			<summary>
 			Returns an axis state value (the position) of the right trigger. Zero means the trigger is not pressed; 1 means the trigger is pressed to the maximum.
 			</summary>  
 			<returns>Value in range [0; 1]. </returns>
 		</member>
-		<member name="M:Unigine.ControlsXPad360.getRightX">
+		<member name="M:Unigine.ControlsGamepad.getRightX const">
 			<summary>
 			Returns a state value of the right thumbstick along the X-axis. When a thumbstick is in the center position, this value is zero. Negative values indicate left; positive values indicate right.
 			</summary>  
 			<returns>Value in range [-1; 1]. </returns>
 		</member>
-		<member name="M:Unigine.ControlsXPad360.getRightY">
+		<member name="M:Unigine.ControlsGamepad.getRightY const">
 			<summary>
 			Returns a state value of the right thumbstick along the Y-axis. When a thumbstick is in the center position, this value is zero. Negative values indicate down; positive values indicate up.
 			</summary>  
 			<returns>Value in range [-1; 1]. </returns>
 		</member>
-		<member name="M:Unigine.ControlsXPad360.setStateButton(int,int)">
+		<member name="M:Unigine.ControlsGamepad.setVibration(float,float,float)">
 			<summary>
-			Sets a game pad button that switches a given state on and off.
+			Sets the amount of vibration for the right (high-frequency) and left (low-frequency) motors for the time period specified in milliseconds.
+			</summary> 
+			<param name="low_frequency"> Vibration value in the [0.0f; 1.0f] range for the left (low-frequency) motor. </param>
+			<param name="high_frequency"> Vibration value in the [0.0f; 1.0f] range for the right (high-frequency) motor. </param>
+			<param name="duration_ms"> Vibration period duration, in milliseconds. </param> 
+		</member>
+		<member name="M:Unigine.ControlsGamepad.getButton(int) const">
+			<summary>
+			Returns a button state (pressed or not pressed).
+			</summary> 
+			<param name="button"> Button number. </param> 
+			<returns>1 if the button is pressed; otherwise, 0. </returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.clearButton(int)">
+			<summary>
+			Returns a button state and clears it to 0 (not pressed).
+			</summary> 
+			<param name="button"> Button number. </param> 
+			<returns>1 if the button is pressed, and this function was not called previously in the current frame; otherwise, 0. </returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.setStateButton(int,int)">
+			<summary>
+			Sets a game pad button that switches a given state on or off.
 			</summary> 
 			<param name="state"> State (one of the CONTROLS_STATE_* variables). </param>
-			<param name="button"> Button that switches the state (one of the CONTROLS_XPAD360_BUTTON_* variables). </param> 
+			<param name="button"> Button number. </param> 
 		</member>
-		<member name="M:Unigine.ControlsXPad360.getStateButton(int)">
+		<member name="M:Unigine.ControlsGamepad.getStateButton(int) const">
 			<summary>
 			Returns a game pad button that switches a given state on and off.
 			</summary> 
 			<param name="state"> State (one of the CONTROLS_STATE_* variables). </param> 
-			<returns>Button that switches the state (one of the CONTROLS_XPAD360_BUTTON_* variables): BUTTON_A = 0BUTTON_BBUTTON_XBUTTON_YBUTTON_BACKBUTTON_STARTBUTTON_DPAD_UPBUTTON_DPAD_DOWNBUTTON_DPAD_LEFTBUTTON_DPAD_RIGHTBUTTON_THUMB_LEFTBUTTON_THUMB_RIGHTBUTTON_SHOULDER_LEFTBUTTON_SHOULDER_RIGHT</returns>
+			<returns>Button that switches the given state.</returns>
 		</member>
-		<member name="M:Unigine.ControlsXPad360.getStateEvent(int)">
+		<member name="M:Unigine.ControlsGamepad.getStateName(int) const">
+			<summary>
+			Returns the name of a given state, that was assigned to one of controls.
+			</summary> 
+			<param name="state"> State (one of the CONTROLS_STATE_* variables). </param> 
+			<returns>State name.</returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.saveState(Unigine.Ptr{Unigine.Stream}) const">
+			<summary>
+			Saves ControlsGamepad settings into the stream.						Example using saveState() and restoreState() methods:
+			</summary> 
+			<param name="stream"> Stream smart pointer. </param> 
+			<returns>true if the ControlsGamepad settings are saved successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.restoreState(Unigine.Ptr{Unigine.Stream})">
+			<summary>
+			Restores ControlsGamepad settings from the stream.						Example using saveState() and restoreState() methods:
+			</summary> 
+			<param name="stream"> Stream smart pointer. </param> 
+			<returns>true if the ControlsGamepad settings are restored successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ControlsGamepad.getStateEvent(int)">
 			<summary>
 			Lets the user assign a game pad button to a given state.
 			</summary> 
 			<param name="state"> State (one of the CONTROLS_STATE_* variables), to which a button is going to be assigned. </param> 
 		</member>
-		<member name="M:Unigine.ControlsXPad360.isStateEvent">
+		<member name="M:Unigine.ControlsGamepad.isStateEvent const">
 			<summary>
 			Returns a value indicating if a game pad button is successfully assigned to a state.
 			</summary>  
 			<returns>1 if a button is already assigned; otherwise, 0. </returns>
 		</member>
-		<member name="M:Unigine.ControlsXPad360.getStateName(int)">
+		<member name="F:Unigine.ControlsGamepad.MODEL_TYPE_UNKNOWN">
 			<summary>
-			Returns the name of a given state.
-			</summary> 
-			<param name="state"> State (one of the CONTROLS_STATE_* variables). </param> 
-			<returns>State name.</returns>
-		</member>
-		<member name="M:Unigine.ControlsXPad360.clearButton(int)">
-			<summary>
-			Returns a button state and clears it to 0 (not pressed).
-			</summary> 
-			<param name="button"> Button (one of the CONTROLS_XPAD360_BUTTON_* variables). </param> 
-			<returns>1 if the button is pressed, and this function was not called previously in the current frame; otherwise, 0. </returns>
-		</member>
-		<member name="M:Unigine.ControlsXPad360.saveState(Unigine.Ptr{Unigine.Stream})">
-			<summary>
-			Saves XBox 360 game pad settings into the stream.					Example using saveState() and restoreState() methods:
-			</summary> 
-			<param name="stream"> Stream smart pointer. </param> 
-			<returns>true if the XBox 360 game pad settings are saved successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ControlsXPad360.restoreState(Unigine.Ptr{Unigine.Stream})">
-			<summary>
-			Restores XBox 360 game pad settings from the stream.					Example using saveState() and restoreState() methods:
-			</summary> 
-			<param name="stream"> Stream smart pointer. </param> 
-			<returns>true if the XBox 360 game pad settings are restored successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ControlsXPad360.updateEvents">
-			<summary>
-			Scans a game pad (synchronizes states of game pad buttons and thumbsticks with the controller itself). Should be called each frame.
-			</summary>  
-			<returns>0 if a game pad is not found or updateEvents() already has been called for the frame; otherwise 1.</returns>
-		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_A">
-			<summary>
-			Button A.
+			Unknown model type.
 		</summary>
 		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_B">
+		<member name="F:Unigine.ControlsGamepad.MODEL_TYPE_XBOX_360">
 			<summary>
-			Button B.
+			Xbox 360 device.
 		</summary>
 		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_BACK">
+		<member name="F:Unigine.ControlsGamepad.MODEL_TYPE_XBOX_ONE">
+			<summary>
+			Xbox One device.
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsGamepad.MODEL_TYPE_PS3">
+			<summary>
+			Sony PlayStation 3.
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsGamepad.MODEL_TYPE_PS4">
+			<summary>
+			Sony PlayStation 4.
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsGamepad.MODEL_TYPE_PS5">
+			<summary>
+			Sony PlayStation 5.
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsGamepad.BUTTON_A">
+			<summary>
+			Button "A".
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsGamepad.BUTTON_B">
+			<summary>
+			Button "B".
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsGamepad.BUTTON_X">
+			<summary>
+			Button "X".
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsGamepad.BUTTON_Y">
+			<summary>
+			Button "Y".
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsGamepad.BUTTON_BACK">
 			<summary>
 			Button "Back".
 		</summary>
 		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_DPAD_DOWN">
-			<summary>
-			Button "Down".
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_DPAD_LEFT">
-			<summary>
-			Button "Left".
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_DPAD_RIGHT">
-			<summary>
-			Button "Right".
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_DPAD_UP">
-			<summary>
-			Button "Up".
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_SHOULDER_LEFT">
-			<summary>
-			Left shoulder (bumper) button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_SHOULDER_RIGHT">
-			<summary>
-			Right shoulder (bumper) button.
-		</summary>
-		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_START">
+		<member name="F:Unigine.ControlsGamepad.BUTTON_START">
 			<summary>
 			Button "Start".
 		</summary>
 		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_THUMB_LEFT">
+		<member name="F:Unigine.ControlsGamepad.BUTTON_DPAD_UP">
+			<summary>
+			Button "Up".
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsGamepad.BUTTON_DPAD_DOWN">
+			<summary>
+			Button "Down".
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsGamepad.BUTTON_DPAD_LEFT">
+			<summary>
+			Button "Left".
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsGamepad.BUTTON_DPAD_RIGHT">
+			<summary>
+			Button "Right".
+		</summary>
+		</member>
+		<member name="F:Unigine.ControlsGamepad.BUTTON_THUMB_LEFT">
 			<summary>
 			Left thumbstick button.
 		</summary>
 		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_THUMB_RIGHT">
+		<member name="F:Unigine.ControlsGamepad.BUTTON_THUMB_RIGHT">
 			<summary>
 			Right thumbstick button.
 		</summary>
 		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_X">
+		<member name="F:Unigine.ControlsGamepad.BUTTON_SHOULDER_LEFT">
 			<summary>
-			Button X.
+			Left shoulder (bumper) button.
 		</summary>
 		</member>
-		<member name="F:Unigine.ControlsXPad360.BUTTON_Y">
+		<member name="F:Unigine.ControlsGamepad.BUTTON_SHOULDER_RIGHT">
 			<summary>
-			Button Y.
+			Right shoulder (bumper) button.
 		</summary>
 		</member>
-		<member name="F:Unigine.ControlsXPad360.NUM_BUTTONS">
+		<member name="F:Unigine.ControlsGamepad.NUM_BUTTONS">
 			<summary>
-			Number of buttons on Xbox 360 game pad.
+			Number of buttons on a game pad.
 		</summary>
 		</member>
 	</members>

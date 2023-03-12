@@ -21,7 +21,7 @@ Pluging for scripting by python3 in Unigine Editor https://unigine.com/get-unigi
 ## Build on linux 
 
 ```
-$ docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:latest ./build_plugin.py
+$ docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:v1.0.0 ./build_plugin.py
 ```
 
 

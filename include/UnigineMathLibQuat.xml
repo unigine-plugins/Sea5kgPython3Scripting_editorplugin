@@ -324,6 +324,10 @@
 			</summary> 
 			<param name="v"> Source quaternion. </param> 
 		</member>
+		<member name="M:Unigine.Math.quat.hash const">
+			<summary>
+			</summary>  
+		</member>
 		<member name="F:Unigine.Math.quat.quat_identity">
 			<summary>
 			Quaternion representing no rotation (0.0, 0.0, 0.0, 1.0).

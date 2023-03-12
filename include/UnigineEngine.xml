@@ -61,9 +61,21 @@
 			</summary>  
 			<returns>Path to the Engine's dynamic library file.</returns>
 		</member>
-		<member name="M:Unigine.Engine.isDone const">
+		<member name="M:Unigine.Engine.isActive const">
 			<summary>
-			Returns the done flag on engine quit.
+			Returns the active state of the Engine.
+			</summary>  
+			<returns>true if engine is active; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Engine.isFocus const">
+			<summary>
+			Returns a value indicating if the Engine window is focused at the moment.
+			</summary>  
+			<returns>true if the Engine window is focused; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Engine.isQuit const">
+			<summary>
+			Returns the quitting flag on engine quit.
 			</summary>  
 			<returns>true if engine is quitting; otherwise, false.</returns>
 		</member>
@@ -152,6 +164,18 @@
 			Returns the external definitions specified on the application start-up.
 			</summary>  
 			<returns>The list of external definitions.</returns>
+		</member>
+		<member name="M:Unigine.Engine.setBackgroundUpdate(bool)">
+			<summary>
+			Sets the value indicating whether the application window is updated when the window is hidden or out of focus (rendering frames in background). By default your UNIGINE application stops rendering frames and updating its main window, when it window goes out of focus (e.g. user switches to another window). Setting the background update mode enables constant rendering regardless of whether the Engine window is focused or in the background.
+			</summary> 
+			<param name="update"> Engine window update mode: true for constantly repeating update cycle (i.e. the application is updated even if the window is hidden or out of focus); otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.Engine.isBackgroundUpdate">
+			<summary>
+			Returns a value indicating whether the Engine window is updated when the window is hidden or out of focus.
+			</summary>  
+			<returns>true if the update cycle is constantly repeated (i.e. the application is updated even if the window is hidden or out of focus); otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getFeatures">
 			<summary>
@@ -488,127 +512,6 @@
 			<param name="name"> Name of the plugin. </param> 
 			<returns>Index of the plugin if it is found, or -1 otherwise.</returns>
 		</member>
-		<member name="M:Unigine.Engine.init(int,char,char,char)">
-			<summary>
-			Initializes a new engine instance to be used with an external graphics application.
-			</summary> 
-			<param name="argc"> Number of command line arguments. </param>
-			<param name="argv"> Array of command line arguments values. </param>
-			<param name="project"> Project name. If this parameter is set, it forces the engine to store rewritable data (such as log file, cache files, config files) in user profile rather than in a directory with binaries. Notice that only the project name is required to pass in for this parameter, not the full path to the project. If there is no need to change location of such files, pass the 0 value. </param>
-			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
-			<returns>Pointer to the new engine instance.</returns>
-		</member>
-		<member name="M:Unigine.Engine.init(int,wchar_t,char,char)">
-			<summary>
-			Initializes a new engine instance.
-			</summary> 
-			<param name="argc"> Number of command line arguments. </param>
-			<param name="argv"> Array of command line arguments values. </param>
-			<param name="args"> Array of command line arguments values. </param>
-			<param name="project"> Project name. If this parameter is set, it forces the engine to store rewritable data (such as log file, cache files, config files) in user profile rather than in a directory with binaries. Notice that only the project name is required to pass in for this parameter, not the full path to the project. If there is no need to change location of such files, pass the 0 value. </param>
-			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
-			<returns>Pointer to the new engine instance.</returns>
-		</member>
-		<member name="M:Unigine.Engine.init(char,int,char,char,char)">
-			<summary>
-			Initializes a new engine instance to be used with an external graphics application.
-			</summary> 
-			<param name="window_title"> Title to be set for the application window. </param>
-			<param name="argc"> Number of command line arguments. </param>
-			<param name="argv"> Array of command line arguments values. </param>
-			<param name="project"> Project name. If this parameter is set, it forces the engine to store rewritable data (such as log file, cache files, config files) in user profile rather than in a directory with binaries. Notice that only the project name is required to pass in for this parameter, not the full path to the project. If there is no need to change location of such files, pass the 0 value. </param>
-			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
-			<returns>Pointer to the new engine instance.</returns>
-		</member>
-		<member name="M:Unigine.Engine.init(char,int,wchar_t,char,char)">
-			<summary>
-			Initializes a new engine instance.
-			</summary> 
-			<param name="window_title"> Title to be set for the application window. </param>
-			<param name="argc"> Number of command line arguments. </param>
-			<param name="argv"> Array of command line arguments values. </param>
-			<param name="args"> Array of command line arguments values. </param>
-			<param name="project"> Project name. If this parameter is set, it forces the engine to store rewritable data (such as log file, cache files, config files) in user profile rather than in a directory with binaries. Notice that only the project name is required to pass in for this parameter, not the full path to the project. If there is no need to change location of such files, pass the 0 value. </param>
-			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
-			<returns>Pointer to the new engine instance.</returns>
-		</member>
-		<member name="M:Unigine.Engine.init(CustomApp,int,wchar_t,char,char)">
-			<summary>
-			Initializes a new engine instance to be used with an external graphics application.
-			</summary> 
-			<param name="app"> Pointer to the graphics CustomApp class. </param>
-			<param name="argc"> Number of command line arguments. </param>
-			<param name="argv"> Array of values of command line arguments (a wide-character string). </param>
-			<param name="project"> Project name. If this parameter is set, it forces the engine to store rewritable data (such as log file, cache files, config files) in user profile rather than in a directory with binaries. Notice that only the project name is required to pass in for this parameter, not the full path to the project. If there is no need to change location of such files, pass the 0 value. </param>
-			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
-			<returns>Pointer to the new engine instance.</returns>
-		</member>
-		<member name="M:Unigine.Engine.init(CustomApp,int,char,char,char)">
-			<summary>
-			Initializes a new engine instance to be used with an external graphics application.
-			</summary> 
-			<param name="app"> Pointer to the graphics CustomApp class. </param>
-			<param name="argc"> Number of command line arguments. </param>
-			<param name="argv"> Array of values of command line arguments. </param>
-			<param name="args"> Array of values of command line arguments. </param>
-			<param name="project"> Project name. If this parameter is set, it forces the engine to store rewritable data (such as log file, cache files, config files) in user profile rather than in a directory with binaries. Notice that only the project name is required to pass in for this parameter, not the full path to the project. If there is no need to change location of such files, pass the 0 value. </param>
-			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
-			<returns>Pointer to the new engine instance.</returns>
-		</member>
-		<member name="M:Unigine.Engine.init(CustomApp,char,char,char,int,wchar_t,char,char)">
-			<summary>
-			Initializes a new engine instance to be used with an external graphics application, which is stored at the specified path.
-			</summary> 
-			<param name="app"> Pointer to the graphics CustomApp class. </param>
-			<param name="window_title"> Title to be set for the application window. </param>
-			<param name="app_path"> Path to a directory where binary executable file is stored. Pass the 0 value to ignore this parameter. </param>
-			<param name="home_path"> Path to the user's home directory. </param>
-			<param name="argc"> Number of command line arguments. </param>
-			<param name="argv"> Array of values of command line arguments (a wide-character string). </param>
-			<param name="project"> Project name. If this parameter is set, it forces the engine to store rewritable data (such as log file, cache files, config files) in user profile rather than in a directory with binaries. Notice that only the project name is required to pass in for this parameter, not the full path to the project. If there is no need to change location of such files, pass the 0 value. </param>
-			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
-			<returns>Pointer to the new engine instance.</returns>
-		</member>
-		<member name="M:Unigine.Engine.init(CustomApp,char,char,int,wchar_t,char,char)">
-			<summary>
-			Initializes a new engine instance to be used with an external graphics application, which is stored at the specified path.
-			</summary> 
-			<param name="app"> Pointer to the graphics CustomApp class. </param>
-			<param name="app_path"> Path to a directory where binary executable file is stored. Pass the 0 value to ignore this parameter. </param>
-			<param name="home_path"> Path to the user's home directory. </param>
-			<param name="argc"> Number of command line arguments. </param>
-			<param name="argv"> Array of values of command line arguments (a wide-character string). </param>
-			<param name="project"> Project name. If this parameter is set, it forces the engine to store rewritable data (such as log file, cache files, config files) in user profile rather than in a directory with binaries. Notice that only the project name is required to pass in for this parameter, not the full path to the project. If there is no need to change location of such files, pass the 0 value. </param>
-			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
-			<returns>Pointer to the new engine instance.</returns>
-		</member>
-		<member name="M:Unigine.Engine.init(CustomApp,char,char,char,int,char,char,char)">
-			<summary>
-			Initializes a new engine instance to be used with an external graphics application, which is stored at the specified path.
-			</summary> 
-			<param name="app"> Pointer to the graphics CustomApp class. </param>
-			<param name="window_title"> Title to be set for the application window. </param>
-			<param name="app_path"> Path to a directory where binary executable file is stored. Pass the 0 value to ignore this parameter. </param>
-			<param name="home_path"> Path to the user's home directory. </param>
-			<param name="argc"> Number of command line arguments. </param>
-			<param name="argv"> Array of values of command line arguments. </param>
-			<param name="project"> Project name. If this parameter is set, it forces the engine to store rewritable data (such as log file, cache files, config files) in user profile rather than in a directory with binaries. Notice that only the project name is required to pass in for this parameter, not the full path to the project. If there is no need to change location of such files, pass the 0 value. </param>
-			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
-			<returns>Pointer to the new engine instance.</returns>
-		</member>
-		<member name="M:Unigine.Engine.init(CustomApp,char,char,int,char,char,char)">
-			<summary>
-			Initializes a new engine instance to be used with an external graphics application, which is stored at the specified path.
-			</summary> 
-			<param name="app"> Pointer to the graphics CustomApp class. </param>
-			<param name="app_path"> Path to a directory where binary executable file is stored. Pass the 0 value to ignore this parameter. </param>
-			<param name="home_path"> Path to the user's home directory. </param>
-			<param name="argc"> Number of command line arguments. </param>
-			<param name="argv"> Array of values of command line arguments. </param>
-			<param name="project"> Project name. If this parameter is set, it forces the engine to store rewritable data (such as log file, cache files, config files) in user profile rather than in a directory with binaries. Notice that only the project name is required to pass in for this parameter, not the full path to the project. If there is no need to change location of such files, pass the 0 value. </param>
-			<param name="password"> Password for the filesystem archives. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. Notice that the specified password must be the same as for the project archive (if it exists). Pass the 0 value if you do not need to set a password. </param> 
-			<returns>Pointer to the new engine instance.</returns>
-		</member>
 		<member name="M:Unigine.Engine.main(SystemLogic,WorldLogic,EditorLogic)">
 			<summary>
 			Engine main loop. Replaces the following commands:
@@ -644,11 +547,6 @@
 			</summary> 
 			<param name="logic"> A WorldLogic instance. </param> 
 			<returns>true if the instance has been removed successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Engine.render">
-			<summary>
-			Engine rendering function. This function must be called every frame.
-			</summary>  
 		</member>
 		<member name="M:Unigine.Engine.runEditorFunction(Unigine.Variable)">
 			<summary>
@@ -1301,14 +1199,9 @@
 			Deletes the pointer to the existing engine instance.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Engine.swap">
+		<member name="M:Unigine.Engine.iterate">
 			<summary>
-			Engine swap buffers function. This function must be called every frame.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Engine.update">
-			<summary>
-			Engine update function. This function must be called every frame.
+			Engine iterate function (update, render, swap). This function must be called every frame.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Engine.isEvaluation const">
@@ -1316,6 +1209,52 @@
 			Returns a value indicating if the current version of the Engine is for evaluation only.
 			</summary>  
 			<returns>true if the evaluation version of the Engine is used; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Engine.startFps">
+			<summary>
+			Starts the FPS counter if it was stopped. All function calls are placed into a stack, so the number of calls to this function should correspond to the number of calls to the stopFps() function.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Engine.stopFps">
+			<summary>
+			Stops the FPS counter. This function should be called if application window is hidden or some heavy non-rendering tasks are processing. All function calls are placed into a stack, so the number of calls to this function should correspond to the number of calls to the startFps() function.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Engine.getFps">
+			<summary>
+			Returns the current value of the Engine FPS counter.
+			</summary>  
+			<returns>Value of the Engine FPS counter.</returns>
+		</member>
+		<member name="M:Unigine.Engine.getIFps">
+			<summary>
+			Returns an inverse value of the Engine FPS counter.
+			</summary>  
+			<returns>Inverse value of the Engine FPS counter (1/FPS).</returns>
+		</member>
+		<member name="M:Unigine.Engine.getStatisticsFpsMin">
+			<summary>
+			Returns the minimum FPS counter value for the last 600 frames.
+			</summary>  
+			<returns>Minimum FPS counter value for the last 600 frames.</returns>
+		</member>
+		<member name="M:Unigine.Engine.getStatisticsFpsAvg">
+			<summary>
+			Returns the average FPS counter value for the last 600 frames.
+			</summary>  
+			<returns>Average FPS counter value for the last 600 frames.</returns>
+		</member>
+		<member name="M:Unigine.Engine.getStatisticsFpsMax">
+			<summary>
+			Returns the maximum FPS counter value for the last 600 frames.
+			</summary>  
+			<returns>Maximum FPS counter value for the last 600 frames.</returns>
+		</member>
+		<member name="M:Unigine.Engine.getVideoContextFlags">
+			<summary>
+			Returns the current video context flags.
+			</summary>  
+			<returns>A set of current video context flags as an integer value.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getFrame">
 			<summary>
@@ -1378,6 +1317,11 @@
 			<param name="argc"> Number of command line arguments. </param>
 			<param name="argv"> Array of command line arguments values. </param> 
 			<returns>Pointer to the new engine instance.</returns>
+		</member>
+		<member name="M:Unigine.Engine.quit">
+			<summary>
+			The Engine requests to exit the application.
+			</summary>  
 		</member>
 		<member name="F:Unigine.Engine.GCMODE_DEFAULT">
 			<summary>

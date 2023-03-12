@@ -36,13 +36,13 @@ public:
 	float getOffset() const;
 	void setOffsetScale(float scale);
 	float getOffsetScale() const;
-	void setUVLowerLeft(const Math::vec2& left);
+	void setUVLowerLeft(const Math::vec2 &left);
 	Math::vec2 getUVLowerLeft() const;
-	void setUVUpperRight(const Math::vec2& right);
+	void setUVUpperRight(const Math::vec2 &right);
 	Math::vec2 getUVUpperRight() const;
 	void setRotate(bool rotate);
 	bool isRotate() const;
-	void setColor(const Math::vec4& color);
+	void setColor(const Math::vec4 &color);
 	Math::vec4 getColor() const;
 	void setIntensity(float intensity);
 	float getIntensity() const;
@@ -135,7 +135,7 @@ public:
 	float getLensFlaresOcclusionFade() const;
 	void setLensFlaresOcclusionFadeBorder(float border);
 	float getLensFlaresOcclusionFadeBorder() const;
-	void setLensFlaresWorldPositionOffset(const Math::vec3& offset);
+	void setLensFlaresWorldPositionOffset(const Math::vec3 &offset);
 	Math::vec3 getLensFlaresWorldPositionOffset() const;
 	void setLensFlaresUseLightColor(bool color);
 	bool isLensFlaresUseLightColor() const;
@@ -161,7 +161,7 @@ public:
 	int getViewportMask() const;
 	void setColorMode(Light::COLOR_MODE mode);
 	Light::COLOR_MODE getColorMode() const;
-	void setColor(const Math::vec4& color);
+	void setColor(const Math::vec4 &color);
 	Math::vec4 getColor() const;
 	void setIntensity(float intensity);
 	float getIntensity() const;
@@ -169,7 +169,7 @@ public:
 	float getLux() const;
 	void setColorTemperature(float temperature);
 	float getColorTemperature() const;
-	void setColorFilter(const Math::vec4& filter);
+	void setColorFilter(const Math::vec4 &filter);
 	Math::vec4 getColorFilter() const;
 	void setAttenuationPower(float power);
 	float getAttenuationPower() const;
@@ -230,10 +230,12 @@ public:
 	float getShadowScreenSpaceThresholdFar() const;
 	void setShadowScreenSpaceSoftness(float softness);
 	float getShadowScreenSpaceSoftness() const;
-	void setShadowScreenSpaceNoiseTranslucent(float translucent);
-	float getShadowScreenSpaceNoiseTranslucent() const;
-	void setShadowScreenSpaceViewBias(float bias);
-	float getShadowScreenSpaceViewBias() const;
+	void setShadowScreenSpaceTranslucentDepth(float depth);
+	float getShadowScreenSpaceTranslucentDepth() const;
+	void setShadowScreenSpaceTranslucentDepthPerspectiveCompensation(float compensation);
+	float getShadowScreenSpaceTranslucentDepthPerspectiveCompensation() const;
+	void setShadowScreenSpaceTranslucentViewBias(float bias);
+	float getShadowScreenSpaceTranslucentViewBias() const;
 	bool saveStateLight(const Ptr<Stream> &stream) const;
 	bool restoreStateLight(const Ptr<Stream> &stream);
 	bool saveStateLensFlares(const Ptr<Stream> &stream) const;
@@ -265,11 +267,11 @@ public:
 		BAKE_QUALITY_ULTRA,
 	};
 	static Ptr<LightVoxelProbe> create();
-	void setBoxSize(const Math::vec3& size);
+	void setBoxSize(const Math::vec3 &size);
 	Math::vec3 getBoxSize() const;
 	void setVoxelSize(float size);
 	float getVoxelSize() const;
-	void setAttenuationDistance(const Math::vec3& distance);
+	void setAttenuationDistance(const Math::vec3 &distance);
 	Math::vec3 getAttenuationDistance() const;
 	void setAttenuationPower(float power);
 	float getAttenuationPower() const;
@@ -322,7 +324,7 @@ public:
 	void setTexture(const Ptr<Texture> &texture);
 	Ptr<Texture> getTexture() const;
 	Math::ivec3 getResolution();
-	long long getVideoMemoryUsage();
+	size_t getVideoMemoryUsage();
 };
 typedef Ptr<LightVoxelProbe> LightVoxelProbePtr;
 
@@ -334,8 +336,8 @@ public:
 	static int type() { return Node::LIGHT_ENVIRONMENT_PROBE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<LightEnvironmentProbe> create(const Math::vec4& color, const Math::vec3& attenuation_distance, const char *name = 0);
-	void setAttenuationDistance(const Math::vec3& distance);
+	static Ptr<LightEnvironmentProbe> create(const Math::vec4 &color, const Math::vec3 &attenuation_distance, const char *name = 0);
+	void setAttenuationDistance(const Math::vec3 &distance);
 	Math::vec3 getAttenuationDistance() const;
 	void setDynamic(bool dynamic);
 	bool isDynamic() const;
@@ -359,7 +361,7 @@ public:
 	float getBoxGI() const;
 	void setBoxGlossCorners(float corners);
 	float getBoxGlossCorners() const;
-	void setBoxSize(const Math::vec3& size);
+	void setBoxSize(const Math::vec3 &size);
 	Math::vec3 getBoxSize() const;
 	void setRenderFacesPerFrame(int frame);
 	int getRenderFacesPerFrame() const;
@@ -369,6 +371,8 @@ public:
 	int getSupersampling() const;
 	void setReflectionViewportMask(int mask);
 	int getReflectionViewportMask() const;
+	void setDistanceScale(float scale);
+	float getDistanceScale() const;
 	void setZNear(float znear);
 	float getZNear() const;
 	void setZFar(float zfar);
@@ -428,9 +432,9 @@ public:
 		REFLECTION_RESOLUTION_MODE_4096,
 	};
 	static Ptr<LightPlanarProbe> create();
-	void setProjectionSize(const Math::vec3& size);
+	void setProjectionSize(const Math::vec3 &size);
 	Math::vec3 getProjectionSize() const;
-	void setAttenuationDistance(const Math::vec3& distance);
+	void setAttenuationDistance(const Math::vec3 &distance);
 	Math::vec3 getAttenuationDistance() const;
 	void setRoughnessSamples(int samples);
 	int getRoughnessSamples() const;
@@ -438,6 +442,8 @@ public:
 	LightPlanarProbe::REFLECTION_RESOLUTION getReflectionResolution() const;
 	void setTwoSided(bool sided);
 	bool isTwoSided() const;
+	void setStereoPerEyeEnabled(bool enabled);
+	bool isStereoPerEyeEnabled() const;
 	void setDistanceScale(float scale);
 	float getDistanceScale() const;
 	void setReflectionDistance(float distance);
@@ -472,7 +478,7 @@ public:
 	static int type() { return Node::LIGHT_OMNI; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<LightOmni> create(const Math::vec4& color, float attenuation_distance, const char *name = 0);
+	static Ptr<LightOmni> create(const Math::vec4 &color, float attenuation_distance, const char *name = 0);
 	void setAttenuationDistance(float distance);
 	float getAttenuationDistance() const;
 	void setShapeRadius(float radius);
@@ -504,7 +510,7 @@ public:
 	static int type() { return Node::LIGHT_PROJ; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<LightProj> create(const Math::vec4& color, float attenuation_distance, float fov, const char *name = 0);
+	static Ptr<LightProj> create(const Math::vec4 &color, float attenuation_distance, float fov, const char *name = 0);
 	void setAttenuationDistance(float distance);
 	float getAttenuationDistance() const;
 	void setShapeType(Light::SHAPE type);
@@ -555,7 +561,7 @@ public:
 		SCATTERING_SUN,
 		SCATTERING_MOON,
 	};
-	static Ptr<LightWorld> create(const Math::vec4& color);
+	static Ptr<LightWorld> create(const Math::vec4 &color);
 	void setScattering(LightWorld::SCATTERING scattering);
 	LightWorld::SCATTERING getScattering() const;
 	void setDisableAngle(float angle);
@@ -569,7 +575,7 @@ public:
 	Math::vec2 getRenderShadowDepthRange() const;
 	Math::Mat4 getRenderShadowCascadeModelview(int num) const;
 	Math::mat4 getRenderShadowCascadeProjection(int num) const;
-	void updateRenderShadowCascadeMatrices(const Math::Vec3& camera_position, float zfar);
+	void updateRenderShadowCascadeMatrices(const Math::Vec3 &camera_position, float zfar);
 	void setShadowHeight(float height);
 	float getShadowHeight() const;
 	void setShadowWidth(float width);

@@ -14,7 +14,7 @@
 #pragma once
 
 
-#include <editor/EditorGlobal.h>
+#include <editor/UnigineEditorGlobal.h>
 
 #include <QObject>
 
@@ -22,19 +22,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Forward decl.
 ////////////////////////////////////////////////////////////////////////////////
-namespace Editor
+namespace UnigineEditor
 {
 class Presenter;
 class Action;
 }
 
 
-namespace Editor
+namespace UnigineEditor
 {
 /// <summary>
 /// Undo manager class. This class is used to manage undo/redo operations for user actions in the Editor.
 /// </summary>
-class EDITOR_API Undo : public QObject
+class UNIGINE_EDITOR_API Undo : public QObject
 {
 	Q_OBJECT
 public:
@@ -42,7 +42,7 @@ public:
 	/// <returns> Undo class instance.</returns>
 	/// <example> <b>Example:</b>
 	/// <code>
-	/// connect(Editor::Undo::instance(), &Editor::Undo::worldModified
+	/// connect(UnigineEditor::Undo::instance(), &UnigineEditor::Undo::worldModified
 	///   , this, &SomeClass::world_modified);
 	/// </code>
 	/// </example>
@@ -88,11 +88,11 @@ private:
 	explicit Undo(QObject *parent);
 	~Undo() override;
 
-	friend class Editor::Presenter;
+	friend class ::UnigineEditor::Presenter;
 };
 
 /// <summary>This basic class is used to represent any possible user action.</summary>
-class EDITOR_API Action
+class UNIGINE_EDITOR_API Action
 {
 public:
 	Action();
@@ -120,5 +120,4 @@ public:
 	virtual bool modifiesWorld() const { return true; }
 };
 
-
-} // namespace Editor
+} // namespace UnigineEditor

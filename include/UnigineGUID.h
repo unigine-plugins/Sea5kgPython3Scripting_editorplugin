@@ -25,6 +25,7 @@ namespace Unigine
 class UNIGINE_API UGUID
 {
 public:
+	static constexpr size_t VALUE_SIZE = 24;
 	static const UGUID empty;
 	static constexpr size_t HASH_SIZE = 40;
 
@@ -33,6 +34,11 @@ public:
 	{
 		clear();
 		setString(str);
+	}
+	UNIGINE_INLINE explicit UGUID(unsigned char(&value_)[VALUE_SIZE])
+	{
+		memcpy(value, value_, VALUE_SIZE);
+		write_string(value_int, 5, get_str_data());
 	}
 
 	UNIGINE_INLINE UGUID(const UGUID &g)
@@ -52,27 +58,27 @@ public:
 		return *this;
 	}
 
-	UNIGINE_INLINE int operator==(const UGUID &g) const
+	UNIGINE_INLINE bool operator==(const UGUID &g) const
 	{
 		return	value_long[0] == g.value_long[0] &&
 				value_long[1] == g.value_long[1] &&
 				value_long[2] == g.value_long[2];
 	}
-	UNIGINE_INLINE int operator!=(const UGUID &g) const
+	UNIGINE_INLINE bool operator!=(const UGUID &g) const
 	{
 		return	value_long[0] != g.value_long[0] ||
 				value_long[1] != g.value_long[1] ||
 				value_long[2] != g.value_long[2];
 	}
-	UNIGINE_INLINE int operator<=(const UGUID &g) const
+	UNIGINE_INLINE bool operator<=(const UGUID &g) const
 	{
 		return *this == g || *this > g;
 	}
-	UNIGINE_INLINE int operator>=(const UGUID &g) const
+	UNIGINE_INLINE bool operator>=(const UGUID &g) const
 	{
 		return *this == g || *this > g;
 	}
-	UNIGINE_INLINE int operator<(const UGUID &g) const
+	UNIGINE_INLINE bool operator<(const UGUID &g) const
 	{
 		if (value_long[0] > g.value_long[0])  return 0;
 		if (value_long[0] < g.value_long[0])  return 1;
@@ -85,7 +91,7 @@ public:
 
 		return 0;
 	}
-	UNIGINE_INLINE int operator>(const UGUID &g) const
+	UNIGINE_INLINE bool operator>(const UGUID &g) const
 	{
 		if (value_long[0] < g.value_long[0]) return 0;
 		if (value_long[0] > g.value_long[0]) return 1;
@@ -107,6 +113,17 @@ public:
 	UNIGINE_INLINE void generate(const char *str_)
 	{
 		Checksum::SHA1(value_int, str_, (int)(sizeof(char) * strlen(str_)));
+		write_string(value_int, 5, get_str_data());
+	}
+	UNIGINE_INLINE void generate(int &seed_)
+	{
+		for (int i = 0; i < 5; ++i)
+			value_int[i] = seed_ = (unsigned int)((unsigned long long)seed_ * Math::Random::A + Math::Random::C);
+		write_string(value_int, 5, get_str_data());
+	}
+	UNIGINE_INLINE void generate(const void *data, int size)
+	{
+		Checksum::SHA1(value_int, data, size);
 		write_string(value_int, 5, get_str_data());
 	}
 
@@ -136,6 +153,7 @@ public:
 		write_string(value_int, 5, get_str_data());
 	}
 
+	UNIGINE_INLINE const unsigned char *getValue() const { return value; }
 	UNIGINE_INLINE const char *getString() const { return str + PREFIX_SIZE; }
 	void setString(const char *str_)
 	{
@@ -155,8 +173,8 @@ public:
 		memset(value_long, 0, sizeof(value_long));
 		memcpy(str, PREFIX, PREFIX_SIZE);
 	}
-	UNIGINE_INLINE int isEmpty() const { return getString()[0] == 0; }
-	UNIGINE_INLINE int isValid() const { return !isEmpty(); }
+	UNIGINE_INLINE bool isEmpty() const { return getString()[0] == 0; }
+	UNIGINE_INLINE bool isValid() const { return !isEmpty(); }
 
 	UNIGINE_INLINE const char *get() const { return str; }
 	UNIGINE_INLINE char &get(int index)
@@ -172,12 +190,13 @@ public:
 	UNIGINE_INLINE char &operator[](int index) { return get(index); }
 	UNIGINE_INLINE char operator[](int index) const { return get(index); }
 
-	UNIGINE_INLINE operator const char *() const { return str; }
-	UNIGINE_INLINE operator const void *() const { return str; }
-
 	UNIGINE_INLINE unsigned int hash() const
 	{
 		return (((value_int[0] ^ value_int[1]) << 5) ^ value_int[2] ^ value_int[3] ^ value_int[4]);
+	}
+	UNIGINE_INLINE unsigned long long hashLong() const
+	{
+		return Math::hashMixer(value_long[0], Math::hashMixer(value_long[1], value_long[2]));
 	}
 
 private:
@@ -227,7 +246,7 @@ private:
 
 	union
 	{
-		unsigned char value[24];
+		unsigned char value[VALUE_SIZE];
 		unsigned int value_int[6];
 		unsigned long long value_long[3];
 	};

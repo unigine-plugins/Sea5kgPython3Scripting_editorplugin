@@ -357,7 +357,7 @@ struct alignas(16) quat
 		return *this;
 	}
 
-	UNIGINE_INLINE unsigned int hash() const { return hashCombine(hashCombine(hashCombine(hashMurmur3(x), y), z), w); }
+	UNIGINE_INLINE unsigned int hash() const { return hashCombine(hashCombine(hashCombine(hashInteger(x), y), z), w); }
 
 	union
 	{

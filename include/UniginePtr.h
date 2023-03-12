@@ -19,6 +19,7 @@
 #include <UnigineVector.h>
 #include <UnigineHashMap.h>
 #include <UnigineMap.h>
+#include <UnigineSet.h>
 
 #include <type_traits>
 
@@ -170,6 +171,7 @@ public:
 
 	UnigineBaseObject *getInternalObject() const { return obj; }
 
+protected:
 	friend UnigineBaseObject;
 	void object_destructor()
 	{
@@ -329,7 +331,6 @@ private:
 	APIInterface *api_interface() { return static_cast<APIInterface *>(ptr); }
 	const APIInterface *api_interface() const { return static_cast<const APIInterface *>(ptr); }
 
-private:
 	Type *ptr;
 };
 
@@ -362,4 +363,71 @@ Ptr<To> checked_ptr_cast(const Ptr<From> &ptr)
 
 typedef Ptr<APIInterface> BaseObjectPtr;
 
+namespace Internal
+{
+
+template <typename Type>
+struct PointerWrapper
+{
+	PointerWrapper(Type *ptr_): ptr(ptr_) {}
+
+	operator Type *() const { return ptr; }
+	operator Type &() const { assert(ptr != nullptr); return *ptr; }
+
+	Type *ptr;
+};
+
+template <typename Type>
+PointerWrapper<Type> GetInternalObject(APIInterface *obj)
+{
+	return PointerWrapper<Type>(obj ? obj->getInternalObject<Type>() : nullptr);
+}
+
+template <typename Type, typename APIClass>
+PointerWrapper<Type> GetInternalObject(const Ptr<APIClass> &obj)
+{
+	return GetInternalObject<Type>(obj.get());
+}
+
+namespace Conversion
+{
+template<typename To, typename From>
+To api_convert(From from)
+{
+	return from;
+}
+template<typename To, typename From>
+To api_convert(From *from)
+{
+	return To(from, false);
+}
+template<typename To, typename From>
+To api_convert(Ptr<From> from)
+{
+	return GetInternalObject<typename std::remove_pointer<To>::type>(from.get());
+}
+} // namespace Conversion
+
+template <typename From, typename To>
+VectorStack<To> api_wrap(const Vector<From> &v)
+{
+	VectorStack<To> ret;
+	ret.allocate(v.size());
+	for (int i = 0; i < v.size(); i++)
+		ret.appendFast(Conversion::api_convert<To>(v[i]));
+	return ret;
+}
+
+// SetToSet
+template <typename From, typename To>
+Set<To> api_wrap(const Set<From> &v)
+{
+	Set<To> ret;
+	auto end = v.end();
+	for (auto it = v.begin(); it != end; ++it)
+		ret.append(Conversion::api_convert<To>(it->key));
+	return ret;
+}
+
+} // namespace Internal
 } // namespace Unigine

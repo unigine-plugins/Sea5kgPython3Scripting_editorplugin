@@ -130,7 +130,7 @@ public:
 			return *this;
 		if (s.dynamic)
 		{
-			if (data != stack_data)
+			if (dynamic)
 				Memory::deallocate(data);
 
 			length = s.length;
@@ -170,7 +170,7 @@ public:
 	}
 
 	UNIGINE_INLINE const char *get() const { return data; }
-	UNIGINE_INLINE char *getRaw() { return data; }
+	UNIGINE_INLINE char *getRaw() const { return data; }
 	UNIGINE_INLINE operator const char *() const { return data; }
 	UNIGINE_INLINE operator const void *() const { return data; }
 	UNIGINE_INLINE char &get(int index)
@@ -275,6 +275,17 @@ public:
 		data[length] = '\0';
 	}
 
+	UNIGINE_INLINE int find(bool (*filter)(char)) const
+	{
+		for (int i = 0; i < length; i++)
+		{
+			if (filter(data[i]))
+				return i;
+		}
+
+		return -1;
+	}
+
 	UNIGINE_INLINE int find(char c, bool case_sensitive = true) const
 	{
 		if (case_sensitive)
@@ -315,6 +326,17 @@ public:
 		return -1;
 	}
 
+
+	UNIGINE_INLINE int rfind(bool (*filter)(char)) const
+	{
+		for (int i = length - 1; i >= 0; i--)
+		{
+			if (filter(data[i]))
+				return i;
+		}
+
+		return -1;
+	}
 	UNIGINE_INLINE int rfind(char c, bool case_sensitive = true) const
 	{
 		if (case_sensitive)
@@ -645,9 +667,7 @@ public:
 
 	UNIGINE_INLINE static bool atob(const char *str)
 	{
-		if (String::equal(str, "1") || String::equal(str, "true") || String::equal(str, "TRUE"))
-			return true;
-		return false;
+		return String::equal(str, "1") || String::equal(str, "true") || String::equal(str, "TRUE");
 	}
 	static int atoi(const char *str)
 	{
@@ -875,6 +895,7 @@ public:
 	static StringStack<> prettyFormat(int value);
 	static StringStack<> prettyFormat(float value, int precision = -1);
 	static StringStack<> prettyFormat(double value, int precision = -1);
+	static StringStack<> prettyFormat(const char *str, bool vocabulary_on = true);
 
 	static int vsscanf(const char *str, const char *format, va_list argptr);
 	static int sscanf(const char *str, const char *format, ...) UNIGINE_SCANF(2, 3);
@@ -992,6 +1013,11 @@ public:
 	UNIGINE_INLINE static String &joinPaths(String &ret, const char *p0, const char *p1, int size0 = -1, int size1 = -1)
 	{
 		String::normalizeDirPath(ret, p0, size0);
+		if (ret.size() && p1 && ((*p1 == '/') || (*p1 == '\\')))
+		{
+			++p1;
+			size1 = (size1 == -1) ? size1 : (size1 - 1);
+		}
 		String::normalizePath(ret, p1, size1);
 		return ret;
 	}
@@ -1118,9 +1144,11 @@ public:
 		return (int)(d - dest);
 	}
 
-	UNIGINE_INLINE static bool equal(const char* s0, const char* s1) { return compare(s0, s1) == 0; }
-	UNIGINE_INLINE static bool equal(const String &s0, const char* s1) { return equal(s0.get(), s1); }
-	UNIGINE_INLINE static bool equal(const char* s0, const String &s1) { return equal(s0, s1.get()); }
+	UNIGINE_INLINE static bool isEmpty(const char *str) { return str == nullptr || *str == 0; }
+
+	UNIGINE_INLINE static bool equal(const char *s0, const char *s1) { return compare(s0, s1) == 0; }
+	UNIGINE_INLINE static bool equal(const String &s0, const char *s1) { return equal(s0.get(), s1); }
+	UNIGINE_INLINE static bool equal(const char *s0, const String &s1) { return equal(s0, s1.get()); }
 	UNIGINE_INLINE static bool equal(const String &s0, const String &s1) { return s0.length == s1.length && equal(s0.get(), s1.get()); }
 
 	UNIGINE_INLINE static int utf8strlen(const char *str)
@@ -1208,7 +1236,6 @@ public:
 					break;
 				p++;
 				s = str;
-				ret = false;
 			} else
 			{
 				if (*p != '?' && *p != *s)
@@ -1275,8 +1302,21 @@ protected:
 	}
 	UNIGINE_INLINE void do_append(const char *s, int size)
 	{
-		reserve(length + size);
-		memmove(data + length, s, size);
+		if ((size + length + 1) <= space())
+		{
+			memcpy(data + length, s, size);
+		} else
+		{
+			capacity = grow_to(length + size);
+			char *new_data = (char *)Memory::allocate(capacity);
+			memcpy(new_data, data, length);
+			memcpy(new_data + length, s, size);
+			if (dynamic)
+				Memory::deallocate(data);
+			dynamic = true;
+			data = new_data;
+		}
+
 		length += size;
 		data[length] = '\0';
 	}
@@ -1291,9 +1331,24 @@ protected:
 	UNIGINE_INLINE void do_append(int pos, const char *s, int size)
 	{
 		assert((unsigned int)pos <= (unsigned int)length && "String::do_append(): bad position");
-		reserve(length + size);
-		memmove(data + pos + size, data + pos, length - pos);
-		memmove(data + pos, s, size);
+		if ((size + length + 1) <= space())
+		{
+			memmove(data + pos + size, data + pos, length - pos);
+			memmove(data + pos, s, size);
+		} else
+		{
+			capacity = grow_to(length + size);
+			char *new_data = (char *)Memory::allocate(capacity);
+			memcpy(new_data, data, pos);
+			memcpy(new_data + pos, s, size);
+			memcpy(new_data + pos + size, data + pos, length - pos);
+
+			if (dynamic)
+				Memory::deallocate(data);
+			dynamic = true;
+			data = new_data;
+		}
+
 		length += size;
 		data[length] = '\0';
 	}
@@ -1317,7 +1372,7 @@ static_assert(sizeof(String) == 24, "String size is changed");
 class StringPtr
 {
 public:
-	UNIGINE_INLINE StringPtr() {}
+	UNIGINE_INLINE StringPtr() = default;
 	UNIGINE_INLINE StringPtr(const String &s)
 	{
 		if (s.size())

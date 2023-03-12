@@ -11,13 +11,12 @@
  * UNIGINE. at http://unigine.com/
  */
 
+// DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
+
 #pragma once
 
-#include <UnigineBase.h>
-
-
-#ifdef EDITOR_LIBRARY
-    #define EDITOR_API UNIGINE_EXPORT
-#else
-    #define EDITOR_API UNIGINE_IMPORT
-#endif
+#define UNIGINE_VERSION_MAJOR "2"
+#define UNIGINE_VERSION_MINOR "16"
+#define UNIGINE_VERSION_PATCH "1"
+#define UNIGINE_VERSION_REVISION "0"
+#define UNIGINE_VERSION "2.16.1.0"

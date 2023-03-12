@@ -23,6 +23,13 @@
 			</summary>  
 			<returns>Creation flags. A combination of IMMUTABLE_*, DYNAMIC_* and FLUSH_* flags.</returns>
 		</member>
+		<member name="M:Unigine.MeshDynamic.copy(Unigine.Ptr{MeshDynamic}) const">
+			<summary>
+			Copies the dynamic mesh to the specified target.
+			</summary> 
+			<param name="dest"> Target dynamic mesh to which the mesh is to be copied. </param> 
+			<returns>true if the dynamic mesh is copied successfully to the specified target; otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.MeshDynamic.bind">
 			<summary>
 			Binds dynamic mesh data (index and vertex buffers) to the input assembler stage.
@@ -234,47 +241,6 @@
 			<param name="z"> Z coordinate of the vertex. </param>
 			<param name="w"> W coordinate of the vertex. </param> 
 		</member>
-		<member name="M:Unigine.MeshDynamic.addVertexDouble(int,double[])">
-			<summary>
-			Adds a new vertex with double coordinates to the dynamic mesh.
-			</summary> 
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="value"> Double-type coordinates of the vertex to be set. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.addVertexDouble1(int,double)">
-			<summary>
-			Adds a new vertex with a single double coordinate to the dynamic mesh.
-			</summary> 
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="x"> X coordinate of the vertex. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.addVertexDouble2(int,double,double)">
-			<summary>
-			Adds a new vertex with 2 double coordinates to the dynamic mesh.
-			</summary> 
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="x"> X coordinate of the vertex. </param>
-			<param name="y"> Y coordinate of the vertex. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.addVertexDouble3(int,double,double,double)">
-			<summary>
-			Adds a new vertex with 2 double coordinates to the dynamic mesh.
-			</summary> 
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="x"> X coordinate of the vertex. </param>
-			<param name="y"> Y coordinate of the vertex. </param>
-			<param name="z"> Z coordinate of the vertex. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.addVertexDouble4(int,double,double,double,double)">
-			<summary>
-			Adds a new vertex with 4 double coordinates to the dynamic mesh.
-			</summary> 
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="x"> X coordinate of the vertex. </param>
-			<param name="y"> Y coordinate of the vertex. </param>
-			<param name="z"> Z coordinate of the vertex. </param>
-			<param name="w"> W coordinate of the vertex. </param> 
-		</member>
 		<member name="M:Unigine.MeshDynamic.addVertexUChar(int,uchar[])">
 			<summary>
 			Adds a new vertex with unsigned char coordinates to the dynamic mesh.
@@ -425,47 +391,6 @@
 		<member name="M:Unigine.MeshDynamic.setVertexFloat4(int,float,float,float,float)">
 			<summary>
 			Sets float-type coordinates and specified attribute for the last vertex in the vertex buffer of the dynamic mesh.
-			</summary> 
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="x"> X coordinate of the vertex. </param>
-			<param name="y"> Y coordinate of the vertex. </param>
-			<param name="z"> Z coordinate of the vertex. </param>
-			<param name="w"> W coordinate of the vertex. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.setVertexDouble(int,double[])">
-			<summary>
-			Sets double-type coordinates and specified attribute for the last vertex in the vertex buffer of the dynamic mesh.
-			</summary> 
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="value"> Double-type coordinates to be set. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.setVertexDouble1(int,double)">
-			<summary>
-			Sets double-type coordinates and specified attribute for the last vertex in the vertex buffer of the dynamic mesh.
-			</summary> 
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="x"> X coordinate of the vertex. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.setVertexDouble2(int,double,double)">
-			<summary>
-			Sets double-type coordinates and specified attribute for the last vertex in the vertex buffer of the dynamic mesh.
-			</summary> 
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="x"> X coordinate of the vertex. </param>
-			<param name="y"> Y coordinate of the vertex. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.setVertexDouble3(int,double,double,double)">
-			<summary>
-			Sets double-type coordinates and specified attribute for the last vertex in the vertex buffer of the dynamic mesh.
-			</summary> 
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="x"> X coordinate of the vertex. </param>
-			<param name="y"> Y coordinate of the vertex. </param>
-			<param name="z"> Z coordinate of the vertex. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.setVertexDouble4(int,double,double,double,double)">
-			<summary>
-			Sets double-type coordinates and specified attribute for the last vertex in the vertex buffer of the dynamic mesh.
 			</summary> 
 			<param name="attribute"> Attribute to be set. </param>
 			<param name="x"> X coordinate of the vertex. </param>
@@ -631,52 +556,6 @@
 		<member name="M:Unigine.MeshDynamic.setVertexFloat4(int,int,float,float,float,float)">
 			<summary>
 			Sets float-type coordinates and specified attribute for the specified vertex in the vertex buffer of the dynamic mesh.
-			</summary> 
-			<param name="vertex"> Vertex number. </param>
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="x"> X coordinate of the vertex. </param>
-			<param name="y"> Y coordinate of the vertex. </param>
-			<param name="z"> Z coordinate of the vertex. </param>
-			<param name="w"> W coordinate of the vertex. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.setVertexDouble(int,int,double[])">
-			<summary>
-			Sets double-type coordinates and specified attribute for the specified vertex in the vertex buffer of the dynamic mesh.
-			</summary> 
-			<param name="vertex"> Vertex number. </param>
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="value"> Double-type coordinates to be set. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.setVertexDouble1(int,int,double)">
-			<summary>
-			Sets double-type coordinates and specified attribute for the specified vertex in the vertex buffer of the dynamic mesh.
-			</summary> 
-			<param name="vertex"> Vertex number. </param>
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="x"> X coordinate of the vertex. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.setVertexDouble2(int,int,double,double)">
-			<summary>
-			Sets double-type coordinates and specified attribute for the specified vertex in the vertex buffer of the dynamic mesh.
-			</summary> 
-			<param name="vertex"> Vertex number. </param>
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="x"> X coordinate of the vertex. </param>
-			<param name="y"> Y coordinate of the vertex. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.setVertexDouble3(int,int,double,double,double)">
-			<summary>
-			Sets double-type coordinates and specified attribute for the specified vertex in the vertex buffer of the dynamic mesh.
-			</summary> 
-			<param name="vertex"> Vertex number. </param>
-			<param name="attribute"> Attribute to be set. </param>
-			<param name="x"> X coordinate of the vertex. </param>
-			<param name="y"> Y coordinate of the vertex. </param>
-			<param name="z"> Z coordinate of the vertex. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.setVertexDouble4(int,int,double,double,double,double)">
-			<summary>
-			Sets double-type coordinates and specified attribute for the specified vertex in the vertex buffer of the dynamic mesh.
 			</summary> 
 			<param name="vertex"> Vertex number. </param>
 			<param name="attribute"> Attribute to be set. </param>
@@ -966,11 +845,6 @@
 		<member name="F:Unigine.MeshDynamic.TYPE_FLOAT">
 			<summary>
 			Floating-point data type.
-		</summary>
-		</member>
-		<member name="F:Unigine.MeshDynamic.TYPE_DOUBLE">
-			<summary>
-			Double-precision floating-point data type.
 		</summary>
 		</member>
 		<member name="F:Unigine.MeshDynamic.TYPE_UCHAR">

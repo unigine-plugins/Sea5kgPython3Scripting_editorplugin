@@ -592,18 +592,20 @@ struct alignas(16) BoundBox
 	UNIGINE_INLINE vec3 getSize() const { return maximum - minimum; }
 	UNIGINE_INLINE void getPoints(vec3 *points, int num_points) const
 	{
+		UNIGINE_UNUSED(num_points);
 		assert(num_points == 8 && "BoundBox::getPoints(): bad points number");
-		points[0].set(minimum.x, minimum.y, minimum.z);
+		points[0].set(minimum);
 		points[1].set(maximum.x, minimum.y, minimum.z);
 		points[2].set(minimum.x, maximum.y, minimum.z);
 		points[3].set(maximum.x, maximum.y, minimum.z);
 		points[4].set(minimum.x, minimum.y, maximum.z);
 		points[5].set(maximum.x, minimum.y, maximum.z);
 		points[6].set(minimum.x, maximum.y, maximum.z);
-		points[7].set(maximum.x, maximum.y, maximum.z);
+		points[7].set(maximum);
 	}
 	UNIGINE_INLINE void getPlanes(vec4 *planes, int num_planes) const
 	{
+		UNIGINE_UNUSED(num_planes);
 		assert(num_planes == 6 && "BoundBox::getPlanes(): bad planes number");
 		planes[0].set(1.0f, 0.0f, 0.0f, -maximum.x);
 		planes[1].set(-1.0f, 0.0f, 0.0f, minimum.x);
@@ -1099,14 +1101,14 @@ UNIGINE_INLINE void BoundSphere::expand(const BoundBox &bb)
 
 	if (isValid())
 	{
-		expand(vec3(bb.minimum.x, bb.minimum.y, bb.minimum.z));
+		expand(bb.minimum);
+		expand(bb.maximum);
 		expand(vec3(bb.maximum.x, bb.minimum.y, bb.minimum.z));
 		expand(vec3(bb.minimum.x, bb.maximum.y, bb.minimum.z));
 		expand(vec3(bb.maximum.x, bb.maximum.y, bb.minimum.z));
 		expand(vec3(bb.minimum.x, bb.minimum.y, bb.maximum.z));
 		expand(vec3(bb.maximum.x, bb.minimum.y, bb.maximum.z));
 		expand(vec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
-		expand(vec3(bb.maximum.x, bb.maximum.y, bb.maximum.z));
 	} else
 	{
 		vec3 center = (bb.minimum + bb.maximum) * 0.5f;
@@ -1120,14 +1122,14 @@ UNIGINE_INLINE void BoundSphere::expandRadius(const BoundBox &bb)
 
 	if (isValid())
 	{
-		expandRadius(vec3(bb.minimum.x, bb.minimum.y, bb.minimum.z));
+		expandRadius(bb.minimum);
+		expandRadius(bb.maximum);
 		expandRadius(vec3(bb.maximum.x, bb.minimum.y, bb.minimum.z));
 		expandRadius(vec3(bb.minimum.x, bb.maximum.y, bb.minimum.z));
 		expandRadius(vec3(bb.maximum.x, bb.maximum.y, bb.minimum.z));
 		expandRadius(vec3(bb.minimum.x, bb.minimum.y, bb.maximum.z));
 		expandRadius(vec3(bb.maximum.x, bb.minimum.y, bb.maximum.z));
 		expandRadius(vec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
-		expandRadius(vec3(bb.maximum.x, bb.maximum.y, bb.maximum.z));
 	} else
 	{
 		vec3 center = (bb.minimum + bb.maximum) * 0.5f;
@@ -1148,14 +1150,14 @@ UNIGINE_INLINE bool BoundSphere::insideValid(const BoundBox &bb) const
 }
 UNIGINE_INLINE bool BoundSphere::insideAllValid(const BoundBox &bb) const
 {
-	return insideValid(vec3(bb.minimum.x, bb.minimum.y, bb.minimum.z))
+	return insideValid(bb.minimum)
+		&& insideValid(bb.maximum)
 		&& insideValid(vec3(bb.maximum.x, bb.minimum.y, bb.minimum.z))
 		&& insideValid(vec3(bb.minimum.x, bb.maximum.y, bb.minimum.z))
 		&& insideValid(vec3(bb.maximum.x, bb.maximum.y, bb.minimum.z))
 		&& insideValid(vec3(bb.minimum.x, bb.minimum.y, bb.maximum.z))
 		&& insideValid(vec3(bb.maximum.x, bb.minimum.y, bb.maximum.z))
-		&& insideValid(vec3(bb.minimum.x, bb.maximum.y, bb.maximum.z))
-		&& insideValid(vec3(bb.maximum.x, bb.maximum.y, bb.maximum.z));
+		&& insideValid(vec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
 }
 
 constexpr BoundBox BoundBox_inf(-Consts::INF, -Consts::INF, -Consts::INF, Consts::INF, Consts::INF, Consts::INF, ConstexprTag{});
@@ -1452,14 +1454,14 @@ struct alignas(16) BoundFrustum
 	UNIGINE_INLINE bool insideAllValid(const BoundBox &bb) const
 	{
 		return bound_box.insideAllValid(bb)
-			&& inside(vec3(bb.minimum.x, bb.minimum.y, bb.minimum.z))
+			&& inside(bb.minimum)
+			&& inside(bb.maximum)
 			&& inside(vec3(bb.maximum.x, bb.minimum.y, bb.minimum.z))
 			&& inside(vec3(bb.minimum.x, bb.maximum.y, bb.minimum.z))
 			&& inside(vec3(bb.maximum.x, bb.maximum.y, bb.minimum.z))
 			&& inside(vec3(bb.minimum.x, bb.minimum.y, bb.maximum.z))
 			&& inside(vec3(bb.maximum.x, bb.minimum.y, bb.maximum.z))
-			&& inside(vec3(bb.minimum.x, bb.maximum.y, bb.maximum.z))
-			&& inside(vec3(bb.maximum.x, bb.maximum.y, bb.maximum.z));
+			&& inside(vec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
 	}
 	UNIGINE_INLINE bool insideAllValid(const BoundFrustum &bf) const
 	{
@@ -1478,14 +1480,14 @@ struct alignas(16) BoundFrustum
 	UNIGINE_INLINE bool insideAllValidFast(const BoundBox &bb) const
 	{
 		return bound_box.insideAllValid(bb)
-			&& insideFast(vec3(bb.minimum.x, bb.minimum.y, bb.minimum.z))
+			&& insideFast(bb.minimum)
+			&& insideFast(bb.maximum)
 			&& insideFast(vec3(bb.maximum.x, bb.minimum.y, bb.minimum.z))
 			&& insideFast(vec3(bb.minimum.x, bb.maximum.y, bb.minimum.z))
 			&& insideFast(vec3(bb.maximum.x, bb.maximum.y, bb.minimum.z))
 			&& insideFast(vec3(bb.minimum.x, bb.minimum.y, bb.maximum.z))
 			&& insideFast(vec3(bb.maximum.x, bb.minimum.y, bb.maximum.z))
-			&& insideFast(vec3(bb.minimum.x, bb.maximum.y, bb.maximum.z))
-			&& insideFast(vec3(bb.maximum.x, bb.maximum.y, bb.maximum.z));
+			&& insideFast(vec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
 	}
 	UNIGINE_INLINE bool insideAllValidFast(const BoundFrustum &bf) const
 	{
@@ -2127,14 +2129,14 @@ struct alignas(16) WorldBoundBox
 	UNIGINE_INLINE void getPoints(dvec3 *points, int num_points) const
 	{
 		assert(num_points == 8 && "WorldBoundBox::getPoints(): bad points number");
-		points[0].set(minimum.x, minimum.y, minimum.z);
+		points[0].set(minimum);
 		points[1].set(maximum.x, minimum.y, minimum.z);
 		points[2].set(minimum.x, maximum.y, minimum.z);
 		points[3].set(maximum.x, maximum.y, minimum.z);
 		points[4].set(minimum.x, minimum.y, maximum.z);
 		points[5].set(maximum.x, minimum.y, maximum.z);
 		points[6].set(minimum.x, maximum.y, maximum.z);
-		points[7].set(maximum.x, maximum.y, maximum.z);
+		points[7].set(maximum);
 	}
 	UNIGINE_INLINE void getPlanes(dvec4 *planes, int num_planes) const
 	{
@@ -2519,14 +2521,14 @@ UNIGINE_INLINE void WorldBoundSphere::expand(const WorldBoundBox &bb)
 
 	if (isValid())
 	{
-		expand(dvec3(bb.minimum.x, bb.minimum.y, bb.minimum.z));
+		expand(bb.minimum);
+		expand(bb.maximum);
 		expand(dvec3(bb.maximum.x, bb.minimum.y, bb.minimum.z));
 		expand(dvec3(bb.minimum.x, bb.maximum.y, bb.minimum.z));
 		expand(dvec3(bb.maximum.x, bb.maximum.y, bb.minimum.z));
 		expand(dvec3(bb.minimum.x, bb.minimum.y, bb.maximum.z));
 		expand(dvec3(bb.maximum.x, bb.minimum.y, bb.maximum.z));
 		expand(dvec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
-		expand(dvec3(bb.maximum.x, bb.maximum.y, bb.maximum.z));
 	} else
 	{
 		dvec3 center = (bb.minimum + bb.maximum) * 0.5;
@@ -2540,14 +2542,14 @@ UNIGINE_INLINE void WorldBoundSphere::expandRadius(const WorldBoundBox &bb)
 
 	if (isValid())
 	{
-		expandRadius(dvec3(bb.minimum.x, bb.minimum.y, bb.minimum.z));
+		expandRadius(bb.minimum);
+		expandRadius(bb.maximum);
 		expandRadius(dvec3(bb.maximum.x, bb.minimum.y, bb.minimum.z));
 		expandRadius(dvec3(bb.minimum.x, bb.maximum.y, bb.minimum.z));
 		expandRadius(dvec3(bb.maximum.x, bb.maximum.y, bb.minimum.z));
 		expandRadius(dvec3(bb.minimum.x, bb.minimum.y, bb.maximum.z));
 		expandRadius(dvec3(bb.maximum.x, bb.minimum.y, bb.maximum.z));
 		expandRadius(dvec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
-		expandRadius(dvec3(bb.maximum.x, bb.maximum.y, bb.maximum.z));
 	} else
 	{
 		dvec3 center = (bb.minimum + bb.maximum) * 0.5;
@@ -2569,14 +2571,13 @@ UNIGINE_INLINE bool WorldBoundSphere::insideValid(const WorldBoundBox &bb) const
 }
 UNIGINE_INLINE bool WorldBoundSphere::insideAllValid(const WorldBoundBox &bb) const
 {
-	return insideValid(Vec3(bb.minimum.x, bb.minimum.y, bb.minimum.z))
+	return insideValid(bb.minimum) && insideValid(bb.maximum)
 		&& insideValid(Vec3(bb.maximum.x, bb.minimum.y, bb.minimum.z))
 		&& insideValid(Vec3(bb.minimum.x, bb.maximum.y, bb.minimum.z))
 		&& insideValid(Vec3(bb.maximum.x, bb.maximum.y, bb.minimum.z))
 		&& insideValid(Vec3(bb.minimum.x, bb.minimum.y, bb.maximum.z))
 		&& insideValid(Vec3(bb.maximum.x, bb.minimum.y, bb.maximum.z))
-		&& insideValid(Vec3(bb.minimum.x, bb.maximum.y, bb.maximum.z))
-		&& insideValid(Vec3(bb.maximum.x, bb.maximum.y, bb.maximum.z));
+		&& insideValid(Vec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -2890,14 +2891,14 @@ struct alignas(16) WorldBoundFrustum
 	UNIGINE_INLINE bool insideAllValid(const WorldBoundBox &bb) const
 	{
 		return bound_box.insideAllValid(bb)
-			&& inside(dvec3(bb.minimum.x, bb.minimum.y, bb.minimum.z))
+			&& inside(bb.minimum)
+			&& inside(bb.maximum)
 			&& inside(dvec3(bb.maximum.x, bb.minimum.y, bb.minimum.z))
 			&& inside(dvec3(bb.minimum.x, bb.maximum.y, bb.minimum.z))
 			&& inside(dvec3(bb.maximum.x, bb.maximum.y, bb.minimum.z))
 			&& inside(dvec3(bb.minimum.x, bb.minimum.y, bb.maximum.z))
 			&& inside(dvec3(bb.maximum.x, bb.minimum.y, bb.maximum.z))
-			&& inside(dvec3(bb.minimum.x, bb.maximum.y, bb.maximum.z))
-			&& inside(dvec3(bb.maximum.x, bb.maximum.y, bb.maximum.z));
+			&& inside(dvec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
 	}
 	UNIGINE_INLINE bool insideAllValid(const WorldBoundFrustum &bf) const
 	{
@@ -2916,14 +2917,14 @@ struct alignas(16) WorldBoundFrustum
 	UNIGINE_INLINE bool insideAllValidFast(const WorldBoundBox &bb) const
 	{
 		return bound_box.insideAllValid(bb)
-			&& insideFast(dvec3(bb.minimum.x, bb.minimum.y, bb.minimum.z))
+			&& insideFast(bb.minimum)
+			&& insideFast(bb.maximum)
 			&& insideFast(dvec3(bb.maximum.x, bb.minimum.y, bb.minimum.z))
 			&& insideFast(dvec3(bb.minimum.x, bb.maximum.y, bb.minimum.z))
 			&& insideFast(dvec3(bb.maximum.x, bb.maximum.y, bb.minimum.z))
 			&& insideFast(dvec3(bb.minimum.x, bb.minimum.y, bb.maximum.z))
 			&& insideFast(dvec3(bb.maximum.x, bb.minimum.y, bb.maximum.z))
-			&& insideFast(dvec3(bb.minimum.x, bb.maximum.y, bb.maximum.z))
-			&& insideFast(dvec3(bb.maximum.x, bb.maximum.y, bb.maximum.z));
+			&& insideFast(dvec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
 	}
 	UNIGINE_INLINE bool insideAllValidFast(const WorldBoundFrustum &bf) const
 	{

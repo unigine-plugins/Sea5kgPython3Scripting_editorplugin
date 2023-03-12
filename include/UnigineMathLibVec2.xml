@@ -370,6 +370,10 @@
 			Returns a vector containing the smallest integral values each being greater than or equal to the corresponding vector component.
 			</summary>  
 		</member>
+		<member name="M:Unigine.Math.vec2.hash const">
+			<summary>
+			</summary>  
+		</member>
 		<member name="F:Unigine.Math.vec2.vec2_eps">
 			<summary>
 			Vector filled with epsilon constant (1e-6f).

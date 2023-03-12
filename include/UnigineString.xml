@@ -70,14 +70,14 @@
 			<summary>
 			Checks whether code is an alphabetic letter.
 			</summary> 
-			<param name="code"> Character to be checked, casted to an int. </param> 
+			<param name="code"> Character to be checked, cast to an int. </param> 
 			<returns>true if the code is an alphabetic character; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.String class.isdigit(int)">
 			<summary>
 			Checks whether code is a decimal digit character.
 			</summary> 
-			<param name="code"> Character to be checked, casted to an int. </param> 
+			<param name="code"> Character to be checked, cast to an int. </param> 
 			<returns>true if the code is a decimal digit character; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.String class.getDouble">
@@ -120,21 +120,21 @@
 			<summary>
 			Checks whether code is a lower-case letter.
 			</summary> 
-			<param name="code"> Character to be checked, casted to an int. </param> 
+			<param name="code"> Character to be checked, cast to an int. </param> 
 			<returns>true if the code is a lower-case character; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.String class.isspace(int)">
 			<summary>
 			Checks whether code is a space or a horizontal tab character.
 			</summary> 
-			<param name="code"> Character to be checked, casted to an int. </param> 
+			<param name="code"> Character to be checked, cast to an int. </param> 
 			<returns>true if the code is a space a horizontal tab character; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.String class.isupper(int)">
 			<summary>
 			Checks whether code is an upper-case letter.
 			</summary> 
-			<param name="code"> Character to be checked, casted to an int. </param> 
+			<param name="code"> Character to be checked, cast to an int. </param> 
 			<returns>true if the code is an upper-case character; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.String class.absname(char,char)">

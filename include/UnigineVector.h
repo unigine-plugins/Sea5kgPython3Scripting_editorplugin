@@ -15,6 +15,7 @@
 
 #include <UnigineMemory.h>
 
+#include <algorithm>
 #include <iterator>
 #include <limits>
 
@@ -1332,7 +1333,7 @@ private:
 			*(reinterpret_cast<Type *>(data) + pos) = { std::forward<Args>(args)... };
 		}
 
-		UNIGINE_INLINE static Counter expand(char *data, Counter length, Counter new_length) { return new_length; }
+		UNIGINE_INLINE static Counter expand(char *, Counter, Counter new_length) { return new_length; }
 
 		UNIGINE_INLINE static Counter expand(char *data, Counter length, Counter new_length, const Type &v)
 		{
@@ -1376,9 +1377,9 @@ private:
 			return memcmp(data0, data1, length * sizeof(Type)) == 0;
 		}
 
-		UNIGINE_INLINE static void destruct(char *data, Counter length) {}
-		UNIGINE_INLINE static void destructOne(char *data, Counter pos) {}
-		UNIGINE_INLINE static void destruct(char *data, Counter pos, Counter size) {}
+		UNIGINE_INLINE static void destruct(char *, Counter ) {}
+		UNIGINE_INLINE static void destructOne(char *, Counter ) {}
+		UNIGINE_INLINE static void destruct(char *, Counter, Counter) {}
 	};
 
 	UNIGINE_INLINE Type &construct(char *d, Counter pos) { return VectorHelper<Type, __is_pod(Type)>::construct(d, pos); }

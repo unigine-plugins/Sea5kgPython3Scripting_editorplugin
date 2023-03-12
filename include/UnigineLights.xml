@@ -88,7 +88,7 @@
 			</summary>  
 			<returns>Integer, each bit of which is used to set a mask.</returns>
 		</member>
-		<member name="M:Unigine.Light.setRenderTransparent(int)">
+		<member name="M:Unigine.Light.setRenderTransparent(bool)">
 			<summary>
 			Enables or disables rendering of the light from the source on transparent objects.
 			</summary> 
@@ -100,7 +100,7 @@
 			</summary>  
 			<returns>1 if the light from the source is rendered on transparent objects; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Light.setRenderWater(int)">
+		<member name="M:Unigine.Light.setRenderWater(bool)">
 			<summary>
 			Enables or disables rendering of the light from the source on water objects.
 			</summary> 
@@ -112,7 +112,7 @@
 			</summary>  
 			<returns>1 if the light from the source is rendered on water objects; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Light.setShadow(int)">
+		<member name="M:Unigine.Light.setShadow(bool)">
 			<summary>
 			Updates a value indicating if the light casts shadows from surfaces with the Cast Shadow material.
 			</summary> 
@@ -208,18 +208,6 @@
 			</summary>  
 			<returns>Step noise intensity.</returns>
 		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceNoiseTranslucent(float)">
-			<summary>
-			Sets the intensity of noise to be used for smoothing of translucent screen-space shadows.					This option affects performance, so use it only in case it noticeably improves the result.
-			</summary> 
-			<param name="translucent"> Intensity of noise to be used for smoothing of translucent screen-space shadows. Higher values result in more intense and noticeable noise. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceNoiseTranslucent const">
-			<summary>
-			Returns the current intensity of noise used for smoothing of translucent screen-space shadows.
-			</summary>  
-			<returns>Current intensity of noise used for smoothing of translucent screen-space shadows.</returns>
-		</member>
 		<member name="M:Unigine.Light.setShadowScreenSpaceNumRays(int)">
 			<summary>
 			Sets the number of rays used to calculate screen-space shadows for the light source.
@@ -303,18 +291,6 @@
 			Returns the current threshold value used to calculate screen-space shadows for the light source (long distance range). You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
 			</summary>  
 			<returns>Screen-space shadows threshold for long distance range.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceViewBias(float)">
-			<summary>
-			Sets the bias value for screen-space shadows. This parameter is used to simulate multiple shadows on the tree crown.
-			</summary> 
-			<param name="bias"> Bias value in the range[0.0f; 1.0f]. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceViewBias const">
-			<summary>
-			Returns the current bias value for screen-space shadows. This parameter is used to simulate multiple shadows on the tree crown.
-			</summary>  
-			<returns>Bias value in the range[0.0f; 1.0f].</returns>
 		</member>
 		<member name="M:Unigine.Light.setViewportMask(int)">
 			<summary>
@@ -573,13 +549,13 @@
 		</member>
 		<member name="M:Unigine.Light.setShadowColorTextureMode(Light::SHADOW_COLOR_MODE)">
 			<summary>
-			Sets the type of texture used to define light distribution.					This feature is available only for Omni Lights and Projected Lights. See description of the modes in the corresponding articles for Omni Lights and Projected Lights.
+			Sets the type of texture used to define light distribution.					This feature is available only for Omni Lights and Projected Lights. See description of the modes in the corresponding articles forOmni Lights and Projected Lights.
 			</summary> 
 			<param name="mode"> One of the following modes:SHADOW_COLOR_MODE_IES - Light distibution is defined by the IES profile.SHADOW_COLOR_MODE_SIMPLE - An arbitrary 2D texture is projected onto the scene. </param> 
 		</member>
 		<member name="M:Unigine.Light.getShadowColorTextureMode const">
 			<summary>
-			Returns the current type of texture used to define light distribution.					This feature is available only for Omni Lights and Projected Lights. See description of the modes in the corresponding articles for Omni Lights and Projected Lights.
+			Returns the current type of texture used to define light distribution.					This feature is available only for Omni Lights and Projected Lights. See description of the modes in the corresponding articles forOmni Lights and Projected Lights.
 			</summary>  
 			<returns>Current mode.</returns>
 		</member>
@@ -696,6 +672,42 @@
 			Sets the distance from the camera after which the Far Threshold is used for screen-space shadows calculation. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
 			</summary>  
 			<returns>Distance from the camera (in units) after which the Far Threshold is used for screen-space shadows calculation. For the space between Near Threshold Distance and Far Threshold Distance, the threshold value is interpolated from Near Threshold to Far Threshold.</returns>
+		</member>
+		<member name="M:Unigine.Light.setShadowScreenSpaceTranslucentDepth(float)">
+			<summary>
+			Sets the Translucent Depth value for Screen-Space Shadows indicating how much the light passes through screen-space shadows on translucent materials (with Translucence option enabled).
+			</summary> 
+			<param name="depth"> New Translucent Depth value to be set for Screen-Space Shadows: The higher the value the deeper the light penetrates translucent objects shifting the shadow. </param> 
+		</member>
+		<member name="M:Unigine.Light.getShadowScreenSpaceTranslucentDepth const">
+			<summary>
+			Returns the current Translucent Depth value for Screen-Space Shadows indicating how much the light passes through screen-space shadows on translucent materials (with Translucence option enabled).
+			</summary>  
+			<returns>Current Translucent Depth value set for Screen-Space Shadows: The higher the value the deeper the light penetrates translucent objects shifting the shadow.</returns>
+		</member>
+		<member name="M:Unigine.Light.setShadowScreenSpaceTranslucentDepthPerspectiveCompensation(float)">
+			<summary>
+			Sets a new Perspective Compensation value for Screen-Space Shadows, that defines whether the Translucent Depth parameter depends on the distance from the camera to the surface or not. This effect is used to make tree crowns located far from the camera more translucent than the grass nearby.
+			</summary> 
+			<param name="compensation"> New Perspective Compensation value to be set for the Translucent Depth parameter of Screen-Space Shadows: 0 - the Translucent Depth value does not depend on the distance from the camera to the surface.1 - the Translucent Depth value linearly depends on the distance from the camera to the surface. </param> 
+		</member>
+		<member name="M:Unigine.Light.getShadowScreenSpaceTranslucentDepthPerspectiveCompensation const">
+			<summary>
+			Returns the current Perspective Compensation value for Screen-Space Shadows, that defines whether the Translucent Depth parameter depends on the distance from the camera to the surface or not. This effect is used to make tree crowns located far from the camera more translucent than the grass nearby.
+			</summary>  
+			<returns>Current Perspective Compensation value set for the Translucent Depth parameter of Screen-Space Shadows: 0 - the Translucent Depth value does not depend on the distance from the camera to the surface.1 - the Translucent Depth value linearly depends on the distance from the camera to the surface.</returns>
+		</member>
+		<member name="M:Unigine.Light.setShadowScreenSpaceTranslucentViewBias(float)">
+			<summary>
+			Sets a new View Bias value for Screen-Space Shadows, that controls an effect of fuzziness for vegetation (e.g. simulating leaves of saintpaulia or providing a sponge-like look for tree crowns).
+			</summary> 
+			<param name="bias"> New View Bias value to be set for Screen-Space Shadows: By the value of 0 the effect is disabledthe value of 1 corresponds to the maximum effect. </param> 
+		</member>
+		<member name="M:Unigine.Light.getShadowScreenSpaceTranslucentViewBias const">
+			<summary>
+			Returns the current Translucent View Bias value for Screen-Space Shadows, that controls an effect of fuzziness for vegetation (e.g. simulating leaves of saintpaulia or providing a sponge-like look for tree crowns).
+			</summary>  
+			<returns>Current Translucent View Bias value for Screen-Space Shadows: By the value of 0 the effect is disabledthe value of 1 corresponds to the maximum effect.</returns>
 		</member>
 		<member name="F:Unigine.Light.SHAPE_DEFAULT">
 			<summary>
@@ -989,6 +1001,18 @@
 			Returns the current value of the coefficient that controls glossiness of reflections in the corners of box projection.					Available only when the Box projection flag is set to 1.
 			</summary>  
 			<returns>Current value of the glossiness coefficient for reflections in the corners of box projection. The default value is 1.</returns>
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setDistanceScale(float)">
+			<summary>
+			Sets the distance multiplier for the reflection visibility distance. Distance Scale is applied to the distance measured from the reflection camera to the node (surface) bound.
+			</summary> 
+			<param name="scale"> Distance scale multiplier for the reflection. The default value is 0.5f. </param> 
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getDistanceScale const">
+			<summary>
+			Returns the distance multiplier for the reflection visibility distance. Distance Scale is applied to the distance measured from the reflection camera to the node (surface) bound.
+			</summary>  
+			<returns>Distance scale multiplier for the reflection. The default value is 0.5f.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setGrabByBakeLighting(bool)">
 			<summary>
@@ -1706,7 +1730,7 @@
 			<summary>
 			Returns the current baking quality for the voxel probe.
 			</summary>  
-			<returns>One of BAKE_QUALITY values.</returns>
+			<returns>The bake quality. One of BAKE_QUALITY values.</returns>
 		</member>
 		<member name="F:Unigine.LightVoxelProbe.BAKE_INTERNAL_VOLUME_HALF">
 			<summary>
@@ -1808,15 +1832,27 @@
 		</member>
 		<member name="M:Unigine.LightPlanarProbe.setTwoSided(bool)">
 			<summary>
-			Set a value indication if two-sided reflection is enabled.
+			Sets the value indicating if two-sided reflection is enabled.
 			</summary> 
 			<param name="sided"> true to enable two-sided reflection; false - to disable it. The default value is false. </param> 
 		</member>
 		<member name="M:Unigine.LightPlanarProbe.isTwoSided const">
 			<summary>
-			Returns a value indication if two sided reflection is enabled.
+			Returns the value indicating if two sided reflection is enabled.
 			</summary>  
 			<returns>true if two sided reflection is enabled; false disabled. The default value is false.</returns>
+		</member>
+		<member name="M:Unigine.LightPlanarProbe.setStereoPerEyeEnabled(bool)">
+			<summary>
+			Sets the value indicating if rendering of the reflection for each eye separately is enabled.
+			</summary> 
+			<param name="enabled"> true to enable stereo rendering per each eye; false - to disable it. </param> 
+		</member>
+		<member name="M:Unigine.LightPlanarProbe.isStereoPerEyeEnabled const">
+			<summary>
+			Returns the value indicating if rendering of the reflection for each eye separately is enabled.
+			</summary>  
+			<returns>true if stereo rendering per each eye is enabled; false disabled.</returns>
 		</member>
 		<member name="M:Unigine.LightPlanarProbe.setDistanceScale(float)">
 			<summary>
@@ -2138,7 +2174,7 @@
 			<summary>
 			Returns shadow depth range for the light source.
 			</summary>  
-			<returns>Shadow depth range for the light source as a two-component vector (min, max).</returns>
+			<returns>The shadow depth range for the light source as a two-component vector (min, max).</returns>
 		</member>
 		<member name="M:Unigine.LightProj.#ctor(Unigine.Math.vec4,float,float,char)">
 			<summary>

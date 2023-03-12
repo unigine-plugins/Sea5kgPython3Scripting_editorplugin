@@ -79,7 +79,7 @@ UNIGINE_INLINE bool AtomicCAS(volatile long long *ptr, long long old_value, long
 	#endif
 }
 /// Atomic CAS (Compare-And-Swap), pointer.
-UNIGINE_INLINE bool AtomicCAS(void *volatile * ptr, void* old_value, void * new_value)
+UNIGINE_INLINE bool AtomicCAS(void *volatile * ptr, void *old_value, void *new_value)
 {
 	assert((((size_t)ptr) % (sizeof(int))) == 0 && "unaligned atomic!");
 	#ifdef _WIN32
@@ -344,8 +344,10 @@ UNIGINE_INLINE void SpinLock(volatile int *ptr, int old_value, int new_value)
 	while (true)
 	{
 		for (int i = 0; i < TRIES; i++)
+		{
 			if (*ptr == old_value && AtomicCAS(ptr, old_value, new_value))
 				return;
+		}
 		spinner.spin();
 	}
 }
@@ -498,9 +500,9 @@ public:
 
 private:
 	
-	Mutex mutex;
 	volatile long long thread_id;
 	volatile int depth;
+	Mutex mutex;
 };
 
 /// Reentrant scoped lock, based on reentrant mutex.
@@ -521,29 +523,7 @@ private:
 /// CPUShader
 ////////////////////////////////////////////////////////////////////////////////
 
-class UNIGINE_API CPUShader
-{
-public:
-	CPUShader() {};
-	virtual ~CPUShader() { wait(); };
-
-	void runSync(int threads_count = -1);
-	void runAsync(int threads_count = -1);
-
-	void wait();
-
-	int isRunning() const { return AtomicGet(&num_active_threads) != 0; }
-	int getNumThreads() { return num_threads; }
-
-	virtual void process(int thread_num, int threads_count) = 0;
-
-public:  // only internal methods
-	void internal_dec_active_threads() { AtomicAdd(&num_active_threads, -1); }
-
-private:
-	mutable volatile int num_active_threads{0};
-	int num_threads{0};
-};
+class UNIGINE_API CPUShader;
 
 class UNIGINE_API PoolCPUShaders
 {
@@ -562,6 +542,7 @@ public:
 
 	// check CPU status
 	static int isRunning();
+	static void wait();
 
 public:  // only internal methods
 
@@ -579,21 +560,50 @@ private:
 		int id{-1};
 		CPUShader *shader{nullptr};
 	};
+	struct CPUThreadQueue;
+	class CPUThread;
 
 	static void run_sync(CPUShader *shader);
 	static void run_async(CPUShader *shader);
+	static void signal_queue(CPUThreadQueue *queue);
+	static void internal_dec_active_threads();
 
-	class CPUThread;
 	static CPUThread *sync_threads[MAX_THREADS];
 	static CPUThread *async_threads[MAX_THREADS];
 
-	struct CPUThreadQueue;
 	static CPUThreadQueue *queue_sync;
 	static CPUThreadQueue *queue_async;
 
 	static int is_initialized;
 	static int num_sync_threads;
 	static int num_async_threads;
+};
+
+class UNIGINE_API CPUShader
+{
+	friend class PoolCPUShaders;
+public:
+	CPUShader() {};
+	virtual ~CPUShader() { wait(); };
+
+	void runSync(int threads_count = -1);
+	void runAsync(int threads_count = -1);
+
+	void wait();
+
+	int isRunning() const { return AtomicGet(&num_active_threads) != 0; }
+	int getNumThreads() { return num_threads; }
+
+	virtual void process(int thread_num, int threads_count) = 0;
+
+private:
+	void internal_dec_active_threads();
+	void set_current_queue(PoolCPUShaders::CPUThreadQueue *queue) { current_queue = queue; }
+
+private:
+	mutable volatile int num_active_threads{ 0 };
+	int num_threads{ 0 };
+	PoolCPUShaders::CPUThreadQueue* current_queue{nullptr};
 };
 
 template<typename State, typename Process, typename Destroy>

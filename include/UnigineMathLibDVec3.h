@@ -270,7 +270,7 @@ struct alignas(16) dvec3
 	}
 	UNIGINE_INLINE dvec3 sign() const { return dvec3(Math::sign(x), Math::sign(y), Math::sign(z)); }
 
-	UNIGINE_INLINE unsigned int hash() const { return hashCast64To32(hashCombine(hashCombine(hashMurmur3(x), y), z)); }
+	UNIGINE_INLINE unsigned int hash() const { return hashCast64To32(hashCombine(hashCombine(hashInteger(x), y), z)); }
 
 	#ifdef USE_SSE
 		struct sse_data
@@ -542,7 +542,7 @@ UNIGINE_INLINE double dot(const dvec3 &v0, const dvec3 &v1)
 
 UNIGINE_INLINE dvec3 &min(dvec3 &ret, const dvec3 &v0, const dvec3 &v1)
 {
-	#ifdef USE_SSE2
+	#ifdef USE_SSE
 		ret.sse.v0 = _mm_min_pd(v0.sse.v0, v1.sse.v0);
 		ret.sse.v1 = _mm_min_sd(v0.sse.v1, v1.sse.v1);
 	#else
@@ -560,7 +560,7 @@ UNIGINE_INLINE dvec3 min(const dvec3 &v0, const dvec3 &v1)
 
 UNIGINE_INLINE dvec3 &max(dvec3 &ret, const dvec3 &v0, const dvec3 &v1)
 {
-	#ifdef USE_SSE2
+	#ifdef USE_SSE
 		ret.sse.v0 = _mm_max_pd(v0.sse.v0, v1.sse.v0);
 		ret.sse.v1 = _mm_max_sd(v0.sse.v1, v1.sse.v1);
 	#else
@@ -578,7 +578,7 @@ UNIGINE_INLINE dvec3 max(const dvec3 &v0, const dvec3 &v1)
 
 UNIGINE_INLINE dvec3 &clamp(dvec3 &ret, const dvec3 &v, const dvec3 &v0, const dvec3 &v1)
 {
-	#ifdef USE_SSE2
+	#ifdef USE_SSE
 		ret.sse.v0 = _mm_min_pd(_mm_max_pd(v.sse.v0, v0.sse.v0), v1.sse.v0);
 		ret.sse.v1 = _mm_min_sd(_mm_max_sd(v.sse.v1, v0.sse.v1), v1.sse.v1);
 	#else
@@ -596,7 +596,7 @@ UNIGINE_INLINE dvec3 clamp(const dvec3 &v, const dvec3 &v0, const dvec3 &v1)
 
 UNIGINE_INLINE dvec3 &saturate(dvec3 &ret, const dvec3 &v)
 {
-	#ifdef USE_SSE2
+	#ifdef USE_SSE
 		ret.sse.v0 = _mm_min_pd(_mm_max_pd(v.sse.v0, dvec2_zero.vec), dvec2_one.vec);
 		ret.sse.v1 = _mm_min_sd(_mm_max_sd(v.sse.v1, dvec2_zero.vec), dvec2_one.vec);
 	#else

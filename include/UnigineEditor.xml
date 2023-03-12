@@ -45,11 +45,6 @@
 			Quit the editor.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Editor.videoRestart">
-			<summary>
-			Restarts the video application to apply changes to video settings, if any.
-			</summary>  
-		</member>
 		<member name="M:Unigine.Editor.reload">
 			<summary>
 			Reloads the Unigine Editor. This functions updates node hierarchy, updates loaded textures if they were modified, etc.
@@ -91,7 +86,7 @@
 			</summary> 
 			<param name="player"> A smart pointer to the Player. </param>
 			<param name="player"> Player instance. </param> 
-			<returns>1 if the Player is an Editor player; otherwise, 0.</returns>
+			<returns>true if the Player is an Editor player; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Editor.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3)">
 			<summary>
@@ -166,6 +161,15 @@
 			<param name="exclude"> Array of the nodes to exclude; all these nodes will be skipped while checking for intersection. </param>
 			<param name="intersection"> Pointer to WorldIntersectionTexCoord. </param> 
 			<returns>The first intersected node smart pointer if found; otherwise, nullptr pointer.</returns>
+		</member>
+		<member name="M:Unigine.Editor.getIntersection(Unigine.Math.WorldBoundFrustum,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},bool)">
+			<summary>
+			Finds all nodes intersected by the specified bound frustum and puts them to the specified output buffer. You can also get editor-only objects (node handlers) along with nodes, just set use_handlers to true.
+			</summary> 
+			<param name="bs"> Bounding frustum where intersection search is to be performed. </param>
+			<param name="nodes"> Output buffer to store the list of intersected nodes (if any). </param>
+			<param name="use_handlers"> true to include editor-only objects (node handlers) in the list of intersected nodes; false - to ignore handlers. </param> 
+			<returns>true if intersected nodes are found; otherwise, false.</returns>
 		</member>
 	</members>
 </doc>

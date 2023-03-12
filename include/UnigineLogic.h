@@ -21,6 +21,7 @@
 #include "UnigineVector.h"
 #include "UnigineGUID.h"
 #include "UnigineMaterial.h"
+#include "UnigineWindowManager.h"
 
 namespace Unigine
 {
@@ -74,13 +75,13 @@ public:
 	// size - count of threads
 	// id - thread number
 	// Non blocking function, works like physics thread (from start of frame to the swap() function)
-	virtual void updateAsyncThread(int id, int size) { }
+	virtual void updateAsyncThread(int id, int size) { UNIGINE_UNUSED(id); UNIGINE_UNUSED(size); }
 
 	// Engine calls this function "size" times before updating each render frame.
 	// size - count of threads
 	// id - thread number
 	// Main thread is blocked until all updateSyncThread is executed
-	virtual void updateSyncThread(int id, int size) { }
+	virtual void updateSyncThread(int id, int size) { UNIGINE_UNUSED(id); UNIGINE_UNUSED(size); }
 
 	// Engine calls this function before updating each render frame.
 	// Similar to world script's update function.
@@ -145,7 +146,7 @@ public:
 	// If editor is loaded, engine calls this function before rendering each render frame.
 	// Similar to editor script's render function.
 	// Returns 1 on success, or 0 if an error occurred.
-	virtual int render() { return 1; }
+	virtual int render(const EngineWindowPtr &window) { UNIGINE_UNUSED(window); return 1; }
 
 	// If editor is loaded, engine calls this function on world initialization.
 	// Similar to editor script's worldInit function.
@@ -164,28 +165,38 @@ public:
 
 	// Node-related signals.
 	virtual void clear() {}
-	virtual void nodeShowInEditorChanged(const NodePtr &node) {}
-	virtual void nodeReparented(const NodePtr &node) {}
-	virtual void nodeReordered(const NodePtr &node) {}
-	virtual void nodeRenamed(const NodePtr &node, const char *old_name) {}
+	virtual void nodeShowInEditorChanged(const NodePtr &node) { UNIGINE_UNUSED(node); }
+	virtual void nodeReparented(const NodePtr &node) { UNIGINE_UNUSED(node); }
+	virtual void nodeReordered(const NodePtr &node) { UNIGINE_UNUSED(node); }
+	virtual void nodeRenamed(const NodePtr &node, const char *old_name) { UNIGINE_UNUSED(node); UNIGINE_UNUSED(old_name); }
 
 	// Material-related signals.
-	virtual void materialAdded(const UGUID &guid) {}
-	virtual void materialRemoved(const UGUID &guid) {}
-	virtual void materialChanged(const UGUID &guid) {}
-	virtual void materialReparented(const UGUID &guid, const UGUID &old_parent, const UGUID &new_parent) {}
+	virtual void materialAdded(const UGUID &guid) { UNIGINE_UNUSED(guid); }
+	virtual void materialRemoved(const UGUID &guid) { UNIGINE_UNUSED(guid); }
+	virtual void materialChanged(const UGUID &guid) { UNIGINE_UNUSED(guid); }
+	virtual void materialReparented(const UGUID &guid, const UGUID &old_parent, const UGUID &new_parent)
+	{
+		UNIGINE_UNUSED(guid);
+		UNIGINE_UNUSED(old_parent);
+		UNIGINE_UNUSED(new_parent);
+	}
 
 	virtual void materialCompileShadersBegin() {}
 	virtual void materialCompileShadersEnd() {}
-	virtual void materialCompileShaders(const MaterialPtr &material, int num) {}
+	virtual void materialCompileShaders(const MaterialPtr &material, int num) { UNIGINE_UNUSED(material); UNIGINE_UNUSED(num); }
 
 	// Properties` related signals.
-	virtual void propertyAdded(const UGUID &guid) {}
-	virtual void propertyRemoved(const UGUID &guid) {}
-	virtual void propertyMoved(const UGUID &guid) {}
-	virtual void propertyChanged(const UGUID &guid) {}
-	virtual void propertyReplaced(const UGUID &guid, const UGUID &new_guid) {}
-	virtual void propertyReparented(const UGUID &guid, const UGUID &old_parent, const UGUID &new_parent) {}
+	virtual void propertyAdded(const UGUID &guid) { UNIGINE_UNUSED(guid); }
+	virtual void propertyRemoved(const UGUID &guid) { UNIGINE_UNUSED(guid); }
+	virtual void propertyMoved(const UGUID &guid) { UNIGINE_UNUSED(guid); }
+	virtual void propertyChanged(const UGUID &guid) { UNIGINE_UNUSED(guid); }
+	virtual void propertyReplaced(const UGUID &guid, const UGUID &new_guid) { UNIGINE_UNUSED(guid); UNIGINE_UNUSED(new_guid);}
+	virtual void propertyReparented(const UGUID &guid, const UGUID &old_parent, const UGUID &new_parent)
+	{
+		UNIGINE_UNUSED(guid);
+		UNIGINE_UNUSED(old_parent);
+		UNIGINE_UNUSED(new_parent);
+	}
 };
 
 } // namespace Unigine

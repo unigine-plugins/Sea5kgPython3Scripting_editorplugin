@@ -17,7 +17,7 @@
 		</member>
 		<member name="M:Unigine.Json.setArray">
 			<summary>
-			Sets array type to the current Json node.
+			Sets the array type to the current Json node.					This method can be called for a newly added node or for the existing node to change its type. However, in certain cases, this can lead to data loss. For example, if you change the type from object to array, names of the child nodes will be lost.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Json.isArray const">
@@ -158,12 +158,6 @@
 			</summary> 
 			<param name="var"> Argument of one of the following types:int number - integer value. For example, 5.double number - double value. For example, 5.0.float number - float value. For example, 5.0f.string value - string with value. For example, "5". </param>
 			<param name="arg1"> Double value. </param> 
-		</member>
-		<member name="M:Unigine.Json.setNumber(int)">
-			<summary>
-			Sets a number value and type to the current Json node.
-			</summary> 
-			<param name="arg1"> Integer value. </param> 
 		</member>
 		<member name="M:Unigine.Json.getNumber const">
 			<summary>

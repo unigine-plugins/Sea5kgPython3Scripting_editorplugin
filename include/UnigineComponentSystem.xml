@@ -160,12 +160,12 @@
 		</member>
 		<member name="M:Unigine.ComponentBase.postUpdate">
 			<summary>
-			Engine calls this function before rendering each render frame. You can correct behavior after the state of the node has been updated.
+			Engine calls this function after updating each render frame. You can correct behavior after the state of the node has been updated.
 			</summary>  
 		</member>
 		<member name="M:Unigine.ComponentBase.updatePhysics">
 			<summary>
-			Engine calls this function before updating each physics frame. Here you can control physics, perform continuous physics-related operations (pushing a car forward depending on current motor's RPM, simulating a wind blowing constantly, perform immediate collision response, etc.).. The engine calls updatePhysics() with the fixed rate (60 times per second by default) regardless of the fps number. Similar to the world script's updatePhysics() function.
+			Engine calls this function before updating each physics frame. Here you can control physics, perform continuous physics-related operations (pushing a car forward depending on current motor's RPM, simulating a wind blowing constantly, perform immediate collision response, etc.). The engine calls updatePhysics() with the fixed rate (60 times per second by default) regardless of the fps number. Similar to the world script's updatePhysics() function.
 			</summary>  
 		</member>
 		<member name="M:Unigine.ComponentBase.shutdown">

@@ -130,7 +130,7 @@ struct alignas(8) vec2
 		x -= v.x;
 		y -= v.y;
 	}
-	UNIGINE_INLINE vec2 &operator-=(float v) { add(v); return *this; }
+	UNIGINE_INLINE vec2 &operator-=(float v) { sub(v); return *this; }
 	UNIGINE_INLINE vec2 &operator-=(const vec2 &v) { sub(v); return *this; }
 
 	UNIGINE_INLINE float sum() const { return x + y; }
@@ -188,7 +188,7 @@ struct alignas(8) vec2
 	UNIGINE_INLINE float max() const { return Math::max(x, y); }
 	UNIGINE_INLINE float min() const { return Math::min(x, y); }
 
-	UNIGINE_INLINE unsigned int hash() const { return hashCombine(hashMurmur3(x), y); }
+	UNIGINE_INLINE unsigned int hash() const { return hashCombine(hashInteger(x), y); }
 
 	UNIGINE_INLINE ivec2 floor() const;
 	UNIGINE_INLINE ivec2 ceil() const;
@@ -479,13 +479,22 @@ UNIGINE_INLINE vec2 contrastLerp(const vec2 &point_a, const vec2 &point_b, float
 	return lerp(point_a, point_b, smoothstep(coef_min_bound, coef_max_bound, coef));
 }
 
+UNIGINE_INLINE vec2 step(const vec2 &a, const vec2 &b)
+{
+	return {toFloat(a.x > b.x), toFloat(a.y > b.y)};
+}
+UNIGINE_INLINE vec2 step(const vec2 &a, float b)
+{
+	return {toFloat(a.x > b), toFloat(a.y > b)};
+}
+
 UNIGINE_INLINE vec2 overlay(const vec2 &a, const vec2 &b, float x)
 {
-	return max(a * lerp(vec2_one, b * 2.0f, x), 0.0f);
+	return max(lerp(a, lerp(vec2_one - (vec2_one - a) * (vec2_one - b) * 2.0f, a * b * 2.0f, step(a, vec2_half)), x), vec2_zero);
 }
 UNIGINE_INLINE vec2 overlay(const vec2 &a, const vec2 &b, const vec2 &x)
 {
-	return max(a * lerp(vec2_one, b * 2.0f, x), 0.0f);
+	return max(lerp(a, lerp(vec2_one - (vec2_one - a) * (vec2_one - b) * 2.0f, a * b * 2.0f, step(a, vec2_half)), x), vec2_zero);
 }
 
 UNIGINE_INLINE float distance2(const vec2 &v0, const vec2 &v1) { return length2(v0 - v1); }

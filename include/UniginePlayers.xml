@@ -40,25 +40,29 @@
 			</summary>  
 			<returns>Controls object used to handle input controls. </returns>
 		</member>
-		<member name="M:Unigine.Player.getDirectionFromScreen(Unigine.Math.Vec3,Unigine.Math.Vec3,int,int,int,int) const">
+		<member name="M:Unigine.Player.getDirectionFromScreen(Unigine.Math.Vec3,Unigine.Math.Vec3,int,int,int,int,int,int) const">
 			<summary>
 			Casts the ray to a certain position on the screen and returns coordinates of the start (p0) and end (p1) points of the ray.
 			</summary> 
 			<param name="p0"> Start coordinates of the ray. </param>
 			<param name="p1"> End coordinates of the ray. </param>
-			<param name="x"> X-coordinate of the screen position. If the value is less than 0, the getMouseX() value will be used. </param>
-			<param name="y"> Y-coordinate of the screen position. If the value is less than 0, the getMouseY() value will be used. </param>
-			<param name="width"> Screen width. If the width is less than 0, the getWidth() value will be used. </param>
-			<param name="height"> Screen height. If the height is less than 0, the getHeight() value will be used. </param> 
+			<param name="mouse_x"> X-coordinate of the mouse position. </param>
+			<param name="mouse_y"> Y-coordinate of the mouse position. </param>
+			<param name="screen_x"> X-coordinate of the screen position. </param>
+			<param name="screen_y"> X-coordinate of the screen position. </param>
+			<param name="screen_width"> Screen width. </param>
+			<param name="screen_height"> Screen height. </param> 
 		</member>
-		<member name="M:Unigine.Player.getDirectionFromScreen(int,int,int,int) const">
+		<member name="M:Unigine.Player.getDirectionFromScreen(int,int,int,int,int,int) const">
 			<summary>
 			Casts the ray to a certain position on the screen and returns a vector in the direction of this position.
 			</summary> 
-			<param name="x"> X-coordinate of the screen position. If the value is less than 0, the getMouseX() value will be used. </param>
-			<param name="y"> Y-coordinate of the screen position. If the value is less than 0, the getMouseY() value will be used. </param>
-			<param name="width"> Screen width. If the width is less than 0, the getWidth() value will be used. </param>
-			<param name="height"> Screen height. If the height is less than 0, the getHeight() value will be used. </param> 
+			<param name="mouse_x"> X-coordinate of the mouse position. </param>
+			<param name="mouse_y"> Y-coordinate of the mouse position. </param>
+			<param name="screen_x"> X-coordinate of the screen position. </param>
+			<param name="screen_y"> X-coordinate of the screen position. </param>
+			<param name="screen_width"> Screen width. </param>
+			<param name="screen_height"> Screen height. </param> 
 			<returns>Vector coordinates.</returns>
 		</member>
 		<member name="M:Unigine.Player.setFov(float)">
@@ -112,14 +116,14 @@
 		</member>
 		<member name="M:Unigine.Player.getProjectionFromScreen(int,int,int,int,int,int) const">
 			<summary>
-			Creates a projection matrix out of 2 screen positions. This is required for the frame selection.
+			Creates a projection matrix out of 2 screen positions . This is required for the frame selection.
 			</summary> 
 			<param name="x0"> X-coordinate of the first screen position. </param>
 			<param name="y0"> Y-coordinate of the first screen position. </param>
 			<param name="x1"> X-coordinate of the second screen position. </param>
 			<param name="y1"> Y-coordinate of the second screen position. </param>
-			<param name="width"> Screen width. If the width is less than 0, the getWidth() value will be used. </param>
-			<param name="height"> Screen height. If the height is less than 0, the getHeight() value will be used. </param> 
+			<param name="screen_width"> Screen width. </param>
+			<param name="screen_height"> Screen height. </param> 
 			<returns>Projection matrix.</returns>
 		</member>
 		<member name="M:Unigine.Player.setReflectionViewportMask(int)">
@@ -153,8 +157,8 @@
 			<param name="x"> X-coordinate of the screen position. </param>
 			<param name="y"> Y-coordinate of the screen position. </param>
 			<param name="point"> Point coordinates. </param>
-			<param name="width"> Screen width. If the width is less than 0, the getWidth() value will be used. </param>
-			<param name="height"> Screen height. If the height is less than 0, the getHeight() value will be used. </param> 
+			<param name="screen_width"> Screen width. </param>
+			<param name="screen_height"> Screen height. </param> 
 			<returns>1 if the point has been projected successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Player.setSourceMask(int)">
@@ -397,6 +401,82 @@
 			Checks if the player is a listener.
 			</summary>  
 			<returns>true if the player is a listener; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Player.getDirectionFromMainWindow(Unigine.Math.Vec3,Unigine.Math.Vec3,int,int) const">
+			<summary>
+			Casts the ray to a certain position on the screen and returns coordinates of the start (p0) and end (p1) points of the ray relative to the current main window.
+			</summary> 
+			<param name="p0"> Start coordinates of the ray. </param>
+			<param name="p1"> End coordinates of the ray. </param>
+			<param name="mouse_x"> X-coordinate of the mouse position in world coordinates. </param>
+			<param name="mouse_y"> Y-coordinate of the mouse position in world coordinates. </param> 
+		</member>
+		<member name="M:Unigine.Player.getDirectionFromMainWindow(int,int) const">
+			<summary>
+			Casts the ray to a certain position on the screen and returns a vector in the direction of this position relative to the current main window.
+			</summary> 
+			<param name="mouse_x"> X-coordinate of the mouse position in world coordinates. </param>
+			<param name="mouse_y"> Y-coordinate of the mouse position in world coordinates. </param> 
+			<returns>Vector coordinates.</returns>
+		</member>
+		<member name="M:Unigine.Player.getDirectionFromWindow(Unigine.Math.Vec3,Unigine.Math.Vec3,int,int,Unigine.Ptr{EngineWindow}) const">
+			<summary>
+			Casts the ray to a certain position on the screen and returns coordinates of the start (p0) and end (p1) points of the ray relative to the specified window.
+			</summary> 
+			<param name="p0"> Start coordinates of the ray. </param>
+			<param name="p1"> End coordinates of the ray. </param>
+			<param name="mouse_x"> X-coordinate of the mouse position in world coordinates. </param>
+			<param name="mouse_y"> Y-coordinate of the mouse position in world coordinates. </param>
+			<param name="window"> Window relative to which the directon is returned. </param> 
+		</member>
+		<member name="M:Unigine.Player.getDirectionFromWindow(int,int,Unigine.Ptr{EngineWindow}) const">
+			<summary>
+			Casts the ray to a certain position on the screen and returns a vector in the direction of this position relative to the specified window.
+			</summary> 
+			<param name="mouse_x"> X-coordinate of the mouse position in world coordinates. </param>
+			<param name="mouse_y"> Y-coordinate of the mouse position in world coordinates. </param>
+			<param name="window"> Window relative to which the directon is returned. </param> 
+			<returns>Vector coordinates.</returns>
+		</member>
+		<member name="M:Unigine.Player.getProjectionFromMainWindow(int,int,int,int) const">
+			<summary>
+			Creates a projection matrix out of 2 screen positions relative to the current main window. This is required for the frame selection.
+			</summary> 
+			<param name="x0"> X-coordinate of the first screen position. </param>
+			<param name="y0"> Y-coordinate of the first screen position. </param>
+			<param name="x1"> X-coordinate of the second screen position. </param>
+			<param name="y1"> Y-coordinate of the second screen position. </param> 
+			<returns>Projection matrix.</returns>
+		</member>
+		<member name="M:Unigine.Player.getProjectionFromWindow(int,int,int,int,Unigine.Ptr{EngineWindow}) const">
+			<summary>
+			Creates a projection matrix out of 2 screen positions relative to the specified window. This is required for the frame selection.
+			</summary> 
+			<param name="x0"> X-coordinate of the first screen position. </param>
+			<param name="y0"> Y-coordinate of the first screen position. </param>
+			<param name="x1"> X-coordinate of the second screen position. </param>
+			<param name="y1"> Y-coordinate of the second screen position. </param>
+			<param name="window"> Window relative to which the projection is returned. </param> 
+			<returns>Projection matrix.</returns>
+		</member>
+		<member name="M:Unigine.Player.getMainWindowPosition(int,int,Unigine.Math.Vec3) const">
+			<summary>
+			Projects the point in world coordinates relative to the main window. The coordinates are written into the first 2 variables passed to the method.
+			</summary> 
+			<param name="x"> X-coordinate of the screen position. </param>
+			<param name="y"> Y-coordinate of the screen position. </param>
+			<param name="point"> Point coordinates. </param> 
+			<returns>1 if the point has been projected successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Player.getWindowPosition(int,int,Unigine.Math.Vec3,Unigine.Ptr{EngineWindow}) const">
+			<summary>
+			Projects the point in world coordinates relative to the specified window. The coordinates are written into the first 2 variables passed to the method.
+			</summary> 
+			<param name="x"> X-coordinate of the screen position. </param>
+			<param name="y"> Y-coordinate of the screen position. </param>
+			<param name="point"> Point coordinates. </param>
+			<param name="window"> Window relative to which the projection is returned. </param> 
+			<returns>1 if the point has been projected successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.PlayerActor.#ctor">
 			<summary>

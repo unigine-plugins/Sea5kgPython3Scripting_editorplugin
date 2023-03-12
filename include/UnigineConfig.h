@@ -105,13 +105,15 @@ public:
 	static void swapExternPlugin(int num0, int num1);
 	static const char *getExternPlugin(int num);
 	static void setExternPlugin(int num, const char *value);
+	static void setScreenEnabled(bool enabled);
+	static bool isScreenEnabled();
 	static void setScreenWidth(int width);
 	static int getScreenWidth();
 	static void setScreenHeight(int height);
 	static int getScreenHeight();
-	static void setScreenBackgroundColor(const Math::vec4& color);
+	static void setScreenBackgroundColor(const Math::vec4 &color);
 	static Math::vec4 getScreenBackgroundColor();
-	static void setScreenTransform(const Math::vec4& transform);
+	static void setScreenTransform(const Math::vec4 &transform);
 	static Math::vec4 getScreenTransform();
 	static void setScreenThreshold(int threshold);
 	static int getScreenThreshold();
@@ -129,8 +131,6 @@ public:
 	static const char *getScreenMessageMaterialsInit();
 	static void setScreenMessagePropertiesInit(const char *init);
 	static const char *getScreenMessagePropertiesInit();
-	static void setScreenMessagePluginsInit(const char *init);
-	static const char *getScreenMessagePluginsInit();
 	static void setScreenMessageShadersCompilation(const char *compilation);
 	static const char *getScreenMessageShadersCompilation();
 };

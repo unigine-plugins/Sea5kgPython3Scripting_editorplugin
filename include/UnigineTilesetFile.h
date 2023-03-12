@@ -34,13 +34,13 @@ public:
 	long long getOffset(int x, int y) const;
 	int hasTile(int x, int y) const;
 	int createFile(const char *name, int tile_size);
-	int getTile(int x, int y, unsigned char * data);
-	int setTile(int x, int y, unsigned char * data, int force = 1);
+	int getTile(int x, int y, unsigned char *data);
+	int setTile(int x, int y, unsigned char *data, int force = 1);
 	int removeTile(int x, int y, int force = 1);
 	int flushHeader();
 	int getNumTiles() const;
-	int getTilePos(int num, int & x, int & y) const;
-	Vector< String >  getAttributeNames() const;
+	int getTilePos(int num, int &x, int &y) const;
+	Vector<String> getAttributeNames() const;
 	int removeAttribute(const char *name, int force = 1);
 	int flushAttributes();
 	int setAttribute(const char *name, const char *value, int force = 1);

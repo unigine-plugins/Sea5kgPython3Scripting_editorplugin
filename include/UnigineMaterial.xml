@@ -740,6 +740,13 @@
 			<param name="num"> Texture number. </param> 
 			<returns>Texture unit number.</returns>
 		</member>
+		<member name="M:Unigine.Material.isTextureEditable(int) const">
+			<summary>
+			Returns a value indicating if the texture with the specified number is editable (can be modified).
+			</summary> 
+			<param name="num"> Texture number. </param> 
+			<returns>true if the texture with the specified number is editable; otherwise, false (the texture is read-only).</returns>
+		</member>
 		<member name="M:Unigine.Material.getTextureSource(int) const">
 			<summary>
 			Returns the source for the texture with the specified number.
@@ -796,12 +803,6 @@
 			</summary>  
 			<returns>1 if the material is rendered in the water pass; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Material.clone">
-			<summary>
-			Clones the material. The cloned material will be empty: it will have a GUID but won't be displayed in the materials hierarchy.
-			</summary>  
-			<returns>Cloned material.</returns>
-		</member>
 		<member name="M:Unigine.Material.findParameter(char) const">
 			<summary>
 			Searches for a parameter by a given name among all parameters of the current material.
@@ -822,12 +823,6 @@
 			</summary> 
 			<param name="name"> Texture name. </param> 
 			<returns>Texture number, if it is found; otherwise, -1.</returns>
-		</member>
-		<member name="M:Unigine.Material.inherit">
-			<summary>
-			Inherits the material. The inherited material will be empty: it will have a GUID but won't be displayed in materials hierarchy.
-			</summary>  
-			<returns>Inherited material.</returns>
 		</member>
 		<member name="M:Unigine.Material.saveState(Unigine.Ptr{Unigine.Stream},bool) const">
 			<summary>
@@ -1077,19 +1072,19 @@
 			<param name="image"> An image. </param> 
 			<returns>1 if the texture is read successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Material.getTextureCurve(int)">
+		<member name="M:Unigine.Material.getTextureRamp(int)">
 			<summary>
-			Returns a curve texture instance for the data stored in the specified curve texture (gradient).					Modifications made to the curve shall propagate to the parent and sibling materials. To modify an overridden curve for this material only use the getTextureCurveOverride() method.
+			Returns a ramp texture instance for the data stored in the specified ramp texture (gradient).					Modifications made to the ramp shall propagate to the parent and sibling materials. To modify an overridden ramp for this material only use the getTextureRampOverride() method.
 			</summary> 
 			<param name="num"> Texture number. </param> 
-			<returns>TextureCurve class instance for the data stored in the gradient texture with the specified number.</returns>
+			<returns>TextureRamp class instance for the data stored in the gradient texture with the specified number.</returns>
 		</member>
-		<member name="M:Unigine.Material.getTextureCurveOverride(int)">
+		<member name="M:Unigine.Material.getTextureRampOverride(int)">
 			<summary>
-			Returns a new curve texture instance for the data stored in the specified curve texture (gradient) overriding the default one. This method enables you to set individual RGBA curves, adjusting color values of the resulting curve texture (gradient).					Modifications made to the curve shall not propagate to the parent and sibling materials.
+			Returns a new ramp texture instance for the data stored in the specified ramp texture (gradient) overriding the default one. This method enables you to set individual RGBA curves, adjusting color values of the resulting ramp texture (gradient).					Modifications made to the ramp shall not propagate to the parent and sibling materials.
 			</summary> 
 			<param name="num"> Texture number. </param> 
-			<returns>New TextureCurve class instance overriding the data stored in the specified curve texture (gradient).</returns>
+			<returns>New TextureRamp class instance overriding the data stored in the specified ramp texture (gradient).</returns>
 		</member>
 		<member name="M:Unigine.Material.getGUID const">
 			<summary>
@@ -1097,16 +1092,11 @@
 			</summary>  
 			<returns>GUID of the material.</returns>
 		</member>
-		<member name="M:Unigine.Material.isEngine const">
+		<member name="M:Unigine.Material.isFileEngine const">
 			<summary>
-			Returns a value indicating if the current material is engine-related (i.e. required for engine operation). Such materials are stored in the core, editor and editor2 folders.
+			Returns a value indicating if the material is a core Engine or UnigineEditor material (i.e. required for Engine/Editor operation). Such materials are stored in the core, editor and editor2 folders/packages.It is not recommended to delete files of non-core materials (e.g., created by plugins or otherwise) at run-time, as this may affect materials caching and result in a crash.
 			</summary>  
-			<returns>true if the material is engine-related; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Material.destroyShaders">
-			<summary>
-			Deletes all shaders used for the current material and its children and clears shaders cache.
-			</summary>  
+			<returns>true if the material is a core Engine or UnigineEditor material; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Material.createShaders(bool)">
 			<summary>
@@ -1327,12 +1317,24 @@
 			<param name="parent"> Material smart pointer. </param> 
 			<returns>true if the material is the parent, otherwise - false.</returns>
 		</member>
+		<member name="M:Unigine.Material.clone">
+			<summary>
+			Clones the material. The cloned material will be empty: it will have a GUID but won't be displayed in the materials hierarchy.
+			</summary>  
+			<returns>Cloned material.</returns>
+		</member>
 		<member name="M:Unigine.Material.clone(Unigine.UGUID)">
 			<summary>
 			Clones the material and assigns the given GUID to it. A base material cannot be cloned.
 			</summary> 
 			<param name="guid"> Cloned material GUID. </param> 
 			<returns>Cloned material.</returns>
+		</member>
+		<member name="M:Unigine.Material.inherit">
+			<summary>
+			Inherits the material. The inherited material will be empty: it will have a GUID but won't be displayed in materials hierarchy.
+			</summary>  
+			<returns>Inherited material.</returns>
 		</member>
 		<member name="M:Unigine.Material.inherit(Unigine.UGUID)">
 			<summary>
@@ -1399,84 +1401,9 @@
 			<summary>
 			</summary>  
 		</member>
-		<member name="F:Unigine.Material.WIDGET_MASK32">
+		<member name="F:Unigine.Material.WIDGET_EDIT_INT">
 			<summary>
-			32-bit mask widget.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_MASK24">
-			<summary>
-			24-bit mask widget.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_UV">
-			<summary>
-			UV texture asset widget enabling you to specify a UV texture.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_COLOR">
-			<summary>
-			Color widget enabling you to specify a color via a color picker dialog.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_SLIDER">
-			<summary>
-			Slider widget enabling you to specify and adjust a float or integer value.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_ACCORDION">
-			<summary>
-			Accordion widget enabling you to expand or collapse a set of widgets it contains.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_TEXTURE_CURVE">
-			<summary>
-			Curve asset widget enabling you to specify and adjust a 2D Curve via the dedicated Curve Editor.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_TEXTURE_ASSET">
-			<summary>
-			Texture asset widget enabling you to specify a texture.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_COMBOBOX">
-			<summary>
-			ComboBox widget enabling you to select a texture out of available ones.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_TOGGLE">
-			<summary>
-			Button widget allowing you to enable or disable a certain state.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_EDIT_FLOAT4">
-			<summary>
-			Text widget enabling you to set 4 float or integer values.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_EDIT_FLOAT3">
-			<summary>
-			Text widget enabling you to set 3 float or integer values.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_EDIT_FLOAT2">
-			<summary>
-			Text widget enabling you to set 2 float or integer values.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_EDIT_FLOAT">
-			<summary>
-			Text widget enabling you to set a float or integer value.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_EDIT_INT4">
-			<summary>
-			Text widget enabling you to set 4 integer values.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.WIDGET_EDIT_INT3">
-			<summary>
-			Text widget enabling you to set 3 integer values.
+			Text widget enabling you to set an integer value.
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.WIDGET_EDIT_INT2">
@@ -1484,24 +1411,89 @@
 			Text widget enabling you to set 2 integer values.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.WIDGET_EDIT_INT">
+		<member name="F:Unigine.Material.WIDGET_EDIT_INT3">
 			<summary>
-			Text widget enabling you to set an integer value.
+			Text widget enabling you to set 3 integer values.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.DATA_TYPE_GROUP">
+		<member name="F:Unigine.Material.WIDGET_EDIT_INT4">
 			<summary>
-			Material group.
+			Text widget enabling you to set 4 integer values.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.DATA_TYPE_TEXTURE">
+		<member name="F:Unigine.Material.WIDGET_EDIT_FLOAT">
 			<summary>
-			Material texture.
+			Text widget enabling you to set a float or integer value.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.DATA_TYPE_PARAMETER">
+		<member name="F:Unigine.Material.WIDGET_EDIT_FLOAT2">
 			<summary>
-			Material parameter.
+			Text widget enabling you to set 2 float or integer values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.WIDGET_EDIT_FLOAT3">
+			<summary>
+			Text widget enabling you to set 3 float or integer values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.WIDGET_EDIT_FLOAT4">
+			<summary>
+			Text widget enabling you to set 4 float or integer values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.WIDGET_TOGGLE">
+			<summary>
+			Button widget allowing you to enable or disable a certain state.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.WIDGET_COMBOBOX">
+			<summary>
+			ComboBox widget enabling you to select a texture out of available ones.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.WIDGET_TEXTURE_ASSET">
+			<summary>
+			Texture asset widget enabling you to specify a texture.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.WIDGET_TEXTURE_RAMP">
+			<summary>
+			Ramp asset widget enabling you to specify and adjust a 2D Ramp via the dedicated Curve Editor.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.WIDGET_ACCORDION">
+			<summary>
+			Accordion widget enabling you to expand or collapse a set of widgets it contains.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.WIDGET_SLIDER">
+			<summary>
+			Slider widget enabling you to specify and adjust a float or integer value.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.WIDGET_COLOR">
+			<summary>
+			Color widget enabling you to specify a color via a color picker dialog.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.WIDGET_UV">
+			<summary>
+			UV texture asset widget enabling you to specify a UV texture.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.WIDGET_MASK24">
+			<summary>
+			24-bit mask widget.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.WIDGET_MASK32">
+			<summary>
+			32-bit mask widget.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.DATA_TYPE_OPTION">
+			<summary>
+			Material option.
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.DATA_TYPE_STATE">
@@ -1509,9 +1501,19 @@
 			Material state. States are flags that are used for a shader corresponding to the material. States define a set of textures and parameters of the material.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.DATA_TYPE_OPTION">
+		<member name="F:Unigine.Material.DATA_TYPE_PARAMETER">
 			<summary>
-			Material option.
+			Material parameter.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.DATA_TYPE_TEXTURE">
+			<summary>
+			Material texture.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.DATA_TYPE_GROUP">
+			<summary>
+			Material group.
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.PARAMETER_FLOAT">
@@ -1589,9 +1591,9 @@
 			Parameter of this type allows you to combine some parameter values in one data type.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.STATE_INT">
+		<member name="F:Unigine.Material.STATE_TOGGLE">
 			<summary>
-			State of this type allows specifying only one possible value.
+			State of this type allows only two possible values.
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.STATE_SWITCH">
@@ -1599,114 +1601,9 @@
 			State of this type allows specifying a set of more than two possible values.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.STATE_TOGGLE">
+		<member name="F:Unigine.Material.STATE_INT">
 			<summary>
-			State of this type allows only two possible values.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_AUTO_EXPOSURE">
-			<summary>
-			An RG16F texture that stores intensity of the exposure (R) and luminance (G).
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_AUXILIARY">
-			<summary>
-			Auxiliary texture is used for different post effects (auxiliary pass).
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_BENT_NORMAL">
-			<summary>
-			An RG11B10F texture that stores bent normals (RGB) used for smooth ambient lighting.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_CLOUDS_DYNAMIC_COVERAGE">
-			<summary>
-			Texture of this type stores clouds dynamic coverage data.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_CLOUDS_STATIC_COVERAGE">
-			<summary>
-			Texture of this type stores clouds static coverage data.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_CLOUDS_SCREEN">
-			<summary>
-			An RGBA16F texture into which clouds are rendered.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_CURRENT_DEPTH">
-			<summary>
-			Texture of this type stores current depth data for all geometry on the scene.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_DECAL_ALBEDO">
-			<summary>
-			Texture of this type stores albedo color data for decals.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_DECAL_DEPTH">
-			<summary>
-			Texture of this type stores depth data for decals.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_DECAL_NORMAL">
-			<summary>
-			Texture of this type stores normal data for decals.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_DECAL_SHADING">
-			<summary>
-			Texture of this type stores shading data for decals.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_DOF_MASK">
-			<summary>
-			Texture of this type stores a DoF (Depth of Field) mask.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_FIELD_HEIGHT_ARRAY">
-			<summary>
-			A heightmap texture is used to create an additional height displacement for water surface. Field Height textures are rendered in a 2D array of R16F or R32F textures (depends on settings). All Field Height textures are packed into 2D array to pass the data to the shader.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_FIELD_SHORELINE_ARRAY">
-			<summary>
-			A field shoreline texture. All Field Shoreline textures are packed into 2D array (of RGBA8) to pass the data to the shader.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_FILTER">
-			<summary>
-			A filtering texture.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_ALBEDO">
-			<summary>
-			Texture of this type uses a G-Buffer to store albedo values.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_MATERIAL_MASK">
-			<summary>
-			Texture of this type uses a G-Buffer to store material mask data.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_NORMAL">
-			<summary>
-			Texture of this type uses a G-Buffer to store normal values.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_SHADING">
-			<summary>
-			Texture of this type uses a G-Buffer to store shading data.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_VELOCITY">
-			<summary>
-			Texture of this type uses a G-Buffer to store velocity values.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_FEATURES">
-			<summary>
-			This texture contains surfaces with the materials that have the Bevel state enabled.
+			State of this type allows specifying only one possible value.
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_ASSET">
@@ -1714,49 +1611,9 @@
 			A standard bitmap image.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_CURVE">
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_RAMP">
 			<summary>
-			Curve texture. This texture is used to store the interpolated RGBA points that are evaluated over a given range producing a color gradient that can be used with Materials (curve gradient).
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_LIGHTS">
-			<summary>
-			A 2D array texture of the RG11B10F format that stores diffuse light in the first layer (RGB) and specular light in the second layer (RGB).
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_LIGHT_SHADOW_COLOR">
-			<summary>
-			Texture of this type (RG) stores depth (G-channel) and transparency (R-channel) values (used to render translucent shadows).
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_LIGHT_SHADOW_DEPTH">
-			<summary>
-			Texture of this type stores depth values (used to render shadows).
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_LIGHT_IMAGE">
-			<summary>
-			Texture of this type stores the light values provided by projected light sources.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_LINEAR_DEPTH">
-			<summary>
-			Texture of this type stores linear depth data.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_NORMAL_UNPACK">
-			<summary>
-			a texture that stores unpacked normals. Available for the following post-effects: SSR, SSGI, SSRTGI, Shadows screen space.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_OPACITY_DEPTH">
-			<summary>
-			Texture of this type stores depth data for opacity geometry and can be used for soft particles and volumetrics.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_OPACITY_SCREEN">
-			<summary>
-			Texture of this type stores the deferred composite and emission data.
+			Ramp texture. This texture is used to store the interpolated RGBA points that are evaluated over a given range producing a color gradient that can be used with Materials (curve gradient).
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_PROCEDURAL">
@@ -1764,14 +1621,39 @@
 			A procedurally generated texture.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_REFLECTION_2D">
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_ALBEDO">
 			<summary>
-			Texture of this type stores reflection values (used to render 2D reflections).
+			Texture of this type uses a G-Buffer to store albedo values.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_REFLECTION_CUBE">
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_SHADING">
 			<summary>
-			Texture of this type stores reflection values (used to render cube-mapped reflections).
+			Texture of this type uses a G-Buffer to store shading data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_NORMAL">
+			<summary>
+			Texture of this type uses a G-Buffer to store normal values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_VELOCITY">
+			<summary>
+			Texture of this type uses a G-Buffer to store velocity values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_MATERIAL_MASK">
+			<summary>
+			Texture of this type uses a G-Buffer to store material mask data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_FEATURES">
+			<summary>
+			This texture contains surfaces with the materials that have the Bevel state enabled.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_AUXILIARY">
+			<summary>
+			Auxiliary texture is used for different post effects (auxiliary pass).
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_REFRACTION">
@@ -1779,24 +1661,24 @@
 			Texture of this type stores refraction data.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_SCATTERING_SKY_LUT">
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_REFRACTION_MASK">
 			<summary>
-			Texture of this type stores sky scattering LUT data.
+			Texture storing refraction mask.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_SCREEN_COLOR">
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_TRANSPARENT_BLUR">
 			<summary>
-			Texture of this type stores screen color data and can be used for post effects.
+			a 1-channel R16F mask that stores intensity of blurring for transparent materials. The mask specifies where to blur the material.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_SCREEN_COLOR_OLD">
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_LIGHTS">
 			<summary>
-			Texture of this type stores Color Old (previous frame) data.
+			A 2D array texture of the RG11B10F format that stores diffuse light in the first layer (RGB) and specular light in the second layer (RGB).
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_SCREEN_COLOR_OLD_REPROJECTION">
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_BENT_NORMAL">
 			<summary>
-			Texture of this type stores Color Old (previous frame) Reprojection data.
+			An RG11B10F texture that stores bent normals (RGB) used for smooth ambient lighting.
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_SSAO">
@@ -1814,14 +1696,94 @@
 			Texture of this type stores SSR (Screen Space Reflections) data.
 		</summary>
 		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_CURVATURE">
+			<summary>
+			Texture used for the Screen-Space Dirt effect (SSDirt).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_DOF_MASK">
+			<summary>
+			Texture of this type stores a DoF (Depth of Field) mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_AUTO_EXPOSURE">
+			<summary>
+			An RG16F texture that stores intensity of the exposure (R) and luminance (G).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_AUTO_WHITE_BALANCE">
+			<summary>
+			Auto white balance texture (RGB16F), color values.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_SCREEN_COLOR">
+			<summary>
+			Texture of this type stores screen color data and can be used for post effects.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_SCREEN_COLOR_OLD">
+			<summary>
+			Texture of this type stores Color Old (previous frame) data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_SCREEN_COLOR_OLD_REPROJECTION">
+			<summary>
+			Texture of this type stores Color Old (previous frame) Reprojection data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_NORMAL_UNPACK">
+			<summary>
+			a texture that stores unpacked normals. Available for the following post-effects: SSR, SSGI, SSRTGI, Shadows screen space.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_CURRENT_DEPTH">
+			<summary>
+			Texture of this type stores current depth data for all geometry on the scene.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_OPACITY_DEPTH">
+			<summary>
+			Texture of this type stores depth data for opacity geometry and can be used for soft particles and volumetrics.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_LINEAR_DEPTH">
+			<summary>
+			Texture of this type stores linear depth data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_LIGHT_IMAGE">
+			<summary>
+			Texture of this type stores the light values provided by projected light sources.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_LIGHT_SHADOW_DEPTH">
+			<summary>
+			Texture of this type stores depth values (used to render shadows).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_LIGHT_SHADOW_COLOR">
+			<summary>
+			Texture of this type (RG) stores depth (G-channel) and transparency (R-channel) values (used to render translucent shadows).
+		</summary>
+		</member>
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_TRANSPARENT_ENVIRONMENT">
 			<summary>
 			An RGBA16F texture that stores environment probes and environment rendered on transparent objects. Available only for transparent materials rendered in the forward pass when Multiple environment probes are enabled.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_TRANSPARENT_BLUR">
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_REFLECTION_2D">
 			<summary>
-			a 1-channel R16F mask that stores intensity of blurring for transparent materials. The mask specifies where to blur the material.
+			Texture of this type stores reflection values (used to render 2D reflections).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_REFLECTION_CUBE">
+			<summary>
+			Texture of this type stores reflection values (used to render cube-mapped reflections).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_SCATTERING_SKY_LUT">
+			<summary>
+			Texture of this type stores sky scattering LUT data.
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_WBUFFER_CONSTANT_ID">
@@ -1839,19 +1801,14 @@
 			Normal texture stores normal data for lighting, and alpha channel stores mesh transparency values (it can be used for soft intersections with water geometry).
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_WBUFFER_SS_ENVIRONMENT">
-			<summary>
-			An RGBA16 underwater fog texture that stores water bottom coloring values (RGB) and fog transparency (A).
-		</summary>
-		</member>
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_WBUFFER_WATER">
 			<summary>
 			Water texture, RG8. It is used to create the procedural foam mask. The mask shows where the foam will be depicted.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_WBUFFER_PLANAR_REFLECTION">
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_WBUFFER_SS_ENVIRONMENT">
 			<summary>
-			Water dynamic planar reflection texture, RGBA16F.
+			An RGBA16 underwater fog texture that stores water bottom coloring values (RGB) and fog transparency (A).
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_WBUFFER_WU_MASK">
@@ -1859,19 +1816,29 @@
 			Underwater mask texture, RGB8. Underwater mask is used only for Global water, since water mesh doesn't have an underwater mode.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_CURVATURE">
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_WBUFFER_PLANAR_REFLECTION">
 			<summary>
-			Texture used for the Screen-Space Dirt effect (SSDirt).
+			Water dynamic planar reflection texture, RGBA16F.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_REFRACTION_MASK">
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_CLOUDS_SCREEN">
 			<summary>
-			Texture storing refraction mask.
+			An RGBA16F texture into which clouds are rendered.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_CUSTOM">
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_CLOUDS_STATIC_COVERAGE">
 			<summary>
-			Custom user texture.
+			Texture of this type stores clouds static coverage data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_CLOUDS_REGION_MASK">
+			<summary>
+			A single-channel texture used to define areas for the layer where the clouds are to be rendered and where they shouldn't (for regional weather).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_CLOUDS_DYNAMIC_COVERAGE">
+			<summary>
+			Texture of this type stores clouds dynamic coverage data.
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_TERRAIN_GLOBAL_DEPTH">
@@ -1882,6 +1849,41 @@
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_TERRAIN_GLOBAL_FLAT_POSITION">
 			<summary>
 			Texture storing geodetic flat positions for the Global Terrain.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_FIELD_HEIGHT_ARRAY">
+			<summary>
+			A heightmap texture is used to create an additional height displacement for water surface. Field Height textures are rendered in a 2D array of R16F or R32F textures (depends on settings). All Field Height textures are packed into 2D array to pass the data to the shader.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_FIELD_SHORELINE_ARRAY">
+			<summary>
+			A field shoreline texture. All Field Shoreline textures are packed into 2D array (of RGBA8) to pass the data to the shader.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_DECAL_DEPTH">
+			<summary>
+			Texture of this type stores depth data for decals.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_DECAL_ALBEDO">
+			<summary>
+			Texture of this type stores albedo color data for decals.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_DECAL_NORMAL">
+			<summary>
+			Texture of this type stores normal data for decals.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_DECAL_SHADING">
+			<summary>
+			Texture of this type stores shading data for decals.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_CUSTOM">
+			<summary>
+			Custom user texture.
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.TRANSPARENT_ALPHA_TEST">
@@ -1972,16 +1974,6 @@
 		<member name="F:Unigine.Material.OPTION_DEPTH_PRE_PASS">
 			<summary>
 			Depth pre-pass rendering, i.e. an additional depth buffer rendering pass is performed for the material in the beginning of the rendering sequence. Performed only for alpha test and complex materials.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_CLOUDS_REGION_MASK">
-			<summary>
-			A single-channel texture used to define areas for the layer where the clouds are to be rendered and where they shouldn't (for regional weather).
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_AUTO_WHITE_BALANCE">
-			<summary>
-			Auto white balance texture (RGB16F), color values.
 		</summary>
 		</member>
 	</members>

@@ -164,11 +164,6 @@ bool Python3UnigineMaterial::isReady() {
         );
         // enum_typename:  
         PyDict_SetItemString(
-            unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_CURVE",
-            Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_CURVE)
-        );
-        // enum_typename:  
-        PyDict_SetItemString(
             unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_PROCEDURAL",
             Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_PROCEDURAL)
         );

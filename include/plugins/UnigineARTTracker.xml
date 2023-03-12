@@ -47,7 +47,7 @@
 			</summary>  
 			<returns>Number of defined (calibrated) DTrack bodies.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.ARTTracker.getBodyId(int)">
+		<member name="M:Unigine.Plugins.ARTTracker.getBodyID(int)">
 			<summary>
 			Returns DTrack body ID.
 			</summary> 
@@ -81,7 +81,7 @@
 			</summary>  
 			<returns>Number of Flystick bodies.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.ARTTracker.getFlyStickId(int)">
+		<member name="M:Unigine.Plugins.ARTTracker.getFlyStickID(int)">
 			<summary>
 			Returns the specified Flystick ID.
 			</summary> 
@@ -145,7 +145,7 @@
 			</summary>  
 			<returns>Number of defined (calibrated) Measurement tools.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.ARTTracker.getMeaToolId(int)">
+		<member name="M:Unigine.Plugins.ARTTracker.getMeaToolID(int)">
 			<summary>
 			Returns the Measurement Tool ID (starting from 0).
 			</summary> 
@@ -208,7 +208,7 @@
 			</summary>  
 			<returns>Number of defined reference bodies of the Measurement Tool.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.ARTTracker.getMeaRefId(int)">
+		<member name="M:Unigine.Plugins.ARTTracker.getMeaRefID(int)">
 			<summary>
 			Returns the ID of the reference body of the Measurement Tool.
 			</summary> 
@@ -242,7 +242,7 @@
 			</summary>  
 			<returns>Number of additional Marker bodies.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.ARTTracker.getMarkId(int)">
+		<member name="M:Unigine.Plugins.ARTTracker.getMarkID(int)">
 			<summary>
 			Returns the marker ID number.
 			</summary> 
@@ -269,7 +269,7 @@
 			</summary>  
 			<returns>Number of tracked hand bodies.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.ARTTracker.getHandId(int)">
+		<member name="M:Unigine.Plugins.ARTTracker.getHandID(int)">
 			<summary>
 			Returns the hand ID number.
 			</summary> 
@@ -357,7 +357,7 @@
 			</summary>  
 			<returns>Number of human models.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.ARTTracker.getHumanId(int)">
+		<member name="M:Unigine.Plugins.ARTTracker.getHumanID(int)">
 			<summary>
 			Returns the ID of the human model (starting with 0).
 			</summary> 
@@ -371,7 +371,7 @@
 			<param name="index"> Human model index. </param> 
 			<returns>Number of joints of the human model.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.ARTTracker.getHumanJointId(int,int)">
+		<member name="M:Unigine.Plugins.ARTTracker.getHumanJointID(int,int)">
 			<summary>
 			Returns the ID of the joint (starting with 0).
 			</summary> 
@@ -417,7 +417,7 @@
 			</summary>  
 			<returns>Number of all tracked standard 6DOF bodies and all hybrid bodies.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.ARTTracker.getInertialId(int)">
+		<member name="M:Unigine.Plugins.ARTTracker.getInertialID(int)">
 			<summary>
 			Returns the ID number of the standard 6DOF body.
 			</summary> 

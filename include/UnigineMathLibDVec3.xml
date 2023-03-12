@@ -368,6 +368,10 @@
 			</summary>  
 			<returns>Result vector.</returns>
 		</member>
+		<member name="M:Unigine.Math.dvec3.hash const">
+			<summary>
+			</summary>  
+		</member>
 		<member name="F:Unigine.Math.dvec3.dvec3_back">
 			<summary>
 			Vector (0.0, -1.0, 0.0).

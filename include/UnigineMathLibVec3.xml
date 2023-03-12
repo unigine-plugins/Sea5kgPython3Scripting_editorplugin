@@ -400,6 +400,10 @@
 			</summary>  
 			<returns>Vector with signs of the argument components. 1.0 if v &gt;= 0.0 ; -1.0 if v &lt; 0.0.</returns>
 		</member>
+		<member name="M:Unigine.Math.vec3.hash const">
+			<summary>
+			</summary>  
+		</member>
 		<member name="F:Unigine.Math.vec3.vec3_back">
 			<summary>
 			Vector (0.0, -1.0, 0.0).

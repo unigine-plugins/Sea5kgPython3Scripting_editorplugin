@@ -27,7 +27,7 @@ class UNIGINE_API GameIntersection : public APIInterface
 {
 public:
 	static Ptr<GameIntersection> create();
-	void setPoint(const Math::Vec3& point);
+	void setPoint(const Math::Vec3 &point);
 	Math::Vec3 getPoint() const;
 };
 typedef Ptr<GameIntersection> GameIntersectionPtr;
@@ -59,18 +59,18 @@ public:
 	static Ptr<Player> getPlayer();
 	static void setPlayerListener(const Ptr<Player> &listener);
 	static Ptr<Player> getPlayerListener();
-	static void getMainPlayers(Vector< Ptr<Player> > &players);
-	static void getListeners(Vector< Ptr<Player> > &players);
+	static void getMainPlayers(Vector<Ptr<Player>> &players);
+	static void getListeners(Vector<Ptr<Player>> &players);
 	static unsigned int getRandom();
 	static Math::vec4 getRandomColor();
 	static int getRandomInt(int from, int to);
 	static float getRandomFloat(float from, float to);
 	static double getRandomDouble(double from, double to);
 	static float getNoise1(float pos, float size, int frequency);
-	static float getNoise2(const Math::vec2& pos, const Math::vec2& size, int frequency);
-	static float getNoise3(const Math::vec3& pos, const Math::vec3& size, int frequency);
-	static Ptr<Obstacle> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, float radius, int mask, const Vector< Ptr<Node> > &exclude, Math::Vec3 * intersection);
-	static Ptr<Obstacle> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, float radius, int mask, const Ptr<GameIntersection> &intersection);
+	static float getNoise2(const Math::vec2 &pos, const Math::vec2 &size, int frequency);
+	static float getNoise3(const Math::vec3 &pos, const Math::vec3 &size, int frequency);
+	static Ptr<Obstacle> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, float radius, int mask, const Vector<Ptr<Node>> &exclude, Math::Vec3 *intersection);
+	static Ptr<Obstacle> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, float radius, int mask, const Ptr<GameIntersection> &intersection);
 };
 
 } // namespace Unigine

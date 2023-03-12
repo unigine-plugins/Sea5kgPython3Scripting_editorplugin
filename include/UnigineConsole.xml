@@ -39,6 +39,18 @@
 			</summary> 
 			<param name="value"> Value of the variable. </param> 
 		</member>
+		<member name="M:Unigine.ConsoleVariableFloat.setGetFunc(float(*))">
+			<summary>
+			Sets a function that will be called when the get() function is called for the variable.
+			</summary> 
+			<param name="func"> Function pointer. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableFloat.setSetFunc(void(*)(float))">
+			<summary>
+			Sets a function that will be called when the set() function is called for the variable. For example:
+			</summary> 
+			<param name="func"> Function pointer. </param> 
+		</member>
 		<member name="M:Unigine.ConsoleVariableFloat.~ConsoleVariableFloat">
 			<summary>
 			Destructor.
@@ -79,6 +91,18 @@
 			</summary> 
 			<param name="value"> Value of the variable. </param> 
 		</member>
+		<member name="M:Unigine.ConsoleVariableInt.setGetFunc(int(*))">
+			<summary>
+			Sets a function that will be called when the get() function is called for the variable.
+			</summary> 
+			<param name="func"> Function pointer. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableInt.setSetFunc(void(*)(int))">
+			<summary>
+			Sets a function that will be called when the set() function is called for the variable. For example:
+			</summary> 
+			<param name="func"> Function pointer. </param> 
+		</member>
 		<member name="M:Unigine.ConsoleVariableInt.~ConsoleVariableInt">
 			<summary>
 			Destructor.
@@ -117,7 +141,175 @@
 			</summary> 
 			<param name="value"> Value of the variable. </param> 
 		</member>
+		<member name="M:Unigine.ConsoleVariableString.setGetFunc(String(*))">
+			<summary>
+			Sets a function that will be called when the get() function is called for the variable.
+			</summary> 
+			<param name="func"> Function pointer. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableString.setSetFunc(void(*)(String))">
+			<summary>
+			Sets a function that will be called when the set() function is called for the variable. For example:
+			</summary> 
+			<param name="func"> Function pointer. </param> 
+		</member>
 		<member name="M:Unigine.ConsoleVariableString.~ConsoleVariableString">
+			<summary>
+			Destructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec2.set(Unigine.Math.vec2) const">
+			<summary>
+			Sets the variable value.
+			</summary> 
+			<param name="value"> Value of the variable. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec2.get const">
+			<summary>
+			Gets the variable value.
+			</summary>  
+			<returns>Value of the variable.</returns>
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec2.ConsoleVariableVec2(char,char,int,Unigine.Math.vec2,Unigine.Math.vec2,Unigine.Math.vec2)">
+			<summary>
+			Console variable constructor.
+			</summary> 
+			<param name="name"> Name of the variable. </param>
+			<param name="desc"> Variable description. </param>
+			<param name="save"> Value indicating whether to save the variable value into the configuration file: 1 to save the variable; otherwise, 0. </param>
+			<param name="value"> Vec2 value of the variable. </param>
+			<param name="min"> Minimum value of the variable. </param>
+			<param name="max"> Maximum value of the variable. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec2.operator Math::vec2 const">
+			<summary>
+			Cast operator for the variable.
+			</summary>  
+			<returns>Value of the variable.</returns>
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec2.operator=(Unigine.Math.vec2)">
+			<summary>
+			Assignment operator for the variable.
+			</summary> 
+			<param name="value"> Value of the variable. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec2.setGetFunc(vec2(*))">
+			<summary>
+			Sets a function that will be called when the get() function is called for the variable.
+			</summary> 
+			<param name="func"> Function pointer. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec2.setSetFunc(void(*)(vec2))">
+			<summary>
+			Sets a function that will be called when the set() function is called for the variable. For example:
+			</summary> 
+			<param name="func"> Function pointer. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec2.~ConsoleVariableVec2">
+			<summary>
+			Destructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec3.set(Unigine.Math.vec3) const">
+			<summary>
+			Sets the variable value.
+			</summary> 
+			<param name="value"> Value of the variable. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec3.get const">
+			<summary>
+			Gets the variable value.
+			</summary>  
+			<returns>Value of the variable.</returns>
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec3.ConsoleVariableVec3(char,char,int,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
+			<summary>
+			Console variable constructor.
+			</summary> 
+			<param name="name"> Name of the variable. </param>
+			<param name="desc"> Variable description. </param>
+			<param name="save"> Value indicating whether to save the variable value into the configuration file: 1 to save the variable; otherwise, 0. </param>
+			<param name="value"> Vec3 value of the variable. </param>
+			<param name="min"> Minimum value of the variable. </param>
+			<param name="max"> Maximum value of the variable. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec3.operator Math::vec3 const">
+			<summary>
+			Cast operator for the variable.
+			</summary>  
+			<returns>Value of the variable.</returns>
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec3.operator=(Unigine.Math.vec3)">
+			<summary>
+			Assignment operator for the variable.
+			</summary> 
+			<param name="value"> Value of the variable. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec3.setGetFunc(vec3(*))">
+			<summary>
+			Sets a function that will be called when the get() function is called for the variable.
+			</summary> 
+			<param name="func"> Function pointer. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec3.setSetFunc(void(*)(vec3))">
+			<summary>
+			Sets a function that will be called when the set() function is called for the variable. For example:
+			</summary> 
+			<param name="func"> Function pointer. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec3.~ConsoleVariableVec3">
+			<summary>
+			Destructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec4.set(Unigine.Math.vec4) const">
+			<summary>
+			Sets the variable value.
+			</summary> 
+			<param name="value"> Value of the variable. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec4.get const">
+			<summary>
+			Gets the variable value.
+			</summary>  
+			<returns>Value of the variable.</returns>
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec4.ConsoleVariableVec4(char,char,int,Unigine.Math.vec4,Unigine.Math.vec4,Unigine.Math.vec4)">
+			<summary>
+			Console variable constructor.
+			</summary> 
+			<param name="name"> Name of the variable. </param>
+			<param name="desc"> Variable description. </param>
+			<param name="save"> Value indicating whether to save the variable value into the configuration file: 1 to save the variable; otherwise, 0. </param>
+			<param name="value"> Vec4 value of the variable. </param>
+			<param name="min"> Minimum value of the variable. </param>
+			<param name="max"> Maximum value of the variable. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec4.operator Math::vec4 const">
+			<summary>
+			Cast operator for the variable.
+			</summary>  
+			<returns>Value of the variable.</returns>
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec4.operator=(Unigine.Math.vec4)">
+			<summary>
+			Assignment operator for the variable.
+			</summary> 
+			<param name="value"> Value of the variable. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec4.setGetFunc(vec4(*))">
+			<summary>
+			Sets a function that will be called when the get() function is called for the variable.
+			</summary> 
+			<param name="func"> Function pointer. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec4.setSetFunc(void(*)(vec4))">
+			<summary>
+			Sets a function that will be called when the set() function is called for the variable. For example:
+			</summary> 
+			<param name="func"> Function pointer. </param> 
+		</member>
+		<member name="M:Unigine.ConsoleVariableVec4.~ConsoleVariableVec4">
 			<summary>
 			Destructor.
 			</summary>  
@@ -139,18 +331,6 @@
 			Sets a background color for the console.
 			</summary> 
 			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
-		</member>
-		<member name="M:Unigine.Console.setFontSize(int)">
-			<summary>
-			Sets the size for the console font.
-			</summary> 
-			<param name="size"> The size of the console font. </param> 
-		</member>
-		<member name="M:Unigine.Console.getFontSize">
-			<summary>
-			Returns the size for the console font.
-			</summary>  
-			<returns>The size of the console font.</returns>
 		</member>
 		<member name="M:Unigine.Console.isCommand(char) const">
 			<summary>
@@ -310,6 +490,42 @@
 			</summary>  
 			<returns>The prompt text.</returns>
 		</member>
+		<member name="M:Unigine.Console.isPalette(char) const">
+			<summary>
+			Checks for a palette with the specified name.
+			</summary> 
+			<param name="name"> Palette name. </param> 
+		</member>
+		<member name="M:Unigine.Console.setPalette(char,Palette)">
+			<summary>
+			Sets a color palette by its name.
+			</summary> 
+			<param name="name"> Palette name. </param>
+			<param name="value"> Palette to be set. </param> 
+		</member>
+		<member name="M:Unigine.Console.setPalette(char,int,float)">
+			<summary>
+			Sets a value for the specified palette color by its index.
+			</summary> 
+			<param name="name"> Palette name. </param>
+			<param name="index"> Palette color index. </param>
+			<param name="value"> Value to be set for the color with the specified index. </param> 
+		</member>
+		<member name="M:Unigine.Console.setPalette(char,char,float)">
+			<summary>
+			Sets a value for the specified palette color by the color name.
+			</summary> 
+			<param name="name"> Palette name. </param>
+			<param name="color"> Palette color name. </param>
+			<param name="value"> Value to be set for the color with the specified name. </param> 
+		</member>
+		<member name="M:Unigine.Console.getPalette(char) const">
+			<summary>
+			Returns a color palette by its name.
+			</summary> 
+			<param name="name"> Palette name. </param> 
+			<returns>Palette with the specified name is it exists; otherwise nullptr.</returns>
+		</member>
 		<member name="M:Unigine.Console.setString(char,char)">
 			<summary>
 			Sets a string value for a given variable.
@@ -445,7 +661,7 @@
 			Removes a custom console command.
 			</summary> 
 			<param name="name"> Name of the custom console command. </param> 
-			<returns>1 if the custom command has been removed successfully; otherwise, 0.</returns>
+			<returns>true if the custom command has been removed successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Console.run(char)">
 			<summary>

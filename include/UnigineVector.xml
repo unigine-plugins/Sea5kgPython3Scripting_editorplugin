@@ -93,6 +93,24 @@
 			</summary>  
 			<returns>Begin iterator.</returns>
 		</member>
+		<member name="M:Unigine.Vector.cbegin const">
+			<summary>
+			Returns the begin iterator.
+			</summary>  
+			<returns>Begin iterator.</returns>
+		</member>
+		<member name="M:Unigine.Vector.rbegin const">
+			<summary>
+			Returns the begin iterator.
+			</summary>  
+			<returns>Begin iterator.</returns>
+		</member>
+		<member name="M:Unigine.Vector.crbegin const">
+			<summary>
+			Returns the begin iterator.
+			</summary>  
+			<returns>Begin iterator.</returns>
+		</member>
 		<member name="M:Unigine.Vector.clear">
 			<summary>
 			Clears the vector.
@@ -116,6 +134,24 @@
 			<returns>End iterator.</returns>
 		</member>
 		<member name="M:Unigine.Vector.end const">
+			<summary>
+			Returns the end iterator.
+			</summary>  
+			<returns>End iterator.</returns>
+		</member>
+		<member name="M:Unigine.Vector.cend const">
+			<summary>
+			Returns the end iterator.
+			</summary>  
+			<returns>End iterator.</returns>
+		</member>
+		<member name="M:Unigine.Vector.rend const">
+			<summary>
+			Returns the end iterator.
+			</summary>  
+			<returns>End iterator.</returns>
+		</member>
+		<member name="M:Unigine.Vector.crend const">
 			<summary>
 			Returns the end iterator.
 			</summary>  

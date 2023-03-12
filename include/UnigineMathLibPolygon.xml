@@ -4,11 +4,6 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.Polygon.#ctor">
-			<summary>
-			Constructor. Initializes the polygon.
-			</summary>  
-		</member>
 		<member name="M:Unigine.Polygon.clear">
 			<summary>
 			Clears the data (vertices and indices) of the polygon.

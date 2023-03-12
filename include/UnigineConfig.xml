@@ -331,7 +331,7 @@
 			<summary>
 			Sets the text of the boot screen.
 			</summary> 
-			<param name="text"> Text of the boot screen. Can be either a plain or rich text. A number of aliases is provided:UNIGINE_COPYRIGHT — the UNIGINE copyright text.UNIGINE_VERSION — the current UNIGINE version.LOADING_PROGRESS — the loading progress going from 0 to 100.Rich text should be enclosed in &lt;![CDATA[]]&gt; section. </param> 
+			<param name="text"> Text of the boot screen. Can be either a plain or rich text. A number of aliases is provided:UNIGINE_COPYRIGHT — the UNIGINE copyright text.UNIGINE_VERSION — the current UNIGINE version.LOADING_PROGRESS — the loading progress going from 0 to 100. </param> 
 		</member>
 		<member name="M:Unigine.BootConfig.getScreenText const">
 			<summary>
@@ -387,18 +387,6 @@
 			</summary>  
 			<returns>Message for properties initialization.</returns>
 		</member>
-		<member name="M:Unigine.BootConfig.setScreenMessagePluginsInit(char)">
-			<summary>
-			Sets the message to be displayed on the plugins initialization. The message is set the same way as the screen text.
-			</summary> 
-			<param name="init"> Message for plugins initialization. </param> 
-		</member>
-		<member name="M:Unigine.BootConfig.getScreenMessagePluginsInit const">
-			<summary>
-			Returns the message currently displayed on plugins initialization.
-			</summary>  
-			<returns>Message for plugins initialization.</returns>
-		</member>
 		<member name="M:Unigine.BootConfig.setScreenMessageShadersCompilation(char)">
 			<summary>
 			Sets the message to be displayed on shaders compilation. The message is set the same way as the screen text.
@@ -434,6 +422,18 @@
 			Returns the path to the custom icon for the final application's window.
 			</summary>  
 			<returns>Path to the custom icon for the final application's window.</returns>
+		</member>
+		<member name="M:Unigine.BootConfig.setScreenEnabled(bool)">
+			<summary>
+			Sets the value indicating if the boot screen is enabled.
+			</summary> 
+			<param name="enabled"> true to enable the boot screen; false — to disable it. </param> 
+		</member>
+		<member name="M:Unigine.BootConfig.isScreenEnabled const">
+			<summary>
+			Returns the value indicating if the boot screen is enabled.
+			</summary>  
+			<returns>true if the boot screen is enabled; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Config.setBool(char,int)">
 			<summary>

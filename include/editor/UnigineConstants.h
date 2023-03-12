@@ -14,41 +14,38 @@
 #pragma once
 
 
-#include <editor/EditorGlobal.h>
-
-#include <UnigineBase.h>
+#include <editor/UnigineEditorGlobal.h>
 
 
+namespace UnigineEditor
+{
 namespace Constants
 {
-
-
-extern EDITOR_API const char *PLUGIN_IID;
 
 ////////////////////////////////////////////////////////////////////////////////
 // The main QMenuBar menu's keys.
 ////////////////////////////////////////////////////////////////////////////////
 /// <summary> File menu category of the main menu bar.</summary>
-extern EDITOR_API const char *MM_FILE;
+extern UNIGINE_EDITOR_API const char MM_FILE[];
 /// <summary> Edit menu category of the main menu bar.</summary>
-extern EDITOR_API const char *MM_EDIT;
+extern UNIGINE_EDITOR_API const char MM_EDIT[];
 /// <summary> Create menu category of the main menu bar.</summary>
-extern EDITOR_API const char *MM_CREATE;
+extern UNIGINE_EDITOR_API const char MM_CREATE[];
 /// <summary> Tools menu category of the main menu bar.</summary>
-extern EDITOR_API const char *MM_TOOLS;
+extern UNIGINE_EDITOR_API const char MM_TOOLS[];
 /// <summary> Windows menu category of the main menu bar.</summary>
-extern EDITOR_API const char *MM_WINDOWS;
+extern UNIGINE_EDITOR_API const char MM_WINDOWS[];
 /// <summary> Rendering menu category of the main menu bar.</summary>
-extern EDITOR_API const char *MM_RENDERING;
+extern UNIGINE_EDITOR_API const char MM_RENDERING[];
 /// <summary> Help menu category of the main menu bar.</summary>
-extern EDITOR_API const char *MM_HELP;
+extern UNIGINE_EDITOR_API const char MM_HELP[];
 
 
 ////////////////////////////////////////////////////////////////////////////////
 // The main QToolBar toolbar's keys.
 ////////////////////////////////////////////////////////////////////////////////
 /// <summary> Tools toolbar.</summary>
-extern EDITOR_API const char *MT_TOOLS;
+extern UNIGINE_EDITOR_API const char MT_TOOLS[];
 
 
 /// <summary> Type of selectable subobjects for various types of nodes.</summary>
@@ -77,6 +74,7 @@ enum class SubObjectType
 };
 
 } // namespace Constants
+} // namespace UnigineEditor
 
 namespace Unigine
 {
@@ -85,14 +83,13 @@ template<typename Type>
 struct Hasher;
 
 template<>
-struct Hasher<::Constants::SubObjectType>
+struct Hasher<::UnigineEditor::Constants::SubObjectType>
 {
 	using HashType = unsigned int;
-	UNIGINE_INLINE static HashType create(::Constants::SubObjectType v)
+	UNIGINE_INLINE static HashType create(::UnigineEditor::Constants::SubObjectType v)
 	{
 		return static_cast<HashType>(v);
 	}
 };
 
 } // namespace Unigine
-

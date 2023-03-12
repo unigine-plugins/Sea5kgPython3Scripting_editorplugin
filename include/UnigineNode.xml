@@ -196,7 +196,7 @@
 		</member>
 		<member name="M:Unigine.Node.getID">
 			<summary>
-			Returns the ID of the node.					See also engine.world.getNodeById() function.
+			Returns the ID of the node.					See also engine.world.getNodeByID() function.
 			</summary>  
 			<returns>Node ID.</returns>
 		</member>
@@ -624,7 +624,7 @@
 			</summary>  
 			<returns>Node type identifier.</returns>
 		</member>
-		<member name="M:Unigine.Node.getTypeId(char)">
+		<member name="M:Unigine.Node.getTypeID(char)">
 			<summary>
 			Returns the ID of a node type with a given name.
 			</summary> 
@@ -1087,6 +1087,12 @@
 			Returns the lifetime management type for the root (either parent or posessor) of the node, or for the node itself (if it is not a child and not possessed by any other node).Lifetime of each node in the hierarchy is defined by it's root (either parent or posessor). Thus, lifetime management type set for a child node that differs from the one set for the root is ignored.
 			</summary>  
 			<returns>Lifetime management type for the root node (see the LIFETIME enum).</returns>
+		</member>
+		<member name="M:Unigine.Node.getLifetimeSelf">
+			<summary>
+			Returns the lifetime management type set for the node itself.Lifetime of each node in the hierarchy is defined by it's root (either parent or posessor). Setting lifetime management type for a child node different from the one set for the root has no effect.
+			</summary>  
+			<returns>Lifetime management type for the node (see the LIFETIME enum).</returns>
 		</member>
 		<member name="M:Unigine.Node.setLifetime(Node::LIFETIME)">
 			<summary>

@@ -76,7 +76,7 @@
 			</summary>  
 			<returns>Physical type identifier.</returns>
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.#ctor(int,Unigine.Math.vec3)">
+		<member name="M:Unigine.PhysicalTrigger.#ctor(Shape::TYPE,Unigine.Math.vec3)">
 			<summary>
 			Constructor. Creates a physical trigger of the specified shape and size.
 			</summary> 

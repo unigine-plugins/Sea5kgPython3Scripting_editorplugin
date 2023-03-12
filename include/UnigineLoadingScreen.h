@@ -37,9 +37,9 @@ public:
 	static void setTexturePath(const char *path);
 	static const char *getTexturePath();
 	static void setImage(const Ptr<Image> &image);
-	static void setTransform(const Math::vec4& transform);
+	static void setTransform(const Math::vec4 &transform);
 	static Math::vec4 getTransform();
-	static void setBackgroundColor(const Math::vec4& color);
+	static void setBackgroundColor(const Math::vec4 &color);
 	static Math::vec4 getBackgroundColor();
 	static void setText(const char *text);
 	static const char *getText();
@@ -57,10 +57,10 @@ public:
 	static void renderForce(const char *message);
 	static int getProgress();
 	static const char *getMessage();
-	static void *addRenderBeginCallback(Unigine::CallbackBase *func);
+	static void *addRenderBeginCallback(CallbackBase *func);
 	static bool removeRenderBeginCallback(void *id);
 	static void clearRenderBeginCallbacks();
-	static void *addRenderEndCallback(Unigine::CallbackBase *func);
+	static void *addRenderEndCallback(CallbackBase *func);
 	static bool removeRenderEndCallback(void *id);
 	static void clearRenderEndCallbacks();
 };

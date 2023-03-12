@@ -202,6 +202,7 @@
 			<summary>
 			Returns the player which is currently the listener.
 			</summary>  
+			<returns>The player that is set as listener.</returns>
 		</member>
 		<member name="M:Unigine.Game.getListeners(Unigine.Vector{Unigine.Ptr{Player},int,Unigine.VectorAllocator})">
 			<summary>

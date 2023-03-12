@@ -308,7 +308,7 @@ struct alignas(16) vec3
 	UNIGINE_INLINE float minXY() { return Math::min(x, y); }
 	UNIGINE_INLINE float min() { return Math::min(minXY(), z); }
 
-	UNIGINE_INLINE unsigned int hash() const { return hashCombine(hashCombine(hashMurmur3(x), y), z); }
+	UNIGINE_INLINE unsigned int hash() const { return hashCombine(hashCombine(hashInteger(x), y), z); }
 
 	UNIGINE_INLINE vec3 &abs()
 	{
@@ -779,6 +779,15 @@ UNIGINE_INLINE vec3 ceil(const vec3 &v)
 UNIGINE_INLINE vec3 frac(const vec3 &v) { return {frac(v.x), frac(v.y), frac(v.z)}; }
 UNIGINE_INLINE vec3 abs(const vec3 &v) { return {abs(v.x), abs(v.y), abs(v.z)}; }
 
+UNIGINE_INLINE vec3 step(const vec3 &a, const vec3 &b)
+{
+	return {toFloat(a.x > b.x), toFloat(a.y > b.y), toFloat(a.z > b.z)};
+}
+UNIGINE_INLINE vec3 step(const vec3 &a, float b)
+{
+	return {toFloat(a.x > b), toFloat(a.y > b), toFloat(a.z > b)};
+}
+
 UNIGINE_INLINE vec3 inverseLerp(const vec3 &v0, const vec3 &v1, const vec3 &v)
 {
 	return saturate((v - v0) / (v1 - v0));
@@ -791,11 +800,11 @@ UNIGINE_INLINE vec3 contrastLerp(const vec3 &point_a, const vec3 &point_b, float
 
 UNIGINE_INLINE vec3 overlay(const vec3 &a, const vec3 &b, float x)
 {
-	return max(a * lerp(vec3_one, b + b, x), vec3_zero);
+	return max(lerp(a, lerp(vec3_one - (vec3_one - a) * (vec3_one - b) * 2.0f, a * b * 2.0f, step(a, vec3_half)), x), vec3_zero);
 }
 UNIGINE_INLINE vec3 overlay(const vec3 &a, const vec3 &b, const vec3 &x)
 {
-	return max(a * lerp(vec3_one, b + b, x), vec3_zero);
+	return max(lerp(a, lerp(vec3_one - (vec3_one - a) * (vec3_one - b) * 2.0f, a * b * 2.0f, step(a, vec3_half)), x), vec3_zero);
 }
 
 UNIGINE_INLINE bool areCollinear(const vec3 &v0, const vec3 &v1) { return length(cross(v0, v1)) < 1e-6f; }

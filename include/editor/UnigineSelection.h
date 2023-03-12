@@ -14,7 +14,7 @@
 #pragma once
 
 
-#include <editor/EditorGlobal.h>
+#include <editor/UnigineEditorGlobal.h>
 
 #include <QObject>
 
@@ -22,7 +22,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Forward decl.
 ////////////////////////////////////////////////////////////////////////////////
-namespace Editor
+namespace UnigineEditor
 {
 class Presenter;
 class Selector;
@@ -31,12 +31,12 @@ class SelectorGUIDs;
 }
 
 
-namespace Editor
+namespace UnigineEditor
 {
 ////////////////////////////////////////////////////////////////////////////////
 // Selection.
 ////////////////////////////////////////////////////////////////////////////////
-class EDITOR_API Selection: public QObject
+class UNIGINE_EDITOR_API Selection: public QObject
 {
 	Q_OBJECT
 public:
@@ -93,8 +93,7 @@ private:
 	explicit Selection(QObject *parent);
 	~Selection() override;
 
-	friend class Editor::Presenter;
+	friend class ::UnigineEditor::Presenter;
 };
 
-
-} // namespace Editor
+} // namespace UnigineEditor

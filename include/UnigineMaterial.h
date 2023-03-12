@@ -68,8 +68,9 @@ public:
 	enum
 	{
 		TEXTURE_SOURCE_ASSET = 0,
-		TEXTURE_SOURCE_CURVE,
+		TEXTURE_SOURCE_RAMP,
 		TEXTURE_SOURCE_PROCEDURAL,
+		TEXTURE_SOURCE_SURFACE_CUSTOM_TEXTURE,
 		TEXTURE_SOURCE_GBUFFER_ALBEDO,
 		TEXTURE_SOURCE_GBUFFER_SHADING,
 		TEXTURE_SOURCE_GBUFFER_NORMAL,
@@ -86,6 +87,7 @@ public:
 		TEXTURE_SOURCE_SSGI,
 		TEXTURE_SOURCE_SSR,
 		TEXTURE_SOURCE_CURVATURE,
+		TEXTURE_SOURCE_SHADOW_SHAFTS,
 		TEXTURE_SOURCE_DOF_MASK,
 		TEXTURE_SOURCE_AUTO_EXPOSURE,
 		TEXTURE_SOURCE_AUTO_WHITE_BALANCE,
@@ -100,6 +102,7 @@ public:
 		TEXTURE_SOURCE_LIGHT_IMAGE,
 		TEXTURE_SOURCE_LIGHT_SHADOW_DEPTH,
 		TEXTURE_SOURCE_LIGHT_SHADOW_COLOR,
+		TEXTURE_SOURCE_HAZE_AMBIENT,
 		TEXTURE_SOURCE_TRANSPARENT_ENVIRONMENT,
 		TEXTURE_SOURCE_REFLECTION_2D,
 		TEXTURE_SOURCE_REFLECTION_CUBE,
@@ -168,7 +171,7 @@ public:
 		WIDGET_TOGGLE,
 		WIDGET_COMBOBOX,
 		WIDGET_TEXTURE_ASSET,
-		WIDGET_TEXTURE_CURVE,
+		WIDGET_TEXTURE_RAMP,
 		WIDGET_ACCORDION,
 		WIDGET_SLIDER,
 		WIDGET_COLOR,
@@ -180,13 +183,13 @@ public:
 	bool setParent(const Ptr<Material> &material, bool save_all_values = true);
 	Ptr<Material> getParent() const;
 	bool isParent(const Ptr<Material> &parent) const;
-	bool isParent(const UGUID& guid) const;
+	bool isParent(const UGUID &guid) const;
 	Ptr<Material> getBaseMaterial() const;
 	int getNumChildren() const;
 	Ptr<Material> getChild(int num) const;
-	Ptr<Material> clone(const UGUID& guid);
+	Ptr<Material> clone(const UGUID &guid);
 	Ptr<Material> clone();
-	Ptr<Material> inherit(const UGUID& guid);
+	Ptr<Material> inherit(const UGUID &guid);
 	Ptr<Material> inherit();
 	const char *getNamespaceName() const;
 	const char *getManualName() const;
@@ -253,7 +256,6 @@ public:
 	Ptr<Shader> fetchShader(const char *pass_name, int node);
 	Ptr<Shader> fetchShader(const char *pass_name);
 	void createShaders(bool recursive = false);
-	void destroyShaders();
 	void destroyTextures();
 	int getNumParameters() const;
 	int findParameter(const char *name) const;
@@ -272,48 +274,48 @@ public:
 	void setParameterFloat(const char *name, float value);
 	float getParameterFloat(int num) const;
 	float getParameterFloat(const char *name) const;
-	void setParameterFloat2(int num, const Math::vec2& value);
-	void setParameterFloat2(const char *name, const Math::vec2& value);
+	void setParameterFloat2(int num, const Math::vec2 &value);
+	void setParameterFloat2(const char *name, const Math::vec2 &value);
 	Math::vec2 getParameterFloat2(int num) const;
 	Math::vec2 getParameterFloat2(const char *name) const;
-	void setParameterFloat3(int num, const Math::vec3& value);
-	void setParameterFloat3(const char *name, const Math::vec3& value);
+	void setParameterFloat3(int num, const Math::vec3 &value);
+	void setParameterFloat3(const char *name, const Math::vec3 &value);
 	Math::vec3 getParameterFloat3(int num) const;
 	Math::vec3 getParameterFloat3(const char *name) const;
-	void setParameterFloat4(int num, const Math::vec4& value);
-	void setParameterFloat4(const char *name, const Math::vec4& value);
+	void setParameterFloat4(int num, const Math::vec4 &value);
+	void setParameterFloat4(const char *name, const Math::vec4 &value);
 	Math::vec4 getParameterFloat4(int num) const;
 	Math::vec4 getParameterFloat4(const char *name) const;
 	void setParameterInt(int num, int value);
 	void setParameterInt(const char *name, int value);
 	int getParameterInt(int num) const;
 	int getParameterInt(const char *name) const;
-	void setParameterInt2(int num, const Math::ivec2& value);
-	void setParameterInt2(const char *name, const Math::ivec2& value);
+	void setParameterInt2(int num, const Math::ivec2 &value);
+	void setParameterInt2(const char *name, const Math::ivec2 &value);
 	Math::ivec2 getParameterInt2(int num) const;
 	Math::ivec2 getParameterInt2(const char *name) const;
-	void setParameterInt3(int num, const Math::ivec3& value);
-	void setParameterInt3(const char *name, const Math::ivec3& value);
+	void setParameterInt3(int num, const Math::ivec3 &value);
+	void setParameterInt3(const char *name, const Math::ivec3 &value);
 	Math::ivec3 getParameterInt3(int num) const;
 	Math::ivec3 getParameterInt3(const char *name) const;
-	void setParameterInt4(int num, const Math::ivec4& value);
-	void setParameterInt4(const char *name, const Math::ivec4& value);
+	void setParameterInt4(int num, const Math::ivec4 &value);
+	void setParameterInt4(const char *name, const Math::ivec4 &value);
 	Math::ivec4 getParameterInt4(int num) const;
 	Math::ivec4 getParameterInt4(const char *name) const;
 	int getParameterArraySize(int num) const;
 	bool isParameterArray(int num) const;
-	void getParameterArray(int num, Vector< float > &values) const;
-	void setParameterArray(int num, const Vector< float > &values);
-	void getParameterArray(int num, Vector< Math::vec2 > &values) const;
-	void setParameterArray(int num, const Vector< Math::vec2 > &values);
-	void getParameterArray(int num, Vector< Math::vec4 > &values) const;
-	void setParameterArray(int num, const Vector< Math::vec4 > &values);
-	void getParameterArray(int num, Vector< int > &values) const;
-	void setParameterArray(int num, const Vector< int > &values);
-	void getParameterArray(int num, Vector< Math::ivec2 > &values) const;
-	void setParameterArray(int num, const Vector< Math::ivec2 > &values);
-	void getParameterArray(int num, Vector< Math::ivec4 > &values) const;
-	void setParameterArray(int num, const Vector< Math::ivec4 > &values);
+	void getParameterArray(int num, Vector<float> &values) const;
+	void setParameterArray(int num, const Vector<float> &values);
+	void getParameterArray(int num, Vector<Math::vec2> &values) const;
+	void setParameterArray(int num, const Vector<Math::vec2> &values);
+	void getParameterArray(int num, Vector<Math::vec4> &values) const;
+	void setParameterArray(int num, const Vector<Math::vec4> &values);
+	void getParameterArray(int num, Vector<int> &values) const;
+	void setParameterArray(int num, const Vector<int> &values);
+	void getParameterArray(int num, Vector<Math::ivec2> &values) const;
+	void setParameterArray(int num, const Vector<Math::ivec2> &values);
+	void getParameterArray(int num, Vector<Math::ivec4> &values) const;
+	void setParameterArray(int num, const Vector<Math::ivec4> &values);
 	int getNumStates() const;
 	int findState(const char *name) const;
 	bool isStateOverridden(int num) const;
@@ -337,6 +339,7 @@ public:
 	bool checkTextureConditions(int num) const;
 	const char *getTextureName(int num) const;
 	int getTextureUnit(int num) const;
+	bool isTextureEditable(int num) const;
 	int getTextureSource(int num) const;
 	int getTextureSamplerFlags(int num) const;
 	void setTextureSamplerFlags(int num, int sampler_flags);
@@ -351,8 +354,8 @@ public:
 	const char *getTexturePath(int num) const;
 	void setTexturePath(const char *name, const char *path);
 	const char *getTexturePath(const char *name) const;
-	Ptr<TextureCurve> getTextureCurve(int num);
-	Ptr<TextureCurve> getTextureCurveOverride(int num);
+	Ptr<TextureRamp> getTextureRamp(int num);
+	Ptr<TextureRamp> getTextureRampOverride(int num);
 	bool isEditable() const;
 	bool isHidden() const;
 	bool isBase() const;
@@ -364,7 +367,7 @@ public:
 	bool isManual() const;
 	bool canSave() const;
 	bool isAutoSave() const;
-	bool isEngine() const;
+	bool isFileEngine() const;
 	bool isEmpty() const;
 	bool hasOverrides() const;
 	bool saveState(const Ptr<Stream> &stream, bool forced = false) const;

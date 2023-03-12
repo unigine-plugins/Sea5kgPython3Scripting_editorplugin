@@ -632,14 +632,14 @@
 			Returns a value indicating whether the file with the specified GUID is a non-native asset (has runtime files generated for it).
 			</summary> 
 			<param name="any_guid"> Any file GUID. </param> 
-			<returns>1 if the file with the specified GUID is a non-native asset; otherwise, 0.</returns>
+			<returns>true if the file with the specified GUID is a non-native asset; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.isAsset(char)">
 			<summary>
 			Returns a value indicating whether the file with the specified path is a non-native asset (has runtime files generated for it).
 			</summary> 
 			<param name="path"> Path to a file. </param> 
-			<returns>1 if the file with the specified path is a non-native asset; otherwise, 0.</returns>
+			<returns>true if the file with the specified path is a non-native asset; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.getAssetGUID(char)">
 			<summary>
@@ -674,14 +674,14 @@
 			Returns a value indicating whether the runtime file corresponding to the specified path is a primary one.
 			</summary> 
 			<param name="path"> Path to a runtime file. </param> 
-			<returns>1 if the runtime file corresponding to the specified path is a primary one; otherwise, 0.</returns>
+			<returns>true if the runtime file corresponding to the specified path is a primary one; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.isPrimary(Unigine.UGUID)">
 			<summary>
 			Returns a value indicating whether the runtime file corresponding to the specified GUID is a primary one.
 			</summary> 
 			<param name="any_guid"> Runtime file GUID. </param> 
-			<returns>1 if the runtime file corresponding to the specified GUID is a primary one; otherwise, 0.</returns>
+			<returns>true if the runtime file corresponding to the specified GUID is a primary one; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.getPrimaryGUID(Unigine.UGUID)">
 			<summary>
@@ -702,28 +702,28 @@
 			Returns a value indicating whether the file with the specified GUID is a *.meta file.
 			</summary> 
 			<param name="any_guid"> Any file GUID. </param> 
-			<returns>1 if the file with the specified GUID is a *.meta file; otherwise, 0.</returns>
+			<returns>true if the file with the specified GUID is a *.meta file; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.isRuntime(char)">
 			<summary>
 			Returns a value indicating whether the file corresponding to the specified path is a generated runtime file.
 			</summary> 
 			<param name="path"> Any file path. </param> 
-			<returns>1 if the file corresponding to the specified path is a generated runtime file; otherwise, 0.This method will return 0 for any native asset.</returns>
+			<returns>true if the file corresponding to the specified path is a generated runtime file; otherwise, false.This method will return 0 for any native asset.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.isRuntime(Unigine.UGUID)">
 			<summary>
 			Returns a value indicating whether the file corresponding to the specified GUID is a generated runtime file.
 			</summary> 
 			<param name="any_guid"> Any file GUID. </param> 
-			<returns>1 if the file corresponding to the specified path is a generated runtime file; otherwise, 0.This method will return 0 for any native asset.</returns>
+			<returns>true if the file corresponding to the specified path is a generated runtime file; otherwise, false.This method will return 0 for any native asset.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.isRuntimePath(char)">
 			<summary>
 			Returns a value indicating whether the specified path is a path to a generated runtime file.
 			</summary> 
 			<param name="path"> Any file path. </param> 
-			<returns>1 if the specified path is a path to a generated runtime file; otherwise, 0.</returns>
+			<returns>true if the specified path is a path to a generated runtime file; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.getRuntimeAlias(char)">
 			<summary>
@@ -739,7 +739,7 @@
 			<param name="runtime_guid"> GUID of the generated runtime file. </param> 
 			<returns>Alias set for the specified generated runtime file, if it exists; otherwise nullptr.</returns>
 		</member>
-		<member name="M:Unigine.FileSystemAssets.getRuntimeAlias(char,int)">
+		<member name="M:Unigine.FileSystemAssets.getRuntimeAlias(String,int)">
 			<summary>
 			Returns the alias of the generated runtime file, specified by the given non-native asset path and runtime index.
 			</summary> 
@@ -761,7 +761,7 @@
 			</summary> 
 			<param name="runtime_path"> Path to the generated runtime file. </param>
 			<param name="new_runtime_guid"> New GUID to be set. </param> 
-			<returns>1 if a new GUID is successfully set; otherwise, 0.</returns>
+			<returns>true if a new GUID is successfully set; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.setRuntimeGUID(Unigine.UGUID,Unigine.UGUID)">
 			<summary>
@@ -769,7 +769,7 @@
 			</summary> 
 			<param name="runtime_guid"> GUID of the generated runtime file. </param>
 			<param name="new_runtime_guid"> New GUID to be set. </param> 
-			<returns>1 if a new GUID is successfully set; otherwise, 0.</returns>
+			<returns>true if a new GUID is successfully set; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.setRuntimeGUID(char,int,Unigine.UGUID)">
 			<summary>
@@ -778,7 +778,7 @@
 			<param name="asset_path"> Path to a non-native asset. </param>
 			<param name="index"> Index of the generated runtime file. </param>
 			<param name="new_runtime_guid"> New GUID to be set. </param> 
-			<returns>1 if a new GUID is successfully set; otherwise, 0.</returns>
+			<returns>true if a new GUID is successfully set; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.setRuntimeGUID(Unigine.UGUID,int,Unigine.UGUID)">
 			<summary>
@@ -787,7 +787,7 @@
 			<param name="asset_guid"> GUID of a non-native asset. </param>
 			<param name="index"> Index of the generated runtime file. </param>
 			<param name="new_runtime_guid"> New GUID to be set. </param> 
-			<returns>1 if a new GUID is successfully set; otherwise, 0.</returns>
+			<returns>true if a new GUID is successfully set; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.getRuntimeGUID(char,int)">
 			<summary>
@@ -831,7 +831,7 @@
 			<param name="alias"> Alias for the new runtime file. </param>
 			<param name="runtime_guid"> GUID for the new runtime file. </param>
 			<param name="primary"> Use 1 to create a new runtime as a primary one; otherwise, 0. </param> 
-			<returns>1 if a new runtime file is successfully created; otherwise, 0.</returns>
+			<returns>true if a new runtime file is successfully created; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.addRuntime(Unigine.UGUID,char,Unigine.UGUID,int)">
 			<summary>
@@ -841,21 +841,21 @@
 			<param name="alias"> Alias for the new runtime file. </param>
 			<param name="runtime_guid"> GUID for the new runtime file. </param>
 			<param name="primary"> Use 1 to create a new runtime as a primary one; otherwise, 0. </param> 
-			<returns>1 if a new runtime file is successfully created; otherwise, 0.</returns>
+			<returns>true if a new runtime file is successfully created; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.clearRuntimes(char)">
 			<summary>
 			Deletes all generated runtime files for the asset with the specified path.
 			</summary> 
 			<param name="asset_path"> Path to the asset for which all generated runtime files are to be deleted. </param> 
-			<returns>1 if all generated runtime files for the specified asset are successfully deleted; otherwise, 0.</returns>
+			<returns>true if all generated runtime files for the specified asset are successfully deleted; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.clearRuntimes(Unigine.UGUID)">
 			<summary>
 			Deletes all generated runtime files for the asset with the specified GUID.
 			</summary> 
 			<param name="asset_guid"> GUID of the asset for which all generated runtime files are to be deleted. </param> 
-			<returns>1 if all generated runtime files for the specified asset are successfully deleted; otherwise, 0.</returns>
+			<returns>true if all generated runtime files for the specified asset are successfully deleted; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.copyRuntime(char,char)">
 			<summary>
@@ -932,7 +932,7 @@
 			<param name="runtime_path"> Path to the generated runtime file to be copied. </param>
 			<param name="new_asset_path"> Path to another asset for which a copy of the generated runtime file is to be added. </param>
 			<param name="new_runtime_guid"> GUID to be set for the new runtime file copy. </param> 
-			<returns>1 if the specified runtime file is successfully copied; otherwise, 0.</returns>
+			<returns>true if the specified runtime file is successfully copied; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.copyRuntime(char,Unigine.UGUID,Unigine.UGUID)">
 			<summary>
@@ -941,7 +941,7 @@
 			<param name="runtime_path"> Path to the generated runtime file to be copied. </param>
 			<param name="new_asset_guid"> GUID of the asset for which a copy of the generated runtime file is to be added. </param>
 			<param name="new_runtime_guid"> GUID to be set for the new runtime file copy. </param> 
-			<returns>1 if the specified runtime file is successfully copied; otherwise, 0.</returns>
+			<returns>true if the specified runtime file is successfully copied; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.copyRuntime(Unigine.UGUID,char,Unigine.UGUID)">
 			<summary>
@@ -950,7 +950,7 @@
 			<param name="runtime_guid"> GUID of the asset file to which the generated runtime file to be copied belongs. </param>
 			<param name="new_asset_path"> Path to another asset for which a copy of the generated runtime file is to be added. </param>
 			<param name="new_runtime_guid"> GUID to be set for the new runtime file copy. </param> 
-			<returns>1 if the specified runtime file is successfully copied; otherwise, 0.</returns>
+			<returns>true if the specified runtime file is successfully copied; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.copyRuntime(Unigine.UGUID,Unigine.UGUID,Unigine.UGUID)">
 			<summary>
@@ -959,7 +959,7 @@
 			<param name="runtime_guid"> GUID of the generated runtime file to be copied. </param>
 			<param name="new_asset_guid"> GUID of the asset for which a copy of the generated runtime file is to be added. </param>
 			<param name="new_runtime_guid"> GUID to be set for the new runtime file copy. </param> 
-			<returns>1 if the specified runtime file is successfully copied; otherwise, 0.</returns>
+			<returns>true if the specified runtime file is successfully copied; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.copyRuntime(char,int,char,Unigine.UGUID)">
 			<summary>
@@ -969,7 +969,7 @@
 			<param name="index"> Index of the generated runtime file to be copied in the range from 0 to the total number of runtimes generated for the asset. </param>
 			<param name="new_asset_path"> Path to another asset for which a copy of the generated runtime file is to be added. </param>
 			<param name="new_runtime_guid"> GUID to be set for the new runtime file copy. </param> 
-			<returns>1 if the specified runtime file is successfully copied; otherwise, 0.</returns>
+			<returns>true if the specified runtime file is successfully copied; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.copyRuntime(char,int,Unigine.UGUID,Unigine.UGUID)">
 			<summary>
@@ -979,7 +979,7 @@
 			<param name="index"> Index of the generated runtime file to be copied in the range from 0 to the total number of runtimes generated for the asset. </param>
 			<param name="new_asset_guid"> GUID of the asset for which a copy of the generated runtime file is to be added. </param>
 			<param name="new_runtime_guid"> GUID to be set for the new runtime file copy. </param> 
-			<returns>1 if the specified runtime file is successfully copied; otherwise, 0.</returns>
+			<returns>true if the specified runtime file is successfully copied; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.copyRuntime(Unigine.UGUID,int,char,Unigine.UGUID)">
 			<summary>
@@ -989,7 +989,7 @@
 			<param name="index"> Index of the generated runtime file to be copied in the range from 0 to the total number of runtimes generated for the asset. </param>
 			<param name="new_asset_path"> Path to another asset for which a copy of the generated runtime file is to be added. </param>
 			<param name="new_runtime_guid"> GUID to be set for the new runtime file copy. </param> 
-			<returns>1 if the specified runtime file is successfully copied; otherwise, 0.</returns>
+			<returns>true if the specified runtime file is successfully copied; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.copyRuntime(Unigine.UGUID,int,Unigine.UGUID,Unigine.UGUID)">
 			<summary>
@@ -999,21 +999,21 @@
 			<param name="index"> Index of the generated runtime file to be copied in the range from 0 to the total number of runtimes generated for the asset. </param>
 			<param name="new_asset_guid"> GUID of the asset for which a copy of the generated runtime file is to be added. </param>
 			<param name="new_runtime_guid"> GUID to be set for the new runtime file copy. </param> 
-			<returns>1 if the specified runtime file is successfully copied; otherwise, 0.</returns>
+			<returns>true if the specified runtime file is successfully copied; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.removeRuntime(char)">
 			<summary>
 			Deletes the specified generated runtime file and removes it from the list of runtimes of the corresponding asset.
 			</summary> 
 			<param name="runtime_path"> Path to the generated runtime file to be deleted. </param> 
-			<returns>1 if the specified runtime file is successfully deleted; otherwise, 0.</returns>
+			<returns>true if the specified runtime file is successfully deleted; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.removeRuntime(Unigine.UGUID)">
 			<summary>
 			Deletes the specified generated runtime file and removes it from the list of runtimes of the corresponding asset.
 			</summary> 
 			<param name="runtime_guid"> GUID of the generated runtime file to be deleted. </param> 
-			<returns>1 if the specified runtime file is successfully deleted; otherwise, 0.</returns>
+			<returns>true if the specified runtime file is successfully deleted; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.removeRuntime(char,int)">
 			<summary>
@@ -1021,7 +1021,7 @@
 			</summary> 
 			<param name="asset_path"> Path to the asset file for which the specified generated runtime file is to be deleted. </param>
 			<param name="index"> Index of the generated runtime file to be deleted in the range from 0 to the total number of runtimes generated for the asset. </param> 
-			<returns>1 if the specified runtime file is successfully deleted; otherwise, 0.</returns>
+			<returns>true if the specified runtime file is successfully deleted; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.removeRuntime(Unigine.UGUID,int)">
 			<summary>
@@ -1029,7 +1029,7 @@
 			</summary> 
 			<param name="asset_guid"> GUID of the asset file for which the specified generated runtime file is to be deleted. </param>
 			<param name="index"> Index of the generated runtime file to be deleted in the range from 0 to the total number of runtimes generated for the asset. </param> 
-			<returns>1 if the specified runtime file is successfully deleted; otherwise, 0.</returns>
+			<returns>true if the specified runtime file is successfully deleted; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.resolve(Unigine.UGUID)">
 			<summary>
@@ -1066,7 +1066,7 @@
 			<param name="asset_guid"> GUID of a non-native asset. </param>
 			<param name="index"> Index of the generated runtime file. </param>
 			<param name="new_alias"> New alias to be set. </param> 
-			<returns>1 if a new alias is successfully set; otherwise, 0.</returns>
+			<returns>true if a new alias is successfully set; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.setRuntimeAlias(Unigine.UGUID,char)">
 			<summary>
@@ -1074,7 +1074,7 @@
 			</summary> 
 			<param name="runtime_guid"> GUID of the generated runtime file. </param>
 			<param name="new_alias"> New alias to be set. </param> 
-			<returns>1 if a new alias is successfully set; otherwise, 0.</returns>
+			<returns>true if a new alias is successfully set; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.setRuntimeAlias(char,char)">
 			<summary>
@@ -1082,7 +1082,7 @@
 			</summary> 
 			<param name="runtime_path"> Path to the generated runtime file. </param>
 			<param name="new_alias"> New alias to be set. </param> 
-			<returns>1 if a new alias is successfully set; otherwise, 0.</returns>
+			<returns>true if a new alias is successfully set; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.setRuntimeAlias(char,int,char)">
 			<summary>
@@ -1091,7 +1091,7 @@
 			<param name="asset_path"> Path to a non-native asset. </param>
 			<param name="index"> Index of the generated runtime file. </param>
 			<param name="new_alias"> New alias to be set. </param> 
-			<returns>1 if a new alias is successfully set; otherwise, 0.</returns>
+			<returns>true if a new alias is successfully set; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.setRuntimePrimary(char,int,int)">
 			<summary>
@@ -1100,7 +1100,7 @@
 			<param name="asset_path"> Path to a non-native asset. </param>
 			<param name="index"> Index of the generated runtime file. </param>
 			<param name="primary"> 1 to make the runtime file primary; 0 to unmake, if it is already set. </param> 
-			<returns>1 if the runtime file is successfully set as a primary one; otherwise, 0.There can be the only one primary runtime file, so when a new runtime file is set as the primary, the previous one is unset.</returns>
+			<returns>true if the runtime file is successfully set as a primary one; otherwise, false.There can be the only one primary runtime file, so when a new runtime file is set as the primary, the previous one is unset.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.setRuntimePrimary(char,int)">
 			<summary>
@@ -1108,7 +1108,7 @@
 			</summary> 
 			<param name="runtime_path"> Path to the generated runtime file. </param>
 			<param name="primary"> 1 to make the runtime file primary; 0 to unmake, if it is already set. </param> 
-			<returns>1 if the runtime file is successfully set as a primary one; otherwise, 0.There can be the only one primary runtime file, so when a new runtime file is set as the primary, the previous one is unset.</returns>
+			<returns>true if the runtime file is successfully set as a primary one; otherwise, false.There can be the only one primary runtime file, so when a new runtime file is set as the primary, the previous one is unset.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.setRuntimePrimary(Unigine.UGUID,int)">
 			<summary>
@@ -1116,7 +1116,7 @@
 			</summary> 
 			<param name="runtime_guid"> GUID of the generated runtime file. </param>
 			<param name="primary"> 1 to make the runtime file primary; 0 to unmake, if it is already set. </param> 
-			<returns>1 if the runtime file is successfully set as a primary one; otherwise, 0.There can be the only one primary runtime file, so when a new runtime file is set as the primary, the previous one is unset.</returns>
+			<returns>true if the runtime file is successfully set as a primary one; otherwise, false.There can be the only one primary runtime file, so when a new runtime file is set as the primary, the previous one is unset.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.setRuntimePrimary(Unigine.UGUID,int,int)">
 			<summary>
@@ -1125,7 +1125,147 @@
 			<param name="asset_guid"> GUID of a non-native asset. </param>
 			<param name="index"> Index of the generated runtime file. </param>
 			<param name="primary"> 1 to make the runtime file primary; 0 to unmake, if it is already set. </param> 
-			<returns>1 if the runtime file is successfully set as a primary one; otherwise, 0.There can be the only one primary runtime file, so when a new runtime file is set as the primary, the previous one is unset.</returns>
+			<returns>true if the runtime file is successfully set as a primary one; otherwise, false.There can be the only one primary runtime file, so when a new runtime file is set as the primary, the previous one is unset.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.setRuntimeParameter(Unigine.UGUID,int,char,char)">
+			<summary>
+			Sets a new parameter with a given name and value for the generated runtime file specified by the non-native asset GUID.
+			</summary> 
+			<param name="asset_guid"> GUID of a non-native asset. </param>
+			<param name="index"> Index of the generated runtime file in the range from 0 to the total number of runtimes generated for the asset. </param>
+			<param name="parameter_name"> Name of the parameter to be set. </param>
+			<param name="new_parameter_value"> Value of the parameter to be set. </param> 
+			<returns>true if a new parameter for the runtime is successfully set; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.setRuntimeParameter(char,int,char,char)">
+			<summary>
+			Sets a new parameter with a given name and value for the generated runtime file specified by the given non-native asset path.
+			</summary> 
+			<param name="asset_path"> Path to a non-native asset. </param>
+			<param name="index"> Index of the generated runtime file in the range from 0 to the total number of runtimes generated for the asset. </param>
+			<param name="parameter_name"> Name of the parameter to be set. </param>
+			<param name="new_parameter_value"> Value of the parameter to be set. </param> 
+			<returns>true if a new parameter for the runtime is successfully set; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.setRuntimeParameter(Unigine.UGUID,char,char)">
+			<summary>
+			Sets a new parameter with a given name and value for the generated runtime file with a given GUID.
+			</summary> 
+			<param name="runtime_guid"> GUID of the generated runtime file. </param>
+			<param name="parameter_name"> Name of the parameter to be set. </param>
+			<param name="new_parameter_value"> Value of the parameter to be set. </param> 
+			<returns>true if a new parameter for the runtime is successfully set; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.setRuntimeParameter(char,char,char)">
+			<summary>
+			Sets a new parameter with a given name and value for the generated runtime file with the specified path.
+			</summary> 
+			<param name="runtime_path"> Path to the generated runtime file. </param>
+			<param name="parameter_name"> Name of the parameter to be set. </param>
+			<param name="new_parameter_value"> Value of the parameter to be set. </param> 
+			<returns>true if a new parameter for the runtime is successfully set; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.getRuntimeParameter(Unigine.UGUID,int,char) const">
+			<summary>
+			Returns the value of the specified parameter of the specified runtime file, or an empty string if such parameter does not exist.
+			</summary> 
+			<param name="asset_guid"> GUID of the asset file for the runtime file of which the parameter is returned. </param>
+			<param name="index"> Index of the generated runtime file in the range from 0 to the total number of runtimes generated for the asset. </param>
+			<param name="parameter_name"> Name of the parameter to be returned. </param> 
+			<returns>Value of the specified parameter, or an empty string if such parameter does not exist.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.getRuntimeParameter(char,int,char) const">
+			<summary>
+			Returns the value of the specified parameter of the specified runtime file, or an empty string if such parameter does not exist.
+			</summary> 
+			<param name="asset_path"> Path to a non-native asset. </param>
+			<param name="index"> Index of the generated runtime file in the range from 0 to the total number of runtimes generated for the asset. </param>
+			<param name="parameter_name"> Name of the parameter to be returned. </param> 
+			<returns>Value of the specified parameter, or an empty string if such parameter does not exist.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.getRuntimeParameter(Unigine.UGUID,char) const">
+			<summary>
+			Returns the value of the specified parameter of the specified runtime file, or an empty string if such parameter does not exist.
+			</summary> 
+			<param name="runtime_guid"> GUID of the generated runtime file. </param>
+			<param name="parameter_name"> Name of the parameter to be returned. </param> 
+			<returns>Value of the specified parameter, or an empty string if such parameter does not exist.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.getRuntimeParameter(char,char) const">
+			<summary>
+			Returns the value of the specified parameter of the specified runtime file, or an empty string if such parameter does not exist.
+			</summary> 
+			<param name="runtime_path"> Path to the generated runtime file. </param>
+			<param name="parameter_name"> Name of the parameter to be returned. </param> 
+			<returns>Value of the specified parameter, or an empty string if such parameter does not exist.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.hasRuntimeParameter(Unigine.UGUID,int,char) const">
+			<summary>
+			Checks if the specified runtime file has the specified parameter.
+			</summary> 
+			<param name="asset_guid"> GUID of the asset file for the runtime file of which the parameter is checked. </param>
+			<param name="index"> Index of the generated runtime file in the range from 0 to the total number of runtimes generated for the asset. </param>
+			<param name="parameter_name"> Name of the parameter to be checked. </param> 
+			<returns>true if the runtime file has the specified parameter; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.hasRuntimeParameter(char,int,char) const">
+			<summary>
+			Checks if the specified runtime file has the specified parameter.
+			</summary> 
+			<param name="asset_path"> Path to a non-native asset. </param>
+			<param name="index"> Index of the generated runtime file in the range from 0 to the total number of runtimes generated for the asset. </param>
+			<param name="parameter_name"> Name of the parameter to be checked. </param> 
+			<returns>true if the runtime file has the specified parameter; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.hasRuntimeParameter(Unigine.UGUID,char) const">
+			<summary>
+			Checks if the specified runtime file has the specified parameter.
+			</summary> 
+			<param name="runtime_guid"> GUID of the generated runtime file. </param>
+			<param name="parameter_name"> Name of the parameter to be checked. </param> 
+			<returns>true if the runtime file has the specified parameter; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.hasRuntimeParameter(char,char) const">
+			<summary>
+			Checks if the specified runtime file has the specified parameter.
+			</summary> 
+			<param name="runtime_path"> Path to the generated runtime file. </param>
+			<param name="parameter_name"> Name of the parameter to be checked. </param> 
+			<returns>true if the runtime file has the specified parameter; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.removeRuntimeParameter(Unigine.UGUID,int,char) const">
+			<summary>
+			Removes the specified parameter of the runtime file of the asset with the specified GUID.
+			</summary> 
+			<param name="asset_guid"> GUID of the asset file for the runtime file of which the parameter is removed. </param>
+			<param name="index"> Index of the generated runtime file in the range from 0 to the total number of runtimes generated for the asset. </param>
+			<param name="parameter_name"> Name of the parameter to be removed. </param> 
+			<returns>true if the specified parameter of the runtime file is successfully deleted; false if such parameter does not exist.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.removeRuntimeParameter(char,int,char) const">
+			<summary>
+			Removes the specified parameter of the runtime file of the asset with the specified path.
+			</summary> 
+			<param name="asset_path"> Path to a non-native asset. </param>
+			<param name="index"> Index of the generated runtime file in the range from 0 to the total number of runtimes generated for the asset. </param>
+			<param name="parameter_name"> Name of the parameter to be removed. </param> 
+			<returns>true if the specified parameter of the runtime file is successfully deleted; false if such parameter does not exist.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.removeRuntimeParameter(Unigine.UGUID,char) const">
+			<summary>
+			Removes the specified parameter of the runtime file with the specified GUID.
+			</summary> 
+			<param name="runtime_guid"> GUID of the generated runtime file. </param>
+			<param name="parameter_name"> Name of the parameter to be removed. </param> 
+			<returns>true if the specified parameter of the runtime file is successfully deleted; false if such parameter does not exist.</returns>
+		</member>
+		<member name="M:Unigine.FileSystemAssets.removeRuntimeParameter(char,char) const">
+			<summary>
+			Removes the specified parameter of the runtime file with the specified path.
+			</summary> 
+			<param name="runtime_path"> Path to the generated runtime file. </param>
+			<param name="parameter_name"> Name of the parameter to be removed. </param> 
+			<returns>true if the specified parameter of the runtime file is successfully deleted; false if such parameter does not exist.</returns>
 		</member>
 		<member name="M:Unigine.FileSystemMount.getAccess">
 			<summary>

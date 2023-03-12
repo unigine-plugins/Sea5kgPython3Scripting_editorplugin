@@ -169,7 +169,7 @@ public:
 		ret += length * sizeof(Node);
 		return ret;
 	}
-	UNIGINE_INLINE int empty() const { return (length == 0); }
+	UNIGINE_INLINE bool empty() const { return (length == 0); }
 	UNIGINE_INLINE void clear()
 	{
 		length = 0;

@@ -169,5 +169,27 @@
 			Updates all widgets belonging to the user interface. This function should be called, for example, after change of the interface language.
 			</summary>  
 		</member>
+		<member name="M:Unigine.UserInterface.setGui(Unigine.Ptr{Gui})">
+			<summary>
+			Sets a new Gui instance to be used for the UserInterface.
+			</summary> 
+			<param name="gui"> Gui instance to be used for the UserInterface. </param> 
+		</member>
+		<member name="M:Unigine.UserInterface.getGui const">
+			<summary>
+			Returns a Gui instance for the UserInterface.
+			</summary>  
+			<returns>Gui instance currently used for the UserInterface.</returns>
+		</member>
+		<member name="M:Unigine.UserInterface.setLifetime(Widget::LIFETIME)">
+			<summary>
+			Sets the lifetime management type for the UserInterface. By default, the LIFETIME_ENGINE type is used.
+			</summary>  
+		</member>
+		<member name="M:Unigine.UserInterface.getLifetime const">
+			<summary>
+			Returns the lifetime management type for the root of the UserInterface, or for the UserInterface itself (if it is not a child for another UserInterface).					Lifetime of each UserInterface in the hierarchy is defined by it's root. Thus, lifetime management type set for a child UserInterface that differs from the one set for the root is ignored.
+			</summary>  
+		</member>
 	</members>
 </doc>

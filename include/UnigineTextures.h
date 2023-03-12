@@ -95,68 +95,67 @@ public:
 		FORMAT_SRGB = 1 << 0,
 		FORMAT_SIGNED = 1 << 1,
 		FORMAT_INTEGER = 1 << 2,
-		FORMAT_MASK = FORMAT_SRGB | FORMAT_SIGNED | FORMAT_INTEGER,
+		FORMAT_MIPMAPS = 1 << 3,
+		FORMAT_MASK = FORMAT_SRGB | FORMAT_SIGNED | FORMAT_INTEGER | FORMAT_MIPMAPS,
 		// multisample
-		MULTISAMPLE_2 = 1 << 3,
-		MULTISAMPLE_4 = 1 << 4,
-		MULTISAMPLE_8 = 1 << 5,
-		MULTISAMPLE_16 = 1 << 6,
-		MULTISAMPLE_MASK = MULTISAMPLE_2 | MULTISAMPLE_4 | MULTISAMPLE_8 | MULTISAMPLE_16,
+		FORMAT_MULTISAMPLE_2 = 1 << 4,
+		FORMAT_MULTISAMPLE_4 = 1 << 5,
+		FORMAT_MULTISAMPLE_8 = 1 << 6,
+		FORMAT_MULTISAMPLE_16 = 1 << 7,
+		FORMAT_MULTISAMPLE_MASK = FORMAT_MULTISAMPLE_2 | FORMAT_MULTISAMPLE_4 | FORMAT_MULTISAMPLE_8 | FORMAT_MULTISAMPLE_16,
 		// usage flag
-		USAGE_READWRITE = 1 << 7,
-		USAGE_RENDER = 1 << 8,
-		USAGE_IMMUTABLE = 1 << 9,
-		USAGE_DYNAMIC = 1 << 10,
-		USAGE_STAGING = 1 << 11,
-		USAGE_MASK = USAGE_READWRITE | USAGE_RENDER | USAGE_IMMUTABLE | USAGE_DYNAMIC | USAGE_STAGING,
-		FORMAT_FLAGS = FORMAT_MASK | MULTISAMPLE_MASK | USAGE_MASK,
+		FORMAT_USAGE_UNORDERED_ACCESS = 1 << 8,
+		FORMAT_USAGE_RENDER = 1 << 9,
+		FORMAT_USAGE_IMMUTABLE = 1 << 10,
+		FORMAT_USAGE_DYNAMIC = 1 << 11,
+		FORMAT_USAGE_STAGING = 1 << 12,
+		FORMAT_USAGE_MASK = FORMAT_USAGE_UNORDERED_ACCESS | FORMAT_USAGE_RENDER | FORMAT_USAGE_IMMUTABLE | FORMAT_USAGE_DYNAMIC | FORMAT_USAGE_STAGING,
+		FORMAT_FLAGS = FORMAT_MASK | FORMAT_MULTISAMPLE_MASK | FORMAT_USAGE_MASK,
 	};
 
 	enum
 	{
 		// wrapping
-		WRAP_CLAMP_X = 1 << 12,
-		WRAP_CLAMP_Y = 1 << 13,
-		WRAP_CLAMP_Z = 1 << 14,
-		WRAP_CLAMP = WRAP_CLAMP_X | WRAP_CLAMP_Y | WRAP_CLAMP_Z,
-		WRAP_BORDER_X = 1 << 15,
-		WRAP_BORDER_Y = 1 << 16,
-		WRAP_BORDER_Z = 1 << 17,
-		WRAP_BORDER_ONE = 1 << 18,
-		WRAP_BORDER = WRAP_BORDER_X | WRAP_BORDER_Y | WRAP_BORDER_Z,
-		WRAP_MASK = WRAP_CLAMP | WRAP_BORDER | WRAP_BORDER_ONE,
+		SAMPLER_WRAP_CLAMP_X = 1 << 13,
+		SAMPLER_WRAP_CLAMP_Y = 1 << 14,
+		SAMPLER_WRAP_CLAMP_Z = 1 << 15,
+		SAMPLER_WRAP_CLAMP = SAMPLER_WRAP_CLAMP_X | SAMPLER_WRAP_CLAMP_Y | SAMPLER_WRAP_CLAMP_Z,
+		SAMPLER_WRAP_BORDER_X = 1 << 16,
+		SAMPLER_WRAP_BORDER_Y = 1 << 17,
+		SAMPLER_WRAP_BORDER_Z = 1 << 18,
+		SAMPLER_WRAP_BORDER_ONE = 1 << 19,
+		SAMPLER_WRAP_BORDER = SAMPLER_WRAP_BORDER_X | SAMPLER_WRAP_BORDER_Y | SAMPLER_WRAP_BORDER_Z,
+		SAMPLER_WRAP_MASK = SAMPLER_WRAP_CLAMP | SAMPLER_WRAP_BORDER | SAMPLER_WRAP_BORDER_ONE,
 		// filter
-		FILTER_POINT = 1 << 19,
-		FILTER_LINEAR = 1 << 20,
-		FILTER_BILINEAR = 1 << 21,
-		FILTER_TRILINEAR = 1 << 22,
-		FILTER_MASK = FILTER_POINT | FILTER_LINEAR | FILTER_BILINEAR | FILTER_TRILINEAR,
+		SAMPLER_FILTER_POINT = 1 << 20,
+		SAMPLER_FILTER_LINEAR = 1 << 21,
+		SAMPLER_FILTER_BILINEAR = 1 << 22,
+		SAMPLER_FILTER_TRILINEAR = 1 << 23,
+		SAMPLER_FILTER_MASK = SAMPLER_FILTER_POINT | SAMPLER_FILTER_LINEAR | SAMPLER_FILTER_BILINEAR | SAMPLER_FILTER_TRILINEAR,
 		// anisotropy
-		ANISOTROPY_1 = 1 << 23,
-		ANISOTROPY_2 = 1 << 24,
-		ANISOTROPY_4 = 1 << 25,
-		ANISOTROPY_8 = 1 << 26,
-		ANISOTROPY_16 = 1 << 27,
-		ANISOTROPY_MASK = ANISOTROPY_1 | ANISOTROPY_2 | ANISOTROPY_4 | ANISOTROPY_8 | ANISOTROPY_16,
+		SAMPLER_ANISOTROPY_1 = 1 << 24,
+		SAMPLER_ANISOTROPY_2 = 1 << 25,
+		SAMPLER_ANISOTROPY_4 = 1 << 26,
+		SAMPLER_ANISOTROPY_8 = 1 << 27,
+		SAMPLER_ANISOTROPY_16 = 1 << 28,
+		SAMPLER_ANISOTROPY_MASK = SAMPLER_ANISOTROPY_1 | SAMPLER_ANISOTROPY_2 | SAMPLER_ANISOTROPY_4 | SAMPLER_ANISOTROPY_8 | SAMPLER_ANISOTROPY_16,
 		// shadow
-		SHADOW_COMPARE = 1 << 28,
-		SHADOW_MASK = SHADOW_COMPARE,
-		// default flags
-		DEFAULT_FLAGS = FILTER_LINEAR,
-		SAMPLER_FLAGS = WRAP_MASK | FILTER_MASK | ANISOTROPY_MASK | SHADOW_MASK,
+		SAMPLER_SHADOW_COMPARE = 1 << 29,
+		SAMPLER_SHADOW_MASK = SAMPLER_SHADOW_COMPARE,
+		SAMPLER_FLAGS = SAMPLER_WRAP_MASK | SAMPLER_FILTER_MASK | SAMPLER_ANISOTROPY_MASK | SAMPLER_SHADOW_MASK,
 	};
 	static Ptr<Texture> create();
-	bool create(const Ptr<Image> &image, int flags = 1<<20);
-	bool create2D(int width, int height, int format, int flags = 1<<20);
-	bool create3D(int width, int height, int depth, int format, int flags = 1<<20);
-	bool createCube(int width, int height, int format, int flags = 1<<20);
-	bool create2DArray(int width, int height, int num_layers, int format, int flags = 1<<20);
-	bool createCubeArray(int width, int height, int num_layers, int format, int flags = 1<<20);
+	bool create(const Ptr<Image> &image, int flags = 1<<21);
+	bool create2D(int width, int height, int format, int flags = 1<<21);
+	bool create3D(int width, int height, int depth, int format, int flags = 1<<21);
+	bool createCube(int width, int height, int format, int flags = 1<<21);
+	bool create2DArray(int width, int height, int num_layers, int format, int flags = 1<<21);
+	bool createCubeArray(int width, int height, int num_layers, int format, int flags = 1<<21);
 	int fromGLTexture2D(unsigned int tex_id, int width, int height, int format, int flags);
 	int fromGLTexture2D(unsigned int tex_id, int width, int height, int format, int internal_format, int flags);
-	int fromD3D11Texture2D(void * ptr, int width, int height, int format, int flags);
-	int fromD3D11Texture2D(void * ptr, int width, int height, int format, int internal_format, int flags);
-	bool load(const char *name, int flags = 1<<20);
+	int fromD3D11Texture2D(void *ptr, int width, int height, int format, int flags);
+	int fromD3D11Texture2D(void *ptr, int width, int height, int format, int internal_format, int flags);
+	bool load(const char *name, int flags = 1<<21);
 	bool setImage(const Ptr<Image> &image);
 	bool setImage2D(const Ptr<Image> &image, int offset_x, int offset_y, int texture_format = -1);
 	bool setImageLayer(const Ptr<Image> &image, int layer, int texture_format = -1);
@@ -183,6 +182,8 @@ public:
 	bool isRawFormat() const;
 	bool isUCharFormat() const;
 	bool isUShortFormat() const;
+	bool isUIntFormat() const;
+	bool isIntegerFormat() const;
 	bool isHalfFormat() const;
 	bool isFloatFormat() const;
 	bool isCombinedFormat() const;
@@ -196,17 +197,18 @@ public:
 	int getNumMipmaps() const;
 	int getNumLayers() const;
 	int getNumFaces() const;
-	void setFlags(int flags);
-	int getFlags() const;
-	bool isBilinear() const;
+	void setSamplerFlags(int flags);
+	int getSamplerFlags() const;
+	int getFormatFlags() const;
+	int getAllFlags() const;
 	bool isAnisotropy() const;
 	bool getMultisample() const;
 	bool createMipmaps();
-	void clearBuffer(const Math::vec4& color);
+	void clearBuffer(const Math::vec4 &color);
 	void clearBuffer();
 	void swap(const Ptr<Texture> &texture);
 	bool copy(const Ptr<Texture> &src);
-	bool copyRegion(const Ptr<Texture> &src, const Math::ivec3& src_coords, int src_level, const Math::ivec3& dest_coords, int dest_level, int width, int height, int depth);
+	bool copyRegion(const Ptr<Texture> &src, const Math::ivec3 &src_coords, int src_level, const Math::ivec3 &dest_coords, int dest_level, int width, int height, int depth);
 	bool copy2D(int dest_x = 0, int dest_y = 0, int src_x = 0, int src_y = 0, int w = -1, int h = -1);
 	bool copyCube(int face, int dest_x = 0, int dest_y = 0, int src_x = 0, int src_y = 0, int w = -1, int h = -1);
 	void render2D(float x0 = -1.0f, float y0 = -1.0f, float x1 = 1.0f, float y1 = 1.0f);
@@ -250,9 +252,9 @@ public:
 		STAGING = 3,
 	};
 	static Ptr<StructuredBuffer> create();
-	int create(int flags, void * data, unsigned int structure_size, unsigned int num_elements);
+	int create(int flags, void *data, unsigned int structure_size, unsigned int num_elements);
 	int create(int flags, unsigned int structure_size, unsigned int num_elements);
-	int getData(void * data);
+	int getData(void *data);
 	void clear();
 	void destroy();
 	void clearBuffer();
@@ -285,14 +287,28 @@ public:
 	static Ptr<RenderTarget> create();
 	void destroy();
 	Ptr<Texture> getColorTexture(int slot) const;
-	void bindColorTexture(int slot, const Ptr<Texture> &texture, int array_slice = -1, int texture_slice = -1, int mip_level = 0);
+	void bindColorTexture(int slot, const Ptr<Texture> &texture);
+	void bindColorTexture2D(int slot, const Ptr<Texture> &texture, int mip = 0);
+	void bindColorTexture2DArray(int slot, const Ptr<Texture> &texture, int layer = -1, int mip = 0);
+	void bindColorTextureCube(int slot, const Ptr<Texture> &texture, int face = -1, int mip = 0);
+	void bindColorTextureCubeArray(int slot, const Ptr<Texture> &texture, int layer = -1, int face = -1, int mip = 0);
+	void bindColorTexture3D(int slot, const Ptr<Texture> &texture, int depth = -1, int mip = 0);
 	void unbindColorTexture(int slot);
 	void unbindColorTextures();
 	Ptr<Texture> getDepthTexture() const;
-	void bindDepthTexture(const Ptr<Texture> &texture, int array_slice = -1, int texture_slice = -1, int mip_level = 0);
+	void bindDepthTexture(const Ptr<Texture> &texture);
+	void bindDepthTexture2D(const Ptr<Texture> &texture, int mip = 0);
+	void bindDepthTexture2DArray(const Ptr<Texture> &texture, int layer = -1, int mip = 0);
+	void bindDepthTextureCube(const Ptr<Texture> &texture, int face = -1, int mip = 0);
+	void bindDepthTextureCubeArray(const Ptr<Texture> &texture, int layer = -1, int face = -1, int mip = 0);
 	void unbindDepthTexture();
 	Ptr<Texture> getUnorderedAccessTexture(int slot) const;
 	void bindUnorderedAccessTexture(int slot, const Ptr<Texture> &texture, bool writeonly = false, bool atomic = false);
+	void bindUnorderedAccessTexture2D(int slot, const Ptr<Texture> &texture, bool writeonly = false, bool atomic = false, int mip = 0);
+	void bindUnorderedAccessTexture2DArray(int slot, const Ptr<Texture> &texture, bool writeonly = false, bool atomic = false, int layer = -1, int mip = 0);
+	void bindUnorderedAccessTextureCube(int slot, const Ptr<Texture> &texture, bool writeonly = false, bool atomic = false, int face = -1, int mip = 0);
+	void bindUnorderedAccessTextureCubeArray(int slot, const Ptr<Texture> &texture, bool writeonly = false, bool atomic = false, int layer = -1, int face = -1, int mip = 0);
+	void bindUnorderedAccessTexture3D(int slot, const Ptr<Texture> &texture, bool writeonly = false, bool atomic = false, int depth = -1, int mip = 0);
 	void unbindUnorderedAccessTexture(int slot);
 	void unbindUnorderedAccessTextures();
 	Ptr<StructuredBuffer> getStructuredBuffer(int slot) const;
@@ -310,22 +326,24 @@ public:
 typedef Ptr<RenderTarget> RenderTargetPtr;
 
 
-class UNIGINE_API TextureCurve : public APIInterface
+class UNIGINE_API TextureRamp : public APIInterface
 {
 public:
-	static Ptr<TextureCurve> create();
-	static Ptr<TextureCurve> create(int num_channels, int resolution, int flags);
-	static Ptr<TextureCurve> create(const Ptr<TextureCurve> &texture_curve);
+	static Ptr<TextureRamp> create();
+	static Ptr<TextureRamp> create(int num_channels, int resolution, int flags);
+	static Ptr<TextureRamp> create(const Ptr<TextureRamp> &texture_ramp);
 	Ptr<Texture> getTexture() const;
 	void releaseTexture();
-	void copy(const Ptr<TextureCurve> &src_texture_curve);
-	Ptr<TextureCurve> clone() const;
+	void copy(const Ptr<TextureRamp> &src_texture_ramp);
+	Ptr<TextureRamp> clone() const;
 	Ptr<Curve2d> getCurve(int channel) const;
 	void setDefaultCurve(int channel, const Ptr<Curve2d> &default_curve);
-	bool isDefault(int channel) const;
-	bool isDefaultAll() const;
-	void save(const Ptr<Xml> &xml);
+	bool isDefault(int channel);
+	bool isDefaultAll();
+	void save(const Ptr<Xml> &xml) const;
 	void load(const Ptr<Xml> &xml);
+	void save(const Ptr<Json> &json) const;
+	void load(const Ptr<Json> &json);
 	void saveState(const Ptr<Stream> &stream);
 	void restoreState(const Ptr<Stream> &stream);
 	void setNumChannels(int channels);
@@ -334,10 +352,10 @@ public:
 	int getResolution() const;
 	void setFlags(int flags);
 	int getFlags() const;
-	void *addChangedCallback(Unigine::CallbackBase *func);
+	void *addChangedCallback(CallbackBase *func);
 	bool removeChangedCallback(void *id);
 	void clearChangedCallbacks();
 };
-typedef Ptr<TextureCurve> TextureCurvePtr;
+typedef Ptr<TextureRamp> TextureRampPtr;
 
 } // namespace Unigine

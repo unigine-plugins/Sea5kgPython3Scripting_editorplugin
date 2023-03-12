@@ -66,8 +66,8 @@ public:
 	static int checkNode(int id);
 	static Ptr<Node> getNode(int id);
 	static Ptr<Node> takeNode(int id);
-	static int getNodes(int id, Vector< Ptr<Node> > &nodes);
-	static int takeNodes(int id, Vector< Ptr<Node> > &nodes);
+	static int getNodes(int id, Vector<Ptr<Node>> &nodes);
+	static int takeNodes(int id, Vector<Ptr<Node>> &nodes);
 	static float getTotalTime();
 	static int getNumQueuedData();
 	static int getNumQueuedFiles();
@@ -81,7 +81,7 @@ public:
 	static int getNumLoadedMeshes();
 	static int getNumLoadedNodes();
 	static int getNumLoadedResources();
-	static void *addCallback(AsyncQueue::CALLBACK_INDEX callback, Unigine::CallbackBase2< const char *, int > *func);
+	static void *addCallback(AsyncQueue::CALLBACK_INDEX callback, CallbackBase2<const char *, int> *func);
 	static bool removeCallback(AsyncQueue::CALLBACK_INDEX callback, void *id);
 	static void clearCallbacks(AsyncQueue::CALLBACK_INDEX callback);
 };

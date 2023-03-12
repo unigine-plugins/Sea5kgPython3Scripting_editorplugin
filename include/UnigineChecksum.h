@@ -769,6 +769,21 @@ public:
 	UNIGINE_INLINE static int MD5(const void *data, int size, bool big_endian = true) { return MD5::calculate(data, size, big_endian); }
 
 	/**
+		* Calculates the 64-bit MD5 checksum.
+		*
+		* @param data The input data pointer.
+		* @param size The input data size in bytes.
+		* @param big_endian Flag to control endianness of the result.
+		* @return The 64-bit MD5 checksum.
+		*/
+	UNIGINE_INLINE static unsigned long long MD5_64(const void *data, int size, bool big_endian = true)
+	{
+		unsigned long long v[2];
+		MD5::calculate((unsigned int *)v, data, size, big_endian);
+		return v[0] ^ (v[1] + 0x9ddfea08eb382d69ULL + (v[1] << 16) + (v[1] >> 12));
+	}
+
+	/**
 		* Calculates the 128-bit MD5 checksum.
 		*
 		* @param value The 128-bit MD5 checksum (array of 4 unsigned int elements).
@@ -777,7 +792,7 @@ public:
 		* @param big_endian Flag to control endianness of the result.
 		*/
 	UNIGINE_INLINE static void MD5(unsigned int *value, const void *data, int size, bool big_endian = true) { MD5::calculate(value, data, size, big_endian); }
-
+	
 	/**
 		* Calculates the 32-bit SHA1 checksum.
 		*

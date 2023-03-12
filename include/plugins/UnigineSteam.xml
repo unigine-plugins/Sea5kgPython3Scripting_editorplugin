@@ -58,11 +58,12 @@
 			</summary> 
 			<param name="dialog"> The dialog to open. Valid options are: "friends", "community", "players", "settings", "officialgamegroup", "stats", "achievements". </param> 
 		</member>
-		<member name="M:Unigine.Plugins.Steam.showOverlayToWebPage(char)">
+		<member name="M:Unigine.Plugins.Steam.showOverlayToWebPage(char,Steam::OVERLAY_TO_WEB_PAGE_MODE)">
 			<summary>
 			Activates Steam Overlay web browser directly to the specified URL.
 			</summary> 
-			<param name="url"> The webpage to open (a fully qualified address with the protocol is required). </param> 
+			<param name="url"> The webpage to open (a fully qualified address with the protocol is required). </param>
+			<param name="mode"> Overlay mode to be set. One of the OVERLAY_TO_WEB_PAGE_MODE_* values. </param> 
 		</member>
 		<member name="M:Unigine.Plugins.Steam.showOverlayToUser(char,unsignedlonglong)">
 			<summary>

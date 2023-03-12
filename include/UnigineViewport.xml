@@ -331,6 +331,13 @@
 			<param name="camera_right"> Camera that renders an image for the right eye. </param>
 			<param name="stereo_material"> List of names of stereo materials to be used. </param> 
 		</member>
+		<member name="M:Unigine.Viewport.renderStereoPeripheral(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Texture},Unigine.Ptr{Unigine.Texture},Unigine.Ptr{Unigine.Texture},Unigine.Ptr{Unigine.Texture},char)">
+			<summary>
+			</summary> 
+			<param name="camera_left"> Camera that renders an image for the left eye. </param>
+			<param name="camera_right"> Camera that renders an image for the right eye. </param>
+			<param name="stereo_material"> List of names of stereo materials to be used. </param> 
+		</member>
 		<member name="M:Unigine.Viewport.renderTexture2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Texture})">
 			<summary>
 			Renders an image from the camera to the specified 2D texture.
@@ -403,7 +410,7 @@
 			<summary>
 			Sets the type of lighting for the render of a node (used for impostor grabbing, node preview rendering, etc.).
 			</summary> 
-			<param name="usage"> The lighting type. Can be one of the following:0 - USAGE_WORLD_LIGHT (use lighting from the auxiliary virtual scene containing one LightWorld with 45 degrees slope angles along all axes, scattering is not used).1 - USAGE_AUX_LIGHT (use the node lighting).2 - USAGE_NODE_LIGHT (use lighting from the LightWorld set in the current loaded world). </param> 
+			<param name="usage"> The lighting type. Can be one of the following:0 - USAGE_WORLD_LIGHT (use lighting from the LightWorld set in the current loaded world).1 - USAGE_AUX_LIGHT (use lighting from the auxiliary virtual scene containing one LightWorld with 45 degrees slope angles along all axes, scattering is not used).2 - USAGE_NODE_LIGHT (use the node lighting). </param> 
 		</member>
 		<member name="M:Unigine.Viewport.setUseTAAOffset(bool)">
 			<summary>
@@ -472,6 +479,11 @@
 			Disables auto white balance in the process of rendering.
 		</summary>
 		</member>
+		<member name="F:Unigine.Viewport.USAGE_WORLD_LIGHT">
+			<summary>
+			Use lighting from the LightWorld set in the current loaded world.
+		</summary>
+		</member>
 		<member name="F:Unigine.Viewport.USAGE_AUX_LIGHT">
 			<summary>
 			Use lighting from the auxiliary virtual scene containing one LightWorld (with 45, 45 and 45 degrees slope angles), scattering is not used.
@@ -480,11 +492,6 @@
 		<member name="F:Unigine.Viewport.USAGE_NODE_LIGHT">
 			<summary>
 			Use the node lighting.
-		</summary>
-		</member>
-		<member name="F:Unigine.Viewport.USAGE_WORLD_LIGHT">
-			<summary>
-			Use lighting from the LightWorld set in the current loaded world.
 		</summary>
 		</member>
 		<member name="F:Unigine.Viewport.RENDER_DEPTH">

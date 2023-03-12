@@ -779,9 +779,9 @@
 			<summary>
 			</summary>  
 		</member>
-		<member name="F:Unigine.Plugins.IG.Manager.DEBUG_MODE_REGION_BOUND">
+		<member name="F:Unigine.Plugins.IG.Manager.DEBUG_MODE_METEO">
 			<summary>
-			Debug mode visualizing region bounds.
+			Debug mode visualizing meteo information.
 		</summary>
 		</member>
 		<member name="F:Unigine.Plugins.IG.Manager.DEBUG_MODE_ENTITY_INFO">
@@ -3715,6 +3715,18 @@
 			Returns the current size of particles used to visualize the precipitation effect (snowflakes, droplets, etc.).
 			</summary>  
 			<returns>Particle size, in units.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.IG.WeatherLayerPrecipitation.setParticlesSizeSmoothBySpeed(float)">
+			<summary>
+			Sets the mode of smooth gradual change of the particles size by the specified rate (in units per second). The particles size changes gradually from the current to target value by the specified value during each second, such smoothing is performed to make changes more realistic. Moreover, each value can be changed with its own rate (the rain starting fast with a slowly changing cloud coverage). This method fits best when the difference between the target and current value is either too big (e.g. visibility distance change from 10m to 1km) or too small (e.g. from 1m to 1.05m), avoiding too fast or too slow changes. For other cases you can also choose another mode "by time" to change the value from the current to target during the specified time interval via the setParticlesSizeSmoothByTime().
+			</summary> 
+			<param name="unit_per_sec"> Constant rate (in units per second) with which the value gradually changes from the current to target. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.IG.WeatherLayerPrecipitation.setParticlesSizeSmoothByTime(float)">
+			<summary>
+			Sets the mode of smooth gradual change of the particles size by the specified time interval. The particles size changes gradually from the current to target value during this interval, such smoothing is performed to make changes more realistic. Moreover, each value can be changed with its own rate (the rain starting fast with a slowly changing cloud coverage). When the value of 0 is set, the value changes instantly. If the difference between the target and current value is too big (e.g. visibility distance change from 10m to 1km), the changes in this mode may be too fast and too noticeable, or on the contrary they might be too slow if the difference is too small (e.g. from 1m to 1.05m). In this case you can choose another mode to change the value with a specified rate via the setParticlesSizeSmoothBySpeed().
+			</summary> 
+			<param name="sec"> Time interval (in seconds) during which the value changes from the current to target. </param> 
 		</member>
 	</members>
 </doc>

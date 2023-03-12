@@ -14,19 +14,20 @@
 #pragma once
 
 
-#include <editor/EditorGlobal.h>
+#include <UnigineVersion.h>
+#include <editor/UnigineEditorGlobal.h>
 
 #include <QtPlugin>
 
 
-namespace Editor
+namespace UnigineEditor
 {
 
 
 /// <summary>
 /// This class is used for plugin interface implementation when creating Editor plugins. It is a base class for all Editor plugins.
 /// </summary>
-class EDITOR_API Plugin
+class UNIGINE_EDITOR_API Plugin
 {
 public:
 	Plugin();
@@ -39,8 +40,15 @@ public:
 	virtual void shutdown() = 0;
 };
 
+} // namespace UnigineEditor
 
-} // namespace Editor
+#if defined(USE_DOUBLE) || defined(UNIGINE_DOUBLE)
+	#define UNIGINE_EDITOR_PLUGIN_PRECISION "double"
+#else
+	#define UNIGINE_EDITOR_PLUGIN_PRECISION "float"
+#endif
 
-Q_DECLARE_INTERFACE(Editor::Plugin, "com.unigine.EditorPlugin")
+#define UNIGINE_EDITOR_PLUGIN_IID \
+	"com.unigine.EditorPlugin." UNIGINE_EDITOR_PLUGIN_PRECISION "." UNIGINE_VERSION
 
+Q_DECLARE_INTERFACE(UnigineEditor::Plugin, UNIGINE_EDITOR_PLUGIN_IID)

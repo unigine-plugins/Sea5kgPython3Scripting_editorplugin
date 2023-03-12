@@ -13,15 +13,19 @@
 
 #pragma once
 
-#include <editor/EditorGlobal.h>
+#include <editor/UnigineEditorGlobal.h>
 
 #include <UnigineCallback.h>
 
 #include <QWidget>
 
-namespace Editor { class RenderWindowPrivate; }
 
-namespace Editor
+////////////////////////////////////////////////////////////////////////////////
+// Forward decl.
+////////////////////////////////////////////////////////////////////////////////
+namespace UnigineEditor { struct RenderWindowPrivate; }
+
+namespace UnigineEditor
 {
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -31,7 +35,7 @@ namespace Editor
 /// can be rendered by the Engine. For example, to render node or texture
 /// previews, frame sequences, etc.
 /// </summary>
-class EDITOR_API RenderWindow : public QWidget
+class UNIGINE_EDITOR_API RenderWindow : public QWidget
 {
 	Q_OBJECT
 	Q_DISABLE_COPY(RenderWindow)
@@ -51,7 +55,7 @@ public:
 	};
 
 public:
-	explicit RenderWindow(QWidget *parent = nullptr);
+	explicit RenderWindow(QWidget *parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
 	~RenderWindow() override;
 
 	struct Callback;
@@ -217,6 +221,7 @@ protected:
 	/// the Update callback (<see cref="addUpdateCallback"/>).
 	/// </summary>
 	void resizeEvent(QResizeEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
 	/// <summary>You can inherit your class from RenderWindow and
 	/// override this method to define actions to be performed on
 	/// getting focus, i.e., receiving the corresponding focus
@@ -281,15 +286,17 @@ protected:
 	/// </summary>
 	void dropEvent(QDropEvent *event) override;
 
+protected:
+	bool is_rendering() const;
+
 private:
 	void do_update();
 	void do_render();
 	void do_swap();
-	bool is_paused_rendering() const;
 
 private:
-	friend class RenderWindowPrivate;
-	RenderWindowPrivate *const d;
+	friend struct ::UnigineEditor::RenderWindowPrivate;
+	::UnigineEditor::RenderWindowPrivate *d;
 };
 
-} // namespace Editor
+} // namespace UnigineEditor

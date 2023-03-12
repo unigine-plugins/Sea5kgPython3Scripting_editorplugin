@@ -23,12 +23,6 @@
 			<param name="num"> The navigation area number. </param> 
 			<returns>The navigation area.</returns>
 		</member>
-		<member name="M:Unigine.Navigation.getNavigation">
-			<summary>
-			Returns the specified connected navigation area.
-			</summary>  
-			<returns>The navigation area.</returns>
-		</member>
 		<member name="M:Unigine.Navigation.setNavigationMask(int)">
 			<summary>
 			Sets a navigation mask for the navigation area. The navigation mask of the navigation area must match the navigation mask of the route that is calculated within it. 			Otherwise, the area will not participate in pathfinding. By using the navigation mask, you can specify navigation ares that must be ignored during pathfinding.
@@ -148,7 +142,7 @@
 			</summary> 
 			<param name="path"> A mesh name to be set. </param>
 			<param name="force_load"> Force flag.If 1 is specified, the mesh with the new name will be loaded immediately.If 0 is specified, only the mesh name will be updated. </param> 
-			<returns>1 if:The current mesh name coincides the new name.The mesh with the new name has been loaded successfully.The force flag is set to 0.In other cases,0.</returns>
+			<returns>true if:The current mesh name coincides the new name.The mesh with the new name has been loaded successfully.The force flag is set to 0. In other cases,false.</returns>
 		</member>
 		<member name="M:Unigine.NavigationMesh.getMeshName">
 			<summary>
@@ -175,12 +169,6 @@
 			Returns the type of the node.
 			</summary>  
 			<returns>Navigation type identifier.</returns>
-		</member>
-		<member name="M:Unigine.NavigationMesh.setMeshName(char)">
-			<summary>
-			Saves the name of the mesh used as a base for the navigation mesh.					A mesh used as a base for the navigation mesh should meet the requirements described here.
-			</summary> 
-			<param name="name"> A mesh name to be set. </param> 
 		</member>
 		<member name="M:Unigine.NavigationSector.#ctor(Unigine.Math.vec3)">
 			<summary>

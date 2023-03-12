@@ -17,6 +17,11 @@
 #include "UnigineMathLibVec2.h"
 #include "UnigineMathLibDVec2.h"
 
+#ifdef __GNUC__
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wreorder"
+#endif
+
 namespace Unigine
 {
 namespace Math
@@ -425,3 +430,7 @@ UNIGINE_INLINE mat2 transpose(const mat2 &m)
 
 }
 }
+
+#ifdef __GNUC__
+	#pragma GCC diagnostic pop
+#endif

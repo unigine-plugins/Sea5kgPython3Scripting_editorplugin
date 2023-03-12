@@ -15,19 +15,22 @@
 
 #pragma once
 
-#include <UnigineMathLib.h>
 #include <UnigineEngine.h>
+#include <UnigineMathLib.h>
+#include <UniginePlayers.h>
 
 namespace Unigine
 {
 namespace Plugins
 {
-class AppVive
+
+
+class OpenVR
 {
 protected:
-	virtual ~AppVive(){}
+	virtual ~OpenVR(){}
 public:
-	UNIGINE_INLINE static AppVive *get() { return Unigine::Engine::get()->getPlugin<AppVive>("AppVive"); }
+	UNIGINE_INLINE static OpenVR *get() { return Unigine::Engine::get()->getPlugin<OpenVR>("OpenVR"); }
 
 	enum VIEWPORT
 	{
@@ -83,12 +86,12 @@ public:
 		CONTROLLER_ROLE_TREADMILL = 4,
 		CONTROLLER_ROLE_MAX = 5,
 	};
-	virtual void setViewportMode(AppVive::VIEWPORT mode) = 0;
-	virtual AppVive::VIEWPORT getViewportMode() const = 0;
+	virtual void setViewportMode(OpenVR::VIEWPORT mode) = 0;
+	virtual OpenVR::VIEWPORT getViewportMode() const = 0;
 	virtual void setHeadPositionLock(bool lock) = 0;
+	virtual bool isHeadPositionLock() const = 0;
 	virtual void setHeadRotationLock(bool lock) = 0;
-	virtual bool isHeadPositionLocked() const = 0;
-	virtual bool isHeadRotationLocked() const = 0;
+	virtual bool isHeadRotationLock() const = 0;
 	virtual int getMaxTrackedDeviceCount() const = 0;
 	virtual int getControllerStateAxisCount() const = 0;
 	virtual UNIGINE_DEPRECATED(Math::mat4 getDevicePose(int device_num)) = 0;
@@ -98,16 +101,17 @@ public:
 	virtual bool isDeviceConnected(int device_num) = 0;
 	virtual bool isPoseValid(int device_num) = 0;
 	virtual int getTrackingResult(int device_num) = 0;
-	virtual AppVive::DEVICE getDeviceType(int device_num) = 0;
-	virtual AppVive::AXIS getDeviceAxisType(int device_num, int axis_num) = 0;
+	virtual OpenVR::DEVICE getDeviceType(int device_num) = 0;
+	virtual OpenVR::AXIS getDeviceAxisType(int device_num, int axis_num) = 0;
 	virtual String getDeviceManufacturerName(int device) = 0;
 	virtual String getDeviceModelNumber(int device) = 0;
-	virtual AppVive::CONTROLLER_ROLE getControllerRole(int device_num) = 0;
+	virtual OpenVR::CONTROLLER_ROLE getControllerRole(int device_num) = 0;
 	virtual int getControllerPacketNum(int device_num) = 0;
-	virtual bool getControllerButtonPressed(int device_num, AppVive::BUTTON button) = 0;
-	virtual bool getControllerButtonTouched(int device_num, AppVive::BUTTON button) = 0;
+	virtual bool getControllerButtonPressed(int device_num, OpenVR::BUTTON button) = 0;
+	virtual bool getControllerButtonTouched(int device_num, OpenVR::BUTTON button) = 0;
 	virtual Math::vec2 getControllerAxis(int device_num, int axis_num) = 0;
 	virtual void setControllerVibration(int device_num, unsigned short duration) = 0;
+	virtual void render(const Ptr<Player> &player, const Math::ivec2 &size, bool render_window) = 0;
 };
 
 } // namespace Plugins

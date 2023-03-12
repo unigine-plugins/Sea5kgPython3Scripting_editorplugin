@@ -76,6 +76,18 @@
 			</summary>  
 			<returns>Distance value, in units.</returns>
 		</member>
+		<member name="M:Unigine.Decal.setOpacity(float)">
+			<summary>
+			Sets opacity for the decal. This parameter enables you to control whether the decal should be opaque or semi-transparent.
+			</summary> 
+			<param name="opacity"> New opacity value to be set in the [0.0f; 1.0f] range (1.0f - the decal is fully opaque). </param> 
+		</member>
+		<member name="M:Unigine.Decal.getOpacity const">
+			<summary>
+			Returns the current opacity for the decal.
+			</summary>  
+			<returns>Current opacity value in the [0.0f; 1.0f] range (1.0f - the decal is fully opaque).</returns>
+		</member>
 		<member name="M:Unigine.Decal.setRadius(float)">
 			<summary>
 			Sets the new height of the projection box/pyramid along the Z axis.

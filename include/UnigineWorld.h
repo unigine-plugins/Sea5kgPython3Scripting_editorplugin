@@ -39,7 +39,7 @@ public:
 	static Ptr<WorldIntersection> create();
 	WorldIntersection::TYPE getType() const;
 	const char *getTypeName() const;
-	void setPoint(const Math::Vec3& point);
+	void setPoint(const Math::Vec3 &point);
 	Math::Vec3 getPoint() const;
 	void setIndex(int index);
 	int getIndex() const;
@@ -67,7 +67,7 @@ public:
 		return false;
 	}
 	static Ptr<WorldIntersectionNormal> create();
-	void setNormal(const Math::vec3& normal);
+	void setNormal(const Math::vec3 &normal);
 	Math::vec3 getNormal() const;
 };
 typedef Ptr<WorldIntersectionNormal> WorldIntersectionNormalPtr;
@@ -78,7 +78,7 @@ class UNIGINE_API WorldIntersectionTexCoord : public WorldIntersectionNormal
 public:
 	static bool convertible(WorldIntersection *obj) { return obj && obj->getType() == WorldIntersection::WORLD_INTERSECTION_TEX_COORD; }
 	static Ptr<WorldIntersectionTexCoord> create();
-	void setTexCoord(const Math::vec4& coord);
+	void setTexCoord(const Math::vec4 &coord);
 	Math::vec4 getTexCoord() const;
 };
 typedef Ptr<WorldIntersectionTexCoord> WorldIntersectionTexCoordPtr;
@@ -146,47 +146,47 @@ public:
 	static const char *getLoadWorldRequestPath();
 	static void updateSpatial();
 	static bool isNode(int id);
-	static void getNodes(Vector< Ptr<Node> > &nodes);
+	static void getNodes(Vector<Ptr<Node>> &nodes);
 	static bool clearNode(const char *name);
 	static Ptr<Node> loadNode(const char *name, int cache = 1);
-	static int loadNodes(const char *name, Vector< Ptr<Node> > &nodes);
+	static int loadNodes(const char *name, Vector<Ptr<Node>> &nodes);
 	static bool saveNode(const char *name, const Ptr<Node> &node, int binary = 0);
-	static int saveNodes(const char *name, const Vector< Ptr<Node> > &nodes, int binary = 0);
+	static int saveNodes(const char *name, const Vector<Ptr<Node>> &nodes, int binary = 0);
 	static Ptr<Node> getNodeByName(const char *name);
-	static void getNodesByName(const char *name, Vector< Ptr<Node> > &nodes);
+	static void getNodesByName(const char *name, Vector<Ptr<Node>> &nodes);
 	static Ptr<Node> getNodeByType(int type);
-	static void getNodesByType(int type, Vector< Ptr<Node> > &nodes);
-	static Ptr<Node> getNodeById(int node_id);
-	static void getRootNodes(Vector< Ptr<Node> > &nodes);
+	static void getNodesByType(int type, Vector<Ptr<Node>> &nodes);
+	static Ptr<Node> getNodeByID(int node_id);
+	static void getRootNodes(Vector<Ptr<Node>> &nodes);
 	static int getRootNodeIndex(const Ptr<Node> &node);
 	static void setRootNodeIndex(const Ptr<Node> &node, int index);
 	static bool isNode(const char *name);
-	static bool getCollision(const Math::WorldBoundBox& bb, Vector< Ptr<Object> > &objects);
-	static bool getCollision(const Math::WorldBoundSphere& bs, Vector< Ptr<Object> > &objects);
-	static bool getCollision(const Math::Vec3& p0, const Math::Vec3& p1, Vector< Ptr<Object> > &objects);
-	static bool getIntersection(const Math::WorldBoundBox& bb, Vector< Ptr<Node> > &nodes);
-	static bool getIntersection(const Math::WorldBoundBox& bb, Vector< Ptr<Object> > &objects);
-	static bool getIntersection(const Math::WorldBoundBox& bb, Node::TYPE type, Vector< Ptr<Node> > &nodes);
-	static bool getIntersection(const Math::WorldBoundSphere& bs, Vector< Ptr<Node> > &nodes);
-	static bool getIntersection(const Math::WorldBoundSphere& bs, Vector< Ptr<Object> > &objects);
-	static bool getIntersection(const Math::WorldBoundSphere& bs, Node::TYPE type, Vector< Ptr<Node> > &nodes);
-	static bool getIntersection(const Math::WorldBoundFrustum& bf, Vector< Ptr<Object> > &objects);
-	static bool getIntersection(const Math::WorldBoundFrustum& bf, Node::TYPE type, Vector< Ptr<Node> > &nodes);
-	static bool getVisibleIntersection(const Math::Vec3& camera, const Math::WorldBoundFrustum& bf, Vector< Ptr<Object> > &objects, float max_distance);
-	static bool getVisibleIntersection(const Math::Vec3& camera, const Math::WorldBoundFrustum& bf, Node::TYPE type, Vector< Ptr<Node> > &nodes, float max_distance);
-	static bool getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, Vector< Ptr<Object> > &objects);
-	static Ptr<Object> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask);
-	static Ptr<Object> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Ptr<WorldIntersection> &intersection);
-	static Ptr<Object> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Ptr<WorldIntersectionNormal> &intersection);
-	static Ptr<Object> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Ptr<WorldIntersectionTexCoord> &intersection);
-	static Ptr<Object> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Vector< Ptr<Node> > &exclude);
-	static Ptr<Object> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Vector< Ptr<Node> > &exclude, const Ptr<WorldIntersection> &intersection);
-	static Ptr<Object> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Vector< Ptr<Node> > &exclude, const Ptr<WorldIntersectionNormal> &intersection);
-	static Ptr<Object> getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Vector< Ptr<Node> > &exclude, const Ptr<WorldIntersectionTexCoord> &intersection);
+	static bool getCollision(const Math::WorldBoundBox &bb, Vector<Ptr<Object>> &objects);
+	static bool getCollision(const Math::WorldBoundSphere &bs, Vector<Ptr<Object>> &objects);
+	static bool getCollision(const Math::Vec3 &p0, const Math::Vec3 &p1, Vector<Ptr<Object>> &objects);
+	static bool getIntersection(const Math::WorldBoundBox &bb, Vector<Ptr<Node>> &nodes);
+	static bool getIntersection(const Math::WorldBoundBox &bb, Vector<Ptr<Object>> &objects);
+	static bool getIntersection(const Math::WorldBoundBox &bb, Node::TYPE type, Vector<Ptr<Node>> &nodes);
+	static bool getIntersection(const Math::WorldBoundSphere &bs, Vector<Ptr<Node>> &nodes);
+	static bool getIntersection(const Math::WorldBoundSphere &bs, Vector<Ptr<Object>> &objects);
+	static bool getIntersection(const Math::WorldBoundSphere &bs, Node::TYPE type, Vector<Ptr<Node>> &nodes);
+	static bool getIntersection(const Math::WorldBoundFrustum &bf, Vector<Ptr<Object>> &objects);
+	static bool getIntersection(const Math::WorldBoundFrustum &bf, Node::TYPE type, Vector<Ptr<Node>> &nodes);
+	static bool getVisibleIntersection(const Math::Vec3 &camera, const Math::WorldBoundFrustum &bf, Vector<Ptr<Object>> &objects, float max_distance);
+	static bool getVisibleIntersection(const Math::Vec3 &camera, const Math::WorldBoundFrustum &bf, Node::TYPE type, Vector<Ptr<Node>> &nodes, float max_distance);
+	static bool getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, Vector<Ptr<Object>> &objects);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<WorldIntersection> &intersection);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<WorldIntersectionNormal> &intersection);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<WorldIntersectionTexCoord> &intersection);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Vector<Ptr<Node>> &exclude);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Vector<Ptr<Node>> &exclude, const Ptr<WorldIntersection> &intersection);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Vector<Ptr<Node>> &exclude, const Ptr<WorldIntersectionNormal> &intersection);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Vector<Ptr<Node>> &exclude, const Ptr<WorldIntersectionTexCoord> &intersection);
 	static void clearBindings();
-	static void *addCallback(World::CALLBACK_INDEX callback, Unigine::CallbackBase *func);
-	static void *addCallback(World::CALLBACK_INDEX callback, Unigine::CallbackBase1< const char *> *func);
-	static void *addCallback(World::CALLBACK_INDEX callback, Unigine::CallbackBase2< const char *, Ptr<Node> > *func);
+	static void *addCallback(World::CALLBACK_INDEX callback, CallbackBase *func);
+	static void *addCallback(World::CALLBACK_INDEX callback, CallbackBase1<const char *> *func);
+	static void *addCallback(World::CALLBACK_INDEX callback, CallbackBase2<const char *, Ptr<Node>> *func);
 	static bool removeCallback(World::CALLBACK_INDEX callback, void *id);
 	static void clearCallbacks(World::CALLBACK_INDEX callback);
 };
@@ -240,7 +240,7 @@ public:
 	virtual int restoreState(const Ptr<Stream> &stream);
 	static void savePointer(const StreamPtr &stream, WorldExternBase *world);
 	static WorldExternBase *restorePointer(const StreamPtr &stream);
-	private:
+private:
 	template <class Type> static WorldExternBase *constructor(void *world) { return new Type(world); }
 	struct WorldExternData;
 	WorldExternData *data;

@@ -66,7 +66,7 @@ public:
 	using iterator = typename Parent::iterator;
 	using const_iterator = typename Parent::const_iterator;
 
-	HashMap()
+	HashMap() noexcept
 	{
 		Parent::data = nullptr;
 		Parent::length = 0;
@@ -100,7 +100,7 @@ public:
 			do_emplace_hash(it.hash, it.key, it.data);
 	}
 
-	HashMap(HashMap &&o)
+	HashMap(HashMap &&o) noexcept
 	{
 		Parent::length = o.length;
 		Parent::capacity = o.capacity;
@@ -173,20 +173,20 @@ public:
 	template <typename ... Args>
 	UNIGINE_INLINE Type &emplace(Key &&key, Args && ... args) { return (*do_emplace(std::move(key), std::forward<Args>(args)...))->data; }
 
-	UNIGINE_INLINE Type take(const Key &key, const Type &value) { return do_take(Hasher<Key>::create(key), key, value); }
+	UNIGINE_INLINE Type take(const Key &key, const Type &def) { return do_take(Hasher<Key>::create(key), key, def); }
 	UNIGINE_INLINE Type take(const Key &key) { return do_take(Hasher<Key>::create(key), key); }
 	UNIGINE_INLINE Type take(const Iterator &it) { return do_take(it->hash, it->key); }
 	UNIGINE_INLINE Type take(const ConstIterator &it) { return do_take(it->hash, it->key); }
 
-	UNIGINE_INLINE Type &operator[](const Key &key) { return get(key); }
-	UNIGINE_INLINE Type &operator[](Key &&key) { return get(std::move(key)); }
-	UNIGINE_INLINE const Type &operator[](const Key &key) const { return get(key); }
+	UNIGINE_INLINE Type &operator[](const Key &key) noexcept { return get(key); }
+	UNIGINE_INLINE Type &operator[](Key &&key) noexcept { return get(std::move(key)); }
+	UNIGINE_INLINE const Type &operator[](const Key &key) const noexcept { return get(key); }
 
-	UNIGINE_INLINE Type &get(Key &&key) { return Parent::do_append(std::move(key))->data; }
-	UNIGINE_INLINE Type &get(const Key &key) { return Parent::do_append(key)->data; }
+	UNIGINE_INLINE Type &get(Key &&key) noexcept { return Parent::do_append(std::move(key))->data; }
+	UNIGINE_INLINE Type &get(const Key &key) noexcept { return Parent::do_append(key)->data; }
 
 	template <typename T>
-	UNIGINE_INLINE const Type &get(const T &key) const
+	UNIGINE_INLINE const Type &get(const T &key) const noexcept
 	{
 		const Data * const *d = Parent::do_find(key);
 		assert(d != nullptr && "Hash::get() const : bad key.");
@@ -194,7 +194,7 @@ public:
 	}
 	
 	template <typename T>
-	UNIGINE_INLINE const Type &get(const T &key, const Type &value) const
+	UNIGINE_INLINE const Type &get(const T &key, const Type &value) const noexcept
 	{
 		const Data *const *d = Parent::do_find(key);
 		if (!d)
@@ -205,13 +205,14 @@ public:
 	using Parent::contains;
 
 	template <typename T>
-	UNIGINE_INLINE bool contains(const T &key, const Type &value) const
+	UNIGINE_INLINE bool contains(const T &key, const Type &value) const noexcept
 	{
 		const Data * const *d = Parent::do_find(key);
 		return d != nullptr && (*d)->data == value;
 	}
 
-	UNIGINE_INLINE Iterator findData(const Type &t)
+	template<typename T>
+	UNIGINE_INLINE Iterator findData(const T &t) noexcept
 	{
 		Iterator end_it = Parent::end();
 		for (Iterator it = Parent::begin(); it != end_it; ++it)
@@ -220,7 +221,8 @@ public:
 		return end_it;
 	}
 
-	UNIGINE_INLINE ConstIterator findData(const Type &t) const
+	template<typename T>
+	UNIGINE_INLINE ConstIterator findData(const T &t) const noexcept
 	{
 		ConstIterator end_it = Parent::end();
 		for (ConstIterator it = Parent::begin(); it != end_it; ++it)
@@ -230,21 +232,21 @@ public:
 	}
 
 	template<typename T>
-	UNIGINE_INLINE Type value(const T &key) const
+	UNIGINE_INLINE Type value(const T &key) const noexcept
 	{
 		const Data * const *d = Parent::do_find(key);
 		return d == nullptr ? Type{} : (*d)->data;
 	}
 
 	template<typename T>
-	UNIGINE_INLINE Type value(const T &key, const Type &def) const
+	UNIGINE_INLINE Type value(const T &key, const Type &def) const noexcept
 	{
 		const Data * const *d = Parent::do_find(key);
 		return d == nullptr ? def : (*d)->data;
 	}
 
 	template<typename T>
-	UNIGINE_INLINE const Type &valueRef(const T &key, const Type &def) const
+	UNIGINE_INLINE const Type &valueRef(const T &key, const Type &def) const noexcept
 	{
 		const Data * const *d = Parent::do_find(key);
 		return d == nullptr ? def : (*d)->data;
@@ -279,7 +281,7 @@ public:
 		}
 	}
 
-	UNIGINE_INLINE bool operator==(const HashMap &o) const
+	UNIGINE_INLINE bool operator==(const HashMap &o) const noexcept
 	{
 		if (Parent::length != o.length)
 			return false;
@@ -299,7 +301,7 @@ public:
 		return true;
 	}
 
-	UNIGINE_INLINE bool operator!=(const HashMap &o) const { return !(*this == o); }
+	UNIGINE_INLINE bool operator!=(const HashMap &o) const noexcept { return !(*this == o); }
 
 private:
 

@@ -98,6 +98,7 @@ public:
 	void renderImageCube(const Ptr<Camera> &camera, const Ptr<Image> &image, int size, bool hdr = false, bool local_space = false);
 	void renderImageCube(const Ptr<Camera> &camera, const Ptr<Image> &image);
 	void renderStereo(const Ptr<Camera> &camera_left, const Ptr<Camera> &camera_right, const char *stereo_material);
+	void renderStereoPeripheral(const Ptr<Camera> &camera_left, const Ptr<Camera> &camera_right, const Ptr<Camera> &camera_focus_left, const Ptr<Camera> &camera_focus_right, const Ptr<Texture> &texture_left, const Ptr<Texture> &texture_right, const Ptr<Texture> &texture_focus_left, const Ptr<Texture> &texture_focus_right, const char *stereo_material);
 	void setStereoHiddenAreaMesh(const Ptr<Mesh> &hidden_area_mesh_left, const Ptr<Mesh> &hidden_area_mesh_right);
 	void clearStereoHiddenAreaMesh();
 	void setNodeLightUsage(int usage);
@@ -112,12 +113,12 @@ public:
 	void renderNodeTexture2D(const Ptr<Camera> &camera, const Ptr<Node> &node, const Ptr<Texture> &texture);
 	void renderNodeImage2D(const Ptr<Camera> &camera, const Ptr<Node> &node, const Ptr<Image> &image, int width, int height, bool hdr);
 	void renderNodeImage2D(const Ptr<Camera> &camera, const Ptr<Node> &node, const Ptr<Image> &image);
-	void renderNodes(const Ptr<Camera> &camera, const Vector< Ptr<Node> > &nodes);
-	void renderNodes(const Ptr<Camera> &camera, const Vector< Ptr<Node> > &nodes, int width, int height);
-	void renderNodesTexture2D(const Ptr<Camera> &camera, const Vector< Ptr<Node> > &nodes, const Ptr<Texture> &texture);
-	void renderNodesImage2D(const Ptr<Camera> &camera, const Vector< Ptr<Node> > &nodes, const Ptr<Image> &image, int width, int height, int hdr);
-	void renderNodesImage2D(const Ptr<Camera> &camera, const Vector< Ptr<Node> > &nodes, const Ptr<Image> &image);
-	void *addCallback(Render::CALLBACK_INDEX callback, Unigine::CallbackBase *func);
+	void renderNodes(const Ptr<Camera> &camera, const Vector<Ptr<Node>> &nodes);
+	void renderNodes(const Ptr<Camera> &camera, const Vector<Ptr<Node>> &nodes, int width, int height);
+	void renderNodesTexture2D(const Ptr<Camera> &camera, const Vector<Ptr<Node>> &nodes, const Ptr<Texture> &texture);
+	void renderNodesImage2D(const Ptr<Camera> &camera, const Vector<Ptr<Node>> &nodes, const Ptr<Image> &image, int width, int height, int hdr);
+	void renderNodesImage2D(const Ptr<Camera> &camera, const Vector<Ptr<Node>> &nodes, const Ptr<Image> &image);
+	void *addCallback(Render::CALLBACK_INDEX callback, CallbackBase *func);
 	bool removeCallback(Render::CALLBACK_INDEX callback, void *id);
 	void clearCallbacks(Render::CALLBACK_INDEX callback);
 };

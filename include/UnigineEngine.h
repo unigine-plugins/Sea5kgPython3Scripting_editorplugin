@@ -42,7 +42,7 @@ enum
 namespace Unigine
 {
 
-class App;
+class CustomSystemProxy;
 class Engine;
 class SystemLogic;
 class WorldLogic;
@@ -51,8 +51,8 @@ class Plugin;
 class Variable;
 
 /// Free functions for internal usage.
-UNIGINE_API Engine* Engine_internal_init(int compilation_flags, App* app, const char* window_title, const char* window_icon_path, const char* app_path, const char* home_path, const char* project, const char* password, int argc, char **argv);
-UNIGINE_API Engine* Engine_internal_init(int compilation_flags, App* app, const char* window_title, const char* window_icon_path, const char* app_path, const char* home_path, const char* project, const char* password, int argc, wchar_t **argv);
+UNIGINE_API Engine* Engine_internal_init(int compilation_flags, CustomSystemProxy *system_proxy, const char* window_title, const char* window_icon_path, const char* app_path, const char* home_path, const char* project, const char* password, int argc, char **argv);
+UNIGINE_API Engine* Engine_internal_init(int compilation_flags, CustomSystemProxy *system_proxy, const char* window_title, const char* window_icon_path, const char* app_path, const char* home_path, const char* project, const char* password, int argc, wchar_t **argv);
 
 class Engine
 {
@@ -68,6 +68,14 @@ public:
 	{
 		PRECISION_FLOAT = 0,
 		PRECISION_DOUBLE,
+	};
+
+	enum VIDEO_CONTEXT
+	{
+		VIDEO_CONTEXT_DEBUG = 1 << 0,
+		VIDEO_CONTEXT_BREAK_ON_ERROR = 1 << 1,
+		VIDEO_CONTEXT_GPU_SIDE_VALIDATION = 1 << 2,
+		VIDEO_CONTEXT_QUAD_BUFFER_CONTEXT = 1 << 3,
 	};
 
 	enum CALLBACK_INDEX
@@ -109,8 +117,6 @@ public:
 			  CALLBACK_END_SYSTEM_LOGIC_UPDATE,
 			CALLBACK_BEGIN_WORLD_UPDATE,
 			  CALLBACK_END_WORLD_UPDATE,
-			CALLBACK_BEGIN_GUI_UPDATE,
-			  CALLBACK_END_GUI_UPDATE,
 			CALLBACK_BEGIN_WORLD_POST_UPDATE,
 			  CALLBACK_END_WORLD_POST_UPDATE,
 			CALLBACK_BEGIN_SYSTEM_SCRIPT_POST_UPDATE,
@@ -150,8 +156,6 @@ public:
 
 		// Engine::swap()
 		CALLBACK_BEGIN_SWAP,
-			CALLBACK_BEGIN_VIDEOGRAB,
-			  CALLBACK_END_VIDEOGRAB,
 			CALLBACK_END_PHYSICS,
 			CALLBACK_END_PATHFINDING,
 			CALLBACK_BEGIN_WORLD_SWAP,
@@ -162,13 +166,17 @@ public:
 			  CALLBACK_END_DELETE_OBJECTS,
 		CALLBACK_END_SWAP,
 
+		// Engine::focus()
+		CALLBACK_FOCUS_GAINED,
+		CALLBACK_FOCUS_LOST,
+
 		NUM_CALLBACKS,
 	};
 
 	/// Additional parameters to initialize a new Engine instance
 	struct InitParameters
 	{
-		App *app = nullptr;
+		CustomSystemProxy *system_proxy = nullptr;
 		const char *window_title = nullptr;
 		const char *window_icon_path = nullptr;
 		const char *app_path = nullptr;
@@ -194,13 +202,13 @@ public:
 	static UNIGINE_INLINE Engine *init(const InitParameters &init_parameters, int argc, char **argv)
 	{
 		const InitParameters &p = init_parameters;
-		return Engine_internal_init(UNIGINE_COMPILATION_FLAGS, p.app, p.window_title, p.window_icon_path, p.app_path, p.home_path, p.project, p.password, argc, argv);
+		return Engine_internal_init(UNIGINE_COMPILATION_FLAGS, p.system_proxy, p.window_title, p.window_icon_path, p.app_path, p.home_path, p.project, p.password, argc, argv);
 	}
 	/// Initializes a new Engine instance.
 	static UNIGINE_INLINE Engine *init(const InitParameters &init_parameters, int argc, wchar_t **argv)
 	{
 		const InitParameters &p = init_parameters;
-		return Engine_internal_init(UNIGINE_COMPILATION_FLAGS, p.app, p.window_title, p.window_icon_path, p.app_path, p.home_path, p.project, p.password, argc, argv);
+		return Engine_internal_init(UNIGINE_COMPILATION_FLAGS, p.system_proxy, p.window_title, p.window_icon_path, p.app_path, p.home_path, p.project, p.password, argc, argv);
 	}
 
 	/// Deletes the pointer to the existing Engine instance.
@@ -211,9 +219,6 @@ public:
 
 	/// Returns true if the Engine is initialized; otherwise, false.
 	static UNIGINE_API bool isInitialized();
-
-	/// Returns true if the argument is known by the Engine; otherwise, false.
-	static UNIGINE_API bool isKnownArg(const char *arg);
 
 	/// Returns Unigine Engine Version.
 	static UNIGINE_API const char *getVersion();
@@ -241,6 +246,9 @@ public:
 
 	/// Returns a command line argument by its index converted to a floating point value.
 	virtual float getArgf(int num) const = 0;
+
+	/// Returns video context flags
+	virtual int getVideoContextFlags() const = 0;
 
 	/// Returns the number of loaded plugins.
 	virtual int getNumPlugins() const = 0;
@@ -360,20 +368,50 @@ public:
 	/// Returns Unigine Script defines specified at startup (provided with -extern_define command line argument).
 	virtual const char *getExternDefine() const = 0;
 
-	/// return Returns true when the Engine is quitting; otherwise, false.
-	virtual bool isDone() const = 0;
+	/// Sets the value indicating whether an application windows is updated when all window is hidden or out of focus.
+	virtual void setBackgroundUpdate(bool enabled) = 0;
 
-	/// Engine update function. This function must be called every frame.
-	virtual void update() = 0;
+	/// Returns a value indicating whether an application windows is updated when all window is hidden or out of focus.
+	virtual bool isBackgroundUpdate() const = 0;
 
-	/// Engine rendering function. This function must be called every frame.
-	virtual void render() = 0;
+	/// Return the active state of engine
+	virtual bool isActive() const = 0;
+	
+	/// Return the focus state of engine
+	virtual bool isFocus() const = 0;
 
-	/// Engine swap buffers function. This function must be called every frame.
-	virtual void swap() = 0;
+	/// Returns true when the Engine is quitting; otherwise, false.
+	virtual bool isQuit() const = 0;
 
-	/// Engine main loop. Replaces while (isDone() == 0) { update(): render(); swap(); } commands.
+	/// Engine iterate function. This function must be called every frame.
+	virtual void iterate() = 0;
+
+	/// Engine main loop. Replaces while (isQuit() == 0) { iterate(); } commands.
 	virtual void main(SystemLogic *system = nullptr, WorldLogic *world = nullptr, EditorLogic *editor = nullptr) = 0;
+
+	/// The engine requests to exit the application.
+	virtual void quit() = 0;
+
+	/// Stops the FPS counter.
+	virtual void stopFps() = 0;
+
+	/// Starts the FPS counter if it was stopped.
+	virtual void startFps() = 0;
+
+	/// Returns the engine FPS counter value.
+	virtual float getFps() const = 0;
+
+	/// Returns an inverse value of engine FPS counter.
+	virtual float getIFps() const = 0;
+
+	/// Returns the minimum FPS counter value for the last 600 frames.
+	virtual float getStatisticsFpsMin() const = 0;
+
+	/// Returns the average FPS counter value for the last 600 frames.
+	virtual float getStatisticsFpsAvg() const = 0;
+
+	/// Returns the maximum FPS counter value for the last 600 frames.
+	virtual float getStatisticsFpsMax() const = 0;
 
 	/// Returns true when the function is called from the system script; otherwise, false.
 	virtual bool isSystemInterpreter() const = 0;

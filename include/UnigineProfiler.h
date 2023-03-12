@@ -34,13 +34,13 @@ public:
 	static void setEnabled(bool enabled);
 	static bool isEnabled();
 	static void begin(const char *name);
-	static void begin(const char *name, const Math::vec4& color);
+	static void begin(const char *name, const Math::vec4 &color);
 	static float end();
 	static int beginMicro(const char *name, bool gpu = false);
 	static void endMicro(int id);
 	static float getValue(const char *name);
-	static void setValue(const char *name, const char *units, int value, int max_value, float * arg5);
-	static void setValue(const char *name, const char *units, float value, float max_value, float * arg5);
+	static void setValue(const char *name, const char *units, int value, int max_value, float *arg5);
+	static void setValue(const char *name, const char *units, float value, float max_value, float *arg5);
 	static const char *getMicroprofileUrl();
 	static void setGui(const Ptr<Gui> &gui);
 	static Ptr<Gui> getGui();

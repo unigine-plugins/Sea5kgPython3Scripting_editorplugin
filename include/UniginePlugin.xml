@@ -33,16 +33,17 @@
 			Engine calls this function before updating each physics frame.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Plugin.gui">
+		<member name="M:Unigine.Plugin.gui(EngineWindowPtr)">
 			<summary>
-			Engine calls this function before gui each render frame.
-			</summary>  
+			Engine calls this function before gui each render frame for the specified engine window.
+			</summary> 
+			<param name="window"> Target Engine window. </param> 
 		</member>
 		<member name="M:Unigine.Plugin.init">
 			<summary>
 			Engine calls this function on plugin initialization.
 			</summary>  
-			<returns>Returns 1 on success, or 0 if an error has occurred.</returns>
+			<returns>true on success, or false if an error has occurred.</returns>
 		</member>
 		<member name="M:Unigine.Plugin.loadWorld(XmlPtr)">
 			<summary>
@@ -51,10 +52,11 @@
 			<param name="xml"> Xml instance from which the data is to be loaded. </param> 
 			<returns>true on success; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Plugin.render">
+		<member name="M:Unigine.Plugin.render(EngineWindowPtr)">
 			<summary>
-			Engine calls this function before rendering each render frame.
-			</summary>  
+			Engine calls this function before rendering each render frame for the specified Engine window.
+			</summary> 
+			<param name="window"> Target Engine window. </param> 
 		</member>
 		<member name="M:Unigine.Plugin.saveState(StreamPtr)">
 			<summary>

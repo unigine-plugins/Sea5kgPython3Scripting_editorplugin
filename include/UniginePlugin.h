@@ -17,6 +17,7 @@
 #include "UnigineEngine.h"
 #include "UnigineXml.h"
 #include "UnigineStreams.h"
+#include "UnigineWindowManager.h"
 
 namespace Unigine
 {
@@ -54,10 +55,10 @@ public:
 	virtual void postUpdate() { }
 
 	// The engine calls this function before rendering each render frame.
-	virtual void render() { }
+	virtual void render(const EngineWindowPtr &window) { }
 
 	// The engine calls this function before each GUI render frame.
-	virtual void gui() { }
+	virtual void gui(EngineWindowPtr &window) { }
 
 	// The engine calls this function before updating each physics frame.
 	virtual void updatePhysics() { }

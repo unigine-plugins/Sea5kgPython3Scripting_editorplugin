@@ -42,7 +42,7 @@ public:
 	static UNIGINE_API void deallocate(void *ptr);
 	static UNIGINE_API void deallocate(void *ptr, size_t size);
 
-	static UNIGINE_API const MemoryStats &getStats();
+	static UNIGINE_API MemoryStats getStats();
 
 	static UNIGINE_API size_t getHeapUsage();
 	static UNIGINE_API size_t getMemoryUsage();

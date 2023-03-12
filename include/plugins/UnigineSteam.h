@@ -16,13 +16,15 @@
 #pragma once
 
 #include <UnigineCallback.h>
-#include <UnigineInterpreter.h>
 #include <UnigineEngine.h>
+#include <UnigineInterpreter.h>
 
 namespace Unigine
 {
 namespace Plugins
 {
+
+
 class SteamLeaderboard
 {
 protected:
@@ -171,15 +173,15 @@ public:
 		CALLBACK_LEADERBOARD_SCORES_UPLOADED,
 		CALLBACK_LEADERBOARD_SCORES_DOWNLOADED,
 	};
-	virtual void *addCallback(Steam::CALLBACK_INDEX callback, Unigine::CallbackBase1< unsigned char > *func) = 0;
-	virtual void *addCallback(Steam::CALLBACK_INDEX callback, Unigine::CallbackBase1< int > *func) = 0;
-	virtual void *addCallback(Steam::CALLBACK_INDEX callback, Unigine::CallbackBase3< int, int, unsigned char > *func) = 0;
-	virtual void *addCallback(Steam::CALLBACK_INDEX callback, Unigine::CallbackBase3< int, int, int > *func) = 0;
+	virtual void *addCallback(Steam::CALLBACK_INDEX callback, CallbackBase1<unsigned char> *func) = 0;
+	virtual void *addCallback(Steam::CALLBACK_INDEX callback, CallbackBase1<int> *func) = 0;
+	virtual void *addCallback(Steam::CALLBACK_INDEX callback, CallbackBase3<int, int, unsigned char> *func) = 0;
+	virtual void *addCallback(Steam::CALLBACK_INDEX callback, CallbackBase3<int, int, int> *func) = 0;
 	virtual bool removeCallback(Steam::CALLBACK_INDEX callback, void *id) = 0;
 	virtual void clearCallbacks(Steam::CALLBACK_INDEX callback) = 0;
 	virtual SteamLeaderboard * createLeaderboard(const char *name) = 0;
 	virtual SteamLeaderboard * getLeaderboard(int id) = 0;
-	virtual void deleteLeaderboard(SteamLeaderboard * leaderboard) = 0;
+	virtual void deleteLeaderboard(SteamLeaderboard *leaderboard) = 0;
 };
 
 } // namespace Plugins

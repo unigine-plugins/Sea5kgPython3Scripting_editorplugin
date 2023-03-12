@@ -39,8 +39,8 @@ public:
 	int getQuality() const;
 	void setVelocity(float velocity);
 	float getVelocity() const;
-	int inside2D(const Math::Vec3& point, float radius) const;
-	int inside3D(const Math::Vec3& point, float radius) const;
+	int inside2D(const Math::Vec3 &point, float radius) const;
+	int inside3D(const Math::Vec3 &point, float radius) const;
 	int inside(const Ptr<Navigation> &navigation) const;
 };
 typedef Ptr<Navigation> NavigationPtr;
@@ -76,8 +76,8 @@ public:
 	static int type() { return Node::NAVIGATION_SECTOR; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<NavigationSector> create(const Math::vec3& arg1);
-	void setSize(const Math::vec3& size);
+	static Ptr<NavigationSector> create(const Math::vec3 &arg1);
+	void setSize(const Math::vec3 &size);
 	Math::vec3 getSize() const;
 };
 typedef Ptr<NavigationSector> NavigationSectorPtr;
@@ -102,8 +102,8 @@ public:
 	static int type() { return Node::OBSTACLE_BOX; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<ObstacleBox> create(const Math::vec3& arg1);
-	void setSize(const Math::vec3& size);
+	static Ptr<ObstacleBox> create(const Math::vec3 &arg1);
+	void setSize(const Math::vec3 &size);
 	Math::vec3 getSize() const;
 };
 typedef Ptr<ObstacleBox> ObstacleBoxPtr;
@@ -144,13 +144,13 @@ class UNIGINE_API PathRoute : public APIInterface
 public:
 	static Ptr<PathRoute> create(float radius = 0.0f);
 	void addExcludeNavigation(const Ptr<Node> &navigation);
-	Vector< Ptr<Node> >  getExcludeNavigations() const;
-	void setExcludeNavigations(const Vector< Ptr<Node> > &exclude_navigations);
-	Vector< Ptr<Node> >  getExcludeObstacles() const;
-	void setExcludeObstacles(const Vector< Ptr<Node> > &obstacles);
+	Vector<Ptr<Node>> getExcludeNavigations() const;
+	void setExcludeNavigations(const Vector<Ptr<Node>> &exclude_navigations);
+	Vector<Ptr<Node>> getExcludeObstacles() const;
+	void setExcludeObstacles(const Vector<Ptr<Node>> &obstacles);
 	void addExcludeObstacle(const Ptr<Node> &obstacle);
-	void create2D(const Math::Vec3& p0, const Math::Vec3& p1, int delay = 0);
-	void create3D(const Math::Vec3& p0, const Math::Vec3& p1, int delay = 0);
+	void create2D(const Math::Vec3 &p0, const Math::Vec3 &p1, int delay = 0);
+	void create3D(const Math::Vec3 &p0, const Math::Vec3 &p1, int delay = 0);
 	float getDangerous() const;
 	float getDistance() const;
 	void setHeight(float height);
@@ -182,7 +182,7 @@ public:
 	bool isReady() const;
 	void removeExcludeNavigation(const Ptr<Node> &navigation);
 	void removeExcludeObstacle(const Ptr<Node> &obstacle);
-	void renderVisualizer(const Math::vec4& color);
+	void renderVisualizer(const Math::vec4 &color);
 };
 typedef Ptr<PathRoute> PathRoutePtr;
 
@@ -191,7 +191,7 @@ class UNIGINE_API PathRouteIntersection : public APIInterface
 {
 public:
 	static Ptr<PathRouteIntersection> create();
-	void setPoint(const Math::Vec3& point);
+	void setPoint(const Math::Vec3 &point);
 	Math::Vec3 getPoint() const;
 	void setIndex(int index);
 	int getIndex() const;

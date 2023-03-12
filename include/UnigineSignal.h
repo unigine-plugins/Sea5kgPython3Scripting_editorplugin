@@ -71,7 +71,7 @@ public:
 	UNIGINE_INLINE int size() const { return callbacks.size(); }
 
 	template <typename ...Ts>
-	UNIGINE_INLINE void invoke(Ts &&... args)
+	UNIGINE_INLINE void invoke(Ts... args)
 	{
 		if (callbacks.empty())
 			return;
@@ -87,7 +87,7 @@ public:
 		reentrancy_stack.append(&frame);
 
 		while (!frame.isDone())
-			frame.runNext(std::forward<Ts>(args)...);
+			frame.runNext<Ts...>(std::move(args)...);
 
 		assert(reentrancy_stack.size());
 		reentrancy_stack.removeLast();
@@ -137,11 +137,20 @@ private:
 		UNIGINE_INLINE bool isDone() const { return current >= callbacks.size(); }
 
 		template <typename ...Ts>
+		UNIGINE_INLINE void runNext()
+		{
+			assert(current < callbacks.size());
+			CallbackBase *callback = callbacks[current];
+			callback->run();
+			++current;
+		}
+
+		template <typename ...Ts>
 		UNIGINE_INLINE void runNext(Ts... args)
 		{
 			assert(current < callbacks.size());
 			CallbackBase *callback = callbacks[current];
-			callback->run(std::forward<Ts>(args)...);
+			callback->run<Ts...>(std::move(args)...);
 			++current;
 		}
 

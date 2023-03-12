@@ -13,13 +13,19 @@
 
 #pragma once
 
-#include "RenderWindow.h"
+
+#include <editor/UnigineRenderWindow.h>
 
 #include <UnigineGui.h>
 
-namespace Editor { class EngineGuiWindowPrivate; }
 
-namespace Editor
+////////////////////////////////////////////////////////////////////////////////
+// Forward decl.
+////////////////////////////////////////////////////////////////////////////////
+namespace UnigineEditor { struct EngineGuiWindowPrivate; }
+
+
+namespace UnigineEditor
 {
 ////////////////////////////////////////////////////////////////////////////////
 // EngineGuiWindow.
@@ -31,7 +37,7 @@ namespace Editor
 /// keyboard events for this window exclusively, without sending them to the
 /// common Editor's Controls handling system.
 /// </summary>
-class EDITOR_API EngineGuiWindow : public RenderWindow
+class UNIGINE_EDITOR_API EngineGuiWindow : public RenderWindow
 {
 	Q_OBJECT
 	Q_DISABLE_COPY(EngineGuiWindow)
@@ -82,8 +88,13 @@ protected:
 	/// </summary>
 	void onRender() override;
 
+	void focusOutEvent(QFocusEvent *event) override;
+	void focusInEvent(QFocusEvent *event) override;
+
 private:
-	EngineGuiWindowPrivate *const d;
+	void update_gui();
+
+	::UnigineEditor::EngineGuiWindowPrivate *const d;
 };
 
-} // namespace Editor
+} // namespace UnigineEditor

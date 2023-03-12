@@ -516,33 +516,19 @@
 			<param name="surface"> Surface number. </param> 
 			<returns>Path to the texture file.</returns>
 		</member>
-		<member name="M:Unigine.Object.setMaxFadeDistance(float,int)">
+		<member name="M:Unigine.Object.setMinVisibleDistance(float,int)">
 			<summary>
-			Updates the maximum fade-out distance of a given surface. Over this distance the surface smoothly becomes invisible due to alpha fading. It is counted off starting from the maximum visibility distance.
+			Updates the minimum visibility distance of a given surface. It is the distance, starting from which the surface begins to fade in until it becomes completely visible.
 			</summary> 
-			<param name="distance"> Maximum fade-out distance, in units. If a negative value is provided, 0 will be used instead. The default value is 0. </param>
+			<param name="distance"> Minimum visibility distance, in units. If a negative value is provided, 0 will be used instead. The default value is -inf. </param>
 			<param name="surface"> Surface number. </param> 
 		</member>
-		<member name="M:Unigine.Object.getMaxFadeDistance(int) const">
+		<member name="M:Unigine.Object.getMinVisibleDistance(int) const">
 			<summary>
-			Returns the maximum fade-out distance. Over this distance the surface smoothly becomes invisible due to alpha fading. It is counted starting from the maximum visibility distance.
+			Returns minimum visibility distance of a given surface. It is the distance, starting from which the surface begins to fade in until it becomes completely visible.
 			</summary> 
 			<param name="surface"> Surface number. </param> 
-			<returns>Maximum fade-out distance, in units.</returns>
-		</member>
-		<member name="M:Unigine.Object.setMaxParent(int,int)">
-			<summary>
-			Sets a surface maximum LOD parent surface number.
-			</summary> 
-			<param name="parent"> Surface maximum LOD parent surface number. </param>
-			<param name="surface"> Surface number. </param> 
-		</member>
-		<member name="M:Unigine.Object.getMaxParent(int) const">
-			<summary>
-			Returns the surface maximum LOD parent surface number.
-			</summary> 
-			<param name="surface"> Surface number. </param> 
-			<returns>Surface maximum LOD parent surface number.</returns>
+			<returns>Minimum visibility distance, in units.</returns>
 		</member>
 		<member name="M:Unigine.Object.setMaxVisibleDistance(float,int)">
 			<summary>
@@ -572,6 +558,20 @@
 			<param name="surface"> Surface number. </param> 
 			<returns>Minimum fade-in distance, in units.</returns>
 		</member>
+		<member name="M:Unigine.Object.setMaxFadeDistance(float,int)">
+			<summary>
+			Updates the maximum fade-out distance of a given surface. Over this distance the surface smoothly becomes invisible due to alpha fading. It is counted off starting from the maximum visibility distance.
+			</summary> 
+			<param name="distance"> Maximum fade-out distance, in units. If a negative value is provided, 0 will be used instead. The default value is 0. </param>
+			<param name="surface"> Surface number. </param> 
+		</member>
+		<member name="M:Unigine.Object.getMaxFadeDistance(int) const">
+			<summary>
+			Returns the maximum fade-out distance. Over this distance the surface smoothly becomes invisible due to alpha fading. It is counted starting from the maximum visibility distance.
+			</summary> 
+			<param name="surface"> Surface number. </param> 
+			<returns>Maximum fade-out distance, in units.</returns>
+		</member>
 		<member name="M:Unigine.Object.setMinParent(int,int)">
 			<summary>
 			Sets surface minimum LOD parent surface number.
@@ -586,19 +586,19 @@
 			<param name="surface"> Surface number. </param> 
 			<returns>Surface minimum LOD parent surface number.</returns>
 		</member>
-		<member name="M:Unigine.Object.setMinVisibleDistance(float,int)">
+		<member name="M:Unigine.Object.setMaxParent(int,int)">
 			<summary>
-			Updates the minimum visibility distance of a given surface. It is the distance, starting from which the surface begins to fade in until it becomes completely visible.
+			Sets a surface maximum LOD parent surface number.
 			</summary> 
-			<param name="distance"> Minimum visibility distance, in units. If a negative value is provided, 0 will be used instead. The default value is -inf. </param>
+			<param name="parent"> Surface maximum LOD parent surface number. </param>
 			<param name="surface"> Surface number. </param> 
 		</member>
-		<member name="M:Unigine.Object.getMinVisibleDistance(int) const">
+		<member name="M:Unigine.Object.getMaxParent(int) const">
 			<summary>
-			Returns minimum visibility distance of a given surface. It is the distance, starting from which the surface begins to fade in until it becomes completely visible.
+			Returns the surface maximum LOD parent surface number.
 			</summary> 
 			<param name="surface"> Surface number. </param> 
-			<returns>Minimum visibility distance, in units.</returns>
+			<returns>Surface maximum LOD parent surface number.</returns>
 		</member>
 		<member name="M:Unigine.Object.getNumSurfaces const">
 			<summary>
@@ -1394,21 +1394,6 @@
 			<param name="vertex"> Vertices array pointer. </param>
 			<param name="num_vertex"> Number of vertices. </param> 
 		</member>
-		<member name="M:Unigine.ObjectDynamic.setVertexDouble(int,double[])">
-			<summary>
-			Updates the last added vertex to the vertex of the double type with the given parameters.
-			</summary> 
-			<param name="attribute"> Attribute number. </param>
-			<param name="value"> Value pointer. </param> 
-		</member>
-		<member name="M:Unigine.ObjectDynamic.setVertexDouble(int,int,double[])">
-			<summary>
-			Updates the given vertex to the vertex of the double type with the given parameters.
-			</summary> 
-			<param name="vertex"> Vertex index. </param>
-			<param name="attribute"> Attribute number. </param>
-			<param name="value"> Value pointer. </param> 
-		</member>
 		<member name="M:Unigine.ObjectDynamic.setVertexFloat(int,float[])">
 			<summary>
 			Updates the last added vertex to the vertex of the float type with the given parameters.
@@ -1547,13 +1532,6 @@
 			</summary> 
 			<param name="vertex"> Vertices array pointer. </param>
 			<param name="num_vertex"> Number of vertices. </param> 
-		</member>
-		<member name="M:Unigine.ObjectDynamic.addVertexDouble(int,double[])">
-			<summary>
-			Adds a vertex of a double type with the given attribute, coordinates and size to the object.
-			</summary> 
-			<param name="attribute"> Attribute number. </param>
-			<param name="value"> Value pointer. </param> 
 		</member>
 		<member name="M:Unigine.ObjectDynamic.addVertexFloat(int,float[])">
 			<summary>
@@ -2498,7 +2476,7 @@
 			Invalidates all grass cells. All invalidated cells will be regenerated.
 			</summary>  
 		</member>
-		<member name="M:Unigine.ObjectGrass.invalidate(UNIGINE_BOUND_BOX)">
+		<member name="M:Unigine.ObjectGrass.invalidate(Unigine.Math.WorldBoundBox)">
 			<summary>
 			Invalidates all grass cells within the area specified by the given bounding box. All invalidated cells will be regenerated.
 			</summary> 
@@ -2536,17 +2514,17 @@
 			<param name="height"> Physical height of the new GUI object in units. </param>
 			<param name="name"> Path to the folder with GUI skin (the RC file and textures). If no value is specified, the default gui skin will be used. </param> 
 		</member>
-		<member name="M:Unigine.ObjectGui.setBackground(int)">
+		<member name="M:Unigine.ObjectGui.setBackground(bool)">
 			<summary>
 			Sets a value indicating if the GUI background (black screen) should be rendered.
 			</summary> 
-			<param name="background"> 1 to render GUI background, 0 to keep it transparent. </param> 
+			<param name="background"> true to render GUI background, false to keep it transparent. </param> 
 		</member>
-		<member name="M:Unigine.ObjectGui.getBackground const">
+		<member name="M:Unigine.ObjectGui.isBackground const">
 			<summary>
 			Returns a value indicating if GUI background (black screen) is rendered.
 			</summary>  
-			<returns>1 if background is rendered; otherwise, 0.</returns>
+			<returns>true if background is rendered; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGui.setBillboard(bool)">
 			<summary>
@@ -2564,29 +2542,29 @@
 			<summary>
 			Sets a distance at which the GUI becomes controllable.
 			</summary> 
-			<param name="distance"> A new distance in units. </param> 
+			<param name="distance"> New distance in units. If a negative value is provided, 0 will be used instead. </param> 
 		</member>
 		<member name="M:Unigine.ObjectGui.getControlDistance const">
 			<summary>
-			Returns the distance at which the GUI becomes controllable.
+			Returns the distance, at which the GUI becomes controllable.
 			</summary>  
-			<returns>The distance in units.</returns>
+			<returns>Distance in units.</returns>
 		</member>
-		<member name="M:Unigine.ObjectGui.setDepthTest(int)">
+		<member name="M:Unigine.ObjectGui.setDepthTest(bool)">
 			<summary>
 			Sets a value indicating if depth test should be used for the GUI object.
 			</summary> 
-			<param name="test"> 1 to use depth test; otherwise, 0. </param> 
+			<param name="test"> true to use depth test; otherwise, false. </param> 
 		</member>
-		<member name="M:Unigine.ObjectGui.getDepthTest const">
+		<member name="M:Unigine.ObjectGui.isDepthTest const">
 			<summary>
 			Returns a value indicating if the GUI object uses depth test.
 			</summary>  
-			<returns>1 if the GUI object uses depth test; otherwise, 0.</returns>
+			<returns>true if the GUI object uses depth test; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGui.getGui const">
 			<summary>
-			Returns a Gui instance associated with the object.
+			Returns a Gui instance associated with the object. This function is used when assigning a widget to the GUI object.					When you create an instance of the ObjectGui class, it is automatically associated with a Gui instance.
 			</summary>  
 			<returns>Gui smart pointer.</returns>
 		</member>
@@ -2611,67 +2589,67 @@
 			</summary>  
 			<returns>Mouse mode. One of the MOUSE_* variables.</returns>
 		</member>
-		<member name="M:Unigine.ObjectGui.setMouseShow(int)">
+		<member name="M:Unigine.ObjectGui.setMouseShow(bool)">
 			<summary>
 			Sets a value indicating if the mouse cursor should be rendered in the GUI object.
 			</summary> 
-			<param name="show"> 1 to render the mouse cursor; otherwise, 0. </param> 
+			<param name="show"> true to render the mouse cursor; otherwise, false. </param> 
 		</member>
-		<member name="M:Unigine.ObjectGui.getMouseShow const">
+		<member name="M:Unigine.ObjectGui.isMouseShow const">
 			<summary>
 			Returns a value indicating if the mouse cursor is rendered in the GUI object.
 			</summary>  
-			<returns>1 if the cursor is rendered; otherwise, 0.</returns>
+			<returns>true if the cursor is rendered; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGui.getPhysicalHeight const">
 			<summary>
 			Returns the physical height of the GUI object.
 			</summary>  
-			<returns>The height in units.</returns>
+			<returns>Height in units.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGui.setPhysicalSize(float,float)">
 			<summary>
 			Sets physical dimensions of the GUI object.
 			</summary> 
-			<param name="width"> A new width in units. </param>
-			<param name="height"> A new height in units. </param> 
+			<param name="width"> New width in units. If a negative value is provided, 0 will be used instead. </param>
+			<param name="height"> New height in units. If a negative value is provided, 0 will be used instead. </param> 
 		</member>
 		<member name="M:Unigine.ObjectGui.getPhysicalWidth const">
 			<summary>
 			Returns the physical width of the GUI object.
 			</summary>  
-			<returns>The width in units.</returns>
+			<returns>Width in units.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGui.setPolygonOffset(float)">
 			<summary>
 			Sets an offset of the GUI object above the background to avoid z-fighting.
 			</summary> 
-			<param name="offset"> A polygon offset in units. </param> 
+			<param name="offset"> Polygon offset in units.  If a negative value is provided, 0 will be used instead. </param> 
 		</member>
 		<member name="M:Unigine.ObjectGui.getPolygonOffset const">
 			<summary>
 			Returns an offset of the GUI object above the background to avoid z-fighting.
 			</summary>  
-			<returns>The polygon offset in units.</returns>
+			<returns>Polygon offset in units.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGui.getScreenHeight const">
 			<summary>
 			Returns the screen height of the GUI object.
 			</summary>  
-			<returns>The height in pixels.</returns>
+			<returns>Height in pixels.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGui.setScreenSize(int,int)">
 			<summary>
 			Sets screen dimensions of the GUI object.
 			</summary> 
-			<param name="width"> A new width in pixels. </param>
-			<param name="height"> A new height in pixels. </param> 
+			<param name="width"> New width in pixels. If a negative value is provided, 0 will be used instead. </param>
+			<param name="height"> New height in pixels. If a negative value is provided, 0 will be used instead. </param> 
 		</member>
 		<member name="M:Unigine.ObjectGui.getScreenWidth const">
 			<summary>
 			Returns the screen width of the GUI object.
 			</summary>  
-			<returns>The width in pixels.</returns>
+			<returns>Width in pixels.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGui.type">
 			<summary>
@@ -2693,15 +2671,14 @@
 			<summary>
 			ObjectGuiMesh constructor. Creates a new GUI mesh from a given file.
 			</summary> 
-			<param name="mesh"> A mesh smart pointer. </param>
+			<param name="mesh"> Source Mesh to be used. </param>
 			<param name="path"> A name of a new GUI mesh. </param> 
 		</member>
-		<member name="M:Unigine.ObjectGuiMesh.#ctor(char,char,int)">
+		<member name="M:Unigine.ObjectGuiMesh.#ctor(char,char,bool)">
 			<summary>
 			An ObjectGuiMesh constructor. The ObjectGuiMesh will be created on the basis of the specified mesh.
 			</summary> 
-			<param name="mesh_name"> Path to the mesh file. </param>
-			<param name="v"> A variable of one of the following types:Mesh mesh - The source mesh.string name - The path to the .mesh file. </param>
+			<param name="mesh_name"> Path to the .mesh file. </param>
 			<param name="path"> Name of the new GUI mesh. </param>
 			<param name="unique"> When you create several objects out of a single .mesh file, the instance of the mesh geometry is created. If you then change the source geometry, its instances will be changed as well. To avoid this, set the unique flag to 1, so a copy of the mesh geometry will be created and changes won't be applied.This argument is available only if the first argument is string. </param> 
 		</member>
@@ -2770,44 +2747,56 @@
 			</summary>  
 			<returns>Mouse mode. One of the MOUSE_* variables.</returns>
 		</member>
-		<member name="M:Unigine.ObjectGuiMesh.setMouseShow(int)">
+		<member name="M:Unigine.ObjectGuiMesh.setMouseShow(bool)">
 			<summary>
 			Sets a value indicating if the mouse cursor should be rendered in the mesh GUI object.
 			</summary> 
-			<param name="show"> 1 to render the mouse cursor; otherwise, 0. </param> 
+			<param name="show"> true to render the mouse cursor; otherwise, false. </param> 
 		</member>
-		<member name="M:Unigine.ObjectGuiMesh.getMouseShow const">
+		<member name="M:Unigine.ObjectGuiMesh.isMouseShow const">
 			<summary>
 			Returns a value indicating if the mouse cursor is rendered in the mesh GUI object.
 			</summary>  
-			<returns>1 if the cursor is rendered; otherwise, 0.</returns>
+			<returns>true if the cursor is rendered; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.setBackground(bool)">
+			<summary>
+			Sets a value indicating if the GUI background (black screen) should be rendered.
+			</summary> 
+			<param name="background"> true to render GUI background, false to keep it transparent. </param> 
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.isBackground const">
+			<summary>
+			Returns a value indicating if GUI background (black screen) is rendered.
+			</summary>  
+			<returns>true if background is rendered; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.getScreenHeight const">
 			<summary>
 			Returns the screen height of the mesh GUI object.
 			</summary>  
-			<returns>The height in pixels.</returns>
+			<returns>Height in pixels.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.setScreenSize(int,int)">
 			<summary>
 			Sets screen dimensions of the mesh GUI object.
 			</summary> 
-			<param name="width"> A new width in pixels. </param>
-			<param name="height"> A new height in pixels. </param> 
+			<param name="width"> New width in pixels. If a negative value is provided, 0 will be used instead. </param>
+			<param name="height"> New height in pixels. If a negative value is provided, 0 will be used instead. </param> 
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.getScreenWidth const">
 			<summary>
 			Returns the screen width of the mesh GUI object.
 			</summary>  
-			<returns>The width in pixels.</returns>
+			<returns>Width in pixels.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.createMesh(char,bool)">
 			<summary>
 			Creates the GUI mesh with the specified parameters.
 			</summary> 
-			<param name="path"> Path to the mesh file. </param>
+			<param name="path"> Path to the *.mesh file. </param>
 			<param name="unique"> Dynamic flag:false - If the mesh vertices are changed in run-time, meshes loaded from the same file will be also changed.true - If the mesh vertices are changed in run-time, meshes loaded from the same file won't be changed </param> 
-			<returns>1 if the mesh is created successfully; otherwise, 0.</returns>
+			<returns>true if the mesh is created successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.flushMesh">
 			<summary>
@@ -2818,19 +2807,19 @@
 			<summary>
 			Loads a mesh file.
 			</summary> 
-			<param name="path"> Mesh file name. </param> 
+			<param name="path"> Path to the .mesh file. </param> 
 			<returns>1 if the mesh is loaded successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.saveMesh(char)">
 			<summary>
-			Saves the mesh into a file.
+			Saves the mesh into the .mesh format.
 			</summary> 
-			<param name="path"> Mesh file name. </param> 
+			<param name="path"> Path to the .mesh file. </param> 
 			<returns>1 if the mesh is saved successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.type">
 			<summary>
-			Returns the type of ObjectMeshStatic.
+			Returns the type identifier of ObjectMeshStatic.
 			</summary>  
 			<returns>ObjectMeshStatic type identifier.</returns>
 		</member>
@@ -3306,7 +3295,7 @@
 			Returns a detail by its index.
 			</summary> 
 			<param name="num"> Detail index. </param> 
-			<returns>Detail with the specified index (if it exists); otherwise, nullptr.</returns>
+			<returns>Detail with the specified index (if it exists); otherwise, an assertion failure error is reported.</returns>
 		</member>
 		<member name="M:Unigine.TerrainDetailMask.isDetail(Unigine.Ptr{Unigine.TerrainDetail})">
 			<summary>
@@ -3368,6 +3357,30 @@
 			</summary>  
 			<returns>Current dither amount for the detail mask in the [0.0f; 1.0f] range.</returns>
 		</member>
+		<member name="M:Unigine.TerrainDetailMask.setDefaultValue(float)">
+			<summary>
+			Sets a default (background) value to be used for the mask.
+			</summary> 
+			<param name="value"> Value to be used for the mask as default. </param> 
+		</member>
+		<member name="M:Unigine.TerrainDetailMask.getDefaultValue const">
+			<summary>
+			Returns the current default (background) value for the mask.
+			</summary>  
+			<returns>Value currently used for the mask as default.</returns>
+		</member>
+		<member name="M:Unigine.TerrainDetailMask.setMaskByAlbedo(Unigine.Math.vec4)">
+			<summary>
+			Sets a new albedo color to be used as a mask.
+			</summary> 
+			<param name="albedo"> Albedo color to be used as a mask, as a four-component vector (R,G,B,A).. </param> 
+		</member>
+		<member name="M:Unigine.TerrainDetailMask.getMaskByAlbedo const">
+			<summary>
+			Returns the albedo color currently used as a mask.
+			</summary>  
+			<returns>Albedo color currently used as a mask, as a four-component vector (R,G,B,A).</returns>
+		</member>
 		<member name="M:Unigine.Landscape.getTemporaryTexture(Unigine.Math.ivec2)">
 			<summary>
 			Returns a fragment of terrain data as a LandscapeTextures of the specified resolution.
@@ -3381,7 +3394,7 @@
 			</summary> 
 			<param name="texture"> Temporary landscape texture to be released. </param> 
 		</member>
-		<member name="M:Unigine.Landscape.terrainLoad(UNIGINE_BOUND_BOX)">
+		<member name="M:Unigine.Landscape.terrainLoad(Unigine.Math.WorldBoundBox)">
 			<summary>
 			Loads terrain data (tiles) for all landscape layer maps within the specified bounding box to cache.
 			</summary> 
@@ -3428,7 +3441,7 @@
 			<param name="padding"> Inner padding size for the area to be rendered. </param> 
 			<returns>true if the data of the landscape terrain area (specified landscape layer maps) defined by the specified transformation and texel size, was successfully rendered to the specified buffers; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Landscape.asyncTextureDraw(int,Unigine.UGUID,Unigine.Math.ivec2,Unigine.Math.ivec2,int,Unigine.Vector{UNIGINE_BOUND_BOX,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.Landscape.asyncTextureDraw(int,Unigine.UGUID,Unigine.Math.ivec2,Unigine.Math.ivec2,int,Unigine.Vector{Unigine.Math.WorldBoundBox,int,Unigine.VectorAllocator})">
 			<summary>
 			Commences an asynchronous GPU-based drawing operation with forced pre-loading of terrain data within the specified bounding box (all landscape layer maps). The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining data layers defined by the specified flags. The operation itself is to be implemented in the TextureDrawCallback handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes) that requires additional data beyond the area specified by coords and resolution parameters as well as the data of other landscape layer maps (e.g. a copy brush).
 			</summary> 
@@ -3458,7 +3471,7 @@
 			<param name="coord"> Coordinates of the upper left corner of the landscape layer map data segment to be modified along the X and Y axes. </param>
 			<param name="resolution"> Resolution of the landscape layer map data segment to be modified along the X and Y axes. </param> 
 		</member>
-		<member name="M:Unigine.Landscape.asyncTextureDraw(Unigine.UGUID,Unigine.Math.ivec2,Unigine.Math.ivec2,int,Unigine.Vector{UNIGINE_BOUND_BOX,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.Landscape.asyncTextureDraw(Unigine.UGUID,Unigine.Math.ivec2,Unigine.Math.ivec2,int,Unigine.Vector{Unigine.Math.WorldBoundBox,int,Unigine.VectorAllocator})">
 			<summary>
 			Commences an asynchronous GPU-based drawing operation with forced pre-loading of terrain data within the specified bounding box (all landscape layer maps). The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining data layers defined by the specified flags. The operation itself is to be implemented in the TextureDrawCallback handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes) that requires additional data beyond the area specified by coords and resolution parameters as well as the data of other landscape layer maps (e.g. a copy brush).
 			</summary> 
@@ -3973,6 +3986,46 @@
 			Landscape map file fifth masks opacity data block (for masks with indices 16,17,18,19).
 		</summary>
 		</member>
+		<member name="F:Unigine.Landscape.COMPRESSOR_TYPE_NONE">
+			<summary>
+			No compression is used.
+		</summary>
+		</member>
+		<member name="F:Unigine.Landscape.COMPRESSOR_TYPE_JACKALLESS">
+			<summary>
+			Our Method compression is used. It is optimized for compressing 2D and 3D textures and provides better results than LZ4 and Zlib without deteriorating the quality.
+		</summary>
+		</member>
+		<member name="F:Unigine.Landscape.COMPRESSOR_TYPE_LZ4">
+			<summary>
+			LZ4 compression is used (temporary option, planned to be removed in the upcoming releases).
+		</summary>
+		</member>
+		<member name="F:Unigine.Landscape.COMPRESSOR_TYPE_ZLIB">
+			<summary>
+			Zlib compression (can provide up to 2 times higher compression ratio, but takes up to 20 times longer).
+		</summary>
+		</member>
+		<member name="F:Unigine.Landscape.ALPHA_BLEND">
+			<summary>
+			Alpha blending mode - the colors of the layer map and the underlying one are blended.
+		</summary>
+		</member>
+		<member name="F:Unigine.Landscape.ADDITIVE">
+			<summary>
+			Additive blending mode - data of the layer map is added atop of the data of underlying maps.
+		</summary>
+		</member>
+		<member name="F:Unigine.Landscape.OVERLAY">
+			<summary>
+			Overlay blending mode - data of the layer map replaces the data of underlying maps.
+		</summary>
+		</member>
+		<member name="F:Unigine.Landscape.MULTIPLICATIVE">
+			<summary>
+			Multiplicative blending mode - albedo colors of the underlying map are multiplied by the colors of the layer map.
+		</summary>
+		</member>
 		<member name="M:Unigine.LandscapeLayerMap.#ctor">
 			<summary>
 			The LandscapeLayerMap constructor.
@@ -4060,31 +4113,31 @@
 			<summary>
 			Sets a new size for the landscape layer map.
 			</summary> 
-			<param name="size"> Two-component vector (X, Y) defining the size of the landscape layer map along X and Y axes, in units. </param> 
+			<param name="size"> The two-component vector (X, Y) defining the size of the landscape layer map along X and Y axes, in units. </param> 
 		</member>
 		<member name="M:Unigine.LandscapeLayerMap.getSize const">
 			<summary>
 			Returns the current size of the landscape layer map.
 			</summary>  
-			<returns>Two-component vector (X, Y) defining the size of the landscape layer map along X and Y axes, in units.</returns>
+			<returns>The two-component vector (X, Y) defining the size of the landscape layer map along X and Y axes, in units.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeLayerMap.setHeightScale(float)">
 			<summary>
 			Sets a new scale factor to be used for heights data. Height values of landscape layer map are multiplied by this value during terrain rendering.
 			</summary> 
-			<param name="scale"> Scale factor used for heights data. </param> 
+			<param name="scale"> The scale factor used for heights data. </param> 
 		</member>
 		<member name="M:Unigine.LandscapeLayerMap.getHeightScale const">
 			<summary>
 			Returns the current scale factor used for heights data. Height values of landscape layer map are multiplied by this value during terrain rendering.
 			</summary>  
-			<returns>Scale factor used for heights data.</returns>
+			<returns>The scale factor used for heights data.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeLayerMap.getTexelSize const">
 			<summary>
 			Returns the current texel size for the landscape layer map textures.
 			</summary>  
-			<returns>Two-component vector (X, Y) defining the size of the texel of the landscape layer map textures along X and Y axes.</returns>
+			<returns>The two-component vector (X, Y) defining the size of the texel of the landscape layer map textures along X and Y axes.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeLayerMap.isInit const">
 			<summary>
@@ -4097,7 +4150,7 @@
 			Returns the minimum and maximum height of the landscape layer map as a two-component vector.
 			</summary> 
 			<param name="precision"> Precision value in the [0.0f, 1.0f] range. The default value is 1.0f (maximum). </param> 
-			<returns>Two-component vector (X, Y) defining the minimum (X) and maximum (Y) height of the landscape layer map.</returns>
+			<returns>The two-component vector (X, Y) defining the minimum (X) and maximum (Y) height of the landscape layer map.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeLayerMap.type">
 			<summary>
@@ -4109,39 +4162,98 @@
 			<summary>
 			Returns the current landscape map resolution.
 			</summary>  
-			<returns>Two-component vector (X, Y) representing landscape map resolution along X and Y axes, in pixels.</returns>
+			<returns>The two-component vector (X, Y) representing landscape map resolution along X and Y axes, in pixels.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeLayerMap.setFadeAttenuation(Unigine.Math.vec2)">
 			<summary>
 			Sets a new fade attenuation of landscape layer map. This parameter defines the distance of the map transparency attenuation, starting from the edge of the map.
 			</summary> 
-			<param name="attenuation"> Two-component vector (X, Y) defining the fade attenuation of the landscape layer map along X and Y axes. </param> 
+			<param name="attenuation"> The two-component vector (X, Y) defining the fade attenuation of the landscape layer map along X and Y axes. </param> 
 		</member>
 		<member name="M:Unigine.LandscapeLayerMap.getFadeAttenuation const">
 			<summary>
 			Returns the current fade attenuation for the landscape layer map. This parameter defines the distance of the map transparency attenuation, starting from the edge of the map.
 			</summary>  
-			<returns>Two-component vector (X, Y) defining the fade attenuation of the landscape layer map  along X and Y axes.</returns>
+			<returns>The two-component vector (X, Y) defining the fade attenuation of the landscape layer map along X and Y axes.</returns>
 		</member>
-		<member name="F:Unigine.LandscapeLayerMap.ALPHA_BLEND">
+		<member name="M:Unigine.LandscapeLayerMap.isEnabledHeight const">
 			<summary>
-			Alpha blending mode.
-		</summary>
+			Returns the value specifying if heightmap data is enabled for the landscape layer map.
+			</summary>  
+			<returns>true if heightmap data is enabled for the landscape layer map; otherwise, false.</returns>
 		</member>
-		<member name="F:Unigine.LandscapeLayerMap.ADDITIVE">
+		<member name="M:Unigine.LandscapeLayerMap.isEnabledAlbedo const">
 			<summary>
-			Additive blending mode.
-		</summary>
+			Returns the value specifying if albedo data is enabled for the landscape layer map.
+			</summary>  
+			<returns>true if albedo data is enabled for the landscape layer map; otherwise, false.</returns>
 		</member>
-		<member name="F:Unigine.LandscapeLayerMap.OVERLAY">
+		<member name="M:Unigine.LandscapeLayerMap.isEnabledMask(int) const">
 			<summary>
-			Overlay blending mode.
-		</summary>
+			Returns the value specifying if the specified mask is enabled for the landscape layer map.
+			</summary> 
+			<param name="mask"> Mask index. </param> 
+			<returns>true if the specified mask is enabled for the landscape layer map; otherwise, false.</returns>
 		</member>
-		<member name="F:Unigine.LandscapeLayerMap.MULTIPLICATIVE">
+		<member name="M:Unigine.LandscapeLayerMap.isEnabledOpacityHeight const">
 			<summary>
-			Multiplicative blending mode.
-		</summary>
+			Returns the value specifying if heightmap with an additional opacity mask applied is enabled for the landscape layer map.
+			</summary>  
+			<returns>true if heightmap with an opacity mask is enabled for the landscape layer map; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeLayerMap.isEnabledOpacityAlbedo const">
+			<summary>
+			Returns the value specifying if albedo data with an additional opacity mask applied is enabled for the landscape layer map.
+			</summary>  
+			<returns>true if heightmap with an opacity mask is enabled for the landscape layer map; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeLayerMap.isEnabledOpacityMask(int) const">
+			<summary>
+			Returns the value specifying if the specified mask with an additional opacity mask applied is enabled for the landscape layer map.
+			</summary> 
+			<param name="mask"> Mask index. </param> 
+			<returns>true if heightmap with an opacity mask is enabled for the landscape layer map; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeLayerMap.getHeightBlending const">
+			<summary>
+			Returns the blending mode set for the height data.
+			</summary>  
+		</member>
+		<member name="M:Unigine.LandscapeLayerMap.getAlbedoBlending const">
+			<summary>
+			Returns the blending mode set for the albedo data.
+			</summary>  
+		</member>
+		<member name="M:Unigine.LandscapeLayerMap.getMaskBlending(int) const">
+			<summary>
+			Returns the blending mode set for the mask data.
+			</summary> 
+			<param name="mask"> Mask index. </param> 
+		</member>
+		<member name="M:Unigine.LandscapeLayerMap.getHeightFadeAttenuation const">
+			<summary>
+			Returns the current fade attenuation for height data of the landscape map. This parameter defines the distance of the transparency attenuation starting from the edge of the map.
+			</summary>  
+			<returns>The two-component vector (X, Y) defining the fade attenuation of the height data along X and Y axes.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeLayerMap.getAlbedoFadeAttenuation const">
+			<summary>
+			Returns the current fade attenuation for albedo data of the landscape map. This parameter defines the distance of the transparency attenuation starting from the edge of the map.
+			</summary>  
+			<returns>The two-component vector (X, Y) defining the fade attenuation of the albedo data along X and Y axes.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeLayerMap.getMaskFadeAttenuation(int) const">
+			<summary>
+			Returns the current fade attenuation for the data of the specified detail mask. This parameter defines the distance of the transparency attenuation starting from the edge of the map.
+			</summary> 
+			<param name="mask"> Mask index. </param> 
+			<returns>The two-component vector (X, Y) defining the fade attenuation of the detail mask data along X and Y axes.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeLayerMap.isCompressed const">
+			<summary>
+			Returns the value indicating if the landscape layer map is compressed.
+			</summary>  
+			<returns>true if the landscape layer map is compressed; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeMapFileCreator.#ctor">
 			<summary>
@@ -4317,33 +4429,26 @@
 			</summary>  
 			<returns>Current landscape map file compression progress (percentage).</returns>
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.run(bool,bool)">
+		<member name="M:Unigine.LandscapeMapFileCompression.compress(bool)">
 			<summary>
-			Runs the landscape map file compression/decompression process.
+			Starts the landscape map file compression process.
 			</summary> 
-			<param name="decompress"> true — the landscape map file will be decompressed, false — the landscape map file will be compressed. </param>
 			<param name="is_safe"> true to make the Engine automatically call filesClose()/fileOpen() methods when performing operations (before modifying an .lmap file the Engine should release files via filesClose(), while after modification fileOpen() should be called), false — to call filesClose()/fileOpen() methods manually.The Landscape class has two overloads for the filesClose() method:filesClose() — to be called in case of moving an .lmap file (no data reloading is performed as the file itself was not modified — saves time on reloading data)filesClose(reload_files) — to be called in case of deleting or modifying an .lmap file.When is_safe = true the Engine shall always call filesClose(reload_files) with complete data reloading. </param> 
-			<returns>true if the operation is successful; otherwise, false.</returns>
+			<returns>true if the compression operation is successful; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileCompression.decompress(bool)">
+			<summary>
+			Starts the landscape map file decompression process.
+			</summary> 
+			<param name="is_safe"> true to make the Engine automatically call filesClose()/fileOpen() methods when performing operations (before modifying an .lmap file the Engine should release files via filesClose(), while after modification fileOpen() should be called), false — to call filesClose()/fileOpen() methods manually.The Landscape class has two overloads for the filesClose() method:filesClose() — to be called in case of moving an .lmap file (no data reloading is performed as the file itself was not modified — saves time on reloading data)filesClose(reload_files) — to be called in case of deleting or modifying an .lmap file.When is_safe = true the Engine shall always call filesClose(reload_files) with complete data reloading. </param> 
+			<returns>true if the decompression operation is successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeMapFileCompression.stop">
 			<summary>
 			Stops the landscape map file compression/decompression process.
 			</summary>  
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.isLoaded const">
-			<summary>
-			Returns a value indicating if the landscape map file (.lmap) is loaded.
-			</summary>  
-			<returns>true if the .lmap is loaded; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.load(Unigine.UGUID)">
-			<summary>
-			Loads the landscape map file (.lmap) having the specified GUID.
-			</summary> 
-			<param name="guid"> GUID of the landscape map file (.lmap) to be loaded. </param> 
-			<returns>true if the operation is successful; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.setHeightCompressor(LandscapeMapFileCompression::COMPRESSOR_TYPE)">
+		<member name="M:Unigine.LandscapeMapFileCompression.setHeightCompressor(Landscape::COMPRESSOR_TYPE)">
 			<summary>
 			Sets the type of the compressor used for height data compression.
 			</summary> 
@@ -4355,7 +4460,7 @@
 			</summary>  
 			<returns>Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib</returns>
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.setAlbedoCompressor(LandscapeMapFileCompression::COMPRESSOR_TYPE)">
+		<member name="M:Unigine.LandscapeMapFileCompression.setAlbedoCompressor(Landscape::COMPRESSOR_TYPE)">
 			<summary>
 			Sets the type of the compressor used for albedo data compression.
 			</summary> 
@@ -4367,7 +4472,7 @@
 			</summary>  
 			<returns>Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib</returns>
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.setOpacityHeightCompressor(LandscapeMapFileCompression::COMPRESSOR_TYPE)">
+		<member name="M:Unigine.LandscapeMapFileCompression.setOpacityHeightCompressor(Landscape::COMPRESSOR_TYPE)">
 			<summary>
 			Sets the type of the compressor used for compression of the opacity height data.
 			</summary> 
@@ -4379,31 +4484,25 @@
 			</summary>  
 			<returns>Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib</returns>
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.setMaskCompressor(int,LandscapeMapFileCompression::COMPRESSOR_TYPE)">
+		<member name="M:Unigine.LandscapeMapFileCompression.setMaskCompressor(int,Landscape::COMPRESSOR_TYPE)">
 			<summary>
 			Sets the type of the compressor used for the specified mask.
 			</summary> 
 			<param name="mask"> Mask number. </param>
 			<param name="compressor_type"> Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.setMaskOpacityCompressor(int,LandscapeMapFileCompression::COMPRESSOR_TYPE)">
+		<member name="M:Unigine.LandscapeMapFileCompression.setMaskOpacityCompressor(int,Landscape::COMPRESSOR_TYPE)">
 			<summary>
 			Sets the type of the compressor used for the opacity data of the specified mask.
 			</summary> 
 			<param name="mask"> Mask number. </param>
 			<param name="compressor_type"> Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.setCompressorAll(LandscapeMapFileCompression::COMPRESSOR_TYPE)">
+		<member name="M:Unigine.LandscapeMapFileCompression.setCompressorAll(Landscape::COMPRESSOR_TYPE)">
 			<summary>
 			Sets the type of the compressor used to compress all data.
 			</summary> 
 			<param name="compressor_type"> Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib </param> 
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.isCompressed const">
-			<summary>
-			Returns the value indicating if the .lmap file is compressed.
-			</summary>  
-			<returns>true if the file is compressed; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeMapFileCompression.getMaskCompressor(int)">
 			<summary>
@@ -4489,68 +4588,48 @@
 			</summary>  
 			<returns>The path to the directory that stores the cache.</returns>
 		</member>
-		<member name="F:Unigine.LandscapeMapFileCompression.COMPRESSOR_TYPE_NONE">
-			<summary>
-			No compression is used.
-		</summary>
-		</member>
-		<member name="F:Unigine.LandscapeMapFileCompression.COMPRESSOR_TYPE_JACKALLESS">
-			<summary>
-			Our Method compression is used. It is optimized for compressing 2D and 3D textures and provides better results than LZ4 and Zlib without deteriorating the quality.
-		</summary>
-		</member>
-		<member name="F:Unigine.LandscapeMapFileCompression.COMPRESSOR_TYPE_LZ4">
-			<summary>
-			LZ4 compression is used (temporary option, planned to be removed in the upcoming releases).
-		</summary>
-		</member>
-		<member name="F:Unigine.LandscapeMapFileCompression.COMPRESSOR_TYPE_ZLIB">
-			<summary>
-			Zlib compression (can provide up to 2 times higher compression ratio, but takes up to 20 times longer).
-		</summary>
-		</member>
 		<member name="M:Unigine.LandscapeMapFileSettings.#ctor">
 			<summary>
 			The LandscapeMapFileSettings constructor.
 			</summary>  
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.setHeightBlending(int)">
+		<member name="M:Unigine.LandscapeMapFileSettings.setHeightBlending(Landscape::BLENDING_MODE)">
 			<summary>
 			Sets a new blending mode to be used for heights data of the landscape map.
 			</summary> 
-			<param name="blending"> Blending mode to be used for heights data. One of the following values:0 - Alpha Blend1 - Additive </param> 
+			<param name="blending"> Blending mode to be used for heights data. One of the following values:Alpha BlendAdditive </param> 
 		</member>
 		<member name="M:Unigine.LandscapeMapFileSettings.getHeightBlending const">
 			<summary>
 			Returns the current blending mode used for heights data of the landscape map.
 			</summary>  
-			<returns>Blending mode used for heights data. One of the following values:0 - Alpha Blend1 - Additive</returns>
+			<returns>Blending mode used for heights data. One of the following values:Alpha BlendAdditive</returns>
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.setAlbedoBlending(int)">
+		<member name="M:Unigine.LandscapeMapFileSettings.setAlbedoBlending(Landscape::BLENDING_MODE)">
 			<summary>
 			Sets a new blending mode to be used for albedo data of the landscape map.
 			</summary> 
-			<param name="blending"> Blending mode to be used for albedo data. One of the following values:0 - Alpha Blend1 - Additive2 - Overlay3 - Multiplicative </param> 
+			<param name="blending"> Blending mode to be used for albedo data. One of the following values:Alpha BlendAdditiveOverlayMultiplicative </param> 
 		</member>
 		<member name="M:Unigine.LandscapeMapFileSettings.getAlbedoBlending const">
 			<summary>
 			Returns the current blending mode used for albedo data of the landscape map.
 			</summary>  
-			<returns>Blending mode used for albedo data. One of the following values:0 - Alpha Blend1 - Additive2 - Overlay3 - Multiplicative</returns>
+			<returns>Blending mode used for albedo data. One of the following values:Alpha BlendAdditiveOverlayMultiplicative</returns>
 		</member>
-		<member name="M:Unigine.LandscapeMapFileSettings.setMaskBlending(int,int)">
+		<member name="M:Unigine.LandscapeMapFileSettings.setMaskBlending(int,Landscape::BLENDING_MODE)">
 			<summary>
 			Sets a new blending mode to be used for the data of the specified detail mask.
 			</summary> 
 			<param name="mask"> Detail mask number in the [0; 19] range. </param>
-			<param name="blend"> Blending mode used for the data of the specified detail mask. One of the following values:0 - Alpha Blend1 - Additive2 - Overlay3 - Multiplicative </param> 
+			<param name="blend"> Blending mode used for the data of the specified detail mask. One of the following values:Alpha BlendAdditiveOverlayMultiplicative </param> 
 		</member>
 		<member name="M:Unigine.LandscapeMapFileSettings.getMaskBlending(int) const">
 			<summary>
 			Returns the current blending mode used for the data of the specified detail mask.
 			</summary> 
 			<param name="mask"> Detail mask number in the [0; 19] range. </param> 
-			<returns>Blending mode used for the data of the specified detail mask. One of the following values:0 - Alpha Blend1 - Additive2 - Overlay3 - Multiplicative</returns>
+			<returns>Blending mode used for the data of the specified detail mask. One of the following values:Alpha BlendAdditiveOverlayMultiplicative</returns>
 		</member>
 		<member name="M:Unigine.LandscapeMapFileSettings.setEnabledHeight(bool)">
 			<summary>
@@ -4702,6 +4781,70 @@
 			</summary> 
 			<param name="mask"> Mask number. </param> 
 			<returns>Two-component vector (X, Y) defining the fade attenuation of the detail mask data along X and Y axes.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.getHeightCompressor const">
+			<summary>
+			Returns the type of compression currently used for height data.
+			</summary>  
+			<returns>Type of compression currently used for height data.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.getAlbedoCompressor const">
+			<summary>
+			Returns the type of compression currently used for albedo data.
+			</summary>  
+			<returns>Type of compression currently used for albedo data.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.getOpacityHeightCompressor const">
+			<summary>
+			Returns the type of compression currently used for opacity height data.
+			</summary>  
+			<returns>Type of compression currently used for opacity height data.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.getMaskCompressor(int)">
+			<summary>
+			Returns the type of compression currently used for the data of the mask with the specified number.
+			</summary> 
+			<param name="mask"> Mask number. </param> 
+			<returns>Type of compression currently used for the data of the mask with the specified number.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.getMaskOpacityCompressor(int)">
+			<summary>
+			Returns the type of compression currently used for the opacity data of the mask with the specified number.
+			</summary> 
+			<param name="mask"> Mask number. </param> 
+			<returns>Type of compression currently used for the opacity data of the mask with the specified number.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.isCompressed const">
+			<summary>
+			Returns the value indicating if the .lmap file is compressed.
+			</summary>  
+			<returns>true if the file is compressed; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledAlbedoTextureCompression const">
+			<summary>
+			Returns a value indicating if albedo texture compression is enabled.
+			</summary>  
+			<returns>true if albedo texture compression is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledOpacityHeightTextureCompression const">
+			<summary>
+			Returns a value indicating if opacity height texture compression is enabled.
+			</summary>  
+			<returns>true if opacity height texture compression is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledMaskTextureCompression(int)">
+			<summary>
+			Returns a value indicating if compression of the mask texture for the mask with the specified number is enabled.
+			</summary> 
+			<param name="mask"> Mask number. </param> 
+			<returns>true if compression of the mask texture for the mask with the specified number is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.LandscapeMapFileSettings.isEnabledMaskOpacityTextureCompression(int)">
+			<summary>
+			Returns a value indicating if compression of the opacity texture for the mask with the specified number is enabled.
+			</summary> 
+			<param name="mask"> Mask number. </param> 
+			<returns>true if compression of the opacity texture for the mask with the specified number is enabled; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeFetch.#ctor">
 			<summary>
@@ -5002,7 +5145,7 @@
 			Clears all added fetch end callbacks.
 			</summary>  
 		</member>
-		<member name="M:Unigine.LandscapeImages.create(Unigine.Math.ivec2)">
+		<member name="M:Unigine.LandscapeImages.#ctor(Unigine.Math.ivec2)">
 			<summary>
 			Creates a new LandscapeImages object to store the data for a terrain area of the specified resolution.
 			</summary> 
@@ -5073,7 +5216,7 @@
 			</summary>  
 			<returns>Cloned LandscapeImages buffer.</returns>
 		</member>
-		<member name="M:Unigine.LandscapeTextures.create(Unigine.Math.ivec2)">
+		<member name="M:Unigine.LandscapeTextures.#ctor(Unigine.Math.ivec2)">
 			<summary>
 			Creates a new LandscapeTextures object to store the data for a terrain area of the specified resolution.
 			</summary> 
@@ -5313,13 +5456,6 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Number of the surface vertices.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getSplineMesh(Unigine.Ptr{Unigine.Mesh}) const">
-			<summary>
-			Copies a spline collision mesh if it exists to the specified destination mesh.					This mesh is used for MeshStatic objects generated along the splines (see the WorldSplineGraph class).
-			</summary> 
-			<param name="mesh"> Destination mesh. </param> 
-			<returns>true if the mesh is copied successfully; otherwise, false.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshStatic.getSurfaceTargetName(int,int) const">
 			<summary>
 			Returns the name of the target for the given mesh surface by the target number.
@@ -5556,14 +5692,14 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Current lightmap mode for the surface with the specified number. One of the LIGHTMAP_MODE values.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setLightmapTextureSurface(int,int)">
+		<member name="M:Unigine.ObjectMeshStatic.setLightmapSourceSurface(int,int)">
 			<summary>
 			Sets a new source mesh surface number for the surface with the specified number. A lightmap texture generated for the source mesh surface shall be used for the specified surface (available only when the lightmap mode for the surface is set to LIGHTMAP_MODE_SURFACE mode. This can be used as optimization for LODs.
 			</summary> 
-			<param name="texture_surface"> Source mesh surface number. </param>
+			<param name="source_surface"> Source mesh surface number. </param>
 			<param name="surface"> Mesh surface number. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getLightmapTextureSurface(int) const">
+		<member name="M:Unigine.ObjectMeshStatic.getLightmapSourceSurface(int) const">
 			<summary>
 			Returns the current source mesh surface number for the surface with the specified number. A lightmap texture generated for the source mesh surface is used for the specified surface (available only when the lightmap mode for the surface is set to LIGHTMAP_MODE_SURFACE mode. This can be used as optimization for LODs.
 			</summary> 
@@ -5581,6 +5717,7 @@
 			<summary>
 			Sets a value indicating if the lightmap texture baked for the surface with the specified number is to be compressed. Compressed lightmaps are lightweight, but please note that some compression artifacts may appear.
 			</summary> 
+			<param name="enabled"> true to enable compression for the lightmap texture baked for the surface with the specified number, or false - to disable. </param>
 			<param name="surface"> Mesh surface number. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.setLightmapQuality(ObjectMeshStatic::LIGHTMAP_QUALITY,int)">
@@ -5610,6 +5747,76 @@
 			</summary> 
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Path to the baked lightmap texture currently used for the surface with the specified number.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.setSurfaceCustomTextureEnabled(bool,int)">
+			<summary>
+			Sets a value indicating if a custom texture is to be used for the surface with the specified number.
+			</summary> 
+			<param name="enabled"> true to enable using the custom texture for the surface with the specified number, or false - to disable. </param>
+			<param name="surface"> Mesh surface number. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.isSurfaceCustomTextureEnabled(int) const">
+			<summary>
+			Returns a value indicating if a custom texture is to be used for the surface with the specified number.
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>true if a custom texture is to be used for the surface with the specified number; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.setSurfaceCustomTextureMode(ObjectMeshStatic::SURFACE_CUSTOM_TEXTURE_MODE,int)">
+			<summary>
+			Sets a new mode for the custom texture of the surface with the specified number. This mode defines the source of the custom texture for the surface: either use a unique custom texture, or use a custom texture that is assigned to another surface of the mesh.
+			</summary> 
+			<param name="mode"> Custom texture mode to be set for the surface with the specified number. One of the SURFACE_CUSTOM_TEXTURE_MODE_ values. </param>
+			<param name="surface"> Mesh surface number. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getSurfaceCustomTextureMode(int) const">
+			<summary>
+			Returns the current mode for the custom texture of the surface with the specified number. This mode defines the source of the custom texture for the surface: either use a unique custom texture, or use a custom texture that is assigned to another surface of the mesh.
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Current custom texture mode for the surface with the specified number. One of the SURFACE_CUSTOM_TEXTURE_MODE_ values.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.setSurfaceCustomTextureSourceSurface(int,int)">
+			<summary>
+			Sets a new source mesh surface number for the surface with the specified number. A custom texture generated for the source mesh surface shall be used for the specified surface (available only when the custom texture mode for the surface is set to SURFACE_CUSTOM_TEXTURE_MODE_SURFACE. This can be used as optimization for LODs.
+			</summary> 
+			<param name="source_surface"> Source mesh surface number. </param>
+			<param name="surface"> Mesh surface number. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getSurfaceCustomTextureSourceSurface(int) const">
+			<summary>
+			Returns the current source mesh surface number for the surface with the specified number. A custom texture generated for the source mesh surface is used for the specified surface (available only when the custom texture mode for the surface is set to SURFACE_CUSTOM_TEXTURE_MODE_SURFACE. This can be used as optimization for LODs.
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Source mesh surface number.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.setSurfaceCustomTexturePath(char,int)">
+			<summary>
+			Sets a new path to the custom texture to be used for the surface with the specified number. You can use this method to specify a texture generated in a third-party software.
+			</summary> 
+			<param name="path"> Path to the custom texture to be assigned to the surface with the specified number. </param>
+			<param name="surface"> Mesh surface number. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getSurfaceCustomTexturePath(int) const">
+			<summary>
+			Returns the path to the custom texture currently assigned to the surface with the specified index.
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Path to the custom texture currently assigned to the surface with the specified number.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.setSurfaceCustomTexture(Unigine.Ptr{Unigine.Texture},int)">
+			<summary>
+			Sets a new texture to be used as a custom texture for the surface with the specified number. You can use this method to set any texture.
+			</summary> 
+			<param name="texture"> Texture to be set. </param>
+			<param name="surface"> Mesh surface number. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getSurfaceCustomTexture(int) const">
+			<summary>
+			Returns the texture currently used as a custom texture for the surface with the specified number.
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Texture used as a custom texture for the specified surface.</returns>
 		</member>
 		<member name="F:Unigine.ObjectMeshStatic.LIGHTMAP_QUALITY_ULTRA">
 			<summary>
@@ -5654,6 +5861,16 @@
 		<member name="F:Unigine.ObjectMeshStatic.LIGHTMAP_MODE_UNIQUE">
 			<summary>
 			Bake a unique lightmap texture for the surface.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshStatic.SURFACE_CUSTOM_TEXTURE_MODE_UNIQUE">
+			<summary>
+			Use a unique custom texture for the surface.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshStatic.SURFACE_CUSTOM_TEXTURE_MODE_SURFACE">
+			<summary>
+			Use the custom texture from another surface. This option is intended for use with LODs having the same UV maps.
 		</summary>
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.#ctor(char,bool)">
@@ -5835,7 +6052,7 @@
 			</summary>  
 			<returns>Node type identifier.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.removeClusterTransforms(UNIGINE_BOUND_BOX)">
+		<member name="M:Unigine.ObjectMeshCluster.removeClusterTransforms(Unigine.Math.WorldBoundBox)">
 			<summary>
 			Removes cluster meshes, found within the specified bounding box, from the cluster.
 			</summary> 
@@ -5849,7 +6066,7 @@
 			<param name="bb"> Bounding sphere defining the area, for which the transformations of cluster meshes are to be collected. </param> 
 			<returns>true if cluster meshes, found within the specified bounding sphere are successfully removed; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.detachClusterTransforms(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.ObjectMeshCluster.detachClusterTransforms(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
 			<summary>
 			Detaches cluster meshes found within the area specified by the given bounding box from the cluster and puts their transformations (local coordinates) to the specified buffer.
 			</summary> 
@@ -5857,7 +6074,7 @@
 			<param name="transforms"> Buffer to store transformations of detached cluster meshes. </param> 
 			<returns>true if cluster meshes have been detached from the cluster; otherwise false.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.detachClusterWorldTransforms(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.ObjectMeshCluster.detachClusterWorldTransforms(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator})">
 			<summary>
 			Detaches cluster meshes found within the area specified by the given bounding box from the cluster and puts their transformations (world coordinates) to the specified buffer.
 			</summary> 
@@ -5873,7 +6090,7 @@
 			<param name="transforms"> Buffer to store transformations of cluster meshes, in world coordinates. </param> 
 			<returns>true if cluster meshes have been detached from the cluster; otherwise false.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.getClusterTransforms(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.ObjectMeshCluster.getClusterTransforms(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
 			<summary>
 			Collects transformations (local coordinates) for all cluster meshes within the area specified by the given bounding box and puts them to the specified buffer.
 			</summary> 
@@ -5881,7 +6098,7 @@
 			<param name="transforms"> Buffer to store transformations of cluster meshes. </param> 
 			<returns>true, if there are transformations of cluster meshes; or false, if there are no transformations of cluster meshes found.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.getClusterWorldTransforms(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.ObjectMeshCluster.getClusterWorldTransforms(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator})">
 			<summary>
 			Collects transformations (world coordinates) for all cluster meshes within the area specified by the given bounding box and puts them to the specified buffer.
 			</summary> 
@@ -6356,7 +6573,7 @@
 			Invalidates all mesh clutter cells. All invalidated cells will be regenerated.
 			</summary>  
 		</member>
-		<member name="M:Unigine.ObjectMeshClutter.invalidate(UNIGINE_BOUND_BOX)">
+		<member name="M:Unigine.ObjectMeshClutter.invalidate(Unigine.Math.WorldBoundBox)">
 			<summary>
 			Invalidates all mesh clutter cells within the area specified by the given bounding box. All invalidated cells will be regenerated.
 			</summary> 
@@ -6386,14 +6603,14 @@
 			Restores all cells removed by the calls to the setClutterExclude() method. Restored cells will be regenerated.
 			</summary>  
 		</member>
-		<member name="M:Unigine.ObjectMeshClutter.setClutterExclude(UNIGINE_BOUND_BOX,int)">
+		<member name="M:Unigine.ObjectMeshClutter.setClutterExclude(Unigine.Math.WorldBoundBox,int)">
 			<summary>
 			Removes all cells within the area specified by the given bounding box. Generation of these cells will be skipped. This method can be used to replace some parts of the clutter with modified meshes (e.g., broken trees within the area around the shell crater in the forest).
 			</summary> 
 			<param name="bounds"> Bounding box, defining the area, where mesh clutter cells will not be generated. </param>
 			<param name="exclude"> Exclude flag. Set 1 to remove all mesh clutter cells within the area; otherwise, set 0 to restore the removed ones. Restored cells will be regenerated. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshClutter.getClutterTransforms(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator},bool,bool) const">
+		<member name="M:Unigine.ObjectMeshClutter.getClutterTransforms(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator},bool,bool) const">
 			<summary>
 			Collects transformations for all clutter meshes in the generated cells within the area specified by the given bounding box and puts them to the specified buffer.					Generation of clutter cells is performed in separate threads. Some of the cells may have their lifetime expired. Therefore, the content of certain cells might be unavailable at the moment, such cells are considered as not generated.
 			</summary> 
@@ -6410,7 +6627,7 @@
 			<param name="transforms"> Buffer to store transformations of clutter meshes. </param> 
 			<returns>1, if there are transformations of clutter meshes; or 0, if there are no transformations of clutter meshes found.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshClutter.getClutterWorldTransforms(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator},bool,bool) const">
+		<member name="M:Unigine.ObjectMeshClutter.getClutterWorldTransforms(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator},bool,bool) const">
 			<summary>
 			Collects transformations (in world coordinates) for all clutter meshes in the generated cells within the area specified by the given bounding box and puts them to the specified buffer.					Generation of clutter cells is performed in separate threads. Some of the cells may have their lifetime expired. Therefore, the content of certain cells might be unavailable at the moment, such cells are considered as not generated.
 			</summary> 
@@ -8203,7 +8420,7 @@
 			<param name="num"> Mesh instance number. </param> 
 			<returns>Mesh transformation matrix.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSplineCluster.getClusterTransforms(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.ObjectMeshSplineCluster.getClusterTransforms(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
 			<summary>
 			Collects transformations (local coordinates) for all spline cluster meshes within the area specified by the given bounding box and puts them to the specified buffer.
 			</summary> 
@@ -8211,7 +8428,7 @@
 			<param name="transforms"> Buffer to store transformations of spline cluster meshes. </param> 
 			<returns>true, if there are transformations of spline cluster meshes; or false, if there are no transformations of spline cluster meshes found.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSplineCluster.getClusterWorldTransforms(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.ObjectMeshSplineCluster.getClusterWorldTransforms(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator})">
 			<summary>
 			Collects transformations (world coordinates) for all spline cluster meshes within the area specified by the given bounding box and puts them to the specified buffer.
 			</summary> 
@@ -10024,9 +10241,9 @@
 		</member>
 		<member name="M:Unigine.ObjectTerrainGlobal.setForceIntersection(bool)">
 			<summary>
-			Enables or disables forced loading of necessary terrain tiles to ensure correct intersection detection.
+								Enables or disables forced loading of necessary terrain tiles to ensure correct intersection detection.																		When enabled, this option may significantly reduce performance. Thus, it is recommended to enable it, perform intersection check, and disable it again.							It is recommended to make two or more intersection requests to make sure you get the required result when necessary, as in some rare cases forced loading of tiles may not give you a 100% guarantee.
 			</summary> 
-			<param name="intersection"> true to load necessary terrain tiles for intersection detection; otherwise, false. The default value is false.When enabled, this option may significantly reduce performance. Thus, it is recommended to enable it, perform intersection check, and disable it again. </param> 
+			<param name="intersection"> true to load necessary terrain tiles for intersection detection; otherwise, false. The default value is false. </param> 
 		</member>
 		<member name="M:Unigine.ObjectTerrainGlobal.isForceIntersection const">
 			<summary>
@@ -11220,19 +11437,13 @@
 			<param name="mesh"> The received mesh smart pointer. </param> 
 			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.ObjectWaterMesh.setMeshName(char)">
-			<summary>
-			Sets a name for the water mesh.
-			</summary> 
-			<param name="name"> The water mesh name. </param> 
-		</member>
 		<member name="M:Unigine.ObjectWaterMesh.setMeshName(char,int)">
 			<summary>
 			Sets a new name for the water mesh and forces loading of the mesh with the new name for the current water mesh.
 			</summary> 
 			<param name="path"> A new name to be set for the water mesh. </param>
 			<param name="force_load"> Force flag.If 1 is specified, the mesh with the new name will be loaded immediately from the file specified as the first argument for this function.If 0 is specified, only the mesh name will be updated. </param> 
-			<returns>1 if :The current mesh name coincides the new name.The mesh with the new name has been loaded successfully.The force flag is set to 0.In other cases,0.</returns>
+			<returns>1 if:The current mesh name coincides the new name.The mesh with the new name has been loaded successfully.The force flag is set to 0.In other cases,0.</returns>
 		</member>
 		<member name="M:Unigine.ObjectWaterMesh.getMeshName">
 			<summary>

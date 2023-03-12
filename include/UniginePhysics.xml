@@ -9,13 +9,13 @@
 			ShapeContact class constructor.
 			</summary>  
 		</member>
-		<member name="M:Unigine.ShapeContact.setId(int)">
+		<member name="M:Unigine.ShapeContact.setID(int)">
 			<summary>
 			Sets a new contact ID.
 			</summary> 
 			<param name="id"> Contact ID. </param> 
 		</member>
-		<member name="M:Unigine.ShapeContact.getId">
+		<member name="M:Unigine.ShapeContact.getID">
 			<summary>
 			Returns the contact ID.
 			</summary>  
@@ -276,7 +276,7 @@
 		</member>
 		<member name="M:Unigine.Physics.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Ptr{PhysicsIntersection})">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find a collision object located on that line. If an object is assigned a body, intersection occurs with its shape. If an object has no body, this function detects intersection with surfaces (polygons) of objects with intersection flag set. Physics intersection shall only be detected for objects with a matching mask. Intersection does not work for disabled objects. 					This function uses world space coordinates.					Usage Example					The following example shows how you can get the intersection information by using the PhysicsIntersection class. In this example the line is an invisible traced line from the point of the camera (vec3 p0) to the point of the mouse pointer (vec3 p1). The executing sequence is the following:													Define and initialize two points (p0 and p1) by using the Player::getDirectionFromScreen() function.							Create an instance of the PhysicsIntersection class to get the intersection information.							Check, if there is an intersection with an object. The getIntersection() function returns an intersected object when the object intersects with the traced line.							In this example, when the object intersects with the traced line, all the surfaces of the intersected object change their material parameters. If the object has a shape, its information will be shown in the console. The PhysicsIntersection class instance gets the coordinates of the intersection point and the Shape class object. You can get all these fields by using getShape(), getPoint() functions.
+								Performs tracing from the p0 point to the p1 point to find a collision object located on that line. If an object is assigned a body, intersection occurs with its shape. If an object has no body, this function detects intersection with surfaces (polygons) of objects with intersection flag set. Physics intersection shall only be detected for objects with a matching mask. Intersection does not work for disabled objects. 					This function uses world space coordinates.					Usage Example					The following example shows how you can get the intersection information by using the PhysicsIntersection class. In this example the line is an invisible traced line from the point of the camera (vec3 p0) to the point of the mouse pointer (vec3 p1). The executing sequence is the following:											Define and initialize two points (p0 and p1) by using the Player::getDirectionFromScreen() function.						Create an instance of the PhysicsIntersection class to get the intersection information.						Check, if there is an intersection with an object. The getIntersection() function returns an intersected object when the object intersects with the traced line.						When the object intersects with the traced line, all the surfaces of the intersected object change their material parameters. If the object has a shape, its information will be shown in the console. The PhysicsIntersection class instance gets the coordinates of the intersection point and the Shape class object. You can get all these fields by using getShape(), getPoint() functions.
 			</summary> 
 			<param name="p0"> Line start point coordinates. </param>
 			<param name="p1"> Line end point coordinates. </param>
@@ -471,13 +471,13 @@
 			</summary>  
 			<returns>A simulation phases duration value, milliseconds.</returns>
 		</member>
-		<member name="M:Unigine.Physics.setDeterministic(bool)">
+		<member name="M:Unigine.Physics.setDeterminism(bool)">
 			<summary>
 			Sets a value indicating if objects are updated in a definite order or not. Deterministic mode ensures that all contacts are solved in the predefined order and visualization of physics in the world is repetitive (on one computer). When this mode is enabled the Engine performs additional sorting of bodies, shapes and joints inside islands after building them. Deterministic mode is unavailable in case there are missed frames - it is simply impossible. Moreover, there may be differences between visualization of physics on different hardware (e.g., AMD and Intel).					Determinism is guaranteed if there are no missed frames, the same Engine version is used, and the CPUs perform SSE operations similarly.Please note that deterministic mode does not come for free, it may eat up 10-20% of the frame rate, and it also depends on the scene a lot.
 			</summary> 
 			<param name="stable"> true to indicate that the objects are updated in a definite order; false to indicate that an objects update order may change. The default is false (the update order may change). </param> 
 		</member>
-		<member name="M:Unigine.Physics.isDeterministic">
+		<member name="M:Unigine.Physics.isDeterminism">
 			<summary>
 			Returns a value indicating if objects are updated in a definite order or not.Deterministic mode ensures that all contacts are solved in the predefined order and visualization of physics in the world is repetitive (on one computer). When this mode is enabled the Engine performs additional sorting of bodies, shapes and joints inside islands after building them. Deterministic mode is unavailable in case there are missed frames - it is simply impossible. Moreover, there may be differences between visualization of physics on different hardware (e.g., AMD and Intel).					Determinism is guaranteed if there are no missed frames, the same Engine version is used, and the CPUs perform SSE operations similarly.Please note that deterministic mode does not come for free, it may eat up 10-20% of the frame rate, and it also depends on the scene a lot.
 			</summary>  

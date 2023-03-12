@@ -31,7 +31,7 @@ public:
 
 	void setMaterialPath(const char *path);
 	const char *getMaterialPath() const;
-	void setMaterialGUID(const UGUID& materialguid);
+	void setMaterialGUID(const UGUID &materialguid);
 	UGUID getMaterialGUID() const;
 	void setMaterial(const Ptr<Material> &material);
 	Ptr<Material> getMaterial() const;
@@ -46,13 +46,15 @@ public:
 	float getMinFadeDistance() const;
 	void setMinVisibleDistance(float distance);
 	float getMinVisibleDistance() const;
+	void setOpacity(float opacity);
+	float getOpacity() const;
 	void setViewportMask(int mask);
 	int getViewportMask() const;
 	void setIntersectionMask(int mask);
 	int getIntersectionMask() const;
 	int isMaterialInherited() const;
 	int isTerrainHole() const;
-	int inside(const Math::vec3& p);
+	int inside(const Math::vec3 &p);
 };
 typedef Ptr<Decal> DecalPtr;
 

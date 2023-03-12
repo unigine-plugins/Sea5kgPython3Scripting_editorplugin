@@ -466,7 +466,7 @@
 			<param name="color"> Color, in which the object's surface will be rendered. </param>
 			<param name="duration"> Time period (in seconds) during which the rendered element shall be displayed. The default value of 0 means that the visualizer is rendered for 1 frame only. </param> 
 		</member>
-		<member name="M:Unigine.Visualizer.renderMessage2D(Unigine.Math.vec3,Unigine.Math.vec3,char,Unigine.Math.vec4,int,float)">
+		<member name="M:Unigine.Visualizer.renderMessage2D(Unigine.Math.vec3,Unigine.Math.vec3,char,Unigine.Math.vec4,int,int,float)">
 			<summary>
 			Renders a message in a given color. Message position is specified in screen coordinates.
 			</summary> 
@@ -475,9 +475,10 @@
 			<param name="str"> Message text to display. </param>
 			<param name="color"> Color, in which the message will be rendered. </param>
 			<param name="outline"> 1 to use font outlining, 0 not to use. </param>
+			<param name="font_size"> Font size. </param>
 			<param name="duration"> Time period (in seconds) during which the rendered element shall be displayed. The default value of 0 means that the visualizer is rendered for 1 frame only. </param> 
 		</member>
-		<member name="M:Unigine.Visualizer.renderMessage3D(Unigine.Math.Vec3,Unigine.Math.vec3,char,Unigine.Math.vec4,int,float)">
+		<member name="M:Unigine.Visualizer.renderMessage3D(Unigine.Math.Vec3,Unigine.Math.vec3,char,Unigine.Math.vec4,int,int,float)">
 			<summary>
 			Renders a message in a given color. Message position is specified in world coordinates.
 			</summary> 
@@ -486,6 +487,7 @@
 			<param name="str"> Message text to display. </param>
 			<param name="color"> Color, in which the message will be rendered. </param>
 			<param name="outline"> 1 to use font outlining, 0 not to use. </param>
+			<param name="font_size"> Font size. </param>
 			<param name="duration"> Time period (in seconds) during which the rendered element shall be displayed. The default value of 0 means that the visualizer is rendered for 1 frame only. </param> 
 		</member>
 		<member name="M:Unigine.Visualizer.setMode(Visualizer::MODE)">

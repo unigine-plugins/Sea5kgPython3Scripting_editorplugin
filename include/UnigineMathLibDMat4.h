@@ -24,6 +24,11 @@
 #include "UnigineMathLibMat3.h"
 #include "UnigineMathLibMat4.h"
 
+#ifdef __GNUC__
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wreorder"
+#endif
+
 namespace Unigine
 {
 namespace Math
@@ -727,7 +732,7 @@ struct alignas(16) dmat4
 
 	UNIGINE_INLINE unsigned int hash() const
 	{
-		unsigned long long h = hashMurmur3(m00);
+		unsigned long long h = hashInteger(m00);
 		h = hashCombine(h, m10);
 		h = hashCombine(h, m20);
 		h = hashCombine(h, m01);
@@ -1718,3 +1723,7 @@ UNIGINE_INLINE dmat4 &composeTransform(dmat4 &ret, const dvec3 &position, const 
 
 }
 }
+
+#ifdef __GNUC__
+	#pragma GCC diagnostic pop
+#endif

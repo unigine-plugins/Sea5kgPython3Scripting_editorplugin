@@ -40,9 +40,9 @@ public:
 	void close();
 	int getNumFiles() const;
 	const char *getFileName(int num);
-	int selectFile(const char *name, int & size);
-	int readFile(unsigned char * data, int size);
-	int writeFile(const char *name, unsigned char * data, int size);
+	int selectFile(const char *name, int &size);
+	int readFile(unsigned char *data, int size);
+	int writeFile(const char *name, unsigned char *data, int size);
 	int getCompressionType() const;
 };
 typedef Ptr<PackageUng> PackageUngPtr;

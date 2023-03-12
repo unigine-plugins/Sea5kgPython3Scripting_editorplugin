@@ -78,21 +78,21 @@
 			<summary>
 			Sets the GUI for the engine Performance Profiler.
 			</summary> 
-			<param name="gui"> A pointer to the GUI class instance. </param> 
+			<param name="gui"> Pointer to the GUI class instance. </param> 
 		</member>
 		<member name="M:Unigine.Profiler.beginMicro(char,bool) const">
 			<summary>
 			Starts a counter with a given name in the Microprofile only, without overloading the Performance Profiler layout. The counter shows user how many millisecods have been spent for the operation that is performed between the beginMicro() and the endMicro() functions.Each counter has an ID. Thus, several nested beginMicro() / endMicro() blocks can be created, which can't be done in the Performance Profiler.
 			</summary> 
 			<param name="name"> Name of the counter. </param>
-			<param name="gpu"> Use 1 for a GPU counter, or 0 - for a CPU one. The default value is 0. </param> 
+			<param name="gpu"> Use 1 for the GPU counter, or 0 — for the CPU counter. The default value is 0. </param> 
 			<returns>ID of the new added counter.</returns>
 		</member>
 		<member name="M:Unigine.Profiler.endMicro(int) const">
 			<summary>
 			Stops a previously activated Microprofile counter with the specified ID.
 			</summary> 
-			<param name="id"> Microoprofile counter ID. </param> 
+			<param name="id"> Microprofile counter ID. </param> 
 		</member>
 	</members>
 </doc>

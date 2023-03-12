@@ -73,6 +73,12 @@
 			Updates the internal state of the device and receives input data.					This function should be called each frame.
 			</summary>  
 		</member>
+		<member name="M:Unigine.Plugins.VrpnAnalogDevice.hasChanges const">
+			<summary>
+			Returns a value indicating if there were any changes in analog values registered.
+			</summary>  
+			<returns>true if there were any changes in analog values registered otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.Plugins.VrpnAnalogDevice.VrpnAnalogDevice(char)">
 			<summary>
 			Constructor.
@@ -96,7 +102,26 @@
 			Updates the internal state of the device and receives input data.					This function should be called each frame.
 			</summary>  
 		</member>
+		<member name="M:Unigine.Plugins.VrpnButtonDevice.getNumButtons const">
+			<summary>
+			Returns the total number of buttons of the input device.
+			</summary>  
+			<returns>Total number of buttons of the input device.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnButtonDevice.getButtonState(int) const">
+			<summary>
+			Returns the current state for a button with the specified index.
+			</summary> 
+			<param name="num"> Button index. </param> 
+			<returns>Button state.</returns>
+		</member>
 		<member name="M:Unigine.Plugins.VrpnButtonDevice.VrpnButtonDevice(char)">
+			<summary>
+			Constructor.
+			</summary> 
+			<param name="name"> Path to the device in the format device_name@server_address. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.VrpnTrackerDevice(char)">
 			<summary>
 			Constructor.
 			</summary> 
@@ -143,11 +168,67 @@
 			Updates the internal state of the device and receives input data.					This function should be called each frame.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Plugins.VrpnTrackerDevice.VrpnTrackerDevice(char)">
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.getNumSensors const">
 			<summary>
-			Constructor.
+			Returns the total number of sensors.
+			</summary>  
+			<returns>The total number of sensors.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.getSensorPosition(int) const">
+			<summary>
+			Returns the specified sensor position.
 			</summary> 
-			<param name="name"> Path to the device in the format device_name@server_address. </param> 
+			<param name="num"> Sensor index number in range [0; NUM_SENSORS - 1 ]. </param> 
+			<returns>Sensor position.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.getSensorRotation(int) const">
+			<summary>
+			Returns the specified sensor rotation.
+			</summary> 
+			<param name="num"> Sensor index number in range [0; NUM_SENSORS - 1 ]. </param> 
+			<returns>Sensor rotation.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.getSensorVelocity(int) const">
+			<summary>
+			Returns the current sensor velocity (m/s2).
+			</summary> 
+			<param name="num"> Sensor index number in range [0; NUM_SENSORS - 1 ]. </param> 
+			<returns>Sensor velocity, in units per second.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.getSensorVelocityOrientation(int) const">
+			<summary>
+			Returns the orientation of the specified sensor after the delta time.
+			</summary> 
+			<param name="num"> Sensor index number in range [0; NUM_SENSORS - 1 ]. </param> 
+			<returns>Orientation of the sensor velocity.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.getSensorVelocityIFps(int) const">
+			<summary>
+			Returns the delta time (in seconds) for the sensor velocity.
+			</summary> 
+			<param name="num"> Sensor index number in range [0; NUM_SENSORS - 1 ]. </param> 
+			<returns>Delta time (in seconds).</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.getSensorAcceleration(int) const">
+			<summary>
+			Returns the current sensor acceleration (m/s2).
+			</summary> 
+			<param name="num"> Sensor index number in range [0; NUM_SENSORS - 1 ]. </param> 
+			<returns>Sensor acceleration.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.getSensorAccelerationOrientation(int) const">
+			<summary>
+			Returns the orientation of the specified sensor after the delta time.
+			</summary> 
+			<param name="num"> Sensor index number in range [0; NUM_SENSORS - 1 ]. </param> 
+			<returns>Orientation of the sensor acceleration.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.VrpnTrackerDevice.getSensorAccelerationIFps(int) const">
+			<summary>
+			Returns delta time (in seconds) for the sensor acceleration.
+			</summary> 
+			<param name="num"> Sensor index number in range [0; NUM_SENSORS - 1 ]. </param> 
+			<returns>Delta time (in seconds).</returns>
 		</member>
 	</members>
 </doc>

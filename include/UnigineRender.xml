@@ -266,11 +266,95 @@
 			Loads texture cache from the disk. Texture cache always remains in memory after loading.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Render.getScreenshot(Unigine.Ptr{Unigine.Image})">
+		<member name="M:Unigine.Render.getBlack2DArrayTexture const">
 			<summary>
-			Takes a screenshot and puts it to the specified image.
-			</summary> 
-			<param name="image"> Image to which the screenshot is to be saved. </param> 
+			Returns black 2D array texture.
+			</summary>  
+			<returns>Black 2D array texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getBlack2DTexture const">
+			<summary>
+			Returns black 2D texture.
+			</summary>  
+			<returns>Black 2D texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getBlack2DUIntTexture const">
+			<summary>
+			Returns black 2D UInt texture.
+			</summary>  
+			<returns>Black 2D UInt texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getBlack3DTexture const">
+			<summary>
+			Returns black 3D texture.
+			</summary>  
+			<returns>Black 3D texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getBlackCubeTexture const">
+			<summary>
+			Returns black Cube texture.
+			</summary>  
+			<returns>Black Cube texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getGray2DArrayTexture const">
+			<summary>
+			Returns gray 2D array texture.
+			</summary>  
+			<returns>Gray 2D array texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getGray2DTexture const">
+			<summary>
+			Returns gray 2D texture.
+			</summary>  
+			<returns>Gray 2D texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getGray2DUIntTexture const">
+			<summary>
+			Returns gray 2D UInt texture.
+			</summary>  
+			<returns>Gray 2D UInt texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getGray3DTexture const">
+			<summary>
+			Returns gray 3D texture.
+			</summary>  
+			<returns>Gray 3D texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getGrayCubeTexture const">
+			<summary>
+			Returns gray Cube texture.
+			</summary>  
+			<returns>Gray Cube texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getWhite2DArrayTexture const">
+			<summary>
+			Returns white 2D array texture.
+			</summary>  
+			<returns>White 2D array texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getWhite2DTexture const">
+			<summary>
+			Returns white 2D texture.
+			</summary>  
+			<returns>White 2D texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getWhite2DUIntTexture const">
+			<summary>
+			Returns white 2D UInt texture.
+			</summary>  
+			<returns>White 2D UInt texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getWhite3DTexture const">
+			<summary>
+			Returns white 3D texture.
+			</summary>  
+			<returns>White 3D texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getWhiteCubeTexture const">
+			<summary>
+			Returns white Cube texture.
+			</summary>  
+			<returns>White Cube texture.</returns>
 		</member>
 		<member name="M:Unigine.Render.getMaxTextureBufferSize">
 			<summary>
@@ -373,67 +457,252 @@
 			</summary>  
 			<returns>Current HDR texture format. One of the following values:FORMAT_RGBA16FFORMAT_RG11B10F</returns>
 		</member>
-		<member name="M:Unigine.Render.getTemporaryTexture(int,int,int,int,char)">
-			<summary>
-								Allocates a temporary render texture with the specified width, height, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.						You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.										It also automatically gives names to resources, which can be used for identification in debug.
-			</summary> 
-			<param name="width"> Width of the texture, in pixels. </param>
-			<param name="height"> Height of the texture, in pixels. </param>
-			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
-			<param name="flags"> Texture flags. </param>
-			<param name="name"> Name to be used for this temporary texture (optional). </param> 
-			<returns>Temporary texture.</returns>
-		</member>
-		<member name="M:Unigine.Render.getTemporaryTexture(int,char)">
-			<summary>
-								Allocates a temporary render texture of the specified format. This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.						You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.										It also automatically gives names to resources, which can be used for identification in debug.
-			</summary> 
-			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
-			<param name="name"> Name to be used for this temporary texture (optional). </param> 
-			<returns>Temporary texture.</returns>
-		</member>
 		<member name="M:Unigine.Render.getTemporaryTexture(Unigine.Ptr{Unigine.Texture})">
 			<summary>
-								Allocates a temporary render texture with the specified width, height, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.						You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.										It also automatically gives names to resources, which can be used for identification in debug.
+								Allocates a temporary render texture with the specified width, height, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
 			</summary> 
 			<param name="texture"> Source texture for which a temporary texture is to be allocated in the pool. </param> 
 			<returns>Temporary texture.</returns>
 		</member>
 		<member name="M:Unigine.Render.getTemporaryTexture(Unigine.Ptr{Unigine.Texture},char)">
 			<summary>
-								Allocates a temporary render texture for the specified source texture (using all its parameters: resolution, flags, etc.). This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.						You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.										It also automatically gives names to resources, which can be used for identification in debug.
+								Allocates a temporary render texture for the specified source texture (using all its parameters: resolution, flags, etc.). This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
 			</summary> 
 			<param name="texture"> Source texture for which a temporary texture is to be allocated in the pool. </param>
 			<param name="name"> Name to be used for this temporary texture (optional). </param> 
 			<returns>Temporary texture.</returns>
 		</member>
-		<member name="M:Unigine.Render.getTemporary2DArrayTexture(int,int,int,int,int,char)">
+		<member name="M:Unigine.Render.getTemporaryTexture(Unigine.Ptr{Unigine.Texture},char,int)">
 			<summary>
-								Allocates a temporary 2D array texture with the specified width, height, number of layers, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.						You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.
+								Allocates a temporary render texture for the specified source texture (using all its parameters: resolution, flags, etc.). This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="texture"> Source texture for which a temporary texture is to be allocated in the pool. </param>
+			<param name="name"> Name to be used for this temporary texture (optional). </param>
+			<param name="accessory"> Texture render sequence accessory type. One of the TEXTURE_ACCESSORY_* values. </param> 
+			<returns>Temporary texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryTexture(int,int,int,int,int,int,char,int)">
+			<summary>
+								Allocates a temporary render texture with the specified width, height, depth, format, flags, and type. This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="width"> Width of the texture, in pixels. </param>
+			<param name="height"> Height of the texture, in pixels. </param>
+			<param name="depth"> Depth of the texture, in pixels. </param>
+			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
+			<param name="flags"> Texture flags. </param>
+			<param name="type"> Texture type (2D, 3D, Cube, etc.): one of the Texture::TEXTURE_* values. </param>
+			<param name="name"> Name to be used for this temporary texture (optional). </param>
+			<param name="accessory"> Texture render sequence accessory type. One of the TEXTURE_ACCESSORY_* values. </param> 
+			<returns>Temporary texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryTexture(int,int,int,int,int,int,char)">
+			<summary>
+								Allocates a temporary render texture with the specified width, height, depth, format, flags, and type. This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="width"> Width of the texture, in pixels. </param>
+			<param name="height"> Height of the texture, in pixels. </param>
+			<param name="depth"> Depth of the texture, in pixels. </param>
+			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
+			<param name="flags"> Texture flags. </param>
+			<param name="type"> Texture type (2D, 3D, Cube, etc.): one of the Texture::TEXTURE_* values. </param>
+			<param name="name"> Name to be used for this temporary texture (optional). </param> 
+			<returns>Temporary texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryTexture(int,int,int,int,int,int)">
+			<summary>
+								Allocates a temporary render texture with the specified width, height, depth, format, flags, and type. This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="width"> Width of the texture, in pixels. </param>
+			<param name="height"> Height of the texture, in pixels. </param>
+			<param name="depth"> Depth of the texture, in pixels. </param>
+			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
+			<param name="flags"> Texture flags. </param>
+			<param name="type"> Texture type (2D, 3D, Cube, etc.): one of the Texture::TEXTURE_* values. </param> 
+			<returns>Temporary texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryTexture2D(int,int,int,int,char,int)">
+			<summary>
+								Allocates a temporary 2D texture with the specified width, height, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.
+			</summary> 
+			<param name="width"> Width of the 2D texture, in pixels. </param>
+			<param name="height"> Height of the 2D texture, in pixels. </param>
+			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
+			<param name="flags"> Texture flags. </param>
+			<param name="name"> Name to be used for this temporary 2D texture (optional). </param>
+			<param name="accessory"> Texture render sequence accessory type. One of the TEXTURE_ACCESSORY_* values. </param> 
+			<returns>Temporary 2D texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryTexture2DArray(int,int,int,int,int,char,int)">
+			<summary>
+								Allocates a temporary 2D array texture with the specified width, height, number of layers, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.
 			</summary> 
 			<param name="width"> Width of the 2D array texture, in pixels. </param>
 			<param name="height"> Height of the 2D array texture, in pixels. </param>
 			<param name="depth"> Number of layers in the 2D array texture. </param>
 			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
 			<param name="flags"> Texture flags. </param>
-			<param name="name"> Name to be used for this temporary 2D array texture (optional). </param> 
+			<param name="name"> Name to be used for this temporary 2D array texture (optional). </param>
+			<param name="accessory"> Texture render sequence accessory type. One of the TEXTURE_ACCESSORY_* values. </param> 
 			<returns>Temporary 2D array texture.</returns>
 		</member>
-		<member name="M:Unigine.Render.getTemporary3DTexture(int,int,int,int,int,char)">
+		<member name="M:Unigine.Render.getTemporaryTexture3D(int,int,int,int,int,char,int)">
 			<summary>
-								Allocates a temporary 3D texture with the specified width, height, depth, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.						You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.
+								Allocates a temporary 3D texture with the specified width, height, depth, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.
 			</summary> 
 			<param name="width"> Width of the 3D texture, in pixels. </param>
 			<param name="height"> Height of the 3D texture, in pixels. </param>
 			<param name="depth"> Depth of the 3D texture, in pixels. </param>
 			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
 			<param name="flags"> Texture flags. </param>
-			<param name="name"> Name to be used for this temporary 3D texture (optional). </param> 
+			<param name="name"> Name to be used for this temporary 3D texture (optional). </param>
+			<param name="accessory"> Texture render sequence accessory type. One of the TEXTURE_ACCESSORY_* values. </param> 
 			<returns>Temporary 3D texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryTextureCube(int,int,int,int,char,int)">
+			<summary>
+								Allocates a temporary cubemap texture with the specified width, height, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. Release it using releaseTemporaryTexture() as soon as you're done with it, so another call can start reusing it, if necessary. In any case, such texture shall be released automatically in the next frame.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.
+			</summary> 
+			<param name="width"> Width of the cubemap texture, in pixels. </param>
+			<param name="height"> Height of the cubemap texture, in pixels. </param>
+			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
+			<param name="flags"> Texture flags. </param>
+			<param name="name"> Name to be used for this temporary cubemap texture (optional). </param>
+			<param name="accessory"> Texture render sequence accessory type. One of the TEXTURE_ACCESSORY_* values. </param> 
+			<returns>Temporary cubemap texture.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryOldTexture(Unigine.Ptr{Unigine.Material},int,int,int,int,int,int,int,char,int)">
+			<summary>
+								Allocates a temporary render texture from the previous frame with the specified width, height, depth, format, flags, and accessory type. This function can be used when you need a quick render texture to perform some temporary calculations. This texture doesn't require to be released.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="mat"> Material that will use the texture with the specified ID. </param>
+			<param name="texture_id"> Texture ID set by the user, value in the range [0, 255]. </param>
+			<param name="width"> Width of the texture, in pixels. </param>
+			<param name="height"> Height of the texture, in pixels. </param>
+			<param name="depth"> Depth of the texture, in pixels. </param>
+			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
+			<param name="flags"> Texture flags. </param>
+			<param name="type"> Texture type (2D, 3D, Cube, etc.): one of the Texture::TEXTURE_* values. </param>
+			<param name="name"> Name to be used for this temporary texture (optional). </param>
+			<param name="accessory"> Texture render sequence accessory type. One of the TEXTURE_ACCESSORY_* values. </param> 
+			<returns>Temporary texture from the previous frame.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryOldTexture(Unigine.Ptr{Unigine.Material},int,int,int,int,int,int,int,char)">
+			<summary>
+								Allocates a temporary render texture from the previous frame with the specified width, height, depth, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. This texture doesn't require to be released.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="mat"> Material that will use the texture with the specified ID. </param>
+			<param name="texture_id"> Texture ID set by the user, value in the range [0, 255]. </param>
+			<param name="width"> Width of the texture, in pixels. </param>
+			<param name="height"> Height of the texture, in pixels. </param>
+			<param name="depth"> Depth of the texture, in pixels. </param>
+			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
+			<param name="flags"> Texture flags. </param>
+			<param name="type"> Texture type (2D, 3D, Cube, etc.): one of the Texture::TEXTURE_* values. </param>
+			<param name="name"> Name to be used for this temporary texture (optional). </param> 
+			<returns>Temporary texture from the previous frame.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryOldTexture(Unigine.Ptr{Unigine.Material},int,int,int,int,int,int,int)">
+			<summary>
+								Allocates a temporary render texture from the previous frame with the specified width, height, depth, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. This texture doesn't require to be released.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="mat"> Material that will use the texture with the specified ID. </param>
+			<param name="texture_id"> Texture ID set by the user, value in the range [0, 255]. </param>
+			<param name="width"> Width of the texture, in pixels. </param>
+			<param name="height"> Height of the texture, in pixels. </param>
+			<param name="depth"> Depth of the texture, in pixels. </param>
+			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
+			<param name="flags"> Texture flags. </param>
+			<param name="type"> Texture type (2D, 3D, Cube, etc.): one of the Texture::TEXTURE_* values. </param> 
+			<returns>Temporary texture from the previous frame.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryOldTexture(Unigine.Ptr{Unigine.Material},int,Unigine.Ptr{Unigine.Texture},char,int)">
+			<summary>
+								Allocates a temporary render texture from the previous frame for the specified source texture (using all its parameters: resolution, flags, etc.). This function can be used when you need a quick render texture to perform some temporary calculations. This texture doesn't require to be released.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="mat"> Material that will use the texture with the specified ID. </param>
+			<param name="texture_id"> Texture ID set by the user, value in the range [0, 255]. </param>
+			<param name="texture"> Source texture for which a temporary texture is to be allocated in the pool. </param>
+			<param name="name"> Name to be used for this temporary texture (optional). </param>
+			<param name="accessory"> Texture render sequence accessory type. One of the TEXTURE_ACCESSORY_* values. </param> 
+			<returns>Temporary texture from the previous frame.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryOldTexture(Unigine.Ptr{Unigine.Material},int,Unigine.Ptr{Unigine.Texture},char)">
+			<summary>
+								Allocates a temporary render texture from the previous frame for the specified source texture (using all its parameters: resolution, flags, etc.). This function can be used when you need a quick render texture to perform some temporary calculations. This texture doesn't require to be released.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="mat"> Material that will use the texture with the specified ID. </param>
+			<param name="texture_id"> Texture ID set by the user, value in the range [0, 255]. </param>
+			<param name="texture"> Source texture for which a temporary old texture is to be allocated in the pool. </param>
+			<param name="name"> Name to be used for this temporary texture (optional). </param> 
+			<returns>Temporary texture from the previous frame.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryOldTexture(Unigine.Ptr{Unigine.Material},int,Unigine.Ptr{Unigine.Texture})">
+			<summary>
+								Allocates a temporary render texture from the previous frame for the specified source texture (using all its parameters: resolution, flags, etc.). This function can be used when you need a quick render texture to perform some temporary calculations. This texture doesn't require to be released.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="mat"> Material that will use the texture with the specified ID. </param>
+			<param name="texture_id"> Texture ID set by the user, value in the range [0, 255]. </param>
+			<param name="texture"> Source texture for which a temporary old texture is to be allocated in the pool. </param> 
+			<returns>Temporary texture from the previous frame.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryOldTexture2D(Unigine.Ptr{Unigine.Material},int,int,int,int,int,char,int)">
+			<summary>
+								Allocates a temporary 2D texture with the specified width, height, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. This texture doesn't require to be released.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="mat"> Material that will use the texture with the specified ID. </param>
+			<param name="texture_id"> Texture ID set by the user, value in the range [0, 255]. </param>
+			<param name="width"> Width of the texture, in pixels. </param>
+			<param name="height"> Height of the texture, in pixels. </param>
+			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
+			<param name="flags"> Texture flags. </param>
+			<param name="accessory"> Texture render sequence accessory type. One of the TEXTURE_ACCESSORY_* values. </param> 
+			<returns>Temporary 2D texture from the previous frame.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryOldTexture2DArray(Unigine.Ptr{Unigine.Material},int,int,int,int,int,int,char,int)">
+			<summary>
+								Allocates a temporary 2D array texture with the specified width, height, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. This texture doesn't require to be released.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="mat"> Material that will use the texture with the specified ID. </param>
+			<param name="texture_id"> Texture ID set by the user, value in the range [0, 255]. </param>
+			<param name="width"> Width of the texture, in pixels. </param>
+			<param name="height"> Height of the texture, in pixels. </param>
+			<param name="depth"> Depth of the texture, in pixels. </param>
+			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
+			<param name="flags"> Texture flags. </param>
+			<param name="accessory"> Texture render sequence accessory type. One of the TEXTURE_ACCESSORY_* values. </param> 
+			<returns>Temporary 2D array texture from the previous frame.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryOldTexture3D(Unigine.Ptr{Unigine.Material},int,int,int,int,int,int,char,int)">
+			<summary>
+								Allocates a temporary 3D texture with the specified width, height, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. This texture doesn't require to be released.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="mat"> Material that will use the texture with the specified ID. </param>
+			<param name="texture_id"> Texture ID set by the user, value in the range [0, 255]. </param>
+			<param name="width"> Width of the texture, in pixels. </param>
+			<param name="height"> Height of the texture, in pixels. </param>
+			<param name="depth"> Depth of the texture, in pixels. </param>
+			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
+			<param name="flags"> Texture flags. </param>
+			<param name="name"> Name to be used for this temporary texture (optional). </param>
+			<param name="accessory"> Texture render sequence accessory type. One of the TEXTURE_ACCESSORY_* values. </param> 
+			<returns>Temporary 3D texture from the previous frame.</returns>
+		</member>
+		<member name="M:Unigine.Render.getTemporaryOldTextureCube(Unigine.Ptr{Unigine.Material},int,int,int,int,int,char,int)">
+			<summary>
+								Allocates a temporary cubemap texture with the specified width, height, format, and flags. This function can be used when you need a quick render texture to perform some temporary calculations. This texture doesn't require to be released.					UNIGINE keeps an internal pool of temporary render textures, so a call to this method most often just returns an already created one (if the size and format match). These temporary textures are actually destroyed when they aren't used for a couple of frames.					If you are doing a series of post-processing "blits", it's best for performance to get and release a temporary render texture for each blit, instead of getting one or two render textures upfront and reusing them.					You can't depend on any particular contents of a temporary texture obtained from this function: it might be garbage, or it might be cleared to some color, depending on the platform.					It also automatically gives names to resources, which can be used for identification in debug.
+			</summary> 
+			<param name="mat"> Material that will use the texture with the specified ID. </param>
+			<param name="texture_id"> Texture ID set by the user, value in the range [0, 255]. </param>
+			<param name="width"> Width of the texture, in pixels. </param>
+			<param name="height"> Height of the texture, in pixels. </param>
+			<param name="format"> Texture format: one of the Texture::FORMAT_* values. </param>
+			<param name="flags"> Texture flags. </param>
+			<param name="accessory"> Texture render sequence accessory type. One of the TEXTURE_ACCESSORY_* values. </param> 
+			<returns>Temporary cubemap texture from the previous frame.</returns>
 		</member>
 		<member name="M:Unigine.Render.releaseTemporaryTexture(Unigine.Ptr{Unigine.Texture})">
 			<summary>
-			Releases the temporary texture previously obtained via getTemporaryTexture(), getTemporary2DArrayTexture(), or getTemporary3DTexture() method and returns it to the pool.
+			Releases the temporary texture previously obtained via getTemporaryTexture(), getTemporaryTexture2D(), getTemporaryTexture2DArray(), getTemporaryTexture3D(), or getTemporaryTextureCube() method and returns it to the pool.
 			</summary> 
 			<param name="texture"> Temporary texture or texture array to be returned to the pool. </param> 
 		</member>
@@ -513,6 +782,20 @@
 			<param name="downsample_resolution"> Texture resolution value, can be one of the following: 16, 32, 64, 128, 256, 512, 1024, 2048. </param> 
 			<returns>1 if the shoreline distance field texture is grabbed successfully; otherwise, 0.</returns>
 		</member>
+		<member name="M:Unigine.Render.setColorCorrectionHueShiftIndex(int,float)">
+			<summary>
+			Sets the hue (color shift) value for the specified major color of the spectre (one of 12). This method can be used for fine-adjustment of color shift correction.
+			</summary> 
+			<param name="index"> Index of the desired major color of the spectre in the range [0; 11] (Red, Orange, Yellow, Chartreuse, Green, Spring Green, Cyan, Azure, Blue, Violet, Magenta, Rose).  </param>
+			<param name="value"> Hue (color shift) value to be set for the specified major color of the spectre in the range [0.0f; 1.0f]. </param> 
+		</member>
+		<member name="M:Unigine.Render.getColorCorrectionHueShiftIndex(int)">
+			<summary>
+			Returns the current hue (color shift) value for the specified major color of the spectre (one of 12).
+			</summary> 
+			<param name="index"> Index of the desired major color of the spectre in the range [0; 11] (Red, Orange, Yellow, Chartreuse, Green, Spring Green, Cyan, Azure, Blue, Violet, Magenta, Rose).  </param> 
+			<returns>Current hue (color shift) value for the specified major color of the spectre in the range [0.0f; 1.0f].</returns>
+		</member>
 		<member name="M:Unigine.Render.setColorCorrectionLUTImage(Unigine.Ptr{Unigine.Image})">
 			<summary>
 			Sets a new color transformation image (LUT). This function resets a LUT texture name to null if it has been previously set via setColorCorrectionLUTPath().
@@ -527,15 +810,29 @@
 			<param name="image"> Image to store the color transformation texture in. </param> 
 			<returns>1 if an image is successfully received; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Render.resetColorCorrectionCurve">
+		<member name="M:Unigine.Render.resetColorCorrectionRamp">
 			<summary>
-			Resets the Color Correction curve to the default value.
+			Resets the Color Correction ramp to the default value.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Render.resetColorCorrectionSaturationCurve">
+		<member name="M:Unigine.Render.resetColorCorrectionSaturationRamp">
 			<summary>
-			Resets the Saturation Correction curve to the default value.
+			Resets the Saturation Correction ramp to the default value.
 			</summary>  
+		</member>
+		<member name="M:Unigine.Render.setColorCorrectionSaturationIndex(int,float)">
+			<summary>
+			Sets the saturation value for the specified major color of the spectre (one of 12). This method can be used for fine-adjustment of color saturation correction.
+			</summary> 
+			<param name="index"> Index of the desired major color of the spectre in the range [0; 11] (Red, Orange, Yellow, Chartreuse, Green, Spring Green, Cyan, Azure, Blue, Violet, Magenta, Rose).  </param>
+			<param name="value"> Saturation value to be set for the specified major color of the spectre in the range [0.0f; 1.0f]. </param> 
+		</member>
+		<member name="M:Unigine.Render.getColorCorrectionSaturationIndex(int)">
+			<summary>
+			Returns the current saturation value for the specified major color of the spectre (one of 12).
+			</summary> 
+			<param name="index"> Index of the desired major color of the spectre in the range [0; 11] (Red, Orange, Yellow, Chartreuse, Green, Spring Green, Cyan, Azure, Blue, Violet, Magenta, Rose).  </param> 
+			<returns>Current saturation value for the specified major color of the spectre in the range [0.0f; 1.0f].</returns>
 		</member>
 		<member name="M:Unigine.Render.loadSettings(char,bool)">
 			<summary>
@@ -875,6 +1172,30 @@
 			<summary>
 			</summary>  
 		</member>
+		<member name="M:Unigine.Render.getD3D11Factory const">
+			<summary>
+			Returns the pointer to the D3D11Factory.
+			</summary>  
+			<returns>D3D11 Factory pointer.</returns>
+		</member>
+		<member name="M:Unigine.Render.getD3D11Device const">
+			<summary>
+			Returns the D3D11 device associated with D3D11 renderer.
+			</summary>  
+			<returns>D3D11 device associated with given renderer.</returns>
+		</member>
+		<member name="M:Unigine.Render.getD3D11Context const">
+			<summary>
+			Returns a pointer to the existing ID3D11DeviceContext interface.
+			</summary>  
+			<returns>ID3D11Device interface pointer.</returns>
+		</member>
+		<member name="M:Unigine.Render.getGLContext const">
+			<summary>
+			Returns the pointer to the OpenGL context.
+			</summary>  
+			<returns>OpenGL context pointer.</returns>
+		</member>
 		<member name="F:Unigine.Render.API_UNKNOWN">
 			<summary>
 			Unknown API.
@@ -893,6 +1214,16 @@
 		<member name="F:Unigine.Render.API_DIRECT3D11">
 			<summary>
 			DIRECT3D 11 API.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.API_DIRECT3D12">
+			<summary>
+			DIRECT3D 12 API.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.API_VULKAN">
+			<summary>
+			VULKAN API.
 		</summary>
 		</member>
 		<member name="F:Unigine.Render.ENVIRONMENT_NUM_PRESETS">
@@ -970,24 +1301,454 @@
 			Solid color haze. The haze color is set by setHazeColor().
 		</summary>
 		</member>
-		<member name="F:Unigine.Render.NUM_PASSES">
+		<member name="F:Unigine.Render.CALLBACK_BEGIN">
 			<summary>
-			Total number of rendering passes.
+			Beginning of the callback range.
 		</summary>
 		</member>
-		<member name="F:Unigine.Render.PASS_ALPHA_TEST">
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_ENVIRONMENT">
 			<summary>
-			Alpha test pass.
+			Callback before the Environment rendering stage.
 		</summary>
 		</member>
-		<member name="F:Unigine.Render.PASS_AMBIENT">
+		<member name="F:Unigine.Render.CALLBACK_END_ENVIRONMENT">
 			<summary>
-			Ambient pass.
+			Callback after the Environment rendering stage.
 		</summary>
 		</member>
-		<member name="F:Unigine.Render.PASS_AUXILIARY">
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_SHADOWS">
 			<summary>
-			Auxiliary pass.
+			Callback before the shadows rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_WORLD_SHADOW">
+			<summary>
+			Callback before the stage of rendering shadows from World light sources.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_WORLD_SHADOW">
+			<summary>
+			Callback after the stage of rendering shadows from World light sources.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_PROJ_SHADOW">
+			<summary>
+			Callback before the stage of rendering shadows from Projected light sources.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_PROJ_SHADOW">
+			<summary>
+			Callback after the stage of rendering shadows from Projected light sources.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_OMNI_SHADOW">
+			<summary>
+			Callback before the stage of rendering shadows from Omni light sources.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_OMNI_SHADOW">
+			<summary>
+			Callback after the stage of rendering shadows from Omni light sources.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_SHADOWS">
+			<summary>
+			Callback after the shadows rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_SCREEN">
+			<summary>
+			Callback before the stage of rendering each screen (a stereo image has 2 screens, while a cubemap will have 6).
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_OPACITY_GBUFFER">
+			<summary>
+			Callback before filling the Gbuffer.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_OPACITY_GBUFFER">
+			<summary>
+			Callback after filling the Gbuffer.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_OPACITY_DECALS">
+			<summary>
+			Callback before the opacity decals rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_OPACITY_DECALS">
+			<summary>
+			Callback after the opacity decals rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_CURVATURE">
+			<summary>
+			Callback before the SSBevel effect rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_CURVATURE">
+			<summary>
+			Callback after the SSBevel effect rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_CURVATURE_COMPOSITE">
+			<summary>
+			Callback before the curvature rendering stage for the SSDirt effect.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_CURVATURE_COMPOSITE">
+			<summary>
+			Callback after the curvature rendering stage for the SSDirt effect.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_SSRTGI">
+			<summary>
+			Callback before the SSRTGI rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_SSRTGI">
+			<summary>
+			Callback after the SSRTGI rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_OPACITY_LIGHTS">
+			<summary>
+			Callback before the opacity lightgs rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_OPACITY_LIGHTS">
+			<summary>
+			Callback after the opacity lightgs rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_OPACITY_VOXEL_PROBES">
+			<summary>
+			Callback before the opacity voxel probes rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_OPACITY_VOXEL_PROBES">
+			<summary>
+			Callback after the opacity voxel probes rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_OPACITY_ENVIRONMENT_PROBES">
+			<summary>
+			Callback before the opacity environment probes rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_OPACITY_ENVIRONMENT_PROBES">
+			<summary>
+			Callback after the opacity environment probes rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_OPACITY_PLANAR_PROBES">
+			<summary>
+			Callback before the opacity planar probes rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_OPACITY_PLANAR_PROBES">
+			<summary>
+			Callback after the opacity planar probes rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_AUXILIARY_BUFFER">
+			<summary>
+			Callback before filling the auxiliary buffer.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_AUXILIARY_BUFFER">
+			<summary>
+			Callback after filling the auxiliary buffer.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_REFRACTION_BUFFER">
+			<summary>
+			Callback before filling the refraction buffer.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_REFRACTION_BUFFER">
+			<summary>
+			Callback after filling the refraction buffer.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_TRANSPARENT_BLUR_BUFFER">
+			<summary>
+			Callback before filling the transparent blur buffer.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_TRANSPARENT_BLUR_BUFFER">
+			<summary>
+			Callback after filling the transparent blur buffer.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_SSSS">
+			<summary>
+			Callback before the Screen-Space Shadow Shafts rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_SSSS">
+			<summary>
+			Callback after the Screen-Space Shadow Shafts rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_SSR">
+			<summary>
+			Callback before the SSR rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_SSR">
+			<summary>
+			Callback after the SSR rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_SSAO">
+			<summary>
+			Callback before the SSAO rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_SSAO">
+			<summary>
+			Callback after the SSAO rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_SSGI">
+			<summary>
+			Callback before the SSGI rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_SSGI">
+			<summary>
+			Callback after the SSGI rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_SKY">
+			<summary>
+			Callback after the sky rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_SKY">
+			<summary>
+			Callback after the sky rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_COMPOSITE_DEFERRED">
+			<summary>
+			Callback before the clouds deferred composite stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_COMPOSITE_DEFERRED">
+			<summary>
+			Callback after the clouds deferred composite stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_TRANSPARENT">
+			<summary>
+			Callback before the transparent objects rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_CLOUDS">
+			<summary>
+			Callback before the clouds rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_CLOUDS">
+			<summary>
+			Callback after the clouds rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_WATER">
+			<summary>
+			Callback before the water rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_WATER_DECALS">
+			<summary>
+			Callback before the water decals rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_WATER_DECALS">
+			<summary>
+			Callback after the water decals rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_WATER_LIGHTS">
+			<summary>
+			Callback before the water lights rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_WATER_LIGHTS">
+			<summary>
+			Callback after the water lights rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_WATER_VOXEL_PROBES">
+			<summary>
+			Callback before the water voxel probes rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_WATER_VOXEL_PROBES">
+			<summary>
+			Callback after the water voxel probes rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_WATER_ENVIRONMENT_PROBES">
+			<summary>
+			Callback before the water environment probes rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_WATER_ENVIRONMENT_PROBES">
+			<summary>
+			Callback after the water environment probes rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_WATER_PLANAR_PROBES">
+			<summary>
+			Callback before the water planar probes rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_WATER_PLANAR_PROBES">
+			<summary>
+			Callback after the water planar probes rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_WATER">
+			<summary>
+			Callback after the water rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_TRANSPARENT">
+			<summary>
+			Callback after the transparent objects rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_SRGB_CORRECTION">
+			<summary>
+			Callback before the sRGB correction stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_SRGB_CORRECTION">
+			<summary>
+			Callback after the sRGB correction stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_ADAPTATION_COLOR_AVERAGE">
+			<summary>
+			Callback before the calculation of automatic exposure and white balance correction.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_ADAPTATION_COLOR_AVERAGE">
+			<summary>
+			Callback after the calculation of automatic exposure and white balance correction.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_ADAPTATION_COLOR">
+			<summary>
+			Callback before the color adaptation rendering stage (automatic exposure and white balance correction).
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_ADAPTATION_COLOR">
+			<summary>
+			Callback after the color adaptation rendering stage (automatic exposure and white balance correction).
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_TAA">
+			<summary>
+			Callback before the Temporal Anti-Aliasing (TAA) pass.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_TAA">
+			<summary>
+			Callback after the Temporal Anti-Aliasing (TAA) pass.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_CAMERA_EFFECTS">
+			<summary>
+			Callback before the camera effects stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_CAMERA_EFFECTS">
+			<summary>
+			Callback after the camera effects stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_POST_MATERIALS">
+			<summary>
+			Callback before the post materials rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_POST_MATERIALS">
+			<summary>
+			Callback after the post materials rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_DEBUG_MATERIALS">
+			<summary>
+			Callback before the debug materials stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_DEBUG_MATERIALS">
+			<summary>
+			Callback after the debug materials stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_BEGIN_VISUALIZER">
+			<summary>
+			Callback before the visualizer rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_VISUALIZER">
+			<summary>
+			Callback after the visualizer rendering stage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END_SCREEN">
+			<summary>
+			Callback after the stage of rendering each screen (a stereo image has 2 screens, while a cubemap will have 6).
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.CALLBACK_END">
+			<summary>
+			End of the callback range.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.NUM_CALLBACKS">
+			<summary>
+			Callback counter.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.TONEMAPPER_FILMIC">
+			<summary>
+			Filmic - basic customizable filmic tone mapping mode.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.TONEMAPPER_ACES">
+			<summary>
+			ACES - tone mapping in accordance with the industry standard set by the Academy Color Encoding System (ACES) for television and film.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.TONEMAPPER_MIX_ACES_WITH_REINHARD">
+			<summary>
+			Mix ACES With Reinhard - Combination of ACES and Reinhard tone mapping.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.TONEMAPPER_REINHARD">
+			<summary>
+			Reinhard - Simple Reinhard. C/(1+C) formula applied to each of the channels. May cause slight desaturation.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.TONEMAPPER_REINHARD_LUMA_BASED">
+			<summary>
+			Reinhard Luma-Based - Luma-based Reinhard tone mapping, applied to luminance only. More accurate representation of colors.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.PASS_WIREFRAME">
+			<summary>
+			Wireframe pass.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.PASS_VISUALIZER_SOLID">
+			<summary>
+			Visualizer pass.
 		</summary>
 		</member>
 		<member name="F:Unigine.Render.PASS_DEFERRED">
@@ -995,19 +1756,34 @@
 			Deferred pass.
 		</summary>
 		</member>
-		<member name="F:Unigine.Render.PASS_DEPTH_PRE_PASS">
+		<member name="F:Unigine.Render.PASS_AUXILIARY">
 			<summary>
-			Depth pre-pass.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.PASS_MS_DEPTH">
-			<summary>
-			MS depth pass.
+			Auxiliary pass.
 		</summary>
 		</member>
 		<member name="F:Unigine.Render.PASS_EMISSION">
 			<summary>
 			Emission pass.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.PASS_REFRACTION">
+			<summary>
+			Refraction pass.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.PASS_TRANSPARENT_BLUR">
+			<summary>
+			Transparent blur pass.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.PASS_AMBIENT">
+			<summary>
+			Ambient pass.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.PASS_LIGHT_VOXEL_PROBE">
+			<summary>
+			Light voxel probe pass.
 		</summary>
 		</member>
 		<member name="F:Unigine.Render.PASS_LIGHT_ENVIRONMENT_PROBE">
@@ -1030,39 +1806,9 @@
 			Proj light pass.
 		</summary>
 		</member>
-		<member name="F:Unigine.Render.PASS_LIGHT_VOXEL_PROBE">
-			<summary>
-			Light voxel probe pass.
-		</summary>
-		</member>
 		<member name="F:Unigine.Render.PASS_LIGHT_WORLD">
 			<summary>
 			World light pass.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.PASS_PROCEDURAL_FIELDS">
-			<summary>
-			Pass for rendering of particles into procedural textures to be used by height fields.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.PASS_PROCEDURAL_DECALS">
-			<summary>
-			Pass for rendering of particles into procedural textures to be used by orthographic decals.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.PASS_POST">
-			<summary>
-			Post materials pass.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.PASS_REFLECTION">
-			<summary>
-			Reflection pass.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.PASS_REFRACTION">
-			<summary>
-			Refraction pass.
 		</summary>
 		</member>
 		<member name="F:Unigine.Render.PASS_SHADOW">
@@ -1070,24 +1816,34 @@
 			Shadow pass.
 		</summary>
 		</member>
-		<member name="F:Unigine.Render.PASS_TRANSPARENT_BLUR">
+		<member name="F:Unigine.Render.PASS_DEPTH_PRE_PASS">
 			<summary>
-			Transparent blur pass.
+			Depth pre-pass.
 		</summary>
 		</member>
-		<member name="F:Unigine.Render.PASS_VISUALIZER_SOLID">
+		<member name="F:Unigine.Render.PASS_MS_DEPTH">
 			<summary>
-			Visualizer pass.
+			MS depth pass.
 		</summary>
 		</member>
-		<member name="F:Unigine.Render.PASS_WIREFRAME">
+		<member name="F:Unigine.Render.PASS_POST">
 			<summary>
-			Wireframe pass.
+			Post materials pass.
 		</summary>
 		</member>
-		<member name="F:Unigine.Render.PASS_CUSTOM_BEGIN">
+		<member name="F:Unigine.Render.PASS_LIGHTMAP_DATA">
 			<summary>
-			Beginning of the range of custom rendering passes. Up to 32 custom rendering passes are available.
+			Lightmap data rendering pass.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.PASS_PROCEDURAL_DECALS">
+			<summary>
+			Pass for rendering of particles into procedural textures to be used by orthographic decals.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.PASS_PROCEDURAL_FIELDS">
+			<summary>
+			Pass for rendering of particles into procedural textures to be used by height fields.
 		</summary>
 		</member>
 		<member name="F:Unigine.Render.PASS_CUSTOM_0">
@@ -1255,9 +2011,9 @@
 			Custom pass (unassigned).
 		</summary>
 		</member>
-		<member name="F:Unigine.Render.PASS_CUSTOM_END">
+		<member name="F:Unigine.Render.NUM_PASSES">
 			<summary>
-			End of the range of custom rendering passes. Up to 32 custom rendering passes are available.
+			Total number of rendering passes.
 		</summary>
 		</member>
 		<member name="F:Unigine.Render.QUALITY_HIGH">
@@ -1273,391 +2029,6 @@
 		<member name="F:Unigine.Render.QUALITY_MEDIUM">
 			<summary>
 			Medium quality of textures. 1/4 of the original texture will be used.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN">
-			<summary>
-			Beginning of the callback range.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.NUM_CALLBACKS">
-			<summary>
-			Callback counter.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END">
-			<summary>
-			End of the callback range.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_VISUALIZER">
-			<summary>
-			Callback after the visualizer rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_VISUALIZER">
-			<summary>
-			Callback before the visualizer rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_DEBUG_MATERIALS">
-			<summary>
-			Callback after the debug materials stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_DEBUG_MATERIALS">
-			<summary>
-			Callback before the debug materials stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_POST_MATERIALS">
-			<summary>
-			Callback after the post materials rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_POST_MATERIALS">
-			<summary>
-			Callback before the post materials rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_CAMERA_EFFECTS">
-			<summary>
-			Callback after the camera effects stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_CAMERA_EFFECTS">
-			<summary>
-			Callback before the camera effects stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_TAA">
-			<summary>
-			Callback after the Temporal Anti-Aliasing (TAA) pass.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_TAA">
-			<summary>
-			Callback before the Temporal Anti-Aliasing (TAA) pass.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_SRGB_CORRECTION">
-			<summary>
-			Callback after the sRGB correction stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_SRGB_CORRECTION">
-			<summary>
-			Callback before the sRGB correction stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_TRANSPARENT">
-			<summary>
-			Callback before the transparent objects rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_TRANSPARENT">
-			<summary>
-			Callback after the transparent objects rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_WATER">
-			<summary>
-			Callback before the water rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_WATER">
-			<summary>
-			Callback after the water rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_WATER_ENVIRONMENT_PROBES">
-			<summary>
-			Callback after the water environment probes rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_WATER_ENVIRONMENT_PROBES">
-			<summary>
-			Callback before the water environment probes rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_WATER_VOXEL_PROBES">
-			<summary>
-			Callback before the water voxel probes rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_WATER_VOXEL_PROBES">
-			<summary>
-			Callback after the water voxel probes rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_WATER_LIGHTS">
-			<summary>
-			Callback before the water lights rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_WATER_LIGHTS">
-			<summary>
-			Callback after the water lights rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_WATER_DECALS">
-			<summary>
-			Callback before the water decals rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_WATER_DECALS">
-			<summary>
-			Callback after the water decals rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_CLOUDS">
-			<summary>
-			Callback before the clouds rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_CLOUDS">
-			<summary>
-			Callback after the clouds rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_COMPOSITE_DEFERRED">
-			<summary>
-			Callback before the clouds deferred composite stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_COMPOSITE_DEFERRED">
-			<summary>
-			Callback after the clouds deferred composite stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_SSGI">
-			<summary>
-			Callback before the SSGI rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_SSGI">
-			<summary>
-			Callback after the SSGI rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_SSAO">
-			<summary>
-			Callback before the SSAO rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_SSAO">
-			<summary>
-			Callback after the SSAO rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_SSR">
-			<summary>
-			Callback before the SSR rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_SSR">
-			<summary>
-			Callback after the SSR rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_TRANSPARENT_BLUR_BUFFER">
-			<summary>
-			Callback before filling the transparent blur buffer.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_TRANSPARENT_BLUR_BUFFER">
-			<summary>
-			Callback after filling the transparent blur buffer.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_REFRACTION_BUFFER">
-			<summary>
-			Callback before filling the refraction buffer.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_REFRACTION_BUFFER">
-			<summary>
-			Callback after filling the refraction buffer.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_AUXILIARY_BUFFER">
-			<summary>
-			Callback before filling the auxiliary buffer.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_AUXILIARY_BUFFER">
-			<summary>
-			Callback after filling the auxiliary buffer.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_WATER_PLANAR_PROBES">
-			<summary>
-			Callback after the water planar probes rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_WATER_PLANAR_PROBES">
-			<summary>
-			Callback before the water planar probes rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_OPACITY_PLANAR_PROBES">
-			<summary>
-			Callback after the opacity planar probes rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_OPACITY_PLANAR_PROBES">
-			<summary>
-			Callback before the opacity planar probes rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_OPACITY_ENVIRONMENT_PROBES">
-			<summary>
-			Callback before the opacity environment probes rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_OPACITY_ENVIRONMENT_PROBES">
-			<summary>
-			Callback after the opacity environment probes rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_OPACITY_VOXEL_PROBES">
-			<summary>
-			Callback before the opacity voxel probes rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_OPACITY_VOXEL_PROBES">
-			<summary>
-			Callback after the opacity voxel probes rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_OPACITY_LIGHTS">
-			<summary>
-			Callback before the opacity lightgs rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_OPACITY_LIGHTS">
-			<summary>
-			Callback after the opacity lightgs rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_SSRTGI">
-			<summary>
-			Callback before the SSRTGI rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_SSRTGI">
-			<summary>
-			Callback after the SSRTGI rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_OPACITY_DECALS">
-			<summary>
-			Callback before the opacity decals rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_OPACITY_DECALS">
-			<summary>
-			Callback after the opacity decals rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_OPACITY_GBUFFER">
-			<summary>
-			Callback before filling the Gbuffer.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_OPACITY_GBUFFER">
-			<summary>
-			Callback after filling the Gbuffer.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_ADAPTATION_COLOR">
-			<summary>
-			Callback before the color adaptation rendering stage (automatic exposure and white balance correction).
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_ADAPTATION_COLOR">
-			<summary>
-			Callback after the color adaptation rendering stage (automatic exposure and white balance correction).
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_ADAPTATION_COLOR_AVERAGE">
-			<summary>
-			Callback before the calculation of automatic exposure and white balance correction.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_ADAPTATION_COLOR_AVERAGE">
-			<summary>
-			Callback after the calculation of automatic exposure and white balance correction.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_CURVATURE_COMPOSITE">
-			<summary>
-			Callback before the curvature rendering stage for the SSDirt effect.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_CURVATURE_COMPOSITE">
-			<summary>
-			Callback after the curvature rendering stage for the SSDirt effect.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_CURVATURE">
-			<summary>
-			Callback before the SSBevel effect rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_CURVATURE">
-			<summary>
-			Callback after the SSBevel effect rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_SCREEN">
-			<summary>
-			Callback after the stage of rendering each screen (a stereo image has 2 screens, while a cubemap will have 6).
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_SCREEN">
-			<summary>
-			Callback before the stage of rendering each screen (a stereo image has 2 screens, while a cubemap will have 6).
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_SHADOWS">
-			<summary>
-			Callback after the shadows rendering stage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_OMNI_SHADOW">
-			<summary>
-			Callback after the stage of rendering shadows from Omni light sources.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_OMNI_SHADOW">
-			<summary>
-			Callback before the stage of rendering shadows from Omni light sources.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_PROJ_SHADOW">
-			<summary>
-			Callback after the stage of rendering shadows from Projected light sources.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_PROJ_SHADOW">
-			<summary>
-			Callback before the stage of rendering shadows from Projected light sources.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_END_WORLD_SHADOW">
-			<summary>
-			Callback after the stage of rendering shadows from World light sources.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_WORLD_SHADOW">
-			<summary>
-			Callback before the stage of rendering shadows from World light sources.
-		</summary>
-		</member>
-		<member name="F:Unigine.Render.CALLBACK_BEGIN_SHADOWS">
-			<summary>
-			Callback before the shadows rendering stage.
 		</summary>
 		</member>
 		<member name="F:Unigine.Render.STREAMING_FORCE">
@@ -1768,6 +2139,51 @@
 		<member name="F:Unigine.Render.VIEWPORT_MODE_STEREO_REPLICATE">
 			<summary>
 			Enables the separate images stereo mode. This mode serves to output two separate images for each of the eye. It can be used with any VR/AR output devices that support separate images output, e.g. for 3D video glasses or helmets (HMD).
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.VSYNC_DISABLE">
+			<summary>
+			Vertical FPS synchronization is disabled.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.VSYNC_STRICT">
+			<summary>
+			Strict vertical FPS synchronization.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.VSYNC_ADAPTIVE">
+			<summary>
+			Adaptive vertical FPS synchronization (OpenGL only).
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.TEXTURE_ACCESSORY_NONE">
+			<summary>
+			Ordinary non-accessory textures.
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.TEXTURE_ACCESSORY_GBUFFER">
+			<summary>
+			GBuffer textures (gbuffer_albedo, gbuffer_shading, gbuffer_normal, etc.).
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.TEXTURE_ACCESSORY_WBUFFER">
+			<summary>
+			Water buffer (WBuffer) textures (wbuffer_diffuse, wbuffer_normal, etc.).
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.TEXTURE_ACCESSORY_RENDER">
+			<summary>
+			Render textures (clouds, scene depth, etc.).
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.TEXTURE_ACCESSORY_OCCLUDERS">
+			<summary>
+			Textures used for occluders (occluders, occluder shadows, etc.).
+		</summary>
+		</member>
+		<member name="F:Unigine.Render.TEXTURE_ACCESSORY_EXTERNAL">
+			<summary>
+			External textures.
 		</summary>
 		</member>
 		<member name="M:Unigine.RenderEnvironmentPreset.getNum const">
@@ -2136,6 +2552,38 @@
 			</summary>  
 			<returns>Current intensity of the sunlight color's contribution to the haze.</returns>
 		</member>
+		<member name="M:Unigine.RenderEnvironmentPreset.setHazeScatteringMieIntensity(float)">
+			<summary>
+			Sets the minimum Mie intensity value for geometry-occluded areas. This value specifies the fraction of Mie intensity visible when the surface is viewed from straight on. Setting this value to 1 disables the Fresnel effect. You can use this parameter together with Mie Frontside Intensity and Mie Fresnel Power to control light occlusion from World light sources. Works for both, opaque and transparent objects.
+			</summary> 
+			<param name="intensity"> New minimum Mie intensity value for geometry-occluded areas to be set in the [0.0f, 1.0f] range. </param> 
+		</member>
+		<member name="M:Unigine.RenderEnvironmentPreset.getHazeScatteringMieIntensity const">
+			<summary>
+			Returns the current minimum Mie intensity value for geometry-occluded areas. This value specifies the fraction of Mie intensity visible when the surface is viewed from straight on. Setting this value to 1 disables the Fresnel effect. You can use this parameter together with Mie Frontside Intensity and Mie Fresnel Power to control light occlusion from World light sources. Works for both, opaque and transparent objects.
+			</summary>  
+			<returns>Current minimum Mie intensity value for geometry-occluded areas in the [0.0f, 1.0f] range.</returns>
+		</member>
+		<member name="M:Unigine.RenderEnvironmentPreset.setHazeScatteringMieFrontSideIntensity(float)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.RenderEnvironmentPreset.getHazeScatteringMieFrontSideIntensity const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.RenderEnvironmentPreset.setHazeScatteringMieFresnelPower(float)">
+			<summary>
+			Sets the power of the Fresnel effect for Mie visibility. Higher values will tighten up the areas affected, while lower ones will allow more areas to be affected by the Fresnel effect.
+			</summary> 
+			<param name="power"> New power of the Fresnel effect to be set. </param> 
+		</member>
+		<member name="M:Unigine.RenderEnvironmentPreset.getHazeScatteringMieFresnelPower const">
+			<summary>
+			Returns the current power of the Fresnel effect for Mie visibility. Higher values will tighten up the areas affected, while lower ones will allow more areas to be affected by the Fresnel effect.
+			</summary>  
+			<returns>Current power of the Fresnel effect.</returns>
+		</member>
 		<member name="M:Unigine.Renderer.clearStates">
 			<summary>
 			Clears rendering states and textures.					The shader will also be cleared.
@@ -2393,7 +2841,13 @@
 			<summary>
 			Returns the current stereo mode.
 			</summary>  
-			<returns>One of the RENDER_STEREO_* variables:</returns>
+			<returns>One of the RENDER_STEREO_* variables.</returns>
+		</member>
+		<member name="M:Unigine.Renderer.getStereoCurrentEye const">
+			<summary>
+			Returns the current stereo eye.
+			</summary>  
+			<returns>One of the RENDER_STEREO_EYE_* variables.</returns>
 		</member>
 		<member name="M:Unigine.Renderer.getTextureAutoExposure const">
 			<summary>
@@ -2526,6 +2980,12 @@
 			Returns the SSGI texture.
 			</summary>  
 			<returns>SSGI texture.</returns>
+		</member>
+		<member name="M:Unigine.Renderer.getTextureSSShadowShafts const">
+			<summary>
+			Returns the Screen-Space Shadow Shafts texture.
+			</summary>  
+			<returns>Screen-Space Shadow Shafts texture.</returns>
 		</member>
 		<member name="M:Unigine.Renderer.getTextureTransparentBlur const">
 			<summary>
@@ -2660,7 +3120,7 @@
 			<param name="height"> Texture height, in pixels. </param>
 			<param name="depth"> Texture depth, in pixels. </param>
 			<param name="format"> Texture format, one of the Texture::FORMAT_ values. </param>
-			<param name="flags"> Texture flags. A combination of flags (such as Texture::USAGE_, Texture::WRAP_, etc.) </param> 
+			<param name="flags"> Texture flags. A combination of flags (such as Texture::FORMAT_USAGE_, Texture::SAMPLER_WRAP_, etc.) </param> 
 			<returns>New created custom 3D texture.</returns>
 		</member>
 		<member name="M:Unigine.Renderer.createCustomTexture2D(char,int,int,int,int)">
@@ -2671,7 +3131,7 @@
 			<param name="width"> Texture width, in pixels. </param>
 			<param name="height"> Texture height, in pixels. </param>
 			<param name="format"> Texture format, one of the Texture::FORMAT_ values. </param>
-			<param name="flags"> Texture flags. A combination of flags (such as Texture::USAGE_, Texture::WRAP_, etc.) </param> 
+			<param name="flags"> Texture flags. A combination of flags (such as Texture::FORMAT_USAGE_, Texture::SAMPLER_WRAP_, etc.) </param> 
 			<returns>New created custom 2D texture.</returns>
 		</member>
 		<member name="M:Unigine.Renderer.createCustomTexture2DArray(char,int,int,int,int,int)">
@@ -2683,7 +3143,7 @@
 			<param name="height"> Texture height, in pixels. </param>
 			<param name="depth"> Number of elements in the array. </param>
 			<param name="format"> Texture format, one of the Texture::FORMAT_ values. </param>
-			<param name="flags"> Texture flags. A combination of flags (such as Texture::USAGE_, Texture::WRAP_, etc.) </param> 
+			<param name="flags"> Texture flags. A combination of flags (such as Texture::FORMAT_USAGE_, Texture::SAMPLER_WRAP_, etc.) </param> 
 			<returns>New created custom 2D texture array.</returns>
 		</member>
 		<member name="M:Unigine.Renderer.getCustomTexture(char)">
@@ -2730,11 +3190,15 @@
 		</member>
 		<member name="M:Unigine.Renderer.getTextureNormalUnpack const">
 			<summary>
+			Returns the texture that stores unpacked normals. Available for the following post-effects: SSR, SSGI, SSRTGI, Shadows screen space.
 			</summary>  
+			<returns>The texture that stores unpacked normals.</returns>
 		</member>
 		<member name="M:Unigine.Renderer.getTextureLinearDepth const">
 			<summary>
+			Returns the texture that stores linear depth data.
 			</summary>  
+			<returns>The texture that stores linear depth data.</returns>
 		</member>
 		<member name="M:Unigine.Renderer.renderMeshStatic(Unigine.Ptr{MeshStatic},Unigine.Ptr{Unigine.Material},char,Unigine.Math.Mat4,Unigine.Ptr{Unigine.Camera})">
 			<summary>
@@ -2745,6 +3209,10 @@
 			<param name="pass_name"> Name of the rendering pass during which the mesh is to be rendered. </param>
 			<param name="transform"> Transformation to be passed to shader for rendering. </param>
 			<param name="camera"> Camera to be used for mesh rendering. </param> 
+		</member>
+		<member name="M:Unigine.Renderer.isStereoPeripheral const">
+			<summary>
+			</summary>  
 		</member>
 		<member name="F:Unigine.Renderer.RENDER_STEREO_VERTICAL">
 			<summary>
@@ -2759,6 +3227,21 @@
 		<member name="F:Unigine.Renderer.RENDER_STEREO_DEFAULT">
 			<summary>
 			Default stereo mode.
+		</summary>
+		</member>
+		<member name="F:Unigine.Renderer.RENDER_STEREO_EYE_NONE">
+			<summary>
+			None of the stereo eyes.
+		</summary>
+		</member>
+		<member name="F:Unigine.Renderer.RENDER_STEREO_EYE_LEFT">
+			<summary>
+			Left stereo eye.
+		</summary>
+		</member>
+		<member name="F:Unigine.Renderer.RENDER_STEREO_EYE_RIGHT">
+			<summary>
+			Right stereo eye.
 		</summary>
 		</member>
 		<member name="M:Unigine.RenderState.setAnisotropy(int)">
@@ -3384,6 +3867,11 @@
 		<member name="F:Unigine.RenderState.STENCIL_INCR">
 			<summary>
 			A flag indicating stencil buffer operation that increments the stencil-buffer entry (stencil value incremented).
+		</summary>
+		</member>
+		<member name="F:Unigine.RenderState.STENCIL_DECR">
+			<summary>
+			A flag indicating stencil buffer operation that decrements the stencil-buffer entry (stencil value decremented).
 		</summary>
 		</member>
 		<member name="F:Unigine.RenderState.STENCIL_REPLACE">

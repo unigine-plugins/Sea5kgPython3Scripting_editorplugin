@@ -26,7 +26,7 @@
 #include "UnigineDir.h"
 #include "UnigineWorld.h"
 
-// Component example (.h file) 
+// Component example (.h file)
 /*
 #pragma once
 #include <UnigineComponentSystem.h>
@@ -35,12 +35,17 @@ class MyComponent: public Unigine::ComponentBase
 {
 public:
 	COMPONENT_DEFINE(MyComponent, Unigine::ComponentBase);
+	COMPONENT_DESCRIPTION(
+		"You can use this component on rigidbody objects only\n"
+		"This component is implicitly related to YourComponent"
+	);
 
 	// methods
 	COMPONENT_INIT(init);
 	COMPONENT_UPDATE(update);
 
 	// parameters
+	PROP_GROUP("Very Important Parameters");
 	PROP_PARAM(Float, my_float, 1.5f);
 	PROP_PARAM(Node, my_node);
 	PROP_PARAM(Switch, my_type, 0, "one,two,three", "Title", "ToolTip for param", "Group");
@@ -91,17 +96,23 @@ class ComponentBase;
 #endif
 
 // component
-#define COMPONENT(CLASS_NAME, PARENT_NAME)												\
-	public:																				\
-		CLASS_NAME(const Unigine::NodePtr &node, int num) : PARENT_NAME(node, num) {}	\
-		virtual ~CLASS_NAME() {}														\
-		using __this_class = CLASS_NAME;												\
+#define COMPONENT(CLASS_NAME, PARENT_NAME)																	\
+	public:																									\
+		CLASS_NAME(const Unigine::NodePtr &node, int num) : PARENT_NAME(node, num) {}						\
+		virtual ~CLASS_NAME() {}																			\
+		using __this_class = CLASS_NAME;																	\
 		virtual bool isBase() const override { return std::is_same<PARENT_NAME, ComponentBase>::value; }	\
-		const char *getClassName() const override { return #CLASS_NAME; }
+		const char *getClassName() const override { return #CLASS_NAME; }									\
+		PROP_TITLE(nullptr);																				\
+		PROP_TOOLTIP(nullptr);																				\
+		PROP_GROUP(nullptr);
 
-#define COMPONENT_DEFINE(CLASS_NAME, PARENT_NAME)\
-COMPONENT(CLASS_NAME, PARENT_NAME);\
+#define COMPONENT_DEFINE(CLASS_NAME, PARENT_NAME)	\
+COMPONENT(CLASS_NAME, PARENT_NAME);					\
 PROP_NAME(#CLASS_NAME);
+
+// component description
+#define COMPONENT_DESCRIPTION(TEXT) const char *getComponentDescription() const override { return TEXT; }
 
 // property
 #define PROP_NAME(NAME) static const char *getPropertyName() { return NAME; }
@@ -117,7 +128,18 @@ PROP_NAME(#CLASS_NAME);
 	Unigine::ComponentVariableArray<Unigine::ComponentVariable##TYPE> NAME { this, #NAME, #TYPE, ##__VA_ARGS__ };
 #define PROP_ARRAY_STRUCT(TYPE, NAME, ...) \
 	Unigine::ComponentVariableArray<Unigine::ComponentVariableStruct<TYPE>> NAME { this, #NAME, #TYPE, ##__VA_ARGS__ };
+// title, tooltip, group
+// ( creates something like: Unigine::ComponentVariableArgumentGroup __group_23 { "MyPrettyGroup" }; )
+#define PROP_TITLE(TEXT) Unigine::ComponentVariableArgumentTitle UNIGINE_CONCATENATE(__title_, __LINE__) { TEXT };
+#define PROP_TOOLTIP(TEXT) Unigine::ComponentVariableArgumentTooltip UNIGINE_CONCATENATE(__tooltip_, __LINE__) { TEXT };
+#define PROP_GROUP(TEXT) Unigine::ComponentVariableArgumentGroup UNIGINE_CONCATENATE(__group_, __LINE__) { TEXT };
 
+// one level of macro indirection is required in order to resolve __LINE__,
+// and get __group_10 instead of __group__LINE__
+#ifndef UNIGINE_CONCATENATE
+#define UNIGINE_CONCATENATE_IMPL(A, B) A ## B
+#define UNIGINE_CONCATENATE(A, B) UNIGINE_CONCATENATE_IMPL(A, B)
+#endif
 // register methods
 #define COMPONENT_METHOD(TYPE, NAME, ...)																					\
 	template <typename T>																									\
@@ -241,7 +263,7 @@ public:
 
 	void getComponentNames(Vector<String> &names) const
 	{
-		names = map.keys();
+		map.getKeys(names);
 	}
 
 private:
@@ -271,6 +293,10 @@ public:
 
 	// adds a callback that is called during initialize()
 	UNIGINE_API void addInitCallback(CallbackBase *callback);
+
+	// for perf debug modes : enable/disable update, postUpdate, updatePhysics, swap, updateSync, updateAsync for all components
+	void setEnabled(bool enabled) { is_enabled = enabled; }
+	bool isEnabled() const { return is_enabled; }
 
 	// register user object derived from ComponentBase class
 	template <class C>
@@ -318,7 +344,8 @@ public:
 				C *c = dynamic_cast<C *>(it->data[i]);
 				if (c)
 				{
-					delete it->data[i];
+					c->call_shutdown();
+					delete c;
 					it->data[i] = nullptr;
 				}
 			}
@@ -515,6 +542,10 @@ public:
 		return 0;
 	}
 
+	// force to initialize components
+	// (and doesn't wait for the next frame (WorldLogic::update() callback))
+	void initializeComponents(const NodePtr &node);
+
 	// statistics
 	UNIGINE_API int getNumComponents() const;	// slow, use this method rarely
 	UNIGINE_INLINE int getNumNodesWithComponents() const { return components.size(); }
@@ -574,6 +605,8 @@ private:
 	UNIGINE_API void on_property_removed(const NodePtr node, const PropertyPtr prop, int num);
 	UNIGINE_API void on_property_change_enabled(const NodePtr node, const PropertyPtr prop, int num);
 	UNIGINE_API void on_node_change_enabled(const NodePtr node);
+
+	bool is_enabled = true;
 
 	struct QueuedCallback
 	{
@@ -685,8 +718,8 @@ public:
 	UNIGINE_INLINE const char *getName() const { return name; }
 	UNIGINE_INLINE int getType() const { return type; }
 	UNIGINE_API const char *getTypeName() const;
-	UNIGINE_INLINE virtual String getValueAsString() const { return String::null; }
-	UNIGINE_INLINE virtual int nullCheck() const { return 0; }
+	virtual String getValueAsString() const { return String::null; }
+	virtual int nullCheck() const { return 0; }
 
 	UNIGINE_API virtual void save(const XmlPtr &parameter) const;
 
@@ -719,7 +752,7 @@ public:
 	UNIGINE_API ComponentVariableInt &operator=(int value);
 	UNIGINE_API operator int() const;
 	UNIGINE_API int get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::itoa(value); }
+	virtual String getValueAsString() const override { return String::itoa(value); }
 
 protected:
 	int value;
@@ -737,7 +770,7 @@ public:
 	UNIGINE_API ComponentVariableToggle &operator=(int value);
 	UNIGINE_API operator int() const;
 	UNIGINE_API int get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::itoa(value); }
+	virtual String getValueAsString() const override { return String::itoa(value); }
 
 protected:
 	int value;
@@ -755,13 +788,14 @@ public:
 	UNIGINE_API ComponentVariableSwitch &operator=(int value);
 	UNIGINE_API operator int() const;
 	UNIGINE_API int get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::itoa(value); }
+	virtual String getValueAsString() const override { return String::itoa(value); }
+	UNIGINE_INLINE const char * getItems() const { return items; }
 
 	UNIGINE_API void save(const XmlPtr &parameter) const override;
 
 protected:
 	int value;
-	String items;
+	const char * items = nullptr;
 };
 
 class UNIGINE_CS ComponentVariableMask : public ComponentVariable
@@ -779,13 +813,14 @@ public:
 	UNIGINE_API ComponentVariableMask &operator=(int value);
 	UNIGINE_API operator int() const;
 	UNIGINE_API int get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::itoa(value); }
+	virtual String getValueAsString() const override { return String::itoa(value); }
+	UNIGINE_INLINE const char * getFlags() const { return flags; }
 
 	UNIGINE_API void save(const XmlPtr &parameter) const override;
 
 protected:
 	int value;
-	String flags;
+	const char * flags = nullptr;
 };
 
 class UNIGINE_CS ComponentVariableFloat : public ComponentVariable
@@ -800,7 +835,7 @@ public:
 	UNIGINE_API ComponentVariableFloat &operator=(float value);
 	UNIGINE_API operator float() const;
 	UNIGINE_API float get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::ftoa(value); }
+	virtual String getValueAsString() const override { return String::ftoa(value); }
 
 protected:
 	float value;
@@ -818,7 +853,7 @@ public:
 	UNIGINE_API ComponentVariableDouble &operator=(double value);
 	UNIGINE_API operator double() const;
 	UNIGINE_API double get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::dtoa(value); }
+	virtual String getValueAsString() const override { return String::dtoa(value); }
 
 protected:
 	double value;
@@ -836,7 +871,7 @@ public:
 	UNIGINE_API ComponentVariableString &operator=(const char *value);
 	UNIGINE_API operator const char *() const;
 	UNIGINE_API const char *get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return value; }
+	virtual String getValueAsString() const override { return value; }
 
 protected:
 	mutable String value;
@@ -857,7 +892,7 @@ public:
 	UNIGINE_API ComponentVariableVec2 &operator=(const Math::vec2 &value);
 	UNIGINE_API operator Math::vec2() const;
 	UNIGINE_API Math::vec2 get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::format("%f %f", value.x, value.y); }
+	virtual String getValueAsString() const override { return String::format("%f %f", value.x, value.y); }
 
 protected:
 	Math::vec2 value;
@@ -878,7 +913,7 @@ public:
 	UNIGINE_API ComponentVariableVec3 &operator=(const Math::vec3 &value);
 	UNIGINE_API operator Math::vec3() const;
 	UNIGINE_API Math::vec3 get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::format("%f %f %f", value.x, value.y, value.z); }
+	virtual String getValueAsString() const override { return String::format("%f %f %f", value.x, value.y, value.z); }
 
 protected:
 	Math::vec3 value;
@@ -899,7 +934,7 @@ public:
 	UNIGINE_API ComponentVariableVec4 &operator=(const Math::vec4 &value);
 	UNIGINE_API operator Math::vec4() const;
 	UNIGINE_API Math::vec4 get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::format("%f %f %f %f", value.x, value.y, value.z, value.w); }
+	virtual String getValueAsString() const override { return String::format("%f %f %f %f", value.x, value.y, value.z, value.w); }
 
 protected:
 	Math::vec4 value;
@@ -920,7 +955,7 @@ public:
 	UNIGINE_API ComponentVariableDVec2 &operator=(const Math::dvec2 &value);
 	UNIGINE_API operator Math::dvec2() const;
 	UNIGINE_API Math::dvec2 get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::format("%lf %lf", value.x, value.y); }
+	virtual String getValueAsString() const override { return String::format("%lf %lf", value.x, value.y); }
 
 protected:
 	Math::dvec2 value;
@@ -941,7 +976,7 @@ public:
 	UNIGINE_API ComponentVariableDVec3 &operator=(const Math::dvec3 &value);
 	UNIGINE_API operator Math::dvec3() const;
 	UNIGINE_API Math::dvec3 get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::format("%lf %lf %lf", value.x, value.y, value.z); }
+	virtual String getValueAsString() const override { return String::format("%lf %lf %lf", value.x, value.y, value.z); }
 
 protected:
 	Math::dvec3 value;
@@ -962,7 +997,7 @@ public:
 	UNIGINE_API ComponentVariableDVec4 &operator=(const Math::dvec4 &value);
 	UNIGINE_API operator Math::dvec4() const;
 	UNIGINE_API Math::dvec4 get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::format("%lf %lf %lf %lf", value.x, value.y, value.z, value.w); }
+	virtual String getValueAsString() const override { return String::format("%lf %lf %lf %lf", value.x, value.y, value.z, value.w); }
 
 protected:
 	Math::dvec4 value;
@@ -983,7 +1018,7 @@ public:
 	UNIGINE_API ComponentVariableIVec2 &operator=(const Math::ivec2 &value);
 	UNIGINE_API operator Math::ivec2() const;
 	UNIGINE_API Math::ivec2 get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::format("%d %d", value.x, value.y); }
+	virtual String getValueAsString() const override { return String::format("%d %d", value.x, value.y); }
 
 protected:
 	Math::ivec2 value;
@@ -1004,7 +1039,7 @@ public:
 	UNIGINE_API ComponentVariableIVec3 &operator=(const Math::ivec3 &value);
 	UNIGINE_API operator Math::ivec3() const;
 	UNIGINE_API Math::ivec3 get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::format("%d %d %d", value.x, value.y, value.z); }
+	virtual String getValueAsString() const override { return String::format("%d %d %d", value.x, value.y, value.z); }
 
 protected:
 	Math::ivec3 value;
@@ -1025,7 +1060,7 @@ public:
 	UNIGINE_API ComponentVariableIVec4 &operator=(const Math::ivec4 &value);
 	UNIGINE_API operator Math::ivec4() const;
 	UNIGINE_API Math::ivec4 get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::format("%d %d %d %d", value.x, value.y, value.z, value.w); }
+	virtual String getValueAsString() const override { return String::format("%d %d %d %d", value.x, value.y, value.z, value.w); }
 
 protected:
 	Math::ivec4 value;
@@ -1046,7 +1081,7 @@ public:
 	UNIGINE_API ComponentVariableColor &operator=(const Math::vec4 &value);
 	UNIGINE_API operator Math::vec4() const;
 	UNIGINE_API Math::vec4 get() const;
-	UNIGINE_INLINE String getValueAsString() const override { return String::format("%f %f %f %f", value.x, value.y, value.z, value.w); }
+	virtual String getValueAsString() const override { return String::format("%f %f %f %f", value.x, value.y, value.z, value.w); }
 
 protected:
 	Math::vec4 value;
@@ -1065,8 +1100,8 @@ public:
 	UNIGINE_API operator const char*() const;
 	UNIGINE_API const char *get() const;
 	UNIGINE_API const char *getRaw() const;
-	UNIGINE_INLINE String getValueAsString() const override { return value; }
-	UNIGINE_INLINE int nullCheck() const override { return parameter ? (!parameter->isFileExist()) : 0; }
+	virtual String getValueAsString() const override { return value; }
+	virtual int nullCheck() const override { return parameter ? (!parameter->isFileExist()) : 0; }
 
 protected:
 	mutable String value;
@@ -1094,8 +1129,8 @@ public:
 	UNIGINE_API PropertyPtr get() const;
 	UNIGINE_API Property *operator->();
 	UNIGINE_INLINE int isEmpty() const { return get().get() == nullptr; }
-	UNIGINE_INLINE String getValueAsString() const override { return value_guid.getString(); }
-	UNIGINE_INLINE int nullCheck() const override { return isEmpty(); }
+	virtual String getValueAsString() const override { return value_guid.getString(); }
+	virtual int nullCheck() const override { return isEmpty(); }
 
 protected:
 	PropertyPtr value;
@@ -1124,8 +1159,8 @@ public:
 	UNIGINE_API MaterialPtr get() const;
 	UNIGINE_API Material *operator->();
 	UNIGINE_INLINE int isEmpty() const { return get().get() == nullptr; }
-	UNIGINE_INLINE String getValueAsString() const override { return value_guid.getString(); }
-	UNIGINE_INLINE int nullCheck() const override { return isEmpty(); }
+	virtual String getValueAsString() const override { return value_guid.getString(); }
+	virtual int nullCheck() const override { return isEmpty(); }
 
 protected:
 	MaterialPtr value;
@@ -1155,8 +1190,8 @@ public:
 	UNIGINE_API NodePtr get() const;
 	UNIGINE_API Node *operator->();
 	UNIGINE_INLINE int isEmpty() const { return get().get() == nullptr; }
-	UNIGINE_INLINE String getValueAsString() const override { return String::itoa(value_id); }
-	UNIGINE_INLINE int nullCheck() const override { return isEmpty(); }
+	virtual String getValueAsString() const override { return String::itoa(value_id); }
+	virtual int nullCheck() const override { return isEmpty(); }
 
 protected:
 	NodePtr value;
@@ -1187,8 +1222,8 @@ public:
 	UNIGINE_API Unigine::Curve2dPtr get() const;
 	UNIGINE_API Unigine::Curve2d *operator->();
 	UNIGINE_INLINE int isEmpty() const { return get().get() == nullptr; }
-	UNIGINE_INLINE Unigine::String getValueAsString() const override { return Unigine::String(""); }
-	UNIGINE_INLINE int nullCheck() const override { return isEmpty(); }
+	virtual Unigine::String getValueAsString() const override { return Unigine::String(""); }
+	virtual int nullCheck() const override { return isEmpty(); }
 
 protected:
 	mutable Unigine::Curve2dPtr value{Curve2d::create()};
@@ -1200,7 +1235,10 @@ public:
 	ComponentVariableStructBase() = default;
 	UNIGINE_API ComponentVariableStructBase(PropertyWrapper *component, const char *type_name,
 		const char *name = nullptr, const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
-		: ComponentVariable(component, name, Property::PARAMETER_STRUCT, title, tooltip, group, args) {}
+		: ComponentVariable(component, name, Property::PARAMETER_STRUCT, title, tooltip, group, args)
+	{
+		UNIGINE_UNUSED(type_name);
+	}
 	virtual ~ComponentVariableStructBase() = default;
 
 	UNIGINE_INLINE ComponentStruct *getBase() const { return value_base; }
@@ -1315,7 +1353,7 @@ public:
 	UNIGINE_INLINE C &get(int index) { refresh(); return *value[index]; }
 	UNIGINE_INLINE C &operator[](int index) { refresh(); return *value[index]; }
 
-	UNIGINE_INLINE void save(const XmlPtr &xml) const override
+	virtual void save(const XmlPtr &xml) const override
 	{
 		ComponentVariable::save(xml);
 		xml->setArg("array_type", value_type.get());
@@ -1340,6 +1378,32 @@ private:
 #pragma endregion Variables
 #endif
 
+#ifndef __GNUC__
+#pragma region VariableArguments
+#endif
+
+struct UNIGINE_CS ComponentVariableArgumentTitle
+{
+	UNIGINE_API ComponentVariableArgumentTitle(const char *text) { value = text; }
+	static const char *value;
+};
+
+struct UNIGINE_CS ComponentVariableArgumentTooltip
+{
+	UNIGINE_API ComponentVariableArgumentTooltip(const char *text) { value = text; }
+	static const char *value;
+};
+
+struct UNIGINE_CS ComponentVariableArgumentGroup
+{
+	UNIGINE_API ComponentVariableArgumentGroup(const char *text) { value = text; }
+	static const char *value;
+};
+
+#ifndef __GNUC__
+#pragma endregion VariableArguments
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////////////
 // Component Bases
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -1355,12 +1419,13 @@ public:
 	UNIGINE_API ComponentBase(const NodePtr &node, int num);
 	UNIGINE_API virtual ~ComponentBase();
 
-	UNIGINE_INLINE virtual const char *getClassName() const { return "ComponentBase"; }
+	virtual const char *getClassName() const { return "ComponentBase"; }
+	virtual const char *getComponentDescription() const { return nullptr; }
 
 	// property
 	UNIGINE_INLINE static const char *getPropertyName() { return "component_base"; }
-	UNIGINE_INLINE virtual const char *getParentPropertyName() const { return "node_base"; }
-	UNIGINE_INLINE virtual int isAutoSaveProperty() const { return 1; }
+	virtual const char *getParentPropertyName() const { return "node_base"; }
+	virtual int isAutoSaveProperty() const { return 1; }
 
 	// common functions
 	UNIGINE_INLINE const NodePtr &getNode() const { return node; }
@@ -1371,7 +1436,7 @@ public:
 	UNIGINE_INLINE int isEnabled() const { return enabled; }
 
 	UNIGINE_INLINE int isInitialized() const { return all_init_called; }
-	UNIGINE_INLINE virtual bool isBase() const { return true; }
+	virtual bool isBase() const { return true; }
 
 	// callbacks
 	UNIGINE_INLINE void setDestroyCallback(CallbackBase *func) { delete destroy_callback; destroy_callback = func; }
@@ -1480,6 +1545,7 @@ private:
 	UNIGINE_API void init_called();
 
 	UNIGINE_API void refresh_enabled();
+	UNIGINE_API void call_shutdown();
 
 	// id of the node when component was created
 	// (user can change id at runtime)

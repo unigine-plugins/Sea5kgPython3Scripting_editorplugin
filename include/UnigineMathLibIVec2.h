@@ -167,15 +167,15 @@ constexpr ivec2 ivec2_one(1, ConstexprTag{});
 
 UNIGINE_INLINE int length2(const ivec2 &v) { return v.length2(); }
 
-UNIGINE_INLINE int compare(const ivec2 &v0, const ivec2 &v1) { return v0.long_v == v1.long_v; }
-UNIGINE_INLINE int operator==(const ivec2 &v0, const ivec2 &v1) { return v0.long_v == v1.long_v; }
-UNIGINE_INLINE int operator!=(const ivec2 &v0, const ivec2 &v1) { return v0.long_v != v1.long_v; }
+UNIGINE_INLINE bool compare(const ivec2 &v0, const ivec2 &v1) { return v0.long_v == v1.long_v; }
+UNIGINE_INLINE bool operator==(const ivec2 &v0, const ivec2 &v1) { return v0.long_v == v1.long_v; }
+UNIGINE_INLINE bool operator!=(const ivec2 &v0, const ivec2 &v1) { return v0.long_v != v1.long_v; }
 
-UNIGINE_INLINE int operator<(const ivec2 &v0, const ivec2 &v1) { return v0.long_v < v1.long_v; }
-UNIGINE_INLINE int operator>(const ivec2 &v0, const ivec2 &v1) { return v0.long_v > v1.long_v; }
+UNIGINE_INLINE bool operator<(const ivec2 &v0, const ivec2 &v1) { return v0.long_v < v1.long_v; }
+UNIGINE_INLINE bool operator>(const ivec2 &v0, const ivec2 &v1) { return v0.long_v > v1.long_v; }
 
-UNIGINE_INLINE int operator>=(const ivec2 &v0, const ivec2 &v1) { return v0.long_v >= v1.long_v; }
-UNIGINE_INLINE int operator<=(const ivec2 &v0, const ivec2 &v1) { return v0.long_v <= v1.long_v; }
+UNIGINE_INLINE bool operator>=(const ivec2 &v0, const ivec2 &v1) { return v0.long_v >= v1.long_v; }
+UNIGINE_INLINE bool operator<=(const ivec2 &v0, const ivec2 &v1) { return v0.long_v <= v1.long_v; }
 
 UNIGINE_INLINE ivec2 &mul(ivec2 &ret, const ivec2 &v0, int v1)
 {

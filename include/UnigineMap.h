@@ -286,7 +286,7 @@ public:
 
 	UNIGINE_INLINE Type take(const Key &key)
 	{
-		Type ret = {};
+		Type ret{};
 		take(key, ret);
 		return ret;
 	}
@@ -322,7 +322,7 @@ public:
 	{
 		Vector<Type> values;
 		getValues(values);
-		return std::move(values);
+		return values;
 	}
 
 	UNIGINE_INLINE void getValues(Vector<Type> &values) const

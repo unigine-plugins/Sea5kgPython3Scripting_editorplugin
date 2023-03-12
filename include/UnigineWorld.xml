@@ -28,7 +28,7 @@
 			</summary>  
 			<returns>The budget value in seconds. The default value is 1/60.</returns>
 		</member>
-		<member name="M:Unigine.World.getCollision(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.getCollision(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
 			Searches for all collider objects within a given bounding box.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
@@ -36,7 +36,7 @@
 			<param name="objects"> Array with collider objects' smart pointers. </param> 
 			<returns>1 if collider objects are found; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.World.getCollision(UNIGINE_BOUND_SPHERE,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.getCollision(Unigine.Math.WorldBoundSphere,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
 			Searches for all collider objects within a given bounding sphere.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
@@ -168,94 +168,94 @@
 			<param name="p0"> Coordinates of the line start point. </param>
 			<param name="p1"> Coordinates of the line end point. </param>
 			<param name="objects"> Array of intersected objects' smart pointers. </param> 
-			<returns>1 if intersections are found; otherwise, 0.</returns>
+			<returns>true if intersections are found; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.getIntersection(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
 								Searches for intersections with objects that are found in a given bounding box.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
 			<param name="bb"> Bounding box where intersection search will be performed. </param>
 			<param name="objects"> Array of intersected objects' smart pointers. </param> 
-			<returns>1 if intersections are found; otherwise, 0.</returns>
+			<returns>true if intersections are found; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.getIntersection(UNIGINE_BOUND_SPHERE,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
-			<summary>
-								Searches for intersections with objects that are found in a given bounding sphere.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
-			</summary> 
-			<param name="bs"> Bounding sphere where intersection search will be performed. </param>
-			<param name="objects"> Array of intersected objects' smart pointers. </param> 
-			<returns>1 if intersections are found; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.World.getIntersection(UNIGINE_BOUND_FRUSTUM,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
-			<summary>
-								Searches for intersections with objects that are found in a given bounding frustum. Increase the global distance scale to detect intersections with invisible objects.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.					 This method ignores the "visual" component enabling you to catch objects hidden by visibility distance (for example if an object LOD is hidden by visibility distance, but the object is within the bounding frustum the intersection shall be detected). To check for intersections regarding the visibility aspect use getVisibleIntersection().
-			</summary> 
-			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
-			<param name="objects"> Array of intersected objects' smart pointers. </param> 
-			<returns>1 if intersections are found; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.World.getIntersection(UNIGINE_BOUND_BOX,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
 								Searches for intersections with nodes that are found in a given bounding box.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
 			<param name="bb"> Bounding box where intersection search will be performed. </param>
 			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
-			<returns>1 if intersections are found; otherwise, 0.</returns>
+			<returns>true if intersections are found; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.getIntersection(UNIGINE_BOUND_SPHERE,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
-			<summary>
-								Searches for intersections with nodes that are found in a given bounding sphere.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
-			</summary> 
-			<param name="bs"> Bounding sphere where intersection search will be performed. </param>
-			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
-			<returns>1 if intersections are found; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.World.getIntersection(UNIGINE_BOUND_BOX,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundBox,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
 								Searches for intersections with specified type of nodes that are found in a given bounding box.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
 			<param name="bb"> Bounding box where intersection search will be performed. </param>
 			<param name="type"> Node type filter. Only the nodes of the specified type will be checked. </param>
 			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
-			<returns>1 if intersections are found; otherwise, 0.</returns>
+			<returns>true if intersections are found; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.getIntersection(UNIGINE_BOUND_SPHERE,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundSphere,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
-								Searches for intersections with specified type of nodes that are found in a given bounding sphere.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Searches for intersections with objects that are found in a given bounding sphere.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+			</summary> 
+			<param name="bs"> Bounding sphere where intersection search will be performed. </param>
+			<param name="objects"> Array of intersected objects' smart pointers. </param> 
+			<returns>true if intersections are found; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundSphere,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+			<summary>
+								Searches for intersections with nodes that are found in a given bounding sphere.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+			</summary> 
+			<param name="bs"> Bounding sphere where intersection search will be performed. </param>
+			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
+			<returns>true if intersections are found; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundSphere,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+			<summary>
+								Searches for intersections with nodes of the specified type that are found in a given bounding sphere.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
 			<param name="bs"> Bounding sphere where intersection search will be performed. </param>
 			<param name="type"> Node type filter. Only the nodes of the specified type will be checked. </param>
 			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
-			<returns>1 if intersections are found; otherwise, 0.</returns>
+			<returns>true if intersections are found; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.getIntersection(UNIGINE_BOUND_FRUSTUM,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundFrustum,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
-								Searches for intersections with specified type of nodes that are found in a given bounding frustum.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.					 This method ignores the "visual" component enabling you to catch objects hidden by visibility distance (for example if an object LOD is hidden by visibility distance, but the object is within the bounding frustum the intersection shall be detected). To check for intersections regarding the visibility aspect use getVisibleIntersection().
+								Searches for intersections with Objects that are found in a given bounding frustum. This method catches all objects independent of their visibility (i.e., if an object is disabled, any of its LODs are disabled, or it is out of the  visibility distance range, but is located within the bounding frustum, the intersection shall be detected). To check for intersections while taking into account the visibility aspect, use getVisibleIntersection(). Check the usage example applying this method.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+			</summary> 
+			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
+			<param name="objects"> Array of intersected objects' smart pointers. </param> 
+			<returns>true if intersections are found; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundFrustum,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+			<summary>
+								Searches for intersections with nodes of the specified type that are found in a given bounding frustum. This method catches all nodes of the specified type independent of their visibility (i.e., if an object is disabled, any of its LODs are disabled, or it is out of the  visibility distance range, but is located within the bounding frustum, the intersection shall be detected). To check for intersections while taking into account the visibility aspect, use getVisibleIntersection().					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
 			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
 			<param name="type"> Node type filter. Only the nodes of the specified type will be checked. </param>
 			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
-			<returns>1 if intersections are found; otherwise, 0.</returns>
+			<returns>true if intersections are found; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.World.getVisibleIntersection(Unigine.Math.Vec3,Unigine.Math.WorldBoundFrustum,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator},float)">
 			<summary>
-			Searches for intersections with nodes that are found in a given bounding frustum and are visible to the specified camera position within the specified distance range. Unlike the getIntersection() method, this one takes the "visibility" component into account (hidden nodes or the ones that are too far away won't be found.).
+			Searches for intersections with objects inside a given bounding frustum that are visible to the specified camera position, i.e. either of its LODs is within the visibility distance distance. Unlike the getIntersection() method, this one takes the "visibility" concept into account (hidden objects or the ones that are too far away won't be found). Check this usage example for more details.
 			</summary> 
-			<param name="camera"> Position of the camera to check visibility of nodes for. </param>
-			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
-			<param name="objects"> Array of intersected nodes. </param>
-			<param name="max_distance"> Maximum visibility distance limit for nodes, in units. If the distance from the specified camera position to a node exceeds this limit, intersection will not be registered even if the node is within the specified bounding box. </param> 
+			<param name="camera"> Position of the camera from which the visibility distance to objects is checked. </param>
+			<param name="bf"> Bounding frustum inside which intersection search is performed. </param>
+			<param name="objects"> Array of intersected objects. </param>
+			<param name="max_distance"> Maximum visibility distance for objects, in units. If the distance from the specified camera position to an object exceeds this limit, the intersection is not registered even if the node is within the specified bounding frustum. </param> 
 			<returns>true if at least one intersection is found; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.World.getVisibleIntersection(Unigine.Math.Vec3,Unigine.Math.WorldBoundFrustum,Node::TYPE,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},float)">
 			<summary>
-			Searches for intersections with nodes that are found in a given bounding frustum and are visible to the specified camera position within the specified distance range. Unlike the getIntersection() method, this one takes the "visibility" component into account (hidden nodes or the ones that are too far away won't be found.).
+								Searches for intersections with nodes inside a given bounding frustum that are visible to the specified camera position, i.e. either of its LODs is within the visibility distance distance. Unlike the getIntersection() method, this one takes the "visibility" concept into account (hidden nodes or the ones that are too far away won't be found). Check this usage example for more details.					This method can be used only for nodes inherited from the Object class, i.e. they have sufraces that store LOD and visibility distance data.
 			</summary> 
-			<param name="camera"> Position of the camera to check visibility of nodes for. </param>
-			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
-			<param name="type"> Node type (one of the NODE_* variables); -1 is not to use a filter. </param>
+			<param name="camera"> Position of the camera from which the visibility distance to nodes is checked. </param>
+			<param name="bf"> Bounding frustum inside which intersection search is performed. </param>
+			<param name="type"> Node type (one of the NODE_* variables); set it to -1 if you won't use this filter. </param>
 			<param name="nodes"> Array of intersected nodes. </param>
-			<param name="max_distance"> Maximum visibility distance limit for nodes, in units. If the distance from the specified camera position to a node exceeds this limit, intersection will not be registered even if the node is within the specified bounding box. </param> 
+			<param name="max_distance"> Maximum visibility distance for nodes, in units. If the distance from the specified camera position to a node exceeds this limit, the intersection is not registered even if the node is within the specified bounding frustum. </param> 
 			<returns>true if at least one intersection is found; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.World.loadWorld(char)">
@@ -329,7 +329,7 @@
 			<summary>
 			Returns the path to the world which is going to be loaded.
 			</summary>  
-			<returns>Path to the world to be loaded.</returns>
+			<returns>The path to the world to be loaded.</returns>
 		</member>
 		<member name="M:Unigine.World.addWorld(char)">
 			<summary>
@@ -493,7 +493,7 @@
 			</summary>  
 			<returns>1 if a logic script associated with the world is to be loaded with it; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.World.getNodeById(int)">
+		<member name="M:Unigine.World.getNodeByID(int)">
 			<summary>
 			Returns a node by its identifier if it exists.
 			</summary> 
@@ -774,6 +774,12 @@
 			Returns a unique class ID.
 			</summary>  
 			<returns>Returns a unique class ID if the world exists; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.WorldExtern.type">
+			<summary>
+			Returns the type of the node.
+			</summary>  
+			<returns>WorldExtern type identifier.</returns>
 		</member>
 		<member name="M:Unigine.WorldIntersection.#ctor">
 			<summary>

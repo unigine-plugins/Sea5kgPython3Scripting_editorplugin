@@ -44,10 +44,10 @@ public:
 	static int type() { return Node::FIELD_ANIMATION; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<FieldAnimation> create(const Math::vec3& size);
+	static Ptr<FieldAnimation> create(const Math::vec3 &size);
 	void setEllipse(bool ellipse);
 	bool isEllipse() const;
-	void setSize(const Math::vec3& size);
+	void setSize(const Math::vec3 &size);
 	Math::vec3 getSize() const;
 	void setAttenuation(float attenuation);
 	float getAttenuation() const;
@@ -57,7 +57,7 @@ public:
 	float getLeaf() const;
 	void setAnimationScale(float scale);
 	float getAnimationScale() const;
-	void setWind(const Math::vec3& wind);
+	void setWind(const Math::vec3 &wind);
 	Math::vec3 getWind() const;
 };
 typedef Ptr<FieldAnimation> FieldAnimationPtr;
@@ -71,7 +71,7 @@ public:
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<FieldHeight> create();
-	void setSize(const Math::vec3& size);
+	void setSize(const Math::vec3 &size);
 	Math::vec3 getSize() const;
 	void setAttenuation(float attenuation);
 	float getAttenuation() const;
@@ -105,7 +105,7 @@ public:
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<FieldWeather> create();
-	void setSize(const Math::vec3& size);
+	void setSize(const Math::vec3 &size);
 	Math::vec3 getSize() const;
 	void setAttenuationType(int type);
 	int getAttenuationType() const;
@@ -121,11 +121,11 @@ public:
 	int getTextureImage(const Ptr<Image> &image) const;
 	void setTexture(const Ptr<Texture> &texture);
 	Ptr<Texture> getTexture() const;
-	void setWindAnimation(const Math::vec3& animation);
+	void setWindAnimation(const Math::vec3 &animation);
 	Math::vec3 getWindAnimation() const;
 	void setWindEnabled(int enabled);
 	int getWindEnabled() const;
-	void setCloudsAnimationOffset(const Math::vec3& offset);
+	void setCloudsAnimationOffset(const Math::vec3 &offset);
 	Math::vec3 getCloudsAnimationOffset() const;
 };
 typedef Ptr<FieldWeather> FieldWeatherPtr;
@@ -139,7 +139,7 @@ public:
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<FieldShoreline> create();
-	void setSize(const Math::vec3& size);
+	void setSize(const Math::vec3 &size);
 	Math::vec3 getSize() const;
 	void setTexturePath(const char *path);
 	const char *getTexturePath() const;
@@ -149,7 +149,7 @@ public:
 	Ptr<Texture> getTexture() const;
 	int bakeWaterLevel(const Ptr<Image> &image);
 	int createShorelineDistanceField(const Ptr<Image> &image, int shoreline_radius, int blur_radius, int downsample_resolution);
-	void *addProgressCallback(Unigine::CallbackBase1< float > *func);
+	void *addProgressCallback(CallbackBase1<float> *func);
 	bool removeProgressCallback(void *id);
 	void clearProgressCallbacks();
 };
@@ -163,10 +163,10 @@ public:
 	static int type() { return Node::FIELD_SPACER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<FieldSpacer> create(const Math::vec3& size);
+	static Ptr<FieldSpacer> create(const Math::vec3 &size);
 	void setEllipse(bool ellipse);
 	bool isEllipse() const;
-	void setSize(const Math::vec3& size);
+	void setSize(const Math::vec3 &size);
 	Math::vec3 getSize() const;
 	void setAttenuation(float attenuation);
 	float getAttenuation() const;

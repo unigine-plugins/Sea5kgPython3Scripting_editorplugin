@@ -19,6 +19,11 @@
 			</summary> 
 			<param name="str"> Source string. </param> 
 		</member>
+		<member name="M:Unigine.UGUID.#ctor(unsignedchar)">
+			<summary>
+			</summary> 
+			<param name="value_"> Source character. </param> 
+		</member>
 		<member name="M:Unigine.UGUID.UGUID(Unigine.UGUID)">
 			<summary>
 			Copy constructor. Creates a UGUID by copying a source UGUID.
@@ -36,7 +41,26 @@
 			</summary> 
 			<param name="str"> Source string. </param> 
 		</member>
+		<member name="M:Unigine.UGUID.generate(int)">
+			<summary>
+			Generates a random UGUID value using the seed value.
+			</summary> 
+			<param name="seed_"> Seed value. </param> 
+		</member>
+		<member name="M:Unigine.UGUID.generate(void,int)">
+			<summary>
+			Generates a UGUID value from the given source byte array of the specified size using the SHA1 algorithm.
+			</summary> 
+			<param name="data"> Source byte array. </param>
+			<param name="size"> Number of bytes to be taken from the byte array for UGUID generation. </param> 
+		</member>
 		<member name="M:Unigine.UGUID.hash">
+			<summary>
+			Returns a hash for the UGUID value.
+			</summary>  
+			<returns>Hash generated for the UGUID value.</returns>
+		</member>
+		<member name="M:Unigine.UGUID.hashLong const">
 			<summary>
 			Returns a hash for the UGUID value.
 			</summary>  
@@ -47,17 +71,17 @@
 			Clears the UGUID value. All 40 bytes are set to 0.
 			</summary>  
 		</member>
-		<member name="M:Unigine.UGUID.isEmpty">
+		<member name="M:Unigine.UGUID.isEmpty const">
 			<summary>
 			Returns a value indicating if the UGUID is empty (all 40 bytes are equal to 0).
 			</summary>  
 			<returns>true if the UGUID is empty; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.UGUID.isValid">
+		<member name="M:Unigine.UGUID.isValid const">
 			<summary>
 			Returns a value indicating if the UGUID has a valid value.
 			</summary>  
-			<returns>1 if the value is valid; otherwise, 0.</returns>
+			<returns>true if the value is valid; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.UGUID.setFileSystemString(char)">
 			<summary>
@@ -159,6 +183,10 @@
 			<param name="index"> Array item index </param> 
 			<returns>Array item</returns>
 		</member>
+		<member name="M:Unigine.UGUID.getValue const">
+			<summary>
+			</summary>  
+		</member>
 		<member name="M:Unigine.UGUID.operator[](int)">
 			<summary>
 			Array access.
@@ -200,6 +228,11 @@
 		<member name="F:Unigine.UGUID.PREFIX">
 			<summary>
 			GUID prefix ("guid://").
+		</summary>
+		</member>
+		<member name="F:Unigine.UGUID.VALUE_SIZE">
+			<summary>
+			GUID value size in bytes (24).
 		</summary>
 		</member>
 	</members>

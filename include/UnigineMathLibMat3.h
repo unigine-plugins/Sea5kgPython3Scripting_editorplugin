@@ -22,6 +22,11 @@
 
 #include "UnigineMathLibMat2.h"
 
+#ifdef __GNUC__
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wreorder"
+#endif
+
 namespace Unigine
 {
 namespace Math
@@ -1112,3 +1117,7 @@ UNIGINE_INLINE vec3 decomposeRotationZYX(const mat3 &t)
 
 }
 }
+
+#ifdef __GNUC__
+	#pragma GCC diagnostic pop
+#endif

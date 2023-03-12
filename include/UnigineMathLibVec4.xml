@@ -483,6 +483,10 @@
 			<param name="str"> Color string in the Web format. </param> 
 			<returns>Color value as a vec4 vector (R, G, B, A).</returns>
 		</member>
+		<member name="M:Unigine.Math.vec4.hash const">
+			<summary>
+			</summary>  
+		</member>
 		<member name="F:Unigine.Math.vec4.vec4_blue">
 			<summary>
 			Blue color vector (0, 0, 1 1).

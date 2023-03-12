@@ -14,7 +14,7 @@
 #pragma once
 
 
-#include <editor/EditorGlobal.h>
+#include <editor/UnigineEditorGlobal.h>
 
 #include <UnigineVector.h>
 
@@ -24,13 +24,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Forward decl.
 ////////////////////////////////////////////////////////////////////////////////
-namespace Editor { class Presenter; }
 class QWidget;
 class QMenu;
 class QToolBar;
+namespace UnigineEditor { class Presenter; }
 
 
-namespace Editor
+namespace UnigineEditor
 {
 ////////////////////////////////////////////////////////////////////////////////
 // WindowManager.
@@ -38,7 +38,7 @@ namespace Editor
 /// <summary>
 /// Window manager class. This class is used to manage tool windows in the Editor.
 /// </summary>
-class EDITOR_API WindowManager final : public QObject
+class UNIGINE_EDITOR_API WindowManager final : public QObject
 {
 	Q_OBJECT
 
@@ -254,8 +254,7 @@ private:
 	explicit WindowManager(QObject *parent = nullptr);
 	~WindowManager() override;
 
-	friend class Editor::Presenter;
+	friend class ::UnigineEditor::Presenter;
 };
 
-
-} // namespace Editor
+} // namespace UnigineEditor

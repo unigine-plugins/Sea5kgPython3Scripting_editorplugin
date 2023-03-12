@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include <editor/EditorGlobal.h>
+#include <editor/UnigineEditorGlobal.h>
 
 #include <UniginePlayers.h>
 #include <UnigineGui.h>
@@ -23,7 +23,7 @@
 #include <UnigineObjects.h>
 
 
-namespace Editor
+namespace UnigineEditor
 {
 
 struct ViewportWindow;
@@ -34,7 +34,7 @@ using ViewportWindowId = ViewportWindow *;
 /// <summary>
 /// Viewport manager class. This class is used to create, manage, and remove all viewports in the Editor.
 /// </summary>
-class EDITOR_API ViewportManager final
+class UNIGINE_EDITOR_API ViewportManager final
 {
 public:
 	/// <summary> Creates a new viewport window with the specified name.</summary>
@@ -153,4 +153,4 @@ public:
 	static void placeNodeList(const Unigine::Vector<Unigine::NodePtr> &nodes);
 };
 
-} // namespace Editor
+} // namespace UnigineEditor

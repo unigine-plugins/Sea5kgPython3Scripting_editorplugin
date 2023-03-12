@@ -45,11 +45,12 @@
 			</summary> 
 			<param name="class_id"> Unique class ID. </param> 
 		</member>
-		<member name="M:Unigine.NodeExternBase.copy">
+		<member name="M:Unigine.NodeExternBase.copy(NodeExternBase,int)">
 			<summary>
 			Copies the current custom node into the given one.
-			</summary>  
-			<returns>Pointer to the custom node.</returns>
+			</summary> 
+			<param name="node"> Pointer to a target node. </param>
+			<param name="is_root"> Unique class ID. </param> 
 		</member>
 		<member name="M:Unigine.NodeExternBase.getBoundBox">
 			<summary>
@@ -80,18 +81,6 @@
 			Returns the NodeExtern instance that is created on loading the custom node.
 			</summary>  
 			<returns>NodeExtern smart pointer.</returns>
-		</member>
-		<member name="M:Unigine.NodeExternBase.getWorldBoundBox">
-			<summary>
-			Returns the world bounding box of the custom node.
-			</summary>  
-			<returns>World bounding box.</returns>
-		</member>
-		<member name="M:Unigine.NodeExternBase.getWorldBoundSphere">
-			<summary>
-			Returns the world bounding sphere of the custom node.
-			</summary>  
-			<returns>World bounding sphere.</returns>
 		</member>
 		<member name="M:Unigine.NodeExternBase.loadWorld(Unigine.Ptr{Unigine.Xml})">
 			<summary>
@@ -135,7 +124,7 @@
 			<summary>
 			Swaps two custom nodes.
 			</summary> 
-			<param name="n"> Pointer to the custom node to swap. </param> 
+			<param name="node"> Pointer to the custom node to swap. </param> 
 		</member>
 		<member name="M:Unigine.NodeExternBase.updateEnabled">
 			<summary>

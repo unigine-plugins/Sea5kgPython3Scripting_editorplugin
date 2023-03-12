@@ -290,7 +290,7 @@
 			</summary>  
 			<returns>Finger type. One of the Finger::TYPE_* values.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.LeapMotion.Finger.getId">
+		<member name="M:Unigine.Plugins.LeapMotion.Finger.getID">
 			<summary>
 			Returns the ID of the finger.					Finger IDs are assigned based on the hand ID. If a hand has an ID of "5", then its fingers are assigned IDs 50 to 55, ordered from thumb to pinky.
 			</summary>  
@@ -374,7 +374,7 @@
 			Total number of finger types.
 		</summary>
 		</member>
-		<member name="M:Unigine.Plugins.LeapMotion.Hand.getId">
+		<member name="M:Unigine.Plugins.LeapMotion.Hand.getID">
 			<summary>
 			Returns the id of the hand.
 			</summary>  

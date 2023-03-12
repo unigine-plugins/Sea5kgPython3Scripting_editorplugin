@@ -18,6 +18,7 @@
 #include "UniginePtr.h"
 #include "UnigineMathLib.h"
 #include "UnigineCallback.h"
+#include "UnigineInput.h"
 
 namespace Unigine
 {
@@ -43,6 +44,7 @@ public:
 		PRESSED,
 		RELEASED,
 		KEY_PRESSED,
+		TEXT_PRESSED,
 		ENTER,
 		LEAVE,
 		DRAG_MOVE,
@@ -125,22 +127,49 @@ public:
 		CURSOR_SCALE,
 		NUM_CURSORS,
 	};
-	static Ptr<Gui> get();
+
+	enum
+	{
+		MOUSE_MASK_LEFT = 1 << 0,
+		MOUSE_MASK_MIDDLE = 1 << 1,
+		MOUSE_MASK_RIGHT = 1 << 2,
+		MOUSE_MASK_DCLICK = 1 << 3,
+		MOUSE_BUTTON_MASK = MOUSE_MASK_LEFT | MOUSE_MASK_MIDDLE | MOUSE_MASK_RIGHT,
+	};
+	static Ptr<Gui> getCurrent();
 	static Ptr<Gui> create(const char *name = nullptr);
-	void enable(int width, int height);
+	void enable();
 	void disable();
 	void destroy();
-	void update(float ifps);
-	void render(int mouse_x, int mouse_y, int mouse_button, int mouse_show);
+	void update();
+	void render(int custom_mouse_buttons);
+	void render();
+	void focusGained();
+	void focusLost();
+	bool isHover(int global_pos_x, int global_pos_y) const;
+	Ptr<Widget> getWidgetIntersection(int global_pos_x, int global_pos_y);
+	Ptr<Widget> getUnderCursorWidget();
+	static Ptr<Gui> getFocusGui();
+	static Ptr<Gui> getGuiIntersection(int global_pos_x, int global_pos_y);
+	static Ptr<Gui> getUnderCursorGui();
+	static void getWorldGuiInstances(Vector<Ptr<Gui>> &ret_instances);
 	void setEnabled(bool enabled);
 	bool isEnabled() const;
 	void setHidden(bool hidden);
 	bool isHidden() const;
+	void setSize(const Math::ivec2 &size);
+	Math::ivec2 getSize() const;
+	void setPosition(const Math::ivec2 &position);
+	Math::ivec2 getPosition() const;
 	int getWidth() const;
 	int getHeight() const;
-	void setColor(const Math::vec4& color);
+	void setWinHandle(unsigned long long handle);
+	unsigned long long getWinHandle() const;
+	void setWorldObject(bool val);
+	bool isWorldObject() const;
+	void setColor(const Math::vec4 &color);
 	Math::vec4 getColor() const;
-	void setTransform(const Math::mat4& transform);
+	void setTransform(const Math::mat4 &transform);
 	Math::mat4 getTransform() const;
 	void setExposeSpeed(float speed);
 	float getExposeSpeed() const;
@@ -150,7 +179,7 @@ public:
 	float getFadeOutSpeed() const;
 	void setDefaultSize(int size);
 	int getDefaultSize() const;
-	void setDefaultColor(const Math::vec4& color);
+	void setDefaultColor(const Math::vec4 &color);
 	Math::vec4 getDefaultColor() const;
 	void setDefaultAlpha(float alpha);
 	float getDefaultAlpha() const;
@@ -158,19 +187,19 @@ public:
 	bool isFocusedEnabled() const;
 	void setFocusedPermanent(bool permanent);
 	bool isFocusedPermanent() const;
-	void setFocusedColor(const Math::vec4& color);
+	void setFocusedColor(const Math::vec4 &color);
 	Math::vec4 getFocusedColor() const;
 	void setFocusedAlpha(float alpha);
 	float getFocusedAlpha() const;
 	void setDisabledEnabled(bool enabled);
 	bool isDisabledEnabled() const;
-	void setDisabledColor(const Math::vec4& color);
+	void setDisabledColor(const Math::vec4 &color);
 	Math::vec4 getDisabledColor() const;
 	void setDisabledAlpha(float alpha);
 	float getDisabledAlpha() const;
 	void setTransparentEnabled(bool enabled);
 	bool isTransparentEnabled() const;
-	void setTransparentColor(const Math::vec4& color);
+	void setTransparentColor(const Math::vec4 &color);
 	Math::vec4 getTransparentColor() const;
 	void setTransparentAlpha(float alpha);
 	float getTransparentAlpha() const;
@@ -180,7 +209,7 @@ public:
 	int getToolTipSize() const;
 	void setToolTipWidth(int width);
 	int getToolTipWidth() const;
-	void setToolTipColor(const Math::vec4& color);
+	void setToolTipColor(const Math::vec4 &color);
 	Math::vec4 getToolTipColor() const;
 	void setToolTipAlpha(float alpha);
 	float getToolTipAlpha() const;
@@ -201,14 +230,25 @@ public:
 	Ptr<WidgetSprite> getMouseSprite() const;
 	void setMouseCursor(int cursor);
 	int getMouseCursor() const;
-	void setMouseButton(int button);
-	int getMouseButton() const;
+	void setMouseButtons(int buttons);
+	int getMouseButtons() const;
 	void setMouseGrab(int grab);
 	int getMouseGrab() const;
+	void setMouseShow(bool show);
+	bool isMouseShow() const;
 	int getMouseX() const;
 	int getMouseY() const;
 	int getMouseDX() const;
 	int getMouseDY() const;
+	int getMouseWheel() const;
+	int getAndClearMouseWheel();
+	void forceSetMouseWheel(int value);
+	int getMouseWheelHorizontal() const;
+	int getAndClearMouseWheelHorizontal();
+	void forceSetMouseWheelHorizontal(int value);
+	bool isUnderCursor() const;
+	bool getKey(Input::KEY key);
+	bool getAndClearKey(Input::KEY key);
 	Ptr<Widget> getFocus() const;
 	Ptr<Widget> getOverlappedFocus() const;
 	Ptr<Widget> getPermanentFocus() const;
@@ -235,7 +275,7 @@ public:
 	static bool isRenderingBootScreen();
 	static bool isRenderingSplashScreen();
 	static bool isRenderingLoadingScreen();
-	void *addUpdateCallback(Unigine::CallbackBase *func);
+	void *addUpdateCallback(CallbackBase *func);
 	bool removeUpdateCallback(void *id);
 	void clearUpdateCallbacks();
 };

@@ -16,12 +16,6 @@
 			</summary>  
 			<returns>1 if the editor shutdown is performed successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.EditorLogic.destroyRenderResources">
-			<summary>
-			Engine calls this function when the video mode is changed or the application is restarted (i.e. video_restart is called). It is used to reinitialize the graphics context. Similar to the editor script's destroyRenderResources() function.
-			</summary>  
-			<returns>1 if the editor is destroyed successfully; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.EditorLogic.update">
 			<summary>
 			Engine calls this function before updating each render frame when editor is loaded. Similar to the editor script's update() function.
@@ -34,10 +28,11 @@
 			</summary>  
 			<returns>1 if there were no errors during the editor post update; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.EditorLogic.render">
+		<member name="M:Unigine.EditorLogic.render(EngineWindowPtr)">
 			<summary>
-			Engine calls this function before rendering each render frame when editor is loaded. Similar to the editor script's render() function.
-			</summary>  
+			Engine calls this function before rendering each render frame for the specified Engine window, when editor is loaded. Similar to the editor script's render() function.
+			</summary> 
+			<param name="window"> Target Engine window. </param> 
 			<returns>1 if there were no errors during the editor rendering; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.EditorLogic.worldInit">
@@ -97,12 +92,6 @@
 		<member name="M:Unigine.EditorLogic.materialRemoved(Unigine.UGUID)">
 			<summary>
 			Callback called on removing a material.
-			</summary> 
-			<param name="guid"> Material GUID. </param> 
-		</member>
-		<member name="M:Unigine.EditorLogic.materialMoved(Unigine.UGUID)">
-			<summary>
-			Callback called on moving a material.
 			</summary> 
 			<param name="guid"> Material GUID. </param> 
 		</member>
@@ -185,12 +174,6 @@
 		<member name="M:Unigine.SystemLogic.shutdown">
 			<summary>
 			Engine calls this function on engine shutdown. Similar to the system script's shutdown() function.
-			</summary>  
-			<returns>Returns 1 if there were no errors; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.SystemLogic.destroyRenderResources">
-			<summary>
-			Engine calls this function when the video mode is changed or the application is restarted (i.e. video_restart is called). It is used to reinitialize the graphics context. Similar to the system script's destroyRenderResources() function.
 			</summary>  
 			<returns>Returns 1 if there were no errors; otherwise, 0.</returns>
 		</member>

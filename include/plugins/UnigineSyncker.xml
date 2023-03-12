@@ -136,9 +136,9 @@
 		</member>
 		<member name="M:Unigine.Plugins.Syncker.Manager.getSyncker">
 			<summary>
-			Returns the syncker interface.
+			Returns the base class interface for Master and Slave.
 			</summary>  
-			<returns>Pointer to the syncker interface.</returns>
+			<returns>Pointer to the syncker interface. It is the base class for Master and Slave.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.Syncker.Manager.setDebugWindow(bool)">
 			<summary>
@@ -216,12 +216,6 @@
 		<member name="M:Unigine.Plugins.Syncker.Manager.initSyncker">
 			<summary>
 			Initializes the Syncker as Master or Slave application depending on the values specified via the command-line arguments.
-			</summary>  
-			<returns>Pointer to the syncker interface. It is the base class for Master and Slave.</returns>
-		</member>
-		<member name="M:Unigine.Plugins.Syncker.Manager.getSyncker">
-			<summary>
-			Returns the base class interface for Master and Slave.
 			</summary>  
 			<returns>Pointer to the syncker interface. It is the base class for Master and Slave.</returns>
 		</member>
@@ -342,7 +336,7 @@
 			<summary>
 			Sends a user message contained in the specified buffer using the given delivery method to the specified named channel via the UDP protocol.
 			</summary> 
-			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and a users App application). For convenience, all messages are sent and received via named channels. </param>
+			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and user's application). For convenience, all messages are sent and received via named channels. </param>
 			<param name="message"> Buffer, containing the user message. </param>
 			<param name="delivery_method">  </param> 
 			<returns>true if the message was sent successfully; otherwise, false.</returns>
@@ -351,7 +345,7 @@
 			<summary>
 			Sets a callback function to be fired when a UDP user message is sent. A callback is executed in the Main Thread, but it is undefined when exactly - either in update(), or postUpdate(), or swap().
 			</summary> 
-			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and a users App application). For convenience, all messages are sent and received via named channels. If the specified channel does not exist, it shall be created. </param>
+			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and user's application). For convenience, all messages are sent and received via named channels. If the specified channel does not exist, it shall be created. </param>
 			<param name="func"> Callback pointer. </param> 
 		</member>
 		<member name="M:Unigine.Plugins.Syncker.Syncker.getSwapSyncMode const">
@@ -731,6 +725,14 @@
 			<param name="init_transform"> Initial transformation of the node. </param> 
 			<returns>Loaded node or nullptr if an error has occurred.</returns>
 		</member>
+		<member name="M:Unigine.Plugins.Syncker.Master.loadNode(char,unsignedchar)">
+			<summary>
+			Loads a node from the specified file to the world on the Master and all Slaves and places it at the origin with the default transformation. This is a network analogue of the loadNode() method of the World class. By default, the loaded node is not synchronized, which is suitable for static objects at run time and at the same time saves performance. For dynamic objects to be synchronized, the suitable synchronization mask should be set.
+			</summary> 
+			<param name="name"> Path to the *.node file. </param>
+			<param name="sync_mask"> Synchronization mask, one of the SYNC_MASK values. </param> 
+			<returns>Loaded node or nullptr if an error has occurred.</returns>
+		</member>
 		<member name="M:Unigine.Plugins.Syncker.Master.loadNodeReference(char,unsignedchar,Unigine.Math.Mat4)">
 			<summary>
 			Loads a node reference from the specified file to the world on the Master and all Slaves and places it to the specified ititial transformation. This is a network analogue of the NodeReference class constructor. By default, the loaded node is not synchronized, which is suitable for static objects at run time and at the same time saves performance. For dynamic objects to be synchronized, the suitable synchronization mask should be set.
@@ -738,6 +740,15 @@
 			<param name="name"> Path to the *.node file. </param>
 			<param name="sync_mask"> Synchronization mask, one of the SYNC_MASK values. </param>
 			<param name="init_transform"> Initial transformation of the node. </param> 
+			<returns>Node Reference instance if it was loaded successfully; otherwise nullptr.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Syncker.Master.loadNodeReference(char,unsignedchar)">
+			<summary>
+			Loads a node reference from the specified file to the world on the Master and all Slaves and places it to the origin with default transformation. This is a network analogue of the NodeReference class constructor. By default, the loaded node is not synchronized, which is suitable for static objects at run time and at the same time saves performance. For dynamic objects to be synchronized, the suitable synchronization mask should be set.
+			</summary> 
+			<param name="name"> Path to the *.node file. </param>
+			<param name="sync_mask"> Synchronization mask, one of the SYNC_MASK values. </param> 
+			<returns>Node Reference instance if it was loaded successfully; otherwise nullptr.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.Syncker.Master.isNodeLoadedBySyncker(Unigine.Ptr{Unigine.Node})">
 			<summary>
@@ -773,7 +784,7 @@
 			<summary>
 			Adds a message to the buffer to be received by additional slaves as soon as they connect.
 			</summary> 
-			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and a users App application). For convenience, all messages are sent and received via named channels. </param>
+			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and user's application). For convenience, all messages are sent and received via named channels. </param>
 			<param name="message"> Buffer containing the user message. </param> 
 			<returns>Message ID.</returns>
 		</member>
@@ -781,14 +792,14 @@
 			<summary>
 			Returns the total number of buffered messages.
 			</summary> 
-			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and a users App application). For convenience, all messages are sent and received via named channels. </param> 
+			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and user's application). For convenience, all messages are sent and received via named channels. </param> 
 			<returns>Total number of buffered messages.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.Syncker.Master.getBufferedMessageID(char,int) const">
 			<summary>
 			Returns the ID of the buffered message by its index.
 			</summary> 
-			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and a users App application). For convenience, all messages are sent and received via named channels. </param>
+			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and user's application). For convenience, all messages are sent and received via named channels. </param>
 			<param name="index"> Message index number. </param> 
 			<returns>Message ID.</returns>
 		</member>
@@ -796,7 +807,7 @@
 			<summary>
 			Returns the buffer containing the message.
 			</summary> 
-			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and a users App application). For convenience, all messages are sent and received via named channels. </param>
+			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and user's application). For convenience, all messages are sent and received via named channels. </param>
 			<param name="id"> Message ID. </param> 
 			<returns>Buffer containing the user message.</returns>
 		</member>
@@ -804,14 +815,14 @@
 			<summary>
 			Removes the specified message from the buffer.
 			</summary> 
-			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and a users App application). For convenience, all messages are sent and received via named channels. </param>
+			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and user's application). For convenience, all messages are sent and received via named channels. </param>
 			<param name="id"> Message ID. </param> 
 		</member>
 		<member name="M:Unigine.Plugins.Syncker.Master.clearBufferedMessages(char)">
 			<summary>
 			Removes all messages from the buffer.
 			</summary> 
-			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and a users App application). For convenience, all messages are sent and received via named channels. </param> 
+			<param name="channel"> Channel name. Multiple systems may use Syncker's network simultaneously (e.g. IG and user's application). For convenience, all messages are sent and received via named channels. </param> 
 		</member>
 		<member name="F:Unigine.Plugins.Syncker.Master.MASTER_SETUP_CHANGED">
 			<summary>
@@ -1297,6 +1308,14 @@
 			</summary> 
 			<param name="num"> Number of the projector in the range from 0 to the total number of projectors. </param> 
 			<returns>Current vertical offset of the viewport of the specified projector, in meters.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Syncker.Projections.setDefaultProjectionsEnabled(bool)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.Syncker.Projections.isDefaultProjectionsEnabled const">
+			<summary>
+			</summary>  
 		</member>
 	</members>
 </doc>

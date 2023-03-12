@@ -14,29 +14,29 @@
 #pragma once
 
 
-#include <editor/EditorGlobal.h>
+#include <editor/UnigineEditorGlobal.h>
 
 #include <UnigineString.h>
 
 #include <QPluginLoader>
 
-
 ////////////////////////////////////////////////////////////////////////////////
 // Forward decl.
 ////////////////////////////////////////////////////////////////////////////////
-namespace Editor
+namespace UnigineEditor
 {
 class Plugin;
 class PluginManager;
 class PluginInfoPrivate;
+class PluginManagerPrivate;
 }
 
 
-namespace Editor
+namespace UnigineEditor
 {
 
 /// <summary> Defines dependency on a plugin.</summary>
-struct EDITOR_API PluginDependency
+struct UNIGINE_EDITOR_API PluginDependency
 {
 	/// <summary> Plugin type. Defines whether the plugin is a required or an optional one.</summary>
 	enum class Type
@@ -57,7 +57,7 @@ struct EDITOR_API PluginDependency
 /// <summary> This class it is responsible for plugin loading/unloading and contains all necessary plugin metadata (name, version, dependencies, etc.).
 /// It can also be used to check the current plugin state and get information on errors (if any).
 /// </summary>
-class EDITOR_API PluginInfo
+class UNIGINE_EDITOR_API PluginInfo
 {
 public:
 	/// <summary> Current plugin state.</summary>
@@ -71,9 +71,9 @@ public:
 		RESOLVED,
 		/// <summary> The plugin's dynamic link library is successfully loaded and processed by the dynamic linker.</summary>
 		LOADED,
-		/// <summary> The plugin is running - i.e., the Editor::Plugin::init() method was executed successfully.</summary>
+		/// <summary> The plugin is running - i.e., the UnigineEditor::Plugin::init() method was executed successfully.</summary>
 		RUNNING,
-		/// <summary> The plugin is stopped - i.e., the Editor::Plugin::shutdown() method was called. </summary>
+		/// <summary> The plugin is stopped - i.e., the UnigineEditor::Plugin::shutdown() method was called. </summary>
 		STOPPED,
 		/// <summary> The plugin's dynamic link library is successfully unloaded from memory.</summary>
 		UNLOADED
@@ -118,15 +118,14 @@ public:
 	Plugin *plugin() const;
 
 private:
-	PluginInfoPrivate *d;
+	::UnigineEditor::PluginInfoPrivate *const d;
 
-	friend class PluginManagerPrivate;
+	friend class ::UnigineEditor::PluginManagerPrivate;
 };
 
+} // namespace UnigineEditor
 
-} // namespace Editor
-
-Q_DECLARE_METATYPE(::Editor::PluginInfo *);
+Q_DECLARE_METATYPE(::UnigineEditor::PluginInfo *);
 
 namespace Unigine
 {
@@ -135,14 +134,13 @@ template<typename Type>
 struct Hasher;
 
 template<>
-struct Hasher<::Editor::PluginDependency>
+struct Hasher<::UnigineEditor::PluginDependency>
 {
 	using HashType = unsigned int;
-	UNIGINE_INLINE static HashType create(const ::Editor::PluginDependency &v)
+	UNIGINE_INLINE static HashType create(const ::UnigineEditor::PluginDependency &v)
 	{
 		return ::Unigine::Hasher<::Unigine::String>::create(v.name);
 	}
 };
 
 } // namespace Unigine
-

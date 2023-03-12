@@ -46,7 +46,7 @@ public:
 	static Ptr<ObjectIntersection> create();
 	ObjectIntersection::TYPE getType() const;
 	const char *getTypeName() const;
-	void setPoint(const Math::Vec3& point);
+	void setPoint(const Math::Vec3 &point);
 	Math::Vec3 getPoint() const;
 	void setIndex(int index);
 	int getIndex() const;
@@ -72,7 +72,7 @@ public:
 		return false;
 	}
 	static Ptr<ObjectIntersectionNormal> create();
-	void setNormal(const Math::vec3& normal);
+	void setNormal(const Math::vec3 &normal);
 	Math::vec3 getNormal() const;
 };
 typedef Ptr<ObjectIntersectionNormal> ObjectIntersectionNormalPtr;
@@ -83,7 +83,7 @@ class UNIGINE_API ObjectIntersectionTexCoord : public ObjectIntersectionNormal
 public:
 	static bool convertible(ObjectIntersection *obj) { return obj && obj->getType() == ObjectIntersection::OBJECT_INTERSECTION_TEX_COORD; }
 	static Ptr<ObjectIntersectionTexCoord> create();
-	void setTexCoord(const Math::vec4& coord);
+	void setTexCoord(const Math::vec4 &coord);
 	Math::vec4 getTexCoord() const;
 };
 typedef Ptr<ObjectIntersectionTexCoord> ObjectIntersectionTexCoordPtr;
@@ -183,8 +183,8 @@ public:
 	void setMaterialPath(const char *path, int surface);
 	void setMaterialPath(const char *path, const char *pattern);
 	const char *getMaterialPath(int surface) const;
-	void setMaterialGUID(const UGUID& guid, int surface);
-	void setMaterialGUID(const UGUID& guid, const char *pattern);
+	void setMaterialGUID(const UGUID &guid, int surface);
+	void setMaterialGUID(const UGUID &guid, const char *pattern);
 	UGUID getMaterialGUID(int surface) const;
 	void setMaterial(const Ptr<Material> &mat, int surface);
 	void setMaterial(const Ptr<Material> &mat, const char *pattern);
@@ -196,27 +196,27 @@ public:
 	int getMaterialState(const char *name, int surface) const;
 	void setMaterialTexture(const char *name, const char *texture, int surface);
 	const char *getMaterialTexture(const char *name, int surface) const;
-	void setMaterialParameterFloat4(const char *name, const Math::vec4& parameter, int surface);
+	void setMaterialParameterFloat4(const char *name, const Math::vec4 &parameter, int surface);
 	Math::vec4 getMaterialParameterFloat4(const char *name, int surface) const;
-	void setMaterialParameterFloat3(const char *name, const Math::vec3& parameter, int surface);
+	void setMaterialParameterFloat3(const char *name, const Math::vec3 &parameter, int surface);
 	Math::vec3 getMaterialParameterFloat3(const char *name, int surface) const;
-	void setMaterialParameterFloat2(const char *name, const Math::vec2& parameter, int surface);
+	void setMaterialParameterFloat2(const char *name, const Math::vec2 &parameter, int surface);
 	Math::vec2 getMaterialParameterFloat2(const char *name, int surface) const;
 	void setMaterialParameterFloat(const char *name, float parameter, int surface);
 	float getMaterialParameterFloat(const char *name, int surface) const;
-	void setMaterialParameterInt4(const char *name, const Math::ivec4& parameter, int surface);
+	void setMaterialParameterInt4(const char *name, const Math::ivec4 &parameter, int surface);
 	Math::ivec4 getMaterialParameterInt4(const char *name, int surface) const;
-	void setMaterialParameterInt3(const char *name, const Math::ivec3& parameter, int surface);
+	void setMaterialParameterInt3(const char *name, const Math::ivec3 &parameter, int surface);
 	Math::ivec3 getMaterialParameterInt3(const char *name, int surface) const;
-	void setMaterialParameterInt2(const char *name, const Math::ivec2& parameter, int surface);
+	void setMaterialParameterInt2(const char *name, const Math::ivec2 &parameter, int surface);
 	Math::ivec2 getMaterialParameterInt2(const char *name, int surface) const;
 	void setMaterialParameterInt(const char *name, int parameter, int surface);
 	int getMaterialParameterInt(const char *name, int surface) const;
 	UGUID getLostMaterialGUID(int surface) const;
 	int setSurfaceProperty(const char *name, int surface);
 	int setSurfaceProperty(const char *name, const char *pattern);
-	int setSurfaceProperty(const UGUID& guid, int surface);
-	int setSurfaceProperty(const UGUID& guid, const char *pattern);
+	int setSurfaceProperty(const UGUID &guid, int surface);
+	int setSurfaceProperty(const UGUID &guid, const char *pattern);
 	int setSurfaceProperty(const Ptr<Property> &property, int surface);
 	int setSurfaceProperty(const Ptr<Property> &property, const char *pattern);
 	void clearSurfaceProperty(int surface);
@@ -228,14 +228,14 @@ public:
 	UGUID getLostSurfacePropertyGUID(int surface) const;
 	Math::BoundBox getBoundBox(int surface) const;
 	Math::BoundSphere getBoundSphere(int surface) const;
-	bool getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, Math::Vec3 * ret_point, Math::vec3 * ret_normal, Math::vec4 * ret_texcoord, int * ret_index, int * ret_instance, int surface) const;
-	bool getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, Math::Vec3 * ret_point, Math::vec3 * ret_normal, Math::vec4 * ret_texcoord, int * ret_index, int * ret_instance, int * ret_surface) const;
-	bool getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Ptr<ObjectIntersection> &v, int * ret_surface) const;
-	bool getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Ptr<ObjectIntersectionNormal> &v, int * ret_surface) const;
-	bool getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, int mask, const Ptr<ObjectIntersectionTexCoord> &v, int * ret_surface) const;
-	bool getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, const Ptr<ObjectIntersection> &v, int surface) const;
-	bool getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, const Ptr<ObjectIntersectionNormal> &v, int surface) const;
-	bool getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, const Ptr<ObjectIntersectionTexCoord> &v, int surface) const;
+	bool getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, Math::Vec3 *ret_point, Math::vec3 *ret_normal, Math::vec4 *ret_texcoord, int *ret_index, int *ret_instance, int surface) const;
+	bool getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, Math::Vec3 *ret_point, Math::vec3 *ret_normal, Math::vec4 *ret_texcoord, int *ret_index, int *ret_instance, int *ret_surface) const;
+	bool getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<ObjectIntersection> &v, int *ret_surface) const;
+	bool getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<ObjectIntersectionNormal> &v, int *ret_surface) const;
+	bool getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<ObjectIntersectionTexCoord> &v, int *ret_surface) const;
+	bool getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, const Ptr<ObjectIntersection> &v, int surface) const;
+	bool getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, const Ptr<ObjectIntersectionNormal> &v, int surface) const;
+	bool getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, const Ptr<ObjectIntersectionTexCoord> &v, int surface) const;
 	int getNumTriangles(int surface) const;
 	Math::WorldBoundBox getWorldBoundBox(int surface) const;
 	Math::WorldBoundSphere getWorldBoundSphere(int surface) const;
@@ -289,7 +289,6 @@ public:
 	{
 		TYPE_HALF = 0,
 		TYPE_FLOAT,
-		TYPE_DOUBLE,
 		TYPE_UCHAR,
 		TYPE_USHORT,
 	};
@@ -328,10 +327,10 @@ public:
 	void removeVertex(int num, int size, int indices);
 	void setNumVertex(int vertex);
 	int getNumVertex() const;
-	void addVertex(const void * vertex);
-	void setVertex(int num, const void * vertex);
-	void addVertexArray(const void * vertex, int num_vertex);
-	void setVertexArray(const void * vertex, int num_vertex);
+	void addVertex(const void *vertex);
+	void setVertex(int num, const void *vertex);
+	void addVertexArray(const void *vertex, int num_vertex);
+	void setVertexArray(const void *vertex, int num_vertex);
 	const void *getVertexArray() const;
 	const void *getVertex(int num) const;
 	void addVertexHalf(int attribute, const float *value, int value_size);
@@ -340,9 +339,6 @@ public:
 	void addVertexFloat(int attribute, const float *value, int value_size);
 	void setVertexFloat(int attribute, const float *value, int value_size);
 	void setVertexFloat(int vertex, int attribute, const float *value, int value_size);
-	void addVertexDouble(int attribute, const double *value, int value_size);
-	void setVertexDouble(int attribute, const double *value, int value_size);
-	void setVertexDouble(int vertex, int attribute, const double *value, int value_size);
 	void addVertexUChar(int attribute, const unsigned char *value, int value_size);
 	void setVertexUChar(int attribute, const unsigned char *value, int value_size);
 	void setVertexUChar(int vertex, int attribute, const unsigned char *value, int value_size);
@@ -366,8 +362,8 @@ public:
 	void addTriangleQuads(int num_quads);
 	void addLineStrip(int num_vertex);
 	void addPoints(int num_points);
-	void setBoundBox(const Math::BoundBox& bb, int surface);
-	void setBoundBox(const Math::BoundBox& bb);
+	void setBoundBox(const Math::BoundBox &bb, int surface);
+	void setBoundBox(const Math::BoundBox &bb);
 	void flushVertex();
 	void flushIndices();
 };
@@ -398,6 +394,12 @@ public:
 		LIGHTMAP_QUALITY_HIGH,
 		LIGHTMAP_QUALITY_ULTRA,
 	};
+
+	enum SURFACE_CUSTOM_TEXTURE_MODE
+	{
+		SURFACE_CUSTOM_TEXTURE_MODE_UNIQUE = 0,
+		SURFACE_CUSTOM_TEXTURE_MODE_SURFACE,
+	};
 	static Ptr<ObjectMeshStatic> create(const Ptr<Mesh> &mesh);
 	static Ptr<ObjectMeshStatic> create(const char *path, bool unique = false);
 	bool createMesh(const char *path, bool unique = false);
@@ -419,12 +421,22 @@ public:
 	ObjectMeshStatic::LIGHTMAP_QUALITY getLightmapQuality(int surface) const;
 	void setLightmapMode(ObjectMeshStatic::LIGHTMAP_MODE mode, int surface);
 	ObjectMeshStatic::LIGHTMAP_MODE getLightmapMode(int surface) const;
-	void setLightmapTextureSurface(int texture_surface, int surface);
-	int getLightmapTextureSurface(int surface) const;
+	void setLightmapSourceSurface(int source_surface, int surface);
+	int getLightmapSourceSurface(int surface) const;
 	void setLightmapTexturePath(const char *path, int surface);
 	const char *getLightmapTexturePath(int surface) const;
+	void setSurfaceCustomTextureEnabled(bool enabled, int surface);
+	bool isSurfaceCustomTextureEnabled(int surface) const;
+	void setSurfaceCustomTextureMode(ObjectMeshStatic::SURFACE_CUSTOM_TEXTURE_MODE mode, int surface);
+	ObjectMeshStatic::SURFACE_CUSTOM_TEXTURE_MODE getSurfaceCustomTextureMode(int surface) const;
+	void setSurfaceCustomTextureSourceSurface(int source_surface, int surface);
+	int getSurfaceCustomTextureSourceSurface(int surface) const;
+	void setSurfaceCustomTexturePath(const char *path, int surface);
+	const char *getSurfaceCustomTexturePath(int surface) const;
+	void setSurfaceCustomTexture(const Ptr<Texture> &texture, int surface);
+	Ptr<Texture> getSurfaceCustomTexture(int surface) const;
 	void updateSurfaceBounds(int surface = -1);
-	void setSurfaceTransform(const Math::mat4& transform, int surface, int target = -1);
+	void setSurfaceTransform(const Math::mat4 &transform, int surface, int target = -1);
 	int addMeshSurface(const char *name, const Ptr<Mesh> &mesh, int surface, int target = -1);
 	int addMeshSurface(const char *name, const Ptr<ObjectMeshStatic> &mesh, int surface, int target = -1);
 	int addMeshSurface(int dest_surface, const Ptr<ObjectMeshStatic> &mesh, int surface, int target = -1);
@@ -432,22 +444,22 @@ public:
 	int addEmptySurface(const char *name, int num_vertex, int num_indices);
 	int addSurfaceTarget(int surface, const char *name = 0);
 	int getNumVertex(int surface) const;
-	void setVertex(int num, const Math::vec3& vertex, int surface, int target = 0);
+	void setVertex(int num, const Math::vec3 &vertex, int surface, int target = 0);
 	Math::vec3 getVertex(int num, int surface, int target = 0) const;
 	int getNumTangents(int surface) const;
-	void setTangent(int num, const Math::quat& tangent, int surface, int target = 0);
+	void setTangent(int num, const Math::quat &tangent, int surface, int target = 0);
 	Math::quat getTangent(int num, int surface, int target = 0) const;
 	Math::vec3 getNormal(int num, int surface, int target = 0) const;
 	void setNumTexCoords0(int num, int surface);
 	int getNumTexCoords0(int surface) const;
-	void setTexCoord0(int num, const Math::vec2& texcoord, int surface);
+	void setTexCoord0(int num, const Math::vec2 &texcoord, int surface);
 	Math::vec2 getTexCoord0(int num, int surface) const;
 	void setNumTexCoords1(int num, int surface);
 	int getNumTexCoords1(int surface) const;
-	void setTexCoord1(int num, const Math::vec2& texcoord, int surface);
+	void setTexCoord1(int num, const Math::vec2 &texcoord, int surface);
 	Math::vec2 getTexCoord1(int num, int surface) const;
 	int getNumColors(int surface) const;
-	void setColor(int num, const Math::vec4& color, int surface);
+	void setColor(int num, const Math::vec4 &color, int surface);
 	Math::vec4 getColor(int num, int surface) const;
 	int getNumCIndices(int surface) const;
 	void setCIndex(int num, int index, int surface);
@@ -526,7 +538,7 @@ public:
 	bool isPlaying() const;
 	bool isStopped() const;
 	void updateSurfaceBounds(int surface = -1);
-	void setSurfaceTransform(const Math::mat4& transform, int surface, int target = -1);
+	void setSurfaceTransform(const Math::mat4 &transform, int surface, int target = -1);
 	int addMeshSurface(const char *name, const Ptr<Mesh> &mesh, int surface, int target = -1);
 	int addMeshSurface(const char *name, const Ptr<ObjectMeshSkinned> &mesh, int surface, int target = -1);
 	int addMeshSurface(int dest_surface, const Ptr<ObjectMeshSkinned> &mesh, int surface, int target = -1);
@@ -536,25 +548,25 @@ public:
 	int addSurfaceTarget(int dest_surface, const Ptr<ObjectMeshSkinned> &src_mesh, int src_surface, int src_target = -1);
 	void mergeMeshSurface(int dest_surface, const Ptr<ObjectMeshSkinned> &src_mesh, int src_surface);
 	int getNumVertex(int surface) const;
-	void setVertex(int num, const Math::vec3& vertex, int surface, int target = 0);
+	void setVertex(int num, const Math::vec3 &vertex, int surface, int target = 0);
 	Math::vec3 getVertex(int num, int surface, int target = 0) const;
 	Math::vec3 getSkinnedVertex(int num, int surface) const;
 	int getNumTangents(int surface) const;
-	void setTangent(int num, const Math::quat& tangent, int surface, int target = 0);
+	void setTangent(int num, const Math::quat &tangent, int surface, int target = 0);
 	Math::quat getTangent(int num, int surface, int target = 0) const;
 	Math::vec3 getNormal(int num, int surface, int target = 0) const;
 	Math::quat getSkinnedTangent(int num, int index, int surface) const;
 	Math::vec3 getSkinnedNormal(int num, int index, int surface) const;
 	void setNumTexCoords0(int num, int surface);
 	int getNumTexCoords0(int surface) const;
-	void setTexCoord0(int num, const Math::vec2& texcoord, int surface);
+	void setTexCoord0(int num, const Math::vec2 &texcoord, int surface);
 	Math::vec2 getTexCoord0(int num, int surface) const;
 	void setNumTexCoords1(int num, int surface);
 	int getNumTexCoords1(int surface) const;
-	void setTexCoord1(int num, const Math::vec2& texcoord, int surface);
+	void setTexCoord1(int num, const Math::vec2 &texcoord, int surface);
 	Math::vec2 getTexCoord1(int num, int surface) const;
 	int getNumColors(int surface) const;
-	void setColor(int num, const Math::vec4& color, int surface);
+	void setColor(int num, const Math::vec4 &color, int surface);
 	Math::vec4 getColor(int num, int surface) const;
 	int getNumCIndices(int surface) const;
 	void setCIndex(int num, int index, int surface);
@@ -596,16 +608,16 @@ public:
 	int getBoneChild(int bone, int child) const;
 	Math::mat4 getBoneBindTransform(int bone) const;
 	Math::mat4 getBoneBindITransform(int bone) const;
-	void setBoneTransform(int bone, const Math::mat4& transform);
-	void setBoneTransformWithChildren(int bone, const Math::mat4& transform);
-	void setBoneTransforms(const int * bones, const Math::mat4 * transforms, int num_bones);
+	void setBoneTransform(int bone, const Math::mat4 &transform);
+	void setBoneTransformWithChildren(int bone, const Math::mat4 &transform);
+	void setBoneTransforms(const int *bones, const Math::mat4 *transforms, int num_bones);
 	Math::mat4 getBoneTransform(int bone) const;
 	Math::mat4 getBoneITransform(int bone) const;
-	void setBoneWorldTransform(int bone, const Math::Mat4& transform);
-	void setBoneWorldTransformWithChildren(int bone, const Math::Mat4& transform);
+	void setBoneWorldTransform(int bone, const Math::Mat4 &transform);
+	void setBoneWorldTransformWithChildren(int bone, const Math::Mat4 &transform);
 	Math::Mat4 getBoneWorldTransform(int bone) const;
 	void setBoneLayerTransformEnabled(int layer, int bone, bool enabled);
-	void setBoneLayerTransform(int layer, int bone, const Math::mat4& transform);
+	void setBoneLayerTransform(int layer, int bone, const Math::mat4 &transform);
 	Math::mat4 getBoneLayerTransform(int layer, int bone) const;
 	bool isBoneLayerTransform(int layer, int bone) const;
 	Math::mat4 getBoneNotAdditionalBindLocalTransform(int bone) const;
@@ -620,7 +632,7 @@ public:
 	ObjectMeshSkinned::BONE_SPACE getBindBoneSpace(int bone) const;
 	void setBindMode(int bone, ObjectMeshSkinned::BIND_MODE mode);
 	ObjectMeshSkinned::BIND_MODE getBindMode(int bone) const;
-	void setBindNodeOffset(int bone, const Math::Mat4& offset);
+	void setBindNodeOffset(int bone, const Math::Mat4 &offset);
 	Math::Mat4 getBindNodeOffset(int bone) const;
 	void addVisualizeBone(int bone);
 	void removeVisualizeBone(int bone);
@@ -701,21 +713,21 @@ public:
 	void removeVertex(int num, int size, int indices);
 	void setNumVertex(int vertex);
 	int getNumVertex() const;
-	void addVertex(const Math::vec3& xyz);
-	void setVertex(int num, const Math::vec3& xyz);
+	void addVertex(const Math::vec3 &xyz);
+	void setVertex(int num, const Math::vec3 &xyz);
 	void addVertexArray(const ObjectMeshDynamic::Vertex *vertex, int vertex_size);
 	void setVertexArray(const ObjectMeshDynamic::Vertex *vertex, int vertex_size);
 	const ObjectMeshDynamic::Vertex * getVertexArray() const;
 	Math::vec3 getVertex(int num) const;
-	void addTexCoord(const Math::vec4& texcoord);
-	void setTexCoord(int num, const Math::vec4& texcoord);
+	void addTexCoord(const Math::vec4 &texcoord);
+	void setTexCoord(int num, const Math::vec4 &texcoord);
 	Math::vec4 getTexCoord(int num) const;
-	void addTangent(const Math::quat& tangent);
-	void setTangent(int num, const Math::quat& tangent);
+	void addTangent(const Math::quat &tangent);
+	void setTangent(int num, const Math::quat &tangent);
 	Math::quat getTangent(int num) const;
 	Math::vec3 getNormal(int num) const;
-	void addColor(const Math::vec4& color);
-	void setColor(int num, const Math::vec4& color);
+	void addColor(const Math::vec4 &color);
+	void setColor(int num, const Math::vec4 &color);
 	Math::vec4 getColor(int num) const;
 	void clearIndices();
 	void allocateIndices(int num);
@@ -732,8 +744,8 @@ public:
 	void addTriangleFan(int num_vertex);
 	void addTriangleStrip(int num_vertex);
 	void addTriangleQuads(int num_quads);
-	void setBoundBox(const Math::BoundBox& bb, int surface);
-	void setBoundBox(const Math::BoundBox& bb);
+	void setBoundBox(const Math::BoundBox &bb, int surface);
+	void setBoundBox(const Math::BoundBox &bb);
 	bool updateBounds();
 	bool updateIndices();
 	bool updateTangents();
@@ -783,22 +795,22 @@ public:
 	void removeMeshTransformFast(int num);
 	int addMeshTransform();
 	Math::mat4 getMeshTransform(int num) const;
-	void setMeshTransform(int num, const Math::mat4& transform);
-	void createMeshes(const Vector< Math::Mat4 > &world_transforms);
-	void appendMeshes(const Vector< Math::Mat4 > &world_transforms);
+	void setMeshTransform(int num, const Math::mat4 &transform);
+	void createMeshes(const Vector<Math::Mat4> &world_transforms);
+	void appendMeshes(const Vector<Math::Mat4> &world_transforms);
 	void clearMeshes();
-	bool getClusterTransforms(const Math::WorldBoundBox& bounds, Vector< Math::mat4 > &transforms);
-	bool getClusterWorldTransforms(const Math::WorldBoundBox& bounds, Vector< Math::Mat4 > &transforms);
-	bool getClusterWorldTransformsFromSphere(const Math::WorldBoundSphere& bounds, Vector< Math::Mat4 > &transforms);
-	bool detachClusterTransforms(const Math::WorldBoundBox& bb, Vector< Math::mat4 > &transforms);
-	bool detachClusterWorldTransforms(const Math::WorldBoundBox& bb, Vector< Math::Mat4 > &transforms);
-	bool detachClusterWorldTransformsFromSphere(const Math::WorldBoundSphere& bb, Vector< Math::Mat4 > &transforms);
-	bool removeClusterTransforms(const Math::WorldBoundBox& bb);
-	bool removeClusterTransformsFromSphere(const Math::WorldBoundSphere& bb);
+	bool getClusterTransforms(const Math::WorldBoundBox &bounds, Vector<Math::mat4> &transforms);
+	bool getClusterWorldTransforms(const Math::WorldBoundBox &bounds, Vector<Math::Mat4> &transforms);
+	bool getClusterWorldTransformsFromSphere(const Math::WorldBoundSphere &bounds, Vector<Math::Mat4> &transforms);
+	bool detachClusterTransforms(const Math::WorldBoundBox &bb, Vector<Math::mat4> &transforms);
+	bool detachClusterWorldTransforms(const Math::WorldBoundBox &bb, Vector<Math::Mat4> &transforms);
+	bool detachClusterWorldTransformsFromSphere(const Math::WorldBoundSphere &bb, Vector<Math::Mat4> &transforms);
+	bool removeClusterTransforms(const Math::WorldBoundBox &bb);
+	bool removeClusterTransformsFromSphere(const Math::WorldBoundSphere &bb);
 	int getNumSurfaceTargets(int surface) const;
 	const char *getSurfaceTargetName(int surface, int target) const;
 	int findSurfaceTarget(const char *name, int surface) const;
-	bool getInstancesFromSphere(const Math::WorldBoundSphere& bb, Vector< int > &instances);
+	bool getInstancesFromSphere(const Math::WorldBoundSphere &bb, Vector<int> &instances);
 };
 typedef Ptr<ObjectMeshCluster> ObjectMeshClusterPtr;
 
@@ -858,7 +870,7 @@ public:
 	void setOffset(float mean, float spread);
 	float getOffsetMean() const;
 	float getOffsetSpread() const;
-	void setMeshesRotation(const Math::vec3& mean, const Math::vec3& spread);
+	void setMeshesRotation(const Math::vec3 &mean, const Math::vec3 &spread);
 	Math::vec3 getMeshesRotationMean() const;
 	Math::vec3 getMeshesRotationSpread() const;
 	int setMaskImage(const Ptr<Image> &image, bool invalidate = true);
@@ -891,14 +903,14 @@ public:
 	const char *getSurfaceTargetName(int surface, int target) const;
 	int findSurfaceTarget(const char *name, int surface) const;
 	void invalidate();
-	void invalidate(const Math::WorldBoundBox& bounds);
+	void invalidate(const Math::WorldBoundBox &bounds);
 	void createClutterTransforms();
-	bool getClutterTransforms(Vector< Math::mat4 > &transforms) const;
-	bool getClutterWorldTransforms(Vector< Math::Mat4 > &transforms) const;
-	bool getClutterTransforms(const Math::WorldBoundBox& bounds, Vector< Math::mat4 > &transforms, bool precise = true, bool force = true) const;
-	bool getClutterWorldTransforms(const Math::WorldBoundBox& bounds, Vector< Math::Mat4 > &transforms, bool precise = true, bool force = true) const;
-	int getClutterLocalTransforms(const Math::BoundBox& bounds, Vector< Math::mat4 > &transforms, int precise = 1, int force = 1) const;
-	void setClutterExclude(const Math::WorldBoundBox& bounds, int exclude);
+	bool getClutterTransforms(Vector<Math::mat4> &transforms) const;
+	bool getClutterWorldTransforms(Vector<Math::Mat4> &transforms) const;
+	bool getClutterTransforms(const Math::WorldBoundBox &bounds, Vector<Math::mat4> &transforms, bool precise = true, bool force = true) const;
+	bool getClutterWorldTransforms(const Math::WorldBoundBox &bounds, Vector<Math::Mat4> &transforms, bool precise = true, bool force = true) const;
+	int getClutterLocalTransforms(const Math::BoundBox &bounds, Vector<Math::mat4> &transforms, int precise = 1, int force = 1) const;
+	void setClutterExclude(const Math::WorldBoundBox &bounds, int exclude);
 	void clearClutterExcludes();
 };
 typedef Ptr<ObjectMeshClutter> ObjectMeshClutterPtr;
@@ -914,8 +926,8 @@ public:
 	const char *getMeshName() const;
 	int getNumMeshes() const;
 	Math::mat4 getMeshTransform(int num) const;
-	bool getClusterTransforms(const Math::WorldBoundBox& bounds, Vector< Math::mat4 > &transforms);
-	bool getClusterWorldTransforms(const Math::WorldBoundBox& bounds, Vector< Math::Mat4 > &transforms);
+	bool getClusterTransforms(const Math::WorldBoundBox &bounds, Vector<Math::mat4> &transforms);
+	bool getClusterWorldTransforms(const Math::WorldBoundBox &bounds, Vector<Math::Mat4> &transforms);
 	int getNumSurfaceTargets(int surface) const;
 	const char *getSurfaceTargetName(int surface, int target) const;
 	int findSurfaceTarget(const char *name, int surface) const;
@@ -976,27 +988,27 @@ public:
 	float getThreshold() const;
 	void setAngle(float angle);
 	float getAngle() const;
-	void setProbability(const Math::vec4& probability);
+	void setProbability(const Math::vec4 &probability);
 	Math::vec4 getProbability() const;
-	void setMinBend(const Math::vec4& mean, const Math::vec4& spread);
+	void setMinBend(const Math::vec4 &mean, const Math::vec4 &spread);
 	Math::vec4 getMinBendMean() const;
 	Math::vec4 getMinBendSpread() const;
-	void setMaxBend(const Math::vec4& mean, const Math::vec4& spread);
+	void setMaxBend(const Math::vec4 &mean, const Math::vec4 &spread);
 	Math::vec4 getMaxBendMean() const;
 	Math::vec4 getMaxBendSpread() const;
-	void setMinHeight(const Math::vec4& mean, const Math::vec4& spread);
+	void setMinHeight(const Math::vec4 &mean, const Math::vec4 &spread);
 	Math::vec4 getMinHeightMean() const;
 	Math::vec4 getMinHeightSpread() const;
-	void setMaxHeight(const Math::vec4& mean, const Math::vec4& spread);
+	void setMaxHeight(const Math::vec4 &mean, const Math::vec4 &spread);
 	Math::vec4 getMaxHeightMean() const;
 	Math::vec4 getMaxHeightSpread() const;
-	void setAspect(const Math::vec4& mean, const Math::vec4& spread);
+	void setAspect(const Math::vec4 &mean, const Math::vec4 &spread);
 	Math::vec4 getAspectMean() const;
 	Math::vec4 getAspectSpread() const;
-	void setOffset(const Math::vec4& mean, const Math::vec4& spread);
+	void setOffset(const Math::vec4 &mean, const Math::vec4 &spread);
 	Math::vec4 getOffsetMean() const;
 	Math::vec4 getOffsetSpread() const;
-	void setRotation(const Math::vec4& mean, const Math::vec4& spread);
+	void setRotation(const Math::vec4 &mean, const Math::vec4 &spread);
 	Math::vec4 getRotationMean() const;
 	Math::vec4 getRotationSpread() const;
 	int setMaskImage(const Ptr<Image> &image, int invalidate = 1);
@@ -1015,7 +1027,7 @@ public:
 	int getMaskMesh(const Ptr<Mesh> &mesh) const;
 	void setMaskMeshName(const char *mesh_name, int invalidate = 1);
 	const char *getMaskMeshName() const;
-	void setTerrainMasks(const Math::ivec4& masks);
+	void setTerrainMasks(const Math::ivec4 &masks);
 	Math::ivec4 getTerrainMasks() const;
 	void setMaskInverse(int inverse);
 	int getMaskInverse() const;
@@ -1024,7 +1036,7 @@ public:
 	void setCutoutInverse(int inverse);
 	int getCutoutInverse() const;
 	void invalidate();
-	void invalidate(const Math::WorldBoundBox& bounds);
+	void invalidate(const Math::WorldBoundBox &bounds);
 };
 typedef Ptr<ObjectGrass> ObjectGrassPtr;
 
@@ -1056,7 +1068,7 @@ public:
 	float getMinFadeTexelSize() const;
 	void setMaxFadeTexelSize(float size);
 	float getMaxFadeTexelSize() const;
-	void setMaskByAlbedo(const Math::vec4& albedo);
+	void setMaskByAlbedo(const Math::vec4 &albedo);
 	Math::vec4 getMaskByAlbedo() const;
 	void setMaskThreshold(float threshold);
 	float getMaskThreshold() const;
@@ -1066,7 +1078,7 @@ public:
 	Ptr<TerrainDetailMask> getDetailMask() const;
 	void setMaterialPath(const char *path);
 	const char *getMaterialPath() const;
-	void setMaterialGUID(const UGUID& materialguid);
+	void setMaterialGUID(const UGUID &materialguid);
 	UGUID getMaterialGUID() const;
 	void setMaterial(const Ptr<Material> &material);
 	Ptr<Material> getMaterial() const;
@@ -1085,6 +1097,10 @@ public:
 	bool isEnabled() const;
 	void setDithering(float dithering);
 	float getDithering() const;
+	void setDefaultValue(float value);
+	float getDefaultValue() const;
+	void setMaskByAlbedo(const Math::vec4 &albedo);
+	Math::vec4 getMaskByAlbedo() const;
 	int getRenderOrder() const;
 	void swapRenderOrder(const Ptr<TerrainDetailMask> &mask);
 	Ptr<TerrainDetail> addDetail();
@@ -1118,8 +1134,8 @@ public:
 	Ptr<TerrainDetailMask> getDetailMaskSortRender(int num);
 	Ptr<TerrainDetailMask> findDetailMask(const char *name);
 	long long getLastStreamingFrame() const;
-	void getDetailMasks(Vector< Ptr<TerrainDetailMask> > &masks);
-	void getDetailMasksSortRender(Vector< Ptr<TerrainDetailMask> > &masks);
+	void getDetailMasks(Vector<Ptr<TerrainDetailMask>> &masks);
+	void getDetailMasksSortRender(Vector<Ptr<TerrainDetailMask>> &masks);
 };
 typedef Ptr<ObjectLandscapeTerrain> ObjectLandscapeTerrainPtr;
 
@@ -1127,7 +1143,7 @@ typedef Ptr<ObjectLandscapeTerrain> ObjectLandscapeTerrainPtr;
 class UNIGINE_API LandscapeImages : public APIInterface
 {
 public:
-	static Ptr<LandscapeImages> create(const Math::ivec2& resolution);
+	static Ptr<LandscapeImages> create(const Math::ivec2 &resolution);
 	Ptr<Image> getHeight();
 	Ptr<Image> getAlbedo();
 	Ptr<Image> getMask(int num);
@@ -1135,7 +1151,7 @@ public:
 	Ptr<Image> getOpacityMask(int num);
 	Ptr<Image> get(int type);
 	Math::ivec2 getResolution() const;
-	void resize(const Math::ivec2& new_resolution);
+	void resize(const Math::ivec2 &new_resolution);
 	Ptr<LandscapeImages> copy(const Ptr<LandscapeImages> &image) const;
 	Ptr<LandscapeImages> clone();
 };
@@ -1145,7 +1161,7 @@ typedef Ptr<LandscapeImages> LandscapeImagesPtr;
 class UNIGINE_API LandscapeTextures : public APIInterface
 {
 public:
-	static Ptr<LandscapeTextures> create(const Math::ivec2& resolution);
+	static Ptr<LandscapeTextures> create(const Math::ivec2 &resolution);
 	Ptr<Texture> getHeight() const;
 	Ptr<Texture> getAlbedo() const;
 	Ptr<Texture> getMask(int num);
@@ -1160,197 +1176,7 @@ public:
 };
 typedef Ptr<LandscapeTextures> LandscapeTexturesPtr;
 
-//////////////////////////////////////////////////////////////////////////
-
-class UNIGINE_API LandscapeLayerMap : public Node
-{
-public:
-	static int type() { return Node::LANDSCAPE_LAYER_MAP; }
-	static bool convertible(Node *node) { return (node && node->getType() == type()); }
-
-
-	enum
-	{
-		ALPHA_BLEND,
-		ADDITIVE,
-		OVERLAY,
-		MULTIPLICATIVE,
-	};
-	static Ptr<LandscapeLayerMap> create();
-	void setPath(const char *path);
-	const char *getPath() const;
-	UGUID getGUID();
-	void setIntersectionBicubicFilter(bool filter);
-	bool isIntersectionBicubicFilter() const;
-	void setIntersection(bool intersection);
-	bool isIntersection() const;
-	void setCollision(bool collision);
-	bool isCollision() const;
-	void setCulling(bool culling);
-	bool isCulling() const;
-	void setOrder(int order);
-	int getOrder() const;
-	void setSize(const Math::Vec2& size);
-	Math::Vec2 getSize() const;
-	void setFadeAttenuation(const Math::vec2& attenuation);
-	Math::vec2 getFadeAttenuation() const;
-	void setHeightScale(float scale);
-	float getHeightScale() const;
-	Math::Vec2 getTexelSize() const;
-	Math::ivec2 getResolution() const;
-	bool isInit() const;
-	Math::Vec2 getExtremumHeight(float precision = 1.0f);
-};
-typedef Ptr<LandscapeLayerMap> LandscapeLayerMapPtr;
-
-
-class UNIGINE_API LandscapeMapFileSettings : public APIInterface
-{
-public:
-	static Ptr<LandscapeMapFileSettings> create();
-	void setHeightBlending(int blending);
-	int getHeightBlending() const;
-	void setAlbedoBlending(int blending);
-	int getAlbedoBlending() const;
-	void setHeightFadeAttenuation(const Math::vec2& attenuation);
-	Math::vec2 getHeightFadeAttenuation() const;
-	void setAlbedoFadeAttenuation(const Math::vec2& attenuation);
-	Math::vec2 getAlbedoFadeAttenuation() const;
-	void setMaskBlending(int mask, int blend);
-	int getMaskBlending(int mask) const;
-	void setMaskFadeAttenuation(int mask, const Math::vec2& fade_attenuation);
-	Math::vec2 getMaskFadeAttenuation(int mask) const;
-	void setEnabledHeight(bool height);
-	bool isEnabledHeight() const;
-	void setEnabledAlbedo(bool albedo);
-	bool isEnabledAlbedo() const;
-	void setEnabledMask(int mask, bool enabled);
-	bool isEnabledMask(int mask) const;
-	void setEnabledOpacityHeight(bool height);
-	bool isEnabledOpacityHeight() const;
-	void setEnabledOpacityAlbedo(bool albedo);
-	bool isEnabledOpacityAlbedo() const;
-	void setEnabledOpacityMask(int mask, bool enabled);
-	bool isEnabledOpacityMask(int mask) const;
-	Math::ivec2 getTilesSize() const;
-	Math::ivec2 getResolution() const;
-	UGUID getGUID() const;
-	bool isLoaded() const;
-	bool load(const UGUID& guid);
-	bool apply();
-};
-typedef Ptr<LandscapeMapFileSettings> LandscapeMapFileSettingsPtr;
-
-
-class UNIGINE_API LandscapeMapFileCompression : public APIInterface
-{
-public:
-
-	enum COMPRESSOR_TYPE
-	{
-		COMPRESSOR_TYPE_NONE = 0,
-		COMPRESSOR_TYPE_JACKALLESS = 1,
-		COMPRESSOR_TYPE_LZ4 = 2,
-		COMPRESSOR_TYPE_ZLIB = 3,
-	};
-	static Ptr<LandscapeMapFileCompression> create();
-	bool isCompressing() const;
-	bool isDecompressing() const;
-	int getProgress() const;
-	bool run(bool decompress, bool is_safe);
-	void stop();
-	bool isLoaded() const;
-	bool load(const UGUID& guid);
-	void setHeightCompressor(LandscapeMapFileCompression::COMPRESSOR_TYPE compressor);
-	LandscapeMapFileCompression::COMPRESSOR_TYPE getHeightCompressor() const;
-	void setAlbedoCompressor(LandscapeMapFileCompression::COMPRESSOR_TYPE compressor);
-	LandscapeMapFileCompression::COMPRESSOR_TYPE getAlbedoCompressor() const;
-	void setOpacityHeightCompressor(LandscapeMapFileCompression::COMPRESSOR_TYPE compressor);
-	LandscapeMapFileCompression::COMPRESSOR_TYPE getOpacityHeightCompressor() const;
-	void setMaskCompressor(int mask, LandscapeMapFileCompression::COMPRESSOR_TYPE compressor_type);
-	void setMaskOpacityCompressor(int mask, LandscapeMapFileCompression::COMPRESSOR_TYPE compressor_type);
-	void setCompressorAll(LandscapeMapFileCompression::COMPRESSOR_TYPE compressor_type);
-	bool isCompressed() const;
-	int getMaskCompressor(int mask);
-	int getMaskOpacityCompressor(int mask);
-	void setEnabledAlbedoTextureCompression(bool compression);
-	bool isEnabledAlbedoTextureCompression() const;
-	void setEnabledOpacityHeightTextureCompression(bool compression);
-	bool isEnabledOpacityHeightTextureCompression() const;
-	void setEnabledMaskTextureCompression(int mask, bool enable);
-	void setEnabledMaskOpacityTextureCompression(int mask, bool enable);
-	bool isEnabledMaskTextureCompression(int mask);
-	bool isEnabledMaskOpacityTextureCompression(int mask);
-	UGUID getGUID() const;
-	void *addBeginCallback(Unigine::CallbackBase1< Ptr<LandscapeMapFileCompression> > *func);
-	bool removeBeginCallback(void *id);
-	void clearBeginCallbacks();
-	void *addProgressCallback(Unigine::CallbackBase1< Ptr<LandscapeMapFileCompression> > *func);
-	bool removeProgressCallback(void *id);
-	void clearProgressCallbacks();
-	void *addEndCallback(Unigine::CallbackBase1< Ptr<LandscapeMapFileCompression> > *func);
-	bool removeEndCallback(void *id);
-	void clearEndCallbacks();
-	void setCacheDirectory(const char *directory);
-	const char *getCacheDirectory() const;
-};
-typedef Ptr<LandscapeMapFileCompression> LandscapeMapFileCompressionPtr;
-
-
-class UNIGINE_API LandscapeFetch : public APIInterface
-{
-public:
-	static Ptr<LandscapeFetch> create();
-	Math::Vec3 getPosition() const;
-	float getHeight() const;
-	bool isIntersection() const;
-	Math::vec3 getNormal() const;
-	Math::vec4 getAlbedo() const;
-	float getMask(int num) const;
-	void setUses(int uses);
-	int getUses() const;
-	void setUsesHeight(bool height);
-	bool isUsesHeight() const;
-	void setUsesNormal(bool normal);
-	bool isUsesNormal() const;
-	void setUsesAlbedo(bool albedo);
-	bool isUsesAlbedo() const;
-	bool isUsesMask(int num) const;
-	void setUsesMask(int num, bool value);
-	void setHolesEnabled(bool enabled);
-	bool isHolesEnabled() const;
-	void setIntersectionPrecision(float precision);
-	float getIntersectionPrecision() const;
-	void setIntersectionPositionBegin(const Math::Vec3& begin);
-	Math::Vec3 getIntersectionPositionBegin() const;
-	void setIntersectionPositionEnd(const Math::Vec3& end);
-	Math::Vec3 getIntersectionPositionEnd() const;
-	void setFetchPosition(const Math::Vec2& position);
-	Math::Vec2 getFetchPosition() const;
-	bool fetchForce(const Math::Vec2& position);
-	bool fetchForce();
-	bool intersectionForce(const Math::Vec3& p0, const Math::Vec3& p1);
-	bool intersectionForce();
-	void fetchAsync(const Math::Vec2& position, bool critical = false);
-	void fetchAsync(bool critical = false);
-	void intersectionAsync(const Math::Vec3& p0, const Math::Vec3& p1, bool critical = false);
-	void intersectionAsync(bool critical = false);
-	static void fetchForce(const Vector< Ptr<LandscapeFetch> > &fetches);
-	static void intersectionForce(const Vector< Ptr<LandscapeFetch> > &fetches);
-	static void fetchAsync(const Vector< Ptr<LandscapeFetch> > &fetches, bool critical = false);
-	static void intersectionAsync(const Vector< Ptr<LandscapeFetch> > &fetches, bool critical = false);
-	static void wait(const Vector< Ptr<LandscapeFetch> > &fetches);
-	void wait();
-	bool isAsyncCompleted() const;
-	void *addStartCallback(Unigine::CallbackBase *func);
-	bool removeStartCallback(void *id);
-	void clearStartCallbacks();
-	void *addEndCallback(Unigine::CallbackBase *func);
-	bool removeEndCallback(void *id);
-	void clearEndCallbacks();
-};
-typedef Ptr<LandscapeFetch> LandscapeFetchPtr;
-
+class LandscapeLayerMap;
 //////////////////////////////////////////////////////////////////////////
 
 class UNIGINE_API Landscape
@@ -1446,50 +1272,263 @@ public:
 		FLAGS_FILE_DATA_OPACITY_MASK_3 = 1 << 11,
 		FLAGS_FILE_DATA_OPACITY_MASK_4 = 1 << 12,
 	};
-	static Ptr<LandscapeTextures> getTemporaryTexture(const Math::ivec2& resolution);
+
+	enum COMPRESSOR_TYPE
+	{
+		COMPRESSOR_TYPE_NONE = 0,
+		COMPRESSOR_TYPE_JACKALLESS = 1,
+		COMPRESSOR_TYPE_LZ4 = 2,
+		COMPRESSOR_TYPE_ZLIB = 3,
+	};
+
+	enum BLENDING_MODE
+	{
+		ALPHA_BLEND = 0,
+		ADDITIVE = 1,
+		OVERLAY = 2,
+		MULTIPLICATIVE = 3,
+	};
+	static Ptr<LandscapeTextures> getTemporaryTexture(const Math::ivec2 &resolution);
 	static void releaseTemporaryTexture(const Ptr<LandscapeTextures> &texture);
-	static bool terrainLoad(const Math::WorldBoundBox& bb);
-	static bool render(const Ptr<LandscapeTextures> &buffers, const Math::Mat4& transform, Math::Scalar texel_size, int padding);
-	static bool render(const Ptr<LandscapeTextures> &buffers, const Math::Mat4& transform, Math::Scalar texel_size);
-	static bool render(const Vector< Ptr<LandscapeLayerMap> > &maps, const Ptr<LandscapeTextures> &buffers, const Math::Mat4& transform, Math::Scalar texel_size, int padding);
-	static bool render(const Vector< Ptr<LandscapeLayerMap> > &maps, const Ptr<LandscapeTextures> &buffers, const Math::Mat4& transform, Math::Scalar texel_size);
+	static bool terrainLoad(const Math::WorldBoundBox &bb);
+	static bool render(const Ptr<LandscapeTextures> &buffers, const Math::Mat4 &transform, Math::Scalar texel_size, int padding);
+	static bool render(const Ptr<LandscapeTextures> &buffers, const Math::Mat4 &transform, Math::Scalar texel_size);
+	static bool render(const Vector<Ptr<LandscapeLayerMap>> &maps, const Ptr<LandscapeTextures> &buffers, const Math::Mat4 &transform, Math::Scalar texel_size, int padding);
+	static bool render(const Vector<Ptr<LandscapeLayerMap>> &maps, const Ptr<LandscapeTextures> &buffers, const Math::Mat4 &transform, Math::Scalar texel_size);
 	static int generateOperationID();
-	static void asyncTextureDraw(int operation_id, const UGUID& file_guid, const Math::ivec2& coord, const Math::ivec2& resolution, int flags_file_data, const Vector< Math::WorldBoundBox > &bounds_preload);
-	static void asyncTextureDraw(int operation_id, const UGUID& file_guid, const Math::ivec2& coord, const Math::ivec2& resolution, int flags_file_data);
-	static void asyncTextureDraw(int operation_id, const UGUID& file_guid, const Math::ivec2& coord, const Math::ivec2& resolution);
-	static void asyncTextureDraw(const UGUID& file_guid, const Math::ivec2& coord, const Math::ivec2& resolution, int flags_file_data, const Vector< Math::WorldBoundBox > &bounds_preload);
-	static void asyncTextureDraw(const UGUID& file_guid, const Math::ivec2& coord, const Math::ivec2& resolution, int flags_file_data);
-	static void asyncTextureDraw(const UGUID& file_guid, const Math::ivec2& coord, const Math::ivec2& resolution);
-	static void *addTextureDrawCallback(Unigine::CallbackBase5< UGUID, int, Ptr<LandscapeTextures>, Math::ivec2, int > *func);
+	static void asyncTextureDraw(int operation_id, const UGUID &file_guid, const Math::ivec2 &coord, const Math::ivec2 &resolution, int flags_file_data, const Vector<Math::WorldBoundBox> &bounds_preload);
+	static void asyncTextureDraw(int operation_id, const UGUID &file_guid, const Math::ivec2 &coord, const Math::ivec2 &resolution, int flags_file_data);
+	static void asyncTextureDraw(int operation_id, const UGUID &file_guid, const Math::ivec2 &coord, const Math::ivec2 &resolution);
+	static void asyncTextureDraw(const UGUID &file_guid, const Math::ivec2 &coord, const Math::ivec2 &resolution, int flags_file_data, const Vector<Math::WorldBoundBox> &bounds_preload);
+	static void asyncTextureDraw(const UGUID &file_guid, const Math::ivec2 &coord, const Math::ivec2 &resolution, int flags_file_data);
+	static void asyncTextureDraw(const UGUID &file_guid, const Math::ivec2 &coord, const Math::ivec2 &resolution);
+	static void *addTextureDrawCallback(CallbackBase5<UGUID, int, Ptr<LandscapeTextures>, Math::ivec2, int> *func);
 	static bool removeTextureDrawCallback(void *id);
 	static void clearTextureDrawCallbacks();
-	static void asyncApplyDiff(int operation_id, const UGUID& file_guid, const char *path);
-	static void asyncApplyDiff(const UGUID& file_guid, const char *path);
-	static void *addApplyDiffCallback(Unigine::CallbackBase3< UGUID, int, const char *> *func);
+	static void asyncApplyDiff(int operation_id, const UGUID &file_guid, const char *path);
+	static void asyncApplyDiff(const UGUID &file_guid, const char *path);
+	static void *addApplyDiffCallback(CallbackBase3<UGUID, int, const char *> *func);
 	static bool removeApplyDiffCallback(void *id);
 	static void clearApplyDiffCallbacks();
-	static void asyncSaveFile(int operation_id, const UGUID& file_guid, const char *path_new_diff, const char *path_old_diff);
-	static void asyncSaveFile(int operation_id, const UGUID& file_guid);
-	static void asyncSaveFile(const UGUID& file_guid, const char *path_new_diff, const char *path_old_diff);
-	static void asyncSaveFile(const UGUID& file_guid);
-	static void *addSaveFileCallback(Unigine::CallbackBase4< UGUID, int, const char *, const char *> *func);
+	static void asyncSaveFile(int operation_id, const UGUID &file_guid, const char *path_new_diff, const char *path_old_diff);
+	static void asyncSaveFile(int operation_id, const UGUID &file_guid);
+	static void asyncSaveFile(const UGUID &file_guid, const char *path_new_diff, const char *path_old_diff);
+	static void asyncSaveFile(const UGUID &file_guid);
+	static void *addSaveFileCallback(CallbackBase4<UGUID, int, const char *, const char *> *func);
 	static bool removeSaveFileCallback(void *id);
 	static void clearSaveFileCallbacks();
 	static bool isFilesClosed();
-	static void filesClose(const Vector< UGUID > &reload_files);
+	static void filesClose(const Vector<UGUID> &reload_files);
 	static void filesClose();
 	static void filesOpen();
 	static Ptr<ObjectLandscapeTerrain> getActiveTerrain();
 };
+
+//////////////////////////////////////////////////////////////////////////
+
+class UNIGINE_API LandscapeLayerMap : public Node
+{
+public:
+	static int type() { return Node::LANDSCAPE_LAYER_MAP; }
+	static bool convertible(Node *node) { return (node && node->getType() == type()); }
+
+	static Ptr<LandscapeLayerMap> create();
+	void setPath(const char *path);
+	const char *getPath() const;
+	UGUID getGUID();
+	void setIntersectionBicubicFilter(bool filter);
+	bool isIntersectionBicubicFilter() const;
+	void setIntersection(bool intersection);
+	bool isIntersection() const;
+	void setCollision(bool collision);
+	bool isCollision() const;
+	void setCulling(bool culling);
+	bool isCulling() const;
+	void setOrder(int order);
+	int getOrder() const;
+	void setSize(const Math::Vec2 &size);
+	Math::Vec2 getSize() const;
+	void setFadeAttenuation(const Math::vec2 &attenuation);
+	Math::vec2 getFadeAttenuation() const;
+	void setHeightScale(float scale);
+	float getHeightScale() const;
+	Math::Vec2 getTexelSize() const;
+	Math::ivec2 getResolution() const;
+	bool isInit() const;
+	Math::Vec2 getExtremumHeight(float precision = 1.0f);
+	bool isEnabledHeight() const;
+	bool isEnabledAlbedo() const;
+	bool isEnabledMask(int mask) const;
+	bool isEnabledOpacityHeight() const;
+	bool isEnabledOpacityAlbedo() const;
+	int isEnabledOpacityMask(int mask) const;
+	Landscape::BLENDING_MODE getHeightBlending() const;
+	Landscape::BLENDING_MODE getAlbedoBlending() const;
+	Landscape::BLENDING_MODE getMaskBlending(int mask) const;
+	Math::vec2 getHeightFadeAttenuation() const;
+	Math::vec2 getAlbedoFadeAttenuation() const;
+	Math::vec2 getMaskFadeAttenuation(int mask) const;
+	bool isCompressed() const;
+};
+typedef Ptr<LandscapeLayerMap> LandscapeLayerMapPtr;
+
+
+class UNIGINE_API LandscapeMapFileSettings : public APIInterface
+{
+public:
+	static Ptr<LandscapeMapFileSettings> create();
+	void setHeightBlending(Landscape::BLENDING_MODE blending);
+	Landscape::BLENDING_MODE getHeightBlending() const;
+	void setAlbedoBlending(Landscape::BLENDING_MODE blending);
+	Landscape::BLENDING_MODE getAlbedoBlending() const;
+	void setHeightFadeAttenuation(const Math::vec2 &attenuation);
+	Math::vec2 getHeightFadeAttenuation() const;
+	void setAlbedoFadeAttenuation(const Math::vec2 &attenuation);
+	Math::vec2 getAlbedoFadeAttenuation() const;
+	void setMaskBlending(int mask, Landscape::BLENDING_MODE blend);
+	Landscape::BLENDING_MODE getMaskBlending(int mask) const;
+	void setMaskFadeAttenuation(int mask, const Math::vec2 &fade_attenuation);
+	Math::vec2 getMaskFadeAttenuation(int mask) const;
+	void setEnabledHeight(bool height);
+	bool isEnabledHeight() const;
+	void setEnabledAlbedo(bool albedo);
+	bool isEnabledAlbedo() const;
+	void setEnabledMask(int mask, bool enabled);
+	bool isEnabledMask(int mask) const;
+	void setEnabledOpacityHeight(bool height);
+	bool isEnabledOpacityHeight() const;
+	void setEnabledOpacityAlbedo(bool albedo);
+	bool isEnabledOpacityAlbedo() const;
+	void setEnabledOpacityMask(int mask, bool enabled);
+	bool isEnabledOpacityMask(int mask) const;
+	Landscape::COMPRESSOR_TYPE getHeightCompressor() const;
+	Landscape::COMPRESSOR_TYPE getAlbedoCompressor() const;
+	Landscape::COMPRESSOR_TYPE getOpacityHeightCompressor() const;
+	bool isCompressed() const;
+	Landscape::COMPRESSOR_TYPE getMaskCompressor(int mask);
+	Landscape::COMPRESSOR_TYPE getMaskOpacityCompressor(int mask);
+	bool isEnabledAlbedoTextureCompression() const;
+	bool isEnabledOpacityHeightTextureCompression() const;
+	bool isEnabledMaskTextureCompression(int mask);
+	bool isEnabledMaskOpacityTextureCompression(int mask);
+	Math::ivec2 getTilesSize() const;
+	Math::ivec2 getResolution() const;
+	UGUID getGUID() const;
+	bool isLoaded() const;
+	bool load(const UGUID &guid);
+	bool apply();
+};
+typedef Ptr<LandscapeMapFileSettings> LandscapeMapFileSettingsPtr;
+
+
+class UNIGINE_API LandscapeMapFileCompression : public APIInterface
+{
+public:
+	static Ptr<LandscapeMapFileCompression> create();
+	bool isCompressing() const;
+	bool isDecompressing() const;
+	int getProgress() const;
+	bool compress(bool is_safe);
+	bool decompress(bool is_safe);
+	void stop();
+	void setHeightCompressor(Landscape::COMPRESSOR_TYPE compressor);
+	Landscape::COMPRESSOR_TYPE getHeightCompressor() const;
+	void setAlbedoCompressor(Landscape::COMPRESSOR_TYPE compressor);
+	Landscape::COMPRESSOR_TYPE getAlbedoCompressor() const;
+	void setOpacityHeightCompressor(Landscape::COMPRESSOR_TYPE compressor);
+	Landscape::COMPRESSOR_TYPE getOpacityHeightCompressor() const;
+	void setMaskCompressor(int mask, Landscape::COMPRESSOR_TYPE compressor_type);
+	void setMaskOpacityCompressor(int mask, Landscape::COMPRESSOR_TYPE compressor_type);
+	int getMaskCompressor(int mask);
+	int getMaskOpacityCompressor(int mask);
+	void setEnabledAlbedoTextureCompression(bool compression);
+	bool isEnabledAlbedoTextureCompression() const;
+	void setEnabledOpacityHeightTextureCompression(bool compression);
+	bool isEnabledOpacityHeightTextureCompression() const;
+	void setEnabledMaskTextureCompression(int mask, bool enable);
+	void setEnabledMaskOpacityTextureCompression(int mask, bool enable);
+	bool isEnabledMaskTextureCompression(int mask);
+	bool isEnabledMaskOpacityTextureCompression(int mask);
+	void setCompressorAll(Landscape::COMPRESSOR_TYPE compressor_type);
+	void setCacheDirectory(const char *directory);
+	const char *getCacheDirectory() const;
+	void setGUID(const UGUID &guid);
+	UGUID getGUID() const;
+	void *addBeginCallback(CallbackBase1<Ptr<LandscapeMapFileCompression>> *func);
+	bool removeBeginCallback(void *id);
+	void clearBeginCallbacks();
+	void *addProgressCallback(CallbackBase1<Ptr<LandscapeMapFileCompression>> *func);
+	bool removeProgressCallback(void *id);
+	void clearProgressCallbacks();
+	void *addEndCallback(CallbackBase1<Ptr<LandscapeMapFileCompression>> *func);
+	bool removeEndCallback(void *id);
+	void clearEndCallbacks();
+};
+typedef Ptr<LandscapeMapFileCompression> LandscapeMapFileCompressionPtr;
+
+
+class UNIGINE_API LandscapeFetch : public APIInterface
+{
+public:
+	static Ptr<LandscapeFetch> create();
+	Math::Vec3 getPosition() const;
+	float getHeight() const;
+	bool isIntersection() const;
+	Math::vec3 getNormal() const;
+	Math::vec4 getAlbedo() const;
+	float getMask(int num) const;
+	void setUses(int uses);
+	int getUses() const;
+	void setUsesHeight(bool height);
+	bool isUsesHeight() const;
+	void setUsesNormal(bool normal);
+	bool isUsesNormal() const;
+	void setUsesAlbedo(bool albedo);
+	bool isUsesAlbedo() const;
+	bool isUsesMask(int num) const;
+	void setUsesMask(int num, bool value);
+	void setHolesEnabled(bool enabled);
+	bool isHolesEnabled() const;
+	void setIntersectionPrecision(float precision);
+	float getIntersectionPrecision() const;
+	void setIntersectionPositionBegin(const Math::Vec3 &begin);
+	Math::Vec3 getIntersectionPositionBegin() const;
+	void setIntersectionPositionEnd(const Math::Vec3 &end);
+	Math::Vec3 getIntersectionPositionEnd() const;
+	void setFetchPosition(const Math::Vec2 &position);
+	Math::Vec2 getFetchPosition() const;
+	bool fetchForce(const Math::Vec2 &position);
+	bool fetchForce();
+	bool intersectionForce(const Math::Vec3 &p0, const Math::Vec3 &p1);
+	bool intersectionForce();
+	void fetchAsync(const Math::Vec2 &position, bool critical = false);
+	void fetchAsync(bool critical = false);
+	void intersectionAsync(const Math::Vec3 &p0, const Math::Vec3 &p1, bool critical = false);
+	void intersectionAsync(bool critical = false);
+	static void fetchForce(const Vector<Ptr<LandscapeFetch>> &fetches);
+	static void intersectionForce(const Vector<Ptr<LandscapeFetch>> &fetches);
+	static void fetchAsync(const Vector<Ptr<LandscapeFetch>> &fetches, bool critical = false);
+	static void intersectionAsync(const Vector<Ptr<LandscapeFetch>> &fetches, bool critical = false);
+	static void wait(const Vector<Ptr<LandscapeFetch>> &fetches);
+	void wait();
+	bool isAsyncCompleted() const;
+	void *addStartCallback(CallbackBase *func);
+	bool removeStartCallback(void *id);
+	void clearStartCallbacks();
+	void *addEndCallback(CallbackBase *func);
+	bool removeEndCallback(void *id);
+	void clearEndCallbacks();
+};
+typedef Ptr<LandscapeFetch> LandscapeFetchPtr;
 
 
 class UNIGINE_API LandscapeMapFileCreator : public APIInterface
 {
 public:
 	static Ptr<LandscapeMapFileCreator> create();
-	void setResolution(const Math::ivec2& resolution);
+	void setResolution(const Math::ivec2 &resolution);
 	Math::ivec2 getResolution() const;
-	void setGrid(const Math::ivec2& grid);
+	void setGrid(const Math::ivec2 &grid);
 	Math::ivec2 getGrid() const;
 	void setDownscaleFilter(Landscape::TYPE_FILE_DATA file_data_type, Image::FILTER filter);
 	Image::FILTER getDownscaleFilter(Landscape::TYPE_FILE_DATA file_data_type) const;
@@ -1497,16 +1536,16 @@ public:
 	double getTimeSeconds() const;
 	void setPath(const char *path);
 	const char *getPath() const;
-	void *addCreateCallback(Unigine::CallbackBase4< Ptr<LandscapeMapFileCreator>, Ptr<LandscapeImages>, int, int > *func);
+	void *addCreateCallback(CallbackBase4<Ptr<LandscapeMapFileCreator>, Ptr<LandscapeImages>, int, int> *func);
 	bool removeCreateCallback(void *id);
 	void clearCreateCallbacks();
-	void *addProgressCallback(Unigine::CallbackBase1< Ptr<LandscapeMapFileCreator> > *func);
+	void *addProgressCallback(CallbackBase1<Ptr<LandscapeMapFileCreator>> *func);
 	bool removeProgressCallback(void *id);
 	void clearProgressCallbacks();
-	void *addBeginCallback(Unigine::CallbackBase1< Ptr<LandscapeMapFileCreator> > *func);
+	void *addBeginCallback(CallbackBase1<Ptr<LandscapeMapFileCreator>> *func);
 	bool removeBeginCallback(void *id);
 	void clearBeginCallbacks();
-	void *addEndCallback(Unigine::CallbackBase1< Ptr<LandscapeMapFileCreator> > *func);
+	void *addEndCallback(CallbackBase1<Ptr<LandscapeMapFileCreator>> *func);
 	bool removeEndCallback(void *id);
 	void clearEndCallbacks();
 	bool run(bool is_empty = false, bool is_safe = true);
@@ -1583,8 +1622,8 @@ public:
 	void removeLod(int num);
 	void clearLods();
 	String getVideoMemoryUsage() const;
-	int fetch(const Math::BoundSphere& bs, const Math::BoundBox& bb, int force = 0);
-	int fetchData(double x, double y, Image::Pixel & ret_pixel, int layer, bool force);
+	int fetch(const Math::BoundSphere &bs, const Math::BoundBox &bb, int force = 0);
+	int fetchData(double x, double y, Image::Pixel &ret_pixel, int layer, bool force);
 };
 typedef Ptr<TerrainGlobalLods> TerrainGlobalLodsPtr;
 
@@ -1598,9 +1637,9 @@ public:
 	bool isEnabled() const;
 	void setMaskNumber(int number);
 	int getMaskNumber() const;
-	void setMaskColor(const Math::vec4& color);
+	void setMaskColor(const Math::vec4 &color);
 	Math::vec4 getMaskColor() const;
-	void setTransform(const Math::vec4& transform);
+	void setTransform(const Math::vec4 &transform);
 	Math::vec4 getTransform() const;
 	void setMinVisibleHeight(float height);
 	float getMinVisibleHeight() const;
@@ -1640,7 +1679,7 @@ public:
 	const char *getNormalTextureName() const;
 	void setHeightTextureName(const char *name);
 	const char *getHeightTextureName() const;
-	void setAlbedoColor(const Math::vec4& color);
+	void setAlbedoColor(const Math::vec4 &color);
 	Math::vec4 getAlbedoColor() const;
 	void setRoughness(float roughness);
 	float getRoughness() const;
@@ -1667,7 +1706,7 @@ public:
 
 	static Ptr<ObjectTerrainGlobal> create();
 	void clear();
-	int fetchTopologyData(double x, double y, Math::Vec3 & ret_point, Math::vec3 &ret_normal, Math::vec3 &ret_up, int force = 0);
+	int fetchTopologyData(double x, double y, Math::Vec3 &ret_point, Math::vec3 &ret_normal, Math::vec3 &ret_up, int force = 0);
 	Ptr<TerrainGlobalLods> getHeightLods();
 	Ptr<TerrainGlobalLods> getAlbedoLods();
 	Ptr<TerrainGlobalLods> getNormalLods();
@@ -1680,7 +1719,7 @@ public:
 	int cloneMask(int num);
 	void setMaskName(int num, const char *name);
 	const char *getMaskName(int num) const;
-	void replaceMasks(const Vector< String > &names);
+	void replaceMasks(const Vector<String> &names);
 	int getNumDetails() const;
 	Ptr<TerrainGlobalDetail> getDetail(int num);
 	int addDetail(const char *name);
@@ -1763,11 +1802,11 @@ class UNIGINE_API ParticleModifierVector : public ParticleModifier
 {
 public:
 	static bool convertible(ParticleModifier *obj) { return obj && obj->getType() == ParticleModifier::PARTICLE_MODIFIER_VECTOR; }
-	void setConstant(const Math::vec3& constant);
+	void setConstant(const Math::vec3 &constant);
 	Math::vec3 getConstant() const;
-	void setConstantMin(const Math::vec3& val);
+	void setConstantMin(const Math::vec3 &val);
 	Math::vec3 getConstantMin() const;
-	void setConstantMax(const Math::vec3& val);
+	void setConstantMax(const Math::vec3 &val);
 	Math::vec3 getConstantMax() const;
 	void setCurveScale(float scale);
 	float getCurveScale() const;
@@ -1831,7 +1870,7 @@ public:
 	int getVariationY() const;
 	void setTextureAtlas(int atlas);
 	int getTextureAtlas() const;
-	void setTextureAtlasSize(const Math::ivec2& size);
+	void setTextureAtlasSize(const Math::ivec2 &size);
 	Math::ivec2 getTextureAtlasSize() const;
 	void setPhysicsIntersection(int intersection);
 	int getPhysicsIntersection() const;
@@ -1854,7 +1893,7 @@ public:
 	float getParticleRadius(int num) const;
 	Math::Vec3 getParticlePosition(int num) const;
 	Math::vec3 getParticleVelocity(int num) const;
-	void getParticleTransforms(Vector< Math::Mat4 > &transforms) const;
+	void getParticleTransforms(Vector<Math::Mat4> &transforms) const;
 	void setPhysicalMask(int mask);
 	int getPhysicalMask() const;
 	void setPhysicalMass(float mass);
@@ -1873,7 +1912,7 @@ public:
 	int getProceduralPositioning() const;
 	void setProceduralParenting(int parenting);
 	int getProceduralParenting() const;
-	void setProceduralTextureResolution(const Math::vec3& res);
+	void setProceduralTextureResolution(const Math::vec3 &res);
 	Math::vec3 getProceduralTextureResolution() const;
 	void setEmitterEnabled(bool enabled);
 	bool isEmitterEnabled() const;
@@ -1889,11 +1928,11 @@ public:
 	int getEmitterLimitPerSpawn() const;
 	void setEmitterSync(int sync);
 	int getEmitterSync() const;
-	void setEmitterSize(const Math::vec3& size);
+	void setEmitterSize(const Math::vec3 &size);
 	Math::vec3 getEmitterSize() const;
-	void setEmitterVelocity(const Math::vec3& velocity);
+	void setEmitterVelocity(const Math::vec3 &velocity);
 	Math::vec3 getEmitterVelocity() const;
-	void addEmitterSpark(const Math::Vec3& point, const Math::vec3& normal, const Math::vec3& velocity);
+	void addEmitterSpark(const Math::Vec3 &point, const Math::vec3 &normal, const Math::vec3 &velocity);
 	void setDelay(float mean, float spread);
 	float getDelayMean() const;
 	float getDelaySpread() const;
@@ -1924,7 +1963,7 @@ public:
 	bool isForceEnabled(int num) const;
 	void setForceAttached(int num, int attached);
 	int isForceAttached(int num) const;
-	void setForceTransform(int num, const Math::Mat4& transform);
+	void setForceTransform(int num, const Math::Mat4 &transform);
 	Math::Mat4 getForceTransform(int num) const;
 	void setForceRadius(int num, float radius);
 	float getForceRadius(int num) const;
@@ -1942,11 +1981,11 @@ public:
 	bool isNoiseEnabled(int num) const;
 	void setNoiseAttached(int num, int attached);
 	int isNoiseAttached(int num) const;
-	void setNoiseTransform(int num, const Math::Mat4& transform);
+	void setNoiseTransform(int num, const Math::Mat4 &transform);
 	Math::Mat4 getNoiseTransform(int num) const;
-	void setNoiseOffset(int num, const Math::vec3& offset);
+	void setNoiseOffset(int num, const Math::vec3 &offset);
 	Math::vec3 getNoiseOffset(int num) const;
-	void setNoiseStep(int num, const Math::vec3& step);
+	void setNoiseStep(int num, const Math::vec3 &step);
 	Math::vec3 getNoiseStep(int num) const;
 	void setNoiseForce(int num, float force);
 	float getNoiseForce(int num) const;
@@ -1969,9 +2008,9 @@ public:
 	bool isDeflectorEnabled(int num) const;
 	void setDeflectorAttached(int num, int attached);
 	int isDeflectorAttached(int num) const;
-	void setDeflectorTransform(int num, const Math::Mat4& transform);
+	void setDeflectorTransform(int num, const Math::Mat4 &transform);
 	Math::Mat4 getDeflectorTransform(int num) const;
-	void setDeflectorSize(int num, const Math::vec3& size);
+	void setDeflectorSize(int num, const Math::vec3 &size);
 	Math::vec3 getDeflectorSize(int num) const;
 	void setDeflectorRestitution(int num, float restitution);
 	float getDeflectorRestitution(int num) const;
@@ -2051,9 +2090,9 @@ public:
 	int addBillboard(float width, float height);
 	void removeBillboard(int num);
 	int getNumBillboards() const;
-	void setBillboardPosition(int num, const Math::vec3& position);
+	void setBillboardPosition(int num, const Math::vec3 &position);
 	Math::vec3 getBillboardPosition(int num) const;
-	void setTexCoord(int num, const Math::vec4& texcoord);
+	void setTexCoord(int num, const Math::vec4 &texcoord);
 	Math::vec4 getTexCoord(int num) const;
 	void setWidth(int num, float width);
 	float getWidth(int num) const;
@@ -2061,7 +2100,7 @@ public:
 	float getHeight(int num) const;
 	void setAngle(int num, float angle);
 	float getAngle(int num) const;
-	void setNormal(int num, const Math::vec3& normal);
+	void setNormal(int num, const Math::vec3 &normal);
 	Math::vec3 getNormal(int num) const;
 	int saveStateSelf(const Ptr<Stream> &stream) const;
 	int restoreStateSelf(const Ptr<Stream> &stream);
@@ -2078,8 +2117,8 @@ public:
 	static int type() { return Node::OBJECT_VOLUME_BOX; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<ObjectVolumeBox> create(const Math::vec3& size);
-	void setSize(const Math::vec3& size);
+	static Ptr<ObjectVolumeBox> create(const Math::vec3 &size);
+	void setSize(const Math::vec3 &size);
 	Math::vec3 getSize() const;
 };
 typedef Ptr<ObjectVolumeBox> ObjectVolumeBoxPtr;
@@ -2092,8 +2131,8 @@ public:
 	static int type() { return Node::OBJECT_VOLUME_SPHERE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<ObjectVolumeSphere> create(const Math::vec3& radius);
-	void setRadius(const Math::vec3& radius);
+	static Ptr<ObjectVolumeSphere> create(const Math::vec3 &radius);
+	void setRadius(const Math::vec3 &radius);
 	Math::vec3 getRadius() const;
 };
 typedef Ptr<ObjectVolumeSphere> ObjectVolumeSpherePtr;
@@ -2159,15 +2198,15 @@ public:
 	Ptr<Gui> getGui() const;
 	void setBillboard(bool billboard);
 	bool isBillboard() const;
-	void setBackground(int background);
-	int getBackground() const;
-	void setDepthTest(int test);
-	int getDepthTest() const;
-	void setMouseShow(int show);
-	int getMouseShow() const;
+	void setBackground(bool background);
+	bool isBackground() const;
+	void setDepthTest(bool test);
+	bool isDepthTest() const;
+	void setMouseShow(bool show);
+	bool isMouseShow() const;
 	void setMouseMode(int mode);
 	int getMouseMode() const;
-	void setMouse(const Math::Vec3& p0, const Math::Vec3& p1, int mouse_button, int mouse_show);
+	void setMouse(const Math::Vec3 &p0, const Math::Vec3 &p1, int mouse_buttons, bool mouse_show);
 	void setControlDistance(float distance);
 	float getControlDistance() const;
 	void setPolygonOffset(float offset);
@@ -2206,11 +2245,13 @@ public:
 	void flushMesh();
 	void setMeshName(const char *name);
 	const char *getMeshName() const;
-	void setMouseShow(int show);
-	int getMouseShow() const;
+	void setMouseShow(bool show);
+	bool isMouseShow() const;
+	void setBackground(bool background);
+	bool isBackground() const;
 	void setMouseMode(int mode);
 	int getMouseMode() const;
-	void setMouse(const Math::Vec3& p0, const Math::Vec3& p1, int mouse_button, int mouse_show);
+	void setMouse(const Math::Vec3 &p0, const Math::Vec3 &p1, int mouse_buttons, bool mouse_show);
 	void setControlDistance(float distance);
 	float getControlDistance() const;
 	void setScreenSize(int width, int height);
@@ -2238,7 +2279,7 @@ public:
 	const char *getMeshName() const;
 	void setFieldMask(int mask);
 	int getFieldMask() const;
-	void setWave(int num, const Math::vec4& wave);
+	void setWave(int num, const Math::vec4 &wave);
 	Math::vec4 getWave(int num) const;
 	void setWaveAngle(int num, float angle);
 	float getWaveAngle(int num) const;
@@ -2248,8 +2289,8 @@ public:
 	float getWaveLength(int num) const;
 	void setWaveHeight(int num, float height);
 	float getWaveHeight(int num) const;
-	float getHeight(const Math::Vec3& position) const;
-	Math::vec3 getNormal(const Math::Vec3& position) const;
+	float getHeight(const Math::Vec3 &position) const;
+	Math::vec3 getNormal(const Math::Vec3 &position) const;
 };
 typedef Ptr<ObjectWaterMesh> ObjectWaterMeshPtr;
 
@@ -2282,7 +2323,7 @@ public:
 	int getDepthTest() const;
 	void setText(const char *text);
 	const char *getText() const;
-	void setTextColor(const Math::vec4& color);
+	void setTextColor(const Math::vec4 &color);
 	Math::vec4 getTextColor() const;
 	void setTextWrapWidth(float width);
 	float getTextWrapWidth() const;
@@ -2318,8 +2359,8 @@ public:
 		STEEPNESS_QUALITY_ULTRA,
 		STEEPNESS_QUALITY_EXTREME,
 	};
-	float fetchHeight(const Math::Vec3& position) const;
-	Math::vec3 fetchNormal(const Math::Vec3& position) const;
+	float fetchHeight(const Math::Vec3 &position) const;
+	Math::vec3 fetchNormal(const Math::Vec3 &position) const;
 	void setFetchAmplitudeThreshold(float threshold);
 	float getFetchAmplitudeThreshold() const;
 	void setFetchSteepnessQuality(ObjectWaterGlobal::STEEPNESS_QUALITY quality);
@@ -2366,9 +2407,9 @@ public:
 	int getLayerNumWaves(int layer) const;
 	void setLayerNumWaves(int layer, int num);
 	Math::vec2 getLayerLengthRange(int layer) const;
-	void setLayerLengthRange(int layer, const Math::vec2& value);
+	void setLayerLengthRange(int layer, const Math::vec2 &value);
 	Math::vec2 getLayerAmplitudeRange(int layer) const;
-	void setLayerAmplitudeRange(int layer, const Math::vec2& value);
+	void setLayerAmplitudeRange(int layer, const Math::vec2 &value);
 	float getLayerSteepnessScale(int layer) const;
 	void setLayerSteepnessScale(int layer, float value);
 	float getLayerDirectionAngleVariance(int layer) const;
@@ -2387,21 +2428,21 @@ public:
 	float getTextureNormalIntensity() const;
 	void setDetailTexturePath(const char *path);
 	const char *getDetailTexturePath() const;
-	void setDetail0UVSize(const Math::vec2& size);
+	void setDetail0UVSize(const Math::vec2 &size);
 	Math::vec2 getDetail0UVSize() const;
-	void setDetail0UVSpeed(const Math::vec2& speed);
+	void setDetail0UVSpeed(const Math::vec2 &speed);
 	Math::vec2 getDetail0UVSpeed() const;
 	void setDetail0Intensity(float intensity);
 	float getDetail0Intensity() const;
-	void setDetail1UVSize(const Math::vec2& size);
+	void setDetail1UVSize(const Math::vec2 &size);
 	Math::vec2 getDetail1UVSize() const;
-	void setDetail1UVSpeed(const Math::vec2& speed);
+	void setDetail1UVSpeed(const Math::vec2 &speed);
 	Math::vec2 getDetail1UVSpeed() const;
 	void setDetail1Intensity(float intensity);
 	float getDetail1Intensity() const;
 	void setDistantWavesTexturePath(const char *path);
 	const char *getDistantWavesTexturePath() const;
-	void setDistantWavesUVTransform(const Math::vec4& transform);
+	void setDistantWavesUVTransform(const Math::vec4 &transform);
 	Math::vec4 getDistantWavesUVTransform() const;
 	void setDistantWavesIntensity(float intensity);
 	float getDistantWavesIntensity() const;
@@ -2439,7 +2480,7 @@ public:
 	float getFoamContactIntensity() const;
 	void setFoamTextureAffect(float affect);
 	float getFoamTextureAffect() const;
-	void setSubsurfaceColor(const Math::vec4& color);
+	void setSubsurfaceColor(const Math::vec4 &color);
 	Math::vec4 getSubsurfaceColor() const;
 	void setSubsurfaceAmbientIntensity(float intensity);
 	float getSubsurfaceAmbientIntensity() const;
@@ -2451,7 +2492,7 @@ public:
 	float getSubsurfaceDiffuseIntensity() const;
 	void setDepthLUTTexturePath(const char *path);
 	const char *getDepthLUTTexturePath() const;
-	void setUnderwaterFogColor(const Math::vec4& color);
+	void setUnderwaterFogColor(const Math::vec4 &color);
 	Math::vec4 getUnderwaterFogColor() const;
 	void setUnderwaterFogTransparency(float transparency);
 	float getUnderwaterFogTransparency() const;
@@ -2490,7 +2531,7 @@ public:
 	ObjectWaterGlobal::PLANAR_REFLECTION_SIZE getPlanarReflectionMapSizeType() const;
 	void setPlanarReflectionDistance(float distance);
 	float getPlanarReflectionDistance() const;
-	void setPlanarReflectionPivotOffset(const Math::vec3& offset);
+	void setPlanarReflectionPivotOffset(const Math::vec3 &offset);
 	Math::vec3 getPlanarReflectionPivotOffset() const;
 	void setPlanarReflectionViewportMask(int mask);
 	int getPlanarReflectionViewportMask() const;
@@ -2506,7 +2547,7 @@ public:
 	bool isCausticsDistortion() const;
 	void setCausticsTexturePath(const char *path);
 	const char *getCausticsTexturePath() const;
-	void setCausticUVTransform(const Math::vec4& transform);
+	void setCausticUVTransform(const Math::vec4 &transform);
 	Math::vec4 getCausticUVTransform() const;
 	void setCausticDistanceFade(float fade);
 	float getCausticDistanceFade() const;
@@ -2564,7 +2605,7 @@ public:
 	float getShorelineWetnessOffset() const;
 	void setAuxiliary(bool auxiliary);
 	bool isAuxiliary() const;
-	void setAuxiliaryColor(const Math::vec4& color);
+	void setAuxiliaryColor(const Math::vec4 &color);
 	Math::vec4 getAuxiliaryColor() const;
 	void setRefractionScale(float scale);
 	float getRefractionScale() const;
@@ -2590,12 +2631,12 @@ public:
 	float getIntersectionThreshold() const;
 	void setIntersectionAccuracy(float accuracy);
 	float getIntersectionAccuracy() const;
-	void setAnimationCoverageOffset(const Math::vec4& offset);
+	void setAnimationCoverageOffset(const Math::vec4 &offset);
 	Math::vec4 getAnimationCoverageOffset() const;
-	void setAnimationNoiseOffset(const Math::vec4& offset);
+	void setAnimationNoiseOffset(const Math::vec4 &offset);
 	Math::vec4 getAnimationNoiseOffset() const;
 	void refreshCloudsRegionMask();
-	float getDensity(const Math::Vec3& world_point) const;
+	float getDensity(const Math::Vec3 &world_point) const;
 };
 typedef Ptr<ObjectCloudLayer> ObjectCloudLayerPtr;
 
@@ -2638,13 +2679,13 @@ public:
 	virtual void updateEnabled(int surface);
 	virtual void updateEnabled();
 	virtual int getResource(int surface);
-	virtual int getOrder(const Math::Vec3& camera, int surface);
-	virtual int getSequence(const Math::Vec3& camera, int surface);
-	virtual float getTransparentDistance(const Math::Vec3& camera, int surface);
+	virtual int getOrder(const Math::Vec3 &camera, int surface);
+	virtual int getSequence(const Math::Vec3 &camera, int surface);
+	virtual float getTransparentDistance(const Math::Vec3 &camera, int surface);
 	virtual int hasLods();
-	virtual int getCollision(const Math::BoundBox& bb, Vector< int > &surfaces);
-	virtual int getCollision(const Math::Vec3& p0, const Math::Vec3& p1, Vector< int > &surfaces);
-	virtual int getIntersection(const Math::Vec3& p0, const Math::Vec3& p1, Math::Vec3 * ret_point, Math::vec3 * ret_normal, Math::vec4 * ret_texcoord, int * ret_index, int * ret_instance, int surface);
+	virtual int getCollision(const Math::BoundBox &bb, Vector<int> &surfaces);
+	virtual int getCollision(const Math::Vec3 &p0, const Math::Vec3 &p1, Vector<int> &surfaces);
+	virtual int getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, Math::Vec3 *ret_point, Math::vec3 *ret_normal, Math::vec4 *ret_texcoord, int *ret_index, int *ret_instance, int surface);
 	virtual int getRandomPoint(Math::vec3 &ret_point, Math::vec3 &ret_normal, Math::vec3 &ret_velocity, int surface);
 	virtual int getNumTriangles(int surface);
 	virtual const Math::BoundBox &getBoundBox(int surface) = 0;
@@ -2658,7 +2699,7 @@ public:
 	virtual void updatePosition();
 	virtual void updateTransform();
 	virtual void update(float ifps);
-	virtual void flush(float ifps) final {} // This method was given a more meaningful name "preRender", please override it instead.
+	virtual void flush(float) final {} // This method was given a more meaningful name "preRender", please override it instead.
 	virtual void preRender(float ifps);
 	virtual const Math::BoundBox &getBoundBox() = 0;
 	virtual const Math::BoundSphere &getBoundSphere() = 0;
@@ -2677,7 +2718,7 @@ public:
 	static void savePointer(const StreamPtr &stream, ObjectExternBase *object);
 	static ObjectExternBase *restorePointer(const StreamPtr &stream);
 
-	private:
+private:
 	template <class Type> static ObjectExternBase *constructor(void *object) { return new Type(object); }
 	struct ObjectExternData;
 	ObjectExternData *data;

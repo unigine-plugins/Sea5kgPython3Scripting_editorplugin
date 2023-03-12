@@ -20,6 +20,7 @@
 #include "UniginePtr.h"
 #include "UnigineXml.h"
 #include "UnigineStreams.h"
+#include "UnigineJson.h"
 
 namespace Unigine
 {
@@ -42,23 +43,25 @@ public:
 	void copy(const Ptr<Curve2d> &curve);
 	int getHash() const;
 	int getNumKeys() const;
-	int addKey(const Math::vec2& point);
-	int addKey(const Math::vec2& point, const Math::vec2& left_tangent, const Math::vec2& right_tangent);
+	int addKey(const Math::vec2 &point);
+	int addKey(const Math::vec2 &point, const Math::vec2 &left_tangent, const Math::vec2 &right_tangent);
 	void removeKey(int index);
-	int moveKey(int index, const Math::vec2& point);
+	int moveKey(int index, const Math::vec2 &point);
 	void sortKeys();
-	void setKeyPoint(int index, const Math::vec2& point);
-	void setKeyLeftTangent(int index, const Math::vec2& point);
-	void setKeyRightTangent(int index, const Math::vec2& point);
-	Math::vec2 getKeyPoint(int index);
-	Math::vec2 getKeyLeftTangent(int index);
-	Math::vec2 getKeyRightTangent(int index);
+	void setKeyPoint(int index, const Math::vec2 &point);
+	void setKeyLeftTangent(int index, const Math::vec2 &point);
+	void setKeyRightTangent(int index, const Math::vec2 &point);
+	Math::vec2 getKeyPoint(int index) const;
+	Math::vec2 getKeyLeftTangent(int index) const;
+	Math::vec2 getKeyRightTangent(int index) const;
 	bool saveState(const Ptr<Stream> &stream) const;
 	bool restoreState(const Ptr<Stream> &stream);
 	float evaluate(float time) const;
 	bool save(const Ptr<Xml> &xml) const;
 	bool load(const Ptr<Xml> &xml);
-	void *addChangedCallback(Unigine::CallbackBase *func);
+	bool save(const Ptr<Json> &json) const;
+	bool load(const Ptr<Json> &json);
+	void *addChangedCallback(CallbackBase *func);
 	bool removeChangedCallback(void *id);
 	void clearChangedCallbacks();
 	void setRepeatModeStart(Curve2d::REPEAT_MODE start);

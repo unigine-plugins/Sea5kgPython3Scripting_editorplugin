@@ -45,8 +45,10 @@ public:
 	static Input::MOUSE_HANDLE getMouseHandle();
 	static void setMouseEnabled(bool enabled);
 	static bool isMouseEnabled();
-	static void setMouseInverse(int inverse);
-	static int getMouseInverse();
+	static void setMouseInverse(bool inverse);
+	static bool isMouseInverse();
+	static void setMouseRawInput(bool input);
+	static bool isMouseRawInput();
 	static void setMouseSensitivity(float sensitivity);
 	static float getMouseSensitivity();
 	static void setMouseDX(float mousedx);
@@ -56,13 +58,16 @@ public:
 	static void setState(int state, int value);
 	static int getState(int state);
 	static int clearState(int state);
-	static int isStateKey(int key);
-	static void setStateKey(int state, int key);
-	static int getStateKey(int state);
-	static int isStateButton(int button);
-	static void setStateButton(int state, int button);
-	static int getStateButton(int state);
+	static void setRemoveGrabKey(Input::KEY key);
+	static Input::KEY getRemoveGrabKey();
+	static int isStateKey(Input::KEY key);
+	static void setStateKey(int state, Input::KEY key);
+	static Input::KEY getStateKey(int state);
+	static int isStateMouseButton(Input::MOUSE_BUTTON button);
+	static void setStateMouseButton(int state, Input::MOUSE_BUTTON button);
+	static Input::MOUSE_BUTTON getStateMouseButton(int state);
 	static String getStateName(int state);
+	static String getStateInfo(int state);
 	static void getStateEvent(int state);
 	static int isStateEvent();
 };
@@ -77,8 +82,7 @@ public:
 	{
 		CONTROLS_APP,
 		CONTROLS_DUMMY,
-		CONTROLS_SIX_AXIS,
-		CONTROLS_X_PAD360,
+		CONTROLS_GAMEPAD,
 		CONTROLS_JOYSTICK,
 	};
 
@@ -130,6 +134,8 @@ public:
 	int clearState(int state);
 	int saveState(const Ptr<Stream> &stream) const;
 	int restoreState(const Ptr<Stream> &stream);
+	const char *getStateName(int state) const;
+	int getStateByName(const char *name) const;
 };
 typedef Ptr<Controls> ControlsPtr;
 
@@ -147,25 +153,43 @@ class UNIGINE_API ControlsJoystick : public Controls
 {
 public:
 	static bool convertible(Controls *obj) { return obj && obj->getType() == Controls::CONTROLS_JOYSTICK; }
+
+	enum POV
+	{
+		POV_NOT_PRESSED = -1,
+		POV_UP = 0,
+		POV_UP_RIGHT = 4500,
+		POV_RIGHT = 9000,
+		POV_DOWN_RIGHT = 13500,
+		POV_DOWN = 18000,
+		POV_DOWN_LEFT = 22500,
+		POV_LEFT = 27000,
+		POV_UP_LEFT = 31500,
+	};
 	static Ptr<ControlsJoystick> create(int num);
 	int getNumber() const;
+	int getPlayerIndex() const;
 	bool isAvailable() const;
 	const char *getName() const;
+	Input::DEVICE_TYPE getDeviceType() const;
 	void setFilter(float filter);
 	float getFilter() const;
 	int updateEvents();
 	int getNumAxes() const;
 	float getAxis(int axis) const;
+	float getAxisInitialValue(int axis) const;
 	const char *getAxisName(int axis) const;
 	int getNumPovs() const;
-	int getPov(int pov) const;
+	ControlsJoystick::POV getPov(int pov) const;
 	const char *getPovName(int pov) const;
 	int getNumButtons() const;
 	int getButton(int button) const;
 	int clearButton(int button);
 	const char *getButtonName(int button) const;
-	const char *getGuidProduct() const;
-	const char *getGuidInstance() const;
+	const char *getGuid() const;
+	int getVendor() const;
+	int getProduct() const;
+	int getProductVersion() const;
 	void setStateButton(int state, int button);
 	int getStateButton(int state) const;
 	String getStateName(int state) const;
@@ -177,14 +201,17 @@ public:
 typedef Ptr<ControlsJoystick> ControlsJoystickPtr;
 
 
-class UNIGINE_API ControlsXPad360 : public Controls
+class UNIGINE_API ControlsGamepad : public Controls
 {
 public:
-	static bool convertible(Controls *obj) { return obj && obj->getType() == Controls::CONTROLS_X_PAD360; }
-	static Ptr<ControlsXPad360> create(int num);
+	static bool convertible(Controls *obj) { return obj && obj->getType() == Controls::CONTROLS_GAMEPAD; }
+	static Ptr<ControlsGamepad> create(int num);
 	int getNumber() const;
+	int getPlayerIndex() const;
 	bool isAvailable() const;
 	const char *getName() const;
+	Input::DEVICE_TYPE getDeviceType() const;
+	InputGamePad::MODEL_TYPE getModelType() const;
 	void setFilter(float filter);
 	float getFilter() const;
 	int updateEvents();
@@ -194,10 +221,9 @@ public:
 	float getRightY() const;
 	float getLeftTrigger() const;
 	float getRightTrigger() const;
-	void setLeftMotor(float speed);
-	void setRightMotor(float speed);
-	int getButton(int button) const;
-	int clearButton(int button);
+	void setVibration(float low_frequency, float high_frequency, float duration_ms = 100.0f);
+	int getButton(InputGamePad::BUTTON button) const;
+	int clearButton(InputGamePad::BUTTON button);
 	void setStateButton(int state, int button);
 	int getStateButton(int state) const;
 	String getStateName(int state) const;
@@ -205,93 +231,7 @@ public:
 	int restoreState(const Ptr<Stream> &stream);
 	void getStateEvent(int state);
 	bool isStateEvent() const;
-
-	enum
-	{
-		BUTTON_A = 0,
-		BUTTON_B,
-		BUTTON_X,
-		BUTTON_Y,
-		BUTTON_BACK,
-		BUTTON_START,
-		BUTTON_DPAD_UP,
-		BUTTON_DPAD_DOWN,
-		BUTTON_DPAD_LEFT,
-		BUTTON_DPAD_RIGHT,
-		BUTTON_THUMB_LEFT,
-		BUTTON_THUMB_RIGHT,
-		BUTTON_SHOULDER_LEFT,
-		BUTTON_SHOULDER_RIGHT,
-		NUM_BUTTONS,
-	};
 };
-typedef Ptr<ControlsXPad360> ControlsXPad360Ptr;
-
-
-class UNIGINE_API ControlsSixAxis : public Controls
-{
-public:
-	static bool convertible(Controls *obj) { return obj && obj->getType() == Controls::CONTROLS_SIX_AXIS; }
-	static Ptr<ControlsSixAxis> create(int num);
-	int getNumber() const;
-	bool isAvailable() const;
-	const char *getName() const;
-	void setFilter(float filter);
-	float getFilter() const;
-	int updateEvents();
-	float getLeftX() const;
-	float getLeftY() const;
-	float getRightX() const;
-	float getRightY() const;
-	float getPressL1() const;
-	float getPressR1() const;
-	float getPressL2() const;
-	float getPressR2() const;
-	float getPressUp() const;
-	float getPressDown() const;
-	float getPressLeft() const;
-	float getPressRight() const;
-	float getPressTriangle() const;
-	float getPressCircle() const;
-	float getPressCross() const;
-	float getPressSquare() const;
-	float getSensorX() const;
-	float getSensorY() const;
-	float getSensorZ() const;
-	float getSensorG() const;
-	void setSmallMotor(float speed);
-	void setLargeMotor(float speed);
-	int getButton(int button) const;
-	int clearButton(int button);
-	void setStateButton(int state, int button);
-	int getStateButton(int state) const;
-	String getStateName(int state) const;
-	int saveState(const Ptr<Stream> &stream) const;
-	int restoreState(const Ptr<Stream> &stream);
-	void getStateEvent(int state);
-	bool isStateEvent() const;
-
-	enum
-	{
-		BUTTON_L1 = 0,
-		BUTTON_R1,
-		BUTTON_L2,
-		BUTTON_R2,
-		BUTTON_L3,
-		BUTTON_R3,
-		BUTTON_UP,
-		BUTTON_DOWN,
-		BUTTON_LEFT,
-		BUTTON_RIGHT,
-		BUTTON_TRIANGLE,
-		BUTTON_CIRCLE,
-		BUTTON_CROSS,
-		BUTTON_SQUARE,
-		BUTTON_START,
-		BUTTON_SELECT,
-		NUM_BUTTONS,
-	};
-};
-typedef Ptr<ControlsSixAxis> ControlsSixAxisPtr;
+typedef Ptr<ControlsGamepad> ControlsGamepadPtr;
 
 } // namespace Unigine

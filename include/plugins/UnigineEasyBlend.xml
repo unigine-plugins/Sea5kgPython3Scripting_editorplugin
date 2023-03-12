@@ -4,43 +4,43 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.Plugins.AppEasyBlend.setEnabled(bool)">
+		<member name="M:Unigine.Plugins.EasyBlend.setEnabled(bool)">
 			<summary>
-			Enables or disables the AppEasyBlend plugin.
+			Enables or disables the EasyBlend plugin.
 			</summary> 
 			<param name="enabled"> true to enable the plugin; false to disable it. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppEasyBlend.isEnabled const">
+		<member name="M:Unigine.Plugins.EasyBlend.isEnabled const">
 			<summary>
-			Returns a value indicating whether the AppEasyBlend plugin is enabled.
+			Returns a value indicating whether the EasyBlend plugin is enabled.
 			</summary>  
-			<returns>true if the to enable the AppEasyBlend plugin is enabled; otherwise, false.</returns>
+			<returns>true if the to enable the EasyBlend plugin is enabled; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppEasyBlend.setCalibrationFile(char)">
+		<member name="M:Unigine.Plugins.EasyBlend.setCalibrationFile(char)">
 			<summary>
 			Sets a path to a new *.ol calibration file with projection settings to be used. This method can be used to switch to another calibration file at run time (e.g., to switch from pilot to copilot).					The path to calibration file can also be set via the following command-line option: -calibration_file &lt;path_to_calibration_file&gt;.
 			</summary> 
 			<param name="file_name"> Path to *.ol calibration file to be set. Both relative and absolute paths are supported. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppEasyBlend.setAuxRotation(Unigine.Math.quat)">
+		<member name="M:Unigine.Plugins.EasyBlend.setAuxRotation(Unigine.Math.quat)">
 			<summary>
 			Sets auxiliary rotation for the projection.
 			</summary> 
 			<param name="rotation"> Quaternion representing auxiliary rotation of the projection to be set. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppEasyBlend.getAuxRotation">
+		<member name="M:Unigine.Plugins.EasyBlend.getAuxRotation">
 			<summary>
 			Returns the current auxiliary rotation for the projection.
 			</summary>  
 			<returns>Quaternion representing current auxiliary rotation of the projection.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.AppEasyBlend.setEyepoint(Unigine.Math.dvec3)">
+		<member name="M:Unigine.Plugins.EasyBlend.setEyepoint(Unigine.Math.dvec3)">
 			<summary>
 			Sets new eyepoint coordinates.
 			</summary> 
 			<param name="eyepoint"> Three-component vector with new eyepoint coordinates along X, Y, and Z axes to be set. </param> 
 		</member>
-		<member name="M:Unigine.Plugins.AppEasyBlend.getEyepoint const">
+		<member name="M:Unigine.Plugins.EasyBlend.getEyepoint const">
 			<summary>
 			Returns the current eyepoint coordinates.
 			</summary>  

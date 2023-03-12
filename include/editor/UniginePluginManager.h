@@ -14,7 +14,7 @@
 #pragma once
 
 
-#include <editor/EditorGlobal.h>
+#include <editor/UnigineEditorGlobal.h>
 
 #include <UnigineString.h>
 #include <UnigineVector.h>
@@ -25,16 +25,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Forward decl.
 ////////////////////////////////////////////////////////////////////////////////
-namespace Editor
+namespace UnigineEditor
 {
-class PluginInfo;
 class Application;
+class PluginInfo;
 }
 
 
-namespace Editor
+namespace UnigineEditor
 {
-/// <summary>The `Editor::PluginManager` is the main controller class of the Plugin System, it is responsible for:
+/// <summary>The `UnigineEditor::PluginManager` is the main controller class of the Plugin System, it is responsible for:
 /// <list type="bullet">
 /// <item>Locating dynamic libraries in folders specified by the user.</item>
 /// <item>Plugins initialization their lifecycle management and destruction via the instances of PluginInfo class.</item>
@@ -43,7 +43,7 @@ namespace Editor
 /// <item>Providing the user with information on plugins. Currently used to build target UI in the Editor.</item>
 /// </list>
 /// </summary>
-class EDITOR_API PluginManager final : public QObject
+class UNIGINE_EDITOR_API PluginManager final : public QObject
 {
 	Q_OBJECT
 public:
@@ -51,7 +51,7 @@ public:
 	/// <returns> PluginManager class instance.</returns>
 	/// <example> <b>Example:</b>
 	/// <code>
-	/// connect(Editor::PluginManager::instance(), &Editor::PluginManager::initializationCompleted
+	/// connect(UnigineEditor::PluginManager::instance(), &UnigineEditor::PluginManager::initializationCompleted
 	///   , this, &SomeClass::plugin_manager_initialized);
 	/// </code>
 	/// </example>
@@ -115,8 +115,7 @@ private:
 	explicit PluginManager(QObject *parent = nullptr);
 	~PluginManager() override;
 
-	friend class Editor::Application; // initialization.
+	friend class ::UnigineEditor::Application; // initialization.
 };
 
-
-} // namespace Editor
+} // namespace UnigineEditor

@@ -12,36 +12,30 @@
 			<param name="func"> Callback pointer. Callback function must have the following signature: void Callback(const char * arg1, int arg2) </param> 
 			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
 		</member>
-		<member name="M:Unigine.AsyncQueue.get">
-			<summary>
-			Returns a pointer to the existing AsyncQueue instance.
-			</summary>  
-			<returns>Pointer to the AsyncQueue instance.</returns>
-		</member>
 		<member name="M:Unigine.AsyncQueue.getImage(int)">
 			<summary>
-			Returns the image loaded by the specified operation.					This method does not remove the image from the list of loaded ones. If you want the image to be removed from this list right after retrieving it, use the takeImage() method.
+			Returns the image loaded by the specified operation.					This method does not remove the image from the list of loaded ones. If you want the image to be removed from this list right after retrieving it, use the  method.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadImage() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>Image smart pointer.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.getMesh(int)">
 			<summary>
-			Returns the mesh loaded by the specified operation.					This method does not remove the mesh from the list of loaded ones. If you want the mesh to be removed from this list right after retrieving it, use the takeMesh() method.
+			Returns the mesh loaded by the specified operation.					This method does not remove the mesh from the list of loaded ones. If you want the mesh to be removed from this list right after retrieving it, use the  method.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadMesh() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>Mesh smart pointer.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.getNode(int)">
 			<summary>
-			Returns the node loaded by the specified operation. If the node loaded by the specified operation consists of multiple objects, a new dummy object to combine them is created and its smart pointer is returned.					This method does not remove the node from the list of loaded ones. If you want the node to be removed from this list right after retrieving it, use the takeNode() method.
+			Returns the node loaded by the specified operation. If the node loaded by the specified operation consists of multiple objects, a new dummy object to combine them is created and its smart pointer is returned.					This method does not remove the node from the list of loaded ones. If you want the node to be removed from this list right after retrieving it, use the  method.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadNode() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>Node smart pointer.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.getNodes(int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
-			Puts the nodes loaded by the specified operation to the specified array. If the node loaded by the specified operation consists of multiple objects, they are put into the array.					This method does not remove the nodes from the list of loaded ones. If you want the nodes to be removed from this list right after retrieving them, use the takeNodes() method.
+			Puts the nodes loaded by the specified operation to the specified array. If the node loaded by the specified operation consists of multiple objects, they are put into the array.					This method does not remove the nodes from the list of loaded ones. If you want the nodes to be removed from this list right after retrieving them, use the  method.
 			</summary> 
 			<param name="id"> Loading operation identifier. </param>
 			<param name="nodes"> Array of loaded nodes' smart pointers. </param> 
@@ -129,28 +123,28 @@
 			<summary>
 			Returns a value indicating if the file is in the loading queue or already loaded.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadFile() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>1 if the file is in the loading queue or already loaded; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.checkImage(int)">
 			<summary>
 			Returns a value indicating if the image is in the loading queue or already loaded.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadImage() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>1 if the image is in the loading queue or already loaded; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.checkMesh(int)">
 			<summary>
 			Returns a value indicating if the mesh is in the loading queue or already loaded.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadMesh() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>1 if the mesh is in the loading queue or already loaded; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.checkNode(int)">
 			<summary>
 			Returns a value indicating if the node is in the loading queue or already loaded.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadNode() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>1 if the node is in the loading queue or already loaded; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.clearCallbacks(Unigine.AsyncQueue.CALLBACK_INDEX)">
@@ -163,28 +157,28 @@
 			<summary>
 			Forces loading of the file. The specified file will be loaded right after the currently loading file (if any) is processed. All other file system operations are suspended until the forced file is loaded.					The file won't be loaded immediately after calling the method as it can be large.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadFile() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>1 if the file is loaded successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.forceImage(int)">
 			<summary>
 			Forces loading of the image. The specified image will be loaded right after the currently loading image (if any) is processed. All other file system operations are suspended until the forced image is loaded.					The image won't be loaded immediately after calling the method as it can be large.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadImage() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>1 if the image is loaded successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.forceMesh(int)">
 			<summary>
 			Forces loading of the mesh. The specified mesf will be loaded right after the currently loading mesh (if any) is processed. All other file system operations are suspended until the forced mesh is loaded.					The mesh won't be loaded immediately after calling the method as it can be large.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadMesh() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>1 if the mesh is loaded successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.forceNode(int)">
 			<summary>
 			Forces loading of the node. The specified node will be loaded right after the currently loading node (if any) is processed. All other file system operations are suspended until the forced node is loaded.					The node won't be loaded immediately after calling the method as it can be large.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadNode() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>1 if the node is loaded successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.loadFile(char,int,float)">
@@ -235,49 +229,49 @@
 			<summary>
 			Removes the given file from the loading queue or from the list of loaded files, if it was already loaded.					If the specified file is currently loading, it will be removed after the loading operation is completed.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadFile() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>1 if the file is successfully removed; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.removeImage(int)">
 			<summary>
 			Removes the given image from the loading queue or from the list of loaded images, if it was already loaded.					If the specified image is currently loading, it will be removed after the loading operation is completed.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadImage() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>1 if the image is successfully removed; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.removeMesh(int)">
 			<summary>
 			Removes the given mesh from the loading queue or from the list of loaded meshes, if it was already loaded.					If the specified mesh is currently loading, it will be removed after the loading operation is completed.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadMesh() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>1 if the mesh is successfully removed; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.removeNode(int)">
 			<summary>
 			Removes the given node from the loading queue or from the list of loaded nodes, if it was already loaded.					If the specified node is currently loading, it will be removed after the loading operation is completed. Nodes are removed with all their hierarchy.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadNode() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>1 if the node is removed successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.takeImage(int)">
 			<summary>
 			Returns the image loaded by the specified operation and removes it from the list of loaded images.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadImage() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>Image smart pointer.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.takeMesh(int)">
 			<summary>
 			Returns the mesh loaded by the specified operation and removes it from the list of loaded meshes.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadMesh() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>Mesh smart pointer.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.takeNode(int)">
 			<summary>
 			Returns the node loaded by the specified operation and removes it from the list of loaded nodes.					Nodes are removed with all their hierarchy.
 			</summary> 
-			<param name="id"> Loading operation identifier (see the loadNode() method). </param> 
+			<param name="id"> Loading operation identifier (see the  method). </param> 
 			<returns>Node smart pointer.</returns>
 		</member>
 		<member name="M:Unigine.AsyncQueue.takeNodes(int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
@@ -287,6 +281,15 @@
 			<param name="id"> Loading operation identifier. </param>
 			<param name="nodes"> Array of loaded nodes' smart pointers. </param> 
 			<returns>1 if the operation is successful; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.AsyncQueue.loadImageInfo(char,int,float)">
+			<summary>
+			Loads file info (size format, etc.) for the specified image, group and priority to the thread.
+			</summary> 
+			<param name="name"> Absolute or relative path to the image file (including its name). </param>
+			<param name="group"> Priority group. Greater priority means faster loading. The default value is 0. </param>
+			<param name="weight"> Weight of the priority inside the group. Greater weight means faster loading inside the same priority group. The default value is 0.0f. </param> 
+			<returns>Loading operation identifier.</returns>
 		</member>
 		<member name="F:Unigine.AsyncQueue.CALLBACK_BEGIN">
 			<summary>

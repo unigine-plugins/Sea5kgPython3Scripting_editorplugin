@@ -13,17 +13,17 @@
 
 #pragma once
 
-#include <editor/EditorGlobal.h>
+#include <editor/UnigineEditorGlobal.h>
 
 #include <UnigineCallback.h>
 #include <UnigineGUID.h>
 #include <UnigineVector.h>
 
 
-namespace Editor
+namespace UnigineEditor
 {
 /// <summary>This class is used to represent a standard asset dialog of the UnigineEditor that can be used for opening and saving assets.</summary>
-class EDITOR_API AssetDialogs final
+class UNIGINE_EDITOR_API AssetDialogs final
 {
 public:
 	/// <summary>Dialog mode.</summary>
@@ -87,4 +87,4 @@ public:
 		DialogMode mode = DialogMode::Modal);
 };
 
-} // namespace Editor
+} // namespace UnigineEditor

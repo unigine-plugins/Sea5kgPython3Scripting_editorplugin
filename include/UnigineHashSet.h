@@ -54,7 +54,7 @@ public:
 	using const_iterator = typename Parent::const_iterator;
     using value_type = Key;
 
-	HashSet()
+	HashSet() noexcept
 	{
 		Parent::data = nullptr;
 		Parent::length = 0;
@@ -81,7 +81,7 @@ public:
 			Parent::do_append(it.hash, it.key);
 	}
 
-	HashSet(HashSet &&o)
+	HashSet(HashSet &&o) noexcept
 	{
 		Parent::length = o.length;
 		Parent::capacity = o.capacity;
@@ -176,7 +176,7 @@ public:
 
 	UNIGINE_INLINE void subtract(const HashSet &o) { remove(o); }
 
-	UNIGINE_INLINE bool operator==(const HashSet &o) const
+	UNIGINE_INLINE bool operator==(const HashSet &o) const noexcept
 	{
 		if (&o == this)
 			return true;
@@ -197,7 +197,7 @@ public:
 		return true;
 	}
 
-	UNIGINE_INLINE bool operator!=(const HashSet &o) const { return !(*this == o); }
+	UNIGINE_INLINE bool operator!=(const HashSet &o) const noexcept { return !(*this == o); }
 
 	UNIGINE_INLINE HashSet &operator+=(const Key &key) { insert(key); return *this; }
 	UNIGINE_INLINE HashSet &operator+=(const HashSet &o) { insert(o); return *this; }

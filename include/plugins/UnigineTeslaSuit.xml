@@ -121,7 +121,7 @@
 			Callback counter.
 		</summary>
 		</member>
-		<member name="M:Unigine.Plugins.Suit.getId">
+		<member name="M:Unigine.Plugins.Suit.getID">
 			<summary>
 			Returns the ID of TESLASUIT.
 			</summary>  
@@ -262,7 +262,7 @@
 			</summary>  
 			<returns>A code that describes the result of function execution, one of the following TSP_ values: TS_SUCCESS, TS_FAIL_ARG, TS_FAIL_SUIT, TS_FAIL_SH_MEM, TS_FAIL_QUEUE_1, TS_FAIL_QUEUE_2.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.Suit.getSourceMapId">
+		<member name="M:Unigine.Plugins.Suit.getSourceMapID">
 			<summary>
 			Returns ID of a source mapping.
 			</summary>  

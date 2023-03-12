@@ -56,7 +56,7 @@
 			</summary> 
 			<param name="callback"> Callback type number. One of the callbacks defined in the Gui class (for example, CLICK, SHOW, HIDE, etc). </param>
 			<param name="id"> Callback ID obtained when adding it. </param> 
-			<returns>True if the callback with the given ID was removed successfully; otherwise false.</returns>
+			<returns>true if the callback with the given ID was removed successfully; otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.Widget.clearCallbacks(Unigine.Gui.CALLBACK_INDEX)">
 			<summary>
@@ -69,7 +69,7 @@
 			Assigns a hot key combination to a given callback function.
 			</summary> 
 			<param name="callback"> Callback number: one of the Gui:: Enumeration (for example, SHOW, HIDE, etc). </param>
-			<param name="key"> ASCII key code: one of the App:: Enumeration with KEY_* prefixes. </param>
+			<param name="key"> ASCII key code: one of the Input::KEY_* values. </param>
 			<param name="ctrl"> CTRL key modifier. </param>
 			<param name="alt"> ALT key modifier. </param>
 			<param name="shift"> SHIFT key modifier. </param> 
@@ -89,7 +89,7 @@
 			<summary>
 			Checks if the given key in combination with CTRL, ALT, or/and SHIFT buttons is assigned as a widget callback.
 			</summary> 
-			<param name="key"> One of the standard ASCII keycodes or one of the APP_KEY_* pre-defined variables. </param>
+			<param name="key"> ASCII key code: one of the Input::KEY_* values. </param>
 			<param name="ctrl"> 1 if the CTRL key modifier is used; otherwise, 0. </param>
 			<param name="alt"> 1 if the ALT key modifier is used; otherwise, 0. </param>
 			<param name="shift"> 1 if the SHIFT key modifier is used; otherwise, 0. </param> 
@@ -100,7 +100,7 @@
 			Enables or disables a given callback function.
 			</summary> 
 			<param name="callback"> Callback number: one of the Gui:: Enumeration (for example, SHOW, HIDE, etc). </param>
-			<param name="enabled"> 1 to enable the callback, 0 to disable it. </param> 
+			<param name="enabled"> true to enable the callback, false to disable it. </param> 
 		</member>
 		<member name="M:Unigine.Widget.isCallbackEnabled(Unigine.Gui.CALLBACK_INDEX) const">
 			<summary>
@@ -330,15 +330,35 @@
 			<summary>
 			Checks for an intersection with the widget's bounds for the given point.
 			</summary> 
-			<param name="x"> Local X coordinate. </param>
-			<param name="y"> Local Y coordinate. </param> 
-			<returns>1 if the input coordinate is inside the widget; otherwise, 0.</returns>
+			<param name="local_pos_x"> Local X coordinate. </param>
+			<param name="local_pos_y"> Local Y coordinate. </param> 
+			<returns>true if the input coordinate is inside the widget; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Widget.getHierarchyIntersection(int,int)">
+			<summary>
+			Checks for an intersection with a widget that belongs to the hierarchy of the current widget.
+			</summary> 
+			<param name="screen_pos_x"> The X coordinate of the screen position. </param>
+			<param name="screen_pos_y"> The Y coordinate of the screen position. </param> 
+			<returns>Widget the intersection with which is found.</returns>
+		</member>
+		<member name="M:Unigine.Widget.setIntersectionEnabled(bool)">
+			<summary>
+			Sets a value indicating if intersection detection is enabled for the widget.
+			</summary> 
+			<param name="enabled"> true to enable intersection detection for the widget, false - to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Widget.isIntersectionEnabled const">
+			<summary>
+			Returns a value indicating if intersection detection is enabled for the widget.
+			</summary>  
+			<returns>true if intersection detection is enabled for the widget; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Widget.getKeyActivity(unsignedint) const">
 			<summary>
 			Checks if a given key already has a special purpose for the widget.
 			</summary> 
-			<param name="key"> ASCII key code: one of the KEY_* pre-defined variables. </param> 
+			<param name="key"> ASCII key code: one of the Input::KEY_* values. </param> 
 			<returns>1 if the key cannot be used; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Widget.setMouseCursor(int)">
@@ -429,7 +449,7 @@
 			<summary>
 			Returns the X coordinate of the widget position relative to its parent.
 			</summary>  
-			<returns>Relative X coordinate.</returns>
+			<returns>The relative X coordinate.</returns>
 		</member>
 		<member name="M:Unigine.Widget.getPositionY const">
 			<summary>
@@ -544,41 +564,85 @@
 			</summary> 
 			<param name="callback"> Callback number: one of the Gui:: Enumeration (for example, SHOW, HIDE, etc). </param> 
 		</member>
-		<member name="M:Unigine.Widget.setIntersectionEnabled(bool)">
+		<member name="M:Unigine.Widget.isExpanded const">
 			<summary>
-			Sets a value indicating if intersection detection is enabled for the widget.
-			</summary> 
-			<param name="enabled"> true to enable intersection detection for the widget, false - to disable it. </param> 
-		</member>
-		<member name="M:Unigine.Widget.isIntersectionEnabled const">
-			<summary>
-			Returns a value indicating if intersection detection is enabled for the widget.
+			Returns a value indicating if the widget is expanded.
 			</summary>  
-			<returns>true if intersection detection is enabled for the widget; otherwise, false.</returns>
+			<returns>true if the widget is expanded; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Widget.isOverlapped const">
+			<summary>
+			Returns a value indicating if the widget is overlapped.
+			</summary>  
+			<returns>true if the widget is overlapped; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Widget.isBackground const">
+			<summary>
+			Returns a value indicating if the widget is a background one.
+			</summary>  
+			<returns>true if the widget a background one; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Widget.isFixed const">
+			<summary>
+			Returns a value indicating if the widget is fixed.
+			</summary>  
+			<returns>true if the widget is fixed; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Widget.isLayout const">
+			<summary>
+			Returns a value indicating if the widget is of a type that is responsible for the layout.
+			</summary>  
+			<returns>true if the widget is a layout; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Widget.getLifetimeSelf const">
+			<summary>
+			Returns the lifetime management type set for the widget.					Lifetime of each widget in the hierarchy is defined by it's root. Setting lifetime management type for a child widget different from the one set for the root has no effect.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Widget.setLifetime(Widget::LIFETIME)">
+			<summary>
+			Sets the lifetime management type for the widget. By default, the LIFETIME_ENGINE type is used.
+			</summary> 
+			<param name="lifetime"> Lifetime management type. </param> 
+		</member>
+		<member name="M:Unigine.Widget.getLifetime const">
+			<summary>
+			Returns the lifetime management type for the root of the widget, or for the widget itself (if it is not a child for another widget).					Lifetime of each widget in the hierarchy is defined by it's root. Thus, lifetime management type set for a child widget that differs from the one set for the root is ignored.
+			</summary>  
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_VBOX">
+			<summary>
+			Vertical box. See also: WidgetVBox.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_HBOX">
+			<summary>
+			Horizontal box. See also: WidgetHBox.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_GRID_BOX">
+			<summary>
+			Grid box. See also: WidgetGridBox.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_VPANED">
+			<summary>
+			Vertical box that allows resizing of its children. See also: WidgetVPaned.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_HPANED">
+			<summary>
+			Horizontal box that allows resizing of its children. See also: WidgetHPaned.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_LABEL">
+			<summary>
+			Text label. See also: WidgetLabel.
+		</summary>
 		</member>
 		<member name="F:Unigine.Widget.WIDGET_BUTTON">
 			<summary>
 			Simple button. See also: WidgetButton.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_CANVAS">
-			<summary>
-			Canvas widget for drawing text, lines and polygons. See also: WidgetCanvas.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_CHECK_BOX">
-			<summary>
-			Checkbox. See also: WidgetCheckbox.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_COMBO_BOX">
-			<summary>
-			Combobox. See also: WidgetCombobox.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_DIALOG">
-			<summary>
-			Dialog window. See also: WidgetDialog.
 		</summary>
 		</member>
 		<member name="F:Unigine.Widget.WIDGET_EDIT_LINE">
@@ -591,19 +655,19 @@
 			Multiline text field. See also: WidgetEdittext.
 		</summary>
 		</member>
-		<member name="F:Unigine.Widget.WIDGET_ENGINE">
+		<member name="F:Unigine.Widget.WIDGET_CHECK_BOX">
 			<summary>
-			Engine-specific widget (manipulator). See also: WidgetManipulator.
+			Checkbox. See also: WidgetCheckbox.
 		</summary>
 		</member>
-		<member name="F:Unigine.Widget.WIDGET_EXTERN">
+		<member name="F:Unigine.Widget.WIDGET_COMBO_BOX">
 			<summary>
-			External widget.
+			Combobox. See also: WidgetCombobox.
 		</summary>
 		</member>
-		<member name="F:Unigine.Widget.WIDGET_GRID_BOX">
+		<member name="F:Unigine.Widget.WIDGET_CANVAS">
 			<summary>
-			Grid box. See also: WidgetGridBox.
+			Canvas widget for drawing text, lines and polygons. See also: WidgetCanvas.
 		</summary>
 		</member>
 		<member name="F:Unigine.Widget.WIDGET_GROUP_BOX">
@@ -611,39 +675,19 @@
 			Group box. See also: WidgetGroupBox.
 		</summary>
 		</member>
-		<member name="F:Unigine.Widget.WIDGET_HBOX">
-			<summary>
-			Horizontal box. See also: WidgetHBox.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_HPANED">
-			<summary>
-			Horizontal box that allows resizing of its children. See also: WidgetHPaned.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_ICON">
-			<summary>
-			Icon. See also: WidgetIcon.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_LABEL">
-			<summary>
-			Text label. See also: WidgetLabel.
-		</summary>
-		</member>
 		<member name="F:Unigine.Widget.WIDGET_LIST_BOX">
 			<summary>
 			List box. See also: WidgetListBox.
 		</summary>
 		</member>
-		<member name="F:Unigine.Widget.WIDGET_MENU_BAR">
+		<member name="F:Unigine.Widget.WIDGET_TREE_BOX">
 			<summary>
-			Menu bar. See also: WidgetMenuBar.
+			Tree box. See also: WidgetTreeBox.
 		</summary>
 		</member>
-		<member name="F:Unigine.Widget.WIDGET_MENU_BOX">
+		<member name="F:Unigine.Widget.WIDGET_TAB_BOX">
 			<summary>
-			Menu. See also: WidgetMenuBox.
+			Tabbed box. See also: WidgetTabBox.
 		</summary>
 		</member>
 		<member name="F:Unigine.Widget.WIDGET_SCROLL">
@@ -656,14 +700,14 @@
 			Box with scrolling. See also: WidgetScrollBox.
 		</summary>
 		</member>
-		<member name="F:Unigine.Widget.WIDGET_SLIDER">
-			<summary>
-			A slider: horizontal or vertical one. See also: WidgetSlider.
-		</summary>
-		</member>
 		<member name="F:Unigine.Widget.WIDGET_SPACER">
 			<summary>
 			Spacer: horizontal or vertical one. See also: WidgetSpacer.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_SLIDER">
+			<summary>
+			A slider: horizontal or vertical one. See also: WidgetSlider.
 		</summary>
 		</member>
 		<member name="F:Unigine.Widget.WIDGET_SPIN_BOX">
@@ -676,24 +720,14 @@
 			Spinbox with double values. See also: WidgetSpinBoxDouble.
 		</summary>
 		</member>
+		<member name="F:Unigine.Widget.WIDGET_ICON">
+			<summary>
+			Icon. See also: WidgetIcon.
+		</summary>
+		</member>
 		<member name="F:Unigine.Widget.WIDGET_SPRITE">
 			<summary>
 			Sprite. See also: WidgetSprite.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_SPRITE_NODE">
-			<summary>
-			Node Sprite. See also: WidgetSpriteNode.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_SPRITE_VIEWPORT">
-			<summary>
-			Viewport Sprite. See also: WidgetSpriteViewport.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_SPRITE_SHADER">
-			<summary>
-			Shader Sprite. See also: WidgetSpriteShader.
 		</summary>
 		</member>
 		<member name="F:Unigine.Widget.WIDGET_SPRITE_VIDEO">
@@ -701,24 +735,29 @@
 			Video Sprite. See also: WidgetSpriteVideo.
 		</summary>
 		</member>
-		<member name="F:Unigine.Widget.WIDGET_TAB_BOX">
+		<member name="F:Unigine.Widget.WIDGET_SPRITE_SHADER">
 			<summary>
-			Tabbed box. See also: WidgetTabBox.
+			Shader Sprite. See also: WidgetSpriteShader.
 		</summary>
 		</member>
-		<member name="F:Unigine.Widget.WIDGET_TREE_BOX">
+		<member name="F:Unigine.Widget.WIDGET_SPRITE_VIEWPORT">
 			<summary>
-			Tree box. See also: WidgetTreeBox.
+			Viewport Sprite. See also: WidgetSpriteViewport.
 		</summary>
 		</member>
-		<member name="F:Unigine.Widget.WIDGET_VBOX">
+		<member name="F:Unigine.Widget.WIDGET_SPRITE_NODE">
 			<summary>
-			Vertical box. See also: WidgetVBox.
+			Node Sprite. See also: WidgetSpriteNode.
 		</summary>
 		</member>
-		<member name="F:Unigine.Widget.WIDGET_VPANED">
+		<member name="F:Unigine.Widget.WIDGET_MENU_BAR">
 			<summary>
-			Vertical box that allows resizing of its children. See also: WidgetVPaned.
+			Menu bar. See also: WidgetMenuBar.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_MENU_BOX">
+			<summary>
+			Menu. See also: WidgetMenuBox.
 		</summary>
 		</member>
 		<member name="F:Unigine.Widget.WIDGET_WINDOW">
@@ -726,39 +765,9 @@
 			Window. See also: WidgetWindow.
 		</summary>
 		</member>
-		<member name="F:Unigine.Widget.WIDGET_MANIPULATOR_SCALER">
+		<member name="F:Unigine.Widget.WIDGET_DIALOG">
 			<summary>
-			Scaler Manipulator. See also: WidgetManipulatorScaler.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_MANIPULATOR_ROTATOR">
-			<summary>
-			Rotator Manipulator. See also: WidgetManipulatorRotator.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_MANIPULATOR_TRANSLATOR">
-			<summary>
-			Translator Manipulator. See also: WidgetManipulatorTranslator.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_MANIPULATOR">
-			<summary>
-			Manipulator widget. See also: WidgetManipulator.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_DIALOG_IMAGE">
-			<summary>
-			Image Dialog. See also: WidgetDialogImage.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_DIALOG_COLOR">
-			<summary>
-			Color Dialog. See also: WidgetDialogColor.
-		</summary>
-		</member>
-		<member name="F:Unigine.Widget.WIDGET_DIALOG_FILE">
-			<summary>
-			File Dialog. See also: WidgetDialogFile.
+			Dialog window. See also: WidgetDialog.
 		</summary>
 		</member>
 		<member name="F:Unigine.Widget.WIDGET_DIALOG_MESSAGE">
@@ -766,9 +775,74 @@
 			Message Dialog. See also: WidgetDialogMessage.
 		</summary>
 		</member>
+		<member name="F:Unigine.Widget.WIDGET_DIALOG_FILE">
+			<summary>
+			File Dialog. See also: WidgetDialogFile.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_DIALOG_COLOR">
+			<summary>
+			Color Dialog. See also: WidgetDialogColor.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_DIALOG_IMAGE">
+			<summary>
+			Image Dialog. See also: WidgetDialogImage.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_MANIPULATOR">
+			<summary>
+			Manipulator widget. See also: WidgetManipulator.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_MANIPULATOR_TRANSLATOR">
+			<summary>
+			Translator Manipulator. See also: WidgetManipulatorTranslator.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_MANIPULATOR_ROTATOR">
+			<summary>
+			Rotator Manipulator. See also: WidgetManipulatorRotator.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_MANIPULATOR_SCALER">
+			<summary>
+			Scaler Manipulator. See also: WidgetManipulatorScaler.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_EXTERN">
+			<summary>
+			External widget.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_ENGINE">
+			<summary>
+			Engine-specific widget (manipulator). See also: WidgetManipulator.
+		</summary>
+		</member>
 		<member name="F:Unigine.Widget.NUM_WIDGETS">
 			<summary>
 			Total number of widget types.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.LIFETIME_WORLD">
+			<summary>
+			Lifetime of the widget or user interface is managed by the world. The widget/user interface will be deleted automatically on closing the world.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.LIFETIME_WINDOW">
+			<summary>
+			Lifetime of the widget or user interface is managed by the window. The widget/user interface will be deleted automatically on deleting the window.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.LIFETIME_ENGINE">
+			<summary>
+			Lifetime of the widget or user interface is managed by the Engine. The widget/user interface will be deleted automatically on Engine shutdown.					When using this lifetime management type, the GUI instance can be empty for the widget: it will be assigned automatically when adding the widget to a window. For a user interface, the Gui instance must be set via the setGui() method.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.LIFETIME_MANUAL">
+			<summary>
+			Lifetime of the widget or user interface is managed by the user. The widget/user interface should be deleted manually.					When using this lifetime management type, the GUI instance can be empty for the widget: it will be assigned automatically when adding the widget to a window. For a user interface, the Gui instance must be set via the setGui() method.
 		</summary>
 		</member>
 		<member name="M:Unigine.WidgetButton.#ctor(Unigine.Ptr{Gui},char)">
@@ -798,13 +872,13 @@
 		</member>
 		<member name="M:Unigine.WidgetButton.setImage(Unigine.Ptr{Unigine.Image})">
 			<summary>
-			Updates a button image.
+			Sets a new image for the button.The button is automatically stretched or shrinked to match the size of the current image. When you resize the button the size of the image does not change. In case you need to create a type of button widget with an auto-adjusted image size, or image rotation, please consider Widget Sprite instead.
 			</summary> 
 			<param name="image"> Image to set. </param> 
 		</member>
 		<member name="M:Unigine.WidgetButton.getImage const">
 			<summary>
-			Returns the button image.
+			Returns the current button image.The button is automatically stretched or shrinked to match the size of the current image. When you resize the button the size of the image does not change. In case you need to create a type of button widget with an auto-adjusted image size, or image rotation, please consider Widget Sprite instead.
 			</summary>  
 			<returns>Button image.</returns>
 		</member>
@@ -834,13 +908,13 @@
 		</member>
 		<member name="M:Unigine.WidgetButton.setTexture(char)">
 			<summary>
-			Sets a button image texture.
+			Sets a new texture to be used as the button image.The button is automatically stretched or shrinked to match the size of the current image. When you resize the button the size of the image does not change. In case you need to create a type of button widget with an auto-adjusted image size, or image rotation, please consider Widget Sprite instead.
 			</summary> 
 			<param name="texture"> Path to a texture file. </param> 
 		</member>
 		<member name="M:Unigine.WidgetButton.getTexture const">
 			<summary>
-			Returns the path to the button image texture.
+			Returns the path to the current button image texture.The button is automatically stretched or shrinked to match the size of the current image. When you resize the button the size of the image does not change. In case you need to create a type of button widget with an auto-adjusted image size, or image rotation, please consider Widget Sprite instead.
 			</summary>  
 			<returns>Path to the button image texture.</returns>
 		</member>
@@ -1232,6 +1306,20 @@
 			<param name="num"> Number of the text element. </param> 
 			<returns>Canvas element ID of the text string.</returns>
 		</member>
+		<member name="M:Unigine.WidgetCanvas.setTextAlign(int,int)">
+			<summary>
+			Updates the alignment of the specified text.
+			</summary> 
+			<param name="text"> Canvas element ID of the text string. </param>
+			<param name="align"> Text alignment. One or a combination of the Gui::ALIGN_* values (TOP, BOTTOM, LEFT, RIGHT, CENTER). </param> 
+		</member>
+		<member name="M:Unigine.WidgetCanvas.getTextAlign(int) const">
+			<summary>
+			Returns the current alignment of the specified text.
+			</summary> 
+			<param name="text"> Canvas element ID of the text string. </param> 
+			<returns>Text alignment. One or a combination of the Gui::ALIGN_* values (TOP, BOTTOM, LEFT, RIGHT, CENTER).</returns>
+		</member>
 		<member name="M:Unigine.WidgetCanvas.setTextColor(int,Unigine.Math.vec4)">
 			<summary>
 			Updates the color of the specified text.
@@ -1584,6 +1672,20 @@
 			<param name="polygon"> ID of the polygon. </param> 
 			<returns>true if the polygon is rendered, otherwise, false.</returns>
 		</member>
+		<member name="M:Unigine.WidgetCanvas.getPolygonTextureWidth(int) const">
+			<summary>
+			Returns the width of the polygon texture.
+			</summary> 
+			<param name="polygon"> ID of the polygon. </param> 
+			<returns>Width of the polygon texture.</returns>
+		</member>
+		<member name="M:Unigine.WidgetCanvas.getPolygonTextureHeight(int) const">
+			<summary>
+			Returns the height of the polygon texture.
+			</summary> 
+			<param name="polygon"> ID of the polygon. </param> 
+			<returns>Height of the polygon texture.</returns>
+		</member>
 		<member name="M:Unigine.WidgetCheckBox.#ctor(Unigine.Ptr{Gui},char)">
 			<summary>
 			Constructor. Creates a checkbox with a given text label and adds it to the specified GUI.
@@ -1625,25 +1727,25 @@
 			<summary>
 			Sets the color to be used for the checked widget's state.
 			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
+			<param name="color"> The four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.WidgetCheckBox.getCheckedColor const">
 			<summary>
 			Returns the current color used for the checked widget's state.
 			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+			<returns>The four-component vector specifying the color in the RGBA format.</returns>
 		</member>
 		<member name="M:Unigine.WidgetCheckBox.setUncheckedColor(Unigine.Math.vec4)">
 			<summary>
 			Sets the color to be used for the unchecked widget's state.
 			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
+			<param name="color"> The four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.WidgetCheckBox.getUncheckedColor const">
 			<summary>
 			Returns the current color used for the unchecked widget's state.
 			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+			<returns>The four-component vector specifying the color in the RGBA format.</returns>
 		</member>
 		<member name="M:Unigine.WidgetComboBox.#ctor(Unigine.Ptr{Gui})">
 			<summary>
@@ -2207,6 +2309,41 @@
 			</summary>  
 			<returns>Text message.</returns>
 		</member>
+		<member name="M:Unigine.WidgetDragArea.#ctor(Unigine.Ptr{Gui})">
+			<summary>
+			Constructor. Creates a drag area and adds it to the specified GUI.
+			</summary> 
+			<param name="gui"> GUI, to which the drag area will belong. </param> 
+		</member>
+		<member name="M:Unigine.WidgetDragArea.#ctor">
+			<summary>
+			Default constructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.WidgetDragArea.setBackground(int)">
+			<summary>
+			Enables/disables rendering of the background for the drag area.
+			</summary> 
+			<param name="background"> 1 to enable background rendering, 0 to disable it. </param> 
+		</member>
+		<member name="M:Unigine.WidgetDragArea.getBackground const">
+			<summary>
+			Returns the flag indicating if background rendering is enabled or disabled for the drag area.
+			</summary>  
+			<returns>1 if background rendering is enabled; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.WidgetDragArea.setBackgroundColor(Unigine.Math.vec4)">
+			<summary>
+			Sets a color for the background of the drag area.
+			</summary> 
+			<param name="color"> Background color. </param> 
+		</member>
+		<member name="M:Unigine.WidgetDragArea.getBackgroundColor const">
+			<summary>
+			Returns the color of the drag area background.
+			</summary>  
+			<returns>Background color.</returns>
+		</member>
 		<member name="M:Unigine.WidgetEditLine.#ctor(Unigine.Ptr{Gui},char)">
 			<summary>
 			Constructor. Creates a text field and adds it to the specified GUI.
@@ -2331,37 +2468,37 @@
 			<summary>
 			Sets the background color for the widget.
 			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
+			<param name="color"> The four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.WidgetEditLine.getBackgroundColor const">
 			<summary>
 			Returns the current background color for the widget.
 			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+			<returns>The four-component vector specifying the color in the RGBA format.</returns>
 		</member>
 		<member name="M:Unigine.WidgetEditLine.setSelectionColor(Unigine.Math.vec4)">
 			<summary>
 			Sets the color to be used to highlight the current selection for the widget.
 			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
+			<param name="color"> The four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.WidgetEditLine.getSelectionColor const">
 			<summary>
 			Returns the current color used to highlight the current selection for the widget.
 			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+			<returns>The four-component vector specifying the color in the RGBA format.</returns>
 		</member>
 		<member name="M:Unigine.WidgetEditLine.setBorderColor(Unigine.Math.vec4)">
 			<summary>
 			Sets the border color for the widget.
 			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
+			<param name="color"> The four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.WidgetEditLine.getBorderColor const">
 			<summary>
 			Returns the current border color for the widget.
 			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+			<returns>The four-component vector specifying the color in the RGBA format.</returns>
 		</member>
 		<member name="M:Unigine.WidgetEditText.#ctor(Unigine.Ptr{Gui},char)">
 			<summary>
@@ -2608,9 +2745,15 @@
 		</member>
 		<member name="M:Unigine.WidgetExternBase.keyPress(unsignedint)">
 			<summary>
-			Keyboard press event.
+			Keyboard press event (scan code).
 			</summary> 
 			<param name="key"> Key code. </param> 
+		</member>
+		<member name="M:Unigine.WidgetExternBase.textPress(unsignedint)">
+			<summary>
+			Keyboard press event (virtual key).
+			</summary> 
+			<param name="unicode"> Virtual key code. </param> 
 		</member>
 		<member name="M:Unigine.WidgetExternBase.render">
 			<summary>
@@ -2622,6 +2765,10 @@
 			Widget update function.
 			</summary> 
 			<param name="ifps"> Inverse FPS value. </param> 
+		</member>
+		<member name="M:Unigine.WidgetExternBase.updatePositions">
+			<summary>
+			</summary>  
 		</member>
 		<member name="M:Unigine.WidgetExtern.#ctor(Unigine.Ptr{Gui},int)">
 			<summary>
@@ -2818,25 +2965,25 @@
 			<summary>
 			Sets the background color to be used for the widget.
 			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
+			<param name="color"> The four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.WidgetGroupBox.getBackgroundColor const">
 			<summary>
 			Returns the current background color used for the widget.
 			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+			<returns>The four-component vector specifying the color in the RGBA format.</returns>
 		</member>
 		<member name="M:Unigine.WidgetGroupBox.setBorderColor(Unigine.Math.vec4)">
 			<summary>
 			Sets the border color for the widget.
 			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
+			<param name="color"> The four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.WidgetGroupBox.getBorderColor const">
 			<summary>
 			Returns the current border color for the widget.
 			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+			<returns>The four-component vector specifying the color in the RGBA format.</returns>
 		</member>
 		<member name="M:Unigine.WidgetHBox.#ctor(Unigine.Ptr{Gui},int,int)">
 			<summary>
@@ -3385,7 +3532,13 @@
 			<summary>
 			Returns a value indicating if any axis of the manipulator is currently in focus.
 			</summary>  
-			<returns>1 if any axis of the manipulator is currently in focus; otherwise, 0.</returns>
+			<returns>true if any axis of the manipulator is currently in focus; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.WidgetManipulator.isHoverAxis const">
+			<summary>
+			Returns a value indicating if any axis of the manipulator is currently hovered.
+			</summary>  
+			<returns>true if any axis of the manipulator is currently hovered; otherwise, false.</returns>
 		</member>
 		<member name="F:Unigine.WidgetManipulator.MASK_X">
 			<summary>
@@ -3680,13 +3833,13 @@
 			<summary>
 			Sets the color to be used to highlight the current selection for the widget.
 			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
+			<param name="color"> The four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.WidgetMenuBar.getSelectionColor const">
 			<summary>
 			Returns the current color used to highlight the current selection for the widget.
 			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+			<returns>The four-component vector specifying the color in the RGBA format.</returns>
 		</member>
 		<member name="M:Unigine.WidgetMenuBox.#ctor(Unigine.Ptr{Gui},int,int)">
 			<summary>
@@ -4039,7 +4192,7 @@
 			<summary>
 			Returns the current orientation of the scroller: horizontal or vertical one.
 			</summary>  
-			<returns>1 if the orientation is vertical; 0 if it is horizontal.</returns>
+			<returns>1 if the orientation is horizontal; 0 if it is vertical.</returns>
 		</member>
 		<member name="M:Unigine.WidgetScroll.setStepSize(int)">
 			<summary>
@@ -4088,6 +4241,18 @@
 			Returns a value indicating if slider buttons are displayed.
 			</summary>  
 			<returns>true if slider buttons are displayed, otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.WidgetScroll.setMouseWheelOrientation(int)">
+			<summary>
+			Sets orientation of the mouse wheel scroll: horizontal or vertical (by default).
+			</summary> 
+			<param name="orientation"> 1 to set horizontal orientation; 0 to set vertical one. </param> 
+		</member>
+		<member name="M:Unigine.WidgetScroll.getMouseWheelOrientation const">
+			<summary>
+			Returns orientation of the mouse wheel scroll: horizontal or vertical.
+			</summary>  
+			<returns>1 if the orientation is horizontal; 0 if it is vertical.</returns>
 		</member>
 		<member name="M:Unigine.WidgetScrollBox.#ctor(Unigine.Ptr{Gui},int,int)">
 			<summary>
@@ -4471,25 +4636,25 @@
 			<summary>
 			Sets the background color to be used for the widget.
 			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
+			<param name="color"> The four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.WidgetSlider.getBackgroundColor const">
 			<summary>
 			Returns the current background color used for the widget.
 			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+			<returns>The four-component vector specifying the color in the RGBA format.</returns>
 		</member>
 		<member name="M:Unigine.WidgetSlider.setButtonColor(Unigine.Math.vec4)">
 			<summary>
 			Sets the color for the widget's button.
 			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
+			<param name="color"> The four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.WidgetSlider.getButtonColor const">
 			<summary>
 			Returns the current color for the widget's button.
 			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+			<returns>The four-component vector specifying the color in the RGBA format.</returns>
 		</member>
 		<member name="M:Unigine.WidgetSpacer.#ctor(Unigine.Ptr{Gui})">
 			<summary>
@@ -6066,13 +6231,13 @@
 			<summary>
 			Enables or disables multiple selection of items.
 			</summary> 
-			<param name="selection"> 1 to enable multiple selection, 0 to disable it. </param> 
+			<param name="selection"> true to enable multiple selection, false to disable it. </param> 
 		</member>
 		<member name="M:Unigine.WidgetTreeBox.isMultiSelection const">
 			<summary>
 			Returns a value indicating if multiple selection of items is enabled. The default is 0.
 			</summary>  
-			<returns>1 if several items can be selected at once; otherwise, 0.</returns>
+			<returns>true if several items can be selected at once; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetTreeBox.getNumItemChildren(int) const">
 			<summary>
@@ -6173,6 +6338,18 @@
 			Returns the ID of the item, over which the cursor is currently hovering.
 			</summary>  
 			<returns>Item ID in range from 0 to the total number of items.</returns>
+		</member>
+		<member name="M:Unigine.WidgetTreeBox.setNeedSortChildren(bool)">
+			<summary>
+			Sets the value specifying if sorting of children is required. Sorting is performed with the default compare algorithm.
+			</summary> 
+			<param name="children"> true to enable sorting of children, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.WidgetTreeBox.isNeedSortChildren const">
+			<summary>
+			Returns the value specifying if sorting of children is required. Sorting is performed with the default compare algorithm.
+			</summary>  
+			<returns>true if sorting of children is enabled, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetVBox.#ctor(Unigine.Ptr{Gui},int,int)">
 			<summary>
@@ -6577,25 +6754,94 @@
 			<summary>
 			Sets the background color to be used for the widget.
 			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
+			<param name="color"> The four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.WidgetWindow.getBackgroundColor const">
 			<summary>
 			Returns the current background color used for the widget.
 			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+			<returns>The four-component vector specifying the color in the RGBA format.</returns>
 		</member>
 		<member name="M:Unigine.WidgetWindow.setBorderColor(Unigine.Math.vec4)">
 			<summary>
 			Sets the border color for the widget.
 			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
+			<param name="color"> The four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.WidgetWindow.getBorderColor const">
 			<summary>
 			Returns the current border color for the widget.
 			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
+			<returns>The four-component vector specifying the color in the RGBA format.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.setDragAreaEnabled(bool)">
+			<summary>
+			Sets a value indicating if the drag area of the window is enabled.
+			</summary> 
+			<param name="enabled"> true to enable the drag area, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.WidgetWindow.isDragAreaEnabled const">
+			<summary>
+			Returns the value indicating if the drag area of the window is enabled.
+			</summary>  
+			<returns>Value indicating if the drag area of the window is enabled: true if the drag area is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.setDragAreaBackground(int)">
+			<summary>
+			Enables/disables rendering of the background for the drag area.
+			</summary> 
+			<param name="background"> 1 to enable background rendering, 0 to disable it. </param> 
+		</member>
+		<member name="M:Unigine.WidgetWindow.getDragAreaBackground const">
+			<summary>
+			Returns the value indicating if background rendering is enabled or disabled for the drag area.
+			</summary>  
+			<returns>Value indicating if rendering of the background is enabled: 1 if background rendering is enabled; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.setDragAreaBackgroundColor(Unigine.Math.vec4)">
+			<summary>
+			Sets a color for the background of the drag area.
+			</summary> 
+			<param name="color"> Background color. </param> 
+		</member>
+		<member name="M:Unigine.WidgetWindow.getDragAreaBackgroundColor const">
+			<summary>
+			Returns the color of the drag area background.
+			</summary>  
+			<returns>Background color.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.setDragAreaPadding(int,int,int,int)">
+			<summary>
+			Sets paddings for all sides of the drag area.
+			</summary> 
+			<param name="l"> Left-side padding in pixels. </param>
+			<param name="r"> Right-side padding in pixels. </param>
+			<param name="t"> Top padding in pixels. </param>
+			<param name="b"> Bottom padding in pixels. </param> 
+		</member>
+		<member name="M:Unigine.WidgetWindow.getDragAreaPaddingLeft const">
+			<summary>
+			Returns the current left-side padding for the drag area.
+			</summary>  
+			<returns>Left-side padding in pixels.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.getDragAreaPaddingRight const">
+			<summary>
+			Returns the current right-side padding for the drag area.
+			</summary>  
+			<returns>Right-side padding in pixels.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.getDragAreaPaddingTop const">
+			<summary>
+			Returns the current top padding for the drag area.
+			</summary>  
+			<returns>Top padding in pixels.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.getDragAreaPaddingBottom const">
+			<summary>
+			Returns the current bottom padding for the drag area.
+			</summary>  
+			<returns>Bottom padding in pixels.</returns>
 		</member>
 	</members>
 </doc>

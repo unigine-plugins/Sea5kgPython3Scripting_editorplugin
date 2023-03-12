@@ -543,6 +543,10 @@
 			<param name="x"> X, Y, and Z components of the scale vector. </param> 
 			<returns>Scaled matrix.</returns>
 		</member>
+		<member name="M:Unigine.Math.dmat4.hash const">
+			<summary>
+			</summary>  
+		</member>
 		<member name="F:Unigine.Math.dmat4.dmat4_identity">
 			<summary>
 			Identity matrix.

@@ -406,6 +406,10 @@
 			Returns the maximum of X, Y, Z, and W components.
 			</summary>  
 		</member>
+		<member name="M:Unigine.Math.dvec4.hash const">
+			<summary>
+			</summary>  
+		</member>
 		<member name="F:Unigine.Math.dvec4.dvec4_eps">
 			<summary>
 			Vector filled with epsilon constant (1e-6f).

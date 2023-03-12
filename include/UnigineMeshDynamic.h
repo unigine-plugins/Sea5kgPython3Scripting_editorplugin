@@ -44,7 +44,6 @@ public:
 	{
 		TYPE_HALF = 0,
 		TYPE_FLOAT,
-		TYPE_DOUBLE,
 		TYPE_UCHAR,
 		TYPE_USHORT,
 		NUM_TYPES,
@@ -77,8 +76,8 @@ public:
 	int renderSurface(int mode, int base, int begin, int end);
 	int renderInstancedSurface(int mode, int base, int begin, int end, int num);
 	int render(int mode, int flush);
-	long long getSystemMemoryUsage() const;
-	long long getVideoMemoryUsage() const;
+	size_t getSystemMemoryUsage() const;
+	size_t getVideoMemoryUsage() const;
 	void setVertexFormat(const MeshDynamic::Attribute *attributes, int attributes_size);
 	int getVertexSize() const;
 	int getNumAttributes() const;
@@ -92,8 +91,8 @@ public:
 	void *getVertex();
 	void addVertex(const void *vertex);
 	void *addVertexArray(int num_vertex);
-	void addVertexArray(const void * vertex, int num_vertex);
-	void setVertexArray(const void * vertex, int num_vertex);
+	void addVertexArray(const void *vertex, int num_vertex);
+	void setVertexArray(const void *vertex, int num_vertex);
 	Vector<unsigned char> &getVertexArray();
 	void addVertexHalf1(int attribute, float x);
 	void addVertexHalf2(int attribute, float x, float y);
@@ -104,11 +103,6 @@ public:
 	void addVertexFloat2(int attribute, float x, float y);
 	void addVertexFloat3(int attribute, float x, float y, float z);
 	void addVertexFloat4(int attribute, float x, float y, float z, float w);
-	void addVertexDouble(int attribute, const double *value, int value_size);
-	void addVertexDouble1(int attribute, double x);
-	void addVertexDouble2(int attribute, double x, double y);
-	void addVertexDouble3(int attribute, double x, double y, double z);
-	void addVertexDouble4(int attribute, double x, double y, double z, double w);
 	void addVertexUChar(int attribute, const unsigned char *value, int value_size);
 	void addVertexUChar1(int attribute, unsigned char x);
 	void addVertexUChar2(int attribute, unsigned char x, unsigned char y);
@@ -128,11 +122,6 @@ public:
 	void setVertexFloat2(int attribute, float x, float y);
 	void setVertexFloat3(int attribute, float x, float y, float z);
 	void setVertexFloat4(int attribute, float x, float y, float z, float w);
-	void setVertexDouble(int attribute, const double *value, int value_size);
-	void setVertexDouble1(int attribute, double x);
-	void setVertexDouble2(int attribute, double x, double y);
-	void setVertexDouble3(int attribute, double x, double y, double z);
-	void setVertexDouble4(int attribute, double x, double y, double z, double w);
 	void setVertexUChar(int attribute, const unsigned char *value, int value_size);
 	void setVertexUChar1(int attribute, unsigned char x);
 	void setVertexUChar2(int attribute, unsigned char x, unsigned char y);
@@ -152,11 +141,6 @@ public:
 	void setVertexFloat2(int vertex, int attribute, float x, float y);
 	void setVertexFloat3(int vertex, int attribute, float x, float y, float z);
 	void setVertexFloat4(int vertex, int attribute, float x, float y, float z, float w);
-	void setVertexDouble(int vertex, int attribute, const double *value, int value_size);
-	void setVertexDouble1(int vertex, int attribute, double x);
-	void setVertexDouble2(int vertex, int attribute, double x, double y);
-	void setVertexDouble3(int vertex, int attribute, double x, double y, double z);
-	void setVertexDouble4(int vertex, int attribute, double x, double y, double z, double w);
 	void setVertexUChar(int vertex, int attribute, const unsigned char *value, int value_size);
 	void setVertexUChar1(int vertex, int attribute, unsigned char x);
 	void setVertexUChar2(int vertex, int attribute, unsigned char x, unsigned char y);
@@ -182,7 +166,7 @@ public:
 	int *addIndicesArray(int num_indices);
 	void addIndicesArray(const int *indices, int indices_size);
 	void setIndicesArray(const int *indices, int indices_size);
-	Vector< int > &getIndicesArray();
+	Vector<int> &getIndicesArray();
 	void addPoints(int num_points);
 	void addLineStrip(int num_vertex);
 	void addTriangles(int num_triangles);

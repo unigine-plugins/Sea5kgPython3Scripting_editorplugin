@@ -127,6 +127,20 @@
 			<param name="stream"> Stream in which the saved curve parameter data is stored. </param> 
 			<returns>true if the curve data is restored successfully; otherwise, false.</returns>
 		</member>
+		<member name="M:Unigine.Curve2d.save(Unigine.Ptr{Json}) const">
+			<summary>
+			Saves data of the curve to the specified instance of the Json class.
+			</summary> 
+			<param name="json"> Json class instance to which the curve data will be saved. </param> 
+			<returns>true if the curve data is successfully saved to the specified Json class instance; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Curve2d.load(Unigine.Ptr{Json})">
+			<summary>
+			Loads curve data from the specified instance of the Json class.
+			</summary> 
+			<param name="json"> Json class instance in which the curve data is stored. </param> 
+			<returns>true if the curve data is successfully loaded from the specified Json class instance; otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.Curve2d.save(Unigine.Ptr{Unigine.Xml}) const">
 			<summary>
 			Saves data of the curve to the specified instance of the Xml class.

@@ -753,6 +753,18 @@
 			</summary>  
 			<returns>Current warning mode of the shader compiler.</returns>
 		</member>
+		<member name="M:Unigine.Shader.setDisableCompileCache(bool)">
+			<summary>
+			Sets a value indicating if compilation cache for the shader is disabled.
+			</summary> 
+			<param name="cache"> true to disable compilation cache for the shader; otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.Shader.isDisableCompileCache const">
+			<summary>
+			Returns a value indicating if compilation cache for the shader is disabled.
+			</summary>  
+			<returns>true if compilation cache for the shader is disabled; otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.Shader.setDisableExport(bool)">
 			<summary>
 			Sets a value indicating if shader export to a file is disabled. By default UNIGINE enables exporting a shader program to a file (e.g. for debug purposes). Shader files are created in native languages for both graphic APIs (Direct3D - .hlsl extension, OpenGL - .glsl extension).

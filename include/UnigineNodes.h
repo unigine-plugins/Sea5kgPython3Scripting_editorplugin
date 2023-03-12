@@ -76,10 +76,10 @@ public:
 	void setEnabledCallbackName(const char *name);
 	const char *getPositionCallbackName() const;
 	void setPositionCallbackName(const char *name);
-	void *addEnabledCallback(Unigine::CallbackBase1< Ptr<NodeTrigger> > *func);
+	void *addEnabledCallback(CallbackBase1<Ptr<NodeTrigger>> *func);
 	bool removeEnabledCallback(void *id);
 	void clearEnabledCallbacks();
-	void *addPositionCallback(Unigine::CallbackBase1< Ptr<NodeTrigger> > *func);
+	void *addPositionCallback(CallbackBase1<Ptr<NodeTrigger>> *func);
 	bool removePositionCallback(void *id);
 	void clearPositionCallbacks();
 };
@@ -128,7 +128,7 @@ public:
 	virtual int restoreState(const Ptr<Stream> &stream);
 	static void savePointer(const StreamPtr &stream, NodeExternBase *node);
 	static NodeExternBase *restorePointer(const StreamPtr &stream);
-	private:
+private:
 	template <class Type> static NodeExternBase *constructor(void *object) { return new Type(object); }
 	struct NodeExternData;
 	NodeExternData *data;

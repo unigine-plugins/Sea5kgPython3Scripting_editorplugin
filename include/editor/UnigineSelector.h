@@ -14,20 +14,20 @@
 #pragma once
 
 
-#include <editor/Constants.h>
-#include <editor/EditorGlobal.h>
+#include <editor/UnigineConstants.h>
+#include <editor/UnigineEditorGlobal.h>
 
+#include <UnigineGUID.h>
+#include <UnigineHashSet.h>
 #include <UnigineNode.h>
 #include <UnigineVector.h>
-#include <UnigineHashSet.h>
 
 
-namespace Unigine
+////////////////////////////////////////////////////////////////////////////////
+// Forward decl.
+////////////////////////////////////////////////////////////////////////////////
+namespace UnigineEditor
 {
-class UGUID;
-}
-
-namespace Editor {
 class IndexList;
 
 namespace Internal {
@@ -37,7 +37,7 @@ class IndexListPrivate;
 }}
 
 
-namespace Editor
+namespace UnigineEditor
 {
 
 /// <summary> Selector type, defines the type of selected entities. The first 256 types are reserved by UNIGINE, user selector types start from SELECTOR_USER + i (256 and higher).</summary>
@@ -58,7 +58,7 @@ enum SelectorType
 ////////////////////////////////////////////////////////////////////////////////
 // Selector.
 ////////////////////////////////////////////////////////////////////////////////
-class EDITOR_API Selector
+class UNIGINE_EDITOR_API Selector
 {
 public:
 	Selector();
@@ -79,7 +79,7 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 // TODO(SiN_Bizkit: 04/11/19): Choose a clear name.
 /// <summary> Selector for GUIDs-based items (materials, properties, runtimes). An item of this type is associated with a file referred to via a GUID.</summary>
-class EDITOR_API SelectorGUIDs : public Selector
+class UNIGINE_EDITOR_API SelectorGUIDs : public Selector
 {
 public:
 	/// <summary> Creates a runtimes selector using the specified list of GUIDs.</summary>
@@ -126,7 +126,7 @@ public:
 	bool empty() const;
 
 private:
-	::Editor::Internal::SelectorGUIDsPrivate *d;
+	::UnigineEditor::Internal::SelectorGUIDsPrivate *d;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +135,7 @@ private:
 /// <summary>
 /// This class is used to manage selected nodes along with their subobjects (such as surfaces, shapes, joints, billboards, etc.).
 /// </summary>
-class EDITOR_API SelectorNodes : public Selector
+class UNIGINE_EDITOR_API SelectorNodes : public Selector
 {
 public:
 	/// <summary> Creates a new selection (<see cref="SelectorNodes"/>) combining all objects from the specified list of nodes. All surfaces of these objects shall also be included in the current selection.</summary>
@@ -155,7 +155,7 @@ public:
 	/// When an object is selected, some of its surfaces or collision shapes can also be selected,
 	/// the subitems list shall contain all of them.
 	/// </summary>
-	class EDITOR_API SubItemList
+	class UNIGINE_EDITOR_API SubItemList
 	{
 	public:
 		SubItemList();
@@ -280,14 +280,14 @@ public:
 	bool isNeedExpand() const;
 
 private:
-	::Editor::Internal::SelectorNodesPrivate *d;
+	::UnigineEditor::Internal::SelectorNodesPrivate *d;
 };
 
 /// <summary> This class represents a list of indices of selected subitems of a selected node. 
 /// When an object is selected, some of its surfaces or collision shapes can also be selected,
 /// the index list shall contain indices for all of them grouped by type.
 /// </summary>
-class EDITOR_API IndexList : public SelectorNodes::SubItemList
+class UNIGINE_EDITOR_API IndexList : public SelectorNodes::SubItemList
 {
 public:
 	IndexList();
@@ -353,8 +353,7 @@ public:
 	IndexList *clone() const override;
 
 private:
-	::Editor::Internal::IndexListPrivate *d;
+	::UnigineEditor::Internal::IndexListPrivate *d;
 };
 
-
-} // namespace Editor
+} // namespace UnigineEditor

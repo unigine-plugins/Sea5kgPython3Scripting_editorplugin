@@ -16,10 +16,11 @@
 
 #include <UnigineFactory.h>
 #include <UnigineInterpreter.h>
-#include <UnigineImport.h>
 
 namespace Unigine
 {
+
+template class UNIGINE_EXPORT Map<String, Variable>;
 
 class UNIGINE_API Exporter
 {
@@ -63,6 +64,8 @@ private:
 
 template class UNIGINE_EXPORT Map<String, Factory<String, Exporter>::FuncPtr>;
 template class UNIGINE_EXPORT Factory<String, Exporter>;
+template class UNIGINE_EXPORT Map<String, String>;
+template class UNIGINE_EXPORT Map<String, Vector<String>>;
 
 class UNIGINE_API Export
 {
@@ -86,7 +89,6 @@ public:
 			type_by_extension.append(ext, type_name);
 		}
 		exporters_factory.append<Type>(type_name);
-		Log::message("Exporter registered \"%s\".\n", type_name);
 	}
 
 	bool unregisterExporter(const char *type_name);
@@ -104,6 +106,9 @@ public:
 	String getExporterTypeByExtension(const char *extension) const;
 
 	bool doExport(const NodePtr& root_node, const char *output_filepath) const;
+
+private:
+	void export_info();
 
 private:
 	Factory<String, Exporter> exporters_factory;

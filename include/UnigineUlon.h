@@ -37,7 +37,7 @@ public:
 	long long getLong() const;
 	char getChar() const;
 	bool getBool() const;
-	Vector< String >  getArray() const;
+	Vector<String> getArray() const;
 	Math::dvec4 getDVec4() const;
 	Math::vec4 getVec4() const;
 	Math::ivec4 getIVec4() const;
@@ -67,12 +67,12 @@ public:
 	static Ptr<UlonNode> create();
 	bool load(const char *path);
 	bool parse(const char *str);
-	Vector< Ptr<UlonNode> >  getChildren() const;
+	Vector<Ptr<UlonNode>> getChildren() const;
 	const char *getType() const;
 	const char *getName() const;
 	const char *getCondition() const;
 	Ptr<UlonValue> getValue() const;
-	Vector< Ptr<UlonArg> >  getArgs() const;
+	Vector<Ptr<UlonArg>> getArgs() const;
 	bool isArg(const char *name) const;
 	float getArgFloat(const char *name, float ret = 0) const;
 	int getArgInt(const char *name, int ret = 0) const;
@@ -80,7 +80,7 @@ public:
 	bool getArgBool(const char *name, bool ret = false) const;
 	char getArgChar(const char *name, char ret = 0) const;
 	const char *getArgStr(const char *name, const char *ret = "") const;
-	Vector< String >  getArgArray(const char *name) const;
+	Vector<String> getArgArray(const char *name) const;
 	void printUnusedData(const char *name) const;
 	void clearUnusedData() const;
 };

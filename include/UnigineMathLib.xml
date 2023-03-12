@@ -642,6 +642,54 @@
 			<param name="v1"> Second vector. </param> 
 			<returns>Resulting vector.</returns>
 		</member>
+		<member name="M:Unigine.Math.distance(Unigine.vec2,Unigine.vec2)">
+			<summary>
+			Calculates the distance between the two given vectors. The distance is calculated as: length(v0 - v1).
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Distance between the two given vectors.</returns>
+		</member>
+		<member name="M:Unigine.Math.distance(Unigine.vec3,Unigine.vec3)">
+			<summary>
+			Calculates the distance between the two given vectors. The distance is calculated as: length(v0 - v1).
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Distance between the two given vectors.</returns>
+		</member>
+		<member name="M:Unigine.Math.distance(Unigine.vec4,Unigine.vec4)">
+			<summary>
+			Calculates the distance between the two given vectors. The distance is calculated as: length(v0 - v1).
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Distance between the two given vectors.</returns>
+		</member>
+		<member name="M:Unigine.Math.distance2(Unigine.vec2,Unigine.vec2)">
+			<summary>
+			Calculates the squared distance between the two given vectors. The squared distance is calculated as: length2(v0 - v1). This method is much faster than distance() - the calculation is basically the same only without the slow Sqrt call. If you simply want to compare distances, then it is faster to compare squared distances against the squares of distances as the comparison gives the same result.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Squared distance between the two given vectors.</returns>
+		</member>
+		<member name="M:Unigine.Math.distance2(Unigine.vec3,Unigine.vec3)">
+			<summary>
+			Calculates the squared distance between the two given vectors. The squared distance is calculated as: length2(v0 - v1). This method is much faster than distance() - the calculation is basically the same only without the slow Sqrt call. If you simply want to compare distances, then it is faster to compare squared distances against the squares of distances as the comparison gives the same result.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Squared distance between the two given vectors.</returns>
+		</member>
+		<member name="M:Unigine.Math.distance2(Unigine.vec4,Unigine.vec4)">
+			<summary>
+			Calculates the squared distance between the two given vectors. The squared distance is calculated as: length2(v0 - v1). This method is much faster than distance() - the calculation is basically the same only without the slow Sqrt call. If you simply want to compare distances, then it is faster to compare squared distances against the squares of distances as the comparison gives the same result.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Squared distance between the two given vectors.</returns>
+		</member>
 		<member name="M:Unigine.Math.dot(Unigine.vec2,Unigine.vec2)">
 			<summary>
 			Dot product of vectors.

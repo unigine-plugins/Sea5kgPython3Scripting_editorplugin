@@ -407,6 +407,10 @@
 			Returns the minimum of all components.
 			</summary>  
 		</member>
+		<member name="M:Unigine.Math.ivec4.hash const">
+			<summary>
+			</summary>  
+		</member>
 		<member name="F:Unigine.Math.ivec4.ivec4_one">
 			<summary>
 			Vector filled with ones (1).

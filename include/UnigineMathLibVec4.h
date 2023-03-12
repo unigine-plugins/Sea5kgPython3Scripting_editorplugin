@@ -368,7 +368,7 @@ struct alignas(16) vec4
 	UNIGINE_INLINE float maxXYZ() const { return Math::max(maxXY(), z); }
 	UNIGINE_INLINE float max() const { return Math::max(maxXYZ(), w); }
 
-	UNIGINE_INLINE unsigned int hash() const { return hashCombine(hashCombine(hashCombine(hashMurmur3(x), y), z), w); }
+	UNIGINE_INLINE unsigned int hash() const { return hashCombine(hashCombine(hashCombine(hashInteger(x), y), z), w); }
 
 	UNIGINE_INLINE static vec4 parseColor(const char *str);
 
@@ -400,6 +400,7 @@ public:
 
 constexpr vec4 vec4_zero(0.0f, ConstexprTag{});
 constexpr vec4 vec4_one(1.0f, ConstexprTag{});
+constexpr vec4 vec4_half(0.5f, ConstexprTag{});
 constexpr vec4 vec4_eps(Consts::EPS, ConstexprTag{});
 constexpr vec4 vec4_inf(Consts::INF, ConstexprTag{});
 constexpr vec4 vec4_white(1.0f, ConstexprTag{});
@@ -466,6 +467,12 @@ UNIGINE_INLINE int compare(const vec4 &v0, const vec4 &v1, float epsilon)
 }
 UNIGINE_INLINE int operator==(const vec4 &v0, const vec4 &v1) { return compare(v0, v1); }
 UNIGINE_INLINE int operator!=(const vec4 &v0, const vec4 &v1) { return !compare(v0, v1); }
+
+UNIGINE_INLINE int operator<(const vec4& v0, const vec4& v1) { return v0.x < v1.x && v0.y < v1.y && v0.z < v1.z && v0.w < v1.w; }
+UNIGINE_INLINE int operator>(const vec4& v0, const vec4& v1) { return v0.x > v1.x && v0.y > v1.y && v0.z > v1.z && v0.w > v1.w; }
+
+UNIGINE_INLINE int operator<=(const vec4& v0, const vec4& v1) { return v0.x <= v1.x && v0.y <= v1.y && v0.z <= v1.z && v0.w <= v1.w; }
+UNIGINE_INLINE int operator>=(const vec4& v0, const vec4& v1) { return v0.x >= v1.x && v0.y >= v1.y && v0.z >= v1.z && v0.w >= v1.w; }
 
 UNIGINE_INLINE vec4 &mul(vec4 &ret, const vec4 &v0, float v1)
 {
@@ -890,6 +897,15 @@ UNIGINE_INLINE vec4 frac(const vec4 &v)
 	return {frac(v.x), frac(v.y), frac(v.z), frac(v.w)};
 }
 
+UNIGINE_INLINE vec4 step(const vec4 &a, const vec4 &b)
+{
+	return {toFloat(a.x > b.x), toFloat(a.y > b.y), toFloat(a.z > b.z), toFloat(a.w > b.w)};
+}
+UNIGINE_INLINE vec4 step(const vec4 &a, float b)
+{
+	return {toFloat(a.x > b), toFloat(a.y > b), toFloat(a.z > b), toFloat(a.w > b)};
+}
+
 UNIGINE_INLINE vec4 inverseLerp(const vec4 &v0, const vec4 &v1, const vec4 &v)
 {
 	return saturate((v - v0) / (v1 - v0));
@@ -902,11 +918,11 @@ UNIGINE_INLINE vec4 contrastLerp(const vec4 &point_a, const vec4 &point_b, float
 
 UNIGINE_INLINE vec4 overlay(const vec4 &a, const vec4 &b, float x)
 {
-	return max(a * lerp(vec4_one, b + b, x), vec4_zero);
+	return max(lerp(a, lerp(vec4_one - (vec4_one - a) * (vec4_one - b) * 2.0f, a * b * 2.0f, step(a, vec4_half)), x), vec4_zero);
 }
 UNIGINE_INLINE vec4 overlay(const vec4 &a, const vec4 &b, const vec4 &x)
 {
-	return max(a * lerp(vec4_one, b + b, x), vec4_zero);
+	return max(lerp(a, lerp(vec4_one - (vec4_one - a) * (vec4_one - b) * 2.0f, a * b * 2.0f, step(a, vec4_half)), x), vec4_zero);
 }
 
 UNIGINE_INLINE float gradient4(float x, const vec4 &keys)

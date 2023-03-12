@@ -27,6 +27,10 @@ class UNIGINE_API UserInterface : public APIInterface
 {
 public:
 	static Ptr<UserInterface> create(const Ptr<Gui> &gui, const char *name, const char *prefix = 0);
+	void setGui(const Ptr<Gui> &gui);
+	Ptr<Gui> getGui() const;
+	void setLifetime(Widget::LIFETIME lifetime);
+	Widget::LIFETIME getLifetime() const;
 	void updateWidgets() const;
 	int getNumWidgets() const;
 	int findWidget(const char *name) const;
@@ -41,10 +45,10 @@ public:
 	const char *getCallbackStringData(int num, int callback) const;
 	const char *getCallbackVariableData(int num, int callback) const;
 	const char *getCallbackInstanceData(int num, int callback) const;
-	void *addCallback(const char *name, Gui::CALLBACK_INDEX callback, Unigine::CallbackBase *func);
-	void *addCallback(const char *name, Gui::CALLBACK_INDEX callback, Unigine::CallbackBase1< Ptr<Widget> > *func);
-	void *addCallback(const char *name, Gui::CALLBACK_INDEX callback, Unigine::CallbackBase2< Ptr<Widget>, Ptr<Widget> > *func);
-	void *addCallback(const char *name, Gui::CALLBACK_INDEX callback, Unigine::CallbackBase3< Ptr<Widget>, Ptr<Widget>, int > *func);
+	void *addCallback(const char *name, Gui::CALLBACK_INDEX callback, CallbackBase *func);
+	void *addCallback(const char *name, Gui::CALLBACK_INDEX callback, CallbackBase1< Ptr<Widget> > *func);
+	void *addCallback(const char *name, Gui::CALLBACK_INDEX callback, CallbackBase2< Ptr<Widget>, Ptr<Widget> > *func);
+	void *addCallback(const char *name, Gui::CALLBACK_INDEX callback, CallbackBase3< Ptr<Widget>, Ptr<Widget>, int > *func);
 	bool removeCallback(const char *name, Gui::CALLBACK_INDEX callback, void *id);
 	void clearCallbacks(const char *name, Gui::CALLBACK_INDEX callback);
 };

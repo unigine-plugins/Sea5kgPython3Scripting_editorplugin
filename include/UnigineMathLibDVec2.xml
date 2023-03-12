@@ -355,6 +355,10 @@
 			</summary>  
 			<returns>Vector containing the smallest integral values.</returns>
 		</member>
+		<member name="M:Unigine.Math.dvec2.hash const">
+			<summary>
+			</summary>  
+		</member>
 		<member name="F:Unigine.Math.dvec2.dvec2_eps">
 			<summary>
 			Vector filled with epsilon constant (1e-6f).

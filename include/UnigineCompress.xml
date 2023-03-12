@@ -77,12 +77,11 @@
 			<param name="src_size"> Source data size. </param> 
 			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Compress.jackallessDecompress(void,size_t,void)">
+		<member name="M:Unigine.Compress.jackallessDecompress(void,void)">
 			<summary>
 			Decompresses the source data using jackalless method and puts the result to the specified destination.
 			</summary> 
 			<param name="dest"> Destination buffer pointer. </param>
-			<param name="dest_size"> Destination data size. </param>
 			<param name="src"> Source buffer pointer. </param> 
 			<returns>true if the operation was successful; otherwise, false.</returns>
 		</member>

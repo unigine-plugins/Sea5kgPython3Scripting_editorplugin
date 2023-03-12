@@ -537,6 +537,12 @@ ExternFunctionBase *MakeExternFunction(Ret(*func)(A0, A1, A2, A3, A4, A5, A6, A7
 	return new ExternFunction<typename MakeTypeList<Ret, A0, A1, A2, A3, A4, A5, A6, A7, A8>::Type, Ret(*)(A0, A1, A2, A3, A4, A5, A6, A7, A8)>(func, args);
 }
 
+template <class Ret, class A0, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
+ExternFunctionBase *MakeExternFunction(Ret(*func)(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9), const char *args = 0)
+{
+	return new ExternFunction<typename MakeTypeList<Ret, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9>::Type, Ret(*)(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9)>(func, args);
+}
+
 /// @endcond
 
 /**************************************************************************\
@@ -557,16 +563,17 @@ public:
 private:
 	enum { Length = Length<TList>::Value - 1 };
 
-	typedef typename TypeAt<TList, 0>::Type Ret;
-	typedef typename TypeAt<TList, 1>::Type A0;
-	typedef typename TypeAt<TList, 2>::Type A1;
-	typedef typename TypeAt<TList, 3>::Type A2;
-	typedef typename TypeAt<TList, 4>::Type A3;
-	typedef typename TypeAt<TList, 5>::Type A4;
-	typedef typename TypeAt<TList, 6>::Type A5;
-	typedef typename TypeAt<TList, 7>::Type A6;
-	typedef typename TypeAt<TList, 8>::Type A7;
-	typedef typename TypeAt<TList, 9>::Type A8;
+	typedef typename TypeAt<TList,  0>::Type Ret;
+	typedef typename TypeAt<TList,  1>::Type A0;
+	typedef typename TypeAt<TList,  2>::Type A1;
+	typedef typename TypeAt<TList,  3>::Type A2;
+	typedef typename TypeAt<TList,  4>::Type A3;
+	typedef typename TypeAt<TList,  5>::Type A4;
+	typedef typename TypeAt<TList,  6>::Type A5;
+	typedef typename TypeAt<TList,  7>::Type A6;
+	typedef typename TypeAt<TList,  8>::Type A7;
+	typedef typename TypeAt<TList,  9>::Type A8;
+	typedef typename TypeAt<TList, 10>::Type A9;
 
 	virtual TypeInfo get_type() const
 	{
@@ -646,6 +653,13 @@ private:
 								  TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name(), TypeToName<A3>::name(),
 								  TypeToName<A4>::name(), TypeToName<A5>::name(), TypeToName<A6>::name(), TypeToName<A7>::name(),
 								  TypeToName<A8>::name());
+		}
+		String do_get_info(const char *name, IntToType<10>) const
+		{
+			return String::format("%s %s(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name,
+				TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name(), TypeToName<A3>::name(),
+				TypeToName<A4>::name(), TypeToName<A5>::name(), TypeToName<A6>::name(), TypeToName<A7>::name(),
+				TypeToName<A8>::name(), TypeToName<A9>::name());
 		}
 	#endif
 
@@ -1038,6 +1052,66 @@ private:
 		func(object, a0.value, a1.value, a2.value, a3.value, a4.value, a5.value, a6.value, a7.value, a8.value);
 		return Variable();
 	}
+	template <class Type> UNIGINE_INLINE Variable do_run(void *i, Variable *args_array, IntToType<1>, Type, IntToType<10>) const
+	{
+		VariableToType<A0> a0(i, args_array[0]);
+		VariableToType<A1> a1(i, args_array[1]);
+		VariableToType<A2> a2(i, args_array[2]);
+		VariableToType<A3> a3(i, args_array[3]);
+		VariableToType<A4> a4(i, args_array[4]);
+		VariableToType<A5> a5(i, args_array[5]);
+		VariableToType<A6> a6(i, args_array[6]);
+		VariableToType<A7> a7(i, args_array[7]);
+		VariableToType<A8> a8(i, args_array[8]);
+		VariableToType<A9> a9(i, args_array[9]);
+		TypeToVariable<Ret> ret(i, (object->*func)(a0.value, a1.value, a2.value, a3.value, a4.value, a5.value, a6.value, a7.value, a8.value, a9.value));
+		return ret.value;
+	}
+	UNIGINE_INLINE Variable do_run(void *i, Variable *args_array, IntToType<1>, TypeToType<void>, IntToType<10>) const
+	{
+		VariableToType<A0> a0(i, args_array[0]);
+		VariableToType<A1> a1(i, args_array[1]);
+		VariableToType<A2> a2(i, args_array[2]);
+		VariableToType<A3> a3(i, args_array[3]);
+		VariableToType<A4> a4(i, args_array[4]);
+		VariableToType<A5> a5(i, args_array[5]);
+		VariableToType<A6> a6(i, args_array[6]);
+		VariableToType<A7> a7(i, args_array[7]);
+		VariableToType<A8> a8(i, args_array[8]);
+		VariableToType<A9> a9(i, args_array[9]);
+		(object->*func)(a0.value, a1.value, a2.value, a3.value, a4.value, a5.value, a6.value, a7.value, a8.value, a9.value);
+		return Variable();
+	}
+	template <class Type> UNIGINE_INLINE Variable do_run(void *i, Variable *args_array, IntToType<0>, Type, IntToType<10>) const
+	{
+		VariableToType<A0> a0(i, args_array[0]);
+		VariableToType<A1> a1(i, args_array[1]);
+		VariableToType<A2> a2(i, args_array[2]);
+		VariableToType<A3> a3(i, args_array[3]);
+		VariableToType<A4> a4(i, args_array[4]);
+		VariableToType<A5> a5(i, args_array[5]);
+		VariableToType<A6> a6(i, args_array[6]);
+		VariableToType<A7> a7(i, args_array[7]);
+		VariableToType<A8> a8(i, args_array[8]);
+		VariableToType<A9> a9(i, args_array[9]);
+		TypeToVariable<Ret> ret(i, func(object, a0.value, a1.value, a2.value, a3.value, a4.value, a5.value, a6.value, a7.value, a8.value, a9.value));
+		return ret.value;
+	}
+	UNIGINE_INLINE Variable do_run(void *i, Variable *args_array, IntToType<0>, TypeToType<void>, IntToType<10>) const
+	{
+		VariableToType<A0> a0(i, args_array[0]);
+		VariableToType<A1> a1(i, args_array[1]);
+		VariableToType<A2> a2(i, args_array[2]);
+		VariableToType<A3> a3(i, args_array[3]);
+		VariableToType<A4> a4(i, args_array[4]);
+		VariableToType<A5> a5(i, args_array[5]);
+		VariableToType<A6> a6(i, args_array[6]);
+		VariableToType<A7> a7(i, args_array[7]);
+		VariableToType<A8> a8(i, args_array[8]);
+		VariableToType<A9> a9(i, args_array[9]);
+		func(object, a0.value, a1.value, a2.value, a3.value, a4.value, a5.value, a6.value, a7.value, a8.value, a9.value);
+		return Variable();
+	}
 
 	Class *object;
 	Func func;
@@ -1238,6 +1312,24 @@ ExternFunctionBase *MakeExternObjectFunction(Class *object, Ret(*func)(Type *, A
 	return new ExternObjectFunction<Class, typename MakeTypeList<Ret, A0, A1, A2, A3, A4, A5, A6, A7, A8>::Type, Ret(*)(Type *, A0, A1, A2, A3, A4, A5, A6, A7, A8)>(object, func, args);
 }
 
+template <class Class, class Type, class Ret, class A0, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
+ExternFunctionBase *MakeExternObjectFunction(Class *object, Ret(Type:: *func)(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9), const char *args = 0)
+{
+	return new ExternObjectFunction<Class, typename MakeTypeList<Ret, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9>::Type, Ret(Type:: *)(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9)>(object, func, args);
+}
+
+template <class Class, class Type, class Ret, class A0, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
+ExternFunctionBase *MakeExternObjectFunction(Class *object, Ret(Type:: *func)(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9) const, const char *args = 0)
+{
+	return new ExternObjectFunction<Class, typename MakeTypeList<Ret, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9>::Type, Ret(Type:: *)(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9) const>(object, func, args);
+}
+
+template <class Class, class Type, class Ret, class A0, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
+ExternFunctionBase *MakeExternObjectFunction(Class *object, Ret(*func)(Type *, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9), const char *args = 0)
+{
+	return new ExternObjectFunction<Class, typename MakeTypeList<Ret, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9>::Type, Ret(*)(Type *, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9)>(object, func, args);
+}
+
 /// @endcond
 
 /**************************************************************************\
@@ -1286,6 +1378,7 @@ private:
 	typedef typename TypeAt<TList, 6>::Type A6;
 	typedef typename TypeAt<TList, 7>::Type A7;
 	typedef typename TypeAt<TList, 8>::Type A8;
+	typedef typename TypeAt<TList, 9>::Type A9;
 
 	virtual int get_num_args() const
 	{
@@ -1360,6 +1453,13 @@ private:
 								  TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name(), TypeToName<A3>::name(),
 								  TypeToName<A4>::name(), TypeToName<A5>::name(), TypeToName<A6>::name(), TypeToName<A7>::name(),
 								  TypeToName<A8>::name());
+		}
+		String do_get_info(const char *name, IntToType<10>) const
+		{
+			return String::format("\t%s(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);\n", name,
+				TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name(), TypeToName<A3>::name(),
+				TypeToName<A4>::name(), TypeToName<A5>::name(), TypeToName<A6>::name(), TypeToName<A7>::name(),
+				TypeToName<A8>::name(), TypeToName<A9>::name());
 		}
 	#endif
 
@@ -1540,6 +1640,34 @@ private:
 		VariableToType<A8> a8(i, args_array[8]);
 		return new Class(a0.value, a1.value, a2.value, a3.value, a4.value, a5.value, a6.value, a7.value, a8.value);
 	}
+	template <class Type> UNIGINE_INLINE void *do_run(void *i, Variable *args_array, Type, IntToType<10>) const
+	{
+		VariableToType<A0> a0(i, args_array[0]);
+		VariableToType<A1> a1(i, args_array[1]);
+		VariableToType<A2> a2(i, args_array[2]);
+		VariableToType<A3> a3(i, args_array[3]);
+		VariableToType<A4> a4(i, args_array[4]);
+		VariableToType<A5> a5(i, args_array[5]);
+		VariableToType<A6> a6(i, args_array[6]);
+		VariableToType<A7> a7(i, args_array[7]);
+		VariableToType<A8> a8(i, args_array[8]);
+		VariableToType<A9> a9(i, args_array[9]);
+		return func(a0.value, a1.value, a2.value, a3.value, a4.value, a5.value, a6.value, a7.value, a8.value, a9.value);
+	}
+	UNIGINE_INLINE void *do_run(void *i, Variable *args_array, TypeToType<int>, IntToType<10>) const
+	{
+		VariableToType<A0> a0(i, args_array[0]);
+		VariableToType<A1> a1(i, args_array[1]);
+		VariableToType<A2> a2(i, args_array[2]);
+		VariableToType<A3> a3(i, args_array[3]);
+		VariableToType<A4> a4(i, args_array[4]);
+		VariableToType<A5> a5(i, args_array[5]);
+		VariableToType<A6> a6(i, args_array[6]);
+		VariableToType<A7> a7(i, args_array[7]);
+		VariableToType<A8> a8(i, args_array[8]);
+		VariableToType<A9> a9(i, args_array[9]);
+		return new Class(a0.value, a1.value, a2.value, a3.value, a4.value, a5.value, a6.value, a7.value, a8.value, a9.value);
+	}
 
 	Func func;
 	String args;
@@ -1587,16 +1715,17 @@ public:
 private:
 	enum { Length = Length<TList>::Value - 1 };
 
-	typedef typename TypeAt<TList, 0>::Type Ret;
-	typedef typename TypeAt<TList, 1>::Type A0;
-	typedef typename TypeAt<TList, 2>::Type A1;
-	typedef typename TypeAt<TList, 3>::Type A2;
-	typedef typename TypeAt<TList, 4>::Type A3;
-	typedef typename TypeAt<TList, 5>::Type A4;
-	typedef typename TypeAt<TList, 6>::Type A5;
-	typedef typename TypeAt<TList, 7>::Type A6;
-	typedef typename TypeAt<TList, 8>::Type A7;
-	typedef typename TypeAt<TList, 9>::Type A8;
+	typedef typename TypeAt<TList,  0>::Type Ret;
+	typedef typename TypeAt<TList,  1>::Type A0;
+	typedef typename TypeAt<TList,  2>::Type A1;
+	typedef typename TypeAt<TList,  3>::Type A2;
+	typedef typename TypeAt<TList,  4>::Type A3;
+	typedef typename TypeAt<TList,  5>::Type A4;
+	typedef typename TypeAt<TList,  6>::Type A5;
+	typedef typename TypeAt<TList,  7>::Type A6;
+	typedef typename TypeAt<TList,  8>::Type A7;
+	typedef typename TypeAt<TList,  9>::Type A8;
+	typedef typename TypeAt<TList, 10>::Type A9;
 
 	virtual const char *get_name() const
 	{
@@ -1681,6 +1810,13 @@ private:
 								  TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name(), TypeToName<A3>::name(),
 								  TypeToName<A4>::name(), TypeToName<A5>::name(), TypeToName<A6>::name(), TypeToName<A7>::name(),
 								  TypeToName<A8>::name());
+		}
+		String do_get_info(const char *name, IntToType<10>) const
+		{
+			return String::format("\t%s %s(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name,
+				TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name(), TypeToName<A3>::name(),
+				TypeToName<A4>::name(), TypeToName<A5>::name(), TypeToName<A6>::name(), TypeToName<A7>::name(),
+				TypeToName<A8>::name(), TypeToName<A9>::name());
 		}
 	#endif
 
@@ -2071,6 +2207,66 @@ private:
 		VariableToType<A7> a7(i, args_array[7]);
 		VariableToType<A8> a8(i, args_array[8]);
 		func(static_cast<Class *>(object), a0.value, a1.value, a2.value, a3.value, a4.value, a5.value, a6.value, a7.value, a8.value);
+		return Variable();
+	}
+	template <class Type> UNIGINE_INLINE Variable do_run(void *object, void *i, Variable *args_array, IntToType<1>, Type, IntToType<10>) const
+	{
+		VariableToType<A0> a0(i, args_array[0]);
+		VariableToType<A1> a1(i, args_array[1]);
+		VariableToType<A2> a2(i, args_array[2]);
+		VariableToType<A3> a3(i, args_array[3]);
+		VariableToType<A4> a4(i, args_array[4]);
+		VariableToType<A5> a5(i, args_array[5]);
+		VariableToType<A6> a6(i, args_array[6]);
+		VariableToType<A7> a7(i, args_array[7]);
+		VariableToType<A8> a8(i, args_array[8]);
+		VariableToType<A9> a9(i, args_array[9]);
+		TypeToVariable<Ret> ret(i, (static_cast<Class *>(object)->*func)(a0.value, a1.value, a2.value, a3.value, a4.value, a5.value, a6.value, a7.value, a8.value, a9.value));
+		return ret.value;
+	}
+	UNIGINE_INLINE Variable do_run(void *object, void *i, Variable *args_array, IntToType<1>, TypeToType<void>, IntToType<10>) const
+	{
+		VariableToType<A0> a0(i, args_array[0]);
+		VariableToType<A1> a1(i, args_array[1]);
+		VariableToType<A2> a2(i, args_array[2]);
+		VariableToType<A3> a3(i, args_array[3]);
+		VariableToType<A4> a4(i, args_array[4]);
+		VariableToType<A5> a5(i, args_array[5]);
+		VariableToType<A6> a6(i, args_array[6]);
+		VariableToType<A7> a7(i, args_array[7]);
+		VariableToType<A8> a8(i, args_array[8]);
+		VariableToType<A9> a9(i, args_array[9]);
+		(static_cast<Class *>(object)->*func)(a0.value, a1.value, a2.value, a3.value, a4.value, a5.value, a6.value, a7.value, a8.value, a9.value);
+		return Variable();
+	}
+	template <class Type> UNIGINE_INLINE Variable do_run(void *object, void *i, Variable *args_array, IntToType<0>, Type, IntToType<10>) const
+	{
+		VariableToType<A0> a0(i, args_array[0]);
+		VariableToType<A1> a1(i, args_array[1]);
+		VariableToType<A2> a2(i, args_array[2]);
+		VariableToType<A3> a3(i, args_array[3]);
+		VariableToType<A4> a4(i, args_array[4]);
+		VariableToType<A5> a5(i, args_array[5]);
+		VariableToType<A6> a6(i, args_array[6]);
+		VariableToType<A7> a7(i, args_array[7]);
+		VariableToType<A8> a8(i, args_array[8]);
+		VariableToType<A9> a9(i, args_array[9]);
+		TypeToVariable<Ret> ret(i, func(static_cast<Class *>(object), a0.value, a1.value, a2.value, a3.value, a4.value, a5.value, a6.value, a7.value, a8.value, a9.value));
+		return ret.value;
+	}
+	UNIGINE_INLINE Variable do_run(void *object, void *i, Variable *args_array, IntToType<0>, TypeToType<void>, IntToType<10>) const
+	{
+		VariableToType<A0> a0(i, args_array[0]);
+		VariableToType<A1> a1(i, args_array[1]);
+		VariableToType<A2> a2(i, args_array[2]);
+		VariableToType<A3> a3(i, args_array[3]);
+		VariableToType<A4> a4(i, args_array[4]);
+		VariableToType<A5> a5(i, args_array[5]);
+		VariableToType<A6> a6(i, args_array[6]);
+		VariableToType<A7> a7(i, args_array[7]);
+		VariableToType<A8> a8(i, args_array[8]);
+		VariableToType<A9> a9(i, args_array[9]);
+		func(static_cast<Class *>(object), a0.value, a1.value, a2.value, a3.value, a4.value, a5.value, a6.value, a7.value, a8.value, a9.value);
 		return Variable();
 	}
 
@@ -2492,6 +2688,16 @@ public:
 	{
 		add_constructor(new ExternClassConstructor<Class, typename MakeTypeList<A0, A1, A2, A3, A4, A5, A6, A7, A8>::Type, Class *(*)(A0, A1, A2, A3, A4, A5, A6, A7, A8)>(func, args));
 	}
+	template <class A0, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
+	void addConstructor(const char *args = 0)
+	{
+		add_constructor(new ExternClassConstructor<Class, typename MakeTypeList<A0, A1, A2, A3, A4, A5, A6, A7, A8, A9>::Type>(args));
+	}
+	template <class A0, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
+	void addConstructor(Class *(*func)(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9), const char *args = 0)
+	{
+		add_constructor(new ExternClassConstructor<Class, typename MakeTypeList<A0, A1, A2, A3, A4, A5, A6, A7, A8, A9>::Type, Class *(*)(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9)>(func, args));
+	}
 
 	/// @endcond
 
@@ -2663,6 +2869,22 @@ public:
 	void addFunction(const char *name, Ret(*func)(Type *, A0, A1, A2, A3, A4, A5, A6, A7, A8), const char *args = 0)
 	{
 		add_function(new ExternClassFunction<Class, typename MakeTypeList<Ret, A0, A1, A2, A3, A4, A5, A6, A7, A8>::Type, Ret(*)(Type *, A0, A1, A2, A3, A4, A5, A6, A7, A8)>(name, func, args));
+	}
+
+	template <class Type, class Ret, class A0, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
+	void addFunction(const char *name, Ret(Type:: *func)(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9), const char *args = 0)
+	{
+		add_function(new ExternClassFunction<Class, typename MakeTypeList<Ret, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9>::Type, Ret(Type:: *)(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9)>(name, func, args));
+	}
+	template <class Type, class Ret, class A0, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
+	void addFunction(const char *name, Ret(Type:: *func)(A0, A1, A2, A3, A4, A5, A6, A7, A8) const, const char *args = 0)
+	{
+		add_function(new ExternClassFunction<Class, typename MakeTypeList<Ret, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9>::Type, Ret(Type:: *)(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9) const>(name, func, args));
+	}
+	template <class Type, class Ret, class A0, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
+	void addFunction(const char *name, Ret(*func)(Type *, A0, A1, A2, A3, A4, A5, A6, A7, A8), const char *args = 0)
+	{
+		add_function(new ExternClassFunction<Class, typename MakeTypeList<Ret, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9>::Type, Ret(*)(Type *, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9)>(name, func, args));
 	}
 
 	/// @endcond

@@ -110,7 +110,8 @@
 		</member>
 		<member name="M:Unigine.Dir.open(char)">
 			<summary>
-			Opens the directory.
+			Opens the directory. Always close the directory descriptor via  before leaving the scope:
+			
 			</summary> 
 			<param name="name"> Directory path. </param> 
 			<returns>Directory descriptor.</returns>
@@ -161,7 +162,7 @@
 			Creates a directory named path.
 			</summary> 
 			<param name="path"> Path to a new directory to be created. </param> 
-			<returns>1 if the specified directory is created successfully; otherwise, 0.</returns>
+			<returns>1 if the specified directory is created successfully or has been created before (i.e. already exists); otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Dir.mkdir(char,bool)">
 			<summary>
@@ -169,7 +170,7 @@
 			</summary> 
 			<param name="path"> Path to a new directory to be created. </param>
 			<param name="recursion">  Use true to create non-existent directories recursively; otherwise, false. </param> 
-			<returns>1 if the specified directory is created successfully; otherwise, 0.</returns>
+			<returns>1 if the specified directory is created successfully or has been created before (i.e. already exists); otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Dir.rmdir(char)">
 			<summary>

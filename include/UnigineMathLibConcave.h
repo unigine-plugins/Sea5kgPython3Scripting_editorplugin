@@ -150,6 +150,8 @@ private:
 
 	vec4 get_split_plane(const vec3 *vertex, int num_vertex, Convex *convex) const
 	{
+		UNIGINE_UNUSED(vertex);
+		UNIGINE_UNUSED(num_vertex);
 		// convex vertices
 		VectorStack<vec3> src(convex->getNumVertex());
 		VectorStack<vec3> dest(convex->getNumVertex());
