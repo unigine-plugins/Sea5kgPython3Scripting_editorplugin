@@ -241,55 +241,7 @@ static int unigine_Material_init(unigine_Material *self, PyObject *args, PyObjec
 // public : renderCompute
 // public : renderCompute
 
-static PyObject *unigine_Material_get_manual_name(unigine_Material* self) {
-    PyErr_Clear();
-    // const char *sName = RUN_IN_MAIN_THREAD(self->unigine_object_ptr->getName())
-
-    PyObject *pName = Py_BuildValue("s", self->unigine_object_ptr->getManualName());
-    return PyUnicode_FromFormat("%S", pName);
-}
-
-static PyObject *
-unigine_Material_set_shadow_mask(unigine_Material* self, PyObject *arg)
-{
-    PyErr_Clear();
-    PyObject *ret = NULL;
-    assert(arg);
-
-    //
-    // int val;
-    // PyArg_ParseTuple(args, "i", &val);
-
-    // int n = PyInt_AsInt(arg);
-    uint32_t nVal = PyLong_AsLong(arg);
-    // RUN_IN_MAIN_THREAD(self->unigine_object_ptr->setShadowMask(nVal))
-    
-    self->unigine_object_ptr->setShadowMask(nVal);
-    
-    Py_INCREF(Py_None);
-    ret = Py_None;
-    assert(! PyErr_Occurred());
-    assert(ret);
-    goto finally;
-except:
-    Py_XDECREF(ret);
-    ret = NULL;
-finally:
-    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
-     * should do this. See below. */
-    // Py_DECREF(arg);
-    return ret;
-}
-
 static PyMethodDef unigine_Material_methods[] = {
-    {
-        "get_manual_name", (PyCFunction)unigine_Material_get_manual_name, METH_NOARGS,
-        "Return the name of material"
-    },
-    {
-        "set_shadow_mask", (PyCFunction)unigine_Material_set_shadow_mask, METH_O,
-        "Return the name of material"
-    },
     {NULL}  /* Sentinel */
 };
 
