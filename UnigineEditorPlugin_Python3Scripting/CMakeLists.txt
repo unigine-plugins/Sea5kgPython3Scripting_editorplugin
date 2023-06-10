@@ -1,26 +1,86 @@
-cmake_minimum_required(VERSION 3.14)
-set(proj_name UnigineEditorPlugin_Python3Scripting_x64)
+##==============================================================================
+## General.
+##==============================================================================
+cmake_minimum_required(VERSION 3.19)
+
+set(current_target UnigineEditorPlugin_Python3Scripting_x64)
 if (CMAKE_BUILD_TYPE MATCHES "RelWithDebInfo")
-	set(proj_name UnigineEditorPlugin_Python3Scripting_x64d)
+	set(current_target UnigineEditorPlugin_Python3Scripting_x64d)
 endif()
-project(${proj_name} CXX)
+project(${current_target} CXX)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+set(CMAKE_CXX_EXTENSIONS FALSE)
+
+set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+set(CMAKE_SKIP_BUILD_RPATH TRUE)
+set(CMAKE_INSTALL_RPATH "$ORIGIN")
+
+set(CMAKE_AUTOMOC TRUE)
+set(CMAKE_AUTOUIC TRUE)
+set(CMAKE_AUTORCC TRUE)
+
+##==============================================================================
+## Environment.
+##==============================================================================
+option(UNIGINE_DOUBLE "build double or not" FALSE)
+
+set(UNIGINE_SDK_PATH ${PROJECT_SOURCE_DIR}/../)
+set(UNIGINE_BIN_DIR ${UNIGINE_SDK_PATH}bin/)
+set(UNIGINE_LIB_DIR ${UNIGINE_SDK_PATH}lib/)
+set(UNIGINE_INCLUDE_DIR ${UNIGINE_SDK_PATH}include/)
+set(UNIGINE_OUTPUT_EDITOR_RELEASE_DIR ${UNIGINE_BIN_DIR}editor/)
+set(UNIGINE_OUTPUT_EDITOR_DEBUG_DIR ${UNIGINE_BIN_DIR}editor_debug/)
+
+##==============================================================================
+## Dependencies.
+##==============================================================================
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
+find_package(Engine REQUIRED MODULE QUIET)
+find_package(Editor REQUIRED MODULE QUIET)
+
+
+# UNIGINE_QTROOT is Unigine related global variable that points to the effective
+# Qt's distributive.
+set(QT5_ROOT "$ENV{UNIGINE_QTROOT}")
+if (QT5_ROOT AND EXISTS "${QT5_ROOT}")
+	list(APPEND CMAKE_PREFIX_PATH ${QT5_ROOT})
+endif()
+
+# The following construct is required as Editor's Debug build
+# uses Release binaries of QT5 framework
+set(temp_map_imported ${CMAKE_MAP_IMPORTED_CONFIG_DEBUG})
+set(CMAKE_MAP_IMPORTED_CONFIG_DEBUG RELEASE)
+cmake_policy(PUSH)
+cmake_policy(SET CMP0111 OLD)
+# Find additional required packages
+find_package(Qt5 5.12.3 CONFIG EXACT COMPONENTS Core Gui Widgets)
+# Restore the actual value
+set(CMAKE_MAP_IMPORTED_CONFIG_DEBUG ${temp_map_imported})
+unset(temp_map_imported)
+cmake_policy(POP)
+
+
 
 # set(PYTHON3SCRIPTING_VERSION "0.0.2")
-file (STRINGS "../version" PYTHON3SCRIPTING_VERSION)
+file (STRINGS "${PROJECT_SOURCE_DIR}/../version" PYTHON3SCRIPTING_VERSION)
 
 add_definitions(-DPYTHON3SCRIPTING_VERSION="${PYTHON3SCRIPTING_VERSION}")
 add_subdirectory(QCodeEditor)
 
-include(${PROJECT_SOURCE_DIR}/cmake/Unigine.cmake)
 
-if (EXISTS ${PROJECT_SOURCE_DIR}/UnigineEditorPlugin_Python3Scripting.json.in)
-	set(PLUGIN_VERSION ${UNIGINE_VERSION})
-	set(PLUGIN_COMPAT_VERSION ${PYTHON3SCRIPTING_VERSION})
-	configure_file(
-		${PROJECT_SOURCE_DIR}/UnigineEditorPlugin_Python3Scripting.json.in
-		${CMAKE_CURRENT_BINARY_DIR}/Plugin.json
-		)
+
+if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/UnigineEditorPlugin_Python3Scripting.json.in)
+	message(FATAL_ERROR "Required file is missed! - ${CMAKE_CURRENT_SOURCE_DIR}/UnigineEditorPlugin_Python3Scripting.json.in")
 endif()
+
+set(PLUGIN_VERSION ${PYTHON3SCRIPTING_VERSION})
+set(PLUGIN_COMPAT_VERSION ${PYTHON3SCRIPTING_VERSION})
+configure_file(
+	${CMAKE_CURRENT_SOURCE_DIR}/UnigineEditorPlugin_Python3Scripting.json.in
+	${CMAKE_CURRENT_BINARY_DIR}/UnigineEditorPlugin_Python3Scripting.json
+	)
 
 # message(FATAL_ERROR ${CMAKE_CURRENT_BINARY_DIR})
 
@@ -44,7 +104,7 @@ set(RESOURCES_FILE
     resources/UnigineEditorPlugin_Python3Scripting_resources.qrc
 )
 
-add_library(${proj_name} SHARED
+add_library(${current_target} SHARED
     ${RESOURCES_FILE}
 	${PROJECT_SOURCE_DIR}/src/UnigineEditorPlugin_Python3Scripting.cpp
 	${PROJECT_SOURCE_DIR}/src/PythonExecutor.cpp
@@ -70,21 +130,20 @@ IF (WIN32)
 	list (APPEND PYTHON3_INCLUDES "${CMAKE_SOURCE_DIR}/Python-3.10.1/Include")
 	list (APPEND PYTHON3_INCLUDES "${CMAKE_SOURCE_DIR}/Python-3.10.1/PC")
 	set(PYTHON3_LIB "${CMAKE_SOURCE_DIR}/python-bin-windows/python310.lib")
-	
+
 	# if (CMAKE_BUILD_TYPE MATCHES "Debug")
 	# 	set(PYTHON3_LIB "${CMAKE_SOURCE_DIR}/python-bin-windows/python310_d.lib")
 	# else()
 	# 	set(PYTHON3_LIB "${CMAKE_SOURCE_DIR}/python-bin-windows/python310.lib")
 	# endif()
 
-	
 ELSE()
 	# linux
 	set(PYTHON3_INCLUDES "${PROJECT_SOURCE_DIR}/python-bin-linux/include/python3.10")
 	set(PYTHON3_LIB "${CMAKE_SOURCE_DIR}/python-bin-linux/lib/libpython3.10.a")
 ENDIF()
 
-target_include_directories(${proj_name} SYSTEM
+target_include_directories(${current_target} SYSTEM
 	PRIVATE
 	${PROJECT_SOURCE_DIR}/QCodeEditor/include
     ${PROJECT_SOURCE_DIR}/include
@@ -97,13 +156,13 @@ target_include_directories(${proj_name} SYSTEM
 	)
 
 if (CMAKE_BUILD_TYPE MATCHES "RelWithDebInfo")
-    target_compile_definitions(${proj_name}
+    target_compile_definitions(${current_target}
 		PRIVATE
 		DEBUG
 		# QT_DEBUG
 	)
 else()
-	target_compile_definitions(${proj_name}
+	target_compile_definitions(${current_target}
 		PRIVATE
 		NDEBUG
 		# QT_NO_DEBUG
@@ -111,7 +170,7 @@ else()
 endif()
 
 
-set_target_properties(${proj_name}
+set_target_properties(${current_target}
 	PROPERTIES
 	RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../bin/editor/
 	LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../bin/editor/
@@ -125,9 +184,8 @@ set_target_properties(${proj_name}
 	CXX_VISIBILITY_PRESET hidden
 )
 
-target_link_libraries(${proj_name}
+target_link_libraries(${current_target}
 	PRIVATE
-	Unigine::CompilerFlags
 	Unigine::Engine
 	Unigine::Editor
 	Qt5::Core
@@ -137,6 +195,22 @@ target_link_libraries(${proj_name}
 	${PYTHON3_LIB}
 	)
 
+if(MSVC)
+	target_compile_options(${current_target}
+		PRIVATE
+    	/arch:SSE4.1
+	)
+else()
+	target_compile_options(${current_target}
+		PRIVATE
+		-m64
+		-march=athlon64
+		-msse4.2
+		# Optimizations.
+		-ffast-math
+		-fno-strict-aliasing
+	)
+endif()
 
 
 

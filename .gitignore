@@ -1,3 +1,9 @@
+include/plugins/UnigineKinect.h
+include/plugins/UnigineLeapMotion.h
+include/plugins/UnigineOculus.h
+include/plugins/UnigineUltraleap.h
+include/plugins/UnigineVarjo.h
+
 UnigineEditorPlugin_Python3Scripting/python-bin*
 linux_UnigineEditorPlugin_Python3Scripting*
 windows_UnigineEditorPlugin_Python3Scripting*
@@ -67,7 +73,6 @@ UnigineEditorPlugin_Python3Scripting/Python-3.10.1/python.bat
 *.out
 *.app
 
-*.project
 /bin
 /data
 /source

@@ -63,8 +63,8 @@ if(Engine_FOUND)
 			IMPORTED_LOCATION_RELEASE ${Engine_LIBRARY_RELEASE}
 			)
 		set_target_properties(Unigine::Engine PROPERTIES
-			IMPORTED_LOCATION_DEBUG ${Engine_LIBRARY_DEBUG}
-		)
+			IMPORTED_LOCATION_MINSIZEREL ${Engine_LIBRARY_RELEASE}
+			)
 	endif()
 
 	if (Engine_LIBRARY_DEBUG)

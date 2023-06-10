@@ -59,7 +59,7 @@ bool UnigineEditorPlugin_Python3Scripting::init() {
 		return false;
 	}
 
-	connect(Editor::Selection::instance(), &Editor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
+	connect(UnigineEditor::Selection::instance(), &UnigineEditor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
 	connect(this, &UnigineEditorPlugin_Python3Scripting::signal_executeRunner, this, &UnigineEditorPlugin_Python3Scripting::slot_executeRunner);
 
 	g_pPython3RunnerMain = this;
@@ -332,21 +332,21 @@ void UnigineEditorPlugin_Python3Scripting::globalSelectionChanged() {
 	// using namespace std;
 	m_vSelectedGuids.clear();
 	m_vSelectedNodes.clear();
-	if (Editor::SelectorGUIDs* selector = Editor::Selection::getSelectorMaterials()) {
+	if (UnigineEditor::SelectorGUIDs* selector = UnigineEditor::Selection::getSelectorMaterials()) {
 		log_info("Selected materials");
 		switchMenuTo(MenuSelectedType::MST_MATERIALS);
 		Unigine::Vector<Unigine::UGUID> vGuids = selector->guids();
 		for(int i = 0; i < vGuids.size(); i++) {
 			m_vSelectedGuids.append(vGuids[i]);
 		}
-	} else if (auto selector = Editor::Selection::getSelectorRuntimes()) {
+	} else if (auto selector = UnigineEditor::Selection::getSelectorRuntimes()) {
 		log_info("Selected runtimes");
 		switchMenuTo(MenuSelectedType::MST_RUNTIMES);
 		Unigine::Vector<Unigine::UGUID> vGuids = selector->guids();
 		for(int i = 0; i < vGuids.size(); i++) {
 			m_vSelectedGuids.append(vGuids[i]);
 		}
-	} else if (auto selector = Editor::Selection::getSelectorProperties()) {
+	} else if (auto selector = UnigineEditor::Selection::getSelectorProperties()) {
 		log_info("Selected properties");
 		switchMenuTo(MenuSelectedType::MST_PROPERTIES);
 		Unigine::Vector<Unigine::UGUID> vGuids = selector->guids();
@@ -354,7 +354,7 @@ void UnigineEditorPlugin_Python3Scripting::globalSelectionChanged() {
 			m_vSelectedGuids.append(vGuids[i]);
 		}
 		// m_vSelectedGuids.append(selector->guids());
-	} else if (auto selector = Editor::Selection::getSelectorNodes()) {
+	} else if (auto selector = UnigineEditor::Selection::getSelectorNodes()) {
 		log_info("Selected nodes");
 		switchMenuTo(MenuSelectedType::MST_NODES);
 		Unigine::Vector<Unigine::NodePtr> vNodes = selector->getNodes();
@@ -384,7 +384,7 @@ void UnigineEditorPlugin_Python3Scripting::runPythonScript(ModelExtension *pMode
 
 	// QProcessEnvironment proc
 
-	disconnect(Editor::Selection::instance(), &Editor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
+	disconnect(UnigineEditor::Selection::instance(), &UnigineEditor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
 
 	if (sAlternativeCode == "") {
 		QFile fl(pModel->getMainPyPath());
@@ -414,7 +414,7 @@ void UnigineEditorPlugin_Python3Scripting::runPythonScript(ModelExtension *pMode
 	m_pScriptThread->start();
 	log_info("Done...");
 
-	connect(Editor::Selection::instance(), &Editor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
+	connect(UnigineEditor::Selection::instance(), &UnigineEditor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
 
 	// TODO after finish trhed remove it
 	// delete pThread;
@@ -437,7 +437,7 @@ bool UnigineEditorPlugin_Python3Scripting::prepareDirectoryWithExtensions() {
 	m_sPython3ScriptingDirPath = m_sRootPath + "/Python3Scripting";
 	QDir dirPython3Scripting(m_sPython3ScriptingDirPath);
 	if (!dirPython3Scripting.exists()) {
-		QDir(m_sRootPath).mkdir("Python3Scripting");	
+		QDir(m_sRootPath).mkdir("Python3Scripting");
 	}
 	if (!dirPython3Scripting.exists()) {
 		log_error(" Could not create directory " + m_sPython3ScriptingDirPath);
@@ -492,12 +492,11 @@ bool UnigineEditorPlugin_Python3Scripting::rewriteExtensionsJson() {
 }
 
 bool UnigineEditorPlugin_Python3Scripting::safeCreateMenuPython3Scripting() {
-	QString sMenuName = Constants::MM_TOOLS;
-	QMenu *pMenu = Editor::WindowManager::findMenu(sMenuName.toStdString().c_str());
+	QString sMenuName = UnigineEditor::Constants::MM_TOOLS;
+	QMenu *pMenu = UnigineEditor::WindowManager::findMenu(sMenuName.toStdString().c_str());
 	if (pMenu == nullptr) {
 		log_error(" Not found menu: " + sMenuName);
 		return false;
-		
 	}
 	// log_info(" Found menu " + sMenuName);
 	// get main menu

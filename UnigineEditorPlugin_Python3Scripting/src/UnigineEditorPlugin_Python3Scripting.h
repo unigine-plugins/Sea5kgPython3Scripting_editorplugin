@@ -1,7 +1,10 @@
 #pragma once
 
 
-#include <editor/Plugin.h>
+#include <editor/UniginePlugin.h>
+#include <editor/UnigineSelector.h>
+#include <editor/UnigineSelection.h>
+#include <editor/UnigineWindowManager.h>
 #include <UnigineGUID.h>
 #include <UnigineNode.h>
 
@@ -20,13 +23,13 @@
 class UnigineEditorPlugin_Python3Scripting
 	:
 		public QObject,
-		public ::Editor::Plugin,
+		public UnigineEditor::Plugin,
 		public IRunPythonScript,
 		public IPython3RunnerMain
 {
 	Q_OBJECT
-	Q_PLUGIN_METADATA(IID "com.unigine.EditorPlugin" FILE "Plugin.json")
-	Q_INTERFACES(Editor::Plugin)
+	Q_PLUGIN_METADATA(IID UNIGINE_EDITOR_PLUGIN_IID FILE "UnigineEditorPlugin_Python3Scripting.json")
+	Q_INTERFACES(UnigineEditor::Plugin)
 public:
 	UnigineEditorPlugin_Python3Scripting();
 	~UnigineEditorPlugin_Python3Scripting() override;
