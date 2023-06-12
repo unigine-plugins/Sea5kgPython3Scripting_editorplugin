@@ -28,4 +28,11 @@ MKDIR ..\python-bin-windows\
 
 XCOPY /K /D /Y /H PCbuild\amd64\* ..\python-bin-windows\
 
-XCOPY /K /D /Y /H PCbuild\amd64\*.dll ..\..\bin\
+XCOPY /K /D /Y /H PCbuild\amd64\*.dll ..\..\..\..\..\bin\
+
+
+IF EXIST ..\..\..\..\..\bin\Python3Home RMDIR /S /Q ..\..\..\..\..\bin\Python3Home
+
+MKDIR ..\..\..\..\..\bin\Python3Home
+
+XCOPY /K /S /D /Y /H .\Lib ..\..\..\..\..\bin\Python3Home\Lib\

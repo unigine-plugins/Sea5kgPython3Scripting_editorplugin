@@ -21,13 +21,13 @@ string(APPEND name "_x64")
 
 find_library(Editor_LIBRARY_RELEASE
 	NAMES ${name}
-	PATHS ${PROJECT_SOURCE_DIR}/../bin ${PROJECT_SOURCE_DIR}/../lib
+	PATHS ${PROJECT_SOURCE_DIR}/../../../../bin ${PROJECT_SOURCE_DIR}/../../../../lib
 	NO_DEFAULT_PATH
 	)
 
 find_library(Editor_LIBRARY_DEBUG
 	NAMES ${name}d
-	PATHS ${PROJECT_SOURCE_DIR}/../bin ${PROJECT_SOURCE_DIR}/../lib
+	PATHS ${PROJECT_SOURCE_DIR}/../../../../bin ${PROJECT_SOURCE_DIR}/../../../../lib
 	NO_DEFAULT_PATH
 	)
 
@@ -37,7 +37,7 @@ select_library_configurations(Editor)
 message(STATUS ${PROJECT_SOURCE_DIR})
 find_path(Editor_INCLUDE_DIR
 	NAMES "UniginePlugin.h"
-	PATHS ${PROJECT_SOURCE_DIR}/../include/editor
+	PATHS ${PROJECT_SOURCE_DIR}/../../../../include/editor
 	NO_DEFAULT_PATH
 	)
 

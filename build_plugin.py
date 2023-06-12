@@ -44,9 +44,7 @@ build_commands = [
     },
 ]
 
-# todo copy Python-3.10.1/Lib -> Python3Home\Lib
-
-os.chdir("UnigineEditorPlugin_Python3Scripting")
+os.chdir("source/plugins/Sea5Kg/Python3Scripting")
 
 for _cmd in build_commands:
     print("Starting... " + _cmd["name"])

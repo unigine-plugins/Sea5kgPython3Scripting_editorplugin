@@ -3,9 +3,9 @@
 ##==============================================================================
 cmake_minimum_required(VERSION 3.19)
 
-set(current_target UnigineEditorPlugin_Python3Scripting_x64)
+set(current_target Sea5kgPython3Scripting_editorplugin_x64)
 if (CMAKE_BUILD_TYPE MATCHES "RelWithDebInfo")
-	set(current_target UnigineEditorPlugin_Python3Scripting_x64d)
+	set(current_target Sea5kgPython3Scripting_editorplugin_x64d)
 endif()
 project(${current_target} CXX)
 
@@ -64,7 +64,7 @@ cmake_policy(POP)
 
 
 # set(PYTHON3SCRIPTING_VERSION "0.0.2")
-file (STRINGS "${PROJECT_SOURCE_DIR}/../version" PYTHON3SCRIPTING_VERSION)
+file (STRINGS "${PROJECT_SOURCE_DIR}/../../../../version" PYTHON3SCRIPTING_VERSION)
 
 add_definitions(-DPYTHON3SCRIPTING_VERSION="${PYTHON3SCRIPTING_VERSION}")
 add_subdirectory(QCodeEditor)
@@ -172,14 +172,14 @@ endif()
 
 set_target_properties(${current_target}
 	PROPERTIES
-	RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../bin/editor/
-	LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../bin/editor/
-	# ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../lib/editor/
-	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../bin/editor_debug/
-	LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../bin/editor_debug/
-	RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_SOURCE_DIR}/../bin/editor_debug/
-	LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_SOURCE_DIR}/../bin/editor_debug/
-	# ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../lib/editor_debug/
+	RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../../../../bin/editor/
+	LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../../../../bin/editor/
+	# ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../../../../lib/editor/
+	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../../../../bin/editor_debug/
+	LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../../../../bin/editor_debug/
+	RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_SOURCE_DIR}/../../../../bin/editor_debug/
+	LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_SOURCE_DIR}/../../../../bin/editor_debug/
+	# ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../../../../lib/editor_debug/
 	C_VISIBILITY_PRESET hidden
 	CXX_VISIBILITY_PRESET hidden
 )

@@ -21,13 +21,13 @@ string(APPEND name "_x64")
 
 find_library(Engine_LIBRARY_RELEASE
 	NAMES ${name}
-	PATHS ${PROJECT_SOURCE_DIR}/../bin ${PROJECT_SOURCE_DIR}/../lib
+	PATHS ${PROJECT_SOURCE_DIR}/../../../../bin ${PROJECT_SOURCE_DIR}/../../../../lib
 	NO_DEFAULT_PATH
 	)
 
 find_library(Engine_LIBRARY_DEBUG
 	NAMES ${name}d
-	PATHS ${PROJECT_SOURCE_DIR}/../bin ${PROJECT_SOURCE_DIR}/../lib
+	PATHS ${PROJECT_SOURCE_DIR}/../../../../bin ${PROJECT_SOURCE_DIR}/../../../../lib
 	NO_DEFAULT_PATH
 	)
 
@@ -36,7 +36,7 @@ select_library_configurations(Engine)
 
 find_path(Engine_INCLUDE_DIR
 	NAMES "Unigine.h"
-	PATHS ${PROJECT_SOURCE_DIR}/../include
+	PATHS ${PROJECT_SOURCE_DIR}/../../../../include
 	NO_DEFAULT_PATH
 	)
 
