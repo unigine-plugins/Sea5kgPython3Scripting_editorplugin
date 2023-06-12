@@ -263,9 +263,9 @@ unigine_Material_set_shadow_mask(unigine_Material* self, PyObject *arg)
     // int n = PyInt_AsInt(arg);
     uint32_t nVal = PyLong_AsLong(arg);
     // RUN_IN_MAIN_THREAD(self->unigine_object_ptr->setShadowMask(nVal))
-    
+
     self->unigine_object_ptr->setShadowMask(nVal);
-    
+
     Py_INCREF(Py_None);
     ret = Py_None;
     assert(! PyErr_Occurred());

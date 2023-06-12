@@ -21,7 +21,6 @@ else:
     sys.exit("Unknown platform")
 
 
-
 build_commands = [
     {
         "name": "cmake configure release",
@@ -32,7 +31,7 @@ build_commands = [
     {
         "name": "cmake build release",
         "command": 'cmake --build junk/release_' + _platform + ' --parallel 8 --config Release',
-    }, 
+    },
     {
         "name": "cmake configure debug",
         "command": "cmake -H. -Bjunk/debug_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -42,8 +41,10 @@ build_commands = [
     {
         "name": "cmake build debug",
         "command": "cmake --build junk/debug_" + _platform + " --parallel 8 --config RelWithDebInfo",
-    }, 
+    },
 ]
+
+# todo copy Python-3.10.1/Lib -> Python3Home\Lib
 
 os.chdir("UnigineEditorPlugin_Python3Scripting")
 

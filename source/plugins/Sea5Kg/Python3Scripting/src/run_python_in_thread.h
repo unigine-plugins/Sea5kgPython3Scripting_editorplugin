@@ -21,7 +21,7 @@ class RunScriptInThread : public QThread {
 		PythonExecutor *executor();
 	protected:
 		void run();
-    
+
 	signals:
 
 	public slots:

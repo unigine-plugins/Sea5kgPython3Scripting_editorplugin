@@ -2,7 +2,7 @@
 
 // python headers
 #include <Python.h>
-
+#include <iostream>
 // local
 #include "python3_unigine_stdout.h"
 #include "python3_unigine_stderr.h"
@@ -22,35 +22,42 @@ std::wstring str2wstr(const std::string& str) {
 }
 
 PythonExecutor::PythonExecutor(
-    const std::string &sExtensionId, 
+    const std::string &sExtensionId,
     const std::string &sDirPathWithModules
 ) {
+    std::cout << "1" << std::endl;
     m_sExtensionId = sExtensionId;
+    std::cout << "2" << std::endl;
     m_sDirPathWithModules = sDirPathWithModules;
+    std::cout << "3" << std::endl;
     m_vWrappers.push_back(new Python3UnigineStdout(sExtensionId));
     m_vWrappers.push_back(new Python3UnigineStderr(sExtensionId));
     m_vWrappers.push_back(new Python3UnigineLib(sExtensionId));
-
+    std::cout << "4" << std::endl;
     for (int i = 0; i < m_vWrappers.size(); i++) {
         m_vWrappers[i]->Call_PyImport_AppendInittab();
     }
-
+    std::cout << "5" << std::endl;
     Py_Initialize();
+    std::cout << "6" << std::endl;
 
     // m_sDirPathWithModules = "P:\\UnigineEditorPlugin_Python3Scripting\\Python-3.10.1\\";
     // std::wstring sDir = str2wstr(m_sDirPathWithModules);
     // PySys_SetPath(sDir.c_str());
 
+    std::cout << "7" << std::endl;
     {
         PyObject* pGlobalDict = PyDict_New();
         PyObject *pString = Py_BuildValue("s", m_sExtensionId.c_str());
         PyDict_SetItemString(pGlobalDict, "EXTENSION_ID", pString);
         m_pGlobalDict = pGlobalDict;
-    }    
+    }
 
+    std::cout << "8" << std::endl;
     for (int i = 0; i < m_vWrappers.size(); i++) {
         m_vWrappers[i]->Call_PyImport_ImportModule();
     }
+    std::cout << "9" << std::endl;
 }
 
 void PythonExecutor::addMaterials(const QVector<Unigine::UGUID> &vGuids) {
