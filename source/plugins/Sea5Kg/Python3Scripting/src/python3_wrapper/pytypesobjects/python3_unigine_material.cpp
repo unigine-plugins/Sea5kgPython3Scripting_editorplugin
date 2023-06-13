@@ -241,6 +241,25 @@ static int unigine_Material_init(unigine_Material *self, PyObject *args, PyObjec
 // public : renderCompute
 // public : renderCompute
 
+static PyObject *
+unigine_Material_create()
+{
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    assert(arg);
+
+    //
+    // int val;
+    // PyArg_ParseTuple(args, "i", &val);
+
+    // RUN_IN_MAIN_THREAD(self->unigine_object_ptr->setShadowMask(nVal))
+    Unigine::Ptr<Unigine::Material> pMat = Unigine::Material::create();
+    // self->unigine_object_ptr->setShadowMask(nVal);
+
+    ret = PyUnigineMaterial::NewObject(pMat);
+    return ret;
+}
+
 static PyObject *unigine_Material_get_manual_name(unigine_Material* self) {
     PyErr_Clear();
     // const char *sName = RUN_IN_MAIN_THREAD(self->unigine_object_ptr->getName())
@@ -263,7 +282,6 @@ unigine_Material_set_shadow_mask(unigine_Material* self, PyObject *arg)
     // int n = PyInt_AsInt(arg);
     uint32_t nVal = PyLong_AsLong(arg);
     // RUN_IN_MAIN_THREAD(self->unigine_object_ptr->setShadowMask(nVal))
-
     self->unigine_object_ptr->setShadowMask(nVal);
 
     Py_INCREF(Py_None);
@@ -282,6 +300,10 @@ finally:
 }
 
 static PyMethodDef unigine_Material_methods[] = {
+    {
+        "create", (PyCFunction)unigine_Material_create, METH_STATIC | METH_NOARGS,
+        "Return new material"
+    },
     {
         "get_manual_name", (PyCFunction)unigine_Material_get_manual_name, METH_NOARGS,
         "Return the name of material"
@@ -379,12 +401,12 @@ bool Python3UnigineMaterial::isReady() {
     if (!unigine_MaterialType.tp_dict) {
         unigine_MaterialType.tp_dict = PyDict_New();
 
-        // enum_typename:  
+        // enum_typename:
         PyDict_SetItemString(
             unigine_MaterialType.tp_dict, "OPTION_TRANSPARENT",
             Py_BuildValue("i", Unigine::Material::OPTION_TRANSPARENT)
         );
-        // enum_typename:  
+        // enum_typename:
         PyDict_SetItemString(
             unigine_MaterialType.tp_dict, "OPTION_ORDER",
             Py_BuildValue("i", Unigine::Material::OPTION_ORDER)

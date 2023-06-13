@@ -77,6 +77,7 @@ other/
 /bin
 /data
 /source
+!/source/plugins
 /launch*
 junk
 .thumbnails
