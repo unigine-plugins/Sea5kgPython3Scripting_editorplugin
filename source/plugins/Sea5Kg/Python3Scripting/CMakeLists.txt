@@ -201,6 +201,7 @@ if(MSVC)
     	/arch:SSE4.1
 	)
 else()
+	target_compile_definitions(${current_target} PUBLIC _LINUX)
 	target_compile_options(${current_target}
 		PRIVATE
 		-m64
