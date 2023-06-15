@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# install 
+# install
 # python3 -m pip install xmltodict
 
 import sys
 import xmltodict
 import json
+import re
 
 print("Loading and parse xml...")
 _content = None
@@ -51,6 +52,9 @@ files_paths = {}
 
 for _file in files_json:
     files_paths[_file['@id']] = _file['@name']
+
+def camel_to_snake_case(name):
+    return re.sub(r'(?<!^)(?=[A-Z])', '_', name).lower()
 
 def get_filepath_by_id(_id):
     return files_paths[_id]
@@ -129,7 +133,7 @@ class Python3UnigineWriter:
             _enum_json["values"].append(_enum_item["@name"])
 
         self.__enums.append(_enum_json)
-    
+
     def add_method(self, _method):
         _method_json = {
             "name": _method["@name"],
@@ -140,6 +144,17 @@ class Python3UnigineWriter:
             _method_json["static"] = _method["@static"] == "1"
 
         print("method", _method_json["name"])
+        print(_method)
+        _method_json["args"] = []
+        if 'Argument' in _method:
+            if isinstance(_method['Argument'], list):
+                for _arg in _method['Argument']:
+                    print("arg: ", _arg)
+                    _method_json["args"].append(_arg["@name"])
+            else:
+                _arg = _method['Argument']
+                _method_json["args"].append(_arg["@name"])
+                print("arg: ", _arg["@name"])
         self.__methods.append(_method_json)
 
     def write_header(self):
@@ -275,11 +290,43 @@ class Python3UnigineWriter:
 
     def write_source_methods(self):
         self.__file_source.write("\n")
+        methods_table = []
         for _method in self.__methods:
             _type = ""
+            method_name = camel_to_snake_case(_method["name"])
+            method_info = {
+                "args": [],
+                "method_name": method_name,
+                "description": "",
+                "func_name": "unigine_" + self.__classname + "_" + method_name,
+                "flags": [],
+            }
             if _method["static"]:
                 _type = "(static)"
-            self.__file_source.write("// " + _method["access"] + " " + _type + ": " + _method["name"] + "\n")
+                method_info["flags"].append("METH_STATIC")
+            else:
+                method_info["args"].append("unigine_" + self.__classname + "* self")
+
+            if len(_method["args"]) == 0:
+                method_info["flags"].append("METH_NOARGS")
+            else:
+                method_info["flags"].append("METH_" + str(len(_method["args"])))
+                method_info["args"].append("PyObject *args")
+                method_info["args"].append("PyObject *kwds")
+
+            method_info["description"] = _method["access"] + " " + _type + ": " + _method["name"]
+
+            if not method_name.endswith("_callback") and not method_name.endswith("_callbacks"):
+                methods_table.append(method_info)
+
+                self.__file_source.write(
+                    "// " + method_info["description"] + "\n"
+                    "static PyObject * " + method_info["func_name"] + "(" + ", ".join(method_info["args"]) + ") {\n"
+                    "    PyErr_Clear();\n"
+                    "    PyObject *ret = NULL;\n"
+                    "    return ret;\n"
+                    "};\n\n"
+                )
 
         self.__file_source.write("\n")
         self.__file_source.write("static PyMethodDef unigine_" + self.__classname + "_methods[] = {\n")
@@ -365,7 +412,10 @@ for _operator_method in operator_method_json:
     _id = _operator_method['@id']
     cache_operator_methods[_id] = _operator_method
 
-make_for_classes = ["Material"]
+make_for_classes = [
+    "Material",
+    "Materials",
+]
 
 for _class in classes_json:
     context = _class['@context']

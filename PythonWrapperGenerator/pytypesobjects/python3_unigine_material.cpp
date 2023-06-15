@@ -34,212 +34,1454 @@ static int unigine_Material_init(unigine_Material *self, PyObject *args, PyObjec
 
 
 // public (static): create
+static PyObject * unigine_Material_create() {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParent
+static PyObject * unigine_Material_set_parent(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParent
+static PyObject * unigine_Material_get_parent(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isParent
+static PyObject * unigine_Material_is_parent(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isParent
+static PyObject * unigine_Material_is_parent(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getBaseMaterial
+static PyObject * unigine_Material_get_base_material(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getNumChildren
+static PyObject * unigine_Material_get_num_children(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getChild
+static PyObject * unigine_Material_get_child(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : clone
+static PyObject * unigine_Material_clone(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : clone
+static PyObject * unigine_Material_clone(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : inherit
+static PyObject * unigine_Material_inherit(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : inherit
+static PyObject * unigine_Material_inherit(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getNamespaceName
+static PyObject * unigine_Material_get_namespace_name(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getManualName
+static PyObject * unigine_Material_get_manual_name(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getGUID
+static PyObject * unigine_Material_get_g_u_i_d(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getPath
+static PyObject * unigine_Material_get_path(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isNodeTypeSupported
+static PyObject * unigine_Material_is_node_type_supported(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isNodeSupported
+static PyObject * unigine_Material_is_node_supported(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : canRenderNode
+static PyObject * unigine_Material_can_render_node(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getNumUIItems
+static PyObject * unigine_Material_get_num_u_i_items(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getUIItemDataType
+static PyObject * unigine_Material_get_u_i_item_data_type(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getUIItemDataID
+static PyObject * unigine_Material_get_u_i_item_data_i_d(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isUIItemHidden
+static PyObject * unigine_Material_is_u_i_item_hidden(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getUIItemTitle
+static PyObject * unigine_Material_get_u_i_item_title(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getUIItemTooltip
+static PyObject * unigine_Material_get_u_i_item_tooltip(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getUIItemWidget
+static PyObject * unigine_Material_get_u_i_item_widget(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getUIItemParent
+static PyObject * unigine_Material_get_u_i_item_parent(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getUIItemNumChildren
+static PyObject * unigine_Material_get_u_i_item_num_children(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getUIItemChild
+static PyObject * unigine_Material_get_u_i_item_child(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isUIItemSliderMinExpand
+static PyObject * unigine_Material_is_u_i_item_slider_min_expand(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isUIItemSliderMaxExpand
+static PyObject * unigine_Material_is_u_i_item_slider_max_expand(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getUIItemSliderMinValue
+static PyObject * unigine_Material_get_u_i_item_slider_min_value(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getUIItemSliderMaxValue
+static PyObject * unigine_Material_get_u_i_item_slider_max_value(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getUIItemGroupToggleStateID
+static PyObject * unigine_Material_get_u_i_item_group_toggle_state_i_d(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isUIItemGroupCollapsed
+static PyObject * unigine_Material_is_u_i_item_group_collapsed(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public (static): widgetToString
+static PyObject * unigine_Material_widget_to_string(PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public (static): stringToWidget
+static PyObject * unigine_Material_string_to_widget(PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setOption
+static PyObject * unigine_Material_set_option(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getOption
+static PyObject * unigine_Material_get_option(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isOptionOverridden
+static PyObject * unigine_Material_is_option_overridden(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : resetOption
+static PyObject * unigine_Material_reset_option(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setTransparent
+static PyObject * unigine_Material_set_transparent(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getTransparent
+static PyObject * unigine_Material_get_transparent(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isWater
+static PyObject * unigine_Material_is_water(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isDeferred
+static PyObject * unigine_Material_is_deferred(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isForward
+static PyObject * unigine_Material_is_forward(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isAlphaTest
+static PyObject * unigine_Material_is_alpha_test(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setBlendDestFunc
+static PyObject * unigine_Material_set_blend_dest_func(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getBlendDestFunc
+static PyObject * unigine_Material_get_blend_dest_func(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setBlendSrcFunc
+static PyObject * unigine_Material_set_blend_src_func(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getBlendSrcFunc
+static PyObject * unigine_Material_get_blend_src_func(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setShadowMask
+static PyObject * unigine_Material_set_shadow_mask(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getShadowMask
+static PyObject * unigine_Material_get_shadow_mask(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setViewportMask
+static PyObject * unigine_Material_set_viewport_mask(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getViewportMask
+static PyObject * unigine_Material_get_viewport_mask(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setDepthMask
+static PyObject * unigine_Material_set_depth_mask(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getDepthMask
+static PyObject * unigine_Material_get_depth_mask(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setOrder
+static PyObject * unigine_Material_set_order(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getOrder
+static PyObject * unigine_Material_get_order(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setCastShadow
+static PyObject * unigine_Material_set_cast_shadow(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isCastShadow
+static PyObject * unigine_Material_is_cast_shadow(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setCastWorldShadow
+static PyObject * unigine_Material_set_cast_world_shadow(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isCastWorldShadow
+static PyObject * unigine_Material_is_cast_world_shadow(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setDepthTest
+static PyObject * unigine_Material_set_depth_test(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isDepthTest
+static PyObject * unigine_Material_is_depth_test(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setTwoSided
+static PyObject * unigine_Material_set_two_sided(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isTwoSided
+static PyObject * unigine_Material_is_two_sided(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setOverlap
+static PyObject * unigine_Material_set_overlap(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isOverlap
+static PyObject * unigine_Material_is_overlap(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : checkShaderCache
+static PyObject * unigine_Material_check_shader_cache(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : checkShaderCache
+static PyObject * unigine_Material_check_shader_cache(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : compileShader
+static PyObject * unigine_Material_compile_shader(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : fetchShader
+static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : fetchShader
+static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : fetchShader
+static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : fetchShader
+static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : createShaders
+static PyObject * unigine_Material_create_shaders(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : destroyTextures
+static PyObject * unigine_Material_destroy_textures(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getNumParameters
+static PyObject * unigine_Material_get_num_parameters(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : findParameter
+static PyObject * unigine_Material_find_parameter(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : resetParameter
+static PyObject * unigine_Material_reset_parameter(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : checkParameterConditions
+static PyObject * unigine_Material_check_parameter_conditions(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterType
+static PyObject * unigine_Material_get_parameter_type(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isParameterInt
+static PyObject * unigine_Material_is_parameter_int(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isParameterFloat
+static PyObject * unigine_Material_is_parameter_float(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isParameterOverridden
+static PyObject * unigine_Material_is_parameter_overridden(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterName
+static PyObject * unigine_Material_get_parameter_name(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isParameterExpressionEnabled
+static PyObject * unigine_Material_is_parameter_expression_enabled(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterExpressionEnabled
+static PyObject * unigine_Material_set_parameter_expression_enabled(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterExpression
+static PyObject * unigine_Material_get_parameter_expression(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterExpression
+static PyObject * unigine_Material_set_parameter_expression(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterFloat
+static PyObject * unigine_Material_set_parameter_float(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterFloat
+static PyObject * unigine_Material_set_parameter_float(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterFloat
+static PyObject * unigine_Material_get_parameter_float(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterFloat
+static PyObject * unigine_Material_get_parameter_float(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterFloat2
+static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterFloat2
+static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterFloat2
+static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterFloat2
+static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterFloat3
+static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterFloat3
+static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterFloat3
+static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterFloat3
+static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterFloat4
+static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterFloat4
+static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterFloat4
+static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterFloat4
+static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterInt
+static PyObject * unigine_Material_set_parameter_int(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterInt
+static PyObject * unigine_Material_set_parameter_int(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterInt
+static PyObject * unigine_Material_get_parameter_int(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterInt
+static PyObject * unigine_Material_get_parameter_int(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterInt2
+static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterInt2
+static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterInt2
+static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterInt2
+static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterInt3
+static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterInt3
+static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterInt3
+static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterInt3
+static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterInt4
+static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterInt4
+static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterInt4
+static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterInt4
+static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterArraySize
+static PyObject * unigine_Material_get_parameter_array_size(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isParameterArray
+static PyObject * unigine_Material_is_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterArray
+static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterArray
+static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterArray
+static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterArray
+static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterArray
+static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterArray
+static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterArray
+static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterArray
+static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterArray
+static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterArray
+static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getParameterArray
+static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setParameterArray
+static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getNumStates
+static PyObject * unigine_Material_get_num_states(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : findState
+static PyObject * unigine_Material_find_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isStateOverridden
+static PyObject * unigine_Material_is_state_overridden(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isStateInternal
+static PyObject * unigine_Material_is_state_internal(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : resetState
+static PyObject * unigine_Material_reset_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : checkStateConditions
+static PyObject * unigine_Material_check_state_conditions(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getStateName
+static PyObject * unigine_Material_get_state_name(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getStateSwitchItem
+static PyObject * unigine_Material_get_state_switch_item(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getStateSwitchNumItems
+static PyObject * unigine_Material_get_state_switch_num_items(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getStateType
+static PyObject * unigine_Material_get_state_type(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getState
+static PyObject * unigine_Material_get_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setState
+static PyObject * unigine_Material_set_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getState
+static PyObject * unigine_Material_get_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setState
+static PyObject * unigine_Material_set_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getNumTextures
+static PyObject * unigine_Material_get_num_textures(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : findTexture
+static PyObject * unigine_Material_find_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isTextureOverridden
+static PyObject * unigine_Material_is_texture_overridden(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isTextureLoaded
+static PyObject * unigine_Material_is_texture_loaded(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isTextureInternal
+static PyObject * unigine_Material_is_texture_internal(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : resetTexture
+static PyObject * unigine_Material_reset_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : checkTextureConditions
+static PyObject * unigine_Material_check_texture_conditions(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getTextureName
+static PyObject * unigine_Material_get_texture_name(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getTextureUnit
+static PyObject * unigine_Material_get_texture_unit(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isTextureEditable
+static PyObject * unigine_Material_is_texture_editable(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getTextureSource
+static PyObject * unigine_Material_get_texture_source(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getTextureSamplerFlags
+static PyObject * unigine_Material_get_texture_sampler_flags(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setTextureSamplerFlags
+static PyObject * unigine_Material_set_texture_sampler_flags(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getTextureFormatFlags
+static PyObject * unigine_Material_get_texture_format_flags(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getTextureImage
+static PyObject * unigine_Material_get_texture_image(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setTextureImage
+static PyObject * unigine_Material_set_texture_image(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getTexture
+static PyObject * unigine_Material_get_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getTexture
+static PyObject * unigine_Material_get_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setTexture
+static PyObject * unigine_Material_set_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setTexture
+static PyObject * unigine_Material_set_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setTexturePath
+static PyObject * unigine_Material_set_texture_path(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getTexturePath
+static PyObject * unigine_Material_get_texture_path(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : setTexturePath
+static PyObject * unigine_Material_set_texture_path(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getTexturePath
+static PyObject * unigine_Material_get_texture_path(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getTextureRamp
+static PyObject * unigine_Material_get_texture_ramp(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getTextureRampOverride
+static PyObject * unigine_Material_get_texture_ramp_override(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isEditable
+static PyObject * unigine_Material_is_editable(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isHidden
+static PyObject * unigine_Material_is_hidden(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isBase
+static PyObject * unigine_Material_is_base(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isBrush
+static PyObject * unigine_Material_is_brush(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isLegacy
+static PyObject * unigine_Material_is_legacy(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isPreviewHidden
+static PyObject * unigine_Material_is_preview_hidden(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isReflection2D
+static PyObject * unigine_Material_is_reflection2_d(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isInternal
+static PyObject * unigine_Material_is_internal(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isManual
+static PyObject * unigine_Material_is_manual(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : canSave
+static PyObject * unigine_Material_can_save(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isAutoSave
+static PyObject * unigine_Material_is_auto_save(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isFileEngine
+static PyObject * unigine_Material_is_file_engine(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : isEmpty
+static PyObject * unigine_Material_is_empty(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : hasOverrides
+static PyObject * unigine_Material_has_overrides(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : saveState
+static PyObject * unigine_Material_save_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : restoreState
+static PyObject * unigine_Material_restore_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : loadXml
+static PyObject * unigine_Material_load_xml(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : saveXml
+static PyObject * unigine_Material_save_xml(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : loadUlon
+static PyObject * unigine_Material_load_ulon(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : load
+static PyObject * unigine_Material_load(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : save
+static PyObject * unigine_Material_save(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : reload
+static PyObject * unigine_Material_reload(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : createMaterialFile
+static PyObject * unigine_Material_create_material_file(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getRenderPass
+static PyObject * unigine_Material_get_render_pass(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : getRenderPassName
+static PyObject * unigine_Material_get_render_pass_name(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : runExpression
+static PyObject * unigine_Material_run_expression(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : renderScreen
+static PyObject * unigine_Material_render_screen(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : renderScreen
+static PyObject * unigine_Material_render_screen(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : renderCompute
+static PyObject * unigine_Material_render_compute(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 // public : renderCompute
+static PyObject * unigine_Material_render_compute(unigine_Material* self, PyObject *args, PyObject *kwds) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    return ret;
+};
+
 
 static PyMethodDef unigine_Material_methods[] = {
     {NULL}  /* Sentinel */

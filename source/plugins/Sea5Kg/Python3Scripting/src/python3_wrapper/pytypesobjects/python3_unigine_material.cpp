@@ -241,16 +241,10 @@ static int unigine_Material_init(unigine_Material *self, PyObject *args, PyObjec
 // public : renderCompute
 // public : renderCompute
 
-static PyObject *
-unigine_Material_create()
-{
+// public (static): create
+static PyObject * unigine_Material_create() {
     PyErr_Clear();
     PyObject *ret = NULL;
-    assert(arg);
-
-    //
-    // int val;
-    // PyArg_ParseTuple(args, "i", &val);
 
     // RUN_IN_MAIN_THREAD(self->unigine_object_ptr->setShadowMask(nVal))
     Unigine::Ptr<Unigine::Material> pMat = Unigine::Material::create();
