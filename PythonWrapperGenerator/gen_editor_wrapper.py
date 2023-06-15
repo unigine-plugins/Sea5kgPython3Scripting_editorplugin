@@ -30,7 +30,8 @@ methods_json = _api["GCC_XML"]["Method"]
 constructor_json = _api["GCC_XML"]["Constructor"]
 destructor_json = _api["GCC_XML"]["Destructor"]
 operator_method_json = _api["GCC_XML"]["OperatorMethod"]
-
+reference_type_json = _api["GCC_XML"]["ReferenceType"]
+cv_qualified_type_json = _api["GCC_XML"]["CvQualifiedType"]
 
 cache_namespaces = {}
 cache_classes = {}
@@ -40,6 +41,7 @@ cache_methods = {}
 cache_constructors = {}
 cache_destructors = {}
 cache_operator_methods = {}
+cache_types = {}
 
 # "Typedef"
 # "Function": [
@@ -55,6 +57,12 @@ for _file in files_json:
 
 def camel_to_snake_case(name):
     return re.sub(r'(?<!^)(?=[A-Z])', '_', name).lower()
+
+def find_type_by_id(_id):
+    _new_id = _id
+    while _new_id in cache_types:
+       _new_id = cache_types[_new_id]
+    return _new_id
 
 def get_filepath_by_id(_id):
     return files_paths[_id]
@@ -150,11 +158,13 @@ class Python3UnigineWriter:
             if isinstance(_method['Argument'], list):
                 for _arg in _method['Argument']:
                     print("arg: ", _arg)
+                    print(find_type_by_id(_arg["@type"]))
                     _method_json["args"].append(_arg["@name"])
             else:
                 _arg = _method['Argument']
                 _method_json["args"].append(_arg["@name"])
                 print("arg: ", _arg["@name"])
+                print(find_type_by_id(_arg["@type"]))
         self.__methods.append(_method_json)
 
     def write_header(self):
@@ -411,6 +421,14 @@ for _destroctor in destructor_json:
 for _operator_method in operator_method_json:
     _id = _operator_method['@id']
     cache_operator_methods[_id] = _operator_method
+
+for _reference_type in reference_type_json:
+    _id = _reference_type['@id']
+    cache_types[_id] = _reference_type["@type"]
+
+for _cv_qualified_type in cv_qualified_type_json:
+    _id = _cv_qualified_type['@id']
+    cache_types[_id] = _cv_qualified_type["@type"]
 
 make_for_classes = [
     "Material",
