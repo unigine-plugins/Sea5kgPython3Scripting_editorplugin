@@ -30,8 +30,12 @@ methods_json = _api["GCC_XML"]["Method"]
 constructor_json = _api["GCC_XML"]["Constructor"]
 destructor_json = _api["GCC_XML"]["Destructor"]
 operator_method_json = _api["GCC_XML"]["OperatorMethod"]
+
 reference_type_json = _api["GCC_XML"]["ReferenceType"]
 cv_qualified_type_json = _api["GCC_XML"]["CvQualifiedType"]
+pointer_type_json = _api["GCC_XML"]["PointerType"]
+fundamental_type_json = _api["GCC_XML"]["FundamentalType"]
+
 
 cache_namespaces = {}
 cache_classes = {}
@@ -41,7 +45,11 @@ cache_methods = {}
 cache_constructors = {}
 cache_destructors = {}
 cache_operator_methods = {}
-cache_types = {}
+
+cache_cv_qualified_types = {}
+cache_reference_types = {}
+cache_pointer_types = {}
+cache_fundamental_types = {}
 
 # "Typedef"
 # "Function": [
@@ -58,11 +66,35 @@ for _file in files_json:
 def camel_to_snake_case(name):
     return re.sub(r'(?<!^)(?=[A-Z])', '_', name).lower()
 
+def resolve_type(_type):
+    _id = _type["id"]
+    if _id in cache_pointer_types:
+        _type["id"] = cache_pointer_types[_id]["@type"]
+        _type["define"] = _type["define"] + " *"
+        return resolve_type(_type)
+    if _id in cache_cv_qualified_types:
+        _type["id"] = cache_cv_qualified_types[_id]["@type"]
+        _type["define"] =  "const " + _type["define"]
+        return resolve_type(_type)
+    if _id in cache_reference_types:
+        _type["id"] = cache_reference_types[_id]["@type"]
+        _type["define"] = _type["define"] + " &"
+        return resolve_type(_type)
+    if _id in cache_enumeration:
+        _type["define"] = _type["define"] + cache_enumeration[_id]["@name"]
+        return _type
+    if _id in cache_classes:
+        _type["define"] = _type["define"] + cache_classes[_id]["fullname"]
+        return _type
+    if _id in cache_fundamental_types:
+        _type["define"] = cache_fundamental_types[_id]["@name"] + _type["define"]
+        return _type
+    _type["unfinshed"] = 1
+    return _type
+
 def find_type_by_id(_id):
-    _new_id = _id
-    while _new_id in cache_types:
-       _new_id = cache_types[_new_id]
-    return _new_id
+    res = resolve_type({"id": _id, "define": ""})
+    return res
 
 def get_filepath_by_id(_id):
     return files_paths[_id]
@@ -155,16 +187,19 @@ class Python3UnigineWriter:
         print(_method)
         _method_json["args"] = []
         if 'Argument' in _method:
+            _args = []
             if isinstance(_method['Argument'], list):
-                for _arg in _method['Argument']:
-                    print("arg: ", _arg)
-                    print(find_type_by_id(_arg["@type"]))
-                    _method_json["args"].append(_arg["@name"])
+                _args.extend(_method['Argument'])
             else:
-                _arg = _method['Argument']
-                _method_json["args"].append(_arg["@name"])
-                print("arg: ", _arg["@name"])
-                print(find_type_by_id(_arg["@type"]))
+                _args.append(_method['Argument'])
+            for _arg in _args:
+                _type = find_type_by_id(_arg["@type"])
+                # print("arg: ", _arg)
+                _method_json["args"].append({
+                    "type": _type["define"],
+                    "name": _arg["@name"]
+                })
+                # print("arg: ", _arg["@name"])
         self.__methods.append(_method_json)
 
     def write_header(self):
@@ -317,6 +352,7 @@ class Python3UnigineWriter:
             else:
                 method_info["args"].append("unigine_" + self.__classname + "* self")
 
+            # TODO returns
             if len(_method["args"]) == 0:
                 method_info["flags"].append("METH_NOARGS")
             else:
@@ -325,15 +361,17 @@ class Python3UnigineWriter:
                 method_info["args"].append("PyObject *kwds")
 
             method_info["description"] = _method["access"] + " " + _type + ": " + _method["name"]
-
+            _args = "    // args:\n"
+            for _arg in _method["args"]:
+                _args += "    // " + _arg["type"] + " " + _arg["name"] + "\n"
             if not method_name.endswith("_callback") and not method_name.endswith("_callbacks"):
                 methods_table.append(method_info)
-
                 self.__file_source.write(
                     "// " + method_info["description"] + "\n"
                     "static PyObject * " + method_info["func_name"] + "(" + ", ".join(method_info["args"]) + ") {\n"
                     "    PyErr_Clear();\n"
-                    "    PyObject *ret = NULL;\n"
+                    "    PyObject *ret = NULL;\n" +
+                    _args +
                     "    return ret;\n"
                     "};\n\n"
                 )
@@ -424,11 +462,19 @@ for _operator_method in operator_method_json:
 
 for _reference_type in reference_type_json:
     _id = _reference_type['@id']
-    cache_types[_id] = _reference_type["@type"]
+    cache_reference_types[_id] = _reference_type
 
 for _cv_qualified_type in cv_qualified_type_json:
     _id = _cv_qualified_type['@id']
-    cache_types[_id] = _cv_qualified_type["@type"]
+    cache_cv_qualified_types[_id] = _cv_qualified_type
+
+for _pointer_type in pointer_type_json:
+    _id = _pointer_type['@id']
+    cache_pointer_types[_id] = _pointer_type
+
+for _fundamental_type in fundamental_type_json:
+    _id = _fundamental_type['@id']
+    cache_fundamental_types[_id] = _fundamental_type
 
 make_for_classes = [
     "Material",
@@ -442,6 +488,18 @@ for _class in classes_json:
         _namespace = cache_namespaces[context]["fullname"]
         _name = _class['@name']
         _filepath = get_filepath_by_id(_class['@file'])
+        _class["fullname"] = _namespace + "::" + _name
+        cache_classes[_id] = _class
+
+for _class in classes_json:
+    context = _class['@context']
+    if context in cache_namespaces:
+        _id = _class['@id']
+        _namespace = cache_namespaces[context]["fullname"]
+        _name = _class['@name']
+        _filepath = get_filepath_by_id(_class['@file'])
+        _class["fullname"] = _namespace + "::" + _name
+        cache_classes[_id] = _class
         if _name in make_for_classes:
             print("_id " + _id)
             print(_namespace, _name, _filepath)
@@ -472,6 +530,5 @@ for _class in classes_json:
         # print(filepath)
         # print(_namespace["fullname"],  )
         # print(_class)
-# cache_classes
 # print(namespaces)
 # "Class"

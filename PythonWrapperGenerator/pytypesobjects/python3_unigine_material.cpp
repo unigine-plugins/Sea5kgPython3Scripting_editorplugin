@@ -37,6 +37,7 @@ static int unigine_Material_init(unigine_Material *self, PyObject *args, PyObjec
 static PyObject * unigine_Material_create() {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -44,6 +45,9 @@ static PyObject * unigine_Material_create() {
 static PyObject * unigine_Material_set_parent(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // const  &Unigine::Ptr<Unigine::Material> material
+    // bool save_all_values
     return ret;
 };
 
@@ -51,6 +55,7 @@ static PyObject * unigine_Material_set_parent(unigine_Material* self, PyObject *
 static PyObject * unigine_Material_get_parent(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -58,6 +63,8 @@ static PyObject * unigine_Material_get_parent(unigine_Material* self) {
 static PyObject * unigine_Material_is_parent(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // const  &Unigine::Ptr<Unigine::Material> parent
     return ret;
 };
 
@@ -65,6 +72,8 @@ static PyObject * unigine_Material_is_parent(unigine_Material* self, PyObject *a
 static PyObject * unigine_Material_is_parent(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // const  &Unigine::UGUID guid
     return ret;
 };
 
@@ -72,6 +81,7 @@ static PyObject * unigine_Material_is_parent(unigine_Material* self, PyObject *a
 static PyObject * unigine_Material_get_base_material(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -79,6 +89,7 @@ static PyObject * unigine_Material_get_base_material(unigine_Material* self) {
 static PyObject * unigine_Material_get_num_children(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -86,6 +97,8 @@ static PyObject * unigine_Material_get_num_children(unigine_Material* self) {
 static PyObject * unigine_Material_get_child(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -93,6 +106,8 @@ static PyObject * unigine_Material_get_child(unigine_Material* self, PyObject *a
 static PyObject * unigine_Material_clone(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // const  &Unigine::UGUID guid
     return ret;
 };
 
@@ -100,6 +115,7 @@ static PyObject * unigine_Material_clone(unigine_Material* self, PyObject *args,
 static PyObject * unigine_Material_clone(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -107,6 +123,8 @@ static PyObject * unigine_Material_clone(unigine_Material* self) {
 static PyObject * unigine_Material_inherit(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // const  &Unigine::UGUID guid
     return ret;
 };
 
@@ -114,6 +132,7 @@ static PyObject * unigine_Material_inherit(unigine_Material* self, PyObject *arg
 static PyObject * unigine_Material_inherit(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -121,6 +140,7 @@ static PyObject * unigine_Material_inherit(unigine_Material* self) {
 static PyObject * unigine_Material_get_namespace_name(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -128,6 +148,7 @@ static PyObject * unigine_Material_get_namespace_name(unigine_Material* self) {
 static PyObject * unigine_Material_get_manual_name(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -135,6 +156,7 @@ static PyObject * unigine_Material_get_manual_name(unigine_Material* self) {
 static PyObject * unigine_Material_get_g_u_i_d(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -142,6 +164,7 @@ static PyObject * unigine_Material_get_g_u_i_d(unigine_Material* self) {
 static PyObject * unigine_Material_get_path(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -149,6 +172,8 @@ static PyObject * unigine_Material_get_path(unigine_Material* self) {
 static PyObject * unigine_Material_is_node_type_supported(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // TYPE type
     return ret;
 };
 
@@ -156,6 +181,8 @@ static PyObject * unigine_Material_is_node_type_supported(unigine_Material* self
 static PyObject * unigine_Material_is_node_supported(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // const  &Unigine::Ptr<Unigine::Node> node
     return ret;
 };
 
@@ -163,6 +190,7 @@ static PyObject * unigine_Material_is_node_supported(unigine_Material* self, PyO
 static PyObject * unigine_Material_can_render_node(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -170,6 +198,7 @@ static PyObject * unigine_Material_can_render_node(unigine_Material* self) {
 static PyObject * unigine_Material_get_num_u_i_items(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -177,6 +206,8 @@ static PyObject * unigine_Material_get_num_u_i_items(unigine_Material* self) {
 static PyObject * unigine_Material_get_u_i_item_data_type(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -184,6 +215,8 @@ static PyObject * unigine_Material_get_u_i_item_data_type(unigine_Material* self
 static PyObject * unigine_Material_get_u_i_item_data_i_d(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -191,6 +224,8 @@ static PyObject * unigine_Material_get_u_i_item_data_i_d(unigine_Material* self,
 static PyObject * unigine_Material_is_u_i_item_hidden(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -198,6 +233,8 @@ static PyObject * unigine_Material_is_u_i_item_hidden(unigine_Material* self, Py
 static PyObject * unigine_Material_get_u_i_item_title(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -205,6 +242,8 @@ static PyObject * unigine_Material_get_u_i_item_title(unigine_Material* self, Py
 static PyObject * unigine_Material_get_u_i_item_tooltip(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -212,6 +251,8 @@ static PyObject * unigine_Material_get_u_i_item_tooltip(unigine_Material* self, 
 static PyObject * unigine_Material_get_u_i_item_widget(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -219,6 +260,8 @@ static PyObject * unigine_Material_get_u_i_item_widget(unigine_Material* self, P
 static PyObject * unigine_Material_get_u_i_item_parent(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -226,6 +269,8 @@ static PyObject * unigine_Material_get_u_i_item_parent(unigine_Material* self, P
 static PyObject * unigine_Material_get_u_i_item_num_children(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -233,6 +278,9 @@ static PyObject * unigine_Material_get_u_i_item_num_children(unigine_Material* s
 static PyObject * unigine_Material_get_u_i_item_child(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
+    // int num
     return ret;
 };
 
@@ -240,6 +288,8 @@ static PyObject * unigine_Material_get_u_i_item_child(unigine_Material* self, Py
 static PyObject * unigine_Material_is_u_i_item_slider_min_expand(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -247,6 +297,8 @@ static PyObject * unigine_Material_is_u_i_item_slider_min_expand(unigine_Materia
 static PyObject * unigine_Material_is_u_i_item_slider_max_expand(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -254,6 +306,8 @@ static PyObject * unigine_Material_is_u_i_item_slider_max_expand(unigine_Materia
 static PyObject * unigine_Material_get_u_i_item_slider_min_value(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -261,6 +315,8 @@ static PyObject * unigine_Material_get_u_i_item_slider_min_value(unigine_Materia
 static PyObject * unigine_Material_get_u_i_item_slider_max_value(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -268,6 +324,8 @@ static PyObject * unigine_Material_get_u_i_item_slider_max_value(unigine_Materia
 static PyObject * unigine_Material_get_u_i_item_group_toggle_state_i_d(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -275,6 +333,8 @@ static PyObject * unigine_Material_get_u_i_item_group_toggle_state_i_d(unigine_M
 static PyObject * unigine_Material_is_u_i_item_group_collapsed(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int item
     return ret;
 };
 
@@ -282,6 +342,8 @@ static PyObject * unigine_Material_is_u_i_item_group_collapsed(unigine_Material*
 static PyObject * unigine_Material_widget_to_string(PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // WIDGET widget
     return ret;
 };
 
@@ -289,6 +351,8 @@ static PyObject * unigine_Material_widget_to_string(PyObject *args, PyObject *kw
 static PyObject * unigine_Material_string_to_widget(PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * str
     return ret;
 };
 
@@ -296,6 +360,9 @@ static PyObject * unigine_Material_string_to_widget(PyObject *args, PyObject *kw
 static PyObject * unigine_Material_set_option(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // int value
     return ret;
 };
 
@@ -303,6 +370,8 @@ static PyObject * unigine_Material_set_option(unigine_Material* self, PyObject *
 static PyObject * unigine_Material_get_option(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -310,6 +379,8 @@ static PyObject * unigine_Material_get_option(unigine_Material* self, PyObject *
 static PyObject * unigine_Material_is_option_overridden(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -317,6 +388,8 @@ static PyObject * unigine_Material_is_option_overridden(unigine_Material* self, 
 static PyObject * unigine_Material_reset_option(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -324,6 +397,8 @@ static PyObject * unigine_Material_reset_option(unigine_Material* self, PyObject
 static PyObject * unigine_Material_set_transparent(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int transparent
     return ret;
 };
 
@@ -331,6 +406,7 @@ static PyObject * unigine_Material_set_transparent(unigine_Material* self, PyObj
 static PyObject * unigine_Material_get_transparent(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -338,6 +414,7 @@ static PyObject * unigine_Material_get_transparent(unigine_Material* self) {
 static PyObject * unigine_Material_is_water(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -345,6 +422,7 @@ static PyObject * unigine_Material_is_water(unigine_Material* self) {
 static PyObject * unigine_Material_is_deferred(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -352,6 +430,7 @@ static PyObject * unigine_Material_is_deferred(unigine_Material* self) {
 static PyObject * unigine_Material_is_forward(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -359,6 +438,7 @@ static PyObject * unigine_Material_is_forward(unigine_Material* self) {
 static PyObject * unigine_Material_is_alpha_test(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -366,6 +446,8 @@ static PyObject * unigine_Material_is_alpha_test(unigine_Material* self) {
 static PyObject * unigine_Material_set_blend_dest_func(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int func
     return ret;
 };
 
@@ -373,6 +455,7 @@ static PyObject * unigine_Material_set_blend_dest_func(unigine_Material* self, P
 static PyObject * unigine_Material_get_blend_dest_func(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -380,6 +463,8 @@ static PyObject * unigine_Material_get_blend_dest_func(unigine_Material* self) {
 static PyObject * unigine_Material_set_blend_src_func(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int func
     return ret;
 };
 
@@ -387,6 +472,7 @@ static PyObject * unigine_Material_set_blend_src_func(unigine_Material* self, Py
 static PyObject * unigine_Material_get_blend_src_func(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -394,6 +480,8 @@ static PyObject * unigine_Material_get_blend_src_func(unigine_Material* self) {
 static PyObject * unigine_Material_set_shadow_mask(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int mask
     return ret;
 };
 
@@ -401,6 +489,7 @@ static PyObject * unigine_Material_set_shadow_mask(unigine_Material* self, PyObj
 static PyObject * unigine_Material_get_shadow_mask(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -408,6 +497,8 @@ static PyObject * unigine_Material_get_shadow_mask(unigine_Material* self) {
 static PyObject * unigine_Material_set_viewport_mask(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int mask
     return ret;
 };
 
@@ -415,6 +506,7 @@ static PyObject * unigine_Material_set_viewport_mask(unigine_Material* self, PyO
 static PyObject * unigine_Material_get_viewport_mask(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -422,6 +514,8 @@ static PyObject * unigine_Material_get_viewport_mask(unigine_Material* self) {
 static PyObject * unigine_Material_set_depth_mask(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int mask
     return ret;
 };
 
@@ -429,6 +523,7 @@ static PyObject * unigine_Material_set_depth_mask(unigine_Material* self, PyObje
 static PyObject * unigine_Material_get_depth_mask(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -436,6 +531,8 @@ static PyObject * unigine_Material_get_depth_mask(unigine_Material* self) {
 static PyObject * unigine_Material_set_order(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int order
     return ret;
 };
 
@@ -443,6 +540,7 @@ static PyObject * unigine_Material_set_order(unigine_Material* self, PyObject *a
 static PyObject * unigine_Material_get_order(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -450,6 +548,8 @@ static PyObject * unigine_Material_get_order(unigine_Material* self) {
 static PyObject * unigine_Material_set_cast_shadow(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // bool shadow
     return ret;
 };
 
@@ -457,6 +557,7 @@ static PyObject * unigine_Material_set_cast_shadow(unigine_Material* self, PyObj
 static PyObject * unigine_Material_is_cast_shadow(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -464,6 +565,8 @@ static PyObject * unigine_Material_is_cast_shadow(unigine_Material* self) {
 static PyObject * unigine_Material_set_cast_world_shadow(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // bool shadow
     return ret;
 };
 
@@ -471,6 +574,7 @@ static PyObject * unigine_Material_set_cast_world_shadow(unigine_Material* self,
 static PyObject * unigine_Material_is_cast_world_shadow(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -478,6 +582,8 @@ static PyObject * unigine_Material_is_cast_world_shadow(unigine_Material* self) 
 static PyObject * unigine_Material_set_depth_test(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // bool test
     return ret;
 };
 
@@ -485,6 +591,7 @@ static PyObject * unigine_Material_set_depth_test(unigine_Material* self, PyObje
 static PyObject * unigine_Material_is_depth_test(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -492,6 +599,8 @@ static PyObject * unigine_Material_is_depth_test(unigine_Material* self) {
 static PyObject * unigine_Material_set_two_sided(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // bool sided
     return ret;
 };
 
@@ -499,6 +608,7 @@ static PyObject * unigine_Material_set_two_sided(unigine_Material* self, PyObjec
 static PyObject * unigine_Material_is_two_sided(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -506,6 +616,8 @@ static PyObject * unigine_Material_is_two_sided(unigine_Material* self) {
 static PyObject * unigine_Material_set_overlap(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // bool overlap
     return ret;
 };
 
@@ -513,6 +625,7 @@ static PyObject * unigine_Material_set_overlap(unigine_Material* self, PyObject 
 static PyObject * unigine_Material_is_overlap(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -520,6 +633,7 @@ static PyObject * unigine_Material_is_overlap(unigine_Material* self) {
 static PyObject * unigine_Material_check_shader_cache(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -527,6 +641,9 @@ static PyObject * unigine_Material_check_shader_cache(unigine_Material* self) {
 static PyObject * unigine_Material_check_shader_cache(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // PASS pass
+    // TYPE node_type
     return ret;
 };
 
@@ -534,6 +651,9 @@ static PyObject * unigine_Material_check_shader_cache(unigine_Material* self, Py
 static PyObject * unigine_Material_compile_shader(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // PASS pass
+    // TYPE node_type
     return ret;
 };
 
@@ -541,6 +661,9 @@ static PyObject * unigine_Material_compile_shader(unigine_Material* self, PyObje
 static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // PASS pass
+    // TYPE node_type
     return ret;
 };
 
@@ -548,6 +671,8 @@ static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject
 static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // PASS pass
     return ret;
 };
 
@@ -555,6 +680,9 @@ static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject
 static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * pass_name
+    // int node
     return ret;
 };
 
@@ -562,6 +690,8 @@ static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject
 static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * pass_name
     return ret;
 };
 
@@ -569,6 +699,8 @@ static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject
 static PyObject * unigine_Material_create_shaders(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // bool recursive
     return ret;
 };
 
@@ -576,6 +708,7 @@ static PyObject * unigine_Material_create_shaders(unigine_Material* self, PyObje
 static PyObject * unigine_Material_destroy_textures(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -583,6 +716,7 @@ static PyObject * unigine_Material_destroy_textures(unigine_Material* self) {
 static PyObject * unigine_Material_get_num_parameters(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -590,6 +724,8 @@ static PyObject * unigine_Material_get_num_parameters(unigine_Material* self) {
 static PyObject * unigine_Material_find_parameter(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -597,6 +733,8 @@ static PyObject * unigine_Material_find_parameter(unigine_Material* self, PyObje
 static PyObject * unigine_Material_reset_parameter(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -604,6 +742,8 @@ static PyObject * unigine_Material_reset_parameter(unigine_Material* self, PyObj
 static PyObject * unigine_Material_check_parameter_conditions(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -611,6 +751,8 @@ static PyObject * unigine_Material_check_parameter_conditions(unigine_Material* 
 static PyObject * unigine_Material_get_parameter_type(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -618,6 +760,8 @@ static PyObject * unigine_Material_get_parameter_type(unigine_Material* self, Py
 static PyObject * unigine_Material_is_parameter_int(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -625,6 +769,8 @@ static PyObject * unigine_Material_is_parameter_int(unigine_Material* self, PyOb
 static PyObject * unigine_Material_is_parameter_float(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -632,6 +778,8 @@ static PyObject * unigine_Material_is_parameter_float(unigine_Material* self, Py
 static PyObject * unigine_Material_is_parameter_overridden(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -639,6 +787,8 @@ static PyObject * unigine_Material_is_parameter_overridden(unigine_Material* sel
 static PyObject * unigine_Material_get_parameter_name(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -646,6 +796,8 @@ static PyObject * unigine_Material_get_parameter_name(unigine_Material* self, Py
 static PyObject * unigine_Material_is_parameter_expression_enabled(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -653,6 +805,9 @@ static PyObject * unigine_Material_is_parameter_expression_enabled(unigine_Mater
 static PyObject * unigine_Material_set_parameter_expression_enabled(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // bool enabled
     return ret;
 };
 
@@ -660,6 +815,8 @@ static PyObject * unigine_Material_set_parameter_expression_enabled(unigine_Mate
 static PyObject * unigine_Material_get_parameter_expression(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -667,6 +824,9 @@ static PyObject * unigine_Material_get_parameter_expression(unigine_Material* se
 static PyObject * unigine_Material_set_parameter_expression(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // charconst  * expression
     return ret;
 };
 
@@ -674,6 +834,9 @@ static PyObject * unigine_Material_set_parameter_expression(unigine_Material* se
 static PyObject * unigine_Material_set_parameter_float(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // float value
     return ret;
 };
 
@@ -681,6 +844,9 @@ static PyObject * unigine_Material_set_parameter_float(unigine_Material* self, P
 static PyObject * unigine_Material_set_parameter_float(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
+    // float value
     return ret;
 };
 
@@ -688,6 +854,8 @@ static PyObject * unigine_Material_set_parameter_float(unigine_Material* self, P
 static PyObject * unigine_Material_get_parameter_float(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -695,6 +863,8 @@ static PyObject * unigine_Material_get_parameter_float(unigine_Material* self, P
 static PyObject * unigine_Material_get_parameter_float(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -702,6 +872,9 @@ static PyObject * unigine_Material_get_parameter_float(unigine_Material* self, P
 static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  & value
     return ret;
 };
 
@@ -709,6 +882,9 @@ static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, 
 static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
+    // const  & value
     return ret;
 };
 
@@ -716,6 +892,8 @@ static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, 
 static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -723,6 +901,8 @@ static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, 
 static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -730,6 +910,9 @@ static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, 
 static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  & value
     return ret;
 };
 
@@ -737,6 +920,9 @@ static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, 
 static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
+    // const  & value
     return ret;
 };
 
@@ -744,6 +930,8 @@ static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, 
 static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -751,6 +939,8 @@ static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, 
 static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -758,6 +948,9 @@ static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, 
 static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  & value
     return ret;
 };
 
@@ -765,6 +958,9 @@ static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, 
 static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
+    // const  & value
     return ret;
 };
 
@@ -772,6 +968,8 @@ static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, 
 static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -779,6 +977,8 @@ static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, 
 static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -786,6 +986,9 @@ static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, 
 static PyObject * unigine_Material_set_parameter_int(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // int value
     return ret;
 };
 
@@ -793,6 +996,9 @@ static PyObject * unigine_Material_set_parameter_int(unigine_Material* self, PyO
 static PyObject * unigine_Material_set_parameter_int(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
+    // int value
     return ret;
 };
 
@@ -800,6 +1006,8 @@ static PyObject * unigine_Material_set_parameter_int(unigine_Material* self, PyO
 static PyObject * unigine_Material_get_parameter_int(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -807,6 +1015,8 @@ static PyObject * unigine_Material_get_parameter_int(unigine_Material* self, PyO
 static PyObject * unigine_Material_get_parameter_int(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -814,6 +1024,9 @@ static PyObject * unigine_Material_get_parameter_int(unigine_Material* self, PyO
 static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  & value
     return ret;
 };
 
@@ -821,6 +1034,9 @@ static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, Py
 static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
+    // const  & value
     return ret;
 };
 
@@ -828,6 +1044,8 @@ static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, Py
 static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -835,6 +1053,8 @@ static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, Py
 static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -842,6 +1062,9 @@ static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, Py
 static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  & value
     return ret;
 };
 
@@ -849,6 +1072,9 @@ static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, Py
 static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
+    // const  & value
     return ret;
 };
 
@@ -856,6 +1082,8 @@ static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, Py
 static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -863,6 +1091,8 @@ static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, Py
 static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -870,6 +1100,9 @@ static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, Py
 static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  & value
     return ret;
 };
 
@@ -877,6 +1110,9 @@ static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, Py
 static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
+    // const  & value
     return ret;
 };
 
@@ -884,6 +1120,8 @@ static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, Py
 static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -891,6 +1129,8 @@ static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, Py
 static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -898,6 +1138,8 @@ static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, Py
 static PyObject * unigine_Material_get_parameter_array_size(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -905,6 +1147,8 @@ static PyObject * unigine_Material_get_parameter_array_size(unigine_Material* se
 static PyObject * unigine_Material_is_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -912,6 +1156,9 @@ static PyObject * unigine_Material_is_parameter_array(unigine_Material* self, Py
 static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    //  &Unigine::Vector<float> values
     return ret;
 };
 
@@ -919,6 +1166,9 @@ static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, P
 static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  &Unigine::Vector<float> values
     return ret;
 };
 
@@ -926,6 +1176,9 @@ static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, P
 static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    //  &Unigine::Vector<Unigine::Math::vec2> values
     return ret;
 };
 
@@ -933,6 +1186,9 @@ static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, P
 static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  &Unigine::Vector<Unigine::Math::vec2> values
     return ret;
 };
 
@@ -940,6 +1196,9 @@ static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, P
 static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    //  &Unigine::Vector<Unigine::Math::vec4> values
     return ret;
 };
 
@@ -947,6 +1206,9 @@ static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, P
 static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  &Unigine::Vector<Unigine::Math::vec4> values
     return ret;
 };
 
@@ -954,6 +1216,9 @@ static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, P
 static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    //  &Unigine::Vector<int> values
     return ret;
 };
 
@@ -961,6 +1226,9 @@ static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, P
 static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  &Unigine::Vector<int> values
     return ret;
 };
 
@@ -968,6 +1236,9 @@ static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, P
 static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    //  &Unigine::Vector<Unigine::Math::ivec2> values
     return ret;
 };
 
@@ -975,6 +1246,9 @@ static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, P
 static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  &Unigine::Vector<Unigine::Math::ivec2> values
     return ret;
 };
 
@@ -982,6 +1256,9 @@ static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, P
 static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    //  &Unigine::Vector<Unigine::Math::ivec4> values
     return ret;
 };
 
@@ -989,6 +1266,9 @@ static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, P
 static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  &Unigine::Vector<Unigine::Math::ivec4> values
     return ret;
 };
 
@@ -996,6 +1276,7 @@ static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, P
 static PyObject * unigine_Material_get_num_states(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1003,6 +1284,8 @@ static PyObject * unigine_Material_get_num_states(unigine_Material* self) {
 static PyObject * unigine_Material_find_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -1010,6 +1293,8 @@ static PyObject * unigine_Material_find_state(unigine_Material* self, PyObject *
 static PyObject * unigine_Material_is_state_overridden(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1017,6 +1302,8 @@ static PyObject * unigine_Material_is_state_overridden(unigine_Material* self, P
 static PyObject * unigine_Material_is_state_internal(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1024,6 +1311,8 @@ static PyObject * unigine_Material_is_state_internal(unigine_Material* self, PyO
 static PyObject * unigine_Material_reset_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1031,6 +1320,8 @@ static PyObject * unigine_Material_reset_state(unigine_Material* self, PyObject 
 static PyObject * unigine_Material_check_state_conditions(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1038,6 +1329,8 @@ static PyObject * unigine_Material_check_state_conditions(unigine_Material* self
 static PyObject * unigine_Material_get_state_name(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1045,6 +1338,9 @@ static PyObject * unigine_Material_get_state_name(unigine_Material* self, PyObje
 static PyObject * unigine_Material_get_state_switch_item(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // int item
     return ret;
 };
 
@@ -1052,6 +1348,8 @@ static PyObject * unigine_Material_get_state_switch_item(unigine_Material* self,
 static PyObject * unigine_Material_get_state_switch_num_items(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1059,6 +1357,8 @@ static PyObject * unigine_Material_get_state_switch_num_items(unigine_Material* 
 static PyObject * unigine_Material_get_state_type(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1066,6 +1366,8 @@ static PyObject * unigine_Material_get_state_type(unigine_Material* self, PyObje
 static PyObject * unigine_Material_get_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1073,6 +1375,9 @@ static PyObject * unigine_Material_get_state(unigine_Material* self, PyObject *a
 static PyObject * unigine_Material_set_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // int value
     return ret;
 };
 
@@ -1080,6 +1385,8 @@ static PyObject * unigine_Material_set_state(unigine_Material* self, PyObject *a
 static PyObject * unigine_Material_get_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -1087,6 +1394,9 @@ static PyObject * unigine_Material_get_state(unigine_Material* self, PyObject *a
 static PyObject * unigine_Material_set_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
+    // int value
     return ret;
 };
 
@@ -1094,6 +1404,7 @@ static PyObject * unigine_Material_set_state(unigine_Material* self, PyObject *a
 static PyObject * unigine_Material_get_num_textures(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1101,6 +1412,8 @@ static PyObject * unigine_Material_get_num_textures(unigine_Material* self) {
 static PyObject * unigine_Material_find_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -1108,6 +1421,8 @@ static PyObject * unigine_Material_find_texture(unigine_Material* self, PyObject
 static PyObject * unigine_Material_is_texture_overridden(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1115,6 +1430,8 @@ static PyObject * unigine_Material_is_texture_overridden(unigine_Material* self,
 static PyObject * unigine_Material_is_texture_loaded(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1122,6 +1439,8 @@ static PyObject * unigine_Material_is_texture_loaded(unigine_Material* self, PyO
 static PyObject * unigine_Material_is_texture_internal(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1129,6 +1448,8 @@ static PyObject * unigine_Material_is_texture_internal(unigine_Material* self, P
 static PyObject * unigine_Material_reset_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1136,6 +1457,8 @@ static PyObject * unigine_Material_reset_texture(unigine_Material* self, PyObjec
 static PyObject * unigine_Material_check_texture_conditions(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1143,6 +1466,8 @@ static PyObject * unigine_Material_check_texture_conditions(unigine_Material* se
 static PyObject * unigine_Material_get_texture_name(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1150,6 +1475,8 @@ static PyObject * unigine_Material_get_texture_name(unigine_Material* self, PyOb
 static PyObject * unigine_Material_get_texture_unit(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1157,6 +1484,8 @@ static PyObject * unigine_Material_get_texture_unit(unigine_Material* self, PyOb
 static PyObject * unigine_Material_is_texture_editable(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1164,6 +1493,8 @@ static PyObject * unigine_Material_is_texture_editable(unigine_Material* self, P
 static PyObject * unigine_Material_get_texture_source(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1171,6 +1502,8 @@ static PyObject * unigine_Material_get_texture_source(unigine_Material* self, Py
 static PyObject * unigine_Material_get_texture_sampler_flags(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1178,6 +1511,9 @@ static PyObject * unigine_Material_get_texture_sampler_flags(unigine_Material* s
 static PyObject * unigine_Material_set_texture_sampler_flags(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // int sampler_flags
     return ret;
 };
 
@@ -1185,6 +1521,8 @@ static PyObject * unigine_Material_set_texture_sampler_flags(unigine_Material* s
 static PyObject * unigine_Material_get_texture_format_flags(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1192,6 +1530,9 @@ static PyObject * unigine_Material_get_texture_format_flags(unigine_Material* se
 static PyObject * unigine_Material_get_texture_image(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  &Unigine::Ptr<Unigine::Image> image
     return ret;
 };
 
@@ -1199,6 +1540,9 @@ static PyObject * unigine_Material_get_texture_image(unigine_Material* self, PyO
 static PyObject * unigine_Material_set_texture_image(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  &Unigine::Ptr<Unigine::Image> image
     return ret;
 };
 
@@ -1206,6 +1550,8 @@ static PyObject * unigine_Material_set_texture_image(unigine_Material* self, PyO
 static PyObject * unigine_Material_get_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1213,6 +1559,8 @@ static PyObject * unigine_Material_get_texture(unigine_Material* self, PyObject 
 static PyObject * unigine_Material_get_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -1220,6 +1568,9 @@ static PyObject * unigine_Material_get_texture(unigine_Material* self, PyObject 
 static PyObject * unigine_Material_set_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // const  &Unigine::Ptr<Unigine::Texture> texture
     return ret;
 };
 
@@ -1227,6 +1578,9 @@ static PyObject * unigine_Material_set_texture(unigine_Material* self, PyObject 
 static PyObject * unigine_Material_set_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
+    // const  &Unigine::Ptr<Unigine::Texture> texture
     return ret;
 };
 
@@ -1234,6 +1588,9 @@ static PyObject * unigine_Material_set_texture(unigine_Material* self, PyObject 
 static PyObject * unigine_Material_set_texture_path(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
+    // charconst  * path
     return ret;
 };
 
@@ -1241,6 +1598,8 @@ static PyObject * unigine_Material_set_texture_path(unigine_Material* self, PyOb
 static PyObject * unigine_Material_get_texture_path(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1248,6 +1607,9 @@ static PyObject * unigine_Material_get_texture_path(unigine_Material* self, PyOb
 static PyObject * unigine_Material_set_texture_path(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
+    // charconst  * path
     return ret;
 };
 
@@ -1255,6 +1617,8 @@ static PyObject * unigine_Material_set_texture_path(unigine_Material* self, PyOb
 static PyObject * unigine_Material_get_texture_path(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
     return ret;
 };
 
@@ -1262,6 +1626,8 @@ static PyObject * unigine_Material_get_texture_path(unigine_Material* self, PyOb
 static PyObject * unigine_Material_get_texture_ramp(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1269,6 +1635,8 @@ static PyObject * unigine_Material_get_texture_ramp(unigine_Material* self, PyOb
 static PyObject * unigine_Material_get_texture_ramp_override(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // int num
     return ret;
 };
 
@@ -1276,6 +1644,7 @@ static PyObject * unigine_Material_get_texture_ramp_override(unigine_Material* s
 static PyObject * unigine_Material_is_editable(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1283,6 +1652,7 @@ static PyObject * unigine_Material_is_editable(unigine_Material* self) {
 static PyObject * unigine_Material_is_hidden(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1290,6 +1660,7 @@ static PyObject * unigine_Material_is_hidden(unigine_Material* self) {
 static PyObject * unigine_Material_is_base(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1297,6 +1668,7 @@ static PyObject * unigine_Material_is_base(unigine_Material* self) {
 static PyObject * unigine_Material_is_brush(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1304,6 +1676,7 @@ static PyObject * unigine_Material_is_brush(unigine_Material* self) {
 static PyObject * unigine_Material_is_legacy(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1311,6 +1684,7 @@ static PyObject * unigine_Material_is_legacy(unigine_Material* self) {
 static PyObject * unigine_Material_is_preview_hidden(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1318,6 +1692,7 @@ static PyObject * unigine_Material_is_preview_hidden(unigine_Material* self) {
 static PyObject * unigine_Material_is_reflection2_d(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1325,6 +1700,7 @@ static PyObject * unigine_Material_is_reflection2_d(unigine_Material* self) {
 static PyObject * unigine_Material_is_internal(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1332,6 +1708,7 @@ static PyObject * unigine_Material_is_internal(unigine_Material* self) {
 static PyObject * unigine_Material_is_manual(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1339,6 +1716,7 @@ static PyObject * unigine_Material_is_manual(unigine_Material* self) {
 static PyObject * unigine_Material_can_save(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1346,6 +1724,7 @@ static PyObject * unigine_Material_can_save(unigine_Material* self) {
 static PyObject * unigine_Material_is_auto_save(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1353,6 +1732,7 @@ static PyObject * unigine_Material_is_auto_save(unigine_Material* self) {
 static PyObject * unigine_Material_is_file_engine(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1360,6 +1740,7 @@ static PyObject * unigine_Material_is_file_engine(unigine_Material* self) {
 static PyObject * unigine_Material_is_empty(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1367,6 +1748,7 @@ static PyObject * unigine_Material_is_empty(unigine_Material* self) {
 static PyObject * unigine_Material_has_overrides(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1374,6 +1756,9 @@ static PyObject * unigine_Material_has_overrides(unigine_Material* self) {
 static PyObject * unigine_Material_save_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // const  &Unigine::Ptr<Unigine::Stream> stream
+    // bool forced
     return ret;
 };
 
@@ -1381,6 +1766,9 @@ static PyObject * unigine_Material_save_state(unigine_Material* self, PyObject *
 static PyObject * unigine_Material_restore_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // const  &Unigine::Ptr<Unigine::Stream> stream
+    // bool forced
     return ret;
 };
 
@@ -1388,6 +1776,8 @@ static PyObject * unigine_Material_restore_state(unigine_Material* self, PyObjec
 static PyObject * unigine_Material_load_xml(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // const  &Unigine::Ptr<Unigine::Xml> xml
     return ret;
 };
 
@@ -1395,6 +1785,8 @@ static PyObject * unigine_Material_load_xml(unigine_Material* self, PyObject *ar
 static PyObject * unigine_Material_save_xml(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // const  &Unigine::Ptr<Unigine::Xml> xml
     return ret;
 };
 
@@ -1402,6 +1794,8 @@ static PyObject * unigine_Material_save_xml(unigine_Material* self, PyObject *ar
 static PyObject * unigine_Material_load_ulon(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // const  &Unigine::Ptr<Unigine::UlonNode> ulon
     return ret;
 };
 
@@ -1409,6 +1803,8 @@ static PyObject * unigine_Material_load_ulon(unigine_Material* self, PyObject *a
 static PyObject * unigine_Material_load(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * path
     return ret;
 };
 
@@ -1416,6 +1812,7 @@ static PyObject * unigine_Material_load(unigine_Material* self, PyObject *args, 
 static PyObject * unigine_Material_save(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1423,6 +1820,7 @@ static PyObject * unigine_Material_save(unigine_Material* self) {
 static PyObject * unigine_Material_reload(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
     return ret;
 };
 
@@ -1430,6 +1828,8 @@ static PyObject * unigine_Material_reload(unigine_Material* self) {
 static PyObject * unigine_Material_create_material_file(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * path
     return ret;
 };
 
@@ -1437,6 +1837,8 @@ static PyObject * unigine_Material_create_material_file(unigine_Material* self, 
 static PyObject * unigine_Material_get_render_pass(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * pass_name
     return ret;
 };
 
@@ -1444,6 +1846,8 @@ static PyObject * unigine_Material_get_render_pass(unigine_Material* self, PyObj
 static PyObject * unigine_Material_get_render_pass_name(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // PASS type
     return ret;
 };
 
@@ -1451,6 +1855,11 @@ static PyObject * unigine_Material_get_render_pass_name(unigine_Material* self, 
 static PyObject * unigine_Material_run_expression(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * name
+    // int w
+    // int h
+    // int d
     return ret;
 };
 
@@ -1458,6 +1867,8 @@ static PyObject * unigine_Material_run_expression(unigine_Material* self, PyObje
 static PyObject * unigine_Material_render_screen(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * pass_name
     return ret;
 };
 
@@ -1465,6 +1876,8 @@ static PyObject * unigine_Material_render_screen(unigine_Material* self, PyObjec
 static PyObject * unigine_Material_render_screen(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // PASS pass
     return ret;
 };
 
@@ -1472,6 +1885,11 @@ static PyObject * unigine_Material_render_screen(unigine_Material* self, PyObjec
 static PyObject * unigine_Material_render_compute(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // charconst  * pass_name
+    // int group_threads_x
+    // int group_threads_y
+    // int group_threads_z
     return ret;
 };
 
@@ -1479,6 +1897,11 @@ static PyObject * unigine_Material_render_compute(unigine_Material* self, PyObje
 static PyObject * unigine_Material_render_compute(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // args:
+    // PASS pass
+    // int group_threads_x
+    // int group_threads_y
+    // int group_threads_z
     return ret;
 };
 
