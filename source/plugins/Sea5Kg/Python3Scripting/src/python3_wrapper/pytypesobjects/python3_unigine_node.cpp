@@ -143,13 +143,13 @@ unigine_Node_rotate_by_angels(unigine_Node* self, PyObject *args)
     // void rotate(float angle_x, float angle_y, float angle_z);
 
     class LocalRunner : public Python3Runner {
-		public:
-			virtual void run() override {
+        public:
+            virtual void run() override {
                 pNode->rotate(angle_x, angle_y, angle_z);
-			};
+            };
             Unigine::Ptr<Unigine::Node> pNode;
             float angle_x, angle_y, angle_z;
-	};
+    };
 	auto *pRunner = new LocalRunner();
     pRunner->pNode = self->m_pNode;
     pRunner->angle_x = angle_x;

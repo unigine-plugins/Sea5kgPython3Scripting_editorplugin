@@ -78,16 +78,16 @@ def resolve_type(_type):
         return resolve_type(_type)
     if _id in cache_reference_types:
         _type["id"] = cache_reference_types[_id]["@type"]
-        _type["define"] = _type["define"] + " &"
+        _type["define"] = _type["define"] + "&"
         return resolve_type(_type)
     if _id in cache_enumeration:
         _type["define"] = _type["define"] + cache_enumeration[_id]["@name"]
         return _type
     if _id in cache_classes:
-        _type["define"] = _type["define"] + cache_classes[_id]["fullname"]
+        _type["define"] = cache_classes[_id]["fullname"] + _type["define"]
         return _type
     if _id in cache_fundamental_types:
-        _type["define"] = cache_fundamental_types[_id]["@name"] + _type["define"]
+        _type["define"] = _type["define"] + cache_fundamental_types[_id]["@name"]
         return _type
     _type["unfinshed"] = 1
     return _type
@@ -184,7 +184,7 @@ class Python3UnigineWriter:
             _method_json["static"] = _method["@static"] == "1"
 
         print("method", _method_json["name"])
-        print(_method)
+        _method_json["return_type"] = find_type_by_id(_method["@returns"])["define"]
         _method_json["args"] = []
         if 'Argument' in _method:
             _args = []
@@ -345,6 +345,7 @@ class Python3UnigineWriter:
                 "description": "",
                 "func_name": "unigine_" + self.__classname + "_" + method_name,
                 "flags": [],
+                "return_type": _method["return_type"],
             }
             if _method["static"]:
                 _type = "(static)"
@@ -372,19 +373,22 @@ class Python3UnigineWriter:
                     "    PyErr_Clear();\n"
                     "    PyObject *ret = NULL;\n" +
                     _args +
+                    "    // return: " + method_info["return_type"] + "\n"
                     "    return ret;\n"
                     "};\n\n"
                 )
 
         self.__file_source.write("\n")
         self.__file_source.write("static PyMethodDef unigine_" + self.__classname + "_methods[] = {\n")
-        for _method in self.__methods:
-            # TODO
-            pass
-            # self.__file_source.write("    {\n")
-            # self.__file_source.write("        \"get_manual_name\", (PyCFunction)unigine_" + self.__classname + "_get_manual_name, METH_NOARGS,\n")
-            # self.__file_source.write("        \"Return the name of material\"\n")
-            # self.__file_source.write("    },\n")
+        for _method in methods_table:
+            print(_method)
+            self.__file_source.write("    {\n")
+            self.__file_source.write(
+                "        \"" + _method["method_name"] + "\"," +
+                " (PyCFunction)" + _method["func_name"] + ", " + "|".join(method_info["flags"]) + ",\n"
+            )
+            self.__file_source.write("        \"" + _method["description"] + "\"\n")
+            self.__file_source.write("    },\n")
             # self.__file_source.write("    {\n")
             # self.__file_source.write("        \"set_shadow_mask\", (PyCFunction)unigine_" + self.__classname + "_set_shadow_mask, METH_O,\n")
             # self.__file_source.write("        \"Return the name of material\"\n")
@@ -407,7 +411,8 @@ class Python3UnigineWriter:
         self.__file_source.write("\n")
         for _enum in self.__enums:
             for _enum_value in _enum["values"]:
-                self.__file_source.write("        // enum_typename: " + _enum["name"] + " \n")
+                if _enum["name"] != "":
+                    self.__file_source.write("        // enum_typename: " + _enum["name"] + "\n")
                 self.__file_source.write("        PyDict_SetItemString(\n")
                 self.__file_source.write("            unigine_" + self.__classname + "Type.tp_dict, \"" + _enum_value + "\",\n")
                 self.__file_source.write("            Py_BuildValue(\"i\", " + _enum["namespace"] + "::" + _enum_value + ")\n")

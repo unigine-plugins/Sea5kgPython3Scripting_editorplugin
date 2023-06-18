@@ -38,6 +38,7 @@ static PyObject * unigine_Materials_is_initialized() {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
+    // return: int
     return ret;
 };
 
@@ -47,6 +48,7 @@ static PyObject * unigine_Materials_set_loading_mode(PyObject *args, PyObject *k
     PyObject *ret = NULL;
     // args:
     // LOADING_MODE mode
+    // return: void
     return ret;
 };
 
@@ -55,6 +57,7 @@ static PyObject * unigine_Materials_get_loading_mode() {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
+    // return: LOADING_MODE
     return ret;
 };
 
@@ -63,7 +66,8 @@ static PyObject * unigine_Materials_load_material(PyObject *args, PyObject *kwds
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // charconst  * path
+    // const  *char path
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
@@ -72,7 +76,8 @@ static PyObject * unigine_Materials_is_material_g_u_i_d(PyObject *args, PyObject
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  &Unigine::UGUID guid
+    // Unigine::UGUIDconst & guid
+    // return: bool
     return ret;
 };
 
@@ -81,6 +86,7 @@ static PyObject * unigine_Materials_get_num_materials() {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
+    // return: int
     return ret;
 };
 
@@ -90,6 +96,7 @@ static PyObject * unigine_Materials_get_material(PyObject *args, PyObject *kwds)
     PyObject *ret = NULL;
     // args:
     // int num
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
@@ -98,7 +105,8 @@ static PyObject * unigine_Materials_find_manual_material(PyObject *args, PyObjec
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // charconst  * name
+    // const  *char name
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
@@ -107,7 +115,8 @@ static PyObject * unigine_Materials_find_material_by_g_u_i_d(PyObject *args, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  &Unigine::UGUID guid
+    // Unigine::UGUIDconst & guid
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
@@ -116,7 +125,8 @@ static PyObject * unigine_Materials_find_material_by_file_g_u_i_d(PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  &Unigine::UGUID guid
+    // Unigine::UGUIDconst & guid
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
@@ -125,7 +135,8 @@ static PyObject * unigine_Materials_find_material_by_path(PyObject *args, PyObje
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // charconst  * path
+    // const  *char path
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
@@ -134,7 +145,8 @@ static PyObject * unigine_Materials_set_cached_material(PyObject *args, PyObject
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  &Unigine::Ptr<Unigine::Material> mat
+    // Unigine::Ptr<Unigine::Material>const & mat
+    // return: void
     return ret;
 };
 
@@ -143,6 +155,7 @@ static PyObject * unigine_Materials_get_cached_material() {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
@@ -151,8 +164,9 @@ static PyObject * unigine_Materials_set_cached_state(PyObject *args, PyObject *k
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // charconst  * name
+    // const  *char name
     // int value
+    // return: void
     return ret;
 };
 
@@ -161,9 +175,10 @@ static PyObject * unigine_Materials_remove_material(PyObject *args, PyObject *kw
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  &Unigine::UGUID guid
+    // Unigine::UGUIDconst & guid
     // bool remove_file
     // bool remove_children
+    // return: bool
     return ret;
 };
 
@@ -172,8 +187,9 @@ static PyObject * unigine_Materials_replace_material(PyObject *args, PyObject *k
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  &Unigine::Ptr<Unigine::Material> material
-    // const  &Unigine::Ptr<Unigine::Material> new_material
+    // Unigine::Ptr<Unigine::Material>const & material
+    // Unigine::Ptr<Unigine::Material>const & new_material
+    // return: bool
     return ret;
 };
 
@@ -182,6 +198,7 @@ static PyObject * unigine_Materials_save_materials() {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
+    // return: bool
     return ret;
 };
 
@@ -190,7 +207,8 @@ static PyObject * unigine_Materials_compile_shaders(PyObject *args, PyObject *kw
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  &Unigine::Vector<Unigine::Ptr<Unigine::Material>> materials
+    // Unigine::Vector<Unigine::Ptr<Unigine::Material>>const & materials
+    // return: void
     return ret;
 };
 
@@ -199,6 +217,7 @@ static PyObject * unigine_Materials_compile_shaders() {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
+    // return: void
     return ret;
 };
 
@@ -208,6 +227,7 @@ static PyObject * unigine_Materials_set_precompile_all_shaders(PyObject *args, P
     PyObject *ret = NULL;
     // args:
     // bool shaders
+    // return: void
     return ret;
 };
 
@@ -216,6 +236,7 @@ static PyObject * unigine_Materials_is_precompile_all_shaders() {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
+    // return: bool
     return ret;
 };
 
@@ -224,6 +245,7 @@ static PyObject * unigine_Materials_reload_materials() {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
+    // return: void
     return ret;
 };
 
@@ -232,6 +254,7 @@ static PyObject * unigine_Materials_destroy_shaders() {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
+    // return: void
     return ret;
 };
 
@@ -240,6 +263,7 @@ static PyObject * unigine_Materials_destroy_textures() {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
+    // return: void
     return ret;
 };
 
@@ -248,11 +272,112 @@ static PyObject * unigine_Materials_create_shaders() {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
+    // return: void
     return ret;
 };
 
 
 static PyMethodDef unigine_Materials_methods[] = {
+    {
+        "is_initialized", (PyCFunction)unigine_Materials_is_initialized, METH_STATIC|METH_NOARGS,
+        "public (static): isInitialized"
+    },
+    {
+        "set_loading_mode", (PyCFunction)unigine_Materials_set_loading_mode, METH_STATIC|METH_NOARGS,
+        "public (static): setLoadingMode"
+    },
+    {
+        "get_loading_mode", (PyCFunction)unigine_Materials_get_loading_mode, METH_STATIC|METH_NOARGS,
+        "public (static): getLoadingMode"
+    },
+    {
+        "load_material", (PyCFunction)unigine_Materials_load_material, METH_STATIC|METH_NOARGS,
+        "public (static): loadMaterial"
+    },
+    {
+        "is_material_g_u_i_d", (PyCFunction)unigine_Materials_is_material_g_u_i_d, METH_STATIC|METH_NOARGS,
+        "public (static): isMaterialGUID"
+    },
+    {
+        "get_num_materials", (PyCFunction)unigine_Materials_get_num_materials, METH_STATIC|METH_NOARGS,
+        "public (static): getNumMaterials"
+    },
+    {
+        "get_material", (PyCFunction)unigine_Materials_get_material, METH_STATIC|METH_NOARGS,
+        "public (static): getMaterial"
+    },
+    {
+        "find_manual_material", (PyCFunction)unigine_Materials_find_manual_material, METH_STATIC|METH_NOARGS,
+        "public (static): findManualMaterial"
+    },
+    {
+        "find_material_by_g_u_i_d", (PyCFunction)unigine_Materials_find_material_by_g_u_i_d, METH_STATIC|METH_NOARGS,
+        "public (static): findMaterialByGUID"
+    },
+    {
+        "find_material_by_file_g_u_i_d", (PyCFunction)unigine_Materials_find_material_by_file_g_u_i_d, METH_STATIC|METH_NOARGS,
+        "public (static): findMaterialByFileGUID"
+    },
+    {
+        "find_material_by_path", (PyCFunction)unigine_Materials_find_material_by_path, METH_STATIC|METH_NOARGS,
+        "public (static): findMaterialByPath"
+    },
+    {
+        "set_cached_material", (PyCFunction)unigine_Materials_set_cached_material, METH_STATIC|METH_NOARGS,
+        "public (static): setCachedMaterial"
+    },
+    {
+        "get_cached_material", (PyCFunction)unigine_Materials_get_cached_material, METH_STATIC|METH_NOARGS,
+        "public (static): getCachedMaterial"
+    },
+    {
+        "set_cached_state", (PyCFunction)unigine_Materials_set_cached_state, METH_STATIC|METH_NOARGS,
+        "public (static): setCachedState"
+    },
+    {
+        "remove_material", (PyCFunction)unigine_Materials_remove_material, METH_STATIC|METH_NOARGS,
+        "public (static): removeMaterial"
+    },
+    {
+        "replace_material", (PyCFunction)unigine_Materials_replace_material, METH_STATIC|METH_NOARGS,
+        "public (static): replaceMaterial"
+    },
+    {
+        "save_materials", (PyCFunction)unigine_Materials_save_materials, METH_STATIC|METH_NOARGS,
+        "public (static): saveMaterials"
+    },
+    {
+        "compile_shaders", (PyCFunction)unigine_Materials_compile_shaders, METH_STATIC|METH_NOARGS,
+        "public (static): compileShaders"
+    },
+    {
+        "compile_shaders", (PyCFunction)unigine_Materials_compile_shaders, METH_STATIC|METH_NOARGS,
+        "public (static): compileShaders"
+    },
+    {
+        "set_precompile_all_shaders", (PyCFunction)unigine_Materials_set_precompile_all_shaders, METH_STATIC|METH_NOARGS,
+        "public (static): setPrecompileAllShaders"
+    },
+    {
+        "is_precompile_all_shaders", (PyCFunction)unigine_Materials_is_precompile_all_shaders, METH_STATIC|METH_NOARGS,
+        "public (static): isPrecompileAllShaders"
+    },
+    {
+        "reload_materials", (PyCFunction)unigine_Materials_reload_materials, METH_STATIC|METH_NOARGS,
+        "public (static): reloadMaterials"
+    },
+    {
+        "destroy_shaders", (PyCFunction)unigine_Materials_destroy_shaders, METH_STATIC|METH_NOARGS,
+        "public (static): destroyShaders"
+    },
+    {
+        "destroy_textures", (PyCFunction)unigine_Materials_destroy_textures, METH_STATIC|METH_NOARGS,
+        "public (static): destroyTextures"
+    },
+    {
+        "create_shaders", (PyCFunction)unigine_Materials_create_shaders, METH_STATIC|METH_NOARGS,
+        "public (static): createShaders"
+    },
     {NULL}  /* Sentinel */
 };
 
@@ -342,17 +467,17 @@ bool Python3UnigineMaterials::isReady() {
     if (!unigine_MaterialsType.tp_dict) {
         unigine_MaterialsType.tp_dict = PyDict_New();
 
-        // enum_typename: LOADING_MODE 
+        // enum_typename: LOADING_MODE
         PyDict_SetItemString(
             unigine_MaterialsType.tp_dict, "LOADING_MODE_FAST",
             Py_BuildValue("i", Unigine::Materials::LOADING_MODE_FAST)
         );
-        // enum_typename: LOADING_MODE 
+        // enum_typename: LOADING_MODE
         PyDict_SetItemString(
             unigine_MaterialsType.tp_dict, "LOADING_MODE_FULL_MATERIALS",
             Py_BuildValue("i", Unigine::Materials::LOADING_MODE_FULL_MATERIALS)
         );
-        // enum_typename: LOADING_MODE 
+        // enum_typename: LOADING_MODE
         PyDict_SetItemString(
             unigine_MaterialsType.tp_dict, "LOADING_MODE_FULL_MATERIALS_SHADERS",
             Py_BuildValue("i", Unigine::Materials::LOADING_MODE_FULL_MATERIALS_SHADERS)
