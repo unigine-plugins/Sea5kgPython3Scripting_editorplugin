@@ -151,6 +151,23 @@ def init_namespaces(process_namespaces):
                     ret.append(_id)
     return ret
 
+def make_method_code(method_info):
+    return_type = method_info["return_type"]
+    ret = "\n"
+    if return_type == "void":
+        ret += "    self->unigine_object_ptr->" + method_info["name_original"] + "();\n"
+
+    elif return_type == "bool":
+        ret += "    bool retOriginal = self->unigine_object_ptr->" + method_info["name_original"] + "();\n"
+        ret += "    ret = PyBool_FromLong(retOriginal);\n"
+    elif return_type == "int":
+        ret += "    int retOriginal = self->unigine_object_ptr->" + method_info["name_original"] + "();\n"
+        ret += "    ret = PyLong_FromLong(retOriginal);\n"
+    else:
+        ret += "    unknown type \n"
+    return ret
+
+
 class Python3UnigineWriter:
     def __init__(self, classname):
         self.__classname = classname
@@ -341,6 +358,7 @@ class Python3UnigineWriter:
             method_name = camel_to_snake_case(_method["name"])
             method_info = {
                 "args": [],
+                "name_original": _method["name"],
                 "method_name": method_name,
                 "description": "",
                 "func_name": "unigine_" + self.__classname + "_" + method_name,
@@ -357,9 +375,12 @@ class Python3UnigineWriter:
             if len(_method["args"]) == 0:
                 method_info["flags"].append("METH_NOARGS")
             else:
-                method_info["flags"].append("METH_" + str(len(_method["args"])))
-                method_info["args"].append("PyObject *args")
-                method_info["args"].append("PyObject *kwds")
+                method_info["flags"].append("METH_" + str(len(_method["args"])-1))
+                if len(_method["args"]) == 1:
+                    method_info["args"].append("PyObject *arg")
+                else:
+                    method_info["args"].append("PyObject *args")
+                    method_info["args"].append("PyObject *kwds")
 
             method_info["description"] = _method["access"] + " " + _type + ": " + _method["name"]
             _args = "    // args:\n"
@@ -373,7 +394,8 @@ class Python3UnigineWriter:
                     "    PyErr_Clear();\n"
                     "    PyObject *ret = NULL;\n" +
                     _args +
-                    "    // return: " + method_info["return_type"] + "\n"
+                    "    // return: " + method_info["return_type"] + "\n" +
+                    make_method_code(method_info) +
                     "    return ret;\n"
                     "};\n\n"
                 )
@@ -381,11 +403,11 @@ class Python3UnigineWriter:
         self.__file_source.write("\n")
         self.__file_source.write("static PyMethodDef unigine_" + self.__classname + "_methods[] = {\n")
         for _method in methods_table:
-            print(_method)
+            # print(_method)
             self.__file_source.write("    {\n")
             self.__file_source.write(
                 "        \"" + _method["method_name"] + "\"," +
-                " (PyCFunction)" + _method["func_name"] + ", " + "|".join(method_info["flags"]) + ",\n"
+                " (PyCFunction)" + _method["func_name"] + ", " + "|".join(_method["flags"]) + ",\n"
             )
             self.__file_source.write("        \"" + _method["description"] + "\"\n")
             self.__file_source.write("    },\n")

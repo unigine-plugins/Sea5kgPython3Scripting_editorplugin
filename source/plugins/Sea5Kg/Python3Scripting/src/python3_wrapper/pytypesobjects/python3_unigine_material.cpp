@@ -262,14 +262,14 @@ static PyObject *unigine_Material_get_manual_name(unigine_Material* self) {
     return PyUnicode_FromFormat("%S", pName);
 }
 
-static PyObject *
-unigine_Material_set_shadow_mask(unigine_Material* self, PyObject *arg)
+// public : setShadowMask
+// return: void
+static PyObject *unigine_Material_set_shadow_mask(unigine_Material* self, PyObject *arg)
 {
     PyErr_Clear();
     PyObject *ret = NULL;
     assert(arg);
 
-    //
     // int val;
     // PyArg_ParseTuple(args, "i", &val);
 
@@ -293,6 +293,28 @@ finally:
     return ret;
 }
 
+// public : getShadowMask
+static PyObject * unigine_Material_get_shadow_mask(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    int retOrig = self->unigine_object_ptr->getShadowMask();
+    ret = PyLong_FromLong(retOrig);
+    // args:
+    // return: int
+    return ret;
+};
+
+// public : isCastShadow
+static PyObject * unigine_Material_is_cast_shadow(unigine_Material* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // args:
+    // return: bool
+    bool retOrig = self->unigine_object_ptr->isCastShadow();
+    ret = PyBool_FromLong(retOrig);
+    return ret;
+};
+
 static PyMethodDef unigine_Material_methods[] = {
     {
         "create", (PyCFunction)unigine_Material_create, METH_STATIC | METH_NOARGS,
@@ -304,7 +326,15 @@ static PyMethodDef unigine_Material_methods[] = {
     },
     {
         "set_shadow_mask", (PyCFunction)unigine_Material_set_shadow_mask, METH_O,
-        "Return the name of material"
+        "public : setShadowMask"
+    },
+    {
+        "is_cast_shadow", (PyCFunction)unigine_Material_is_cast_shadow, METH_NOARGS,
+        "public : isCastShadow"
+    },
+    {
+        "get_shadow_mask", (PyCFunction)unigine_Material_get_shadow_mask, METH_NOARGS,
+        "public : getShadowMask"
     },
     {NULL}  /* Sentinel */
 };
