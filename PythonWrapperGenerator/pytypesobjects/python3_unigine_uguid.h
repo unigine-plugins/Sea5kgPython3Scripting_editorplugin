@@ -1,20 +1,20 @@
-// this file automaticly generated from UnigineNode.h
+// this file automaticly generated from UnigineUGUID.h
 #pragma once
 
 #include "python3_pytypeobjects.h"
-#include <UnigineNode.h>
+#include <UnigineUGUID.h>
 
 namespace PyUnigine {
 
-class Python3UnigineNode : public Python3PyTypeObjectBase {
+class Python3UnigineUGUID : public Python3PyTypeObjectBase {
     public:
         virtual bool isReady() override;
         virtual bool addClassDefinitionToModule(PyObject* pModule) override;
 };
 
-class Node {
+class UGUID {
     public:
-        static PyObject * NewObject(Unigine::Ptr<Unigine::Node> unigine_object_ptr);
+        static PyObject * NewObject(Unigine::Ptr<Unigine::UGUID> unigine_object_ptr);
 };
 
 }; // namespace PyUnigine

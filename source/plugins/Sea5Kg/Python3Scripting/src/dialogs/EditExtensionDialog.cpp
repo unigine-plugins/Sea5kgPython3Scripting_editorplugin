@@ -23,7 +23,7 @@ EditExtensionDialog::EditExtensionDialog(QWidget *parent, IRunPythonScript *pRun
     m_pSaveButton = new QPushButton(tr("Save script"));
 	m_pRunButton = new QPushButton(tr("Run script"));
 	m_pCancelButton = new QPushButton(tr("Close"));
-	
+
 	connect(m_pSaveButton, SIGNAL(clicked()),this, SLOT(saveClicked()));
 	connect(m_pRunButton, SIGNAL(clicked()),this, SLOT(runClicked()));
 	connect(m_pCancelButton, SIGNAL(clicked()),this, SLOT(close())); // TODO if dcript was modified so need ask user about wanna keep changes
@@ -35,7 +35,7 @@ EditExtensionDialog::EditExtensionDialog(QWidget *parent, IRunPythonScript *pRun
 
 	QVBoxLayout *leftLayout = new QVBoxLayout;
 	leftLayout->addLayout(topLayout);
-	
+
 	leftLayout->addWidget(m_pLabelName);
 	leftLayout->addWidget(m_pLabelFor);
 	leftLayout->addWidget(m_pLabelCode);
@@ -107,7 +107,6 @@ void EditExtensionDialog::runClicked() {
 	} catch (...) {
 		Unigine::Log::message("Something wrong");
 	}
-	
 }
 
 void EditExtensionDialog::onCodeChanged() {

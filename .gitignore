@@ -76,8 +76,8 @@ other/
 
 /bin
 /data
-/source
-!/source/plugins
+/source/cmake
+# !/source/plugins
 /launch*
 junk
 .thumbnails

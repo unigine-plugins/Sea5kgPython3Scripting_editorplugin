@@ -50,7 +50,7 @@ ManageScriptsDialog::ManageScriptsDialog(
 
 void ManageScriptsDialog::createListWidget(){
     m_pListWidget = new QListWidget;
-	
+
 	QStringList strList;
 	for (int i = 0; i < m_vScripts->size(); i++) {
 		 ModelExtension *pModel = m_vScripts->at(i);

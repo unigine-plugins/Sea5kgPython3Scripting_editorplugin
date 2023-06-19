@@ -25,11 +25,8 @@ PythonExecutor::PythonExecutor(
     const std::string &sExtensionId,
     const std::string &sDirPathWithModules
 ) {
-    std::cout << "1" << std::endl;
     m_sExtensionId = sExtensionId;
-    std::cout << "2" << std::endl;
     m_sDirPathWithModules = sDirPathWithModules;
-    std::cout << "3" << std::endl;
     m_vWrappers.push_back(new Python3UnigineStdout(sExtensionId));
     m_vWrappers.push_back(new Python3UnigineStderr(sExtensionId));
     m_vWrappers.push_back(new Python3UnigineLib(sExtensionId));
@@ -37,27 +34,21 @@ PythonExecutor::PythonExecutor(
     for (int i = 0; i < m_vWrappers.size(); i++) {
         m_vWrappers[i]->Call_PyImport_AppendInittab();
     }
-    std::cout << "5" << std::endl;
     Py_Initialize();
-    std::cout << "6" << std::endl;
 
     // m_sDirPathWithModules = "P:\\UnigineEditorPlugin_Python3Scripting\\Python-3.10.1\\";
     // std::wstring sDir = str2wstr(m_sDirPathWithModules);
     // PySys_SetPath(sDir.c_str());
 
-    std::cout << "7" << std::endl;
     {
         PyObject* pGlobalDict = PyDict_New();
         PyObject *pString = Py_BuildValue("s", m_sExtensionId.c_str());
         PyDict_SetItemString(pGlobalDict, "EXTENSION_ID", pString);
         m_pGlobalDict = pGlobalDict;
     }
-
-    std::cout << "8" << std::endl;
     for (int i = 0; i < m_vWrappers.size(); i++) {
         m_vWrappers[i]->Call_PyImport_ImportModule();
     }
-    std::cout << "9" << std::endl;
 }
 
 void PythonExecutor::addMaterials(const QVector<Unigine::UGUID> &vGuids) {
@@ -67,7 +58,7 @@ void PythonExecutor::addMaterials(const QVector<Unigine::UGUID> &vGuids) {
     PyObject *pList = PyList_New(vGuids.size());
     for (int i = 0; i < vGuids.size(); i++) {
         Unigine::Ptr<Unigine::Material> pMaterial = Unigine::Materials::findMaterialByGUID(vGuids[i]);
-        PyObject *pMaterialObject = PyUnigineMaterial::NewObject(pMaterial);
+        PyObject *pMaterialObject = PyUnigine::Material::NewObject(pMaterial);
         PyList_SetItem(pList, i, pMaterialObject);
         // Py_DECREF(pMaterial);
     }
@@ -115,7 +106,7 @@ void PythonExecutor::addNodes(const QVector<Unigine::NodePtr> &vNodes) {
     for (int i = 0; i < vNodes.size(); i++) {
         // TODO
         // Unigine::Ptr<Unigine::Node> pMaterial = Unigine::Materials::findMaterialByGUID(vGuids[i]);
-        PyObject *pNode = PyUnigineNode::NewObject(vNodes[i]);
+        PyObject *pNode = PyUnigine::Node::NewObject(vNodes[i]);
         PyList_SetItem(pList, i, pNode);
         // Py_DECREF(pMaterial);
     }
@@ -159,7 +150,7 @@ int PythonExecutor::execCode(const std::string &sScriptContent) {
         return -1;
     }
     Unigine::Log::message("Python3Scripting: end executing script\n");
-    
+
     return 0;
 }
 

@@ -416,8 +416,11 @@ void UnigineEditorPlugin_Python3Scripting::runPythonScript(ModelExtension *pMode
 
 	connect(UnigineEditor::Selection::instance(), &UnigineEditor::Selection::changed, this, &UnigineEditorPlugin_Python3Scripting::globalSelectionChanged);
 
-	// TODO after finish trhed remove it
-	// delete pThread;
+	// TODO
+	// if (m_pScriptThread != nullptr) {
+	// 	delete m_pScriptThread;
+	// 	m_pScriptThread = nullptr;
+	// }
 }
 
 void UnigineEditorPlugin_Python3Scripting::switchMenuTo(MenuSelectedType nType) {

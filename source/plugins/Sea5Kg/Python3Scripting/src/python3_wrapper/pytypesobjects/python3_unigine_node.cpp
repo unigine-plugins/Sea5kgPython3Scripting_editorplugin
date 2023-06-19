@@ -1,12 +1,15 @@
-
+// this file automaticly generated from UnigineNode.h
 #include "python3_unigine_node.h"
 
 #include <string>
-#include <UnigineMaterials.h>
-
+#include <UnigineNode.h>
 #include <UnigineLog.h>
 #include <Python.h>
 #include <structmember.h>
+
+#include <iostream>
+
+namespace PyUnigine {
 
 // ------------------------------------------------------------------------------------------
 // unigine_Node
@@ -255,7 +258,7 @@ static PyTypeObject unigine_NodeType = {
     // 0, /* vectorcallfunc tp_vectorcall; */
 };
 
-PyObject * PyUnigineNode::NewObject(Unigine::Ptr<Unigine::Node> pNode) {
+PyObject * Node::NewObject(Unigine::Ptr<Unigine::Node> pNode) {
     unigine_Node *pInst = PyObject_New(unigine_Node, &unigine_NodeType);
     pInst->m_pNode = pNode;
     return (PyObject *)pInst;
@@ -930,7 +933,6 @@ bool Python3UnigineNode::isReady() {
             Py_BuildValue("i", Unigine::Node::LIFETIME_MANUAL)
         );
     }
-
     if (PyType_Ready(&unigine_NodeType) < 0) {
         return false;
     }
@@ -946,3 +948,5 @@ bool Python3UnigineNode::addClassDefinitionToModule(PyObject* pModule) {
     return true;
 }
 
+
+}; // namespace PyUnigine

@@ -1,18 +1,22 @@
 // this file automaticly generated from UnigineMaterials.h
 #include "python3_unigine_materials.h"
+
 #include <string>
-#include <UnigineMaterialss.h>
+#include <UnigineMaterials.h>
+#include <UnigineLog.h>
 #include <Python.h>
 #include <structmember.h>
 
 #include <iostream>
 
+namespace PyUnigine {
+
 // ------------------------------------------------------------------------------------------
 // unigine_Materials
+
 typedef struct {
     PyObject_HEAD
     // Type-specific fields go here.
-    Unigine::Ptr<Unigine::Materials> unigine_object_ptr;
 } unigine_Materials;
 
 static void unigine_Materials_dealloc(unigine_Materials* self) {
@@ -40,7 +44,7 @@ static PyObject * unigine_Materials_is_initialized() {
     // args:
     // return: int
 
-    int retOriginal = self->unigine_object_ptr->isInitialized();
+    int retOriginal = Unigine::Materials::isInitialized();
     ret = PyLong_FromLong(retOriginal);
     return ret;
 };
@@ -50,10 +54,10 @@ static PyObject * unigine_Materials_set_loading_mode(PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // LOADING_MODE mode
+    Unigine::Materials::LOADING_MODE mode;
     // return: void
 
-    self->unigine_object_ptr->setLoadingMode();
+    Unigine::Materials::setLoadingMode(mode);
     return ret;
 };
 
@@ -62,9 +66,10 @@ static PyObject * unigine_Materials_get_loading_mode() {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: LOADING_MODE
+    // return: Unigine::Materials::LOADING_MODE
 
-    unknown type 
+    Unigine::Materials::LOADING_MODE retOriginal = Unigine::Materials::getLoadingMode();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -73,22 +78,23 @@ static PyObject * unigine_Materials_load_material(PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char path
+    const char * path;
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Materials::loadMaterial(path);
+    ret = PyUnigine::Material::NewObject(retOriginal);
     return ret;
 };
 
 // public (static): isMaterialGUID
-static PyObject * unigine_Materials_is_material_g_u_i_d(PyObject *arg) {
+static PyObject * unigine_Materials_is_material_guid(PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::UGUIDconst & guid
+    const Unigine::UGUID & guid;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isMaterialGUID();
+    bool retOriginal = Unigine::Materials::isMaterialGUID(guid);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -100,7 +106,7 @@ static PyObject * unigine_Materials_get_num_materials() {
     // args:
     // return: int
 
-    int retOriginal = self->unigine_object_ptr->getNumMaterials();
+    int retOriginal = Unigine::Materials::getNumMaterials();
     ret = PyLong_FromLong(retOriginal);
     return ret;
 };
@@ -110,10 +116,11 @@ static PyObject * unigine_Materials_get_material(PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Materials::getMaterial(num);
+    ret = PyUnigine::Material::NewObject(retOriginal);
     return ret;
 };
 
@@ -122,34 +129,37 @@ static PyObject * unigine_Materials_find_manual_material(PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Materials::findManualMaterial(name);
+    ret = PyUnigine::Material::NewObject(retOriginal);
     return ret;
 };
 
 // public (static): findMaterialByGUID
-static PyObject * unigine_Materials_find_material_by_g_u_i_d(PyObject *arg) {
+static PyObject * unigine_Materials_find_material_by_guid(PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::UGUIDconst & guid
+    const Unigine::UGUID & guid;
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Materials::findMaterialByGUID(guid);
+    ret = PyUnigine::Material::NewObject(retOriginal);
     return ret;
 };
 
 // public (static): findMaterialByFileGUID
-static PyObject * unigine_Materials_find_material_by_file_g_u_i_d(PyObject *arg) {
+static PyObject * unigine_Materials_find_material_by_file_guid(PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::UGUIDconst & guid
+    const Unigine::UGUID & guid;
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Materials::findMaterialByFileGUID(guid);
+    ret = PyUnigine::Material::NewObject(retOriginal);
     return ret;
 };
 
@@ -158,10 +168,11 @@ static PyObject * unigine_Materials_find_material_by_path(PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char path
+    const char * path;
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Materials::findMaterialByPath(path);
+    ret = PyUnigine::Material::NewObject(retOriginal);
     return ret;
 };
 
@@ -170,10 +181,10 @@ static PyObject * unigine_Materials_set_cached_material(PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::Ptr<Unigine::Material>const & mat
+    const Unigine::Ptr<Unigine::Material> & mat;
     // return: void
 
-    self->unigine_object_ptr->setCachedMaterial();
+    Unigine::Materials::setCachedMaterial(mat);
     return ret;
 };
 
@@ -184,7 +195,8 @@ static PyObject * unigine_Materials_get_cached_material() {
     // args:
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Materials::getCachedMaterial();
+    ret = PyUnigine::Material::NewObject(retOriginal);
     return ret;
 };
 
@@ -193,11 +205,11 @@ static PyObject * unigine_Materials_set_cached_state(PyObject *args, PyObject *k
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // int value
+    const char * name;
+    int value;
     // return: void
 
-    self->unigine_object_ptr->setCachedState();
+    Unigine::Materials::setCachedState(name, value);
     return ret;
 };
 
@@ -206,12 +218,12 @@ static PyObject * unigine_Materials_remove_material(PyObject *args, PyObject *kw
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::UGUIDconst & guid
-    // bool remove_file
-    // bool remove_children
+    const Unigine::UGUID & guid;
+    bool remove_file;
+    bool remove_children;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->removeMaterial();
+    bool retOriginal = Unigine::Materials::removeMaterial(guid, remove_file, remove_children);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -221,11 +233,11 @@ static PyObject * unigine_Materials_replace_material(PyObject *args, PyObject *k
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::Ptr<Unigine::Material>const & material
-    // Unigine::Ptr<Unigine::Material>const & new_material
+    const Unigine::Ptr<Unigine::Material> & material;
+    const Unigine::Ptr<Unigine::Material> & new_material;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->replaceMaterial();
+    bool retOriginal = Unigine::Materials::replaceMaterial(material, new_material);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -237,7 +249,7 @@ static PyObject * unigine_Materials_save_materials() {
     // args:
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->saveMaterials();
+    bool retOriginal = Unigine::Materials::saveMaterials();
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -247,10 +259,10 @@ static PyObject * unigine_Materials_compile_shaders(PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::Vector<Unigine::Ptr<Unigine::Material>>const & materials
+    const Unigine::Vector<Unigine::Ptr<Unigine::Material>> & materials;
     // return: void
 
-    self->unigine_object_ptr->compileShaders();
+    Unigine::Materials::compileShaders(materials);
     return ret;
 };
 
@@ -261,7 +273,7 @@ static PyObject * unigine_Materials_compile_shaders() {
     // args:
     // return: void
 
-    self->unigine_object_ptr->compileShaders();
+    Unigine::Materials::compileShaders();
     return ret;
 };
 
@@ -270,10 +282,10 @@ static PyObject * unigine_Materials_set_precompile_all_shaders(PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // bool shaders
+    bool shaders;
     // return: void
 
-    self->unigine_object_ptr->setPrecompileAllShaders();
+    Unigine::Materials::setPrecompileAllShaders(shaders);
     return ret;
 };
 
@@ -284,7 +296,7 @@ static PyObject * unigine_Materials_is_precompile_all_shaders() {
     // args:
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isPrecompileAllShaders();
+    bool retOriginal = Unigine::Materials::isPrecompileAllShaders();
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -296,7 +308,7 @@ static PyObject * unigine_Materials_reload_materials() {
     // args:
     // return: void
 
-    self->unigine_object_ptr->reloadMaterials();
+    Unigine::Materials::reloadMaterials();
     return ret;
 };
 
@@ -307,7 +319,7 @@ static PyObject * unigine_Materials_destroy_shaders() {
     // args:
     // return: void
 
-    self->unigine_object_ptr->destroyShaders();
+    Unigine::Materials::destroyShaders();
     return ret;
 };
 
@@ -318,7 +330,7 @@ static PyObject * unigine_Materials_destroy_textures() {
     // args:
     // return: void
 
-    self->unigine_object_ptr->destroyTextures();
+    Unigine::Materials::destroyTextures();
     return ret;
 };
 
@@ -329,7 +341,7 @@ static PyObject * unigine_Materials_create_shaders() {
     // args:
     // return: void
 
-    self->unigine_object_ptr->createShaders();
+    Unigine::Materials::createShaders();
     return ret;
 };
 
@@ -340,7 +352,7 @@ static PyMethodDef unigine_Materials_methods[] = {
         "public (static): isInitialized"
     },
     {
-        "set_loading_mode", (PyCFunction)unigine_Materials_set_loading_mode, METH_STATIC|METH_0,
+        "set_loading_mode", (PyCFunction)unigine_Materials_set_loading_mode, METH_STATIC|METH_O,
         "public (static): setLoadingMode"
     },
     {
@@ -348,11 +360,11 @@ static PyMethodDef unigine_Materials_methods[] = {
         "public (static): getLoadingMode"
     },
     {
-        "load_material", (PyCFunction)unigine_Materials_load_material, METH_STATIC|METH_0,
+        "load_material", (PyCFunction)unigine_Materials_load_material, METH_STATIC|METH_O,
         "public (static): loadMaterial"
     },
     {
-        "is_material_g_u_i_d", (PyCFunction)unigine_Materials_is_material_g_u_i_d, METH_STATIC|METH_0,
+        "is_material_guid", (PyCFunction)unigine_Materials_is_material_guid, METH_STATIC|METH_O,
         "public (static): isMaterialGUID"
     },
     {
@@ -360,27 +372,27 @@ static PyMethodDef unigine_Materials_methods[] = {
         "public (static): getNumMaterials"
     },
     {
-        "get_material", (PyCFunction)unigine_Materials_get_material, METH_STATIC|METH_0,
+        "get_material", (PyCFunction)unigine_Materials_get_material, METH_STATIC|METH_O,
         "public (static): getMaterial"
     },
     {
-        "find_manual_material", (PyCFunction)unigine_Materials_find_manual_material, METH_STATIC|METH_0,
+        "find_manual_material", (PyCFunction)unigine_Materials_find_manual_material, METH_STATIC|METH_O,
         "public (static): findManualMaterial"
     },
     {
-        "find_material_by_g_u_i_d", (PyCFunction)unigine_Materials_find_material_by_g_u_i_d, METH_STATIC|METH_0,
+        "find_material_by_guid", (PyCFunction)unigine_Materials_find_material_by_guid, METH_STATIC|METH_O,
         "public (static): findMaterialByGUID"
     },
     {
-        "find_material_by_file_g_u_i_d", (PyCFunction)unigine_Materials_find_material_by_file_g_u_i_d, METH_STATIC|METH_0,
+        "find_material_by_file_guid", (PyCFunction)unigine_Materials_find_material_by_file_guid, METH_STATIC|METH_O,
         "public (static): findMaterialByFileGUID"
     },
     {
-        "find_material_by_path", (PyCFunction)unigine_Materials_find_material_by_path, METH_STATIC|METH_0,
+        "find_material_by_path", (PyCFunction)unigine_Materials_find_material_by_path, METH_STATIC|METH_O,
         "public (static): findMaterialByPath"
     },
     {
-        "set_cached_material", (PyCFunction)unigine_Materials_set_cached_material, METH_STATIC|METH_0,
+        "set_cached_material", (PyCFunction)unigine_Materials_set_cached_material, METH_STATIC|METH_O,
         "public (static): setCachedMaterial"
     },
     {
@@ -388,15 +400,15 @@ static PyMethodDef unigine_Materials_methods[] = {
         "public (static): getCachedMaterial"
     },
     {
-        "set_cached_state", (PyCFunction)unigine_Materials_set_cached_state, METH_STATIC|METH_1,
+        "set_cached_state", (PyCFunction)unigine_Materials_set_cached_state, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
         "public (static): setCachedState"
     },
     {
-        "remove_material", (PyCFunction)unigine_Materials_remove_material, METH_STATIC|METH_2,
+        "remove_material", (PyCFunction)unigine_Materials_remove_material, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
         "public (static): removeMaterial"
     },
     {
-        "replace_material", (PyCFunction)unigine_Materials_replace_material, METH_STATIC|METH_1,
+        "replace_material", (PyCFunction)unigine_Materials_replace_material, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
         "public (static): replaceMaterial"
     },
     {
@@ -404,7 +416,7 @@ static PyMethodDef unigine_Materials_methods[] = {
         "public (static): saveMaterials"
     },
     {
-        "compile_shaders", (PyCFunction)unigine_Materials_compile_shaders, METH_STATIC|METH_0,
+        "compile_shaders", (PyCFunction)unigine_Materials_compile_shaders, METH_STATIC|METH_O,
         "public (static): compileShaders"
     },
     {
@@ -412,7 +424,7 @@ static PyMethodDef unigine_Materials_methods[] = {
         "public (static): compileShaders"
     },
     {
-        "set_precompile_all_shaders", (PyCFunction)unigine_Materials_set_precompile_all_shaders, METH_STATIC|METH_0,
+        "set_precompile_all_shaders", (PyCFunction)unigine_Materials_set_precompile_all_shaders, METH_STATIC|METH_O,
         "public (static): setPrecompileAllShaders"
     },
     {
@@ -504,12 +516,11 @@ static PyTypeObject unigine_MaterialsType = {
     // 0, /* vectorcallfunc tp_vectorcall; */
 };
 
-PyObject * PyUnigineMaterials::NewObject(Unigine::Ptr<Unigine::Materials> unigine_object_ptr) {
+PyObject * Materials::NewObject() {
 
     std::cout << "sizeof(unigine_Materials) = " << sizeof(unigine_Materials) << std::endl;
 
     unigine_Materials *pInst = PyObject_New(unigine_Materials, &unigine_MaterialsType);
-    pInst->unigine_object_ptr = unigine_object_ptr;
     // Py_INCREF(pInst);
     return (PyObject *)pInst;
 }
@@ -555,3 +566,5 @@ bool Python3UnigineMaterials::addClassDefinitionToModule(PyObject* pModule) {
     return true;
 }
 
+
+}; // namespace PyUnigine

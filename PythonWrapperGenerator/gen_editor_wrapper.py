@@ -64,36 +64,49 @@ for _file in files_json:
     files_paths[_file['@id']] = _file['@name']
 
 def camel_to_snake_case(name):
-    return re.sub(r'(?<!^)(?=[A-Z])', '_', name).lower()
+    name = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).lower()
 
 def resolve_type(_type):
     _id = _type["id"]
     if _id in cache_pointer_types:
         _type["id"] = cache_pointer_types[_id]["@type"]
-        _type["define"] = _type["define"] + " *"
+        _type["defines"].append("*")
         return resolve_type(_type)
     if _id in cache_cv_qualified_types:
         _type["id"] = cache_cv_qualified_types[_id]["@type"]
-        _type["define"] =  "const " + _type["define"]
+        _type["defines"].append("const")
         return resolve_type(_type)
     if _id in cache_reference_types:
         _type["id"] = cache_reference_types[_id]["@type"]
-        _type["define"] = _type["define"] + "&"
+        _type["defines"].append("&")
         return resolve_type(_type)
     if _id in cache_enumeration:
-        _type["define"] = _type["define"] + cache_enumeration[_id]["@name"]
+        _context_id = cache_enumeration[_id]["@context"]
+        _namespace = ""
+        if _context_id in cache_classes:
+            _namespace = cache_classes[_context_id]["fullname"] + "::"
+        _type["defines"].append(_namespace + cache_enumeration[_id]["@name"])
         return _type
     if _id in cache_classes:
-        _type["define"] = cache_classes[_id]["fullname"] + _type["define"]
+        _type["defines"].append(cache_classes[_id]["fullname"])
         return _type
     if _id in cache_fundamental_types:
-        _type["define"] = _type["define"] + cache_fundamental_types[_id]["@name"]
+        _type["defines"].append(cache_fundamental_types[_id]["@name"])
         return _type
     _type["unfinshed"] = 1
     return _type
 
 def find_type_by_id(_id):
-    res = resolve_type({"id": _id, "define": ""})
+    res = resolve_type({"id": _id, "defines": []})
+    if len(res["defines"]) > 0:
+        if res["defines"][0] == "*":
+            res["defines"] = res["defines"][1:]
+            res["defines"].append("*")
+        if res["defines"][0] == "&":
+            res["defines"] = res["defines"][1:]
+            res["defines"].append("&")
+    res["define"] = " ".join(res["defines"])
     return res
 
 def get_filepath_by_id(_id):
@@ -151,22 +164,42 @@ def init_namespaces(process_namespaces):
                     ret.append(_id)
     return ret
 
-def make_method_code(method_info):
+def make_method_code(method_info, args_to_call):
     return_type = method_info["return_type"]
+    args_to_call = ", ".join(args_to_call)
     ret = "\n"
-    if return_type == "void":
-        ret += "    self->unigine_object_ptr->" + method_info["name_original"] + "();\n"
-
-    elif return_type == "bool":
-        ret += "    bool retOriginal = self->unigine_object_ptr->" + method_info["name_original"] + "();\n"
+    if return_type == "void" and not method_info["static"]:
+        ret += "    self->unigine_object_ptr->" + method_info["name"] + "(" + args_to_call + ");\n"
+    elif return_type == "void" and method_info["static"]:
+        ret += "    Unigine::" + method_info["classname"] + "::" + method_info["name"] + "(" + args_to_call + ");\n"
+    elif return_type == "bool" and not method_info["static"]:
+        ret += "    bool retOriginal = self->unigine_object_ptr->" + method_info["name"] + "(" + args_to_call + ");\n"
         ret += "    ret = PyBool_FromLong(retOriginal);\n"
-    elif return_type == "int":
-        ret += "    int retOriginal = self->unigine_object_ptr->" + method_info["name_original"] + "();\n"
+    elif return_type == "bool" and method_info["static"]:
+        ret += "    bool retOriginal = Unigine::" + method_info["classname"] + "::" + method_info["name"] + "(" + args_to_call + ");\n"
+        ret += "    ret = PyBool_FromLong(retOriginal);\n"
+    elif return_type == "int" and not method_info["static"]:
+        ret += "    int retOriginal = self->unigine_object_ptr->" + method_info["name"] + "();\n"
+        ret += "    ret = PyLong_FromLong(retOriginal);\n"
+    elif return_type == "int" and method_info["static"]:
+        ret += "    int retOriginal = Unigine::" + method_info["classname"] + "::" + method_info["name"] + "(" + args_to_call + ");\n"
+        ret += "    ret = PyLong_FromLong(retOriginal);\n"
+    elif return_type.startswith("Unigine::Ptr") and not method_info["static"]:
+        ret += "    " + return_type + " retOriginal = self->unigine_object_ptr->" + method_info["name"] + "(" + args_to_call + ");\n"
+        ret += "    ret = todo;\n"
+    elif return_type.startswith("Unigine::Ptr<") and method_info["static"]:
+        ret += "    " + return_type + " retOriginal = Unigine::" + method_info["classname"] + "::" + method_info["name"] + "(" + args_to_call + ");\n"
+        _unigine_type = return_type.split("<")[1].split(">")[0]
+        ret += "    ret = Py" + _unigine_type + "::NewObject(retOriginal);\n"
+    elif return_type.startswith("Unigine::") and not method_info["static"]:
+        ret += "    " + return_type + " retOriginal = self->unigine_object_ptr->" + method_info["name"] + "(" + args_to_call + ");\n"
+        ret += "    ret = PyLong_FromLong(retOriginal);\n"
+    elif return_type.startswith("Unigine::") and method_info["static"]:
+        ret += "    " + return_type + " retOriginal = Unigine::" + method_info["classname"] + "::" + method_info["name"] + "(" + args_to_call + ");\n"
         ret += "    ret = PyLong_FromLong(retOriginal);\n"
     else:
         ret += "    unknown type \n"
     return ret
-
 
 class Python3UnigineWriter:
     def __init__(self, classname):
@@ -178,7 +211,13 @@ class Python3UnigineWriter:
         self.__file_source = open(self.__filepath + ".cpp", "wt", encoding="utf-8", newline="\n")
         self.__enums = []
         self.__methods = []
-        self.write_source_top()
+        self.__static_methods = 0
+
+    def __is_all_methods_static(self):
+        # print("self.__classname: ", self.__classname)
+        # print("self.__static_methods: ", self.__static_methods)
+        # print("len(self.__methods): ", len(self.__methods))
+        return self.__static_methods == len(self.__methods)
 
     def add_enum(self, _namespace, _enum):
         _enum_json = {
@@ -192,15 +231,28 @@ class Python3UnigineWriter:
         self.__enums.append(_enum_json)
 
     def add_method(self, _method):
+        if _method["@access"] != "public":
+            return
+        method_name = camel_to_snake_case(_method["@name"])
         _method_json = {
+            "classname": self.__classname,
             "name": _method["@name"],
             "access": _method["@access"],
+            "method_name": method_name,
             "static": False,
+            "flags": [],
+            "func_name": "unigine_" + self.__classname + "_" + method_name,
         }
+        _description = ""
         if "@static" in _method:
-            _method_json["static"] = _method["@static"] == "1"
+            if _method["@static"] == "1":
+                self.__static_methods += 1
+                _method_json["static"] = True
+                _method_json["flags"].append("METH_STATIC")
+                _description = "(static)"
+        _method_json["description"] = _method_json["access"] + " " + _description + ": " + _method_json["name"]
 
-        print("method", _method_json["name"])
+        # print("method", _method_json["name"])
         _method_json["return_type"] = find_type_by_id(_method["@returns"])["define"]
         _method_json["args"] = []
         if 'Argument' in _method:
@@ -209,6 +261,7 @@ class Python3UnigineWriter:
                 _args.extend(_method['Argument'])
             else:
                 _args.append(_method['Argument'])
+
             for _arg in _args:
                 _type = find_type_by_id(_arg["@type"])
                 # print("arg: ", _arg)
@@ -217,6 +270,13 @@ class Python3UnigineWriter:
                     "name": _arg["@name"]
                 })
                 # print("arg: ", _arg["@name"])
+        if len(_method_json["args"]) == 0:
+            _method_json["flags"].append("METH_NOARGS")
+        elif len(_method_json["args"]) == 1:
+            _method_json["flags"].append("METH_O")
+        else:
+            _method_json["flags"].append("METH_VARARGS")
+            _method_json["flags"].append("METH_KEYWORDS")
         self.__methods.append(_method_json)
 
     def write_header(self):
@@ -226,33 +286,47 @@ class Python3UnigineWriter:
         self.__file_header.write("#include \"python3_pytypeobjects.h\"\n")
         self.__file_header.write("#include <Unigine" + self.__classname + ".h>\n")
         self.__file_header.write("\n")
+        self.__file_header.write("namespace PyUnigine {\n")
+        self.__file_header.write("\n")
         self.__file_header.write("class Python3Unigine" + self.__classname + " : public Python3PyTypeObjectBase {\n")
         self.__file_header.write("    public:\n")
         self.__file_header.write("        virtual bool isReady() override;\n")
         self.__file_header.write("        virtual bool addClassDefinitionToModule(PyObject* pModule) override;\n")
         self.__file_header.write("};\n")
         self.__file_header.write("\n")
-        self.__file_header.write("class PyUnigine" + self.__classname + " {\n")
+        self.__file_header.write("class " + self.__classname + " {\n")
         self.__file_header.write("    public:\n")
-        self.__file_header.write("        static PyObject * NewObject(Unigine::Ptr<Unigine::" + self.__classname + "> unigine_object_ptr);\n")
+        self.__file_header.write("        static PyObject * NewObject(")
+        if not self.__is_all_methods_static():
+            self.__file_header.write("Unigine::Ptr<Unigine::" + self.__classname + "> unigine_object_ptr")
+        self.__file_header.write(");\n")
         self.__file_header.write("};\n")
+        self.__file_header.write("\n")
+        self.__file_header.write("}; // namespace PyUnigine\n")
 
     def write_source_top(self):
         self.__file_source.write("// this file automaticly generated from Unigine" + self.__classname + ".h\n")
         self.__file_source.write("#include \"python3_unigine_" + self.__classname.lower() + ".h\"\n")
+        self.__file_source.write("\n")
         self.__file_source.write("#include <string>\n")
-        self.__file_source.write("#include <Unigine" + self.__classname + "s.h>\n")
+        # TODO fix filename
+        self.__file_source.write("#include <Unigine" + self.__classname + ".h>\n")
+        self.__file_source.write("#include <UnigineLog.h>\n")
         self.__file_source.write("#include <Python.h>\n")
         self.__file_source.write("#include <structmember.h>\n")
         self.__file_source.write("\n")
         self.__file_source.write("#include <iostream>\n")
         self.__file_source.write("\n")
+        self.__file_source.write("namespace PyUnigine {\n")
+        self.__file_source.write("\n")
         self.__file_source.write("// ------------------------------------------------------------------------------------------\n")
         self.__file_source.write("// unigine_" + self.__classname + "\n")
+        self.__file_source.write("\n")
         self.__file_source.write("typedef struct {\n")
         self.__file_source.write("    PyObject_HEAD\n")
         self.__file_source.write("    // Type-specific fields go here.\n")
-        self.__file_source.write("    Unigine::Ptr<Unigine::" + self.__classname + "> unigine_object_ptr;\n")
+        if not self.__is_all_methods_static():
+            self.__file_source.write("    Unigine::Ptr<Unigine::" + self.__classname + "> unigine_object_ptr;\n")
         self.__file_source.write("} unigine_" + self.__classname + ";\n")
         self.__file_source.write("\n")
         self.__file_source.write("static void unigine_" + self.__classname + "_dealloc(unigine_" + self.__classname + "* self) {\n")
@@ -340,12 +414,16 @@ class Python3UnigineWriter:
         self.__file_source.write("    // 0, /* vectorcallfunc tp_vectorcall; */\n")
         self.__file_source.write("};\n")
         self.__file_source.write("\n")
-        self.__file_source.write("PyObject * PyUnigine" + self.__classname + "::NewObject(Unigine::Ptr<Unigine::" + self.__classname + "> unigine_object_ptr) {\n")
+        self.__file_source.write("PyObject * " + self.__classname + "::NewObject(")
+        if not self.__is_all_methods_static():
+            self.__file_source.write("Unigine::Ptr<Unigine::" + self.__classname + "> unigine_object_ptr")
+        self.__file_source.write(") {\n")
         self.__file_source.write("\n")
         self.__file_source.write("    std::cout << \"sizeof(unigine_" + self.__classname + ") = \" << sizeof(unigine_" + self.__classname + ") << std::endl;\n")
         self.__file_source.write("\n")
         self.__file_source.write("    unigine_" + self.__classname + " *pInst = PyObject_New(unigine_" + self.__classname + ", &unigine_" + self.__classname + "Type);\n")
-        self.__file_source.write("    pInst->unigine_object_ptr = unigine_object_ptr;\n")
+        if not self.__is_all_methods_static():
+            self.__file_source.write("    pInst->unigine_object_ptr = unigine_object_ptr;\n")
         self.__file_source.write("    // Py_INCREF(pInst);\n")
         self.__file_source.write("    return (PyObject *)pInst;\n")
         self.__file_source.write("}\n")
@@ -355,38 +433,34 @@ class Python3UnigineWriter:
         methods_table = []
         for _method in self.__methods:
             _type = ""
-            method_name = camel_to_snake_case(_method["name"])
             method_info = {
                 "args": [],
-                "name_original": _method["name"],
-                "method_name": method_name,
-                "description": "",
-                "func_name": "unigine_" + self.__classname + "_" + method_name,
-                "flags": [],
+                "classname": _method["classname"],
+                "name": _method["name"],
+                "method_name": _method["method_name"],
+                "description": _method["description"],
+                "func_name": _method["func_name"],
+                "flags": _method["flags"],
+                "static": _method["static"],
                 "return_type": _method["return_type"],
             }
-            if _method["static"]:
-                _type = "(static)"
-                method_info["flags"].append("METH_STATIC")
-            else:
+            if not _method["static"]:
                 method_info["args"].append("unigine_" + self.__classname + "* self")
 
             # TODO returns
-            if len(_method["args"]) == 0:
-                method_info["flags"].append("METH_NOARGS")
-            else:
-                method_info["flags"].append("METH_" + str(len(_method["args"])-1))
+            if len(_method["args"]) > 0:
                 if len(_method["args"]) == 1:
                     method_info["args"].append("PyObject *arg")
                 else:
                     method_info["args"].append("PyObject *args")
                     method_info["args"].append("PyObject *kwds")
 
-            method_info["description"] = _method["access"] + " " + _type + ": " + _method["name"]
             _args = "    // args:\n"
+            _args_to_call = []
             for _arg in _method["args"]:
-                _args += "    // " + _arg["type"] + " " + _arg["name"] + "\n"
-            if not method_name.endswith("_callback") and not method_name.endswith("_callbacks"):
+                _args += "    " + _arg["type"] + " " + _arg["name"] + ";\n"
+                _args_to_call.append(_arg["name"])
+            if not _method["method_name"].endswith("_callback") and not _method["method_name"].endswith("_callbacks"):
                 methods_table.append(method_info)
                 self.__file_source.write(
                     "// " + method_info["description"] + "\n"
@@ -395,7 +469,7 @@ class Python3UnigineWriter:
                     "    PyObject *ret = NULL;\n" +
                     _args +
                     "    // return: " + method_info["return_type"] + "\n" +
-                    make_method_code(method_info) +
+                    make_method_code(method_info, _args_to_call) +
                     "    return ret;\n"
                     "};\n\n"
                 )
@@ -455,6 +529,8 @@ class Python3UnigineWriter:
         self.__file_source.write("    return true;\n")
         self.__file_source.write("}\n")
         self.__file_source.write("\n")
+        self.__file_source.write("\n")
+        self.__file_source.write("}; // namespace PyUnigine\n")
 
 _unigine_ns_id = find_namespcase_id_by_name("Unigine")
 
@@ -506,6 +582,8 @@ for _fundamental_type in fundamental_type_json:
 make_for_classes = [
     "Material",
     "Materials",
+    "Node",
+    "UGUID",
 ]
 
 for _class in classes_json:
@@ -532,8 +610,6 @@ for _class in classes_json:
             print(_namespace, _name, _filepath)
             print(_class)
             _writer = Python3UnigineWriter(_name)
-            _writer.write_header()
-
             _members = _class['@members'].split(' ')
             for _mem in _members:
                 if _mem in cache_function:
@@ -550,6 +626,9 @@ for _class in classes_json:
                     print(_mem, "destructor")
                 else:
                     print("Not found: " + _mem)
+
+            _writer.write_header()
+            _writer.write_source_top()
             _writer.write_source_methods()
             _writer.write_source_type()
             _writer.write_source_finish()

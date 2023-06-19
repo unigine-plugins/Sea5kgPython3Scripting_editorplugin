@@ -1,4 +1,4 @@
-#!/bin/bash  
+#!/bin/bash
 
 castxml \
     --castxml-cc-gnu gcc \

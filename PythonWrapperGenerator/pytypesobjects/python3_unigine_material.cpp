@@ -1,14 +1,19 @@
 // this file automaticly generated from UnigineMaterial.h
 #include "python3_unigine_material.h"
+
 #include <string>
-#include <UnigineMaterials.h>
+#include <UnigineMaterial.h>
+#include <UnigineLog.h>
 #include <Python.h>
 #include <structmember.h>
 
 #include <iostream>
 
+namespace PyUnigine {
+
 // ------------------------------------------------------------------------------------------
 // unigine_Material
+
 typedef struct {
     PyObject_HEAD
     // Type-specific fields go here.
@@ -40,7 +45,8 @@ static PyObject * unigine_Material_create() {
     // args:
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Material::create();
+    ret = PyUnigine::Material::NewObject(retOriginal);
     return ret;
 };
 
@@ -49,11 +55,11 @@ static PyObject * unigine_Material_set_parent(unigine_Material* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::Ptr<Unigine::Material>const & material
-    // bool save_all_values
+    const Unigine::Ptr<Unigine::Material> & material;
+    bool save_all_values;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->setParent();
+    bool retOriginal = self->unigine_object_ptr->setParent(material, save_all_values);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -65,7 +71,8 @@ static PyObject * unigine_Material_get_parent(unigine_Material* self) {
     // args:
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->getParent();
+    ret = todo;
     return ret;
 };
 
@@ -74,10 +81,10 @@ static PyObject * unigine_Material_is_parent(unigine_Material* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::Ptr<Unigine::Material>const & parent
+    const Unigine::Ptr<Unigine::Material> & parent;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isParent();
+    bool retOriginal = self->unigine_object_ptr->isParent(parent);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -87,10 +94,10 @@ static PyObject * unigine_Material_is_parent(unigine_Material* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::UGUIDconst & guid
+    const Unigine::UGUID & guid;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isParent();
+    bool retOriginal = self->unigine_object_ptr->isParent(guid);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -102,7 +109,8 @@ static PyObject * unigine_Material_get_base_material(unigine_Material* self) {
     // args:
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->getBaseMaterial();
+    ret = todo;
     return ret;
 };
 
@@ -123,10 +131,11 @@ static PyObject * unigine_Material_get_child(unigine_Material* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->getChild(num);
+    ret = todo;
     return ret;
 };
 
@@ -135,10 +144,11 @@ static PyObject * unigine_Material_clone(unigine_Material* self, PyObject *arg) 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::UGUIDconst & guid
+    const Unigine::UGUID & guid;
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->clone(guid);
+    ret = todo;
     return ret;
 };
 
@@ -149,7 +159,8 @@ static PyObject * unigine_Material_clone(unigine_Material* self) {
     // args:
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->clone();
+    ret = todo;
     return ret;
 };
 
@@ -158,10 +169,11 @@ static PyObject * unigine_Material_inherit(unigine_Material* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::UGUIDconst & guid
+    const Unigine::UGUID & guid;
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->inherit(guid);
+    ret = todo;
     return ret;
 };
 
@@ -172,7 +184,8 @@ static PyObject * unigine_Material_inherit(unigine_Material* self) {
     // args:
     // return: Unigine::Ptr<Unigine::Material>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->inherit();
+    ret = todo;
     return ret;
 };
 
@@ -181,7 +194,7 @@ static PyObject * unigine_Material_get_namespace_name(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: const  *char
+    // return: const char *
 
     unknown type 
     return ret;
@@ -192,20 +205,21 @@ static PyObject * unigine_Material_get_manual_name(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: const  *char
+    // return: const char *
 
     unknown type 
     return ret;
 };
 
 // public : getGUID
-static PyObject * unigine_Material_get_g_u_i_d(unigine_Material* self) {
+static PyObject * unigine_Material_get_guid(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
     // return: Unigine::UGUID
 
-    unknown type 
+    Unigine::UGUID retOriginal = self->unigine_object_ptr->getGUID();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -214,7 +228,7 @@ static PyObject * unigine_Material_get_path(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: const  *char
+    // return: const char *
 
     unknown type 
     return ret;
@@ -225,10 +239,10 @@ static PyObject * unigine_Material_is_node_type_supported(unigine_Material* self
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // TYPE type
+    Unigine::Node::TYPE type;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isNodeTypeSupported();
+    bool retOriginal = self->unigine_object_ptr->isNodeTypeSupported(type);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -238,10 +252,10 @@ static PyObject * unigine_Material_is_node_supported(unigine_Material* self, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::Ptr<Unigine::Node>const & node
+    const Unigine::Ptr<Unigine::Node> & node;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isNodeSupported();
+    bool retOriginal = self->unigine_object_ptr->isNodeSupported(node);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -259,7 +273,7 @@ static PyObject * unigine_Material_can_render_node(unigine_Material* self) {
 };
 
 // public : getNumUIItems
-static PyObject * unigine_Material_get_num_u_i_items(unigine_Material* self) {
+static PyObject * unigine_Material_get_num_ui_items(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
@@ -271,23 +285,24 @@ static PyObject * unigine_Material_get_num_u_i_items(unigine_Material* self) {
 };
 
 // public : getUIItemDataType
-static PyObject * unigine_Material_get_u_i_item_data_type(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_data_type(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
-    // return: DATA_TYPE
+    int item;
+    // return: Unigine::Material::DATA_TYPE
 
-    unknown type 
+    Unigine::Material::DATA_TYPE retOriginal = self->unigine_object_ptr->getUIItemDataType(item);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
 // public : getUIItemDataID
-static PyObject * unigine_Material_get_u_i_item_data_i_d(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_data_id(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
+    int item;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getUIItemDataID();
@@ -296,60 +311,61 @@ static PyObject * unigine_Material_get_u_i_item_data_i_d(unigine_Material* self,
 };
 
 // public : isUIItemHidden
-static PyObject * unigine_Material_is_u_i_item_hidden(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_ui_item_hidden(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
+    int item;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isUIItemHidden();
+    bool retOriginal = self->unigine_object_ptr->isUIItemHidden(item);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
 
 // public : getUIItemTitle
-static PyObject * unigine_Material_get_u_i_item_title(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_title(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
-    // return: const  *char
+    int item;
+    // return: const char *
 
     unknown type 
     return ret;
 };
 
 // public : getUIItemTooltip
-static PyObject * unigine_Material_get_u_i_item_tooltip(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_tooltip(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
-    // return: const  *char
+    int item;
+    // return: const char *
 
     unknown type 
     return ret;
 };
 
 // public : getUIItemWidget
-static PyObject * unigine_Material_get_u_i_item_widget(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_widget(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
-    // return: WIDGET
+    int item;
+    // return: Unigine::Material::WIDGET
 
-    unknown type 
+    Unigine::Material::WIDGET retOriginal = self->unigine_object_ptr->getUIItemWidget(item);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
 // public : getUIItemParent
-static PyObject * unigine_Material_get_u_i_item_parent(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_parent(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
+    int item;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getUIItemParent();
@@ -358,11 +374,11 @@ static PyObject * unigine_Material_get_u_i_item_parent(unigine_Material* self, P
 };
 
 // public : getUIItemNumChildren
-static PyObject * unigine_Material_get_u_i_item_num_children(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_num_children(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
+    int item;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getUIItemNumChildren();
@@ -371,12 +387,12 @@ static PyObject * unigine_Material_get_u_i_item_num_children(unigine_Material* s
 };
 
 // public : getUIItemChild
-static PyObject * unigine_Material_get_u_i_item_child(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_get_ui_item_child(unigine_Material* self, PyObject *args, PyObject *kwds) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
-    // int num
+    int item;
+    int num;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getUIItemChild();
@@ -385,37 +401,37 @@ static PyObject * unigine_Material_get_u_i_item_child(unigine_Material* self, Py
 };
 
 // public : isUIItemSliderMinExpand
-static PyObject * unigine_Material_is_u_i_item_slider_min_expand(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_ui_item_slider_min_expand(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
+    int item;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isUIItemSliderMinExpand();
+    bool retOriginal = self->unigine_object_ptr->isUIItemSliderMinExpand(item);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
 
 // public : isUIItemSliderMaxExpand
-static PyObject * unigine_Material_is_u_i_item_slider_max_expand(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_ui_item_slider_max_expand(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
+    int item;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isUIItemSliderMaxExpand();
+    bool retOriginal = self->unigine_object_ptr->isUIItemSliderMaxExpand(item);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
 
 // public : getUIItemSliderMinValue
-static PyObject * unigine_Material_get_u_i_item_slider_min_value(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_slider_min_value(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
+    int item;
     // return: float
 
     unknown type 
@@ -423,11 +439,11 @@ static PyObject * unigine_Material_get_u_i_item_slider_min_value(unigine_Materia
 };
 
 // public : getUIItemSliderMaxValue
-static PyObject * unigine_Material_get_u_i_item_slider_max_value(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_slider_max_value(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
+    int item;
     // return: float
 
     unknown type 
@@ -435,11 +451,11 @@ static PyObject * unigine_Material_get_u_i_item_slider_max_value(unigine_Materia
 };
 
 // public : getUIItemGroupToggleStateID
-static PyObject * unigine_Material_get_u_i_item_group_toggle_state_i_d(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_group_toggle_state_id(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
+    int item;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getUIItemGroupToggleStateID();
@@ -448,14 +464,14 @@ static PyObject * unigine_Material_get_u_i_item_group_toggle_state_i_d(unigine_M
 };
 
 // public : isUIItemGroupCollapsed
-static PyObject * unigine_Material_is_u_i_item_group_collapsed(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_ui_item_group_collapsed(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int item
+    int item;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isUIItemGroupCollapsed();
+    bool retOriginal = self->unigine_object_ptr->isUIItemGroupCollapsed(item);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -465,8 +481,8 @@ static PyObject * unigine_Material_widget_to_string(PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // WIDGET widget
-    // return: const  *char
+    Unigine::Material::WIDGET widget;
+    // return: const char *
 
     unknown type 
     return ret;
@@ -477,10 +493,11 @@ static PyObject * unigine_Material_string_to_widget(PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char str
-    // return: WIDGET
+    const char * str;
+    // return: Unigine::Material::WIDGET
 
-    unknown type 
+    Unigine::Material::WIDGET retOriginal = Unigine::Material::stringToWidget(str);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -489,11 +506,11 @@ static PyObject * unigine_Material_set_option(unigine_Material* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // int value
+    int num;
+    int value;
     // return: void
 
-    self->unigine_object_ptr->setOption();
+    self->unigine_object_ptr->setOption(num, value);
     return ret;
 };
 
@@ -502,7 +519,7 @@ static PyObject * unigine_Material_get_option(unigine_Material* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getOption();
@@ -515,10 +532,10 @@ static PyObject * unigine_Material_is_option_overridden(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isOptionOverridden();
+    bool retOriginal = self->unigine_object_ptr->isOptionOverridden(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -528,10 +545,10 @@ static PyObject * unigine_Material_reset_option(unigine_Material* self, PyObject
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: void
 
-    self->unigine_object_ptr->resetOption();
+    self->unigine_object_ptr->resetOption(num);
     return ret;
 };
 
@@ -540,10 +557,10 @@ static PyObject * unigine_Material_set_transparent(unigine_Material* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int transparent
+    int transparent;
     // return: void
 
-    self->unigine_object_ptr->setTransparent();
+    self->unigine_object_ptr->setTransparent(transparent);
     return ret;
 };
 
@@ -612,10 +629,10 @@ static PyObject * unigine_Material_set_blend_dest_func(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int func
+    int func;
     // return: void
 
-    self->unigine_object_ptr->setBlendDestFunc();
+    self->unigine_object_ptr->setBlendDestFunc(func);
     return ret;
 };
 
@@ -636,10 +653,10 @@ static PyObject * unigine_Material_set_blend_src_func(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int func
+    int func;
     // return: void
 
-    self->unigine_object_ptr->setBlendSrcFunc();
+    self->unigine_object_ptr->setBlendSrcFunc(func);
     return ret;
 };
 
@@ -660,10 +677,10 @@ static PyObject * unigine_Material_set_shadow_mask(unigine_Material* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int mask
+    int mask;
     // return: void
 
-    self->unigine_object_ptr->setShadowMask();
+    self->unigine_object_ptr->setShadowMask(mask);
     return ret;
 };
 
@@ -684,10 +701,10 @@ static PyObject * unigine_Material_set_viewport_mask(unigine_Material* self, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int mask
+    int mask;
     // return: void
 
-    self->unigine_object_ptr->setViewportMask();
+    self->unigine_object_ptr->setViewportMask(mask);
     return ret;
 };
 
@@ -708,10 +725,10 @@ static PyObject * unigine_Material_set_depth_mask(unigine_Material* self, PyObje
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int mask
+    int mask;
     // return: void
 
-    self->unigine_object_ptr->setDepthMask();
+    self->unigine_object_ptr->setDepthMask(mask);
     return ret;
 };
 
@@ -732,10 +749,10 @@ static PyObject * unigine_Material_set_order(unigine_Material* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int order
+    int order;
     // return: void
 
-    self->unigine_object_ptr->setOrder();
+    self->unigine_object_ptr->setOrder(order);
     return ret;
 };
 
@@ -756,10 +773,10 @@ static PyObject * unigine_Material_set_cast_shadow(unigine_Material* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // bool shadow
+    bool shadow;
     // return: void
 
-    self->unigine_object_ptr->setCastShadow();
+    self->unigine_object_ptr->setCastShadow(shadow);
     return ret;
 };
 
@@ -780,10 +797,10 @@ static PyObject * unigine_Material_set_cast_world_shadow(unigine_Material* self,
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // bool shadow
+    bool shadow;
     // return: void
 
-    self->unigine_object_ptr->setCastWorldShadow();
+    self->unigine_object_ptr->setCastWorldShadow(shadow);
     return ret;
 };
 
@@ -804,10 +821,10 @@ static PyObject * unigine_Material_set_depth_test(unigine_Material* self, PyObje
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // bool test
+    bool test;
     // return: void
 
-    self->unigine_object_ptr->setDepthTest();
+    self->unigine_object_ptr->setDepthTest(test);
     return ret;
 };
 
@@ -828,10 +845,10 @@ static PyObject * unigine_Material_set_two_sided(unigine_Material* self, PyObjec
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // bool sided
+    bool sided;
     // return: void
 
-    self->unigine_object_ptr->setTwoSided();
+    self->unigine_object_ptr->setTwoSided(sided);
     return ret;
 };
 
@@ -852,10 +869,10 @@ static PyObject * unigine_Material_set_overlap(unigine_Material* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // bool overlap
+    bool overlap;
     // return: void
 
-    self->unigine_object_ptr->setOverlap();
+    self->unigine_object_ptr->setOverlap(overlap);
     return ret;
 };
 
@@ -888,11 +905,11 @@ static PyObject * unigine_Material_check_shader_cache(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // PASS pass
-    // TYPE node_type
+    Unigine::Render::PASS pass;
+    Unigine::Node::TYPE node_type;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->checkShaderCache();
+    bool retOriginal = self->unigine_object_ptr->checkShaderCache(pass, node_type);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -902,11 +919,11 @@ static PyObject * unigine_Material_compile_shader(unigine_Material* self, PyObje
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // PASS pass
-    // TYPE node_type
+    Unigine::Render::PASS pass;
+    Unigine::Node::TYPE node_type;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->compileShader();
+    bool retOriginal = self->unigine_object_ptr->compileShader(pass, node_type);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -916,11 +933,12 @@ static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // PASS pass
-    // TYPE node_type
+    Unigine::Render::PASS pass;
+    Unigine::Node::TYPE node_type;
     // return: Unigine::Ptr<Unigine::Shader>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Shader> retOriginal = self->unigine_object_ptr->fetchShader(pass, node_type);
+    ret = todo;
     return ret;
 };
 
@@ -929,10 +947,11 @@ static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // PASS pass
+    Unigine::Render::PASS pass;
     // return: Unigine::Ptr<Unigine::Shader>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Shader> retOriginal = self->unigine_object_ptr->fetchShader(pass);
+    ret = todo;
     return ret;
 };
 
@@ -941,11 +960,12 @@ static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char pass_name
-    // int node
+    const char * pass_name;
+    int node;
     // return: Unigine::Ptr<Unigine::Shader>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Shader> retOriginal = self->unigine_object_ptr->fetchShader(pass_name, node);
+    ret = todo;
     return ret;
 };
 
@@ -954,10 +974,11 @@ static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char pass_name
+    const char * pass_name;
     // return: Unigine::Ptr<Unigine::Shader>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Shader> retOriginal = self->unigine_object_ptr->fetchShader(pass_name);
+    ret = todo;
     return ret;
 };
 
@@ -966,10 +987,10 @@ static PyObject * unigine_Material_create_shaders(unigine_Material* self, PyObje
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // bool recursive
+    bool recursive;
     // return: void
 
-    self->unigine_object_ptr->createShaders();
+    self->unigine_object_ptr->createShaders(recursive);
     return ret;
 };
 
@@ -1001,7 +1022,7 @@ static PyObject * unigine_Material_find_parameter(unigine_Material* self, PyObje
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->findParameter();
@@ -1014,10 +1035,10 @@ static PyObject * unigine_Material_reset_parameter(unigine_Material* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: void
 
-    self->unigine_object_ptr->resetParameter();
+    self->unigine_object_ptr->resetParameter(num);
     return ret;
 };
 
@@ -1026,10 +1047,10 @@ static PyObject * unigine_Material_check_parameter_conditions(unigine_Material* 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->checkParameterConditions();
+    bool retOriginal = self->unigine_object_ptr->checkParameterConditions(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -1039,7 +1060,7 @@ static PyObject * unigine_Material_get_parameter_type(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getParameterType();
@@ -1052,10 +1073,10 @@ static PyObject * unigine_Material_is_parameter_int(unigine_Material* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isParameterInt();
+    bool retOriginal = self->unigine_object_ptr->isParameterInt(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -1065,10 +1086,10 @@ static PyObject * unigine_Material_is_parameter_float(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isParameterFloat();
+    bool retOriginal = self->unigine_object_ptr->isParameterFloat(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -1078,10 +1099,10 @@ static PyObject * unigine_Material_is_parameter_overridden(unigine_Material* sel
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isParameterOverridden();
+    bool retOriginal = self->unigine_object_ptr->isParameterOverridden(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -1091,8 +1112,8 @@ static PyObject * unigine_Material_get_parameter_name(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // return: const  *char
+    int num;
+    // return: const char *
 
     unknown type 
     return ret;
@@ -1103,10 +1124,10 @@ static PyObject * unigine_Material_is_parameter_expression_enabled(unigine_Mater
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isParameterExpressionEnabled();
+    bool retOriginal = self->unigine_object_ptr->isParameterExpressionEnabled(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -1116,11 +1137,11 @@ static PyObject * unigine_Material_set_parameter_expression_enabled(unigine_Mate
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // bool enabled
+    int num;
+    bool enabled;
     // return: void
 
-    self->unigine_object_ptr->setParameterExpressionEnabled();
+    self->unigine_object_ptr->setParameterExpressionEnabled(num, enabled);
     return ret;
 };
 
@@ -1129,8 +1150,8 @@ static PyObject * unigine_Material_get_parameter_expression(unigine_Material* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // return: const  *char
+    int num;
+    // return: const char *
 
     unknown type 
     return ret;
@@ -1141,8 +1162,8 @@ static PyObject * unigine_Material_set_parameter_expression(unigine_Material* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // const  *char expression
+    int num;
+    const char * expression;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->setParameterExpression();
@@ -1155,11 +1176,11 @@ static PyObject * unigine_Material_set_parameter_float(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // float value
+    int num;
+    float value;
     // return: void
 
-    self->unigine_object_ptr->setParameterFloat();
+    self->unigine_object_ptr->setParameterFloat(num, value);
     return ret;
 };
 
@@ -1168,11 +1189,11 @@ static PyObject * unigine_Material_set_parameter_float(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // float value
+    const char * name;
+    float value;
     // return: void
 
-    self->unigine_object_ptr->setParameterFloat();
+    self->unigine_object_ptr->setParameterFloat(name, value);
     return ret;
 };
 
@@ -1181,7 +1202,7 @@ static PyObject * unigine_Material_get_parameter_float(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: float
 
     unknown type 
@@ -1193,7 +1214,7 @@ static PyObject * unigine_Material_get_parameter_float(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: float
 
     unknown type 
@@ -1205,11 +1226,11 @@ static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // const & value
+    int num;
+    const & value;
     // return: void
 
-    self->unigine_object_ptr->setParameterFloat2();
+    self->unigine_object_ptr->setParameterFloat2(num, value);
     return ret;
 };
 
@@ -1218,11 +1239,11 @@ static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // const & value
+    const char * name;
+    const & value;
     // return: void
 
-    self->unigine_object_ptr->setParameterFloat2();
+    self->unigine_object_ptr->setParameterFloat2(name, value);
     return ret;
 };
 
@@ -1231,7 +1252,7 @@ static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: 
 
     unknown type 
@@ -1243,7 +1264,7 @@ static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: 
 
     unknown type 
@@ -1255,11 +1276,11 @@ static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // const & value
+    int num;
+    const & value;
     // return: void
 
-    self->unigine_object_ptr->setParameterFloat3();
+    self->unigine_object_ptr->setParameterFloat3(num, value);
     return ret;
 };
 
@@ -1268,11 +1289,11 @@ static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // const & value
+    const char * name;
+    const & value;
     // return: void
 
-    self->unigine_object_ptr->setParameterFloat3();
+    self->unigine_object_ptr->setParameterFloat3(name, value);
     return ret;
 };
 
@@ -1281,7 +1302,7 @@ static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: 
 
     unknown type 
@@ -1293,7 +1314,7 @@ static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: 
 
     unknown type 
@@ -1305,11 +1326,11 @@ static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // const & value
+    int num;
+    const & value;
     // return: void
 
-    self->unigine_object_ptr->setParameterFloat4();
+    self->unigine_object_ptr->setParameterFloat4(num, value);
     return ret;
 };
 
@@ -1318,11 +1339,11 @@ static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // const & value
+    const char * name;
+    const & value;
     // return: void
 
-    self->unigine_object_ptr->setParameterFloat4();
+    self->unigine_object_ptr->setParameterFloat4(name, value);
     return ret;
 };
 
@@ -1331,7 +1352,7 @@ static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: 
 
     unknown type 
@@ -1343,7 +1364,7 @@ static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: 
 
     unknown type 
@@ -1355,11 +1376,11 @@ static PyObject * unigine_Material_set_parameter_int(unigine_Material* self, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // int value
+    int num;
+    int value;
     // return: void
 
-    self->unigine_object_ptr->setParameterInt();
+    self->unigine_object_ptr->setParameterInt(num, value);
     return ret;
 };
 
@@ -1368,11 +1389,11 @@ static PyObject * unigine_Material_set_parameter_int(unigine_Material* self, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // int value
+    const char * name;
+    int value;
     // return: void
 
-    self->unigine_object_ptr->setParameterInt();
+    self->unigine_object_ptr->setParameterInt(name, value);
     return ret;
 };
 
@@ -1381,7 +1402,7 @@ static PyObject * unigine_Material_get_parameter_int(unigine_Material* self, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getParameterInt();
@@ -1394,7 +1415,7 @@ static PyObject * unigine_Material_get_parameter_int(unigine_Material* self, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getParameterInt();
@@ -1407,11 +1428,11 @@ static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // const & value
+    int num;
+    const & value;
     // return: void
 
-    self->unigine_object_ptr->setParameterInt2();
+    self->unigine_object_ptr->setParameterInt2(num, value);
     return ret;
 };
 
@@ -1420,11 +1441,11 @@ static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // const & value
+    const char * name;
+    const & value;
     // return: void
 
-    self->unigine_object_ptr->setParameterInt2();
+    self->unigine_object_ptr->setParameterInt2(name, value);
     return ret;
 };
 
@@ -1433,7 +1454,7 @@ static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: 
 
     unknown type 
@@ -1445,7 +1466,7 @@ static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: 
 
     unknown type 
@@ -1457,11 +1478,11 @@ static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // const & value
+    int num;
+    const & value;
     // return: void
 
-    self->unigine_object_ptr->setParameterInt3();
+    self->unigine_object_ptr->setParameterInt3(num, value);
     return ret;
 };
 
@@ -1470,11 +1491,11 @@ static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // const & value
+    const char * name;
+    const & value;
     // return: void
 
-    self->unigine_object_ptr->setParameterInt3();
+    self->unigine_object_ptr->setParameterInt3(name, value);
     return ret;
 };
 
@@ -1483,7 +1504,7 @@ static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: 
 
     unknown type 
@@ -1495,7 +1516,7 @@ static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: 
 
     unknown type 
@@ -1507,11 +1528,11 @@ static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // const & value
+    int num;
+    const & value;
     // return: void
 
-    self->unigine_object_ptr->setParameterInt4();
+    self->unigine_object_ptr->setParameterInt4(num, value);
     return ret;
 };
 
@@ -1520,11 +1541,11 @@ static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // const & value
+    const char * name;
+    const & value;
     // return: void
 
-    self->unigine_object_ptr->setParameterInt4();
+    self->unigine_object_ptr->setParameterInt4(name, value);
     return ret;
 };
 
@@ -1533,7 +1554,7 @@ static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: 
 
     unknown type 
@@ -1545,7 +1566,7 @@ static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: 
 
     unknown type 
@@ -1557,7 +1578,7 @@ static PyObject * unigine_Material_get_parameter_array_size(unigine_Material* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getParameterArraySize();
@@ -1570,10 +1591,10 @@ static PyObject * unigine_Material_is_parameter_array(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isParameterArray();
+    bool retOriginal = self->unigine_object_ptr->isParameterArray(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -1583,11 +1604,11 @@ static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Vector<float>& values
+    int num;
+    Unigine::Vector<float> & values;
     // return: void
 
-    self->unigine_object_ptr->getParameterArray();
+    self->unigine_object_ptr->getParameterArray(num, values);
     return ret;
 };
 
@@ -1596,11 +1617,11 @@ static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Vector<float>const & values
+    int num;
+    const Unigine::Vector<float> & values;
     // return: void
 
-    self->unigine_object_ptr->setParameterArray();
+    self->unigine_object_ptr->setParameterArray(num, values);
     return ret;
 };
 
@@ -1609,11 +1630,11 @@ static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Vector<Unigine::Math::vec2>& values
+    int num;
+    Unigine::Vector<Unigine::Math::vec2> & values;
     // return: void
 
-    self->unigine_object_ptr->getParameterArray();
+    self->unigine_object_ptr->getParameterArray(num, values);
     return ret;
 };
 
@@ -1622,11 +1643,11 @@ static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Vector<Unigine::Math::vec2>const & values
+    int num;
+    const Unigine::Vector<Unigine::Math::vec2> & values;
     // return: void
 
-    self->unigine_object_ptr->setParameterArray();
+    self->unigine_object_ptr->setParameterArray(num, values);
     return ret;
 };
 
@@ -1635,11 +1656,11 @@ static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Vector<Unigine::Math::vec4>& values
+    int num;
+    Unigine::Vector<Unigine::Math::vec4> & values;
     // return: void
 
-    self->unigine_object_ptr->getParameterArray();
+    self->unigine_object_ptr->getParameterArray(num, values);
     return ret;
 };
 
@@ -1648,11 +1669,11 @@ static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Vector<Unigine::Math::vec4>const & values
+    int num;
+    const Unigine::Vector<Unigine::Math::vec4> & values;
     // return: void
 
-    self->unigine_object_ptr->setParameterArray();
+    self->unigine_object_ptr->setParameterArray(num, values);
     return ret;
 };
 
@@ -1661,11 +1682,11 @@ static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Vector<int>& values
+    int num;
+    Unigine::Vector<int> & values;
     // return: void
 
-    self->unigine_object_ptr->getParameterArray();
+    self->unigine_object_ptr->getParameterArray(num, values);
     return ret;
 };
 
@@ -1674,11 +1695,11 @@ static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Vector<int>const & values
+    int num;
+    const Unigine::Vector<int> & values;
     // return: void
 
-    self->unigine_object_ptr->setParameterArray();
+    self->unigine_object_ptr->setParameterArray(num, values);
     return ret;
 };
 
@@ -1687,11 +1708,11 @@ static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Vector<Unigine::Math::ivec2>& values
+    int num;
+    Unigine::Vector<Unigine::Math::ivec2> & values;
     // return: void
 
-    self->unigine_object_ptr->getParameterArray();
+    self->unigine_object_ptr->getParameterArray(num, values);
     return ret;
 };
 
@@ -1700,11 +1721,11 @@ static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Vector<Unigine::Math::ivec2>const & values
+    int num;
+    const Unigine::Vector<Unigine::Math::ivec2> & values;
     // return: void
 
-    self->unigine_object_ptr->setParameterArray();
+    self->unigine_object_ptr->setParameterArray(num, values);
     return ret;
 };
 
@@ -1713,11 +1734,11 @@ static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Vector<Unigine::Math::ivec4>& values
+    int num;
+    Unigine::Vector<Unigine::Math::ivec4> & values;
     // return: void
 
-    self->unigine_object_ptr->getParameterArray();
+    self->unigine_object_ptr->getParameterArray(num, values);
     return ret;
 };
 
@@ -1726,11 +1747,11 @@ static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Vector<Unigine::Math::ivec4>const & values
+    int num;
+    const Unigine::Vector<Unigine::Math::ivec4> & values;
     // return: void
 
-    self->unigine_object_ptr->setParameterArray();
+    self->unigine_object_ptr->setParameterArray(num, values);
     return ret;
 };
 
@@ -1751,7 +1772,7 @@ static PyObject * unigine_Material_find_state(unigine_Material* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->findState();
@@ -1764,10 +1785,10 @@ static PyObject * unigine_Material_is_state_overridden(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isStateOverridden();
+    bool retOriginal = self->unigine_object_ptr->isStateOverridden(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -1777,10 +1798,10 @@ static PyObject * unigine_Material_is_state_internal(unigine_Material* self, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isStateInternal();
+    bool retOriginal = self->unigine_object_ptr->isStateInternal(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -1790,10 +1811,10 @@ static PyObject * unigine_Material_reset_state(unigine_Material* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: void
 
-    self->unigine_object_ptr->resetState();
+    self->unigine_object_ptr->resetState(num);
     return ret;
 };
 
@@ -1802,10 +1823,10 @@ static PyObject * unigine_Material_check_state_conditions(unigine_Material* self
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->checkStateConditions();
+    bool retOriginal = self->unigine_object_ptr->checkStateConditions(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -1815,8 +1836,8 @@ static PyObject * unigine_Material_get_state_name(unigine_Material* self, PyObje
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // return: const  *char
+    int num;
+    // return: const char *
 
     unknown type 
     return ret;
@@ -1827,9 +1848,9 @@ static PyObject * unigine_Material_get_state_switch_item(unigine_Material* self,
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // int item
-    // return: const  *char
+    int num;
+    int item;
+    // return: const char *
 
     unknown type 
     return ret;
@@ -1840,7 +1861,7 @@ static PyObject * unigine_Material_get_state_switch_num_items(unigine_Material* 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getStateSwitchNumItems();
@@ -1853,7 +1874,7 @@ static PyObject * unigine_Material_get_state_type(unigine_Material* self, PyObje
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getStateType();
@@ -1866,7 +1887,7 @@ static PyObject * unigine_Material_get_state(unigine_Material* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getState();
@@ -1879,11 +1900,11 @@ static PyObject * unigine_Material_set_state(unigine_Material* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // int value
+    int num;
+    int value;
     // return: void
 
-    self->unigine_object_ptr->setState();
+    self->unigine_object_ptr->setState(num, value);
     return ret;
 };
 
@@ -1892,7 +1913,7 @@ static PyObject * unigine_Material_get_state(unigine_Material* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getState();
@@ -1905,11 +1926,11 @@ static PyObject * unigine_Material_set_state(unigine_Material* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // int value
+    const char * name;
+    int value;
     // return: void
 
-    self->unigine_object_ptr->setState();
+    self->unigine_object_ptr->setState(name, value);
     return ret;
 };
 
@@ -1930,7 +1951,7 @@ static PyObject * unigine_Material_find_texture(unigine_Material* self, PyObject
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->findTexture();
@@ -1943,10 +1964,10 @@ static PyObject * unigine_Material_is_texture_overridden(unigine_Material* self,
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isTextureOverridden();
+    bool retOriginal = self->unigine_object_ptr->isTextureOverridden(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -1956,10 +1977,10 @@ static PyObject * unigine_Material_is_texture_loaded(unigine_Material* self, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isTextureLoaded();
+    bool retOriginal = self->unigine_object_ptr->isTextureLoaded(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -1969,10 +1990,10 @@ static PyObject * unigine_Material_is_texture_internal(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isTextureInternal();
+    bool retOriginal = self->unigine_object_ptr->isTextureInternal(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -1982,10 +2003,10 @@ static PyObject * unigine_Material_reset_texture(unigine_Material* self, PyObjec
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: void
 
-    self->unigine_object_ptr->resetTexture();
+    self->unigine_object_ptr->resetTexture(num);
     return ret;
 };
 
@@ -1994,10 +2015,10 @@ static PyObject * unigine_Material_check_texture_conditions(unigine_Material* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->checkTextureConditions();
+    bool retOriginal = self->unigine_object_ptr->checkTextureConditions(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -2007,8 +2028,8 @@ static PyObject * unigine_Material_get_texture_name(unigine_Material* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // return: const  *char
+    int num;
+    // return: const char *
 
     unknown type 
     return ret;
@@ -2019,7 +2040,7 @@ static PyObject * unigine_Material_get_texture_unit(unigine_Material* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getTextureUnit();
@@ -2032,10 +2053,10 @@ static PyObject * unigine_Material_is_texture_editable(unigine_Material* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->isTextureEditable();
+    bool retOriginal = self->unigine_object_ptr->isTextureEditable(num);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -2045,7 +2066,7 @@ static PyObject * unigine_Material_get_texture_source(unigine_Material* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getTextureSource();
@@ -2058,7 +2079,7 @@ static PyObject * unigine_Material_get_texture_sampler_flags(unigine_Material* s
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getTextureSamplerFlags();
@@ -2071,11 +2092,11 @@ static PyObject * unigine_Material_set_texture_sampler_flags(unigine_Material* s
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // int sampler_flags
+    int num;
+    int sampler_flags;
     // return: void
 
-    self->unigine_object_ptr->setTextureSamplerFlags();
+    self->unigine_object_ptr->setTextureSamplerFlags(num, sampler_flags);
     return ret;
 };
 
@@ -2084,7 +2105,7 @@ static PyObject * unigine_Material_get_texture_format_flags(unigine_Material* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getTextureFormatFlags();
@@ -2097,8 +2118,8 @@ static PyObject * unigine_Material_get_texture_image(unigine_Material* self, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Ptr<Unigine::Image>const & image
+    int num;
+    const Unigine::Ptr<Unigine::Image> & image;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->getTextureImage();
@@ -2111,8 +2132,8 @@ static PyObject * unigine_Material_set_texture_image(unigine_Material* self, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Ptr<Unigine::Image>const & image
+    int num;
+    const Unigine::Ptr<Unigine::Image> & image;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->setTextureImage();
@@ -2125,10 +2146,11 @@ static PyObject * unigine_Material_get_texture(unigine_Material* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: Unigine::Ptr<Unigine::Texture>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Texture> retOriginal = self->unigine_object_ptr->getTexture(num);
+    ret = todo;
     return ret;
 };
 
@@ -2137,10 +2159,11 @@ static PyObject * unigine_Material_get_texture(unigine_Material* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
+    const char * name;
     // return: Unigine::Ptr<Unigine::Texture>
 
-    unknown type 
+    Unigine::Ptr<Unigine::Texture> retOriginal = self->unigine_object_ptr->getTexture(name);
+    ret = todo;
     return ret;
 };
 
@@ -2149,11 +2172,11 @@ static PyObject * unigine_Material_set_texture(unigine_Material* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // Unigine::Ptr<Unigine::Texture>const & texture
+    int num;
+    const Unigine::Ptr<Unigine::Texture> & texture;
     // return: void
 
-    self->unigine_object_ptr->setTexture();
+    self->unigine_object_ptr->setTexture(num, texture);
     return ret;
 };
 
@@ -2162,11 +2185,11 @@ static PyObject * unigine_Material_set_texture(unigine_Material* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // Unigine::Ptr<Unigine::Texture>const & texture
+    const char * name;
+    const Unigine::Ptr<Unigine::Texture> & texture;
     // return: void
 
-    self->unigine_object_ptr->setTexture();
+    self->unigine_object_ptr->setTexture(name, texture);
     return ret;
 };
 
@@ -2175,11 +2198,11 @@ static PyObject * unigine_Material_set_texture_path(unigine_Material* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // const  *char path
+    int num;
+    const char * path;
     // return: void
 
-    self->unigine_object_ptr->setTexturePath();
+    self->unigine_object_ptr->setTexturePath(num, path);
     return ret;
 };
 
@@ -2188,8 +2211,8 @@ static PyObject * unigine_Material_get_texture_path(unigine_Material* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
-    // return: const  *char
+    int num;
+    // return: const char *
 
     unknown type 
     return ret;
@@ -2200,11 +2223,11 @@ static PyObject * unigine_Material_set_texture_path(unigine_Material* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // const  *char path
+    const char * name;
+    const char * path;
     // return: void
 
-    self->unigine_object_ptr->setTexturePath();
+    self->unigine_object_ptr->setTexturePath(name, path);
     return ret;
 };
 
@@ -2213,8 +2236,8 @@ static PyObject * unigine_Material_get_texture_path(unigine_Material* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // return: const  *char
+    const char * name;
+    // return: const char *
 
     unknown type 
     return ret;
@@ -2225,10 +2248,11 @@ static PyObject * unigine_Material_get_texture_ramp(unigine_Material* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: Unigine::Ptr<Unigine::TextureRamp>
 
-    unknown type 
+    Unigine::Ptr<Unigine::TextureRamp> retOriginal = self->unigine_object_ptr->getTextureRamp(num);
+    ret = todo;
     return ret;
 };
 
@@ -2237,10 +2261,11 @@ static PyObject * unigine_Material_get_texture_ramp_override(unigine_Material* s
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // int num
+    int num;
     // return: Unigine::Ptr<Unigine::TextureRamp>
 
-    unknown type 
+    Unigine::Ptr<Unigine::TextureRamp> retOriginal = self->unigine_object_ptr->getTextureRampOverride(num);
+    ret = todo;
     return ret;
 };
 
@@ -2417,11 +2442,11 @@ static PyObject * unigine_Material_save_state(unigine_Material* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::Ptr<Unigine::Stream>const & stream
-    // bool forced
+    const Unigine::Ptr<Unigine::Stream> & stream;
+    bool forced;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->saveState();
+    bool retOriginal = self->unigine_object_ptr->saveState(stream, forced);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -2431,11 +2456,11 @@ static PyObject * unigine_Material_restore_state(unigine_Material* self, PyObjec
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::Ptr<Unigine::Stream>const & stream
-    // bool forced
+    const Unigine::Ptr<Unigine::Stream> & stream;
+    bool forced;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->restoreState();
+    bool retOriginal = self->unigine_object_ptr->restoreState(stream, forced);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -2445,7 +2470,7 @@ static PyObject * unigine_Material_load_xml(unigine_Material* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::Ptr<Unigine::Xml>const & xml
+    const Unigine::Ptr<Unigine::Xml> & xml;
     // return: int
 
     int retOriginal = self->unigine_object_ptr->loadXml();
@@ -2458,10 +2483,10 @@ static PyObject * unigine_Material_save_xml(unigine_Material* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::Ptr<Unigine::Xml>const & xml
+    const Unigine::Ptr<Unigine::Xml> & xml;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->saveXml();
+    bool retOriginal = self->unigine_object_ptr->saveXml(xml);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -2471,10 +2496,10 @@ static PyObject * unigine_Material_load_ulon(unigine_Material* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // Unigine::Ptr<Unigine::UlonNode>const & ulon
+    const Unigine::Ptr<Unigine::UlonNode> & ulon;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->loadUlon();
+    bool retOriginal = self->unigine_object_ptr->loadUlon(ulon);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -2484,10 +2509,10 @@ static PyObject * unigine_Material_load(unigine_Material* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char path
+    const char * path;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->load();
+    bool retOriginal = self->unigine_object_ptr->load(path);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -2521,10 +2546,10 @@ static PyObject * unigine_Material_create_material_file(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char path
+    const char * path;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->createMaterialFile();
+    bool retOriginal = self->unigine_object_ptr->createMaterialFile(path);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -2534,10 +2559,11 @@ static PyObject * unigine_Material_get_render_pass(unigine_Material* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char pass_name
-    // return: PASS
+    const char * pass_name;
+    // return: Unigine::Render::PASS
 
-    unknown type 
+    Unigine::Render::PASS retOriginal = self->unigine_object_ptr->getRenderPass(pass_name);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -2546,8 +2572,8 @@ static PyObject * unigine_Material_get_render_pass_name(unigine_Material* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // PASS type
-    // return: const  *char
+    Unigine::Render::PASS type;
+    // return: const char *
 
     unknown type 
     return ret;
@@ -2558,13 +2584,13 @@ static PyObject * unigine_Material_run_expression(unigine_Material* self, PyObje
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char name
-    // int w
-    // int h
-    // int d
+    const char * name;
+    int w;
+    int h;
+    int d;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->runExpression();
+    bool retOriginal = self->unigine_object_ptr->runExpression(name, w, h, d);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -2574,10 +2600,10 @@ static PyObject * unigine_Material_render_screen(unigine_Material* self, PyObjec
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char pass_name
+    const char * pass_name;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->renderScreen();
+    bool retOriginal = self->unigine_object_ptr->renderScreen(pass_name);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -2587,10 +2613,10 @@ static PyObject * unigine_Material_render_screen(unigine_Material* self, PyObjec
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // PASS pass
+    Unigine::Render::PASS pass;
     // return: void
 
-    self->unigine_object_ptr->renderScreen();
+    self->unigine_object_ptr->renderScreen(pass);
     return ret;
 };
 
@@ -2599,13 +2625,13 @@ static PyObject * unigine_Material_render_compute(unigine_Material* self, PyObje
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // const  *char pass_name
-    // int group_threads_x
-    // int group_threads_y
-    // int group_threads_z
+    const char * pass_name;
+    int group_threads_x;
+    int group_threads_y;
+    int group_threads_z;
     // return: bool
 
-    bool retOriginal = self->unigine_object_ptr->renderCompute();
+    bool retOriginal = self->unigine_object_ptr->renderCompute(pass_name, group_threads_x, group_threads_y, group_threads_z);
     ret = PyBool_FromLong(retOriginal);
     return ret;
 };
@@ -2615,13 +2641,13 @@ static PyObject * unigine_Material_render_compute(unigine_Material* self, PyObje
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // PASS pass
-    // int group_threads_x
-    // int group_threads_y
-    // int group_threads_z
+    Unigine::Render::PASS pass;
+    int group_threads_x;
+    int group_threads_y;
+    int group_threads_z;
     // return: void
 
-    self->unigine_object_ptr->renderCompute();
+    self->unigine_object_ptr->renderCompute(pass, group_threads_x, group_threads_y, group_threads_z);
     return ret;
 };
 
@@ -2632,7 +2658,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public (static): create"
     },
     {
-        "set_parent", (PyCFunction)unigine_Material_set_parent, METH_1,
+        "set_parent", (PyCFunction)unigine_Material_set_parent, METH_VARARGS|METH_KEYWORDS,
         "public : setParent"
     },
     {
@@ -2640,11 +2666,11 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getParent"
     },
     {
-        "is_parent", (PyCFunction)unigine_Material_is_parent, METH_0,
+        "is_parent", (PyCFunction)unigine_Material_is_parent, METH_O,
         "public : isParent"
     },
     {
-        "is_parent", (PyCFunction)unigine_Material_is_parent, METH_0,
+        "is_parent", (PyCFunction)unigine_Material_is_parent, METH_O,
         "public : isParent"
     },
     {
@@ -2656,11 +2682,11 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getNumChildren"
     },
     {
-        "get_child", (PyCFunction)unigine_Material_get_child, METH_0,
+        "get_child", (PyCFunction)unigine_Material_get_child, METH_O,
         "public : getChild"
     },
     {
-        "clone", (PyCFunction)unigine_Material_clone, METH_0,
+        "clone", (PyCFunction)unigine_Material_clone, METH_O,
         "public : clone"
     },
     {
@@ -2668,7 +2694,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : clone"
     },
     {
-        "inherit", (PyCFunction)unigine_Material_inherit, METH_0,
+        "inherit", (PyCFunction)unigine_Material_inherit, METH_O,
         "public : inherit"
     },
     {
@@ -2684,7 +2710,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getManualName"
     },
     {
-        "get_g_u_i_d", (PyCFunction)unigine_Material_get_g_u_i_d, METH_NOARGS,
+        "get_guid", (PyCFunction)unigine_Material_get_guid, METH_NOARGS,
         "public : getGUID"
     },
     {
@@ -2692,11 +2718,11 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getPath"
     },
     {
-        "is_node_type_supported", (PyCFunction)unigine_Material_is_node_type_supported, METH_0,
+        "is_node_type_supported", (PyCFunction)unigine_Material_is_node_type_supported, METH_O,
         "public : isNodeTypeSupported"
     },
     {
-        "is_node_supported", (PyCFunction)unigine_Material_is_node_supported, METH_0,
+        "is_node_supported", (PyCFunction)unigine_Material_is_node_supported, METH_O,
         "public : isNodeSupported"
     },
     {
@@ -2704,95 +2730,95 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : canRenderNode"
     },
     {
-        "get_num_u_i_items", (PyCFunction)unigine_Material_get_num_u_i_items, METH_NOARGS,
+        "get_num_ui_items", (PyCFunction)unigine_Material_get_num_ui_items, METH_NOARGS,
         "public : getNumUIItems"
     },
     {
-        "get_u_i_item_data_type", (PyCFunction)unigine_Material_get_u_i_item_data_type, METH_0,
+        "get_ui_item_data_type", (PyCFunction)unigine_Material_get_ui_item_data_type, METH_O,
         "public : getUIItemDataType"
     },
     {
-        "get_u_i_item_data_i_d", (PyCFunction)unigine_Material_get_u_i_item_data_i_d, METH_0,
+        "get_ui_item_data_id", (PyCFunction)unigine_Material_get_ui_item_data_id, METH_O,
         "public : getUIItemDataID"
     },
     {
-        "is_u_i_item_hidden", (PyCFunction)unigine_Material_is_u_i_item_hidden, METH_0,
+        "is_ui_item_hidden", (PyCFunction)unigine_Material_is_ui_item_hidden, METH_O,
         "public : isUIItemHidden"
     },
     {
-        "get_u_i_item_title", (PyCFunction)unigine_Material_get_u_i_item_title, METH_0,
+        "get_ui_item_title", (PyCFunction)unigine_Material_get_ui_item_title, METH_O,
         "public : getUIItemTitle"
     },
     {
-        "get_u_i_item_tooltip", (PyCFunction)unigine_Material_get_u_i_item_tooltip, METH_0,
+        "get_ui_item_tooltip", (PyCFunction)unigine_Material_get_ui_item_tooltip, METH_O,
         "public : getUIItemTooltip"
     },
     {
-        "get_u_i_item_widget", (PyCFunction)unigine_Material_get_u_i_item_widget, METH_0,
+        "get_ui_item_widget", (PyCFunction)unigine_Material_get_ui_item_widget, METH_O,
         "public : getUIItemWidget"
     },
     {
-        "get_u_i_item_parent", (PyCFunction)unigine_Material_get_u_i_item_parent, METH_0,
+        "get_ui_item_parent", (PyCFunction)unigine_Material_get_ui_item_parent, METH_O,
         "public : getUIItemParent"
     },
     {
-        "get_u_i_item_num_children", (PyCFunction)unigine_Material_get_u_i_item_num_children, METH_0,
+        "get_ui_item_num_children", (PyCFunction)unigine_Material_get_ui_item_num_children, METH_O,
         "public : getUIItemNumChildren"
     },
     {
-        "get_u_i_item_child", (PyCFunction)unigine_Material_get_u_i_item_child, METH_1,
+        "get_ui_item_child", (PyCFunction)unigine_Material_get_ui_item_child, METH_VARARGS|METH_KEYWORDS,
         "public : getUIItemChild"
     },
     {
-        "is_u_i_item_slider_min_expand", (PyCFunction)unigine_Material_is_u_i_item_slider_min_expand, METH_0,
+        "is_ui_item_slider_min_expand", (PyCFunction)unigine_Material_is_ui_item_slider_min_expand, METH_O,
         "public : isUIItemSliderMinExpand"
     },
     {
-        "is_u_i_item_slider_max_expand", (PyCFunction)unigine_Material_is_u_i_item_slider_max_expand, METH_0,
+        "is_ui_item_slider_max_expand", (PyCFunction)unigine_Material_is_ui_item_slider_max_expand, METH_O,
         "public : isUIItemSliderMaxExpand"
     },
     {
-        "get_u_i_item_slider_min_value", (PyCFunction)unigine_Material_get_u_i_item_slider_min_value, METH_0,
+        "get_ui_item_slider_min_value", (PyCFunction)unigine_Material_get_ui_item_slider_min_value, METH_O,
         "public : getUIItemSliderMinValue"
     },
     {
-        "get_u_i_item_slider_max_value", (PyCFunction)unigine_Material_get_u_i_item_slider_max_value, METH_0,
+        "get_ui_item_slider_max_value", (PyCFunction)unigine_Material_get_ui_item_slider_max_value, METH_O,
         "public : getUIItemSliderMaxValue"
     },
     {
-        "get_u_i_item_group_toggle_state_i_d", (PyCFunction)unigine_Material_get_u_i_item_group_toggle_state_i_d, METH_0,
+        "get_ui_item_group_toggle_state_id", (PyCFunction)unigine_Material_get_ui_item_group_toggle_state_id, METH_O,
         "public : getUIItemGroupToggleStateID"
     },
     {
-        "is_u_i_item_group_collapsed", (PyCFunction)unigine_Material_is_u_i_item_group_collapsed, METH_0,
+        "is_ui_item_group_collapsed", (PyCFunction)unigine_Material_is_ui_item_group_collapsed, METH_O,
         "public : isUIItemGroupCollapsed"
     },
     {
-        "widget_to_string", (PyCFunction)unigine_Material_widget_to_string, METH_STATIC|METH_0,
+        "widget_to_string", (PyCFunction)unigine_Material_widget_to_string, METH_STATIC|METH_O,
         "public (static): widgetToString"
     },
     {
-        "string_to_widget", (PyCFunction)unigine_Material_string_to_widget, METH_STATIC|METH_0,
+        "string_to_widget", (PyCFunction)unigine_Material_string_to_widget, METH_STATIC|METH_O,
         "public (static): stringToWidget"
     },
     {
-        "set_option", (PyCFunction)unigine_Material_set_option, METH_1,
+        "set_option", (PyCFunction)unigine_Material_set_option, METH_VARARGS|METH_KEYWORDS,
         "public : setOption"
     },
     {
-        "get_option", (PyCFunction)unigine_Material_get_option, METH_0,
+        "get_option", (PyCFunction)unigine_Material_get_option, METH_O,
         "public : getOption"
     },
     {
-        "is_option_overridden", (PyCFunction)unigine_Material_is_option_overridden, METH_0,
+        "is_option_overridden", (PyCFunction)unigine_Material_is_option_overridden, METH_O,
         "public : isOptionOverridden"
     },
     {
-        "reset_option", (PyCFunction)unigine_Material_reset_option, METH_0,
+        "reset_option", (PyCFunction)unigine_Material_reset_option, METH_O,
         "public : resetOption"
     },
     {
-        "set_transparent", (PyCFunction)unigine_Material_set_transparent, METH_0,
+        "set_transparent", (PyCFunction)unigine_Material_set_transparent, METH_O,
         "public : setTransparent"
     },
     {
@@ -2816,7 +2842,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : isAlphaTest"
     },
     {
-        "set_blend_dest_func", (PyCFunction)unigine_Material_set_blend_dest_func, METH_0,
+        "set_blend_dest_func", (PyCFunction)unigine_Material_set_blend_dest_func, METH_O,
         "public : setBlendDestFunc"
     },
     {
@@ -2824,7 +2850,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getBlendDestFunc"
     },
     {
-        "set_blend_src_func", (PyCFunction)unigine_Material_set_blend_src_func, METH_0,
+        "set_blend_src_func", (PyCFunction)unigine_Material_set_blend_src_func, METH_O,
         "public : setBlendSrcFunc"
     },
     {
@@ -2832,7 +2858,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getBlendSrcFunc"
     },
     {
-        "set_shadow_mask", (PyCFunction)unigine_Material_set_shadow_mask, METH_0,
+        "set_shadow_mask", (PyCFunction)unigine_Material_set_shadow_mask, METH_O,
         "public : setShadowMask"
     },
     {
@@ -2840,7 +2866,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getShadowMask"
     },
     {
-        "set_viewport_mask", (PyCFunction)unigine_Material_set_viewport_mask, METH_0,
+        "set_viewport_mask", (PyCFunction)unigine_Material_set_viewport_mask, METH_O,
         "public : setViewportMask"
     },
     {
@@ -2848,7 +2874,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getViewportMask"
     },
     {
-        "set_depth_mask", (PyCFunction)unigine_Material_set_depth_mask, METH_0,
+        "set_depth_mask", (PyCFunction)unigine_Material_set_depth_mask, METH_O,
         "public : setDepthMask"
     },
     {
@@ -2856,7 +2882,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getDepthMask"
     },
     {
-        "set_order", (PyCFunction)unigine_Material_set_order, METH_0,
+        "set_order", (PyCFunction)unigine_Material_set_order, METH_O,
         "public : setOrder"
     },
     {
@@ -2864,7 +2890,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getOrder"
     },
     {
-        "set_cast_shadow", (PyCFunction)unigine_Material_set_cast_shadow, METH_0,
+        "set_cast_shadow", (PyCFunction)unigine_Material_set_cast_shadow, METH_O,
         "public : setCastShadow"
     },
     {
@@ -2872,7 +2898,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : isCastShadow"
     },
     {
-        "set_cast_world_shadow", (PyCFunction)unigine_Material_set_cast_world_shadow, METH_0,
+        "set_cast_world_shadow", (PyCFunction)unigine_Material_set_cast_world_shadow, METH_O,
         "public : setCastWorldShadow"
     },
     {
@@ -2880,7 +2906,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : isCastWorldShadow"
     },
     {
-        "set_depth_test", (PyCFunction)unigine_Material_set_depth_test, METH_0,
+        "set_depth_test", (PyCFunction)unigine_Material_set_depth_test, METH_O,
         "public : setDepthTest"
     },
     {
@@ -2888,7 +2914,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : isDepthTest"
     },
     {
-        "set_two_sided", (PyCFunction)unigine_Material_set_two_sided, METH_0,
+        "set_two_sided", (PyCFunction)unigine_Material_set_two_sided, METH_O,
         "public : setTwoSided"
     },
     {
@@ -2896,7 +2922,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : isTwoSided"
     },
     {
-        "set_overlap", (PyCFunction)unigine_Material_set_overlap, METH_0,
+        "set_overlap", (PyCFunction)unigine_Material_set_overlap, METH_O,
         "public : setOverlap"
     },
     {
@@ -2908,31 +2934,31 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : checkShaderCache"
     },
     {
-        "check_shader_cache", (PyCFunction)unigine_Material_check_shader_cache, METH_1,
+        "check_shader_cache", (PyCFunction)unigine_Material_check_shader_cache, METH_VARARGS|METH_KEYWORDS,
         "public : checkShaderCache"
     },
     {
-        "compile_shader", (PyCFunction)unigine_Material_compile_shader, METH_1,
+        "compile_shader", (PyCFunction)unigine_Material_compile_shader, METH_VARARGS|METH_KEYWORDS,
         "public : compileShader"
     },
     {
-        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_1,
+        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_VARARGS|METH_KEYWORDS,
         "public : fetchShader"
     },
     {
-        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_0,
+        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_O,
         "public : fetchShader"
     },
     {
-        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_1,
+        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_VARARGS|METH_KEYWORDS,
         "public : fetchShader"
     },
     {
-        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_0,
+        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_O,
         "public : fetchShader"
     },
     {
-        "create_shaders", (PyCFunction)unigine_Material_create_shaders, METH_0,
+        "create_shaders", (PyCFunction)unigine_Material_create_shaders, METH_O,
         "public : createShaders"
     },
     {
@@ -2944,235 +2970,235 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getNumParameters"
     },
     {
-        "find_parameter", (PyCFunction)unigine_Material_find_parameter, METH_0,
+        "find_parameter", (PyCFunction)unigine_Material_find_parameter, METH_O,
         "public : findParameter"
     },
     {
-        "reset_parameter", (PyCFunction)unigine_Material_reset_parameter, METH_0,
+        "reset_parameter", (PyCFunction)unigine_Material_reset_parameter, METH_O,
         "public : resetParameter"
     },
     {
-        "check_parameter_conditions", (PyCFunction)unigine_Material_check_parameter_conditions, METH_0,
+        "check_parameter_conditions", (PyCFunction)unigine_Material_check_parameter_conditions, METH_O,
         "public : checkParameterConditions"
     },
     {
-        "get_parameter_type", (PyCFunction)unigine_Material_get_parameter_type, METH_0,
+        "get_parameter_type", (PyCFunction)unigine_Material_get_parameter_type, METH_O,
         "public : getParameterType"
     },
     {
-        "is_parameter_int", (PyCFunction)unigine_Material_is_parameter_int, METH_0,
+        "is_parameter_int", (PyCFunction)unigine_Material_is_parameter_int, METH_O,
         "public : isParameterInt"
     },
     {
-        "is_parameter_float", (PyCFunction)unigine_Material_is_parameter_float, METH_0,
+        "is_parameter_float", (PyCFunction)unigine_Material_is_parameter_float, METH_O,
         "public : isParameterFloat"
     },
     {
-        "is_parameter_overridden", (PyCFunction)unigine_Material_is_parameter_overridden, METH_0,
+        "is_parameter_overridden", (PyCFunction)unigine_Material_is_parameter_overridden, METH_O,
         "public : isParameterOverridden"
     },
     {
-        "get_parameter_name", (PyCFunction)unigine_Material_get_parameter_name, METH_0,
+        "get_parameter_name", (PyCFunction)unigine_Material_get_parameter_name, METH_O,
         "public : getParameterName"
     },
     {
-        "is_parameter_expression_enabled", (PyCFunction)unigine_Material_is_parameter_expression_enabled, METH_0,
+        "is_parameter_expression_enabled", (PyCFunction)unigine_Material_is_parameter_expression_enabled, METH_O,
         "public : isParameterExpressionEnabled"
     },
     {
-        "set_parameter_expression_enabled", (PyCFunction)unigine_Material_set_parameter_expression_enabled, METH_1,
+        "set_parameter_expression_enabled", (PyCFunction)unigine_Material_set_parameter_expression_enabled, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterExpressionEnabled"
     },
     {
-        "get_parameter_expression", (PyCFunction)unigine_Material_get_parameter_expression, METH_0,
+        "get_parameter_expression", (PyCFunction)unigine_Material_get_parameter_expression, METH_O,
         "public : getParameterExpression"
     },
     {
-        "set_parameter_expression", (PyCFunction)unigine_Material_set_parameter_expression, METH_1,
+        "set_parameter_expression", (PyCFunction)unigine_Material_set_parameter_expression, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterExpression"
     },
     {
-        "set_parameter_float", (PyCFunction)unigine_Material_set_parameter_float, METH_1,
+        "set_parameter_float", (PyCFunction)unigine_Material_set_parameter_float, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterFloat"
     },
     {
-        "set_parameter_float", (PyCFunction)unigine_Material_set_parameter_float, METH_1,
+        "set_parameter_float", (PyCFunction)unigine_Material_set_parameter_float, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterFloat"
     },
     {
-        "get_parameter_float", (PyCFunction)unigine_Material_get_parameter_float, METH_0,
+        "get_parameter_float", (PyCFunction)unigine_Material_get_parameter_float, METH_O,
         "public : getParameterFloat"
     },
     {
-        "get_parameter_float", (PyCFunction)unigine_Material_get_parameter_float, METH_0,
+        "get_parameter_float", (PyCFunction)unigine_Material_get_parameter_float, METH_O,
         "public : getParameterFloat"
     },
     {
-        "set_parameter_float2", (PyCFunction)unigine_Material_set_parameter_float2, METH_1,
+        "set_parameter_float2", (PyCFunction)unigine_Material_set_parameter_float2, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterFloat2"
     },
     {
-        "set_parameter_float2", (PyCFunction)unigine_Material_set_parameter_float2, METH_1,
+        "set_parameter_float2", (PyCFunction)unigine_Material_set_parameter_float2, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterFloat2"
     },
     {
-        "get_parameter_float2", (PyCFunction)unigine_Material_get_parameter_float2, METH_0,
+        "get_parameter_float2", (PyCFunction)unigine_Material_get_parameter_float2, METH_O,
         "public : getParameterFloat2"
     },
     {
-        "get_parameter_float2", (PyCFunction)unigine_Material_get_parameter_float2, METH_0,
+        "get_parameter_float2", (PyCFunction)unigine_Material_get_parameter_float2, METH_O,
         "public : getParameterFloat2"
     },
     {
-        "set_parameter_float3", (PyCFunction)unigine_Material_set_parameter_float3, METH_1,
+        "set_parameter_float3", (PyCFunction)unigine_Material_set_parameter_float3, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterFloat3"
     },
     {
-        "set_parameter_float3", (PyCFunction)unigine_Material_set_parameter_float3, METH_1,
+        "set_parameter_float3", (PyCFunction)unigine_Material_set_parameter_float3, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterFloat3"
     },
     {
-        "get_parameter_float3", (PyCFunction)unigine_Material_get_parameter_float3, METH_0,
+        "get_parameter_float3", (PyCFunction)unigine_Material_get_parameter_float3, METH_O,
         "public : getParameterFloat3"
     },
     {
-        "get_parameter_float3", (PyCFunction)unigine_Material_get_parameter_float3, METH_0,
+        "get_parameter_float3", (PyCFunction)unigine_Material_get_parameter_float3, METH_O,
         "public : getParameterFloat3"
     },
     {
-        "set_parameter_float4", (PyCFunction)unigine_Material_set_parameter_float4, METH_1,
+        "set_parameter_float4", (PyCFunction)unigine_Material_set_parameter_float4, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterFloat4"
     },
     {
-        "set_parameter_float4", (PyCFunction)unigine_Material_set_parameter_float4, METH_1,
+        "set_parameter_float4", (PyCFunction)unigine_Material_set_parameter_float4, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterFloat4"
     },
     {
-        "get_parameter_float4", (PyCFunction)unigine_Material_get_parameter_float4, METH_0,
+        "get_parameter_float4", (PyCFunction)unigine_Material_get_parameter_float4, METH_O,
         "public : getParameterFloat4"
     },
     {
-        "get_parameter_float4", (PyCFunction)unigine_Material_get_parameter_float4, METH_0,
+        "get_parameter_float4", (PyCFunction)unigine_Material_get_parameter_float4, METH_O,
         "public : getParameterFloat4"
     },
     {
-        "set_parameter_int", (PyCFunction)unigine_Material_set_parameter_int, METH_1,
+        "set_parameter_int", (PyCFunction)unigine_Material_set_parameter_int, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterInt"
     },
     {
-        "set_parameter_int", (PyCFunction)unigine_Material_set_parameter_int, METH_1,
+        "set_parameter_int", (PyCFunction)unigine_Material_set_parameter_int, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterInt"
     },
     {
-        "get_parameter_int", (PyCFunction)unigine_Material_get_parameter_int, METH_0,
+        "get_parameter_int", (PyCFunction)unigine_Material_get_parameter_int, METH_O,
         "public : getParameterInt"
     },
     {
-        "get_parameter_int", (PyCFunction)unigine_Material_get_parameter_int, METH_0,
+        "get_parameter_int", (PyCFunction)unigine_Material_get_parameter_int, METH_O,
         "public : getParameterInt"
     },
     {
-        "set_parameter_int2", (PyCFunction)unigine_Material_set_parameter_int2, METH_1,
+        "set_parameter_int2", (PyCFunction)unigine_Material_set_parameter_int2, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterInt2"
     },
     {
-        "set_parameter_int2", (PyCFunction)unigine_Material_set_parameter_int2, METH_1,
+        "set_parameter_int2", (PyCFunction)unigine_Material_set_parameter_int2, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterInt2"
     },
     {
-        "get_parameter_int2", (PyCFunction)unigine_Material_get_parameter_int2, METH_0,
+        "get_parameter_int2", (PyCFunction)unigine_Material_get_parameter_int2, METH_O,
         "public : getParameterInt2"
     },
     {
-        "get_parameter_int2", (PyCFunction)unigine_Material_get_parameter_int2, METH_0,
+        "get_parameter_int2", (PyCFunction)unigine_Material_get_parameter_int2, METH_O,
         "public : getParameterInt2"
     },
     {
-        "set_parameter_int3", (PyCFunction)unigine_Material_set_parameter_int3, METH_1,
+        "set_parameter_int3", (PyCFunction)unigine_Material_set_parameter_int3, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterInt3"
     },
     {
-        "set_parameter_int3", (PyCFunction)unigine_Material_set_parameter_int3, METH_1,
+        "set_parameter_int3", (PyCFunction)unigine_Material_set_parameter_int3, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterInt3"
     },
     {
-        "get_parameter_int3", (PyCFunction)unigine_Material_get_parameter_int3, METH_0,
+        "get_parameter_int3", (PyCFunction)unigine_Material_get_parameter_int3, METH_O,
         "public : getParameterInt3"
     },
     {
-        "get_parameter_int3", (PyCFunction)unigine_Material_get_parameter_int3, METH_0,
+        "get_parameter_int3", (PyCFunction)unigine_Material_get_parameter_int3, METH_O,
         "public : getParameterInt3"
     },
     {
-        "set_parameter_int4", (PyCFunction)unigine_Material_set_parameter_int4, METH_1,
+        "set_parameter_int4", (PyCFunction)unigine_Material_set_parameter_int4, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterInt4"
     },
     {
-        "set_parameter_int4", (PyCFunction)unigine_Material_set_parameter_int4, METH_1,
+        "set_parameter_int4", (PyCFunction)unigine_Material_set_parameter_int4, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterInt4"
     },
     {
-        "get_parameter_int4", (PyCFunction)unigine_Material_get_parameter_int4, METH_0,
+        "get_parameter_int4", (PyCFunction)unigine_Material_get_parameter_int4, METH_O,
         "public : getParameterInt4"
     },
     {
-        "get_parameter_int4", (PyCFunction)unigine_Material_get_parameter_int4, METH_0,
+        "get_parameter_int4", (PyCFunction)unigine_Material_get_parameter_int4, METH_O,
         "public : getParameterInt4"
     },
     {
-        "get_parameter_array_size", (PyCFunction)unigine_Material_get_parameter_array_size, METH_0,
+        "get_parameter_array_size", (PyCFunction)unigine_Material_get_parameter_array_size, METH_O,
         "public : getParameterArraySize"
     },
     {
-        "is_parameter_array", (PyCFunction)unigine_Material_is_parameter_array, METH_0,
+        "is_parameter_array", (PyCFunction)unigine_Material_is_parameter_array, METH_O,
         "public : isParameterArray"
     },
     {
-        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_1,
+        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS|METH_KEYWORDS,
         "public : getParameterArray"
     },
     {
-        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_1,
+        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterArray"
     },
     {
-        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_1,
+        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS|METH_KEYWORDS,
         "public : getParameterArray"
     },
     {
-        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_1,
+        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterArray"
     },
     {
-        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_1,
+        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS|METH_KEYWORDS,
         "public : getParameterArray"
     },
     {
-        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_1,
+        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterArray"
     },
     {
-        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_1,
+        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS|METH_KEYWORDS,
         "public : getParameterArray"
     },
     {
-        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_1,
+        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterArray"
     },
     {
-        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_1,
+        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS|METH_KEYWORDS,
         "public : getParameterArray"
     },
     {
-        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_1,
+        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterArray"
     },
     {
-        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_1,
+        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS|METH_KEYWORDS,
         "public : getParameterArray"
     },
     {
-        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_1,
+        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS|METH_KEYWORDS,
         "public : setParameterArray"
     },
     {
@@ -3180,55 +3206,55 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getNumStates"
     },
     {
-        "find_state", (PyCFunction)unigine_Material_find_state, METH_0,
+        "find_state", (PyCFunction)unigine_Material_find_state, METH_O,
         "public : findState"
     },
     {
-        "is_state_overridden", (PyCFunction)unigine_Material_is_state_overridden, METH_0,
+        "is_state_overridden", (PyCFunction)unigine_Material_is_state_overridden, METH_O,
         "public : isStateOverridden"
     },
     {
-        "is_state_internal", (PyCFunction)unigine_Material_is_state_internal, METH_0,
+        "is_state_internal", (PyCFunction)unigine_Material_is_state_internal, METH_O,
         "public : isStateInternal"
     },
     {
-        "reset_state", (PyCFunction)unigine_Material_reset_state, METH_0,
+        "reset_state", (PyCFunction)unigine_Material_reset_state, METH_O,
         "public : resetState"
     },
     {
-        "check_state_conditions", (PyCFunction)unigine_Material_check_state_conditions, METH_0,
+        "check_state_conditions", (PyCFunction)unigine_Material_check_state_conditions, METH_O,
         "public : checkStateConditions"
     },
     {
-        "get_state_name", (PyCFunction)unigine_Material_get_state_name, METH_0,
+        "get_state_name", (PyCFunction)unigine_Material_get_state_name, METH_O,
         "public : getStateName"
     },
     {
-        "get_state_switch_item", (PyCFunction)unigine_Material_get_state_switch_item, METH_1,
+        "get_state_switch_item", (PyCFunction)unigine_Material_get_state_switch_item, METH_VARARGS|METH_KEYWORDS,
         "public : getStateSwitchItem"
     },
     {
-        "get_state_switch_num_items", (PyCFunction)unigine_Material_get_state_switch_num_items, METH_0,
+        "get_state_switch_num_items", (PyCFunction)unigine_Material_get_state_switch_num_items, METH_O,
         "public : getStateSwitchNumItems"
     },
     {
-        "get_state_type", (PyCFunction)unigine_Material_get_state_type, METH_0,
+        "get_state_type", (PyCFunction)unigine_Material_get_state_type, METH_O,
         "public : getStateType"
     },
     {
-        "get_state", (PyCFunction)unigine_Material_get_state, METH_0,
+        "get_state", (PyCFunction)unigine_Material_get_state, METH_O,
         "public : getState"
     },
     {
-        "set_state", (PyCFunction)unigine_Material_set_state, METH_1,
+        "set_state", (PyCFunction)unigine_Material_set_state, METH_VARARGS|METH_KEYWORDS,
         "public : setState"
     },
     {
-        "get_state", (PyCFunction)unigine_Material_get_state, METH_0,
+        "get_state", (PyCFunction)unigine_Material_get_state, METH_O,
         "public : getState"
     },
     {
-        "set_state", (PyCFunction)unigine_Material_set_state, METH_1,
+        "set_state", (PyCFunction)unigine_Material_set_state, METH_VARARGS|METH_KEYWORDS,
         "public : setState"
     },
     {
@@ -3236,103 +3262,103 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getNumTextures"
     },
     {
-        "find_texture", (PyCFunction)unigine_Material_find_texture, METH_0,
+        "find_texture", (PyCFunction)unigine_Material_find_texture, METH_O,
         "public : findTexture"
     },
     {
-        "is_texture_overridden", (PyCFunction)unigine_Material_is_texture_overridden, METH_0,
+        "is_texture_overridden", (PyCFunction)unigine_Material_is_texture_overridden, METH_O,
         "public : isTextureOverridden"
     },
     {
-        "is_texture_loaded", (PyCFunction)unigine_Material_is_texture_loaded, METH_0,
+        "is_texture_loaded", (PyCFunction)unigine_Material_is_texture_loaded, METH_O,
         "public : isTextureLoaded"
     },
     {
-        "is_texture_internal", (PyCFunction)unigine_Material_is_texture_internal, METH_0,
+        "is_texture_internal", (PyCFunction)unigine_Material_is_texture_internal, METH_O,
         "public : isTextureInternal"
     },
     {
-        "reset_texture", (PyCFunction)unigine_Material_reset_texture, METH_0,
+        "reset_texture", (PyCFunction)unigine_Material_reset_texture, METH_O,
         "public : resetTexture"
     },
     {
-        "check_texture_conditions", (PyCFunction)unigine_Material_check_texture_conditions, METH_0,
+        "check_texture_conditions", (PyCFunction)unigine_Material_check_texture_conditions, METH_O,
         "public : checkTextureConditions"
     },
     {
-        "get_texture_name", (PyCFunction)unigine_Material_get_texture_name, METH_0,
+        "get_texture_name", (PyCFunction)unigine_Material_get_texture_name, METH_O,
         "public : getTextureName"
     },
     {
-        "get_texture_unit", (PyCFunction)unigine_Material_get_texture_unit, METH_0,
+        "get_texture_unit", (PyCFunction)unigine_Material_get_texture_unit, METH_O,
         "public : getTextureUnit"
     },
     {
-        "is_texture_editable", (PyCFunction)unigine_Material_is_texture_editable, METH_0,
+        "is_texture_editable", (PyCFunction)unigine_Material_is_texture_editable, METH_O,
         "public : isTextureEditable"
     },
     {
-        "get_texture_source", (PyCFunction)unigine_Material_get_texture_source, METH_0,
+        "get_texture_source", (PyCFunction)unigine_Material_get_texture_source, METH_O,
         "public : getTextureSource"
     },
     {
-        "get_texture_sampler_flags", (PyCFunction)unigine_Material_get_texture_sampler_flags, METH_0,
+        "get_texture_sampler_flags", (PyCFunction)unigine_Material_get_texture_sampler_flags, METH_O,
         "public : getTextureSamplerFlags"
     },
     {
-        "set_texture_sampler_flags", (PyCFunction)unigine_Material_set_texture_sampler_flags, METH_1,
+        "set_texture_sampler_flags", (PyCFunction)unigine_Material_set_texture_sampler_flags, METH_VARARGS|METH_KEYWORDS,
         "public : setTextureSamplerFlags"
     },
     {
-        "get_texture_format_flags", (PyCFunction)unigine_Material_get_texture_format_flags, METH_0,
+        "get_texture_format_flags", (PyCFunction)unigine_Material_get_texture_format_flags, METH_O,
         "public : getTextureFormatFlags"
     },
     {
-        "get_texture_image", (PyCFunction)unigine_Material_get_texture_image, METH_1,
+        "get_texture_image", (PyCFunction)unigine_Material_get_texture_image, METH_VARARGS|METH_KEYWORDS,
         "public : getTextureImage"
     },
     {
-        "set_texture_image", (PyCFunction)unigine_Material_set_texture_image, METH_1,
+        "set_texture_image", (PyCFunction)unigine_Material_set_texture_image, METH_VARARGS|METH_KEYWORDS,
         "public : setTextureImage"
     },
     {
-        "get_texture", (PyCFunction)unigine_Material_get_texture, METH_0,
+        "get_texture", (PyCFunction)unigine_Material_get_texture, METH_O,
         "public : getTexture"
     },
     {
-        "get_texture", (PyCFunction)unigine_Material_get_texture, METH_0,
+        "get_texture", (PyCFunction)unigine_Material_get_texture, METH_O,
         "public : getTexture"
     },
     {
-        "set_texture", (PyCFunction)unigine_Material_set_texture, METH_1,
+        "set_texture", (PyCFunction)unigine_Material_set_texture, METH_VARARGS|METH_KEYWORDS,
         "public : setTexture"
     },
     {
-        "set_texture", (PyCFunction)unigine_Material_set_texture, METH_1,
+        "set_texture", (PyCFunction)unigine_Material_set_texture, METH_VARARGS|METH_KEYWORDS,
         "public : setTexture"
     },
     {
-        "set_texture_path", (PyCFunction)unigine_Material_set_texture_path, METH_1,
+        "set_texture_path", (PyCFunction)unigine_Material_set_texture_path, METH_VARARGS|METH_KEYWORDS,
         "public : setTexturePath"
     },
     {
-        "get_texture_path", (PyCFunction)unigine_Material_get_texture_path, METH_0,
+        "get_texture_path", (PyCFunction)unigine_Material_get_texture_path, METH_O,
         "public : getTexturePath"
     },
     {
-        "set_texture_path", (PyCFunction)unigine_Material_set_texture_path, METH_1,
+        "set_texture_path", (PyCFunction)unigine_Material_set_texture_path, METH_VARARGS|METH_KEYWORDS,
         "public : setTexturePath"
     },
     {
-        "get_texture_path", (PyCFunction)unigine_Material_get_texture_path, METH_0,
+        "get_texture_path", (PyCFunction)unigine_Material_get_texture_path, METH_O,
         "public : getTexturePath"
     },
     {
-        "get_texture_ramp", (PyCFunction)unigine_Material_get_texture_ramp, METH_0,
+        "get_texture_ramp", (PyCFunction)unigine_Material_get_texture_ramp, METH_O,
         "public : getTextureRamp"
     },
     {
-        "get_texture_ramp_override", (PyCFunction)unigine_Material_get_texture_ramp_override, METH_0,
+        "get_texture_ramp_override", (PyCFunction)unigine_Material_get_texture_ramp_override, METH_O,
         "public : getTextureRampOverride"
     },
     {
@@ -3392,27 +3418,27 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : hasOverrides"
     },
     {
-        "save_state", (PyCFunction)unigine_Material_save_state, METH_1,
+        "save_state", (PyCFunction)unigine_Material_save_state, METH_VARARGS|METH_KEYWORDS,
         "public : saveState"
     },
     {
-        "restore_state", (PyCFunction)unigine_Material_restore_state, METH_1,
+        "restore_state", (PyCFunction)unigine_Material_restore_state, METH_VARARGS|METH_KEYWORDS,
         "public : restoreState"
     },
     {
-        "load_xml", (PyCFunction)unigine_Material_load_xml, METH_0,
+        "load_xml", (PyCFunction)unigine_Material_load_xml, METH_O,
         "public : loadXml"
     },
     {
-        "save_xml", (PyCFunction)unigine_Material_save_xml, METH_0,
+        "save_xml", (PyCFunction)unigine_Material_save_xml, METH_O,
         "public : saveXml"
     },
     {
-        "load_ulon", (PyCFunction)unigine_Material_load_ulon, METH_0,
+        "load_ulon", (PyCFunction)unigine_Material_load_ulon, METH_O,
         "public : loadUlon"
     },
     {
-        "load", (PyCFunction)unigine_Material_load, METH_0,
+        "load", (PyCFunction)unigine_Material_load, METH_O,
         "public : load"
     },
     {
@@ -3424,35 +3450,35 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : reload"
     },
     {
-        "create_material_file", (PyCFunction)unigine_Material_create_material_file, METH_0,
+        "create_material_file", (PyCFunction)unigine_Material_create_material_file, METH_O,
         "public : createMaterialFile"
     },
     {
-        "get_render_pass", (PyCFunction)unigine_Material_get_render_pass, METH_0,
+        "get_render_pass", (PyCFunction)unigine_Material_get_render_pass, METH_O,
         "public : getRenderPass"
     },
     {
-        "get_render_pass_name", (PyCFunction)unigine_Material_get_render_pass_name, METH_0,
+        "get_render_pass_name", (PyCFunction)unigine_Material_get_render_pass_name, METH_O,
         "public : getRenderPassName"
     },
     {
-        "run_expression", (PyCFunction)unigine_Material_run_expression, METH_3,
+        "run_expression", (PyCFunction)unigine_Material_run_expression, METH_VARARGS|METH_KEYWORDS,
         "public : runExpression"
     },
     {
-        "render_screen", (PyCFunction)unigine_Material_render_screen, METH_0,
+        "render_screen", (PyCFunction)unigine_Material_render_screen, METH_O,
         "public : renderScreen"
     },
     {
-        "render_screen", (PyCFunction)unigine_Material_render_screen, METH_0,
+        "render_screen", (PyCFunction)unigine_Material_render_screen, METH_O,
         "public : renderScreen"
     },
     {
-        "render_compute", (PyCFunction)unigine_Material_render_compute, METH_3,
+        "render_compute", (PyCFunction)unigine_Material_render_compute, METH_VARARGS|METH_KEYWORDS,
         "public : renderCompute"
     },
     {
-        "render_compute", (PyCFunction)unigine_Material_render_compute, METH_3,
+        "render_compute", (PyCFunction)unigine_Material_render_compute, METH_VARARGS|METH_KEYWORDS,
         "public : renderCompute"
     },
     {NULL}  /* Sentinel */
@@ -3524,7 +3550,7 @@ static PyTypeObject unigine_MaterialType = {
     // 0, /* vectorcallfunc tp_vectorcall; */
 };
 
-PyObject * PyUnigineMaterial::NewObject(Unigine::Ptr<Unigine::Material> unigine_object_ptr) {
+PyObject * Material::NewObject(Unigine::Ptr<Unigine::Material> unigine_object_ptr) {
 
     std::cout << "sizeof(unigine_Material) = " << sizeof(unigine_Material) << std::endl;
 
@@ -4055,3 +4081,5 @@ bool Python3UnigineMaterial::addClassDefinitionToModule(PyObject* pModule) {
     return true;
 }
 
+
+}; // namespace PyUnigine
