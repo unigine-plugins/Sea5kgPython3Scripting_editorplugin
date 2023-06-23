@@ -19,7 +19,7 @@ class EditExtensionDialog : public QDialog
     Q_OBJECT
 public:
     EditExtensionDialog(QWidget *parent, IRunPythonScript *pRunPythonScript);
-    
+
     void setModelExtension(ModelExtension *pModelExtension);
 
 signals:
