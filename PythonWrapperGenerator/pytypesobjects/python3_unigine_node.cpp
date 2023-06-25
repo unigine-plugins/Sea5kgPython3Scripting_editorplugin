@@ -2959,41 +2959,29 @@ static PyMethodDef unigine_Node_methods[] = {
 };
 
 static PyTypeObject unigine_NodeType = {
-    // PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    // PyVarObject_HEAD_INIT(NULL, 0)
-    // .tp_name = "unigine.Node",
-    // .tp_basicsize = sizeof(unigine_Node) + 16, // magic!!!
-    // .tp_dealloc = (destructor)unigine_Node_dealloc,
-    // .tp_flags = Py_TPFLAGS_DEFAULT, // | Py_TPFLAGS_BASETYPE,
-    // .tp_doc = "Node Object",
-    // .tp_methods = unigine_Node_methods,
-    // .tp_members = 0,
-    // .tp_dict = 0,
-    // .tp_init = (initproc)unigine_Node_init,
-    // .tp_new = unigine_Node_new,
 
 
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Node",             // tp_name
     sizeof(unigine_Node) + 16, // tp_basicsize  (magic 16 bytes!!!)
-    0,                         // tp_itemsize 
+    0,                         // tp_itemsize
     (destructor)unigine_Node_dealloc,   // tp_dealloc
-    0,                         // tp_vectorcall_offset 
-    0,                         // tp_getattr 
-    0,                         // tp_setattr 
-    0,                         // tp_as_async 
-    0,                         // tp_repr 
-    0,                         // tp_as_number 
-    0,                         // tp_as_sequence 
-    0,                         // tp_as_mapping 
-    0,                         // tp_hash  
-    0,                         // tp_call 
-    0,                         // tp_str 
-    0,                         // tp_getattro 
-    0,                         // tp_setattro 
-    0,                         // tp_as_buffer 
-    Py_TPFLAGS_DEFAULT,        // tp_flags 
-    "Node Object",         // tp_doc 
+    0,                         // tp_vectorcall_offset
+    0,                         // tp_getattr
+    0,                         // tp_setattr
+    0,                         // tp_as_async
+    0,                         // tp_repr
+    0,                         // tp_as_number
+    0,                         // tp_as_sequence
+    0,                         // tp_as_mapping
+    0,                         // tp_hash
+    0,                         // tp_call
+    0,                         // tp_str
+    0,                         // tp_getattro
+    0,                         // tp_setattro
+    0,                         // tp_as_buffer
+    Py_TPFLAGS_DEFAULT,        // tp_flags
+    "Node Object",         // tp_doc
     0,                         // traverseproc tp_traverse
     0,                         // inquiry tp_clear
     0,                         // richcmpfunc tp_richcompare
@@ -3011,17 +2999,6 @@ static PyTypeObject unigine_NodeType = {
     (initproc)unigine_Node_init, // tp_init
     0, // tp_alloc
     unigine_Node_new, // tp_new
-    // 0, // tp_free
-    // 0, /* inquiry tp_is_gc; */
-    // 0, /* PyObject *tp_bases; */
-    // 0, /* PyObject *tp_mro; */
-    // 0, /* PyObject *tp_cache; */
-    // 0, /* PyObject *tp_subclasses; */
-    // 0, /* PyObject *tp_weaklist; */
-    // 0, /* destructor tp_del; */
-    // 0, /* unsigned int tp_version_tag; */
-    // 0, /* destructor tp_finalize; */
-    // 0, /* vectorcallfunc tp_vectorcall; */
 };
 
 PyObject * Node::NewObject(Unigine::Ptr<Unigine::Node> unigine_object_ptr) {
@@ -3034,13 +3011,18 @@ PyObject * Node::NewObject(Unigine::Ptr<Unigine::Node> unigine_object_ptr) {
     return (PyObject *)pInst;
 }
 
+Unigine::Ptr<Unigine::Node> Node::Convert(PyObject *pObject) {
+    if (Py_IS_TYPE(pObject, &unigine_NodeType) == 0) {
+        // TODO error
+    }
+    unigine_Node *pInst = (unigine_Node *)pObject;
+    return pInst->unigine_object_ptr;
+}
+
 // UniginePyTypeObjectNode
 
 bool Python3UnigineNode::isReady() {
     // Initialize tp_dict with empty dictionary
-    std::cout << "sizeof(unigine_Node) = " << sizeof(unigine_Node) << std::endl;
-    std::cout << "sizeof(Unigine::Ptr<Unigine::Node>) = " << sizeof(Unigine::Ptr<Unigine::Node>) << std::endl;
-        // Unigine::Ptr<Unigine::Node> material
     if (!unigine_NodeType.tp_dict) {
         unigine_NodeType.tp_dict = PyDict_New();
 

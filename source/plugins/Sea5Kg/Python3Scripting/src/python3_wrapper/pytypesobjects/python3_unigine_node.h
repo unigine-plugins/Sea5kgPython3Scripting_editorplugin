@@ -15,6 +15,7 @@ class Python3UnigineNode : public Python3PyTypeObjectBase {
 class Node {
     public:
         static PyObject * NewObject(Unigine::Ptr<Unigine::Node> unigine_object_ptr);
+        static Unigine::Ptr<Unigine::Node> Convert(PyObject *pObject);
 };
 
 }; // namespace PyUnigine

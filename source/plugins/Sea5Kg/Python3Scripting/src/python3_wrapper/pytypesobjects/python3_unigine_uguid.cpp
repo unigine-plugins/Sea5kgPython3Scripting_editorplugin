@@ -273,25 +273,25 @@ static PyTypeObject unigine_UGUIDType = {
 
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.UGUID",             // tp_name
-    sizeof(unigine_UGUID), // tp_basicsize  (magic 16 bytes!!!)
+    sizeof(unigine_UGUID) + 16, // tp_basicsize  (magic 16 bytes!!!)
     0,                         // tp_itemsize
     (destructor)unigine_UGUID_dealloc,   // tp_dealloc
-    0,                         // tp_vectorcall_offset 
-    0,                         // tp_getattr 
-    0,                         // tp_setattr 
-    0,                         // tp_as_async 
-    0,                         // tp_repr 
-    0,                         // tp_as_number 
-    0,                         // tp_as_sequence 
-    0,                         // tp_as_mapping 
-    0,                         // tp_hash  
-    0,                         // tp_call 
-    0,                         // tp_str 
-    0,                         // tp_getattro 
-    0,                         // tp_setattro 
-    0,                         // tp_as_buffer 
-    Py_TPFLAGS_DEFAULT,        // tp_flags 
-    "UGUID Object",         // tp_doc 
+    0,                         // tp_vectorcall_offset
+    0,                         // tp_getattr
+    0,                         // tp_setattr
+    0,                         // tp_as_async
+    0,                         // tp_repr
+    0,                         // tp_as_number
+    0,                         // tp_as_sequence
+    0,                         // tp_as_mapping
+    0,                         // tp_hash
+    0,                         // tp_call
+    0,                         // tp_str
+    0,                         // tp_getattro
+    0,                         // tp_setattro
+    0,                         // tp_as_buffer
+    Py_TPFLAGS_DEFAULT,        // tp_flags
+    "UGUID Object",         // tp_doc
     0,                         // traverseproc tp_traverse
     0,                         // inquiry tp_clear
     0,                         // richcmpfunc tp_richcompare
@@ -310,8 +310,8 @@ static PyTypeObject unigine_UGUIDType = {
     0, // tp_alloc
     unigine_UGUID_new, // tp_new
     // 0, // tp_free
-    // 0, /* inquiry tp_is_gc; */
-    // 0, /* PyObject *tp_bases; */
+    // 0, // inquiry tp_is_gc;
+    // 0, // PyObject *tp_bases;
     // 0, /* PyObject *tp_mro; */
     // 0, /* PyObject *tp_cache; */
     // 0, /* PyObject *tp_subclasses; */
@@ -337,10 +337,6 @@ Unigine::UGUID *UGUID::Convert(PyObject *pObject) {
         // TODO error
     }
     unigine_UGUID *pInst = (unigine_UGUID *)pObject;
-    std::cout << "pInst: " << pObject << std::endl;
-    std::cout << "pInst: " << pInst << std::endl;
-    std::cout << "pInst->unigine_object_ptr: " << pInst->unigine_object_ptr << std::endl;
-    std::cout << "pInst->unigine_object_ptr->getString(): " << pInst->unigine_object_ptr->getString() << std::endl;
     return pInst->unigine_object_ptr;
 }
 

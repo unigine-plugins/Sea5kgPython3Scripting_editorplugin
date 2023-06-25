@@ -867,41 +867,29 @@ static PyMethodDef unigine_AssetManager_methods[] = {
 };
 
 static PyTypeObject unigine_AssetManagerType = {
-    // PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    // PyVarObject_HEAD_INIT(NULL, 0)
-    // .tp_name = "unigine.AssetManager",
-    // .tp_basicsize = sizeof(unigine_AssetManager) + 16, // magic!!!
-    // .tp_dealloc = (destructor)unigine_AssetManager_dealloc,
-    // .tp_flags = Py_TPFLAGS_DEFAULT, // | Py_TPFLAGS_BASETYPE,
-    // .tp_doc = "AssetManager Object",
-    // .tp_methods = unigine_AssetManager_methods,
-    // .tp_members = 0,
-    // .tp_dict = 0,
-    // .tp_init = (initproc)unigine_AssetManager_init,
-    // .tp_new = unigine_AssetManager_new,
 
 
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.AssetManager",             // tp_name
     sizeof(unigine_AssetManager) + 16, // tp_basicsize  (magic 16 bytes!!!)
-    0,                         // tp_itemsize 
+    0,                         // tp_itemsize
     (destructor)unigine_AssetManager_dealloc,   // tp_dealloc
-    0,                         // tp_vectorcall_offset 
-    0,                         // tp_getattr 
-    0,                         // tp_setattr 
-    0,                         // tp_as_async 
-    0,                         // tp_repr 
-    0,                         // tp_as_number 
-    0,                         // tp_as_sequence 
-    0,                         // tp_as_mapping 
-    0,                         // tp_hash  
-    0,                         // tp_call 
-    0,                         // tp_str 
-    0,                         // tp_getattro 
-    0,                         // tp_setattro 
-    0,                         // tp_as_buffer 
-    Py_TPFLAGS_DEFAULT,        // tp_flags 
-    "AssetManager Object",         // tp_doc 
+    0,                         // tp_vectorcall_offset
+    0,                         // tp_getattr
+    0,                         // tp_setattr
+    0,                         // tp_as_async
+    0,                         // tp_repr
+    0,                         // tp_as_number
+    0,                         // tp_as_sequence
+    0,                         // tp_as_mapping
+    0,                         // tp_hash
+    0,                         // tp_call
+    0,                         // tp_str
+    0,                         // tp_getattro
+    0,                         // tp_setattro
+    0,                         // tp_as_buffer
+    Py_TPFLAGS_DEFAULT,        // tp_flags
+    "AssetManager Object",         // tp_doc
     0,                         // traverseproc tp_traverse
     0,                         // inquiry tp_clear
     0,                         // richcmpfunc tp_richcompare
@@ -919,17 +907,6 @@ static PyTypeObject unigine_AssetManagerType = {
     (initproc)unigine_AssetManager_init, // tp_init
     0, // tp_alloc
     unigine_AssetManager_new, // tp_new
-    // 0, // tp_free
-    // 0, /* inquiry tp_is_gc; */
-    // 0, /* PyObject *tp_bases; */
-    // 0, /* PyObject *tp_mro; */
-    // 0, /* PyObject *tp_cache; */
-    // 0, /* PyObject *tp_subclasses; */
-    // 0, /* PyObject *tp_weaklist; */
-    // 0, /* destructor tp_del; */
-    // 0, /* unsigned int tp_version_tag; */
-    // 0, /* destructor tp_finalize; */
-    // 0, /* vectorcallfunc tp_vectorcall; */
 };
 
 PyObject * AssetManager::NewObject() {
@@ -945,9 +922,6 @@ PyObject * AssetManager::NewObject() {
 
 bool Python3UnigineAssetManager::isReady() {
     // Initialize tp_dict with empty dictionary
-    std::cout << "sizeof(unigine_AssetManager) = " << sizeof(unigine_AssetManager) << std::endl;
-    std::cout << "sizeof(Unigine::Ptr<Unigine::AssetManager>) = " << sizeof(Unigine::Ptr<Unigine::AssetManager>) << std::endl;
-        // Unigine::Ptr<Unigine::AssetManager> material
     if (!unigine_AssetManagerType.tp_dict) {
         unigine_AssetManagerType.tp_dict = PyDict_New();
 
