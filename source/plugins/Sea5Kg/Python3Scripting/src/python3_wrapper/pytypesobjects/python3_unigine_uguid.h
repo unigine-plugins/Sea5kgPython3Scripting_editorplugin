@@ -2,7 +2,7 @@
 #pragma once
 
 #include "python3_pytypeobjects.h"
-#include <Unigine.h>
+#include <UnigineGUID.h>
 
 namespace PyUnigine {
 

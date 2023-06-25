@@ -2,7 +2,7 @@
 #include "python3_unigine_uguid.h"
 
 #include <string>
-#include <UnigineUGUID.h>
+#include <UnigineGUID.h>
 #include <UnigineLog.h>
 #include <Python.h>
 #include <structmember.h>

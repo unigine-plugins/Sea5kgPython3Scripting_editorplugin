@@ -114,7 +114,7 @@ def get_filepath_by_id(_id):
 
 def find_namespcase_id_by_name(_name):
     for _namespace in namespaces_json:
-        if "@name" in _namespace and _namespace["@name"] == "Unigine":
+        if "@name" in _namespace and _namespace["@name"] == _name:
             _id = _namespace["@id"]
             return _id
 
@@ -202,8 +202,9 @@ def make_method_code(method_info, args_to_call):
     return ret
 
 class Python3UnigineWriter:
-    def __init__(self, classname):
+    def __init__(self, classname, _include_filename):
         self.__classname = classname
+        self.__include_filename = _include_filename
         self.__filepath = classname.lower()
         self.__filepath = "python3_unigine_" + self.__filepath
         self.__filepath = "pytypesobjects/" + self.__filepath
@@ -284,7 +285,7 @@ class Python3UnigineWriter:
         self.__file_header.write("#pragma once\n")
         self.__file_header.write("\n")
         self.__file_header.write("#include \"python3_pytypeobjects.h\"\n")
-        self.__file_header.write("#include <Unigine" + self.__classname + ".h>\n")
+        self.__file_header.write("#include <" + self.__include_filename + ">\n")
         self.__file_header.write("\n")
         self.__file_header.write("namespace PyUnigine {\n")
         self.__file_header.write("\n")
@@ -298,6 +299,7 @@ class Python3UnigineWriter:
         self.__file_header.write("    public:\n")
         self.__file_header.write("        static PyObject * NewObject(")
         if not self.__is_all_methods_static():
+            # TODO ptr
             self.__file_header.write("Unigine::Ptr<Unigine::" + self.__classname + "> unigine_object_ptr")
         self.__file_header.write(");\n")
         self.__file_header.write("};\n")
@@ -310,7 +312,7 @@ class Python3UnigineWriter:
         self.__file_source.write("\n")
         self.__file_source.write("#include <string>\n")
         # TODO fix filename
-        self.__file_source.write("#include <Unigine" + self.__classname + ".h>\n")
+        self.__file_source.write("#include <" + self.__include_filename + ">\n")
         self.__file_source.write("#include <UnigineLog.h>\n")
         self.__file_source.write("#include <Python.h>\n")
         self.__file_source.write("#include <structmember.h>\n")
@@ -532,9 +534,10 @@ class Python3UnigineWriter:
         self.__file_source.write("\n")
         self.__file_source.write("}; // namespace PyUnigine\n")
 
-_unigine_ns_id = find_namespcase_id_by_name("Unigine")
-
-process_namespaces = [_unigine_ns_id]
+process_namespaces = [
+    find_namespcase_id_by_name("Unigine"),
+    find_namespcase_id_by_name("UnigineEditor"),
+]
 
 while len(process_namespaces) > 0:
     process_namespaces = init_namespaces(process_namespaces)
@@ -583,6 +586,7 @@ make_for_classes = [
     "Material",
     "Materials",
     "Node",
+    "AssetManager",
     "UGUID",
 ]
 
@@ -608,8 +612,9 @@ for _class in classes_json:
         if _name in make_for_classes:
             print("_id " + _id)
             print(_namespace, _name, _filepath)
+            _include_filename = _filepath.split("/include/")[1]
             print(_class)
-            _writer = Python3UnigineWriter(_name)
+            _writer = Python3UnigineWriter(_name, _include_filename)
             _members = _class['@members'].split(' ')
             for _mem in _members:
                 if _mem in cache_function:

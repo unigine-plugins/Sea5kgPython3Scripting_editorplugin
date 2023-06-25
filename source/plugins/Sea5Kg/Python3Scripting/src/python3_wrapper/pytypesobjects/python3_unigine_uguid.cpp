@@ -349,8 +349,6 @@ Unigine::UGUID *UGUID::Convert(PyObject *pObject) {
 bool Python3UnigineUGUID::isReady() {
     // Initialize tp_dict with empty dictionary
     std::cout << "sizeof(unigine_UGUID) = " << sizeof(unigine_UGUID) << std::endl;
-    std::cout << "sizeof(Unigine::Ptr<Unigine::UGUID>) = " << sizeof(Unigine::Ptr<Unigine::UGUID>) << std::endl;
-        // Unigine::Ptr<Unigine::UGUID> material
     if (!unigine_UGUIDType.tp_dict) {
         unigine_UGUIDType.tp_dict = PyDict_New();
 

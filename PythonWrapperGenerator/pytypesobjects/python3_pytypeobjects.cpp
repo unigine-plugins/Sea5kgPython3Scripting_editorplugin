@@ -3,8 +3,10 @@
 #include "python3_unigine_materials.h"
 #include "python3_unigine_material.h"
 #include "python3_unigine_node.h"
+#include "python3_unigine_uguid.h"
 
 Python3PyTypeObjectAll::Python3PyTypeObjectAll() {
+    m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineUGUID());
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineMaterials());
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineMaterial());
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineNode());
