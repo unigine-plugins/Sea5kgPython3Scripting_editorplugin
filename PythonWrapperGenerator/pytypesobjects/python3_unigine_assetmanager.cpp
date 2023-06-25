@@ -32,7 +32,7 @@ static PyObject *unigine_AssetManager_new(PyTypeObject *type, PyObject *args, Py
 }
 
 static int unigine_AssetManager_init(unigine_AssetManager *self, PyObject *args, PyObject *kwds) {
-    // nothing
+    self->unigine_object_ptr = new Unigine::AssetManager();
     return 0;
 }
 

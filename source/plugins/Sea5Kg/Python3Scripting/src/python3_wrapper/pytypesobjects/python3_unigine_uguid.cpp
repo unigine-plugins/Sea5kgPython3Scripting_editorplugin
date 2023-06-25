@@ -17,7 +17,7 @@ namespace PyUnigine {
 typedef struct {
     PyObject_HEAD
     // Type-specific fields go here.
-    Unigine::UGUID *unigine_object_ptr;
+    Unigine::UGUID * unigine_object_ptr;
 } unigine_UGUID;
 
 static void unigine_UGUID_dealloc(unigine_UGUID* self) {
@@ -34,7 +34,6 @@ static PyObject *unigine_UGUID_new(PyTypeObject *type, PyObject *args, PyObject 
 
 static int unigine_UGUID_init(unigine_UGUID *self, PyObject *args, PyObject *kwds) {
     self->unigine_object_ptr = new Unigine::UGUID();
-    // nothing
     return 0;
 }
 
@@ -309,20 +308,9 @@ static PyTypeObject unigine_UGUIDType = {
     (initproc)unigine_UGUID_init, // tp_init
     0, // tp_alloc
     unigine_UGUID_new, // tp_new
-    // 0, // tp_free
-    // 0, // inquiry tp_is_gc;
-    // 0, // PyObject *tp_bases;
-    // 0, /* PyObject *tp_mro; */
-    // 0, /* PyObject *tp_cache; */
-    // 0, /* PyObject *tp_subclasses; */
-    // 0, /* PyObject *tp_weaklist; */
-    // 0, /* destructor tp_del; */
-    // 0, /* unsigned int tp_version_tag; */
-    // 0, /* destructor tp_finalize; */
-    // 0, /* vectorcallfunc tp_vectorcall; */
 };
 
-PyObject * UGUID::NewObject(Unigine::UGUID *unigine_object_ptr) {
+PyObject * UGUID::NewObject(Unigine::UGUID * unigine_object_ptr) {
 
     std::cout << "sizeof(unigine_UGUID) = " << sizeof(unigine_UGUID) << std::endl;
 
@@ -332,7 +320,7 @@ PyObject * UGUID::NewObject(Unigine::UGUID *unigine_object_ptr) {
     return (PyObject *)pInst;
 }
 
-Unigine::UGUID *UGUID::Convert(PyObject *pObject) {
+Unigine::UGUID * UGUID::Convert(PyObject *pObject) {
     if (Py_IS_TYPE(pObject, &unigine_UGUIDType) == 0) {
         // TODO error
     }

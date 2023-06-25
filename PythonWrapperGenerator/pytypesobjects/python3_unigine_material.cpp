@@ -1227,7 +1227,7 @@ static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, 
     PyObject *ret = NULL;
     // args:
     int num;
-    const & value;
+    const Unigine::Math::vec2 & value;
     // return: void
 
     self->unigine_object_ptr->setParameterFloat2(num, value);
@@ -1240,7 +1240,7 @@ static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, 
     PyObject *ret = NULL;
     // args:
     const char * name;
-    const & value;
+    const Unigine::Math::vec2 & value;
     // return: void
 
     self->unigine_object_ptr->setParameterFloat2(name, value);
@@ -1253,9 +1253,10 @@ static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, 
     PyObject *ret = NULL;
     // args:
     int num;
-    // return: 
+    // return: Unigine::Math::vec2
 
-    unknown type 
+    Unigine::Math::vec2 retOriginal = self->unigine_object_ptr->getParameterFloat2(num);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1265,9 +1266,10 @@ static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, 
     PyObject *ret = NULL;
     // args:
     const char * name;
-    // return: 
+    // return: Unigine::Math::vec2
 
-    unknown type 
+    Unigine::Math::vec2 retOriginal = self->unigine_object_ptr->getParameterFloat2(name);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1277,7 +1279,7 @@ static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, 
     PyObject *ret = NULL;
     // args:
     int num;
-    const & value;
+    const Unigine::Math::vec3 & value;
     // return: void
 
     self->unigine_object_ptr->setParameterFloat3(num, value);
@@ -1290,7 +1292,7 @@ static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, 
     PyObject *ret = NULL;
     // args:
     const char * name;
-    const & value;
+    const Unigine::Math::vec3 & value;
     // return: void
 
     self->unigine_object_ptr->setParameterFloat3(name, value);
@@ -1303,9 +1305,10 @@ static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, 
     PyObject *ret = NULL;
     // args:
     int num;
-    // return: 
+    // return: Unigine::Math::vec3
 
-    unknown type 
+    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getParameterFloat3(num);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1315,9 +1318,10 @@ static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, 
     PyObject *ret = NULL;
     // args:
     const char * name;
-    // return: 
+    // return: Unigine::Math::vec3
 
-    unknown type 
+    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getParameterFloat3(name);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1327,7 +1331,7 @@ static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, 
     PyObject *ret = NULL;
     // args:
     int num;
-    const & value;
+    const Unigine::Math::vec4 & value;
     // return: void
 
     self->unigine_object_ptr->setParameterFloat4(num, value);
@@ -1340,7 +1344,7 @@ static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, 
     PyObject *ret = NULL;
     // args:
     const char * name;
-    const & value;
+    const Unigine::Math::vec4 & value;
     // return: void
 
     self->unigine_object_ptr->setParameterFloat4(name, value);
@@ -1353,9 +1357,10 @@ static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, 
     PyObject *ret = NULL;
     // args:
     int num;
-    // return: 
+    // return: Unigine::Math::vec4
 
-    unknown type 
+    Unigine::Math::vec4 retOriginal = self->unigine_object_ptr->getParameterFloat4(num);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1365,9 +1370,10 @@ static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, 
     PyObject *ret = NULL;
     // args:
     const char * name;
-    // return: 
+    // return: Unigine::Math::vec4
 
-    unknown type 
+    Unigine::Math::vec4 retOriginal = self->unigine_object_ptr->getParameterFloat4(name);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1429,7 +1435,7 @@ static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, Py
     PyObject *ret = NULL;
     // args:
     int num;
-    const & value;
+    const Unigine::Math::ivec2 & value;
     // return: void
 
     self->unigine_object_ptr->setParameterInt2(num, value);
@@ -1442,7 +1448,7 @@ static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, Py
     PyObject *ret = NULL;
     // args:
     const char * name;
-    const & value;
+    const Unigine::Math::ivec2 & value;
     // return: void
 
     self->unigine_object_ptr->setParameterInt2(name, value);
@@ -1455,9 +1461,10 @@ static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, Py
     PyObject *ret = NULL;
     // args:
     int num;
-    // return: 
+    // return: Unigine::Math::ivec2
 
-    unknown type 
+    Unigine::Math::ivec2 retOriginal = self->unigine_object_ptr->getParameterInt2(num);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1467,9 +1474,10 @@ static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, Py
     PyObject *ret = NULL;
     // args:
     const char * name;
-    // return: 
+    // return: Unigine::Math::ivec2
 
-    unknown type 
+    Unigine::Math::ivec2 retOriginal = self->unigine_object_ptr->getParameterInt2(name);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1479,7 +1487,7 @@ static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, Py
     PyObject *ret = NULL;
     // args:
     int num;
-    const & value;
+    const Unigine::Math::ivec3 & value;
     // return: void
 
     self->unigine_object_ptr->setParameterInt3(num, value);
@@ -1492,7 +1500,7 @@ static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, Py
     PyObject *ret = NULL;
     // args:
     const char * name;
-    const & value;
+    const Unigine::Math::ivec3 & value;
     // return: void
 
     self->unigine_object_ptr->setParameterInt3(name, value);
@@ -1505,9 +1513,10 @@ static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, Py
     PyObject *ret = NULL;
     // args:
     int num;
-    // return: 
+    // return: Unigine::Math::ivec3
 
-    unknown type 
+    Unigine::Math::ivec3 retOriginal = self->unigine_object_ptr->getParameterInt3(num);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1517,9 +1526,10 @@ static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, Py
     PyObject *ret = NULL;
     // args:
     const char * name;
-    // return: 
+    // return: Unigine::Math::ivec3
 
-    unknown type 
+    Unigine::Math::ivec3 retOriginal = self->unigine_object_ptr->getParameterInt3(name);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1529,7 +1539,7 @@ static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, Py
     PyObject *ret = NULL;
     // args:
     int num;
-    const & value;
+    const Unigine::Math::ivec4 & value;
     // return: void
 
     self->unigine_object_ptr->setParameterInt4(num, value);
@@ -1542,7 +1552,7 @@ static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, Py
     PyObject *ret = NULL;
     // args:
     const char * name;
-    const & value;
+    const Unigine::Math::ivec4 & value;
     // return: void
 
     self->unigine_object_ptr->setParameterInt4(name, value);
@@ -1555,9 +1565,10 @@ static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, Py
     PyObject *ret = NULL;
     // args:
     int num;
-    // return: 
+    // return: Unigine::Math::ivec4
 
-    unknown type 
+    Unigine::Math::ivec4 retOriginal = self->unigine_object_ptr->getParameterInt4(num);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1567,9 +1578,10 @@ static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, Py
     PyObject *ret = NULL;
     // args:
     const char * name;
-    // return: 
+    // return: Unigine::Math::ivec4
 
-    unknown type 
+    Unigine::Math::ivec4 retOriginal = self->unigine_object_ptr->getParameterInt4(name);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 

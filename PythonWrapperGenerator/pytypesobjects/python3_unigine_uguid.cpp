@@ -17,7 +17,7 @@ namespace PyUnigine {
 typedef struct {
     PyObject_HEAD
     // Type-specific fields go here.
-    Unigine::Ptr<Unigine::UGUID> unigine_object_ptr;
+    Unigine::UGUID * unigine_object_ptr;
 } unigine_UGUID;
 
 static void unigine_UGUID_dealloc(unigine_UGUID* self) {
@@ -33,7 +33,7 @@ static PyObject *unigine_UGUID_new(PyTypeObject *type, PyObject *args, PyObject 
 }
 
 static int unigine_UGUID_init(unigine_UGUID *self, PyObject *args, PyObject *kwds) {
-    // nothing
+    self->unigine_object_ptr = new Unigine::UGUID();
     return 0;
 }
 
@@ -351,7 +351,7 @@ static PyTypeObject unigine_UGUIDType = {
     unigine_UGUID_new, // tp_new
 };
 
-PyObject * UGUID::NewObject(Unigine::Ptr<Unigine::UGUID> unigine_object_ptr) {
+PyObject * UGUID::NewObject(Unigine::UGUID * unigine_object_ptr) {
 
     std::cout << "sizeof(unigine_UGUID) = " << sizeof(unigine_UGUID) << std::endl;
 
@@ -361,7 +361,7 @@ PyObject * UGUID::NewObject(Unigine::Ptr<Unigine::UGUID> unigine_object_ptr) {
     return (PyObject *)pInst;
 }
 
-Unigine::Ptr<Unigine::UGUID> UGUID::Convert(PyObject *pObject) {
+Unigine::UGUID * UGUID::Convert(PyObject *pObject) {
     if (Py_IS_TYPE(pObject, &unigine_UGUIDType) == 0) {
         // TODO error
     }

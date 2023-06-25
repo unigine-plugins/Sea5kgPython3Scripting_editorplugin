@@ -23,6 +23,8 @@ print("Done.")
 
 namespaces_json = _api["GCC_XML"]["Namespace"]
 classes_json = _api["GCC_XML"]["Class"]
+structs_json = _api["GCC_XML"]["Struct"]
+
 files_json = _api["GCC_XML"]["File"]
 functions_json = _api["GCC_XML"]["Function"]
 enumeration_json = _api["GCC_XML"]["Enumeration"]
@@ -202,8 +204,13 @@ def make_method_code(method_info, args_to_call):
     return ret
 
 class Python3UnigineWriter:
-    def __init__(self, classname, _include_filename):
+    def __init__(self, classname, _include_filename, can_ptr):
         self.__classname = classname
+        self.__can_ptr = can_ptr
+        if self.__can_ptr:
+            self.__member_type = "Unigine::Ptr<Unigine::" + self.__classname + ">"
+        else:
+            self.__member_type = "Unigine::" + self.__classname + " *"
         self.__include_filename = _include_filename
         self.__filepath = classname.lower()
         self.__filepath = "python3_unigine_" + self.__filepath
@@ -299,11 +306,10 @@ class Python3UnigineWriter:
         self.__file_header.write("    public:\n")
         self.__file_header.write("        static PyObject * NewObject(")
         if not self.__is_all_methods_static():
-            # TODO ptr
-            self.__file_header.write("Unigine::Ptr<Unigine::" + self.__classname + "> unigine_object_ptr")
+            self.__file_header.write(self.__member_type + " unigine_object_ptr")
         self.__file_header.write(");\n")
         if not self.__is_all_methods_static():
-            self.__file_header.write("        static Unigine::Ptr<Unigine::" + self.__classname + "> Convert(PyObject *pObject);\n")
+            self.__file_header.write("        static " + self.__member_type + " Convert(PyObject *pObject);\n")
         self.__file_header.write("};\n")
         self.__file_header.write("\n")
         self.__file_header.write("}; // namespace PyUnigine\n")
@@ -330,7 +336,7 @@ class Python3UnigineWriter:
         self.__file_source.write("    PyObject_HEAD\n")
         self.__file_source.write("    // Type-specific fields go here.\n")
         if not self.__is_all_methods_static():
-            self.__file_source.write("    Unigine::Ptr<Unigine::" + self.__classname + "> unigine_object_ptr;\n")
+            self.__file_source.write("    " + self.__member_type + " unigine_object_ptr;\n")
         self.__file_source.write("} unigine_" + self.__classname + ";\n")
         self.__file_source.write("\n")
         self.__file_source.write("static void unigine_" + self.__classname + "_dealloc(unigine_" + self.__classname + "* self) {\n")
@@ -346,7 +352,10 @@ class Python3UnigineWriter:
         self.__file_source.write("}\n")
         self.__file_source.write("\n")
         self.__file_source.write("static int unigine_" + self.__classname + "_init(unigine_" + self.__classname + " *self, PyObject *args, PyObject *kwds) {\n")
-        self.__file_source.write("    // nothing\n")
+        if not self.__can_ptr:
+            self.__file_source.write("    self->unigine_object_ptr = new Unigine::" + self.__classname + "();\n")
+        else:
+            self.__file_source.write("    // nothing\n")
         self.__file_source.write("    return 0;\n")
         self.__file_source.write("}\n")
         self.__file_source.write("\n")
@@ -420,7 +429,7 @@ class Python3UnigineWriter:
         self.__file_source.write("\n")
         self.__file_source.write("PyObject * " + self.__classname + "::NewObject(")
         if not self.__is_all_methods_static():
-            self.__file_source.write("Unigine::Ptr<Unigine::" + self.__classname + "> unigine_object_ptr")
+            self.__file_source.write(self.__member_type + " unigine_object_ptr")
         self.__file_source.write(") {\n")
         self.__file_source.write("\n")
         self.__file_source.write("    std::cout << \"sizeof(unigine_" + self.__classname + ") = \" << sizeof(unigine_" + self.__classname + ") << std::endl;\n")
@@ -433,7 +442,7 @@ class Python3UnigineWriter:
         self.__file_source.write("}\n")
         if not self.__is_all_methods_static():
             self.__file_source.write("\n")
-            self.__file_source.write("Unigine::Ptr<Unigine::" + self.__classname + "> " + self.__classname + "::Convert(PyObject *pObject) {\n")
+            self.__file_source.write(self.__member_type + " " + self.__classname + "::Convert(PyObject *pObject) {\n")
             self.__file_source.write("    if (Py_IS_TYPE(pObject, &unigine_" + self.__classname + "Type) == 0) {\n")
             self.__file_source.write("        // TODO error\n")
             self.__file_source.write("    }\n")
@@ -593,61 +602,106 @@ for _fundamental_type in fundamental_type_json:
     _id = _fundamental_type['@id']
     cache_fundamental_types[_id] = _fundamental_type
 
+for _class in classes_json:
+    context = _class['@context']
+    if context in cache_namespaces:
+        _id = _class['@id']
+        _namespace = cache_namespaces[context]["fullname"]
+        _name = _class['@name']
+        _class["fullname"] = _namespace + "::" + _name
+        cache_classes[_id] = _class
+
+for _class in classes_json:
+    context = _class['@context']
+    # scan classes
+    if context in cache_namespaces:
+        _id = _class['@id']
+        _namespace = cache_namespaces[context]["fullname"]
+        _class["class_namespace"] = _namespace
+        _class["fullname"] = _namespace + "::" + _class['@name']
+        cache_classes[_id] = _class
+
+# TODO structs
+for _struct in structs_json:
+    context = _struct['@context']
+    if context in cache_namespaces:
+        _id = _struct['@id']
+        _namespace = cache_namespaces[context]["fullname"]
+        _struct["class_namespace"] = _namespace
+        _struct["fullname"] = _namespace + "::" + _struct['@name']
+        cache_classes[_id] = _struct
+
+# scan bases
+for _id in cache_classes:
+    _class = cache_classes[_id]
+    bases = []
+    if "@bases" in _class:
+        bases_ids = _class["@bases"].split(" ")
+        for _base_id in bases_ids:
+            # print("base_id=", _base_id)
+            _base_access = "public"
+            if _base_id.startswith("private:"):
+                _base_access = "private"
+                _base_id = _base_id.split("private:")[1]
+            if _base_id not in cache_classes:
+                print("ERROR: skip bases class ", _base_id)
+                continue
+            base_classfullname = cache_classes[_base_id]["fullname"]
+            bases.append(_base_access + " " + base_classfullname)
+            # print("base_classfullname ", base_classfullname)
+    cache_classes[_id]["bases_fullnames"] = bases
+
 make_for_classes = [
     "Material",
     "Materials",
     "Node",
     "AssetManager",
     "UGUID",
+    "mat4",
 ]
 
-for _class in classes_json:
-    context = _class['@context']
-    if context in cache_namespaces:
-        _id = _class['@id']
-        _namespace = cache_namespaces[context]["fullname"]
-        _name = _class['@name']
-        _filepath = get_filepath_by_id(_class['@file'])
-        _class["fullname"] = _namespace + "::" + _name
-        cache_classes[_id] = _class
+for _id in cache_classes:
+    _class = cache_classes[_id]
+    _name = _class['@name']
+    _fullname = _class["fullname"]
+    _namespace = _class["class_namespace"]
+    _filepath = get_filepath_by_id(_class['@file'])
+    if _name in make_for_classes:
+        # print("_id " + _id)
+        # print(_namespace, _name, _filepath)
+        _include_filename = _filepath.split("/include/")[1]
+        # print(_class)
+        can_ptr = False
+        if "public Unigine::APIInterface" in _class["bases_fullnames"]:
+            can_ptr = True
 
-for _class in classes_json:
-    context = _class['@context']
-    if context in cache_namespaces:
-        _id = _class['@id']
-        _namespace = cache_namespaces[context]["fullname"]
-        _name = _class['@name']
-        _filepath = get_filepath_by_id(_class['@file'])
-        _class["fullname"] = _namespace + "::" + _name
-        cache_classes[_id] = _class
-        if _name in make_for_classes:
-            print("_id " + _id)
-            print(_namespace, _name, _filepath)
-            _include_filename = _filepath.split("/include/")[1]
-            print(_class)
-            _writer = Python3UnigineWriter(_name, _include_filename)
-            _members = _class['@members'].split(' ')
-            for _mem in _members:
-                if _mem in cache_function:
-                    print(_mem, "func")
-                elif _mem in cache_enumeration:
-                    _writer.add_enum(_namespace, cache_enumeration[_mem])
-                elif _mem in cache_methods:
-                    _writer.add_method(cache_methods[_mem])
-                elif _mem in cache_constructors:
-                    print(_mem, "constructor")
-                elif _mem in cache_operator_methods:
-                    print(_mem, "operator_method")
-                elif _mem in cache_destructors:
-                    print(_mem, "destructor")
-                else:
-                    print("Not found: " + _mem)
+        _writer = Python3UnigineWriter(_name, _include_filename, can_ptr)
+        _members = _class['@members'].split(' ')
+        for _mem in _members:
+            if _mem in cache_function:
+                pass
+                # print(_mem, "func")
+            elif _mem in cache_enumeration:
+                _writer.add_enum(_namespace, cache_enumeration[_mem])
+            elif _mem in cache_methods:
+                _writer.add_method(cache_methods[_mem])
+            elif _mem in cache_constructors:
+                # print(_mem, "constructor")
+                pass
+            elif _mem in cache_operator_methods:
+                # print(_mem, "operator_method")
+                pass
+            elif _mem in cache_destructors:
+                # print(_mem, "destructor")
+                pass
+            else:
+                print("Not found: " + _mem)
 
-            _writer.write_header()
-            _writer.write_source_top()
-            _writer.write_source_methods()
-            _writer.write_source_type()
-            _writer.write_source_finish()
+        _writer.write_header()
+        _writer.write_source_top()
+        _writer.write_source_methods()
+        _writer.write_source_type()
+        _writer.write_source_finish()
 
         # print(filepath)
         # print(_namespace["fullname"],  )

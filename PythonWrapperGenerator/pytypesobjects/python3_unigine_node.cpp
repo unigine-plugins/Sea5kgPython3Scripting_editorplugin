@@ -43,7 +43,7 @@ static PyObject * unigine_Node_to_world(unigine_Node* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    const & p;
+    const Unigine::Math::vec3 & p;
     // return: 
 
     unknown type 
@@ -1493,9 +1493,10 @@ static PyObject * unigine_Node_get_bound_box(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::BoundBox
 
-    unknown type 
+    Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getBoundBox();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1504,9 +1505,10 @@ static PyObject * unigine_Node_get_bound_sphere(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::BoundSphere
 
-    unknown type 
+    Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getBoundSphere();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1515,9 +1517,10 @@ static PyObject * unigine_Node_get_world_bound_box(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::BoundBox
 
-    unknown type 
+    Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getWorldBoundBox();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1526,9 +1529,10 @@ static PyObject * unigine_Node_get_world_bound_sphere(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::BoundSphere
 
-    unknown type 
+    Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getWorldBoundSphere();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1537,9 +1541,10 @@ static PyObject * unigine_Node_get_spatial_bound_box(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::BoundBox
 
-    unknown type 
+    Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getSpatialBoundBox();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1548,9 +1553,10 @@ static PyObject * unigine_Node_get_spatial_bound_sphere(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::BoundSphere
 
-    unknown type 
+    Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getSpatialBoundSphere();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1559,9 +1565,10 @@ static PyObject * unigine_Node_get_hierarchy_bound_box(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::BoundBox
 
-    unknown type 
+    Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getHierarchyBoundBox();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1570,9 +1577,10 @@ static PyObject * unigine_Node_get_hierarchy_bound_sphere(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::BoundSphere
 
-    unknown type 
+    Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getHierarchyBoundSphere();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1581,9 +1589,10 @@ static PyObject * unigine_Node_get_hierarchy_world_bound_box(unigine_Node* self)
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::BoundBox
 
-    unknown type 
+    Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getHierarchyWorldBoundBox();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1592,9 +1601,10 @@ static PyObject * unigine_Node_get_hierarchy_world_bound_sphere(unigine_Node* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::BoundSphere
 
-    unknown type 
+    Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getHierarchyWorldBoundSphere();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1603,9 +1613,10 @@ static PyObject * unigine_Node_get_hierarchy_spatial_bound_box(unigine_Node* sel
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::BoundBox
 
-    unknown type 
+    Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getHierarchySpatialBoundBox();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1614,9 +1625,10 @@ static PyObject * unigine_Node_get_hierarchy_spatial_bound_sphere(unigine_Node* 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::BoundSphere
 
-    unknown type 
+    Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getHierarchySpatialBoundSphere();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1701,9 +1713,10 @@ static PyObject * unigine_Node_get_body_linear_velocity(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::vec3
 
-    unknown type 
+    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getBodyLinearVelocity();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1712,9 +1725,10 @@ static PyObject * unigine_Node_get_body_angular_velocity(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::vec3
 
-    unknown type 
+    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getBodyAngularVelocity();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1724,9 +1738,10 @@ static PyObject * unigine_Node_get_body_world_velocity(unigine_Node* self, PyObj
     PyObject *ret = NULL;
     // args:
     const & point;
-    // return: 
+    // return: Unigine::Math::vec3
 
-    unknown type 
+    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getBodyWorldVelocity(point);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1783,7 +1798,7 @@ static PyObject * unigine_Node_set_rotation(unigine_Node* self, PyObject *args, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    const & rot;
+    const Unigine::Math::quat & rot;
     bool identity;
     // return: void
 
@@ -1796,9 +1811,10 @@ static PyObject * unigine_Node_get_rotation(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::quat
 
-    unknown type 
+    Unigine::Math::quat retOriginal = self->unigine_object_ptr->getRotation();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1807,8 +1823,8 @@ static PyObject * unigine_Node_set_direction(unigine_Node* self, PyObject *args,
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    const & dir;
-    const & up;
+    const Unigine::Math::vec3 & dir;
+    const Unigine::Math::vec3 & up;
     AXIS axis;
     // return: void
 
@@ -1822,9 +1838,10 @@ static PyObject * unigine_Node_get_direction(unigine_Node* self, PyObject *arg) 
     PyObject *ret = NULL;
     // args:
     AXIS axis;
-    // return: 
+    // return: Unigine::Math::vec3
 
-    unknown type 
+    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getDirection(axis);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1833,7 +1850,7 @@ static PyObject * unigine_Node_set_scale(unigine_Node* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    const & s;
+    const Unigine::Math::vec3 & s;
     // return: void
 
     self->unigine_object_ptr->setScale(s);
@@ -1845,9 +1862,10 @@ static PyObject * unigine_Node_get_scale(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::vec3
 
-    unknown type 
+    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getScale();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1879,7 +1897,7 @@ static PyObject * unigine_Node_set_world_rotation(unigine_Node* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    const & rot;
+    const Unigine::Math::quat & rot;
     bool identity;
     // return: void
 
@@ -1892,9 +1910,10 @@ static PyObject * unigine_Node_get_world_rotation(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::quat
 
-    unknown type 
+    Unigine::Math::quat retOriginal = self->unigine_object_ptr->getWorldRotation();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1903,8 +1922,8 @@ static PyObject * unigine_Node_set_world_direction(unigine_Node* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    const & dir;
-    const & up;
+    const Unigine::Math::vec3 & dir;
+    const Unigine::Math::vec3 & up;
     AXIS axis;
     // return: void
 
@@ -1918,9 +1937,10 @@ static PyObject * unigine_Node_get_world_direction(unigine_Node* self, PyObject 
     PyObject *ret = NULL;
     // args:
     AXIS axis;
-    // return: 
+    // return: Unigine::Math::vec3
 
-    unknown type 
+    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getWorldDirection(axis);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1929,7 +1949,7 @@ static PyObject * unigine_Node_set_world_scale(unigine_Node* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    const & s;
+    const Unigine::Math::vec3 & s;
     // return: void
 
     self->unigine_object_ptr->setWorldScale(s);
@@ -1941,9 +1961,10 @@ static PyObject * unigine_Node_get_world_scale(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    // return: 
+    // return: Unigine::Math::vec3
 
-    unknown type 
+    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getWorldScale();
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 
@@ -1978,7 +1999,7 @@ static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    const & r;
+    const Unigine::Math::quat & r;
     // return: void
 
     self->unigine_object_ptr->rotate(r);
@@ -1990,7 +2011,7 @@ static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    const & angles;
+    const Unigine::Math::vec3 & angles;
     // return: void
 
     self->unigine_object_ptr->rotate(angles);
@@ -2042,7 +2063,7 @@ static PyObject * unigine_Node_world_rotate(unigine_Node* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    const & r;
+    const Unigine::Math::quat & r;
     // return: void
 
     self->unigine_object_ptr->worldRotate(r);
@@ -2054,7 +2075,7 @@ static PyObject * unigine_Node_world_rotate(unigine_Node* self, PyObject *arg) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
-    const & angles;
+    const Unigine::Math::vec3 & angles;
     // return: void
 
     self->unigine_object_ptr->worldRotate(angles);
@@ -2093,7 +2114,7 @@ static PyObject * unigine_Node_world_look_at(unigine_Node* self, PyObject *args,
     PyObject *ret = NULL;
     // args:
     const & target;
-    const & up;
+    const Unigine::Math::vec3 & up;
     // return: void
 
     self->unigine_object_ptr->worldLookAt(target, up);
@@ -2106,9 +2127,10 @@ static PyObject * unigine_Node_to_local(unigine_Node* self, PyObject *arg) {
     PyObject *ret = NULL;
     // args:
     const & p;
-    // return: 
+    // return: Unigine::Math::vec3
 
-    unknown type 
+    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->toLocal(p);
+    ret = PyLong_FromLong(retOriginal);
     return ret;
 };
 

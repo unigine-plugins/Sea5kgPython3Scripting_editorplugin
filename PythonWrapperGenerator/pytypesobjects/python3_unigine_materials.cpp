@@ -32,7 +32,7 @@ static PyObject *unigine_Materials_new(PyTypeObject *type, PyObject *args, PyObj
 }
 
 static int unigine_Materials_init(unigine_Materials *self, PyObject *args, PyObject *kwds) {
-    // nothing
+    self->unigine_object_ptr = new Unigine::Materials();
     return 0;
 }
 

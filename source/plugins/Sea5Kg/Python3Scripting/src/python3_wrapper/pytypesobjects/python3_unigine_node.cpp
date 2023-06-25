@@ -106,7 +106,10 @@ static PyMethodDef unigine_Node_methods[] = {
 };
 
 static PyTypeObject unigine_NodeType = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
+
+
+    // PyVarObject_HEAD_INIT(&PyType_Type, 0)
+    PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Node",             // tp_name
     sizeof(unigine_Node) + 16, // tp_basicsize  (magic 16 bytes!!!)
     0,                         // tp_itemsize
@@ -125,7 +128,8 @@ static PyTypeObject unigine_NodeType = {
     0,                         // tp_getattro
     0,                         // tp_setattro
     0,                         // tp_as_buffer
-    Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,        // tp_flags
+    // Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,        // tp_flags
+    Py_TPFLAGS_DEFAULT,        // tp_flags
     "Node Object",         // tp_doc
     0,                         // traverseproc tp_traverse
     0,                         // inquiry tp_clear

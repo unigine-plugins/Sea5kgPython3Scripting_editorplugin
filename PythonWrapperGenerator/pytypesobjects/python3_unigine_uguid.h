@@ -14,8 +14,8 @@ class Python3UnigineUGUID : public Python3PyTypeObjectBase {
 
 class UGUID {
     public:
-        static PyObject * NewObject(Unigine::Ptr<Unigine::UGUID> unigine_object_ptr);
-        static Unigine::Ptr<Unigine::UGUID> Convert(PyObject *pObject);
+        static PyObject * NewObject(Unigine::UGUID * unigine_object_ptr);
+        static Unigine::UGUID * Convert(PyObject *pObject);
 };
 
 }; // namespace PyUnigine
