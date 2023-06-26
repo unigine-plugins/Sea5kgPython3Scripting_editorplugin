@@ -39,104 +39,184 @@ static int unigine_Node_init(unigine_Node *self, PyObject *args, PyObject *kwds)
 
 
 // public : toWorld
-static PyObject * unigine_Node_to_world(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_to_world(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::vec3 & p;
-    // return: 
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::vec3 & p;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & p = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: 
     return ret;
 };
 
 // public (static): getCloneNode
-static PyObject * unigine_Node_get_clone_node(PyObject *arg) {
+static PyObject * unigine_Node_get_clone_node(unigine_Node* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Node> & original_node;
-    // return: Unigine::Ptr<Unigine::Node>
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Node> & original_node;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Node> & original_node = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::Node> retOriginal = Unigine::Node::getCloneNode(original_node);
     ret = PyUnigine::Node::NewObject(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
 
 // public (static): getCloneProperty
-static PyObject * unigine_Node_get_clone_property(PyObject *arg) {
+static PyObject * unigine_Node_get_clone_property(unigine_Node* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Property> & original_property;
-    // return: Unigine::Ptr<Unigine::Property>
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Property> & original_property;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Property> & original_property = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::Property> retOriginal = Unigine::Node::getCloneProperty(original_property);
     ret = PyUnigine::Property::NewObject(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Property>
     return ret;
 };
 
 // public (static): getNode
-static PyObject * unigine_Node_get_node(PyObject *arg) {
+static PyObject * unigine_Node_get_node(unigine_Node* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int id;
-    // return: Unigine::Ptr<Unigine::Node>
+    // parse args:
+    PyObject *pArg1; // int id;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int id = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::Node> retOriginal = Unigine::Node::getNode(id);
     ret = PyUnigine::Node::NewObject(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
 
 // public (static): isNode
-static PyObject * unigine_Node_is_node(PyObject *arg) {
+static PyObject * unigine_Node_is_node(unigine_Node* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Node> & node;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Node> & node;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Node> & node = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = Unigine::Node::isNode(node);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public (static): isNode
-static PyObject * unigine_Node_is_node(PyObject *arg) {
+static PyObject * unigine_Node_is_node(unigine_Node* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int id;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int id;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int id = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = Unigine::Node::isNode(id);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public (static): getTypeID
-static PyObject * unigine_Node_get_type_id(PyObject *arg) {
+static PyObject * unigine_Node_get_type_id(unigine_Node* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * type;
-    // return: Unigine::Node::TYPE
+    // parse args:
+    PyObject *pArg1; // const char * type;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * type = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Node::TYPE retOriginal = Unigine::Node::getTypeID(type);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Node::TYPE
     return ret;
 };
 
 // public (static): getTypeName
-static PyObject * unigine_Node_get_type_name(PyObject *arg) {
+static PyObject * unigine_Node_get_type_name(unigine_Node* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    Unigine::Node::TYPE type;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // Unigine::Node::TYPE type;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    Unigine::Node::TYPE type = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: const char *
     return ret;
 };
 
@@ -144,35 +224,57 @@ static PyObject * unigine_Node_get_type_name(PyObject *arg) {
 static PyObject * unigine_Node_clone(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Ptr<Unigine::Node>
+    // parse args:
 
     Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->clone();
     ret = todo;
+
+    // end
+    // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
 
 // public : swap
-static PyObject * unigine_Node_swap(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_swap(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Node> & n;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Node> & n;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->swap(n);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : setID
-static PyObject * unigine_Node_set_id(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_id(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int id;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int id;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int id = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setID(id);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -180,11 +282,13 @@ static PyObject * unigine_Node_set_id(unigine_Node* self, PyObject *arg) {
 static PyObject * unigine_Node_get_id(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getID();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
@@ -192,11 +296,13 @@ static PyObject * unigine_Node_get_id(unigine_Node* self) {
 static PyObject * unigine_Node_get_type(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Node::TYPE
+    // parse args:
 
     Unigine::Node::TYPE retOriginal = self->unigine_object_ptr->getType();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Node::TYPE
     return ret;
 };
 
@@ -204,10 +310,12 @@ static PyObject * unigine_Node_get_type(unigine_Node* self) {
 static PyObject * unigine_Node_get_type_name(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: const char *
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: const char *
     return ret;
 };
 
@@ -215,11 +323,13 @@ static PyObject * unigine_Node_get_type_name(unigine_Node* self) {
 static PyObject * unigine_Node_is_world(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isWorld();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -227,11 +337,13 @@ static PyObject * unigine_Node_is_world(unigine_Node* self) {
 static PyObject * unigine_Node_is_geodetic(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isGeodetic();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -239,11 +351,13 @@ static PyObject * unigine_Node_is_geodetic(unigine_Node* self) {
 static PyObject * unigine_Node_is_light(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isLight();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -251,11 +365,13 @@ static PyObject * unigine_Node_is_light(unigine_Node* self) {
 static PyObject * unigine_Node_is_decal(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isDecal();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -263,11 +379,13 @@ static PyObject * unigine_Node_is_decal(unigine_Node* self) {
 static PyObject * unigine_Node_is_landscape_layer(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isLandscapeLayer();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -275,11 +393,13 @@ static PyObject * unigine_Node_is_landscape_layer(unigine_Node* self) {
 static PyObject * unigine_Node_is_object(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isObject();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -287,11 +407,13 @@ static PyObject * unigine_Node_is_object(unigine_Node* self) {
 static PyObject * unigine_Node_is_player(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isPlayer();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -299,11 +421,13 @@ static PyObject * unigine_Node_is_player(unigine_Node* self) {
 static PyObject * unigine_Node_is_physical(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isPhysical();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -311,11 +435,13 @@ static PyObject * unigine_Node_is_physical(unigine_Node* self) {
 static PyObject * unigine_Node_is_navigation(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isNavigation();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -323,11 +449,13 @@ static PyObject * unigine_Node_is_navigation(unigine_Node* self) {
 static PyObject * unigine_Node_is_obstacle(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isObstacle();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -335,11 +463,13 @@ static PyObject * unigine_Node_is_obstacle(unigine_Node* self) {
 static PyObject * unigine_Node_is_sound(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isSound();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -347,11 +477,13 @@ static PyObject * unigine_Node_is_sound(unigine_Node* self) {
 static PyObject * unigine_Node_is_field(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isField();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -359,11 +491,13 @@ static PyObject * unigine_Node_is_field(unigine_Node* self) {
 static PyObject * unigine_Node_is_extern(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isExtern();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -371,11 +505,13 @@ static PyObject * unigine_Node_is_extern(unigine_Node* self) {
 static PyObject * unigine_Node_is_enabled_self(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isEnabledSelf();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -383,23 +519,35 @@ static PyObject * unigine_Node_is_enabled_self(unigine_Node* self) {
 static PyObject * unigine_Node_get_lifetime_self(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Node::LIFETIME
+    // parse args:
 
     Unigine::Node::LIFETIME retOriginal = self->unigine_object_ptr->getLifetimeSelf();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Node::LIFETIME
     return ret;
 };
 
 // public : setEnabled
-static PyObject * unigine_Node_set_enabled(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_enabled(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool enabled;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool enabled;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool enabled = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setEnabled(enabled);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -407,23 +555,35 @@ static PyObject * unigine_Node_set_enabled(unigine_Node* self, PyObject *arg) {
 static PyObject * unigine_Node_is_enabled(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isEnabled();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setHandled
-static PyObject * unigine_Node_set_handled(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_handled(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool handled;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool handled;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool handled = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setHandled(handled);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -431,23 +591,35 @@ static PyObject * unigine_Node_set_handled(unigine_Node* self, PyObject *arg) {
 static PyObject * unigine_Node_is_handled(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isHandled();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setImmovable
-static PyObject * unigine_Node_set_immovable(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_immovable(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool immovable;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool immovable;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool immovable = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setImmovable(immovable);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -455,23 +627,35 @@ static PyObject * unigine_Node_set_immovable(unigine_Node* self, PyObject *arg) 
 static PyObject * unigine_Node_is_immovable(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isImmovable();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setTriggerInteractionEnabled
-static PyObject * unigine_Node_set_trigger_interaction_enabled(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_trigger_interaction_enabled(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool enabled;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool enabled;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool enabled = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setTriggerInteractionEnabled(enabled);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -479,23 +663,35 @@ static PyObject * unigine_Node_set_trigger_interaction_enabled(unigine_Node* sel
 static PyObject * unigine_Node_is_trigger_interaction_enabled(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isTriggerInteractionEnabled();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setGrassInteractionEnabled
-static PyObject * unigine_Node_set_grass_interaction_enabled(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_grass_interaction_enabled(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool enabled;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool enabled;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool enabled = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setGrassInteractionEnabled(enabled);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -503,23 +699,35 @@ static PyObject * unigine_Node_set_grass_interaction_enabled(unigine_Node* self,
 static PyObject * unigine_Node_is_grass_interaction_enabled(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isGrassInteractionEnabled();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setClutterInteractionEnabled
-static PyObject * unigine_Node_set_clutter_interaction_enabled(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_clutter_interaction_enabled(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool enabled;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool enabled;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool enabled = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setClutterInteractionEnabled(enabled);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -527,23 +735,35 @@ static PyObject * unigine_Node_set_clutter_interaction_enabled(unigine_Node* sel
 static PyObject * unigine_Node_is_clutter_interaction_enabled(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isClutterInteractionEnabled();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setQuery
-static PyObject * unigine_Node_set_query(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_query(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool query;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool query;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool query = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setQuery(query);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -551,11 +771,13 @@ static PyObject * unigine_Node_set_query(unigine_Node* self, PyObject *arg) {
 static PyObject * unigine_Node_is_query(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isQuery();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -563,23 +785,35 @@ static PyObject * unigine_Node_is_query(unigine_Node* self) {
 static PyObject * unigine_Node_has_query_force(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->hasQueryForce();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setShowInEditorEnabled
-static PyObject * unigine_Node_set_show_in_editor_enabled(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_show_in_editor_enabled(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool enabled;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool enabled;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool enabled = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setShowInEditorEnabled(enabled);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -587,23 +821,35 @@ static PyObject * unigine_Node_set_show_in_editor_enabled(unigine_Node* self, Py
 static PyObject * unigine_Node_is_show_in_editor_enabled(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isShowInEditorEnabled();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setSaveToWorldEnabled
-static PyObject * unigine_Node_set_save_to_world_enabled(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_save_to_world_enabled(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool enabled;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool enabled;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool enabled = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setSaveToWorldEnabled(enabled);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -611,23 +857,35 @@ static PyObject * unigine_Node_set_save_to_world_enabled(unigine_Node* self, PyO
 static PyObject * unigine_Node_is_save_to_world_enabled(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isSaveToWorldEnabled();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setLifetime
-static PyObject * unigine_Node_set_lifetime(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_lifetime(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    Unigine::Node::LIFETIME lifetime;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // Unigine::Node::LIFETIME lifetime;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    Unigine::Node::LIFETIME lifetime = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setLifetime(lifetime);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -635,11 +893,13 @@ static PyObject * unigine_Node_set_lifetime(unigine_Node* self, PyObject *arg) {
 static PyObject * unigine_Node_get_lifetime(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Node::LIFETIME
+    // parse args:
 
     Unigine::Node::LIFETIME retOriginal = self->unigine_object_ptr->getLifetime();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Node::LIFETIME
     return ret;
 };
 
@@ -647,11 +907,13 @@ static PyObject * unigine_Node_get_lifetime(unigine_Node* self) {
 static PyObject * unigine_Node_is_show_in_editor_enabled_self(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isShowInEditorEnabledSelf();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -659,47 +921,79 @@ static PyObject * unigine_Node_is_show_in_editor_enabled_self(unigine_Node* self
 static PyObject * unigine_Node_is_save_to_world_enabled_self(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isSaveToWorldEnabledSelf();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setShowInEditorEnabledRecursive
-static PyObject * unigine_Node_set_show_in_editor_enabled_recursive(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_show_in_editor_enabled_recursive(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool enable;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool enable;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool enable = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setShowInEditorEnabledRecursive(enable);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : setSaveToWorldEnabledRecursive
-static PyObject * unigine_Node_set_save_to_world_enabled_recursive(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_save_to_world_enabled_recursive(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool enable;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool enable;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool enable = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setSaveToWorldEnabledRecursive(enable);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : setName
-static PyObject * unigine_Node_set_name(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_name(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setName(name);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -707,47 +1001,86 @@ static PyObject * unigine_Node_set_name(unigine_Node* self, PyObject *arg) {
 static PyObject * unigine_Node_get_name(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: const char *
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: const char *
     return ret;
 };
 
 // public : setData
-static PyObject * unigine_Node_set_data(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_set_data(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    const char * data;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // const char * data;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * data = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setData(name, data);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getData
-static PyObject * unigine_Node_get_data(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_get_data(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: const char *
     return ret;
 };
 
 // public : setPtr
-static PyObject * unigine_Node_set_ptr(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_ptr(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    void * ptr;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // void * ptr;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    void * ptr = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setPtr(ptr);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -755,10 +1088,12 @@ static PyObject * unigine_Node_set_ptr(unigine_Node* self, PyObject *arg) {
 static PyObject * unigine_Node_get_ptr(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void *
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: void *
     return ret;
 };
 
@@ -766,62 +1101,104 @@ static PyObject * unigine_Node_get_ptr(unigine_Node* self) {
 static PyObject * unigine_Node_get_num_ancestors(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getNumAncestors();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : getAncestor
-static PyObject * unigine_Node_get_ancestor(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_get_ancestor(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Ptr<Unigine::Node>
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->getAncestor(num);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
 
 // public : findAncestor
-static PyObject * unigine_Node_find_ancestor(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_find_ancestor(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->findAncestor();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : findAncestor
-static PyObject * unigine_Node_find_ancestor(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_find_ancestor(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int type;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int type;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int type = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->findAncestor();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : setParent
-static PyObject * unigine_Node_set_parent(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_parent(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Node> & parent;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Node> & parent;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Node> & parent = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setParent(parent);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -829,23 +1206,35 @@ static PyObject * unigine_Node_set_parent(unigine_Node* self, PyObject *arg) {
 static PyObject * unigine_Node_get_parent(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Ptr<Unigine::Node>
+    // parse args:
 
     Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->getParent();
     ret = todo;
+
+    // end
+    // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
 
 // public : setWorldParent
-static PyObject * unigine_Node_set_world_parent(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_world_parent(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Node> & n;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Node> & n;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setWorldParent(n);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -853,72 +1242,124 @@ static PyObject * unigine_Node_set_world_parent(unigine_Node* self, PyObject *ar
 static PyObject * unigine_Node_get_root_node(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Ptr<Unigine::Node>
+    // parse args:
 
     Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->getRootNode();
     ret = todo;
+
+    // end
+    // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
 
 // public : addChild
-static PyObject * unigine_Node_add_child(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_add_child(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Node> & n;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Node> & n;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->addChild(n);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : removeChild
-static PyObject * unigine_Node_remove_child(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_remove_child(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Node> & n;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Node> & n;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->removeChild(n);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : addWorldChild
-static PyObject * unigine_Node_add_world_child(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_add_world_child(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Node> & n;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Node> & n;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->addWorldChild(n);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : removeWorldChild
-static PyObject * unigine_Node_remove_world_child(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_remove_world_child(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Node> & n;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Node> & n;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->removeWorldChild(n);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : isChild
-static PyObject * unigine_Node_is_child(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_is_child(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Node> & n;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Node> & n;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isChild(n);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
@@ -926,77 +1367,143 @@ static PyObject * unigine_Node_is_child(unigine_Node* self, PyObject *arg) {
 static PyObject * unigine_Node_get_num_children(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getNumChildren();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : findChild
-static PyObject * unigine_Node_find_child(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_find_child(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->findChild();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : getChild
-static PyObject * unigine_Node_get_child(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_get_child(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Ptr<Unigine::Node>
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->getChild(num);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
 
 // public : setChildIndex
-static PyObject * unigine_Node_set_child_index(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_set_child_index(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Node> & n;
-    int index;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Node> & n;
+    PyObject *pArg2; // int index;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int index = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setChildIndex(n, index);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getChildIndex
-static PyObject * unigine_Node_get_child_index(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_get_child_index(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Node> & n;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Node> & n;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getChildIndex();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : findNode
-static PyObject * unigine_Node_find_node(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_find_node(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    int recursive;
-    // return: Unigine::Ptr<Unigine::Node>
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // int recursive;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int recursive = PyBytes_AS_STRING(pArg2Str);
 
     Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->findNode(name, recursive);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
 
@@ -1004,23 +1511,35 @@ static PyObject * unigine_Node_find_node(unigine_Node* self, PyObject *args, PyO
 static PyObject * unigine_Node_get_possessor(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Ptr<Unigine::Node>
+    // parse args:
 
     Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->getPossessor();
     ret = todo;
+
+    // end
+    // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
 
 // public : getHierarchy
-static PyObject * unigine_Node_get_hierarchy(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_get_hierarchy(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    Unigine::Vector<Unigine::Ptr<Unigine::Node>> & hierarchy;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // Unigine::Vector<Unigine::Ptr<Unigine::Node>> & hierarchy;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    Unigine::Vector<Unigine::Ptr<Unigine::Node>> & hierarchy = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->getHierarchy(hierarchy);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -1028,273 +1547,524 @@ static PyObject * unigine_Node_get_hierarchy(unigine_Node* self, PyObject *arg) 
 static PyObject * unigine_Node_get_num_properties(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getNumProperties();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : addProperty
-static PyObject * unigine_Node_add_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_add_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->addProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : addProperty
-static PyObject * unigine_Node_add_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_add_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::UGUID & guid;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const Unigine::UGUID & guid;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->addProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : addProperty
-static PyObject * unigine_Node_add_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_add_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Property> & property;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Property> & property;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Property> & property = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->addProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : findProperty
-static PyObject * unigine_Node_find_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_find_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->findProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : findProperty
-static PyObject * unigine_Node_find_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_find_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::UGUID & guid;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const Unigine::UGUID & guid;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->findProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : findProperty
-static PyObject * unigine_Node_find_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_find_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Property> & property;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Property> & property;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Property> & property = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->findProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : setProperty
-static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->setProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : setProperty
-static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::UGUID & guid;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const Unigine::UGUID & guid;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->setProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : setProperty
-static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Property> & property;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Property> & property;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Property> & property = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->setProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : setProperty
-static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const char * name;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const char * name;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg2Str);
 
     int retOriginal = self->unigine_object_ptr->setProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: int
     return ret;
 };
 
 // public : setProperty
-static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::UGUID & guid;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::UGUID & guid;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg2Str);
 
     int retOriginal = self->unigine_object_ptr->setProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: int
     return ret;
 };
 
 // public : setProperty
-static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Ptr<Unigine::Property> & property;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Ptr<Unigine::Property> & property;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Property> & property = PyBytes_AS_STRING(pArg2Str);
 
     int retOriginal = self->unigine_object_ptr->setProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: int
     return ret;
 };
 
 // public : insertProperty
-static PyObject * unigine_Node_insert_property(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_insert_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const char * name;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const char * name;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg2Str);
 
     int retOriginal = self->unigine_object_ptr->insertProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: int
     return ret;
 };
 
 // public : insertProperty
-static PyObject * unigine_Node_insert_property(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_insert_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::UGUID & guid;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::UGUID & guid;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg2Str);
 
     int retOriginal = self->unigine_object_ptr->insertProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: int
     return ret;
 };
 
 // public : insertProperty
-static PyObject * unigine_Node_insert_property(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_insert_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Ptr<Unigine::Property> & property;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Ptr<Unigine::Property> & property;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Property> & property = PyBytes_AS_STRING(pArg2Str);
 
     int retOriginal = self->unigine_object_ptr->insertProperty();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: int
     return ret;
 };
 
 // public : swapProperty
-static PyObject * unigine_Node_swap_property(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_swap_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int from_num;
-    int to_num;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int from_num;
+    PyObject *pArg2; // int to_num;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int from_num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int to_num = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->swapProperty(from_num, to_num);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : removeProperty
-static PyObject * unigine_Node_remove_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_remove_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->removeProperty(num);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : removeProperty
-static PyObject * unigine_Node_remove_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_remove_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->removeProperty(name);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : removeProperty
-static PyObject * unigine_Node_remove_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_remove_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::UGUID & guid;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::UGUID & guid;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->removeProperty(guid);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : removeProperty
-static PyObject * unigine_Node_remove_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_remove_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Property> & property;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Property> & property;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Property> & property = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->removeProperty(property);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -1302,86 +2072,155 @@ static PyObject * unigine_Node_remove_property(unigine_Node* self, PyObject *arg
 static PyObject * unigine_Node_clear_properties(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void
+    // parse args:
 
     self->unigine_object_ptr->clearProperties();
+
+    // end
+    // return: void
     return ret;
 };
 
 // public : getProperty
-static PyObject * unigine_Node_get_property(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_get_property(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Ptr<Unigine::Property>
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::Property> retOriginal = self->unigine_object_ptr->getProperty(num);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Property>
     return ret;
 };
 
 // public : getPropertyName
-static PyObject * unigine_Node_get_property_name(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_get_property_name(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: const char *
     return ret;
 };
 
 // public : setPropertyEnabled
-static PyObject * unigine_Node_set_property_enabled(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_set_property_enabled(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    bool enable;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // bool enable;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    bool enable = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setPropertyEnabled(num, enable);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : isPropertyEnabled
-static PyObject * unigine_Node_is_property_enabled(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_is_property_enabled(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isPropertyEnabled(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : getLostNodePropertyGUID
-static PyObject * unigine_Node_get_lost_node_property_guid(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_get_lost_node_property_guid(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::UGUID
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::UGUID retOriginal = self->unigine_object_ptr->getLostNodePropertyGUID(num);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::UGUID
     return ret;
 };
 
 // public : setTransform
-static PyObject * unigine_Node_set_transform(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_transform(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const & transform;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const & transform;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const & transform = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setTransform(transform);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -1389,22 +2228,34 @@ static PyObject * unigine_Node_set_transform(unigine_Node* self, PyObject *arg) 
 static PyObject * unigine_Node_get_transform(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: 
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: 
     return ret;
 };
 
 // public : setWorldTransform
-static PyObject * unigine_Node_set_world_transform(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_world_transform(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const & transform;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const & transform;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const & transform = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setWorldTransform(transform);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -1412,22 +2263,34 @@ static PyObject * unigine_Node_set_world_transform(unigine_Node* self, PyObject 
 static PyObject * unigine_Node_get_world_transform(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: 
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: 
     return ret;
 };
 
 // public : setOldWorldTransform
-static PyObject * unigine_Node_set_old_world_transform(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_old_world_transform(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const & transform;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const & transform;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const & transform = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setOldWorldTransform(transform);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -1435,10 +2298,12 @@ static PyObject * unigine_Node_set_old_world_transform(unigine_Node* self, PyObj
 static PyObject * unigine_Node_get_old_world_transform(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: 
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: 
     return ret;
 };
 
@@ -1446,10 +2311,12 @@ static PyObject * unigine_Node_get_old_world_transform(unigine_Node* self) {
 static PyObject * unigine_Node_get_old_world_position(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: 
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: 
     return ret;
 };
 
@@ -1457,34 +2324,56 @@ static PyObject * unigine_Node_get_old_world_position(unigine_Node* self) {
 static PyObject * unigine_Node_get_i_world_transform(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: 
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: 
     return ret;
 };
 
 // public : setTransformWithoutChildren
-static PyObject * unigine_Node_set_transform_without_children(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_transform_without_children(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const & transform;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const & transform;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const & transform = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setTransformWithoutChildren(transform);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : setWorldTransformWithoutChildren
-static PyObject * unigine_Node_set_world_transform_without_children(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_world_transform_without_children(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const & transform;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const & transform;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const & transform = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setWorldTransformWithoutChildren(transform);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -1492,11 +2381,13 @@ static PyObject * unigine_Node_set_world_transform_without_children(unigine_Node
 static PyObject * unigine_Node_get_bound_box(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::BoundBox
+    // parse args:
 
     Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getBoundBox();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::BoundBox
     return ret;
 };
 
@@ -1504,11 +2395,13 @@ static PyObject * unigine_Node_get_bound_box(unigine_Node* self) {
 static PyObject * unigine_Node_get_bound_sphere(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::BoundSphere
+    // parse args:
 
     Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getBoundSphere();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::BoundSphere
     return ret;
 };
 
@@ -1516,11 +2409,13 @@ static PyObject * unigine_Node_get_bound_sphere(unigine_Node* self) {
 static PyObject * unigine_Node_get_world_bound_box(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::BoundBox
+    // parse args:
 
     Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getWorldBoundBox();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::BoundBox
     return ret;
 };
 
@@ -1528,11 +2423,13 @@ static PyObject * unigine_Node_get_world_bound_box(unigine_Node* self) {
 static PyObject * unigine_Node_get_world_bound_sphere(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::BoundSphere
+    // parse args:
 
     Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getWorldBoundSphere();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::BoundSphere
     return ret;
 };
 
@@ -1540,11 +2437,13 @@ static PyObject * unigine_Node_get_world_bound_sphere(unigine_Node* self) {
 static PyObject * unigine_Node_get_spatial_bound_box(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::BoundBox
+    // parse args:
 
     Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getSpatialBoundBox();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::BoundBox
     return ret;
 };
 
@@ -1552,11 +2451,13 @@ static PyObject * unigine_Node_get_spatial_bound_box(unigine_Node* self) {
 static PyObject * unigine_Node_get_spatial_bound_sphere(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::BoundSphere
+    // parse args:
 
     Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getSpatialBoundSphere();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::BoundSphere
     return ret;
 };
 
@@ -1564,11 +2465,13 @@ static PyObject * unigine_Node_get_spatial_bound_sphere(unigine_Node* self) {
 static PyObject * unigine_Node_get_hierarchy_bound_box(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::BoundBox
+    // parse args:
 
     Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getHierarchyBoundBox();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::BoundBox
     return ret;
 };
 
@@ -1576,11 +2479,13 @@ static PyObject * unigine_Node_get_hierarchy_bound_box(unigine_Node* self) {
 static PyObject * unigine_Node_get_hierarchy_bound_sphere(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::BoundSphere
+    // parse args:
 
     Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getHierarchyBoundSphere();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::BoundSphere
     return ret;
 };
 
@@ -1588,11 +2493,13 @@ static PyObject * unigine_Node_get_hierarchy_bound_sphere(unigine_Node* self) {
 static PyObject * unigine_Node_get_hierarchy_world_bound_box(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::BoundBox
+    // parse args:
 
     Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getHierarchyWorldBoundBox();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::BoundBox
     return ret;
 };
 
@@ -1600,11 +2507,13 @@ static PyObject * unigine_Node_get_hierarchy_world_bound_box(unigine_Node* self)
 static PyObject * unigine_Node_get_hierarchy_world_bound_sphere(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::BoundSphere
+    // parse args:
 
     Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getHierarchyWorldBoundSphere();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::BoundSphere
     return ret;
 };
 
@@ -1612,11 +2521,13 @@ static PyObject * unigine_Node_get_hierarchy_world_bound_sphere(unigine_Node* se
 static PyObject * unigine_Node_get_hierarchy_spatial_bound_box(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::BoundBox
+    // parse args:
 
     Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getHierarchySpatialBoundBox();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::BoundBox
     return ret;
 };
 
@@ -1624,63 +2535,105 @@ static PyObject * unigine_Node_get_hierarchy_spatial_bound_box(unigine_Node* sel
 static PyObject * unigine_Node_get_hierarchy_spatial_bound_sphere(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::BoundSphere
+    // parse args:
 
     Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getHierarchySpatialBoundSphere();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::BoundSphere
     return ret;
 };
 
 // public : loadWorld
-static PyObject * unigine_Node_load_world(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_load_world(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Xml> & xml;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Xml> & xml;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Xml> & xml = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->loadWorld(xml);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : saveWorld
-static PyObject * unigine_Node_save_world(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_save_world(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Xml> & xml;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Xml> & xml;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Xml> & xml = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->saveWorld(xml);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : saveState
-static PyObject * unigine_Node_save_state(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_save_state(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Stream> & stream;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Stream> & stream;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Stream> & stream = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->saveState(stream);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : restoreState
-static PyObject * unigine_Node_restore_state(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_restore_state(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Stream> & stream;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Stream> & stream;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Stream> & stream = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->restoreState(stream);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
@@ -1688,11 +2641,13 @@ static PyObject * unigine_Node_restore_state(unigine_Node* self, PyObject *arg) 
 static PyObject * unigine_Node_get_object_body(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Ptr<Unigine::Body>
+    // parse args:
 
     Unigine::Ptr<Unigine::Body> retOriginal = self->unigine_object_ptr->getObjectBody();
     ret = todo;
+
+    // end
+    // return: Unigine::Ptr<Unigine::Body>
     return ret;
 };
 
@@ -1700,11 +2655,13 @@ static PyObject * unigine_Node_get_object_body(unigine_Node* self) {
 static PyObject * unigine_Node_get_object_body_rigid(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Ptr<Unigine::BodyRigid>
+    // parse args:
 
     Unigine::Ptr<Unigine::BodyRigid> retOriginal = self->unigine_object_ptr->getObjectBodyRigid();
     ret = todo;
+
+    // end
+    // return: Unigine::Ptr<Unigine::BodyRigid>
     return ret;
 };
 
@@ -1712,11 +2669,13 @@ static PyObject * unigine_Node_get_object_body_rigid(unigine_Node* self) {
 static PyObject * unigine_Node_get_body_linear_velocity(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::vec3
+    // parse args:
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getBodyLinearVelocity();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::vec3
     return ret;
 };
 
@@ -1724,24 +2683,36 @@ static PyObject * unigine_Node_get_body_linear_velocity(unigine_Node* self) {
 static PyObject * unigine_Node_get_body_angular_velocity(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::vec3
+    // parse args:
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getBodyAngularVelocity();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::vec3
     return ret;
 };
 
 // public : getBodyWorldVelocity
-static PyObject * unigine_Node_get_body_world_velocity(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_get_body_world_velocity(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const & point;
-    // return: Unigine::Math::vec3
+    // parse args:
+    PyObject *pArg1; // const & point;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const & point = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getBodyWorldVelocity(point);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec3
     return ret;
 };
 
@@ -1749,36 +2720,58 @@ static PyObject * unigine_Node_get_body_world_velocity(unigine_Node* self, PyObj
 static PyObject * unigine_Node_get_num_world_triggers(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getNumWorldTriggers();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : getWorldTrigger
-static PyObject * unigine_Node_get_world_trigger(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_get_world_trigger(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Ptr<Unigine::WorldTrigger>
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::WorldTrigger> retOriginal = self->unigine_object_ptr->getWorldTrigger(num);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::WorldTrigger>
     return ret;
 };
 
 // public : setPosition
-static PyObject * unigine_Node_set_position(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_position(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const & pos;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const & pos;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const & pos = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setPosition(pos);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -1786,23 +2779,42 @@ static PyObject * unigine_Node_set_position(unigine_Node* self, PyObject *arg) {
 static PyObject * unigine_Node_get_position(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: 
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: 
     return ret;
 };
 
 // public : setRotation
-static PyObject * unigine_Node_set_rotation(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_set_rotation(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::quat & rot;
-    bool identity;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::quat & rot;
+    PyObject *pArg2; // bool identity;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::quat & rot = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    bool identity = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setRotation(rot, identity);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
@@ -1810,50 +2822,96 @@ static PyObject * unigine_Node_set_rotation(unigine_Node* self, PyObject *args, 
 static PyObject * unigine_Node_get_rotation(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::quat
+    // parse args:
 
     Unigine::Math::quat retOriginal = self->unigine_object_ptr->getRotation();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::quat
     return ret;
 };
 
 // public : setDirection
-static PyObject * unigine_Node_set_direction(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_set_direction(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::vec3 & dir;
-    const Unigine::Math::vec3 & up;
-    AXIS axis;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::vec3 & dir;
+    PyObject *pArg2; // const Unigine::Math::vec3 & up;
+    PyObject *pArg3; // AXIS axis;
+    PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & dir = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & up = PyBytes_AS_STRING(pArg2Str);
+
+    // pArg3
+    PyObject* pArg3Repr = PyObject_Repr(pArg3);
+    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
+    AXIS axis = PyBytes_AS_STRING(pArg3Str);
 
     self->unigine_object_ptr->setDirection(dir, up, axis);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    Py_XDECREF(pArg3Repr);
+    Py_XDECREF(pArg3Str);
+    // return: void
     return ret;
 };
 
 // public : getDirection
-static PyObject * unigine_Node_get_direction(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_get_direction(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    AXIS axis;
-    // return: Unigine::Math::vec3
+    // parse args:
+    PyObject *pArg1; // AXIS axis;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    AXIS axis = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getDirection(axis);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec3
     return ret;
 };
 
 // public : setScale
-static PyObject * unigine_Node_set_scale(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_scale(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::vec3 & s;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::vec3 & s;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & s = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setScale(s);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -1861,23 +2919,35 @@ static PyObject * unigine_Node_set_scale(unigine_Node* self, PyObject *arg) {
 static PyObject * unigine_Node_get_scale(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::vec3
+    // parse args:
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getScale();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::vec3
     return ret;
 };
 
 // public : setWorldPosition
-static PyObject * unigine_Node_set_world_position(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_world_position(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const & pos;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const & pos;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const & pos = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setWorldPosition(pos);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -1885,23 +2955,42 @@ static PyObject * unigine_Node_set_world_position(unigine_Node* self, PyObject *
 static PyObject * unigine_Node_get_world_position(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: 
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: 
     return ret;
 };
 
 // public : setWorldRotation
-static PyObject * unigine_Node_set_world_rotation(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_set_world_rotation(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::quat & rot;
-    bool identity;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::quat & rot;
+    PyObject *pArg2; // bool identity;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::quat & rot = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    bool identity = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setWorldRotation(rot, identity);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
@@ -1909,50 +2998,96 @@ static PyObject * unigine_Node_set_world_rotation(unigine_Node* self, PyObject *
 static PyObject * unigine_Node_get_world_rotation(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::quat
+    // parse args:
 
     Unigine::Math::quat retOriginal = self->unigine_object_ptr->getWorldRotation();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::quat
     return ret;
 };
 
 // public : setWorldDirection
-static PyObject * unigine_Node_set_world_direction(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_set_world_direction(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::vec3 & dir;
-    const Unigine::Math::vec3 & up;
-    AXIS axis;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::vec3 & dir;
+    PyObject *pArg2; // const Unigine::Math::vec3 & up;
+    PyObject *pArg3; // AXIS axis;
+    PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & dir = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & up = PyBytes_AS_STRING(pArg2Str);
+
+    // pArg3
+    PyObject* pArg3Repr = PyObject_Repr(pArg3);
+    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
+    AXIS axis = PyBytes_AS_STRING(pArg3Str);
 
     self->unigine_object_ptr->setWorldDirection(dir, up, axis);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    Py_XDECREF(pArg3Repr);
+    Py_XDECREF(pArg3Str);
+    // return: void
     return ret;
 };
 
 // public : getWorldDirection
-static PyObject * unigine_Node_get_world_direction(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_get_world_direction(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    AXIS axis;
-    // return: Unigine::Math::vec3
+    // parse args:
+    PyObject *pArg1; // AXIS axis;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    AXIS axis = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getWorldDirection(axis);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec3
     return ret;
 };
 
 // public : setWorldScale
-static PyObject * unigine_Node_set_world_scale(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_world_scale(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::vec3 & s;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::vec3 & s;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & s = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setWorldScale(s);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -1960,177 +3095,372 @@ static PyObject * unigine_Node_set_world_scale(unigine_Node* self, PyObject *arg
 static PyObject * unigine_Node_get_world_scale(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::vec3
+    // parse args:
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getWorldScale();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::vec3
     return ret;
 };
 
 // public : translate
-static PyObject * unigine_Node_translate(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_translate(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const & t;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const & t;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const & t = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->translate(t);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : translate
-static PyObject * unigine_Node_translate(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_translate(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-     x;
-     y;
-     z;
-    // return: void
+    // parse args:
+    PyObject *pArg1; //  x;
+    PyObject *pArg2; //  y;
+    PyObject *pArg3; //  z;
+    PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+     x = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+     y = PyBytes_AS_STRING(pArg2Str);
+
+    // pArg3
+    PyObject* pArg3Repr = PyObject_Repr(pArg3);
+    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
+     z = PyBytes_AS_STRING(pArg3Str);
 
     self->unigine_object_ptr->translate(x, y, z);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    Py_XDECREF(pArg3Repr);
+    Py_XDECREF(pArg3Str);
+    // return: void
     return ret;
 };
 
 // public : rotate
-static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::quat & r;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::quat & r;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::quat & r = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->rotate(r);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : rotate
-static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::vec3 & angles;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::vec3 & angles;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & angles = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->rotate(angles);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : rotate
-static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    float angle_x;
-    float angle_y;
-    float angle_z;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // float angle_x;
+    PyObject *pArg2; // float angle_y;
+    PyObject *pArg3; // float angle_z;
+    PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    float angle_x = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    float angle_y = PyBytes_AS_STRING(pArg2Str);
+
+    // pArg3
+    PyObject* pArg3Repr = PyObject_Repr(pArg3);
+    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
+    float angle_z = PyBytes_AS_STRING(pArg3Str);
 
     self->unigine_object_ptr->rotate(angle_x, angle_y, angle_z);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    Py_XDECREF(pArg3Repr);
+    Py_XDECREF(pArg3Str);
+    // return: void
     return ret;
 };
 
 // public : worldTranslate
-static PyObject * unigine_Node_world_translate(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_world_translate(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const & t;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const & t;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const & t = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->worldTranslate(t);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : worldTranslate
-static PyObject * unigine_Node_world_translate(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_world_translate(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-     x;
-     y;
-     z;
-    // return: void
+    // parse args:
+    PyObject *pArg1; //  x;
+    PyObject *pArg2; //  y;
+    PyObject *pArg3; //  z;
+    PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+     x = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+     y = PyBytes_AS_STRING(pArg2Str);
+
+    // pArg3
+    PyObject* pArg3Repr = PyObject_Repr(pArg3);
+    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
+     z = PyBytes_AS_STRING(pArg3Str);
 
     self->unigine_object_ptr->worldTranslate(x, y, z);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    Py_XDECREF(pArg3Repr);
+    Py_XDECREF(pArg3Str);
+    // return: void
     return ret;
 };
 
 // public : worldRotate
-static PyObject * unigine_Node_world_rotate(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_world_rotate(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::quat & r;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::quat & r;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::quat & r = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->worldRotate(r);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : worldRotate
-static PyObject * unigine_Node_world_rotate(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_world_rotate(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::vec3 & angles;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::vec3 & angles;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & angles = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->worldRotate(angles);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : worldRotate
-static PyObject * unigine_Node_world_rotate(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_world_rotate(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    float angle_x;
-    float angle_y;
-    float angle_z;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // float angle_x;
+    PyObject *pArg2; // float angle_y;
+    PyObject *pArg3; // float angle_z;
+    PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    float angle_x = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    float angle_y = PyBytes_AS_STRING(pArg2Str);
+
+    // pArg3
+    PyObject* pArg3Repr = PyObject_Repr(pArg3);
+    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
+    float angle_z = PyBytes_AS_STRING(pArg3Str);
 
     self->unigine_object_ptr->worldRotate(angle_x, angle_y, angle_z);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    Py_XDECREF(pArg3Repr);
+    Py_XDECREF(pArg3Str);
+    // return: void
     return ret;
 };
 
 // public : worldLookAt
-static PyObject * unigine_Node_world_look_at(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_world_look_at(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const & target;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const & target;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const & target = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->worldLookAt(target);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : worldLookAt
-static PyObject * unigine_Node_world_look_at(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_world_look_at(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const & target;
-    const Unigine::Math::vec3 & up;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const & target;
+    PyObject *pArg2; // const Unigine::Math::vec3 & up;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const & target = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & up = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->worldLookAt(target, up);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : toLocal
-static PyObject * unigine_Node_to_local(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_to_local(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const & p;
-    // return: Unigine::Math::vec3
+    // parse args:
+    PyObject *pArg1; // const & p;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const & p = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->toLocal(p);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec3
     return ret;
 };
 
@@ -2138,22 +3468,34 @@ static PyObject * unigine_Node_to_local(unigine_Node* self, PyObject *arg) {
 static PyObject * unigine_Node_render_visualizer(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void
+    // parse args:
 
     self->unigine_object_ptr->renderVisualizer();
+
+    // end
+    // return: void
     return ret;
 };
 
 // public : setVariable
-static PyObject * unigine_Node_set_variable(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_set_variable(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Variable & variable;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Variable & variable;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Variable & variable = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setVariable(variable);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -2161,11 +3503,13 @@ static PyObject * unigine_Node_set_variable(unigine_Node* self, PyObject *arg) {
 static PyObject * unigine_Node_get_variable(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Variable
+    // parse args:
 
     Unigine::Variable retOriginal = self->unigine_object_ptr->getVariable();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Variable
     return ret;
 };
 
@@ -2173,62 +3517,111 @@ static PyObject * unigine_Node_get_variable(unigine_Node* self) {
 static PyObject * unigine_Node_has_variable(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->hasVariable();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setVariable
-static PyObject * unigine_Node_set_variable(unigine_Node* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Node_set_variable(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    const Unigine::Variable & variable;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // const Unigine::Variable & variable;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Variable & variable = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setVariable(name, variable);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getVariable
-static PyObject * unigine_Node_get_variable(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_get_variable(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: Unigine::Variable
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Variable retOriginal = self->unigine_object_ptr->getVariable(name);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Variable
     return ret;
 };
 
 // public : hasVariable
-static PyObject * unigine_Node_has_variable(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_has_variable(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->hasVariable(name);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : removeVariable
-static PyObject * unigine_Node_remove_variable(unigine_Node* self, PyObject *arg) {
+static PyObject * unigine_Node_remove_variable(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->removeVariable(name);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -2236,11 +3629,13 @@ static PyObject * unigine_Node_remove_variable(unigine_Node* self, PyObject *arg
 static PyObject * unigine_Node_get_geodetic_pivot(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Ptr<Unigine::GeodeticPivot>
+    // parse args:
 
     Unigine::Ptr<Unigine::GeodeticPivot> retOriginal = self->unigine_object_ptr->getGeodeticPivot();
     ret = todo;
+
+    // end
+    // return: Unigine::Ptr<Unigine::GeodeticPivot>
     return ret;
 };
 
@@ -2248,45 +3643,47 @@ static PyObject * unigine_Node_get_geodetic_pivot(unigine_Node* self) {
 static PyObject * unigine_Node_update_enabled(unigine_Node* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void
+    // parse args:
 
     self->unigine_object_ptr->updateEnabled();
+
+    // end
+    // return: void
     return ret;
 };
 
 
 static PyMethodDef unigine_Node_methods[] = {
     {
-        "to_world", (PyCFunction)unigine_Node_to_world, METH_O,
+        "to_world", (PyCFunction)unigine_Node_to_world, METH_VARARGS,
         "public : toWorld"
     },
     {
-        "get_clone_node", (PyCFunction)unigine_Node_get_clone_node, METH_STATIC|METH_O,
+        "get_clone_node", (PyCFunction)unigine_Node_get_clone_node, METH_STATIC|METH_VARARGS,
         "public (static): getCloneNode"
     },
     {
-        "get_clone_property", (PyCFunction)unigine_Node_get_clone_property, METH_STATIC|METH_O,
+        "get_clone_property", (PyCFunction)unigine_Node_get_clone_property, METH_STATIC|METH_VARARGS,
         "public (static): getCloneProperty"
     },
     {
-        "get_node", (PyCFunction)unigine_Node_get_node, METH_STATIC|METH_O,
+        "get_node", (PyCFunction)unigine_Node_get_node, METH_STATIC|METH_VARARGS,
         "public (static): getNode"
     },
     {
-        "is_node", (PyCFunction)unigine_Node_is_node, METH_STATIC|METH_O,
+        "is_node", (PyCFunction)unigine_Node_is_node, METH_STATIC|METH_VARARGS,
         "public (static): isNode"
     },
     {
-        "is_node", (PyCFunction)unigine_Node_is_node, METH_STATIC|METH_O,
+        "is_node", (PyCFunction)unigine_Node_is_node, METH_STATIC|METH_VARARGS,
         "public (static): isNode"
     },
     {
-        "get_type_id", (PyCFunction)unigine_Node_get_type_id, METH_STATIC|METH_O,
+        "get_type_id", (PyCFunction)unigine_Node_get_type_id, METH_STATIC|METH_VARARGS,
         "public (static): getTypeID"
     },
     {
-        "get_type_name", (PyCFunction)unigine_Node_get_type_name, METH_STATIC|METH_O,
+        "get_type_name", (PyCFunction)unigine_Node_get_type_name, METH_STATIC|METH_VARARGS,
         "public (static): getTypeName"
     },
     {
@@ -2294,11 +3691,11 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : clone"
     },
     {
-        "swap", (PyCFunction)unigine_Node_swap, METH_O,
+        "swap", (PyCFunction)unigine_Node_swap, METH_VARARGS,
         "public : swap"
     },
     {
-        "set_id", (PyCFunction)unigine_Node_set_id, METH_O,
+        "set_id", (PyCFunction)unigine_Node_set_id, METH_VARARGS,
         "public : setID"
     },
     {
@@ -2374,7 +3771,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getLifetimeSelf"
     },
     {
-        "set_enabled", (PyCFunction)unigine_Node_set_enabled, METH_O,
+        "set_enabled", (PyCFunction)unigine_Node_set_enabled, METH_VARARGS,
         "public : setEnabled"
     },
     {
@@ -2382,7 +3779,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : isEnabled"
     },
     {
-        "set_handled", (PyCFunction)unigine_Node_set_handled, METH_O,
+        "set_handled", (PyCFunction)unigine_Node_set_handled, METH_VARARGS,
         "public : setHandled"
     },
     {
@@ -2390,7 +3787,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : isHandled"
     },
     {
-        "set_immovable", (PyCFunction)unigine_Node_set_immovable, METH_O,
+        "set_immovable", (PyCFunction)unigine_Node_set_immovable, METH_VARARGS,
         "public : setImmovable"
     },
     {
@@ -2398,7 +3795,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : isImmovable"
     },
     {
-        "set_trigger_interaction_enabled", (PyCFunction)unigine_Node_set_trigger_interaction_enabled, METH_O,
+        "set_trigger_interaction_enabled", (PyCFunction)unigine_Node_set_trigger_interaction_enabled, METH_VARARGS,
         "public : setTriggerInteractionEnabled"
     },
     {
@@ -2406,7 +3803,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : isTriggerInteractionEnabled"
     },
     {
-        "set_grass_interaction_enabled", (PyCFunction)unigine_Node_set_grass_interaction_enabled, METH_O,
+        "set_grass_interaction_enabled", (PyCFunction)unigine_Node_set_grass_interaction_enabled, METH_VARARGS,
         "public : setGrassInteractionEnabled"
     },
     {
@@ -2414,7 +3811,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : isGrassInteractionEnabled"
     },
     {
-        "set_clutter_interaction_enabled", (PyCFunction)unigine_Node_set_clutter_interaction_enabled, METH_O,
+        "set_clutter_interaction_enabled", (PyCFunction)unigine_Node_set_clutter_interaction_enabled, METH_VARARGS,
         "public : setClutterInteractionEnabled"
     },
     {
@@ -2422,7 +3819,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : isClutterInteractionEnabled"
     },
     {
-        "set_query", (PyCFunction)unigine_Node_set_query, METH_O,
+        "set_query", (PyCFunction)unigine_Node_set_query, METH_VARARGS,
         "public : setQuery"
     },
     {
@@ -2434,7 +3831,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : hasQueryForce"
     },
     {
-        "set_show_in_editor_enabled", (PyCFunction)unigine_Node_set_show_in_editor_enabled, METH_O,
+        "set_show_in_editor_enabled", (PyCFunction)unigine_Node_set_show_in_editor_enabled, METH_VARARGS,
         "public : setShowInEditorEnabled"
     },
     {
@@ -2442,7 +3839,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : isShowInEditorEnabled"
     },
     {
-        "set_save_to_world_enabled", (PyCFunction)unigine_Node_set_save_to_world_enabled, METH_O,
+        "set_save_to_world_enabled", (PyCFunction)unigine_Node_set_save_to_world_enabled, METH_VARARGS,
         "public : setSaveToWorldEnabled"
     },
     {
@@ -2450,7 +3847,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : isSaveToWorldEnabled"
     },
     {
-        "set_lifetime", (PyCFunction)unigine_Node_set_lifetime, METH_O,
+        "set_lifetime", (PyCFunction)unigine_Node_set_lifetime, METH_VARARGS,
         "public : setLifetime"
     },
     {
@@ -2466,15 +3863,15 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : isSaveToWorldEnabledSelf"
     },
     {
-        "set_show_in_editor_enabled_recursive", (PyCFunction)unigine_Node_set_show_in_editor_enabled_recursive, METH_O,
+        "set_show_in_editor_enabled_recursive", (PyCFunction)unigine_Node_set_show_in_editor_enabled_recursive, METH_VARARGS,
         "public : setShowInEditorEnabledRecursive"
     },
     {
-        "set_save_to_world_enabled_recursive", (PyCFunction)unigine_Node_set_save_to_world_enabled_recursive, METH_O,
+        "set_save_to_world_enabled_recursive", (PyCFunction)unigine_Node_set_save_to_world_enabled_recursive, METH_VARARGS,
         "public : setSaveToWorldEnabledRecursive"
     },
     {
-        "set_name", (PyCFunction)unigine_Node_set_name, METH_O,
+        "set_name", (PyCFunction)unigine_Node_set_name, METH_VARARGS,
         "public : setName"
     },
     {
@@ -2482,15 +3879,15 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getName"
     },
     {
-        "set_data", (PyCFunction)unigine_Node_set_data, METH_VARARGS|METH_KEYWORDS,
+        "set_data", (PyCFunction)unigine_Node_set_data, METH_VARARGS,
         "public : setData"
     },
     {
-        "get_data", (PyCFunction)unigine_Node_get_data, METH_O,
+        "get_data", (PyCFunction)unigine_Node_get_data, METH_VARARGS,
         "public : getData"
     },
     {
-        "set_ptr", (PyCFunction)unigine_Node_set_ptr, METH_O,
+        "set_ptr", (PyCFunction)unigine_Node_set_ptr, METH_VARARGS,
         "public : setPtr"
     },
     {
@@ -2502,19 +3899,19 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getNumAncestors"
     },
     {
-        "get_ancestor", (PyCFunction)unigine_Node_get_ancestor, METH_O,
+        "get_ancestor", (PyCFunction)unigine_Node_get_ancestor, METH_VARARGS,
         "public : getAncestor"
     },
     {
-        "find_ancestor", (PyCFunction)unigine_Node_find_ancestor, METH_O,
+        "find_ancestor", (PyCFunction)unigine_Node_find_ancestor, METH_VARARGS,
         "public : findAncestor"
     },
     {
-        "find_ancestor", (PyCFunction)unigine_Node_find_ancestor, METH_O,
+        "find_ancestor", (PyCFunction)unigine_Node_find_ancestor, METH_VARARGS,
         "public : findAncestor"
     },
     {
-        "set_parent", (PyCFunction)unigine_Node_set_parent, METH_O,
+        "set_parent", (PyCFunction)unigine_Node_set_parent, METH_VARARGS,
         "public : setParent"
     },
     {
@@ -2522,7 +3919,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getParent"
     },
     {
-        "set_world_parent", (PyCFunction)unigine_Node_set_world_parent, METH_O,
+        "set_world_parent", (PyCFunction)unigine_Node_set_world_parent, METH_VARARGS,
         "public : setWorldParent"
     },
     {
@@ -2530,23 +3927,23 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getRootNode"
     },
     {
-        "add_child", (PyCFunction)unigine_Node_add_child, METH_O,
+        "add_child", (PyCFunction)unigine_Node_add_child, METH_VARARGS,
         "public : addChild"
     },
     {
-        "remove_child", (PyCFunction)unigine_Node_remove_child, METH_O,
+        "remove_child", (PyCFunction)unigine_Node_remove_child, METH_VARARGS,
         "public : removeChild"
     },
     {
-        "add_world_child", (PyCFunction)unigine_Node_add_world_child, METH_O,
+        "add_world_child", (PyCFunction)unigine_Node_add_world_child, METH_VARARGS,
         "public : addWorldChild"
     },
     {
-        "remove_world_child", (PyCFunction)unigine_Node_remove_world_child, METH_O,
+        "remove_world_child", (PyCFunction)unigine_Node_remove_world_child, METH_VARARGS,
         "public : removeWorldChild"
     },
     {
-        "is_child", (PyCFunction)unigine_Node_is_child, METH_O,
+        "is_child", (PyCFunction)unigine_Node_is_child, METH_VARARGS,
         "public : isChild"
     },
     {
@@ -2554,23 +3951,23 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getNumChildren"
     },
     {
-        "find_child", (PyCFunction)unigine_Node_find_child, METH_O,
+        "find_child", (PyCFunction)unigine_Node_find_child, METH_VARARGS,
         "public : findChild"
     },
     {
-        "get_child", (PyCFunction)unigine_Node_get_child, METH_O,
+        "get_child", (PyCFunction)unigine_Node_get_child, METH_VARARGS,
         "public : getChild"
     },
     {
-        "set_child_index", (PyCFunction)unigine_Node_set_child_index, METH_VARARGS|METH_KEYWORDS,
+        "set_child_index", (PyCFunction)unigine_Node_set_child_index, METH_VARARGS,
         "public : setChildIndex"
     },
     {
-        "get_child_index", (PyCFunction)unigine_Node_get_child_index, METH_O,
+        "get_child_index", (PyCFunction)unigine_Node_get_child_index, METH_VARARGS,
         "public : getChildIndex"
     },
     {
-        "find_node", (PyCFunction)unigine_Node_find_node, METH_VARARGS|METH_KEYWORDS,
+        "find_node", (PyCFunction)unigine_Node_find_node, METH_VARARGS,
         "public : findNode"
     },
     {
@@ -2578,7 +3975,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getPossessor"
     },
     {
-        "get_hierarchy", (PyCFunction)unigine_Node_get_hierarchy, METH_O,
+        "get_hierarchy", (PyCFunction)unigine_Node_get_hierarchy, METH_VARARGS,
         "public : getHierarchy"
     },
     {
@@ -2586,83 +3983,83 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getNumProperties"
     },
     {
-        "add_property", (PyCFunction)unigine_Node_add_property, METH_O,
+        "add_property", (PyCFunction)unigine_Node_add_property, METH_VARARGS,
         "public : addProperty"
     },
     {
-        "add_property", (PyCFunction)unigine_Node_add_property, METH_O,
+        "add_property", (PyCFunction)unigine_Node_add_property, METH_VARARGS,
         "public : addProperty"
     },
     {
-        "add_property", (PyCFunction)unigine_Node_add_property, METH_O,
+        "add_property", (PyCFunction)unigine_Node_add_property, METH_VARARGS,
         "public : addProperty"
     },
     {
-        "find_property", (PyCFunction)unigine_Node_find_property, METH_O,
+        "find_property", (PyCFunction)unigine_Node_find_property, METH_VARARGS,
         "public : findProperty"
     },
     {
-        "find_property", (PyCFunction)unigine_Node_find_property, METH_O,
+        "find_property", (PyCFunction)unigine_Node_find_property, METH_VARARGS,
         "public : findProperty"
     },
     {
-        "find_property", (PyCFunction)unigine_Node_find_property, METH_O,
+        "find_property", (PyCFunction)unigine_Node_find_property, METH_VARARGS,
         "public : findProperty"
     },
     {
-        "set_property", (PyCFunction)unigine_Node_set_property, METH_O,
+        "set_property", (PyCFunction)unigine_Node_set_property, METH_VARARGS,
         "public : setProperty"
     },
     {
-        "set_property", (PyCFunction)unigine_Node_set_property, METH_O,
+        "set_property", (PyCFunction)unigine_Node_set_property, METH_VARARGS,
         "public : setProperty"
     },
     {
-        "set_property", (PyCFunction)unigine_Node_set_property, METH_O,
+        "set_property", (PyCFunction)unigine_Node_set_property, METH_VARARGS,
         "public : setProperty"
     },
     {
-        "set_property", (PyCFunction)unigine_Node_set_property, METH_VARARGS|METH_KEYWORDS,
+        "set_property", (PyCFunction)unigine_Node_set_property, METH_VARARGS,
         "public : setProperty"
     },
     {
-        "set_property", (PyCFunction)unigine_Node_set_property, METH_VARARGS|METH_KEYWORDS,
+        "set_property", (PyCFunction)unigine_Node_set_property, METH_VARARGS,
         "public : setProperty"
     },
     {
-        "set_property", (PyCFunction)unigine_Node_set_property, METH_VARARGS|METH_KEYWORDS,
+        "set_property", (PyCFunction)unigine_Node_set_property, METH_VARARGS,
         "public : setProperty"
     },
     {
-        "insert_property", (PyCFunction)unigine_Node_insert_property, METH_VARARGS|METH_KEYWORDS,
+        "insert_property", (PyCFunction)unigine_Node_insert_property, METH_VARARGS,
         "public : insertProperty"
     },
     {
-        "insert_property", (PyCFunction)unigine_Node_insert_property, METH_VARARGS|METH_KEYWORDS,
+        "insert_property", (PyCFunction)unigine_Node_insert_property, METH_VARARGS,
         "public : insertProperty"
     },
     {
-        "insert_property", (PyCFunction)unigine_Node_insert_property, METH_VARARGS|METH_KEYWORDS,
+        "insert_property", (PyCFunction)unigine_Node_insert_property, METH_VARARGS,
         "public : insertProperty"
     },
     {
-        "swap_property", (PyCFunction)unigine_Node_swap_property, METH_VARARGS|METH_KEYWORDS,
+        "swap_property", (PyCFunction)unigine_Node_swap_property, METH_VARARGS,
         "public : swapProperty"
     },
     {
-        "remove_property", (PyCFunction)unigine_Node_remove_property, METH_O,
+        "remove_property", (PyCFunction)unigine_Node_remove_property, METH_VARARGS,
         "public : removeProperty"
     },
     {
-        "remove_property", (PyCFunction)unigine_Node_remove_property, METH_O,
+        "remove_property", (PyCFunction)unigine_Node_remove_property, METH_VARARGS,
         "public : removeProperty"
     },
     {
-        "remove_property", (PyCFunction)unigine_Node_remove_property, METH_O,
+        "remove_property", (PyCFunction)unigine_Node_remove_property, METH_VARARGS,
         "public : removeProperty"
     },
     {
-        "remove_property", (PyCFunction)unigine_Node_remove_property, METH_O,
+        "remove_property", (PyCFunction)unigine_Node_remove_property, METH_VARARGS,
         "public : removeProperty"
     },
     {
@@ -2670,27 +4067,27 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : clearProperties"
     },
     {
-        "get_property", (PyCFunction)unigine_Node_get_property, METH_O,
+        "get_property", (PyCFunction)unigine_Node_get_property, METH_VARARGS,
         "public : getProperty"
     },
     {
-        "get_property_name", (PyCFunction)unigine_Node_get_property_name, METH_O,
+        "get_property_name", (PyCFunction)unigine_Node_get_property_name, METH_VARARGS,
         "public : getPropertyName"
     },
     {
-        "set_property_enabled", (PyCFunction)unigine_Node_set_property_enabled, METH_VARARGS|METH_KEYWORDS,
+        "set_property_enabled", (PyCFunction)unigine_Node_set_property_enabled, METH_VARARGS,
         "public : setPropertyEnabled"
     },
     {
-        "is_property_enabled", (PyCFunction)unigine_Node_is_property_enabled, METH_O,
+        "is_property_enabled", (PyCFunction)unigine_Node_is_property_enabled, METH_VARARGS,
         "public : isPropertyEnabled"
     },
     {
-        "get_lost_node_property_guid", (PyCFunction)unigine_Node_get_lost_node_property_guid, METH_O,
+        "get_lost_node_property_guid", (PyCFunction)unigine_Node_get_lost_node_property_guid, METH_VARARGS,
         "public : getLostNodePropertyGUID"
     },
     {
-        "set_transform", (PyCFunction)unigine_Node_set_transform, METH_O,
+        "set_transform", (PyCFunction)unigine_Node_set_transform, METH_VARARGS,
         "public : setTransform"
     },
     {
@@ -2698,7 +4095,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getTransform"
     },
     {
-        "set_world_transform", (PyCFunction)unigine_Node_set_world_transform, METH_O,
+        "set_world_transform", (PyCFunction)unigine_Node_set_world_transform, METH_VARARGS,
         "public : setWorldTransform"
     },
     {
@@ -2706,7 +4103,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getWorldTransform"
     },
     {
-        "set_old_world_transform", (PyCFunction)unigine_Node_set_old_world_transform, METH_O,
+        "set_old_world_transform", (PyCFunction)unigine_Node_set_old_world_transform, METH_VARARGS,
         "public : setOldWorldTransform"
     },
     {
@@ -2722,11 +4119,11 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getIWorldTransform"
     },
     {
-        "set_transform_without_children", (PyCFunction)unigine_Node_set_transform_without_children, METH_O,
+        "set_transform_without_children", (PyCFunction)unigine_Node_set_transform_without_children, METH_VARARGS,
         "public : setTransformWithoutChildren"
     },
     {
-        "set_world_transform_without_children", (PyCFunction)unigine_Node_set_world_transform_without_children, METH_O,
+        "set_world_transform_without_children", (PyCFunction)unigine_Node_set_world_transform_without_children, METH_VARARGS,
         "public : setWorldTransformWithoutChildren"
     },
     {
@@ -2778,19 +4175,19 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getHierarchySpatialBoundSphere"
     },
     {
-        "load_world", (PyCFunction)unigine_Node_load_world, METH_O,
+        "load_world", (PyCFunction)unigine_Node_load_world, METH_VARARGS,
         "public : loadWorld"
     },
     {
-        "save_world", (PyCFunction)unigine_Node_save_world, METH_O,
+        "save_world", (PyCFunction)unigine_Node_save_world, METH_VARARGS,
         "public : saveWorld"
     },
     {
-        "save_state", (PyCFunction)unigine_Node_save_state, METH_O,
+        "save_state", (PyCFunction)unigine_Node_save_state, METH_VARARGS,
         "public : saveState"
     },
     {
-        "restore_state", (PyCFunction)unigine_Node_restore_state, METH_O,
+        "restore_state", (PyCFunction)unigine_Node_restore_state, METH_VARARGS,
         "public : restoreState"
     },
     {
@@ -2810,7 +4207,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getBodyAngularVelocity"
     },
     {
-        "get_body_world_velocity", (PyCFunction)unigine_Node_get_body_world_velocity, METH_O,
+        "get_body_world_velocity", (PyCFunction)unigine_Node_get_body_world_velocity, METH_VARARGS,
         "public : getBodyWorldVelocity"
     },
     {
@@ -2818,11 +4215,11 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getNumWorldTriggers"
     },
     {
-        "get_world_trigger", (PyCFunction)unigine_Node_get_world_trigger, METH_O,
+        "get_world_trigger", (PyCFunction)unigine_Node_get_world_trigger, METH_VARARGS,
         "public : getWorldTrigger"
     },
     {
-        "set_position", (PyCFunction)unigine_Node_set_position, METH_O,
+        "set_position", (PyCFunction)unigine_Node_set_position, METH_VARARGS,
         "public : setPosition"
     },
     {
@@ -2830,7 +4227,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getPosition"
     },
     {
-        "set_rotation", (PyCFunction)unigine_Node_set_rotation, METH_VARARGS|METH_KEYWORDS,
+        "set_rotation", (PyCFunction)unigine_Node_set_rotation, METH_VARARGS,
         "public : setRotation"
     },
     {
@@ -2838,15 +4235,15 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getRotation"
     },
     {
-        "set_direction", (PyCFunction)unigine_Node_set_direction, METH_VARARGS|METH_KEYWORDS,
+        "set_direction", (PyCFunction)unigine_Node_set_direction, METH_VARARGS,
         "public : setDirection"
     },
     {
-        "get_direction", (PyCFunction)unigine_Node_get_direction, METH_O,
+        "get_direction", (PyCFunction)unigine_Node_get_direction, METH_VARARGS,
         "public : getDirection"
     },
     {
-        "set_scale", (PyCFunction)unigine_Node_set_scale, METH_O,
+        "set_scale", (PyCFunction)unigine_Node_set_scale, METH_VARARGS,
         "public : setScale"
     },
     {
@@ -2854,7 +4251,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getScale"
     },
     {
-        "set_world_position", (PyCFunction)unigine_Node_set_world_position, METH_O,
+        "set_world_position", (PyCFunction)unigine_Node_set_world_position, METH_VARARGS,
         "public : setWorldPosition"
     },
     {
@@ -2862,7 +4259,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getWorldPosition"
     },
     {
-        "set_world_rotation", (PyCFunction)unigine_Node_set_world_rotation, METH_VARARGS|METH_KEYWORDS,
+        "set_world_rotation", (PyCFunction)unigine_Node_set_world_rotation, METH_VARARGS,
         "public : setWorldRotation"
     },
     {
@@ -2870,15 +4267,15 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getWorldRotation"
     },
     {
-        "set_world_direction", (PyCFunction)unigine_Node_set_world_direction, METH_VARARGS|METH_KEYWORDS,
+        "set_world_direction", (PyCFunction)unigine_Node_set_world_direction, METH_VARARGS,
         "public : setWorldDirection"
     },
     {
-        "get_world_direction", (PyCFunction)unigine_Node_get_world_direction, METH_O,
+        "get_world_direction", (PyCFunction)unigine_Node_get_world_direction, METH_VARARGS,
         "public : getWorldDirection"
     },
     {
-        "set_world_scale", (PyCFunction)unigine_Node_set_world_scale, METH_O,
+        "set_world_scale", (PyCFunction)unigine_Node_set_world_scale, METH_VARARGS,
         "public : setWorldScale"
     },
     {
@@ -2886,55 +4283,55 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getWorldScale"
     },
     {
-        "translate", (PyCFunction)unigine_Node_translate, METH_O,
+        "translate", (PyCFunction)unigine_Node_translate, METH_VARARGS,
         "public : translate"
     },
     {
-        "translate", (PyCFunction)unigine_Node_translate, METH_VARARGS|METH_KEYWORDS,
+        "translate", (PyCFunction)unigine_Node_translate, METH_VARARGS,
         "public : translate"
     },
     {
-        "rotate", (PyCFunction)unigine_Node_rotate, METH_O,
+        "rotate", (PyCFunction)unigine_Node_rotate, METH_VARARGS,
         "public : rotate"
     },
     {
-        "rotate", (PyCFunction)unigine_Node_rotate, METH_O,
+        "rotate", (PyCFunction)unigine_Node_rotate, METH_VARARGS,
         "public : rotate"
     },
     {
-        "rotate", (PyCFunction)unigine_Node_rotate, METH_VARARGS|METH_KEYWORDS,
+        "rotate", (PyCFunction)unigine_Node_rotate, METH_VARARGS,
         "public : rotate"
     },
     {
-        "world_translate", (PyCFunction)unigine_Node_world_translate, METH_O,
+        "world_translate", (PyCFunction)unigine_Node_world_translate, METH_VARARGS,
         "public : worldTranslate"
     },
     {
-        "world_translate", (PyCFunction)unigine_Node_world_translate, METH_VARARGS|METH_KEYWORDS,
+        "world_translate", (PyCFunction)unigine_Node_world_translate, METH_VARARGS,
         "public : worldTranslate"
     },
     {
-        "world_rotate", (PyCFunction)unigine_Node_world_rotate, METH_O,
+        "world_rotate", (PyCFunction)unigine_Node_world_rotate, METH_VARARGS,
         "public : worldRotate"
     },
     {
-        "world_rotate", (PyCFunction)unigine_Node_world_rotate, METH_O,
+        "world_rotate", (PyCFunction)unigine_Node_world_rotate, METH_VARARGS,
         "public : worldRotate"
     },
     {
-        "world_rotate", (PyCFunction)unigine_Node_world_rotate, METH_VARARGS|METH_KEYWORDS,
+        "world_rotate", (PyCFunction)unigine_Node_world_rotate, METH_VARARGS,
         "public : worldRotate"
     },
     {
-        "world_look_at", (PyCFunction)unigine_Node_world_look_at, METH_O,
+        "world_look_at", (PyCFunction)unigine_Node_world_look_at, METH_VARARGS,
         "public : worldLookAt"
     },
     {
-        "world_look_at", (PyCFunction)unigine_Node_world_look_at, METH_VARARGS|METH_KEYWORDS,
+        "world_look_at", (PyCFunction)unigine_Node_world_look_at, METH_VARARGS,
         "public : worldLookAt"
     },
     {
-        "to_local", (PyCFunction)unigine_Node_to_local, METH_O,
+        "to_local", (PyCFunction)unigine_Node_to_local, METH_VARARGS,
         "public : toLocal"
     },
     {
@@ -2942,7 +4339,7 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : renderVisualizer"
     },
     {
-        "set_variable", (PyCFunction)unigine_Node_set_variable, METH_O,
+        "set_variable", (PyCFunction)unigine_Node_set_variable, METH_VARARGS,
         "public : setVariable"
     },
     {
@@ -2954,19 +4351,19 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : hasVariable"
     },
     {
-        "set_variable", (PyCFunction)unigine_Node_set_variable, METH_VARARGS|METH_KEYWORDS,
+        "set_variable", (PyCFunction)unigine_Node_set_variable, METH_VARARGS,
         "public : setVariable"
     },
     {
-        "get_variable", (PyCFunction)unigine_Node_get_variable, METH_O,
+        "get_variable", (PyCFunction)unigine_Node_get_variable, METH_VARARGS,
         "public : getVariable"
     },
     {
-        "has_variable", (PyCFunction)unigine_Node_has_variable, METH_O,
+        "has_variable", (PyCFunction)unigine_Node_has_variable, METH_VARARGS,
         "public : hasVariable"
     },
     {
-        "remove_variable", (PyCFunction)unigine_Node_remove_variable, METH_O,
+        "remove_variable", (PyCFunction)unigine_Node_remove_variable, METH_VARARGS,
         "public : removeVariable"
     },
     {

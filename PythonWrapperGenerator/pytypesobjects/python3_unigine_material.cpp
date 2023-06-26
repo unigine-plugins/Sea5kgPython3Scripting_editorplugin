@@ -39,28 +39,47 @@ static int unigine_Material_init(unigine_Material *self, PyObject *args, PyObjec
 
 
 // public (static): create
-static PyObject * unigine_Material_create() {
+static PyObject * unigine_Material_create(unigine_Material* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Ptr<Unigine::Material>
+    // parse args:
 
     Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Material::create();
     ret = PyUnigine::Material::NewObject(retOriginal);
+
+    // end
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
 // public : setParent
-static PyObject * unigine_Material_set_parent(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parent(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Material> & material;
-    bool save_all_values;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Material> & material;
+    PyObject *pArg2; // bool save_all_values;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Material> & material = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    bool save_all_values = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = self->unigine_object_ptr->setParent(material, save_all_values);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
@@ -68,37 +87,59 @@ static PyObject * unigine_Material_set_parent(unigine_Material* self, PyObject *
 static PyObject * unigine_Material_get_parent(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Ptr<Unigine::Material>
+    // parse args:
 
     Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->getParent();
     ret = todo;
+
+    // end
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
 // public : isParent
-static PyObject * unigine_Material_is_parent(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_parent(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Material> & parent;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Material> & parent;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Material> & parent = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isParent(parent);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : isParent
-static PyObject * unigine_Material_is_parent(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_parent(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::UGUID & guid;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::UGUID & guid;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isParent(guid);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
@@ -106,11 +147,13 @@ static PyObject * unigine_Material_is_parent(unigine_Material* self, PyObject *a
 static PyObject * unigine_Material_get_base_material(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Ptr<Unigine::Material>
+    // parse args:
 
     Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->getBaseMaterial();
     ret = todo;
+
+    // end
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
@@ -118,37 +161,59 @@ static PyObject * unigine_Material_get_base_material(unigine_Material* self) {
 static PyObject * unigine_Material_get_num_children(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getNumChildren();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : getChild
-static PyObject * unigine_Material_get_child(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_child(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Ptr<Unigine::Material>
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->getChild(num);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
 // public : clone
-static PyObject * unigine_Material_clone(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_clone(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::UGUID & guid;
-    // return: Unigine::Ptr<Unigine::Material>
+    // parse args:
+    PyObject *pArg1; // const Unigine::UGUID & guid;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->clone(guid);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
@@ -156,24 +221,36 @@ static PyObject * unigine_Material_clone(unigine_Material* self, PyObject *arg) 
 static PyObject * unigine_Material_clone(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Ptr<Unigine::Material>
+    // parse args:
 
     Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->clone();
     ret = todo;
+
+    // end
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
 // public : inherit
-static PyObject * unigine_Material_inherit(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_inherit(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::UGUID & guid;
-    // return: Unigine::Ptr<Unigine::Material>
+    // parse args:
+    PyObject *pArg1; // const Unigine::UGUID & guid;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->inherit(guid);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
@@ -181,11 +258,13 @@ static PyObject * unigine_Material_inherit(unigine_Material* self, PyObject *arg
 static PyObject * unigine_Material_inherit(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Ptr<Unigine::Material>
+    // parse args:
 
     Unigine::Ptr<Unigine::Material> retOriginal = self->unigine_object_ptr->inherit();
     ret = todo;
+
+    // end
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
@@ -193,10 +272,12 @@ static PyObject * unigine_Material_inherit(unigine_Material* self) {
 static PyObject * unigine_Material_get_namespace_name(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: const char *
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: const char *
     return ret;
 };
 
@@ -204,10 +285,12 @@ static PyObject * unigine_Material_get_namespace_name(unigine_Material* self) {
 static PyObject * unigine_Material_get_manual_name(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: const char *
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: const char *
     return ret;
 };
 
@@ -215,11 +298,13 @@ static PyObject * unigine_Material_get_manual_name(unigine_Material* self) {
 static PyObject * unigine_Material_get_guid(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::UGUID
+    // parse args:
 
     Unigine::UGUID retOriginal = self->unigine_object_ptr->getGUID();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::UGUID
     return ret;
 };
 
@@ -227,36 +312,58 @@ static PyObject * unigine_Material_get_guid(unigine_Material* self) {
 static PyObject * unigine_Material_get_path(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: const char *
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: const char *
     return ret;
 };
 
 // public : isNodeTypeSupported
-static PyObject * unigine_Material_is_node_type_supported(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_node_type_supported(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    Unigine::Node::TYPE type;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // Unigine::Node::TYPE type;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    Unigine::Node::TYPE type = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isNodeTypeSupported(type);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : isNodeSupported
-static PyObject * unigine_Material_is_node_supported(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_node_supported(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Node> & node;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Node> & node;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Node> & node = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isNodeSupported(node);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
@@ -264,11 +371,13 @@ static PyObject * unigine_Material_is_node_supported(unigine_Material* self, PyO
 static PyObject * unigine_Material_can_render_node(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->canRenderNode();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -276,291 +385,527 @@ static PyObject * unigine_Material_can_render_node(unigine_Material* self) {
 static PyObject * unigine_Material_get_num_ui_items(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getNumUIItems();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : getUIItemDataType
-static PyObject * unigine_Material_get_ui_item_data_type(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_data_type(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: Unigine::Material::DATA_TYPE
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Material::DATA_TYPE retOriginal = self->unigine_object_ptr->getUIItemDataType(item);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Material::DATA_TYPE
     return ret;
 };
 
 // public : getUIItemDataID
-static PyObject * unigine_Material_get_ui_item_data_id(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_data_id(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getUIItemDataID();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : isUIItemHidden
-static PyObject * unigine_Material_is_ui_item_hidden(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_ui_item_hidden(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isUIItemHidden(item);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : getUIItemTitle
-static PyObject * unigine_Material_get_ui_item_title(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_title(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: const char *
     return ret;
 };
 
 // public : getUIItemTooltip
-static PyObject * unigine_Material_get_ui_item_tooltip(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_tooltip(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: const char *
     return ret;
 };
 
 // public : getUIItemWidget
-static PyObject * unigine_Material_get_ui_item_widget(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_widget(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: Unigine::Material::WIDGET
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Material::WIDGET retOriginal = self->unigine_object_ptr->getUIItemWidget(item);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Material::WIDGET
     return ret;
 };
 
 // public : getUIItemParent
-static PyObject * unigine_Material_get_ui_item_parent(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_parent(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getUIItemParent();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : getUIItemNumChildren
-static PyObject * unigine_Material_get_ui_item_num_children(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_num_children(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getUIItemNumChildren();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : getUIItemChild
-static PyObject * unigine_Material_get_ui_item_child(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_get_ui_item_child(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    int num;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyObject *pArg2; // int num;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg2Str);
 
     int retOriginal = self->unigine_object_ptr->getUIItemChild();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: int
     return ret;
 };
 
 // public : isUIItemSliderMinExpand
-static PyObject * unigine_Material_is_ui_item_slider_min_expand(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_ui_item_slider_min_expand(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isUIItemSliderMinExpand(item);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : isUIItemSliderMaxExpand
-static PyObject * unigine_Material_is_ui_item_slider_max_expand(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_ui_item_slider_max_expand(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isUIItemSliderMaxExpand(item);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : getUIItemSliderMinValue
-static PyObject * unigine_Material_get_ui_item_slider_min_value(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_slider_min_value(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: float
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: float
     return ret;
 };
 
 // public : getUIItemSliderMaxValue
-static PyObject * unigine_Material_get_ui_item_slider_max_value(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_slider_max_value(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: float
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: float
     return ret;
 };
 
 // public : getUIItemGroupToggleStateID
-static PyObject * unigine_Material_get_ui_item_group_toggle_state_id(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_ui_item_group_toggle_state_id(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getUIItemGroupToggleStateID();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : isUIItemGroupCollapsed
-static PyObject * unigine_Material_is_ui_item_group_collapsed(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_ui_item_group_collapsed(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int item;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int item;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isUIItemGroupCollapsed(item);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): widgetToString
-static PyObject * unigine_Material_widget_to_string(PyObject *arg) {
+static PyObject * unigine_Material_widget_to_string(unigine_Material* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    Unigine::Material::WIDGET widget;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // Unigine::Material::WIDGET widget;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    Unigine::Material::WIDGET widget = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: const char *
     return ret;
 };
 
 // public (static): stringToWidget
-static PyObject * unigine_Material_string_to_widget(PyObject *arg) {
+static PyObject * unigine_Material_string_to_widget(unigine_Material* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * str;
-    // return: Unigine::Material::WIDGET
+    // parse args:
+    PyObject *pArg1; // const char * str;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * str = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Material::WIDGET retOriginal = Unigine::Material::stringToWidget(str);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Material::WIDGET
     return ret;
 };
 
 // public : setOption
-static PyObject * unigine_Material_set_option(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_option(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    int value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // int value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setOption(num, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getOption
-static PyObject * unigine_Material_get_option(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_option(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getOption();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : isOptionOverridden
-static PyObject * unigine_Material_is_option_overridden(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_option_overridden(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isOptionOverridden(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : resetOption
-static PyObject * unigine_Material_reset_option(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_reset_option(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->resetOption(num);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : setTransparent
-static PyObject * unigine_Material_set_transparent(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_set_transparent(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int transparent;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int transparent;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int transparent = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setTransparent(transparent);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -568,11 +913,13 @@ static PyObject * unigine_Material_set_transparent(unigine_Material* self, PyObj
 static PyObject * unigine_Material_get_transparent(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getTransparent();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
@@ -580,11 +927,13 @@ static PyObject * unigine_Material_get_transparent(unigine_Material* self) {
 static PyObject * unigine_Material_is_water(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isWater();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -592,11 +941,13 @@ static PyObject * unigine_Material_is_water(unigine_Material* self) {
 static PyObject * unigine_Material_is_deferred(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isDeferred();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -604,11 +955,13 @@ static PyObject * unigine_Material_is_deferred(unigine_Material* self) {
 static PyObject * unigine_Material_is_forward(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isForward();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -616,23 +969,35 @@ static PyObject * unigine_Material_is_forward(unigine_Material* self) {
 static PyObject * unigine_Material_is_alpha_test(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isAlphaTest();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setBlendDestFunc
-static PyObject * unigine_Material_set_blend_dest_func(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_set_blend_dest_func(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int func;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int func;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int func = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setBlendDestFunc(func);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -640,23 +1005,35 @@ static PyObject * unigine_Material_set_blend_dest_func(unigine_Material* self, P
 static PyObject * unigine_Material_get_blend_dest_func(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getBlendDestFunc();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : setBlendSrcFunc
-static PyObject * unigine_Material_set_blend_src_func(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_set_blend_src_func(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int func;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int func;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int func = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setBlendSrcFunc(func);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -664,23 +1041,35 @@ static PyObject * unigine_Material_set_blend_src_func(unigine_Material* self, Py
 static PyObject * unigine_Material_get_blend_src_func(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getBlendSrcFunc();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : setShadowMask
-static PyObject * unigine_Material_set_shadow_mask(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_set_shadow_mask(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int mask;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int mask;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int mask = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setShadowMask(mask);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -688,23 +1077,35 @@ static PyObject * unigine_Material_set_shadow_mask(unigine_Material* self, PyObj
 static PyObject * unigine_Material_get_shadow_mask(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getShadowMask();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : setViewportMask
-static PyObject * unigine_Material_set_viewport_mask(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_set_viewport_mask(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int mask;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int mask;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int mask = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setViewportMask(mask);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -712,23 +1113,35 @@ static PyObject * unigine_Material_set_viewport_mask(unigine_Material* self, PyO
 static PyObject * unigine_Material_get_viewport_mask(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getViewportMask();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : setDepthMask
-static PyObject * unigine_Material_set_depth_mask(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_set_depth_mask(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int mask;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int mask;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int mask = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setDepthMask(mask);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -736,23 +1149,35 @@ static PyObject * unigine_Material_set_depth_mask(unigine_Material* self, PyObje
 static PyObject * unigine_Material_get_depth_mask(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getDepthMask();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : setOrder
-static PyObject * unigine_Material_set_order(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_set_order(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int order;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int order;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int order = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setOrder(order);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -760,23 +1185,35 @@ static PyObject * unigine_Material_set_order(unigine_Material* self, PyObject *a
 static PyObject * unigine_Material_get_order(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getOrder();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : setCastShadow
-static PyObject * unigine_Material_set_cast_shadow(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_set_cast_shadow(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool shadow;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool shadow;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool shadow = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setCastShadow(shadow);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -784,23 +1221,35 @@ static PyObject * unigine_Material_set_cast_shadow(unigine_Material* self, PyObj
 static PyObject * unigine_Material_is_cast_shadow(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isCastShadow();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setCastWorldShadow
-static PyObject * unigine_Material_set_cast_world_shadow(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_set_cast_world_shadow(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool shadow;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool shadow;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool shadow = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setCastWorldShadow(shadow);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -808,23 +1257,35 @@ static PyObject * unigine_Material_set_cast_world_shadow(unigine_Material* self,
 static PyObject * unigine_Material_is_cast_world_shadow(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isCastWorldShadow();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setDepthTest
-static PyObject * unigine_Material_set_depth_test(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_set_depth_test(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool test;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool test;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool test = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setDepthTest(test);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -832,23 +1293,35 @@ static PyObject * unigine_Material_set_depth_test(unigine_Material* self, PyObje
 static PyObject * unigine_Material_is_depth_test(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isDepthTest();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setTwoSided
-static PyObject * unigine_Material_set_two_sided(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_set_two_sided(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool sided;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool sided;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool sided = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setTwoSided(sided);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -856,23 +1329,35 @@ static PyObject * unigine_Material_set_two_sided(unigine_Material* self, PyObjec
 static PyObject * unigine_Material_is_two_sided(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isTwoSided();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : setOverlap
-static PyObject * unigine_Material_set_overlap(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_set_overlap(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool overlap;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool overlap;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool overlap = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setOverlap(overlap);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -880,11 +1365,13 @@ static PyObject * unigine_Material_set_overlap(unigine_Material* self, PyObject 
 static PyObject * unigine_Material_is_overlap(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isOverlap();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -892,105 +1379,205 @@ static PyObject * unigine_Material_is_overlap(unigine_Material* self) {
 static PyObject * unigine_Material_check_shader_cache(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->checkShaderCache();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : checkShaderCache
-static PyObject * unigine_Material_check_shader_cache(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_check_shader_cache(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    Unigine::Render::PASS pass;
-    Unigine::Node::TYPE node_type;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // Unigine::Render::PASS pass;
+    PyObject *pArg2; // Unigine::Node::TYPE node_type;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    Unigine::Render::PASS pass = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    Unigine::Node::TYPE node_type = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = self->unigine_object_ptr->checkShaderCache(pass, node_type);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public : compileShader
-static PyObject * unigine_Material_compile_shader(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_compile_shader(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    Unigine::Render::PASS pass;
-    Unigine::Node::TYPE node_type;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // Unigine::Render::PASS pass;
+    PyObject *pArg2; // Unigine::Node::TYPE node_type;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    Unigine::Render::PASS pass = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    Unigine::Node::TYPE node_type = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = self->unigine_object_ptr->compileShader(pass, node_type);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public : fetchShader
-static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    Unigine::Render::PASS pass;
-    Unigine::Node::TYPE node_type;
-    // return: Unigine::Ptr<Unigine::Shader>
+    // parse args:
+    PyObject *pArg1; // Unigine::Render::PASS pass;
+    PyObject *pArg2; // Unigine::Node::TYPE node_type;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    Unigine::Render::PASS pass = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    Unigine::Node::TYPE node_type = PyBytes_AS_STRING(pArg2Str);
 
     Unigine::Ptr<Unigine::Shader> retOriginal = self->unigine_object_ptr->fetchShader(pass, node_type);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: Unigine::Ptr<Unigine::Shader>
     return ret;
 };
 
 // public : fetchShader
-static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    Unigine::Render::PASS pass;
-    // return: Unigine::Ptr<Unigine::Shader>
+    // parse args:
+    PyObject *pArg1; // Unigine::Render::PASS pass;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    Unigine::Render::PASS pass = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::Shader> retOriginal = self->unigine_object_ptr->fetchShader(pass);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Shader>
     return ret;
 };
 
 // public : fetchShader
-static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * pass_name;
-    int node;
-    // return: Unigine::Ptr<Unigine::Shader>
+    // parse args:
+    PyObject *pArg1; // const char * pass_name;
+    PyObject *pArg2; // int node;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * pass_name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int node = PyBytes_AS_STRING(pArg2Str);
 
     Unigine::Ptr<Unigine::Shader> retOriginal = self->unigine_object_ptr->fetchShader(pass_name, node);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: Unigine::Ptr<Unigine::Shader>
     return ret;
 };
 
 // public : fetchShader
-static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_fetch_shader(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * pass_name;
-    // return: Unigine::Ptr<Unigine::Shader>
+    // parse args:
+    PyObject *pArg1; // const char * pass_name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * pass_name = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::Shader> retOriginal = self->unigine_object_ptr->fetchShader(pass_name);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Shader>
     return ret;
 };
 
 // public : createShaders
-static PyObject * unigine_Material_create_shaders(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_create_shaders(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    bool recursive;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // bool recursive;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    bool recursive = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->createShaders(recursive);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -998,10 +1585,12 @@ static PyObject * unigine_Material_create_shaders(unigine_Material* self, PyObje
 static PyObject * unigine_Material_destroy_textures(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void
+    // parse args:
 
     self->unigine_object_ptr->destroyTextures();
+
+    // end
+    // return: void
     return ret;
 };
 
@@ -1009,761 +1598,1553 @@ static PyObject * unigine_Material_destroy_textures(unigine_Material* self) {
 static PyObject * unigine_Material_get_num_parameters(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getNumParameters();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : findParameter
-static PyObject * unigine_Material_find_parameter(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_find_parameter(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->findParameter();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : resetParameter
-static PyObject * unigine_Material_reset_parameter(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_reset_parameter(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->resetParameter(num);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : checkParameterConditions
-static PyObject * unigine_Material_check_parameter_conditions(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_check_parameter_conditions(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->checkParameterConditions(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : getParameterType
-static PyObject * unigine_Material_get_parameter_type(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_type(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getParameterType();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : isParameterInt
-static PyObject * unigine_Material_is_parameter_int(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_parameter_int(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isParameterInt(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : isParameterFloat
-static PyObject * unigine_Material_is_parameter_float(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_parameter_float(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isParameterFloat(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : isParameterOverridden
-static PyObject * unigine_Material_is_parameter_overridden(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_parameter_overridden(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isParameterOverridden(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : getParameterName
-static PyObject * unigine_Material_get_parameter_name(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_name(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: const char *
     return ret;
 };
 
 // public : isParameterExpressionEnabled
-static PyObject * unigine_Material_is_parameter_expression_enabled(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_parameter_expression_enabled(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isParameterExpressionEnabled(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : setParameterExpressionEnabled
-static PyObject * unigine_Material_set_parameter_expression_enabled(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_expression_enabled(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    bool enabled;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // bool enabled;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    bool enabled = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterExpressionEnabled(num, enabled);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterExpression
-static PyObject * unigine_Material_get_parameter_expression(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_expression(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: const char *
     return ret;
 };
 
 // public : setParameterExpression
-static PyObject * unigine_Material_set_parameter_expression(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_expression(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const char * expression;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const char * expression;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * expression = PyBytes_AS_STRING(pArg2Str);
 
     int retOriginal = self->unigine_object_ptr->setParameterExpression();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: int
     return ret;
 };
 
 // public : setParameterFloat
-static PyObject * unigine_Material_set_parameter_float(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_float(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    float value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // float value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    float value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterFloat(num, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterFloat
-static PyObject * unigine_Material_set_parameter_float(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_float(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    float value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // float value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    float value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterFloat(name, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterFloat
-static PyObject * unigine_Material_get_parameter_float(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_float(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: float
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: float
     return ret;
 };
 
 // public : getParameterFloat
-static PyObject * unigine_Material_get_parameter_float(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_float(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: float
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: float
     return ret;
 };
 
 // public : setParameterFloat2
-static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Math::vec2 & value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Math::vec2 & value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec2 & value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterFloat2(num, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterFloat2
-static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_float2(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    const Unigine::Math::vec2 & value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // const Unigine::Math::vec2 & value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec2 & value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterFloat2(name, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterFloat2
-static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Math::vec2
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec2 retOriginal = self->unigine_object_ptr->getParameterFloat2(num);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec2
     return ret;
 };
 
 // public : getParameterFloat2
-static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_float2(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: Unigine::Math::vec2
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec2 retOriginal = self->unigine_object_ptr->getParameterFloat2(name);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec2
     return ret;
 };
 
 // public : setParameterFloat3
-static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Math::vec3 & value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Math::vec3 & value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterFloat3(num, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterFloat3
-static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_float3(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    const Unigine::Math::vec3 & value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // const Unigine::Math::vec3 & value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterFloat3(name, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterFloat3
-static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Math::vec3
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getParameterFloat3(num);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec3
     return ret;
 };
 
 // public : getParameterFloat3
-static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_float3(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: Unigine::Math::vec3
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getParameterFloat3(name);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec3
     return ret;
 };
 
 // public : setParameterFloat4
-static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Math::vec4 & value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Math::vec4 & value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec4 & value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterFloat4(num, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterFloat4
-static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_float4(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    const Unigine::Math::vec4 & value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // const Unigine::Math::vec4 & value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec4 & value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterFloat4(name, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterFloat4
-static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Math::vec4
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec4 retOriginal = self->unigine_object_ptr->getParameterFloat4(num);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec4
     return ret;
 };
 
 // public : getParameterFloat4
-static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_float4(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: Unigine::Math::vec4
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec4 retOriginal = self->unigine_object_ptr->getParameterFloat4(name);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec4
     return ret;
 };
 
 // public : setParameterInt
-static PyObject * unigine_Material_set_parameter_int(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_int(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    int value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // int value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterInt(num, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterInt
-static PyObject * unigine_Material_set_parameter_int(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_int(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    int value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // int value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterInt(name, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterInt
-static PyObject * unigine_Material_get_parameter_int(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_int(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getParameterInt();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : getParameterInt
-static PyObject * unigine_Material_get_parameter_int(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_int(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getParameterInt();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : setParameterInt2
-static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Math::ivec2 & value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Math::ivec2 & value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::ivec2 & value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterInt2(num, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterInt2
-static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_int2(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    const Unigine::Math::ivec2 & value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // const Unigine::Math::ivec2 & value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::ivec2 & value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterInt2(name, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterInt2
-static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Math::ivec2
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::ivec2 retOriginal = self->unigine_object_ptr->getParameterInt2(num);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::ivec2
     return ret;
 };
 
 // public : getParameterInt2
-static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_int2(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: Unigine::Math::ivec2
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::ivec2 retOriginal = self->unigine_object_ptr->getParameterInt2(name);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::ivec2
     return ret;
 };
 
 // public : setParameterInt3
-static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Math::ivec3 & value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Math::ivec3 & value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::ivec3 & value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterInt3(num, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterInt3
-static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_int3(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    const Unigine::Math::ivec3 & value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // const Unigine::Math::ivec3 & value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::ivec3 & value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterInt3(name, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterInt3
-static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Math::ivec3
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::ivec3 retOriginal = self->unigine_object_ptr->getParameterInt3(num);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::ivec3
     return ret;
 };
 
 // public : getParameterInt3
-static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_int3(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: Unigine::Math::ivec3
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::ivec3 retOriginal = self->unigine_object_ptr->getParameterInt3(name);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::ivec3
     return ret;
 };
 
 // public : setParameterInt4
-static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Math::ivec4 & value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Math::ivec4 & value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::ivec4 & value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterInt4(num, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterInt4
-static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_int4(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    const Unigine::Math::ivec4 & value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // const Unigine::Math::ivec4 & value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::ivec4 & value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterInt4(name, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterInt4
-static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Math::ivec4
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::ivec4 retOriginal = self->unigine_object_ptr->getParameterInt4(num);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::ivec4
     return ret;
 };
 
 // public : getParameterInt4
-static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_int4(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: Unigine::Math::ivec4
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::ivec4 retOriginal = self->unigine_object_ptr->getParameterInt4(name);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::ivec4
     return ret;
 };
 
 // public : getParameterArraySize
-static PyObject * unigine_Material_get_parameter_array_size(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_parameter_array_size(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getParameterArraySize();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : isParameterArray
-static PyObject * unigine_Material_is_parameter_array(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_parameter_array(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isParameterArray(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : getParameterArray
-static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    Unigine::Vector<float> & values;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // Unigine::Vector<float> & values;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    Unigine::Vector<float> & values = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->getParameterArray(num, values);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterArray
-static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Vector<float> & values;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Vector<float> & values;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Vector<float> & values = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterArray(num, values);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterArray
-static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    Unigine::Vector<Unigine::Math::vec2> & values;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // Unigine::Vector<Unigine::Math::vec2> & values;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    Unigine::Vector<Unigine::Math::vec2> & values = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->getParameterArray(num, values);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterArray
-static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Vector<Unigine::Math::vec2> & values;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Vector<Unigine::Math::vec2> & values;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Vector<Unigine::Math::vec2> & values = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterArray(num, values);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterArray
-static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    Unigine::Vector<Unigine::Math::vec4> & values;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // Unigine::Vector<Unigine::Math::vec4> & values;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    Unigine::Vector<Unigine::Math::vec4> & values = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->getParameterArray(num, values);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterArray
-static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Vector<Unigine::Math::vec4> & values;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Vector<Unigine::Math::vec4> & values;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Vector<Unigine::Math::vec4> & values = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterArray(num, values);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterArray
-static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    Unigine::Vector<int> & values;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // Unigine::Vector<int> & values;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    Unigine::Vector<int> & values = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->getParameterArray(num, values);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterArray
-static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Vector<int> & values;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Vector<int> & values;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Vector<int> & values = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterArray(num, values);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterArray
-static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    Unigine::Vector<Unigine::Math::ivec2> & values;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // Unigine::Vector<Unigine::Math::ivec2> & values;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    Unigine::Vector<Unigine::Math::ivec2> & values = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->getParameterArray(num, values);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterArray
-static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Vector<Unigine::Math::ivec2> & values;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Vector<Unigine::Math::ivec2> & values;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Vector<Unigine::Math::ivec2> & values = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterArray(num, values);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getParameterArray
-static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_get_parameter_array(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    Unigine::Vector<Unigine::Math::ivec4> & values;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // Unigine::Vector<Unigine::Math::ivec4> & values;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    Unigine::Vector<Unigine::Math::ivec4> & values = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->getParameterArray(num, values);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setParameterArray
-static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Vector<Unigine::Math::ivec4> & values;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Vector<Unigine::Math::ivec4> & values;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Vector<Unigine::Math::ivec4> & values = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setParameterArray(num, values);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
@@ -1771,178 +3152,331 @@ static PyObject * unigine_Material_set_parameter_array(unigine_Material* self, P
 static PyObject * unigine_Material_get_num_states(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getNumStates();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : findState
-static PyObject * unigine_Material_find_state(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_find_state(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->findState();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : isStateOverridden
-static PyObject * unigine_Material_is_state_overridden(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_state_overridden(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isStateOverridden(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : isStateInternal
-static PyObject * unigine_Material_is_state_internal(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_state_internal(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isStateInternal(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : resetState
-static PyObject * unigine_Material_reset_state(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_reset_state(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->resetState(num);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : checkStateConditions
-static PyObject * unigine_Material_check_state_conditions(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_check_state_conditions(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->checkStateConditions(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : getStateName
-static PyObject * unigine_Material_get_state_name(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_state_name(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: const char *
     return ret;
 };
 
 // public : getStateSwitchItem
-static PyObject * unigine_Material_get_state_switch_item(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_get_state_switch_item(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    int item;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // int item;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int item = PyBytes_AS_STRING(pArg2Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: const char *
     return ret;
 };
 
 // public : getStateSwitchNumItems
-static PyObject * unigine_Material_get_state_switch_num_items(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_state_switch_num_items(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getStateSwitchNumItems();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : getStateType
-static PyObject * unigine_Material_get_state_type(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_state_type(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getStateType();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : getState
-static PyObject * unigine_Material_get_state(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_state(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getState();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : setState
-static PyObject * unigine_Material_set_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_state(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    int value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // int value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setState(num, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getState
-static PyObject * unigine_Material_get_state(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_state(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getState();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : setState
-static PyObject * unigine_Material_set_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_state(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    int value;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // int value;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int value = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setState(name, value);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
@@ -1950,334 +3484,635 @@ static PyObject * unigine_Material_set_state(unigine_Material* self, PyObject *a
 static PyObject * unigine_Material_get_num_textures(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = self->unigine_object_ptr->getNumTextures();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public : findTexture
-static PyObject * unigine_Material_find_texture(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_find_texture(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->findTexture();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : isTextureOverridden
-static PyObject * unigine_Material_is_texture_overridden(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_texture_overridden(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isTextureOverridden(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : isTextureLoaded
-static PyObject * unigine_Material_is_texture_loaded(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_texture_loaded(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isTextureLoaded(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : isTextureInternal
-static PyObject * unigine_Material_is_texture_internal(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_texture_internal(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isTextureInternal(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : resetTexture
-static PyObject * unigine_Material_reset_texture(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_reset_texture(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->resetTexture(num);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : checkTextureConditions
-static PyObject * unigine_Material_check_texture_conditions(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_check_texture_conditions(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->checkTextureConditions(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : getTextureName
-static PyObject * unigine_Material_get_texture_name(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_texture_name(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: const char *
     return ret;
 };
 
 // public : getTextureUnit
-static PyObject * unigine_Material_get_texture_unit(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_texture_unit(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getTextureUnit();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : isTextureEditable
-static PyObject * unigine_Material_is_texture_editable(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_is_texture_editable(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->isTextureEditable(num);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : getTextureSource
-static PyObject * unigine_Material_get_texture_source(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_texture_source(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getTextureSource();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : getTextureSamplerFlags
-static PyObject * unigine_Material_get_texture_sampler_flags(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_texture_sampler_flags(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getTextureSamplerFlags();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : setTextureSamplerFlags
-static PyObject * unigine_Material_set_texture_sampler_flags(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_texture_sampler_flags(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    int sampler_flags;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // int sampler_flags;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int sampler_flags = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setTextureSamplerFlags(num, sampler_flags);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getTextureFormatFlags
-static PyObject * unigine_Material_get_texture_format_flags(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_texture_format_flags(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->getTextureFormatFlags();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : getTextureImage
-static PyObject * unigine_Material_get_texture_image(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_get_texture_image(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Ptr<Unigine::Image> & image;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Ptr<Unigine::Image> & image;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Image> & image = PyBytes_AS_STRING(pArg2Str);
 
     int retOriginal = self->unigine_object_ptr->getTextureImage();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: int
     return ret;
 };
 
 // public : setTextureImage
-static PyObject * unigine_Material_set_texture_image(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_texture_image(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Ptr<Unigine::Image> & image;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Ptr<Unigine::Image> & image;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Image> & image = PyBytes_AS_STRING(pArg2Str);
 
     int retOriginal = self->unigine_object_ptr->setTextureImage();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: int
     return ret;
 };
 
 // public : getTexture
-static PyObject * unigine_Material_get_texture(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_texture(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Ptr<Unigine::Texture>
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::Texture> retOriginal = self->unigine_object_ptr->getTexture(num);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Texture>
     return ret;
 };
 
 // public : getTexture
-static PyObject * unigine_Material_get_texture(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_texture(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: Unigine::Ptr<Unigine::Texture>
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::Texture> retOriginal = self->unigine_object_ptr->getTexture(name);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Texture>
     return ret;
 };
 
 // public : setTexture
-static PyObject * unigine_Material_set_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_texture(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const Unigine::Ptr<Unigine::Texture> & texture;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const Unigine::Ptr<Unigine::Texture> & texture;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Texture> & texture = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setTexture(num, texture);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setTexture
-static PyObject * unigine_Material_set_texture(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_texture(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    const Unigine::Ptr<Unigine::Texture> & texture;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // const Unigine::Ptr<Unigine::Texture> & texture;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Texture> & texture = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setTexture(name, texture);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setTexturePath
-static PyObject * unigine_Material_set_texture_path(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_texture_path(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    const char * path;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyObject *pArg2; // const char * path;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * path = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setTexturePath(num, path);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getTexturePath
-static PyObject * unigine_Material_get_texture_path(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_texture_path(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: const char *
     return ret;
 };
 
 // public : setTexturePath
-static PyObject * unigine_Material_set_texture_path(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_set_texture_path(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    const char * path;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // const char * path;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * path = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setTexturePath(name, path);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getTexturePath
-static PyObject * unigine_Material_get_texture_path(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_texture_path(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: const char *
     return ret;
 };
 
 // public : getTextureRamp
-static PyObject * unigine_Material_get_texture_ramp(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_texture_ramp(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Ptr<Unigine::TextureRamp>
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::TextureRamp> retOriginal = self->unigine_object_ptr->getTextureRamp(num);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::TextureRamp>
     return ret;
 };
 
 // public : getTextureRampOverride
-static PyObject * unigine_Material_get_texture_ramp_override(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_texture_ramp_override(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int num;
-    // return: Unigine::Ptr<Unigine::TextureRamp>
+    // parse args:
+    PyObject *pArg1; // int num;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int num = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<Unigine::TextureRamp> retOriginal = self->unigine_object_ptr->getTextureRampOverride(num);
     ret = todo;
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::TextureRamp>
     return ret;
 };
 
@@ -2285,11 +4120,13 @@ static PyObject * unigine_Material_get_texture_ramp_override(unigine_Material* s
 static PyObject * unigine_Material_is_editable(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isEditable();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2297,11 +4134,13 @@ static PyObject * unigine_Material_is_editable(unigine_Material* self) {
 static PyObject * unigine_Material_is_hidden(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isHidden();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2309,11 +4148,13 @@ static PyObject * unigine_Material_is_hidden(unigine_Material* self) {
 static PyObject * unigine_Material_is_base(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isBase();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2321,11 +4162,13 @@ static PyObject * unigine_Material_is_base(unigine_Material* self) {
 static PyObject * unigine_Material_is_brush(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isBrush();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2333,11 +4176,13 @@ static PyObject * unigine_Material_is_brush(unigine_Material* self) {
 static PyObject * unigine_Material_is_legacy(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isLegacy();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2345,11 +4190,13 @@ static PyObject * unigine_Material_is_legacy(unigine_Material* self) {
 static PyObject * unigine_Material_is_preview_hidden(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isPreviewHidden();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2357,11 +4204,13 @@ static PyObject * unigine_Material_is_preview_hidden(unigine_Material* self) {
 static PyObject * unigine_Material_is_reflection2_d(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isReflection2D();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2369,11 +4218,13 @@ static PyObject * unigine_Material_is_reflection2_d(unigine_Material* self) {
 static PyObject * unigine_Material_is_internal(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isInternal();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2381,11 +4232,13 @@ static PyObject * unigine_Material_is_internal(unigine_Material* self) {
 static PyObject * unigine_Material_is_manual(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isManual();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2393,11 +4246,13 @@ static PyObject * unigine_Material_is_manual(unigine_Material* self) {
 static PyObject * unigine_Material_can_save(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->canSave();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2405,11 +4260,13 @@ static PyObject * unigine_Material_can_save(unigine_Material* self) {
 static PyObject * unigine_Material_is_auto_save(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isAutoSave();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2417,11 +4274,13 @@ static PyObject * unigine_Material_is_auto_save(unigine_Material* self) {
 static PyObject * unigine_Material_is_file_engine(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isFileEngine();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2429,11 +4288,13 @@ static PyObject * unigine_Material_is_file_engine(unigine_Material* self) {
 static PyObject * unigine_Material_is_empty(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isEmpty();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2441,91 +4302,167 @@ static PyObject * unigine_Material_is_empty(unigine_Material* self) {
 static PyObject * unigine_Material_has_overrides(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->hasOverrides();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : saveState
-static PyObject * unigine_Material_save_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_save_state(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Stream> & stream;
-    bool forced;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Stream> & stream;
+    PyObject *pArg2; // bool forced;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Stream> & stream = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    bool forced = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = self->unigine_object_ptr->saveState(stream, forced);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public : restoreState
-static PyObject * unigine_Material_restore_state(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_restore_state(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Stream> & stream;
-    bool forced;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Stream> & stream;
+    PyObject *pArg2; // bool forced;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Stream> & stream = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    bool forced = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = self->unigine_object_ptr->restoreState(stream, forced);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public : loadXml
-static PyObject * unigine_Material_load_xml(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_load_xml(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Xml> & xml;
-    // return: int
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Xml> & xml;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Xml> & xml = PyBytes_AS_STRING(pArg1Str);
 
     int retOriginal = self->unigine_object_ptr->loadXml();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
     return ret;
 };
 
 // public : saveXml
-static PyObject * unigine_Material_save_xml(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_save_xml(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::Xml> & xml;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Xml> & xml;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::Xml> & xml = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->saveXml(xml);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : loadUlon
-static PyObject * unigine_Material_load_ulon(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_load_ulon(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Ptr<Unigine::UlonNode> & ulon;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::UlonNode> & ulon;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Ptr<Unigine::UlonNode> & ulon = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->loadUlon(ulon);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : load
-static PyObject * unigine_Material_load(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_load(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->load(path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
@@ -2533,11 +4470,13 @@ static PyObject * unigine_Material_load(unigine_Material* self, PyObject *arg) {
 static PyObject * unigine_Material_save(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->save();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -2545,121 +4484,266 @@ static PyObject * unigine_Material_save(unigine_Material* self) {
 static PyObject * unigine_Material_reload(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->reload();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public : createMaterialFile
-static PyObject * unigine_Material_create_material_file(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_create_material_file(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->createMaterialFile(path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : getRenderPass
-static PyObject * unigine_Material_get_render_pass(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_render_pass(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * pass_name;
-    // return: Unigine::Render::PASS
+    // parse args:
+    PyObject *pArg1; // const char * pass_name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * pass_name = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Render::PASS retOriginal = self->unigine_object_ptr->getRenderPass(pass_name);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Render::PASS
     return ret;
 };
 
 // public : getRenderPassName
-static PyObject * unigine_Material_get_render_pass_name(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_get_render_pass_name(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    Unigine::Render::PASS type;
-    // return: const char *
+    // parse args:
+    PyObject *pArg1; // Unigine::Render::PASS type;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    Unigine::Render::PASS type = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: const char *
     return ret;
 };
 
 // public : runExpression
-static PyObject * unigine_Material_run_expression(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_run_expression(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * name;
-    int w;
-    int h;
-    int d;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyObject *pArg2; // int w;
+    PyObject *pArg3; // int h;
+    PyObject *pArg4; // int d;
+    PyArg_ParseTuple(args, "OOOO", &pArg1, &pArg2, &pArg3, &pArg4);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int w = PyBytes_AS_STRING(pArg2Str);
+
+    // pArg3
+    PyObject* pArg3Repr = PyObject_Repr(pArg3);
+    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
+    int h = PyBytes_AS_STRING(pArg3Str);
+
+    // pArg4
+    PyObject* pArg4Repr = PyObject_Repr(pArg4);
+    PyObject* pArg4Str = PyUnicode_AsEncodedString(pArg4Repr, "utf-8", "~E~");
+    int d = PyBytes_AS_STRING(pArg4Str);
 
     bool retOriginal = self->unigine_object_ptr->runExpression(name, w, h, d);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    Py_XDECREF(pArg3Repr);
+    Py_XDECREF(pArg3Str);
+    Py_XDECREF(pArg4Repr);
+    Py_XDECREF(pArg4Str);
+    // return: bool
     return ret;
 };
 
 // public : renderScreen
-static PyObject * unigine_Material_render_screen(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_render_screen(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * pass_name;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * pass_name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * pass_name = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = self->unigine_object_ptr->renderScreen(pass_name);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public : renderScreen
-static PyObject * unigine_Material_render_screen(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_render_screen(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    Unigine::Render::PASS pass;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // Unigine::Render::PASS pass;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    Unigine::Render::PASS pass = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->renderScreen(pass);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : renderCompute
-static PyObject * unigine_Material_render_compute(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_render_compute(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * pass_name;
-    int group_threads_x;
-    int group_threads_y;
-    int group_threads_z;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * pass_name;
+    PyObject *pArg2; // int group_threads_x;
+    PyObject *pArg3; // int group_threads_y;
+    PyObject *pArg4; // int group_threads_z;
+    PyArg_ParseTuple(args, "OOOO", &pArg1, &pArg2, &pArg3, &pArg4);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * pass_name = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int group_threads_x = PyBytes_AS_STRING(pArg2Str);
+
+    // pArg3
+    PyObject* pArg3Repr = PyObject_Repr(pArg3);
+    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
+    int group_threads_y = PyBytes_AS_STRING(pArg3Str);
+
+    // pArg4
+    PyObject* pArg4Repr = PyObject_Repr(pArg4);
+    PyObject* pArg4Str = PyUnicode_AsEncodedString(pArg4Repr, "utf-8", "~E~");
+    int group_threads_z = PyBytes_AS_STRING(pArg4Str);
 
     bool retOriginal = self->unigine_object_ptr->renderCompute(pass_name, group_threads_x, group_threads_y, group_threads_z);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    Py_XDECREF(pArg3Repr);
+    Py_XDECREF(pArg3Str);
+    Py_XDECREF(pArg4Repr);
+    Py_XDECREF(pArg4Str);
+    // return: bool
     return ret;
 };
 
 // public : renderCompute
-static PyObject * unigine_Material_render_compute(unigine_Material* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_Material_render_compute(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    Unigine::Render::PASS pass;
-    int group_threads_x;
-    int group_threads_y;
-    int group_threads_z;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // Unigine::Render::PASS pass;
+    PyObject *pArg2; // int group_threads_x;
+    PyObject *pArg3; // int group_threads_y;
+    PyObject *pArg4; // int group_threads_z;
+    PyArg_ParseTuple(args, "OOOO", &pArg1, &pArg2, &pArg3, &pArg4);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    Unigine::Render::PASS pass = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int group_threads_x = PyBytes_AS_STRING(pArg2Str);
+
+    // pArg3
+    PyObject* pArg3Repr = PyObject_Repr(pArg3);
+    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
+    int group_threads_y = PyBytes_AS_STRING(pArg3Str);
+
+    // pArg4
+    PyObject* pArg4Repr = PyObject_Repr(pArg4);
+    PyObject* pArg4Str = PyUnicode_AsEncodedString(pArg4Repr, "utf-8", "~E~");
+    int group_threads_z = PyBytes_AS_STRING(pArg4Str);
 
     self->unigine_object_ptr->renderCompute(pass, group_threads_x, group_threads_y, group_threads_z);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    Py_XDECREF(pArg3Repr);
+    Py_XDECREF(pArg3Str);
+    Py_XDECREF(pArg4Repr);
+    Py_XDECREF(pArg4Str);
+    // return: void
     return ret;
 };
 
@@ -2670,7 +4754,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public (static): create"
     },
     {
-        "set_parent", (PyCFunction)unigine_Material_set_parent, METH_VARARGS|METH_KEYWORDS,
+        "set_parent", (PyCFunction)unigine_Material_set_parent, METH_VARARGS,
         "public : setParent"
     },
     {
@@ -2678,11 +4762,11 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getParent"
     },
     {
-        "is_parent", (PyCFunction)unigine_Material_is_parent, METH_O,
+        "is_parent", (PyCFunction)unigine_Material_is_parent, METH_VARARGS,
         "public : isParent"
     },
     {
-        "is_parent", (PyCFunction)unigine_Material_is_parent, METH_O,
+        "is_parent", (PyCFunction)unigine_Material_is_parent, METH_VARARGS,
         "public : isParent"
     },
     {
@@ -2694,11 +4778,11 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getNumChildren"
     },
     {
-        "get_child", (PyCFunction)unigine_Material_get_child, METH_O,
+        "get_child", (PyCFunction)unigine_Material_get_child, METH_VARARGS,
         "public : getChild"
     },
     {
-        "clone", (PyCFunction)unigine_Material_clone, METH_O,
+        "clone", (PyCFunction)unigine_Material_clone, METH_VARARGS,
         "public : clone"
     },
     {
@@ -2706,7 +4790,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : clone"
     },
     {
-        "inherit", (PyCFunction)unigine_Material_inherit, METH_O,
+        "inherit", (PyCFunction)unigine_Material_inherit, METH_VARARGS,
         "public : inherit"
     },
     {
@@ -2730,11 +4814,11 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getPath"
     },
     {
-        "is_node_type_supported", (PyCFunction)unigine_Material_is_node_type_supported, METH_O,
+        "is_node_type_supported", (PyCFunction)unigine_Material_is_node_type_supported, METH_VARARGS,
         "public : isNodeTypeSupported"
     },
     {
-        "is_node_supported", (PyCFunction)unigine_Material_is_node_supported, METH_O,
+        "is_node_supported", (PyCFunction)unigine_Material_is_node_supported, METH_VARARGS,
         "public : isNodeSupported"
     },
     {
@@ -2746,91 +4830,91 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getNumUIItems"
     },
     {
-        "get_ui_item_data_type", (PyCFunction)unigine_Material_get_ui_item_data_type, METH_O,
+        "get_ui_item_data_type", (PyCFunction)unigine_Material_get_ui_item_data_type, METH_VARARGS,
         "public : getUIItemDataType"
     },
     {
-        "get_ui_item_data_id", (PyCFunction)unigine_Material_get_ui_item_data_id, METH_O,
+        "get_ui_item_data_id", (PyCFunction)unigine_Material_get_ui_item_data_id, METH_VARARGS,
         "public : getUIItemDataID"
     },
     {
-        "is_ui_item_hidden", (PyCFunction)unigine_Material_is_ui_item_hidden, METH_O,
+        "is_ui_item_hidden", (PyCFunction)unigine_Material_is_ui_item_hidden, METH_VARARGS,
         "public : isUIItemHidden"
     },
     {
-        "get_ui_item_title", (PyCFunction)unigine_Material_get_ui_item_title, METH_O,
+        "get_ui_item_title", (PyCFunction)unigine_Material_get_ui_item_title, METH_VARARGS,
         "public : getUIItemTitle"
     },
     {
-        "get_ui_item_tooltip", (PyCFunction)unigine_Material_get_ui_item_tooltip, METH_O,
+        "get_ui_item_tooltip", (PyCFunction)unigine_Material_get_ui_item_tooltip, METH_VARARGS,
         "public : getUIItemTooltip"
     },
     {
-        "get_ui_item_widget", (PyCFunction)unigine_Material_get_ui_item_widget, METH_O,
+        "get_ui_item_widget", (PyCFunction)unigine_Material_get_ui_item_widget, METH_VARARGS,
         "public : getUIItemWidget"
     },
     {
-        "get_ui_item_parent", (PyCFunction)unigine_Material_get_ui_item_parent, METH_O,
+        "get_ui_item_parent", (PyCFunction)unigine_Material_get_ui_item_parent, METH_VARARGS,
         "public : getUIItemParent"
     },
     {
-        "get_ui_item_num_children", (PyCFunction)unigine_Material_get_ui_item_num_children, METH_O,
+        "get_ui_item_num_children", (PyCFunction)unigine_Material_get_ui_item_num_children, METH_VARARGS,
         "public : getUIItemNumChildren"
     },
     {
-        "get_ui_item_child", (PyCFunction)unigine_Material_get_ui_item_child, METH_VARARGS|METH_KEYWORDS,
+        "get_ui_item_child", (PyCFunction)unigine_Material_get_ui_item_child, METH_VARARGS,
         "public : getUIItemChild"
     },
     {
-        "is_ui_item_slider_min_expand", (PyCFunction)unigine_Material_is_ui_item_slider_min_expand, METH_O,
+        "is_ui_item_slider_min_expand", (PyCFunction)unigine_Material_is_ui_item_slider_min_expand, METH_VARARGS,
         "public : isUIItemSliderMinExpand"
     },
     {
-        "is_ui_item_slider_max_expand", (PyCFunction)unigine_Material_is_ui_item_slider_max_expand, METH_O,
+        "is_ui_item_slider_max_expand", (PyCFunction)unigine_Material_is_ui_item_slider_max_expand, METH_VARARGS,
         "public : isUIItemSliderMaxExpand"
     },
     {
-        "get_ui_item_slider_min_value", (PyCFunction)unigine_Material_get_ui_item_slider_min_value, METH_O,
+        "get_ui_item_slider_min_value", (PyCFunction)unigine_Material_get_ui_item_slider_min_value, METH_VARARGS,
         "public : getUIItemSliderMinValue"
     },
     {
-        "get_ui_item_slider_max_value", (PyCFunction)unigine_Material_get_ui_item_slider_max_value, METH_O,
+        "get_ui_item_slider_max_value", (PyCFunction)unigine_Material_get_ui_item_slider_max_value, METH_VARARGS,
         "public : getUIItemSliderMaxValue"
     },
     {
-        "get_ui_item_group_toggle_state_id", (PyCFunction)unigine_Material_get_ui_item_group_toggle_state_id, METH_O,
+        "get_ui_item_group_toggle_state_id", (PyCFunction)unigine_Material_get_ui_item_group_toggle_state_id, METH_VARARGS,
         "public : getUIItemGroupToggleStateID"
     },
     {
-        "is_ui_item_group_collapsed", (PyCFunction)unigine_Material_is_ui_item_group_collapsed, METH_O,
+        "is_ui_item_group_collapsed", (PyCFunction)unigine_Material_is_ui_item_group_collapsed, METH_VARARGS,
         "public : isUIItemGroupCollapsed"
     },
     {
-        "widget_to_string", (PyCFunction)unigine_Material_widget_to_string, METH_STATIC|METH_O,
+        "widget_to_string", (PyCFunction)unigine_Material_widget_to_string, METH_STATIC|METH_VARARGS,
         "public (static): widgetToString"
     },
     {
-        "string_to_widget", (PyCFunction)unigine_Material_string_to_widget, METH_STATIC|METH_O,
+        "string_to_widget", (PyCFunction)unigine_Material_string_to_widget, METH_STATIC|METH_VARARGS,
         "public (static): stringToWidget"
     },
     {
-        "set_option", (PyCFunction)unigine_Material_set_option, METH_VARARGS|METH_KEYWORDS,
+        "set_option", (PyCFunction)unigine_Material_set_option, METH_VARARGS,
         "public : setOption"
     },
     {
-        "get_option", (PyCFunction)unigine_Material_get_option, METH_O,
+        "get_option", (PyCFunction)unigine_Material_get_option, METH_VARARGS,
         "public : getOption"
     },
     {
-        "is_option_overridden", (PyCFunction)unigine_Material_is_option_overridden, METH_O,
+        "is_option_overridden", (PyCFunction)unigine_Material_is_option_overridden, METH_VARARGS,
         "public : isOptionOverridden"
     },
     {
-        "reset_option", (PyCFunction)unigine_Material_reset_option, METH_O,
+        "reset_option", (PyCFunction)unigine_Material_reset_option, METH_VARARGS,
         "public : resetOption"
     },
     {
-        "set_transparent", (PyCFunction)unigine_Material_set_transparent, METH_O,
+        "set_transparent", (PyCFunction)unigine_Material_set_transparent, METH_VARARGS,
         "public : setTransparent"
     },
     {
@@ -2854,7 +4938,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : isAlphaTest"
     },
     {
-        "set_blend_dest_func", (PyCFunction)unigine_Material_set_blend_dest_func, METH_O,
+        "set_blend_dest_func", (PyCFunction)unigine_Material_set_blend_dest_func, METH_VARARGS,
         "public : setBlendDestFunc"
     },
     {
@@ -2862,7 +4946,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getBlendDestFunc"
     },
     {
-        "set_blend_src_func", (PyCFunction)unigine_Material_set_blend_src_func, METH_O,
+        "set_blend_src_func", (PyCFunction)unigine_Material_set_blend_src_func, METH_VARARGS,
         "public : setBlendSrcFunc"
     },
     {
@@ -2870,7 +4954,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getBlendSrcFunc"
     },
     {
-        "set_shadow_mask", (PyCFunction)unigine_Material_set_shadow_mask, METH_O,
+        "set_shadow_mask", (PyCFunction)unigine_Material_set_shadow_mask, METH_VARARGS,
         "public : setShadowMask"
     },
     {
@@ -2878,7 +4962,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getShadowMask"
     },
     {
-        "set_viewport_mask", (PyCFunction)unigine_Material_set_viewport_mask, METH_O,
+        "set_viewport_mask", (PyCFunction)unigine_Material_set_viewport_mask, METH_VARARGS,
         "public : setViewportMask"
     },
     {
@@ -2886,7 +4970,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getViewportMask"
     },
     {
-        "set_depth_mask", (PyCFunction)unigine_Material_set_depth_mask, METH_O,
+        "set_depth_mask", (PyCFunction)unigine_Material_set_depth_mask, METH_VARARGS,
         "public : setDepthMask"
     },
     {
@@ -2894,7 +4978,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getDepthMask"
     },
     {
-        "set_order", (PyCFunction)unigine_Material_set_order, METH_O,
+        "set_order", (PyCFunction)unigine_Material_set_order, METH_VARARGS,
         "public : setOrder"
     },
     {
@@ -2902,7 +4986,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getOrder"
     },
     {
-        "set_cast_shadow", (PyCFunction)unigine_Material_set_cast_shadow, METH_O,
+        "set_cast_shadow", (PyCFunction)unigine_Material_set_cast_shadow, METH_VARARGS,
         "public : setCastShadow"
     },
     {
@@ -2910,7 +4994,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : isCastShadow"
     },
     {
-        "set_cast_world_shadow", (PyCFunction)unigine_Material_set_cast_world_shadow, METH_O,
+        "set_cast_world_shadow", (PyCFunction)unigine_Material_set_cast_world_shadow, METH_VARARGS,
         "public : setCastWorldShadow"
     },
     {
@@ -2918,7 +5002,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : isCastWorldShadow"
     },
     {
-        "set_depth_test", (PyCFunction)unigine_Material_set_depth_test, METH_O,
+        "set_depth_test", (PyCFunction)unigine_Material_set_depth_test, METH_VARARGS,
         "public : setDepthTest"
     },
     {
@@ -2926,7 +5010,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : isDepthTest"
     },
     {
-        "set_two_sided", (PyCFunction)unigine_Material_set_two_sided, METH_O,
+        "set_two_sided", (PyCFunction)unigine_Material_set_two_sided, METH_VARARGS,
         "public : setTwoSided"
     },
     {
@@ -2934,7 +5018,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : isTwoSided"
     },
     {
-        "set_overlap", (PyCFunction)unigine_Material_set_overlap, METH_O,
+        "set_overlap", (PyCFunction)unigine_Material_set_overlap, METH_VARARGS,
         "public : setOverlap"
     },
     {
@@ -2946,31 +5030,31 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : checkShaderCache"
     },
     {
-        "check_shader_cache", (PyCFunction)unigine_Material_check_shader_cache, METH_VARARGS|METH_KEYWORDS,
+        "check_shader_cache", (PyCFunction)unigine_Material_check_shader_cache, METH_VARARGS,
         "public : checkShaderCache"
     },
     {
-        "compile_shader", (PyCFunction)unigine_Material_compile_shader, METH_VARARGS|METH_KEYWORDS,
+        "compile_shader", (PyCFunction)unigine_Material_compile_shader, METH_VARARGS,
         "public : compileShader"
     },
     {
-        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_VARARGS|METH_KEYWORDS,
+        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_VARARGS,
         "public : fetchShader"
     },
     {
-        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_O,
+        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_VARARGS,
         "public : fetchShader"
     },
     {
-        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_VARARGS|METH_KEYWORDS,
+        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_VARARGS,
         "public : fetchShader"
     },
     {
-        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_O,
+        "fetch_shader", (PyCFunction)unigine_Material_fetch_shader, METH_VARARGS,
         "public : fetchShader"
     },
     {
-        "create_shaders", (PyCFunction)unigine_Material_create_shaders, METH_O,
+        "create_shaders", (PyCFunction)unigine_Material_create_shaders, METH_VARARGS,
         "public : createShaders"
     },
     {
@@ -2982,235 +5066,235 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getNumParameters"
     },
     {
-        "find_parameter", (PyCFunction)unigine_Material_find_parameter, METH_O,
+        "find_parameter", (PyCFunction)unigine_Material_find_parameter, METH_VARARGS,
         "public : findParameter"
     },
     {
-        "reset_parameter", (PyCFunction)unigine_Material_reset_parameter, METH_O,
+        "reset_parameter", (PyCFunction)unigine_Material_reset_parameter, METH_VARARGS,
         "public : resetParameter"
     },
     {
-        "check_parameter_conditions", (PyCFunction)unigine_Material_check_parameter_conditions, METH_O,
+        "check_parameter_conditions", (PyCFunction)unigine_Material_check_parameter_conditions, METH_VARARGS,
         "public : checkParameterConditions"
     },
     {
-        "get_parameter_type", (PyCFunction)unigine_Material_get_parameter_type, METH_O,
+        "get_parameter_type", (PyCFunction)unigine_Material_get_parameter_type, METH_VARARGS,
         "public : getParameterType"
     },
     {
-        "is_parameter_int", (PyCFunction)unigine_Material_is_parameter_int, METH_O,
+        "is_parameter_int", (PyCFunction)unigine_Material_is_parameter_int, METH_VARARGS,
         "public : isParameterInt"
     },
     {
-        "is_parameter_float", (PyCFunction)unigine_Material_is_parameter_float, METH_O,
+        "is_parameter_float", (PyCFunction)unigine_Material_is_parameter_float, METH_VARARGS,
         "public : isParameterFloat"
     },
     {
-        "is_parameter_overridden", (PyCFunction)unigine_Material_is_parameter_overridden, METH_O,
+        "is_parameter_overridden", (PyCFunction)unigine_Material_is_parameter_overridden, METH_VARARGS,
         "public : isParameterOverridden"
     },
     {
-        "get_parameter_name", (PyCFunction)unigine_Material_get_parameter_name, METH_O,
+        "get_parameter_name", (PyCFunction)unigine_Material_get_parameter_name, METH_VARARGS,
         "public : getParameterName"
     },
     {
-        "is_parameter_expression_enabled", (PyCFunction)unigine_Material_is_parameter_expression_enabled, METH_O,
+        "is_parameter_expression_enabled", (PyCFunction)unigine_Material_is_parameter_expression_enabled, METH_VARARGS,
         "public : isParameterExpressionEnabled"
     },
     {
-        "set_parameter_expression_enabled", (PyCFunction)unigine_Material_set_parameter_expression_enabled, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_expression_enabled", (PyCFunction)unigine_Material_set_parameter_expression_enabled, METH_VARARGS,
         "public : setParameterExpressionEnabled"
     },
     {
-        "get_parameter_expression", (PyCFunction)unigine_Material_get_parameter_expression, METH_O,
+        "get_parameter_expression", (PyCFunction)unigine_Material_get_parameter_expression, METH_VARARGS,
         "public : getParameterExpression"
     },
     {
-        "set_parameter_expression", (PyCFunction)unigine_Material_set_parameter_expression, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_expression", (PyCFunction)unigine_Material_set_parameter_expression, METH_VARARGS,
         "public : setParameterExpression"
     },
     {
-        "set_parameter_float", (PyCFunction)unigine_Material_set_parameter_float, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_float", (PyCFunction)unigine_Material_set_parameter_float, METH_VARARGS,
         "public : setParameterFloat"
     },
     {
-        "set_parameter_float", (PyCFunction)unigine_Material_set_parameter_float, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_float", (PyCFunction)unigine_Material_set_parameter_float, METH_VARARGS,
         "public : setParameterFloat"
     },
     {
-        "get_parameter_float", (PyCFunction)unigine_Material_get_parameter_float, METH_O,
+        "get_parameter_float", (PyCFunction)unigine_Material_get_parameter_float, METH_VARARGS,
         "public : getParameterFloat"
     },
     {
-        "get_parameter_float", (PyCFunction)unigine_Material_get_parameter_float, METH_O,
+        "get_parameter_float", (PyCFunction)unigine_Material_get_parameter_float, METH_VARARGS,
         "public : getParameterFloat"
     },
     {
-        "set_parameter_float2", (PyCFunction)unigine_Material_set_parameter_float2, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_float2", (PyCFunction)unigine_Material_set_parameter_float2, METH_VARARGS,
         "public : setParameterFloat2"
     },
     {
-        "set_parameter_float2", (PyCFunction)unigine_Material_set_parameter_float2, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_float2", (PyCFunction)unigine_Material_set_parameter_float2, METH_VARARGS,
         "public : setParameterFloat2"
     },
     {
-        "get_parameter_float2", (PyCFunction)unigine_Material_get_parameter_float2, METH_O,
+        "get_parameter_float2", (PyCFunction)unigine_Material_get_parameter_float2, METH_VARARGS,
         "public : getParameterFloat2"
     },
     {
-        "get_parameter_float2", (PyCFunction)unigine_Material_get_parameter_float2, METH_O,
+        "get_parameter_float2", (PyCFunction)unigine_Material_get_parameter_float2, METH_VARARGS,
         "public : getParameterFloat2"
     },
     {
-        "set_parameter_float3", (PyCFunction)unigine_Material_set_parameter_float3, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_float3", (PyCFunction)unigine_Material_set_parameter_float3, METH_VARARGS,
         "public : setParameterFloat3"
     },
     {
-        "set_parameter_float3", (PyCFunction)unigine_Material_set_parameter_float3, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_float3", (PyCFunction)unigine_Material_set_parameter_float3, METH_VARARGS,
         "public : setParameterFloat3"
     },
     {
-        "get_parameter_float3", (PyCFunction)unigine_Material_get_parameter_float3, METH_O,
+        "get_parameter_float3", (PyCFunction)unigine_Material_get_parameter_float3, METH_VARARGS,
         "public : getParameterFloat3"
     },
     {
-        "get_parameter_float3", (PyCFunction)unigine_Material_get_parameter_float3, METH_O,
+        "get_parameter_float3", (PyCFunction)unigine_Material_get_parameter_float3, METH_VARARGS,
         "public : getParameterFloat3"
     },
     {
-        "set_parameter_float4", (PyCFunction)unigine_Material_set_parameter_float4, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_float4", (PyCFunction)unigine_Material_set_parameter_float4, METH_VARARGS,
         "public : setParameterFloat4"
     },
     {
-        "set_parameter_float4", (PyCFunction)unigine_Material_set_parameter_float4, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_float4", (PyCFunction)unigine_Material_set_parameter_float4, METH_VARARGS,
         "public : setParameterFloat4"
     },
     {
-        "get_parameter_float4", (PyCFunction)unigine_Material_get_parameter_float4, METH_O,
+        "get_parameter_float4", (PyCFunction)unigine_Material_get_parameter_float4, METH_VARARGS,
         "public : getParameterFloat4"
     },
     {
-        "get_parameter_float4", (PyCFunction)unigine_Material_get_parameter_float4, METH_O,
+        "get_parameter_float4", (PyCFunction)unigine_Material_get_parameter_float4, METH_VARARGS,
         "public : getParameterFloat4"
     },
     {
-        "set_parameter_int", (PyCFunction)unigine_Material_set_parameter_int, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_int", (PyCFunction)unigine_Material_set_parameter_int, METH_VARARGS,
         "public : setParameterInt"
     },
     {
-        "set_parameter_int", (PyCFunction)unigine_Material_set_parameter_int, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_int", (PyCFunction)unigine_Material_set_parameter_int, METH_VARARGS,
         "public : setParameterInt"
     },
     {
-        "get_parameter_int", (PyCFunction)unigine_Material_get_parameter_int, METH_O,
+        "get_parameter_int", (PyCFunction)unigine_Material_get_parameter_int, METH_VARARGS,
         "public : getParameterInt"
     },
     {
-        "get_parameter_int", (PyCFunction)unigine_Material_get_parameter_int, METH_O,
+        "get_parameter_int", (PyCFunction)unigine_Material_get_parameter_int, METH_VARARGS,
         "public : getParameterInt"
     },
     {
-        "set_parameter_int2", (PyCFunction)unigine_Material_set_parameter_int2, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_int2", (PyCFunction)unigine_Material_set_parameter_int2, METH_VARARGS,
         "public : setParameterInt2"
     },
     {
-        "set_parameter_int2", (PyCFunction)unigine_Material_set_parameter_int2, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_int2", (PyCFunction)unigine_Material_set_parameter_int2, METH_VARARGS,
         "public : setParameterInt2"
     },
     {
-        "get_parameter_int2", (PyCFunction)unigine_Material_get_parameter_int2, METH_O,
+        "get_parameter_int2", (PyCFunction)unigine_Material_get_parameter_int2, METH_VARARGS,
         "public : getParameterInt2"
     },
     {
-        "get_parameter_int2", (PyCFunction)unigine_Material_get_parameter_int2, METH_O,
+        "get_parameter_int2", (PyCFunction)unigine_Material_get_parameter_int2, METH_VARARGS,
         "public : getParameterInt2"
     },
     {
-        "set_parameter_int3", (PyCFunction)unigine_Material_set_parameter_int3, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_int3", (PyCFunction)unigine_Material_set_parameter_int3, METH_VARARGS,
         "public : setParameterInt3"
     },
     {
-        "set_parameter_int3", (PyCFunction)unigine_Material_set_parameter_int3, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_int3", (PyCFunction)unigine_Material_set_parameter_int3, METH_VARARGS,
         "public : setParameterInt3"
     },
     {
-        "get_parameter_int3", (PyCFunction)unigine_Material_get_parameter_int3, METH_O,
+        "get_parameter_int3", (PyCFunction)unigine_Material_get_parameter_int3, METH_VARARGS,
         "public : getParameterInt3"
     },
     {
-        "get_parameter_int3", (PyCFunction)unigine_Material_get_parameter_int3, METH_O,
+        "get_parameter_int3", (PyCFunction)unigine_Material_get_parameter_int3, METH_VARARGS,
         "public : getParameterInt3"
     },
     {
-        "set_parameter_int4", (PyCFunction)unigine_Material_set_parameter_int4, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_int4", (PyCFunction)unigine_Material_set_parameter_int4, METH_VARARGS,
         "public : setParameterInt4"
     },
     {
-        "set_parameter_int4", (PyCFunction)unigine_Material_set_parameter_int4, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_int4", (PyCFunction)unigine_Material_set_parameter_int4, METH_VARARGS,
         "public : setParameterInt4"
     },
     {
-        "get_parameter_int4", (PyCFunction)unigine_Material_get_parameter_int4, METH_O,
+        "get_parameter_int4", (PyCFunction)unigine_Material_get_parameter_int4, METH_VARARGS,
         "public : getParameterInt4"
     },
     {
-        "get_parameter_int4", (PyCFunction)unigine_Material_get_parameter_int4, METH_O,
+        "get_parameter_int4", (PyCFunction)unigine_Material_get_parameter_int4, METH_VARARGS,
         "public : getParameterInt4"
     },
     {
-        "get_parameter_array_size", (PyCFunction)unigine_Material_get_parameter_array_size, METH_O,
+        "get_parameter_array_size", (PyCFunction)unigine_Material_get_parameter_array_size, METH_VARARGS,
         "public : getParameterArraySize"
     },
     {
-        "is_parameter_array", (PyCFunction)unigine_Material_is_parameter_array, METH_O,
+        "is_parameter_array", (PyCFunction)unigine_Material_is_parameter_array, METH_VARARGS,
         "public : isParameterArray"
     },
     {
-        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS|METH_KEYWORDS,
+        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS,
         "public : getParameterArray"
     },
     {
-        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS,
         "public : setParameterArray"
     },
     {
-        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS|METH_KEYWORDS,
+        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS,
         "public : getParameterArray"
     },
     {
-        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS,
         "public : setParameterArray"
     },
     {
-        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS|METH_KEYWORDS,
+        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS,
         "public : getParameterArray"
     },
     {
-        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS,
         "public : setParameterArray"
     },
     {
-        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS|METH_KEYWORDS,
+        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS,
         "public : getParameterArray"
     },
     {
-        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS,
         "public : setParameterArray"
     },
     {
-        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS|METH_KEYWORDS,
+        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS,
         "public : getParameterArray"
     },
     {
-        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS,
         "public : setParameterArray"
     },
     {
-        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS|METH_KEYWORDS,
+        "get_parameter_array", (PyCFunction)unigine_Material_get_parameter_array, METH_VARARGS,
         "public : getParameterArray"
     },
     {
-        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS|METH_KEYWORDS,
+        "set_parameter_array", (PyCFunction)unigine_Material_set_parameter_array, METH_VARARGS,
         "public : setParameterArray"
     },
     {
@@ -3218,55 +5302,55 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getNumStates"
     },
     {
-        "find_state", (PyCFunction)unigine_Material_find_state, METH_O,
+        "find_state", (PyCFunction)unigine_Material_find_state, METH_VARARGS,
         "public : findState"
     },
     {
-        "is_state_overridden", (PyCFunction)unigine_Material_is_state_overridden, METH_O,
+        "is_state_overridden", (PyCFunction)unigine_Material_is_state_overridden, METH_VARARGS,
         "public : isStateOverridden"
     },
     {
-        "is_state_internal", (PyCFunction)unigine_Material_is_state_internal, METH_O,
+        "is_state_internal", (PyCFunction)unigine_Material_is_state_internal, METH_VARARGS,
         "public : isStateInternal"
     },
     {
-        "reset_state", (PyCFunction)unigine_Material_reset_state, METH_O,
+        "reset_state", (PyCFunction)unigine_Material_reset_state, METH_VARARGS,
         "public : resetState"
     },
     {
-        "check_state_conditions", (PyCFunction)unigine_Material_check_state_conditions, METH_O,
+        "check_state_conditions", (PyCFunction)unigine_Material_check_state_conditions, METH_VARARGS,
         "public : checkStateConditions"
     },
     {
-        "get_state_name", (PyCFunction)unigine_Material_get_state_name, METH_O,
+        "get_state_name", (PyCFunction)unigine_Material_get_state_name, METH_VARARGS,
         "public : getStateName"
     },
     {
-        "get_state_switch_item", (PyCFunction)unigine_Material_get_state_switch_item, METH_VARARGS|METH_KEYWORDS,
+        "get_state_switch_item", (PyCFunction)unigine_Material_get_state_switch_item, METH_VARARGS,
         "public : getStateSwitchItem"
     },
     {
-        "get_state_switch_num_items", (PyCFunction)unigine_Material_get_state_switch_num_items, METH_O,
+        "get_state_switch_num_items", (PyCFunction)unigine_Material_get_state_switch_num_items, METH_VARARGS,
         "public : getStateSwitchNumItems"
     },
     {
-        "get_state_type", (PyCFunction)unigine_Material_get_state_type, METH_O,
+        "get_state_type", (PyCFunction)unigine_Material_get_state_type, METH_VARARGS,
         "public : getStateType"
     },
     {
-        "get_state", (PyCFunction)unigine_Material_get_state, METH_O,
+        "get_state", (PyCFunction)unigine_Material_get_state, METH_VARARGS,
         "public : getState"
     },
     {
-        "set_state", (PyCFunction)unigine_Material_set_state, METH_VARARGS|METH_KEYWORDS,
+        "set_state", (PyCFunction)unigine_Material_set_state, METH_VARARGS,
         "public : setState"
     },
     {
-        "get_state", (PyCFunction)unigine_Material_get_state, METH_O,
+        "get_state", (PyCFunction)unigine_Material_get_state, METH_VARARGS,
         "public : getState"
     },
     {
-        "set_state", (PyCFunction)unigine_Material_set_state, METH_VARARGS|METH_KEYWORDS,
+        "set_state", (PyCFunction)unigine_Material_set_state, METH_VARARGS,
         "public : setState"
     },
     {
@@ -3274,103 +5358,103 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getNumTextures"
     },
     {
-        "find_texture", (PyCFunction)unigine_Material_find_texture, METH_O,
+        "find_texture", (PyCFunction)unigine_Material_find_texture, METH_VARARGS,
         "public : findTexture"
     },
     {
-        "is_texture_overridden", (PyCFunction)unigine_Material_is_texture_overridden, METH_O,
+        "is_texture_overridden", (PyCFunction)unigine_Material_is_texture_overridden, METH_VARARGS,
         "public : isTextureOverridden"
     },
     {
-        "is_texture_loaded", (PyCFunction)unigine_Material_is_texture_loaded, METH_O,
+        "is_texture_loaded", (PyCFunction)unigine_Material_is_texture_loaded, METH_VARARGS,
         "public : isTextureLoaded"
     },
     {
-        "is_texture_internal", (PyCFunction)unigine_Material_is_texture_internal, METH_O,
+        "is_texture_internal", (PyCFunction)unigine_Material_is_texture_internal, METH_VARARGS,
         "public : isTextureInternal"
     },
     {
-        "reset_texture", (PyCFunction)unigine_Material_reset_texture, METH_O,
+        "reset_texture", (PyCFunction)unigine_Material_reset_texture, METH_VARARGS,
         "public : resetTexture"
     },
     {
-        "check_texture_conditions", (PyCFunction)unigine_Material_check_texture_conditions, METH_O,
+        "check_texture_conditions", (PyCFunction)unigine_Material_check_texture_conditions, METH_VARARGS,
         "public : checkTextureConditions"
     },
     {
-        "get_texture_name", (PyCFunction)unigine_Material_get_texture_name, METH_O,
+        "get_texture_name", (PyCFunction)unigine_Material_get_texture_name, METH_VARARGS,
         "public : getTextureName"
     },
     {
-        "get_texture_unit", (PyCFunction)unigine_Material_get_texture_unit, METH_O,
+        "get_texture_unit", (PyCFunction)unigine_Material_get_texture_unit, METH_VARARGS,
         "public : getTextureUnit"
     },
     {
-        "is_texture_editable", (PyCFunction)unigine_Material_is_texture_editable, METH_O,
+        "is_texture_editable", (PyCFunction)unigine_Material_is_texture_editable, METH_VARARGS,
         "public : isTextureEditable"
     },
     {
-        "get_texture_source", (PyCFunction)unigine_Material_get_texture_source, METH_O,
+        "get_texture_source", (PyCFunction)unigine_Material_get_texture_source, METH_VARARGS,
         "public : getTextureSource"
     },
     {
-        "get_texture_sampler_flags", (PyCFunction)unigine_Material_get_texture_sampler_flags, METH_O,
+        "get_texture_sampler_flags", (PyCFunction)unigine_Material_get_texture_sampler_flags, METH_VARARGS,
         "public : getTextureSamplerFlags"
     },
     {
-        "set_texture_sampler_flags", (PyCFunction)unigine_Material_set_texture_sampler_flags, METH_VARARGS|METH_KEYWORDS,
+        "set_texture_sampler_flags", (PyCFunction)unigine_Material_set_texture_sampler_flags, METH_VARARGS,
         "public : setTextureSamplerFlags"
     },
     {
-        "get_texture_format_flags", (PyCFunction)unigine_Material_get_texture_format_flags, METH_O,
+        "get_texture_format_flags", (PyCFunction)unigine_Material_get_texture_format_flags, METH_VARARGS,
         "public : getTextureFormatFlags"
     },
     {
-        "get_texture_image", (PyCFunction)unigine_Material_get_texture_image, METH_VARARGS|METH_KEYWORDS,
+        "get_texture_image", (PyCFunction)unigine_Material_get_texture_image, METH_VARARGS,
         "public : getTextureImage"
     },
     {
-        "set_texture_image", (PyCFunction)unigine_Material_set_texture_image, METH_VARARGS|METH_KEYWORDS,
+        "set_texture_image", (PyCFunction)unigine_Material_set_texture_image, METH_VARARGS,
         "public : setTextureImage"
     },
     {
-        "get_texture", (PyCFunction)unigine_Material_get_texture, METH_O,
+        "get_texture", (PyCFunction)unigine_Material_get_texture, METH_VARARGS,
         "public : getTexture"
     },
     {
-        "get_texture", (PyCFunction)unigine_Material_get_texture, METH_O,
+        "get_texture", (PyCFunction)unigine_Material_get_texture, METH_VARARGS,
         "public : getTexture"
     },
     {
-        "set_texture", (PyCFunction)unigine_Material_set_texture, METH_VARARGS|METH_KEYWORDS,
+        "set_texture", (PyCFunction)unigine_Material_set_texture, METH_VARARGS,
         "public : setTexture"
     },
     {
-        "set_texture", (PyCFunction)unigine_Material_set_texture, METH_VARARGS|METH_KEYWORDS,
+        "set_texture", (PyCFunction)unigine_Material_set_texture, METH_VARARGS,
         "public : setTexture"
     },
     {
-        "set_texture_path", (PyCFunction)unigine_Material_set_texture_path, METH_VARARGS|METH_KEYWORDS,
+        "set_texture_path", (PyCFunction)unigine_Material_set_texture_path, METH_VARARGS,
         "public : setTexturePath"
     },
     {
-        "get_texture_path", (PyCFunction)unigine_Material_get_texture_path, METH_O,
+        "get_texture_path", (PyCFunction)unigine_Material_get_texture_path, METH_VARARGS,
         "public : getTexturePath"
     },
     {
-        "set_texture_path", (PyCFunction)unigine_Material_set_texture_path, METH_VARARGS|METH_KEYWORDS,
+        "set_texture_path", (PyCFunction)unigine_Material_set_texture_path, METH_VARARGS,
         "public : setTexturePath"
     },
     {
-        "get_texture_path", (PyCFunction)unigine_Material_get_texture_path, METH_O,
+        "get_texture_path", (PyCFunction)unigine_Material_get_texture_path, METH_VARARGS,
         "public : getTexturePath"
     },
     {
-        "get_texture_ramp", (PyCFunction)unigine_Material_get_texture_ramp, METH_O,
+        "get_texture_ramp", (PyCFunction)unigine_Material_get_texture_ramp, METH_VARARGS,
         "public : getTextureRamp"
     },
     {
-        "get_texture_ramp_override", (PyCFunction)unigine_Material_get_texture_ramp_override, METH_O,
+        "get_texture_ramp_override", (PyCFunction)unigine_Material_get_texture_ramp_override, METH_VARARGS,
         "public : getTextureRampOverride"
     },
     {
@@ -3430,27 +5514,27 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : hasOverrides"
     },
     {
-        "save_state", (PyCFunction)unigine_Material_save_state, METH_VARARGS|METH_KEYWORDS,
+        "save_state", (PyCFunction)unigine_Material_save_state, METH_VARARGS,
         "public : saveState"
     },
     {
-        "restore_state", (PyCFunction)unigine_Material_restore_state, METH_VARARGS|METH_KEYWORDS,
+        "restore_state", (PyCFunction)unigine_Material_restore_state, METH_VARARGS,
         "public : restoreState"
     },
     {
-        "load_xml", (PyCFunction)unigine_Material_load_xml, METH_O,
+        "load_xml", (PyCFunction)unigine_Material_load_xml, METH_VARARGS,
         "public : loadXml"
     },
     {
-        "save_xml", (PyCFunction)unigine_Material_save_xml, METH_O,
+        "save_xml", (PyCFunction)unigine_Material_save_xml, METH_VARARGS,
         "public : saveXml"
     },
     {
-        "load_ulon", (PyCFunction)unigine_Material_load_ulon, METH_O,
+        "load_ulon", (PyCFunction)unigine_Material_load_ulon, METH_VARARGS,
         "public : loadUlon"
     },
     {
-        "load", (PyCFunction)unigine_Material_load, METH_O,
+        "load", (PyCFunction)unigine_Material_load, METH_VARARGS,
         "public : load"
     },
     {
@@ -3462,35 +5546,35 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : reload"
     },
     {
-        "create_material_file", (PyCFunction)unigine_Material_create_material_file, METH_O,
+        "create_material_file", (PyCFunction)unigine_Material_create_material_file, METH_VARARGS,
         "public : createMaterialFile"
     },
     {
-        "get_render_pass", (PyCFunction)unigine_Material_get_render_pass, METH_O,
+        "get_render_pass", (PyCFunction)unigine_Material_get_render_pass, METH_VARARGS,
         "public : getRenderPass"
     },
     {
-        "get_render_pass_name", (PyCFunction)unigine_Material_get_render_pass_name, METH_O,
+        "get_render_pass_name", (PyCFunction)unigine_Material_get_render_pass_name, METH_VARARGS,
         "public : getRenderPassName"
     },
     {
-        "run_expression", (PyCFunction)unigine_Material_run_expression, METH_VARARGS|METH_KEYWORDS,
+        "run_expression", (PyCFunction)unigine_Material_run_expression, METH_VARARGS,
         "public : runExpression"
     },
     {
-        "render_screen", (PyCFunction)unigine_Material_render_screen, METH_O,
+        "render_screen", (PyCFunction)unigine_Material_render_screen, METH_VARARGS,
         "public : renderScreen"
     },
     {
-        "render_screen", (PyCFunction)unigine_Material_render_screen, METH_O,
+        "render_screen", (PyCFunction)unigine_Material_render_screen, METH_VARARGS,
         "public : renderScreen"
     },
     {
-        "render_compute", (PyCFunction)unigine_Material_render_compute, METH_VARARGS|METH_KEYWORDS,
+        "render_compute", (PyCFunction)unigine_Material_render_compute, METH_VARARGS,
         "public : renderCompute"
     },
     {
-        "render_compute", (PyCFunction)unigine_Material_render_compute, METH_VARARGS|METH_KEYWORDS,
+        "render_compute", (PyCFunction)unigine_Material_render_compute, METH_VARARGS,
         "public : renderCompute"
     },
     {NULL}  /* Sentinel */

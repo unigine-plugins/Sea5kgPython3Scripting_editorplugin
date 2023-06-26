@@ -1,5 +1,6 @@
 // this file automaticly generated from UnigineMaterials.h
 #include "python3_unigine_materials.h"
+#include "python3_unigine_material.h"
 #include "python3_unigine_uguid.h"
 
 #include <string>
@@ -37,10 +38,12 @@ static int unigine_Materials_init(unigine_Materials *self, PyObject *args, PyObj
     return 0;
 }
 
+
 // public (static): isInitialized
-static PyObject * unigine_Materials_is_initialized() {
+static PyObject * unigine_Materials_is_initialized(unigine_Materials* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
+    // parse args:
     // args:
     // return: int
 
@@ -50,25 +53,51 @@ static PyObject * unigine_Materials_is_initialized() {
 };
 
 // public (static): getLoadingMode
-static PyObject * unigine_Materials_get_loading_mode() {
+static PyObject * unigine_Materials_get_loading_mode(unigine_Materials* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Materials::LOADING_MODE
+    // parse args:
 
     Unigine::Materials::LOADING_MODE retOriginal = Unigine::Materials::getLoadingMode();
     ret = PyLong_FromLong(retOriginal);
+
+    // end 
+    // return: Unigine::Materials::LOADING_MODE
+    return ret;
+};
+
+// public (static): loadMaterial
+static PyObject * unigine_Materials_load_material(unigine_Materials* self_static_null, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // const char * path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * path = PyBytes_AS_STRING(pArg1Str);
+
+    Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Materials::loadMaterial(path);
+    ret = PyUnigine::Material::NewObject(retOriginal);
+
+    // end 
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
 // public (static): isMaterialGUID
-static PyObject * unigine_Materials_is_material_guid(PyObject *self, PyObject *arg) {
-    // self is null
+static PyObject * unigine_Materials_is_material_guid(unigine_Materials* self_static_null, PyObject *args) {
     PyErr_Clear();
-    assert(arg);
     PyObject *ret = NULL;
     // args:
-    Unigine::UGUID *guid = PyUnigine::UGUID::Convert(arg);
+    PyObject *pArg1;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    Unigine::UGUID *guid = PyUnigine::UGUID::Convert(pArg1);
     // const Unigine::UGUID & guid;
     // return: bool
 
@@ -78,7 +107,7 @@ static PyObject * unigine_Materials_is_material_guid(PyObject *self, PyObject *a
 };
 
 // public (static): getNumMaterials
-static PyObject * unigine_Materials_get_num_materials() {
+static PyObject * unigine_Materials_get_num_materials(unigine_Materials* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
@@ -90,7 +119,7 @@ static PyObject * unigine_Materials_get_num_materials() {
 };
 
 // public (static): compileShaders
-static PyObject * unigine_Materials_compile_shaders() {
+static PyObject * unigine_Materials_compile_shaders(unigine_Materials* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
@@ -99,6 +128,18 @@ static PyObject * unigine_Materials_compile_shaders() {
     Unigine::Materials::compileShaders();
     return ret;
 };
+
+// public (static): createShaders
+static PyObject * unigine_Materials_create_shaders(unigine_Materials* self_static_null) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // args:
+    // return: void
+
+    Unigine::Materials::createShaders();
+    return ret;
+};
+
 
 static PyMethodDef unigine_Materials_methods[] = {
     {
@@ -110,52 +151,48 @@ static PyMethodDef unigine_Materials_methods[] = {
         "public (static): getLoadingMode"
     },
     {
-        "is_material_guid", (PyCFunction)unigine_Materials_is_material_guid, METH_STATIC | METH_O,
+        "load_material", (PyCFunction)unigine_Materials_load_material, METH_STATIC|METH_VARARGS,
+        "public (static): loadMaterial"
+    },
+    {
+        "is_material_guid", (PyCFunction)unigine_Materials_is_material_guid, METH_STATIC|METH_VARARGS,
         "public (static): isMaterialGUID"
     },
     {
         "get_num_materials", (PyCFunction)unigine_Materials_get_num_materials, METH_STATIC|METH_NOARGS,
         "public (static): getNumMaterials"
     },
+    {
+        "create_shaders", (PyCFunction)unigine_Materials_create_shaders, METH_STATIC|METH_NOARGS,
+        "public (static): createShaders"
+    },
     {NULL}  /* Sentinel */
 };
 
 static PyTypeObject unigine_MaterialsType = {
-    // PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    // PyVarObject_HEAD_INIT(NULL, 0)
-    // .tp_name = "unigine.Materials",
-    // .tp_basicsize = sizeof(unigine_Materials) + 16, // magic!!!
-    // .tp_dealloc = (destructor)unigine_Materials_dealloc,
-    // .tp_flags = Py_TPFLAGS_DEFAULT, // | Py_TPFLAGS_BASETYPE,
-    // .tp_doc = "Materials Object",
-    // .tp_methods = unigine_Materials_methods,
-    // .tp_members = 0,
-    // .tp_dict = 0,
-    // .tp_init = (initproc)unigine_Materials_init,
-    // .tp_new = unigine_Materials_new,
 
 
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Materials",             // tp_name
     sizeof(unigine_Materials) + 16, // tp_basicsize  (magic 16 bytes!!!)
-    0,                         // tp_itemsize 
+    0,                         // tp_itemsize
     (destructor)unigine_Materials_dealloc,   // tp_dealloc
-    0,                         // tp_vectorcall_offset 
-    0,                         // tp_getattr 
-    0,                         // tp_setattr 
-    0,                         // tp_as_async 
-    0,                         // tp_repr 
-    0,                         // tp_as_number 
-    0,                         // tp_as_sequence 
-    0,                         // tp_as_mapping 
-    0,                         // tp_hash  
-    0,                         // tp_call 
-    0,                         // tp_str 
-    0,                         // tp_getattro 
-    0,                         // tp_setattro 
-    0,                         // tp_as_buffer 
-    Py_TPFLAGS_DEFAULT,        // tp_flags 
-    "Materials Object",         // tp_doc 
+    0,                         // tp_vectorcall_offset
+    0,                         // tp_getattr
+    0,                         // tp_setattr
+    0,                         // tp_as_async
+    0,                         // tp_repr
+    0,                         // tp_as_number
+    0,                         // tp_as_sequence
+    0,                         // tp_as_mapping
+    0,                         // tp_hash
+    0,                         // tp_call
+    0,                         // tp_str
+    0,                         // tp_getattro
+    0,                         // tp_setattro
+    0,                         // tp_as_buffer
+    Py_TPFLAGS_DEFAULT,        // tp_flags
+    "Materials Object",         // tp_doc
     0,                         // traverseproc tp_traverse
     0,                         // inquiry tp_clear
     0,                         // richcmpfunc tp_richcompare
@@ -173,17 +210,6 @@ static PyTypeObject unigine_MaterialsType = {
     (initproc)unigine_Materials_init, // tp_init
     0, // tp_alloc
     unigine_Materials_new, // tp_new
-    // 0, // tp_free
-    // 0, /* inquiry tp_is_gc; */
-    // 0, /* PyObject *tp_bases; */
-    // 0, /* PyObject *tp_mro; */
-    // 0, /* PyObject *tp_cache; */
-    // 0, /* PyObject *tp_subclasses; */
-    // 0, /* PyObject *tp_weaklist; */
-    // 0, /* destructor tp_del; */
-    // 0, /* unsigned int tp_version_tag; */
-    // 0, /* destructor tp_finalize; */
-    // 0, /* vectorcallfunc tp_vectorcall; */
 };
 
 PyObject * Materials::NewObject() {
@@ -199,9 +225,6 @@ PyObject * Materials::NewObject() {
 
 bool Python3UnigineMaterials::isReady() {
     // Initialize tp_dict with empty dictionary
-    std::cout << "sizeof(unigine_Materials) = " << sizeof(unigine_Materials) << std::endl;
-    std::cout << "sizeof(Unigine::Ptr<Unigine::Materials>) = " << sizeof(Unigine::Ptr<Unigine::Materials>) << std::endl;
-        // Unigine::Ptr<Unigine::Materials> material
     if (!unigine_MaterialsType.tp_dict) {
         unigine_MaterialsType.tp_dict = PyDict_New();
 

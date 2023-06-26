@@ -39,128 +39,270 @@ static int unigine_mat4_init(unigine_mat4 *self, PyObject *args, PyObject *kwds)
 
 
 // public : set
-static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int row;
-    int column;
-    float v;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int row;
+    PyObject *pArg2; // int column;
+    PyObject *pArg3; // float v;
+    PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int row = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int column = PyBytes_AS_STRING(pArg2Str);
+
+    // pArg3
+    PyObject* pArg3Repr = PyObject_Repr(pArg3);
+    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
+    float v = PyBytes_AS_STRING(pArg3Str);
 
     self->unigine_object_ptr->set(row, column, v);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    Py_XDECREF(pArg3Repr);
+    Py_XDECREF(pArg3Str);
+    // return: void
     return ret;
 };
 
 // public : set
-static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::mat2 & m;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::mat2 & m;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::mat2 & m = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->set(m);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : set
-static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::mat3 & m;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::mat3 & m;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::mat3 & m = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->set(m);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : set
-static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::mat4 & m;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::mat4 & m;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::mat4 & m = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->set(m);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : set
-static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::dmat4 & m;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::dmat4 & m;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::dmat4 & m = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->set(m);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : set
-static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::quat & q;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::quat & q;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::quat & q = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->set(q);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : set
-static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const float * m;
-    int transpose;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const float * m;
+    PyObject *pArg2; // int transpose;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const float * m = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int transpose = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->set(m, transpose);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : set
-static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::mat3 & m;
-    const Unigine::Math::vec3 & v;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::mat3 & m;
+    PyObject *pArg2; // const Unigine::Math::vec3 & v;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::mat3 & m = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & v = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->set(m, v);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : set
-static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::quat & q;
-    const Unigine::Math::vec3 & v;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::quat & q;
+    PyObject *pArg2; // const Unigine::Math::vec3 & v;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::quat & q = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & v = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->set(q, v);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : get
-static PyObject * unigine_mat4_get(unigine_mat4* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_mat4_get(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    float * m;
-    int transpose;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // float * m;
+    PyObject *pArg2; // int transpose;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    float * m = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int transpose = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->get(m, transpose);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
@@ -168,10 +310,12 @@ static PyObject * unigine_mat4_get(unigine_mat4* self, PyObject *args, PyObject 
 static PyObject * unigine_mat4_get(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
+    // parse args:
+
+    unknown type 
+
+    // end
     // return: float *
-
-    unknown type 
     return ret;
 };
 
@@ -179,140 +323,284 @@ static PyObject * unigine_mat4_get(unigine_mat4* self) {
 static PyObject * unigine_mat4_get(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
+    // parse args:
+
+    unknown type 
+
+    // end
     // return: const float *
-
-    unknown type 
     return ret;
 };
 
 // public : get
-static PyObject * unigine_mat4_get(unigine_mat4* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_mat4_get(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int row;
-    int column;
+    // parse args:
+    PyObject *pArg1; // int row;
+    PyObject *pArg2; // int column;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int row = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int column = PyBytes_AS_STRING(pArg2Str);
+
+    unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
     // return: float &
-
-    unknown type 
     return ret;
 };
 
 // public : get
-static PyObject * unigine_mat4_get(unigine_mat4* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_mat4_get(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int row;
-    int column;
-    // return: float
+    // parse args:
+    PyObject *pArg1; // int row;
+    PyObject *pArg2; // int column;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int row = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int column = PyBytes_AS_STRING(pArg2Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: float
     return ret;
 };
 
 // public : setRow
-static PyObject * unigine_mat4_set_row(unigine_mat4* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_mat4_set_row(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int row;
-    const Unigine::Math::vec4 & v;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int row;
+    PyObject *pArg2; // const Unigine::Math::vec4 & v;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int row = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec4 & v = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setRow(row, v);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setRow3
-static PyObject * unigine_mat4_set_row3(unigine_mat4* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_mat4_set_row3(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int row;
-    const Unigine::Math::vec3 & v;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int row;
+    PyObject *pArg2; // const Unigine::Math::vec3 & v;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int row = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & v = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setRow3(row, v);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getRow
-static PyObject * unigine_mat4_get_row(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_get_row(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int row;
-    // return: Unigine::Math::vec4
+    // parse args:
+    PyObject *pArg1; // int row;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int row = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec4 retOriginal = self->unigine_object_ptr->getRow(row);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec4
     return ret;
 };
 
 // public : getRow3
-static PyObject * unigine_mat4_get_row3(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_get_row3(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int row;
-    // return: Unigine::Math::vec3
+    // parse args:
+    PyObject *pArg1; // int row;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int row = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getRow3(row);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec3
     return ret;
 };
 
 // public : setColumn
-static PyObject * unigine_mat4_set_column(unigine_mat4* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_mat4_set_column(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int column;
-    const Unigine::Math::vec4 & v;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int column;
+    PyObject *pArg2; // const Unigine::Math::vec4 & v;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int column = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec4 & v = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setColumn(column, v);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : setColumn3
-static PyObject * unigine_mat4_set_column3(unigine_mat4* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_mat4_set_column3(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int column;
-    const Unigine::Math::vec3 & v;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int column;
+    PyObject *pArg2; // const Unigine::Math::vec3 & v;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int column = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & v = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setColumn3(column, v);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
 // public : getColumn
-static PyObject * unigine_mat4_get_column(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_get_column(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int column;
-    // return: Unigine::Math::vec4
+    // parse args:
+    PyObject *pArg1; // int column;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int column = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec4 retOriginal = self->unigine_object_ptr->getColumn(column);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec4
     return ret;
 };
 
 // public : getColumn3
-static PyObject * unigine_mat4_get_column3(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_get_column3(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int column;
-    // return: Unigine::Math::vec3
+    // parse args:
+    PyObject *pArg1; // int column;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int column = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getColumn3(column);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Math::vec3
     return ret;
 };
 
@@ -320,11 +608,13 @@ static PyObject * unigine_mat4_get_column3(unigine_mat4* self, PyObject *arg) {
 static PyObject * unigine_mat4_get_axis_x(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::vec3
+    // parse args:
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getAxisX();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::vec3
     return ret;
 };
 
@@ -332,11 +622,13 @@ static PyObject * unigine_mat4_get_axis_x(unigine_mat4* self) {
 static PyObject * unigine_mat4_get_axis_y(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::vec3
+    // parse args:
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getAxisY();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::vec3
     return ret;
 };
 
@@ -344,23 +636,35 @@ static PyObject * unigine_mat4_get_axis_y(unigine_mat4* self) {
 static PyObject * unigine_mat4_get_axis_z(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::vec3
+    // parse args:
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getAxisZ();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::vec3
     return ret;
 };
 
 // public : setDiagonal
-static PyObject * unigine_mat4_set_diagonal(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_set_diagonal(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::vec4 & v;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::vec4 & v;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::vec4 & v = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setDiagonal(v);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -368,11 +672,13 @@ static PyObject * unigine_mat4_set_diagonal(unigine_mat4* self, PyObject *arg) {
 static PyObject * unigine_mat4_get_diagonal(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::vec4
+    // parse args:
 
     Unigine::Math::vec4 retOriginal = self->unigine_object_ptr->getDiagonal();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::vec4
     return ret;
 };
 
@@ -380,10 +686,12 @@ static PyObject * unigine_mat4_get_diagonal(unigine_mat4* self) {
 static PyObject * unigine_mat4_set_zero(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void
+    // parse args:
 
     self->unigine_object_ptr->setZero();
+
+    // end
+    // return: void
     return ret;
 };
 
@@ -391,22 +699,34 @@ static PyObject * unigine_mat4_set_zero(unigine_mat4* self) {
 static PyObject * unigine_mat4_set_identity(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void
+    // parse args:
 
     self->unigine_object_ptr->setIdentity();
+
+    // end
+    // return: void
     return ret;
 };
 
 // public : setTranslate
-static PyObject * unigine_mat4_set_translate(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_set_translate(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::vec3 & v;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::vec3 & v;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & v = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setTranslate(v);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -414,24 +734,43 @@ static PyObject * unigine_mat4_set_translate(unigine_mat4* self, PyObject *arg) 
 static PyObject * unigine_mat4_get_translate(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::vec3
+    // parse args:
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getTranslate();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::vec3
     return ret;
 };
 
 // public : setRotate
-static PyObject * unigine_mat4_set_rotate(unigine_mat4* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_mat4_set_rotate(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::vec3 & axis;
-    float angle;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::vec3 & axis;
+    PyObject *pArg2; // float angle;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & axis = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    float angle = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->setRotate(axis, angle);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
@@ -439,59 +778,101 @@ static PyObject * unigine_mat4_set_rotate(unigine_mat4* self, PyObject *args, Py
 static PyObject * unigine_mat4_get_rotate(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::quat
+    // parse args:
 
     Unigine::Math::quat retOriginal = self->unigine_object_ptr->getRotate();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::quat
     return ret;
 };
 
 // public : setRotateX
-static PyObject * unigine_mat4_set_rotate_x(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_set_rotate_x(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    float angle;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // float angle;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    float angle = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setRotateX(angle);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : setRotateY
-static PyObject * unigine_mat4_set_rotate_y(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_set_rotate_y(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    float angle;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // float angle;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    float angle = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setRotateY(angle);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : setRotateZ
-static PyObject * unigine_mat4_set_rotate_z(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_set_rotate_z(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    float angle;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // float angle;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    float angle = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setRotateZ(angle);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : setScale
-static PyObject * unigine_mat4_set_scale(unigine_mat4* self, PyObject *arg) {
+static PyObject * unigine_mat4_set_scale(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::Math::vec3 & v;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const Unigine::Math::vec3 & v;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::Math::vec3 & v = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setScale(v);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -499,11 +880,13 @@ static PyObject * unigine_mat4_set_scale(unigine_mat4* self, PyObject *arg) {
 static PyObject * unigine_mat4_get_scale(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Math::vec3
+    // parse args:
 
     Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getScale();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Math::vec3
     return ret;
 };
 
@@ -511,10 +894,12 @@ static PyObject * unigine_mat4_get_scale(unigine_mat4* self) {
 static PyObject * unigine_mat4_trace(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: float
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: float
     return ret;
 };
 
@@ -522,10 +907,12 @@ static PyObject * unigine_mat4_trace(unigine_mat4* self) {
 static PyObject * unigine_mat4_determinant(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: float
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: float
     return ret;
 };
 
@@ -533,53 +920,55 @@ static PyObject * unigine_mat4_determinant(unigine_mat4* self) {
 static PyObject * unigine_mat4_determinant3(unigine_mat4* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: float
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: float
     return ret;
 };
 
 
 static PyMethodDef unigine_mat4_methods[] = {
     {
-        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS|METH_KEYWORDS,
+        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS,
         "public : set"
     },
     {
-        "set", (PyCFunction)unigine_mat4_set, METH_O,
+        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS,
         "public : set"
     },
     {
-        "set", (PyCFunction)unigine_mat4_set, METH_O,
+        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS,
         "public : set"
     },
     {
-        "set", (PyCFunction)unigine_mat4_set, METH_O,
+        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS,
         "public : set"
     },
     {
-        "set", (PyCFunction)unigine_mat4_set, METH_O,
+        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS,
         "public : set"
     },
     {
-        "set", (PyCFunction)unigine_mat4_set, METH_O,
+        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS,
         "public : set"
     },
     {
-        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS|METH_KEYWORDS,
+        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS,
         "public : set"
     },
     {
-        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS|METH_KEYWORDS,
+        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS,
         "public : set"
     },
     {
-        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS|METH_KEYWORDS,
+        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS,
         "public : set"
     },
     {
-        "get", (PyCFunction)unigine_mat4_get, METH_VARARGS|METH_KEYWORDS,
+        "get", (PyCFunction)unigine_mat4_get, METH_VARARGS,
         "public : get"
     },
     {
@@ -591,43 +980,43 @@ static PyMethodDef unigine_mat4_methods[] = {
         "public : get"
     },
     {
-        "get", (PyCFunction)unigine_mat4_get, METH_VARARGS|METH_KEYWORDS,
+        "get", (PyCFunction)unigine_mat4_get, METH_VARARGS,
         "public : get"
     },
     {
-        "get", (PyCFunction)unigine_mat4_get, METH_VARARGS|METH_KEYWORDS,
+        "get", (PyCFunction)unigine_mat4_get, METH_VARARGS,
         "public : get"
     },
     {
-        "set_row", (PyCFunction)unigine_mat4_set_row, METH_VARARGS|METH_KEYWORDS,
+        "set_row", (PyCFunction)unigine_mat4_set_row, METH_VARARGS,
         "public : setRow"
     },
     {
-        "set_row3", (PyCFunction)unigine_mat4_set_row3, METH_VARARGS|METH_KEYWORDS,
+        "set_row3", (PyCFunction)unigine_mat4_set_row3, METH_VARARGS,
         "public : setRow3"
     },
     {
-        "get_row", (PyCFunction)unigine_mat4_get_row, METH_O,
+        "get_row", (PyCFunction)unigine_mat4_get_row, METH_VARARGS,
         "public : getRow"
     },
     {
-        "get_row3", (PyCFunction)unigine_mat4_get_row3, METH_O,
+        "get_row3", (PyCFunction)unigine_mat4_get_row3, METH_VARARGS,
         "public : getRow3"
     },
     {
-        "set_column", (PyCFunction)unigine_mat4_set_column, METH_VARARGS|METH_KEYWORDS,
+        "set_column", (PyCFunction)unigine_mat4_set_column, METH_VARARGS,
         "public : setColumn"
     },
     {
-        "set_column3", (PyCFunction)unigine_mat4_set_column3, METH_VARARGS|METH_KEYWORDS,
+        "set_column3", (PyCFunction)unigine_mat4_set_column3, METH_VARARGS,
         "public : setColumn3"
     },
     {
-        "get_column", (PyCFunction)unigine_mat4_get_column, METH_O,
+        "get_column", (PyCFunction)unigine_mat4_get_column, METH_VARARGS,
         "public : getColumn"
     },
     {
-        "get_column3", (PyCFunction)unigine_mat4_get_column3, METH_O,
+        "get_column3", (PyCFunction)unigine_mat4_get_column3, METH_VARARGS,
         "public : getColumn3"
     },
     {
@@ -643,7 +1032,7 @@ static PyMethodDef unigine_mat4_methods[] = {
         "public : getAxisZ"
     },
     {
-        "set_diagonal", (PyCFunction)unigine_mat4_set_diagonal, METH_O,
+        "set_diagonal", (PyCFunction)unigine_mat4_set_diagonal, METH_VARARGS,
         "public : setDiagonal"
     },
     {
@@ -659,7 +1048,7 @@ static PyMethodDef unigine_mat4_methods[] = {
         "public : setIdentity"
     },
     {
-        "set_translate", (PyCFunction)unigine_mat4_set_translate, METH_O,
+        "set_translate", (PyCFunction)unigine_mat4_set_translate, METH_VARARGS,
         "public : setTranslate"
     },
     {
@@ -667,7 +1056,7 @@ static PyMethodDef unigine_mat4_methods[] = {
         "public : getTranslate"
     },
     {
-        "set_rotate", (PyCFunction)unigine_mat4_set_rotate, METH_VARARGS|METH_KEYWORDS,
+        "set_rotate", (PyCFunction)unigine_mat4_set_rotate, METH_VARARGS,
         "public : setRotate"
     },
     {
@@ -675,19 +1064,19 @@ static PyMethodDef unigine_mat4_methods[] = {
         "public : getRotate"
     },
     {
-        "set_rotate_x", (PyCFunction)unigine_mat4_set_rotate_x, METH_O,
+        "set_rotate_x", (PyCFunction)unigine_mat4_set_rotate_x, METH_VARARGS,
         "public : setRotateX"
     },
     {
-        "set_rotate_y", (PyCFunction)unigine_mat4_set_rotate_y, METH_O,
+        "set_rotate_y", (PyCFunction)unigine_mat4_set_rotate_y, METH_VARARGS,
         "public : setRotateY"
     },
     {
-        "set_rotate_z", (PyCFunction)unigine_mat4_set_rotate_z, METH_O,
+        "set_rotate_z", (PyCFunction)unigine_mat4_set_rotate_z, METH_VARARGS,
         "public : setRotateZ"
     },
     {
-        "set_scale", (PyCFunction)unigine_mat4_set_scale, METH_O,
+        "set_scale", (PyCFunction)unigine_mat4_set_scale, METH_VARARGS,
         "public : setScale"
     },
     {

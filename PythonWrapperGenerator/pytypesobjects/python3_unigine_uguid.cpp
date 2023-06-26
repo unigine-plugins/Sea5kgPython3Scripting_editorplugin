@@ -42,47 +42,86 @@ static int unigine_UGUID_init(unigine_UGUID *self, PyObject *args, PyObject *kwd
 static PyObject * unigine_UGUID_generate(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void
+    // parse args:
 
     self->unigine_object_ptr->generate();
+
+    // end
+    // return: void
     return ret;
 };
 
 // public : generate
-static PyObject * unigine_UGUID_generate(unigine_UGUID* self, PyObject *arg) {
+static PyObject * unigine_UGUID_generate(unigine_UGUID* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * str_;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * str_;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * str_ = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->generate(str_);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : generate
-static PyObject * unigine_UGUID_generate(unigine_UGUID* self, PyObject *arg) {
+static PyObject * unigine_UGUID_generate(unigine_UGUID* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int & seed_;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // int & seed_;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int & seed_ = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->generate(seed_);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
 // public : generate
-static PyObject * unigine_UGUID_generate(unigine_UGUID* self, PyObject *args, PyObject *kwds) {
+static PyObject * unigine_UGUID_generate(unigine_UGUID* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const void * data;
-    int size;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const void * data;
+    PyObject *pArg2; // int size;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const void * data = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    int size = PyBytes_AS_STRING(pArg2Str);
 
     self->unigine_object_ptr->generate(data, size);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: void
     return ret;
 };
 
@@ -90,22 +129,34 @@ static PyObject * unigine_UGUID_generate(unigine_UGUID* self, PyObject *args, Py
 static PyObject * unigine_UGUID_get_file_system_string(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: const char *
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: const char *
     return ret;
 };
 
 // public : setFileSystemString
-static PyObject * unigine_UGUID_set_file_system_string(unigine_UGUID* self, PyObject *arg) {
+static PyObject * unigine_UGUID_set_file_system_string(unigine_UGUID* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * str_;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * str_;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * str_ = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setFileSystemString(str_);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -113,10 +164,12 @@ static PyObject * unigine_UGUID_set_file_system_string(unigine_UGUID* self, PyOb
 static PyObject * unigine_UGUID_get_value(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: const unsigned char *
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: const unsigned char *
     return ret;
 };
 
@@ -124,22 +177,34 @@ static PyObject * unigine_UGUID_get_value(unigine_UGUID* self) {
 static PyObject * unigine_UGUID_get_string(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: const char *
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: const char *
     return ret;
 };
 
 // public : setString
-static PyObject * unigine_UGUID_set_string(unigine_UGUID* self, PyObject *arg) {
+static PyObject * unigine_UGUID_set_string(unigine_UGUID* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * str_;
-    // return: void
+    // parse args:
+    PyObject *pArg1; // const char * str_;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * str_ = PyBytes_AS_STRING(pArg1Str);
 
     self->unigine_object_ptr->setString(str_);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: void
     return ret;
 };
 
@@ -147,10 +212,12 @@ static PyObject * unigine_UGUID_set_string(unigine_UGUID* self, PyObject *arg) {
 static PyObject * unigine_UGUID_clear(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void
+    // parse args:
 
     self->unigine_object_ptr->clear();
+
+    // end
+    // return: void
     return ret;
 };
 
@@ -158,11 +225,13 @@ static PyObject * unigine_UGUID_clear(unigine_UGUID* self) {
 static PyObject * unigine_UGUID_is_empty(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isEmpty();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -170,11 +239,13 @@ static PyObject * unigine_UGUID_is_empty(unigine_UGUID* self) {
 static PyObject * unigine_UGUID_is_valid(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isValid();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -182,34 +253,56 @@ static PyObject * unigine_UGUID_is_valid(unigine_UGUID* self) {
 static PyObject * unigine_UGUID_get(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
+    // parse args:
+
+    unknown type 
+
+    // end
     // return: const char *
-
-    unknown type 
     return ret;
 };
 
 // public : get
-static PyObject * unigine_UGUID_get(unigine_UGUID* self, PyObject *arg) {
+static PyObject * unigine_UGUID_get(unigine_UGUID* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int index;
+    // parse args:
+    PyObject *pArg1; // int index;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int index = PyBytes_AS_STRING(pArg1Str);
+
+    unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
     // return: char &
-
-    unknown type 
     return ret;
 };
 
 // public : get
-static PyObject * unigine_UGUID_get(unigine_UGUID* self, PyObject *arg) {
+static PyObject * unigine_UGUID_get(unigine_UGUID* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    int index;
-    // return: char
+    // parse args:
+    PyObject *pArg1; // int index;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    int index = PyBytes_AS_STRING(pArg1Str);
 
     unknown type 
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: char
     return ret;
 };
 
@@ -217,10 +310,12 @@ static PyObject * unigine_UGUID_get(unigine_UGUID* self, PyObject *arg) {
 static PyObject * unigine_UGUID_hash(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: unsigned int
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: unsigned int
     return ret;
 };
 
@@ -228,10 +323,12 @@ static PyObject * unigine_UGUID_hash(unigine_UGUID* self) {
 static PyObject * unigine_UGUID_hash_long(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: long long unsigned int
+    // parse args:
 
     unknown type 
+
+    // end
+    // return: long long unsigned int
     return ret;
 };
 
@@ -242,15 +339,15 @@ static PyMethodDef unigine_UGUID_methods[] = {
         "public : generate"
     },
     {
-        "generate", (PyCFunction)unigine_UGUID_generate, METH_O,
+        "generate", (PyCFunction)unigine_UGUID_generate, METH_VARARGS,
         "public : generate"
     },
     {
-        "generate", (PyCFunction)unigine_UGUID_generate, METH_O,
+        "generate", (PyCFunction)unigine_UGUID_generate, METH_VARARGS,
         "public : generate"
     },
     {
-        "generate", (PyCFunction)unigine_UGUID_generate, METH_VARARGS|METH_KEYWORDS,
+        "generate", (PyCFunction)unigine_UGUID_generate, METH_VARARGS,
         "public : generate"
     },
     {
@@ -258,7 +355,7 @@ static PyMethodDef unigine_UGUID_methods[] = {
         "public : getFileSystemString"
     },
     {
-        "set_file_system_string", (PyCFunction)unigine_UGUID_set_file_system_string, METH_O,
+        "set_file_system_string", (PyCFunction)unigine_UGUID_set_file_system_string, METH_VARARGS,
         "public : setFileSystemString"
     },
     {
@@ -270,7 +367,7 @@ static PyMethodDef unigine_UGUID_methods[] = {
         "public : getString"
     },
     {
-        "set_string", (PyCFunction)unigine_UGUID_set_string, METH_O,
+        "set_string", (PyCFunction)unigine_UGUID_set_string, METH_VARARGS,
         "public : setString"
     },
     {
@@ -290,11 +387,11 @@ static PyMethodDef unigine_UGUID_methods[] = {
         "public : get"
     },
     {
-        "get", (PyCFunction)unigine_UGUID_get, METH_O,
+        "get", (PyCFunction)unigine_UGUID_get, METH_VARARGS,
         "public : get"
     },
     {
-        "get", (PyCFunction)unigine_UGUID_get, METH_O,
+        "get", (PyCFunction)unigine_UGUID_get, METH_VARARGS,
         "public : get"
     },
     {

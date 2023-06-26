@@ -32,640 +32,1183 @@ static PyObject *unigine_AssetManager_new(PyTypeObject *type, PyObject *args, Py
 }
 
 static int unigine_AssetManager_init(unigine_AssetManager *self, PyObject *args, PyObject *kwds) {
-    self->unigine_object_ptr = new Unigine::AssetManager();
+    // nothing
     return 0;
 }
 
 
 // public (static): isInitialized
-static PyObject * unigine_AssetManager_is_initialized() {
+static PyObject * unigine_AssetManager_is_initialized(unigine_AssetManager* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
     int retOriginal = Unigine::AssetManager::isInitialized();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
 // public (static): getAssetGUIDFromPath
-static PyObject * unigine_AssetManager_get_asset_guid_from_path(PyObject *arg) {
+static PyObject * unigine_AssetManager_get_asset_guid_from_path(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    // return: Unigine::UGUID
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::UGUID retOriginal = Unigine::AssetManager::getAssetGUIDFromPath(asset_path);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::UGUID
     return ret;
 };
 
 // public (static): getAssetPathFromGUID
-static PyObject * unigine_AssetManager_get_asset_path_from_guid(PyObject *arg) {
+static PyObject * unigine_AssetManager_get_asset_path_from_guid(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::UGUID & asset_guid;
-    // return: Unigine::String
+    // parse args:
+    PyObject *pArg1; // const Unigine::UGUID & asset_guid;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::UGUID & asset_guid = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::String retOriginal = Unigine::AssetManager::getAssetPathFromGUID(asset_guid);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::String
     return ret;
 };
 
 // public (static): importAssetSync
-static PyObject * unigine_AssetManager_import_asset_sync(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_import_asset_sync(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg2; // const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Ptr<UnigineEditor::Collection> & import_parameters = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::importAssetSync(asset_path, import_parameters);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): importAssetAsync
-static PyObject * unigine_AssetManager_import_asset_async(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_import_asset_async(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg2; // const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Ptr<UnigineEditor::Collection> & import_parameters = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::importAssetAsync(asset_path, import_parameters);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): reimportAssetSync
-static PyObject * unigine_AssetManager_reimport_asset_sync(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_reimport_asset_sync(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg2; // const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Ptr<UnigineEditor::Collection> & import_parameters = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::reimportAssetSync(asset_path, import_parameters);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): reimportAssetAsync
-static PyObject * unigine_AssetManager_reimport_asset_async(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_reimport_asset_async(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg2; // const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Ptr<UnigineEditor::Collection> & import_parameters = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::reimportAssetAsync(asset_path, import_parameters);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): removeAssetSync
-static PyObject * unigine_AssetManager_remove_asset_sync(PyObject *arg) {
+static PyObject * unigine_AssetManager_remove_asset_sync(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::removeAssetSync(asset_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): removeAssetAsync
-static PyObject * unigine_AssetManager_remove_asset_async(PyObject *arg) {
+static PyObject * unigine_AssetManager_remove_asset_async(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::removeAssetAsync(asset_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): moveAssetSync
-static PyObject * unigine_AssetManager_move_asset_sync(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_move_asset_sync(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * old_asset_path;
-    const char * new_asset_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * old_asset_path;
+    PyObject *pArg2; // const char * new_asset_path;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * old_asset_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * new_asset_path = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::moveAssetSync(old_asset_path, new_asset_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): moveAssetAsync
-static PyObject * unigine_AssetManager_move_asset_async(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_move_asset_async(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * old_asset_path;
-    const char * new_asset_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * old_asset_path;
+    PyObject *pArg2; // const char * new_asset_path;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * old_asset_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * new_asset_path = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::moveAssetAsync(old_asset_path, new_asset_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): renameAssetSync
-static PyObject * unigine_AssetManager_rename_asset_sync(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_rename_asset_sync(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    const char * new_asset_name;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg2; // const char * new_asset_name;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * new_asset_name = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::renameAssetSync(asset_path, new_asset_name);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): renameAssetAsync
-static PyObject * unigine_AssetManager_rename_asset_async(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_rename_asset_async(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    const char * new_asset_name;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg2; // const char * new_asset_name;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * new_asset_name = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::renameAssetAsync(asset_path, new_asset_name);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): copyAssetSync
-static PyObject * unigine_AssetManager_copy_asset_sync(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_copy_asset_sync(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    const char * new_asset_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg2; // const char * new_asset_path;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * new_asset_path = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::copyAssetSync(asset_path, new_asset_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): copyAssetAsync
-static PyObject * unigine_AssetManager_copy_asset_async(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_copy_asset_async(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    const char * new_asset_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg2; // const char * new_asset_path;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * new_asset_path = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::copyAssetAsync(asset_path, new_asset_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): isAsset
-static PyObject * unigine_AssetManager_is_asset(PyObject *arg) {
+static PyObject * unigine_AssetManager_is_asset(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::isAsset(asset_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): getAssetImportParameters
-static PyObject * unigine_AssetManager_get_asset_import_parameters(PyObject *arg) {
+static PyObject * unigine_AssetManager_get_asset_import_parameters(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    // return: Unigine::Ptr<UnigineEditor::Collection>
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<UnigineEditor::Collection> retOriginal = Unigine::AssetManager::getAssetImportParameters(asset_path);
     ret = PyUnigineEditor::Collection::NewObject(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<UnigineEditor::Collection>
     return ret;
 };
 
 // public (static): isAssetWritable
-static PyObject * unigine_AssetManager_is_asset_writable(PyObject *arg) {
+static PyObject * unigine_AssetManager_is_asset_writable(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::isAssetWritable(asset_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): getAssetGUIDs
-static PyObject * unigine_AssetManager_get_asset_gui_ds() {
+static PyObject * unigine_AssetManager_get_asset_gui_ds(unigine_AssetManager* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Vector<Unigine::UGUID>
+    // parse args:
 
     Unigine::Vector<Unigine::UGUID> retOriginal = Unigine::AssetManager::getAssetGUIDs();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Vector<Unigine::UGUID>
     return ret;
 };
 
 // public (static): getAssetPaths
-static PyObject * unigine_AssetManager_get_asset_paths() {
+static PyObject * unigine_AssetManager_get_asset_paths(unigine_AssetManager* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Vector<Unigine::String>
+    // parse args:
 
     Unigine::Vector<Unigine::String> retOriginal = Unigine::AssetManager::getAssetPaths();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Vector<Unigine::String>
     return ret;
 };
 
 // public (static): getAssetGUIDsForDirectory
-static PyObject * unigine_AssetManager_get_asset_gui_ds_for_directory(PyObject *arg) {
+static PyObject * unigine_AssetManager_get_asset_gui_ds_for_directory(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    // return: Unigine::Vector<Unigine::UGUID>
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Vector<Unigine::UGUID> retOriginal = Unigine::AssetManager::getAssetGUIDsForDirectory(directory_path);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Vector<Unigine::UGUID>
     return ret;
 };
 
 // public (static): getAssetPathsForDirectory
-static PyObject * unigine_AssetManager_get_asset_paths_for_directory(PyObject *arg) {
+static PyObject * unigine_AssetManager_get_asset_paths_for_directory(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    // return: Unigine::Vector<Unigine::String>
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Vector<Unigine::String> retOriginal = Unigine::AssetManager::getAssetPathsForDirectory(directory_path);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Vector<Unigine::String>
     return ret;
 };
 
 // public (static): getRuntimeGUIDs
-static PyObject * unigine_AssetManager_get_runtime_gui_ds(PyObject *arg) {
+static PyObject * unigine_AssetManager_get_runtime_gui_ds(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * asset_path;
-    // return: Unigine::Vector<Unigine::UGUID>
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * asset_path = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Vector<Unigine::UGUID> retOriginal = Unigine::AssetManager::getRuntimeGUIDs(asset_path);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Vector<Unigine::UGUID>
     return ret;
 };
 
 // public (static): getRuntimeAlias
-static PyObject * unigine_AssetManager_get_runtime_alias(PyObject *arg) {
+static PyObject * unigine_AssetManager_get_runtime_alias(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::UGUID & runtime_guid;
-    // return: Unigine::String
+    // parse args:
+    PyObject *pArg1; // const Unigine::UGUID & runtime_guid;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::UGUID & runtime_guid = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::String retOriginal = Unigine::AssetManager::getRuntimeAlias(runtime_guid);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::String
     return ret;
 };
 
 // public (static): isRuntimePrimary
-static PyObject * unigine_AssetManager_is_runtime_primary(PyObject *arg) {
+static PyObject * unigine_AssetManager_is_runtime_primary(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const Unigine::UGUID & runtime_guid;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const Unigine::UGUID & runtime_guid;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const Unigine::UGUID & runtime_guid = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::isRuntimePrimary(runtime_guid);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): createDirectory
-static PyObject * unigine_AssetManager_create_directory(PyObject *arg) {
+static PyObject * unigine_AssetManager_create_directory(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::createDirectory(directory_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): removeDirectorySync
-static PyObject * unigine_AssetManager_remove_directory_sync(PyObject *arg) {
+static PyObject * unigine_AssetManager_remove_directory_sync(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::removeDirectorySync(directory_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): removeDirectoryAsync
-static PyObject * unigine_AssetManager_remove_directory_async(PyObject *arg) {
+static PyObject * unigine_AssetManager_remove_directory_async(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::removeDirectoryAsync(directory_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): moveDirectorySync
-static PyObject * unigine_AssetManager_move_directory_sync(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_move_directory_sync(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * old_directory_path;
-    const char * new_directory_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * old_directory_path;
+    PyObject *pArg2; // const char * new_directory_path;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * old_directory_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * new_directory_path = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::moveDirectorySync(old_directory_path, new_directory_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): moveDirectoryAsync
-static PyObject * unigine_AssetManager_move_directory_async(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_move_directory_async(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * old_directory_path;
-    const char * new_directory_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * old_directory_path;
+    PyObject *pArg2; // const char * new_directory_path;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * old_directory_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * new_directory_path = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::moveDirectoryAsync(old_directory_path, new_directory_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): renameDirectorySync
-static PyObject * unigine_AssetManager_rename_directory_sync(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_rename_directory_sync(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    const char * new_directory_name;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg2; // const char * new_directory_name;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * new_directory_name = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::renameDirectorySync(directory_path, new_directory_name);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): renameDirectoryAsync
-static PyObject * unigine_AssetManager_rename_directory_async(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_rename_directory_async(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    const char * new_directory_name;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg2; // const char * new_directory_name;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * new_directory_name = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::renameDirectoryAsync(directory_path, new_directory_name);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): copyDirectorySync
-static PyObject * unigine_AssetManager_copy_directory_sync(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_copy_directory_sync(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    const char * new_directory_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg2; // const char * new_directory_path;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * new_directory_path = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::copyDirectorySync(directory_path, new_directory_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): copyDirectoryAsync
-static PyObject * unigine_AssetManager_copy_directory_async(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_copy_directory_async(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    const char * new_directory_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg2; // const char * new_directory_path;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const char * new_directory_path = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::copyDirectoryAsync(directory_path, new_directory_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): isDirectory
-static PyObject * unigine_AssetManager_is_directory(PyObject *arg) {
+static PyObject * unigine_AssetManager_is_directory(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::isDirectory(directory_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): isDirectoryWritable
-static PyObject * unigine_AssetManager_is_directory_writable(PyObject *arg) {
+static PyObject * unigine_AssetManager_is_directory_writable(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::isDirectoryWritable(directory_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): getDirectoryPathsAll
-static PyObject * unigine_AssetManager_get_directory_paths_all() {
+static PyObject * unigine_AssetManager_get_directory_paths_all(unigine_AssetManager* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Vector<Unigine::String>
+    // parse args:
 
     Unigine::Vector<Unigine::String> retOriginal = Unigine::AssetManager::getDirectoryPathsAll();
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: Unigine::Vector<Unigine::String>
     return ret;
 };
 
 // public (static): getDirectoryPaths
-static PyObject * unigine_AssetManager_get_directory_paths(PyObject *arg) {
+static PyObject * unigine_AssetManager_get_directory_paths(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    // return: Unigine::Vector<Unigine::String>
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Vector<Unigine::String> retOriginal = Unigine::AssetManager::getDirectoryPaths(directory_path);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Vector<Unigine::String>
     return ret;
 };
 
 // public (static): createMountPoint
-static PyObject * unigine_AssetManager_create_mount_point(PyObject *args, PyObject *kwds) {
+static PyObject * unigine_AssetManager_create_mount_point(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    const Unigine::Ptr<UnigineEditor::MountPointParameters> & mount_creation_parameters;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg2; // const Unigine::Ptr<UnigineEditor::MountPointParameters> & mount_creation_parameters;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
+
+    // pArg2
+    PyObject* pArg2Repr = PyObject_Repr(pArg2);
+    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
+    const Unigine::Ptr<UnigineEditor::MountPointParameters> & mount_creation_parameters = PyBytes_AS_STRING(pArg2Str);
 
     bool retOriginal = Unigine::AssetManager::createMountPoint(directory_path, mount_creation_parameters);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    Py_XDECREF(pArg2Repr);
+    Py_XDECREF(pArg2Str);
+    // return: bool
     return ret;
 };
 
 // public (static): removeMountPoint
-static PyObject * unigine_AssetManager_remove_mount_point(PyObject *arg) {
+static PyObject * unigine_AssetManager_remove_mount_point(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::removeMountPoint(directory_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): isMountPoint
-static PyObject * unigine_AssetManager_is_mount_point(PyObject *arg) {
+static PyObject * unigine_AssetManager_is_mount_point(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::isMountPoint(directory_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): getMountPointParameters
-static PyObject * unigine_AssetManager_get_mount_point_parameters(PyObject *arg) {
+static PyObject * unigine_AssetManager_get_mount_point_parameters(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    // return: Unigine::Ptr<UnigineEditor::MountPointParameters>
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::Ptr<UnigineEditor::MountPointParameters> retOriginal = Unigine::AssetManager::getMountPointParameters(directory_path);
     ret = PyUnigineEditor::MountPointParameters::NewObject(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::Ptr<UnigineEditor::MountPointParameters>
     return ret;
 };
 
 // public (static): refreshMountPointAsync
-static PyObject * unigine_AssetManager_refresh_mount_point_async(PyObject *arg) {
+static PyObject * unigine_AssetManager_refresh_mount_point_async(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * directory_path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * directory_path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::refreshMountPointAsync(directory_path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
 // public (static): blockAutoRefresh
-static PyObject * unigine_AssetManager_block_auto_refresh() {
+static PyObject * unigine_AssetManager_block_auto_refresh(unigine_AssetManager* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void
+    // parse args:
 
     Unigine::AssetManager::blockAutoRefresh();
+
+    // end
+    // return: void
     return ret;
 };
 
 // public (static): unblockAutoRefresh
-static PyObject * unigine_AssetManager_unblock_auto_refresh() {
+static PyObject * unigine_AssetManager_unblock_auto_refresh(unigine_AssetManager* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void
+    // parse args:
 
     Unigine::AssetManager::unblockAutoRefresh();
+
+    // end
+    // return: void
     return ret;
 };
 
 // public (static): isAutoRefreshBlocked
-static PyObject * unigine_AssetManager_is_auto_refresh_blocked() {
+static PyObject * unigine_AssetManager_is_auto_refresh_blocked(unigine_AssetManager* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = Unigine::AssetManager::isAutoRefreshBlocked();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
 // public (static): generateUniquePath
-static PyObject * unigine_AssetManager_generate_unique_path(PyObject *arg) {
+static PyObject * unigine_AssetManager_generate_unique_path(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * path;
-    // return: Unigine::String
+    // parse args:
+    PyObject *pArg1; // const char * path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * path = PyBytes_AS_STRING(pArg1Str);
 
     Unigine::String retOriginal = Unigine::AssetManager::generateUniquePath(path);
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: Unigine::String
     return ret;
 };
 
 // public (static): isExist
-static PyObject * unigine_AssetManager_is_exist(PyObject *arg) {
+static PyObject * unigine_AssetManager_is_exist(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    const char * path;
-    // return: bool
+    // parse args:
+    PyObject *pArg1; // const char * path;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * path = PyBytes_AS_STRING(pArg1Str);
 
     bool retOriginal = Unigine::AssetManager::isExist(path);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: bool
     return ret;
 };
 
@@ -676,71 +1219,71 @@ static PyMethodDef unigine_AssetManager_methods[] = {
         "public (static): isInitialized"
     },
     {
-        "get_asset_guid_from_path", (PyCFunction)unigine_AssetManager_get_asset_guid_from_path, METH_STATIC|METH_O,
+        "get_asset_guid_from_path", (PyCFunction)unigine_AssetManager_get_asset_guid_from_path, METH_STATIC|METH_VARARGS,
         "public (static): getAssetGUIDFromPath"
     },
     {
-        "get_asset_path_from_guid", (PyCFunction)unigine_AssetManager_get_asset_path_from_guid, METH_STATIC|METH_O,
+        "get_asset_path_from_guid", (PyCFunction)unigine_AssetManager_get_asset_path_from_guid, METH_STATIC|METH_VARARGS,
         "public (static): getAssetPathFromGUID"
     },
     {
-        "import_asset_sync", (PyCFunction)unigine_AssetManager_import_asset_sync, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "import_asset_sync", (PyCFunction)unigine_AssetManager_import_asset_sync, METH_STATIC|METH_VARARGS,
         "public (static): importAssetSync"
     },
     {
-        "import_asset_async", (PyCFunction)unigine_AssetManager_import_asset_async, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "import_asset_async", (PyCFunction)unigine_AssetManager_import_asset_async, METH_STATIC|METH_VARARGS,
         "public (static): importAssetAsync"
     },
     {
-        "reimport_asset_sync", (PyCFunction)unigine_AssetManager_reimport_asset_sync, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "reimport_asset_sync", (PyCFunction)unigine_AssetManager_reimport_asset_sync, METH_STATIC|METH_VARARGS,
         "public (static): reimportAssetSync"
     },
     {
-        "reimport_asset_async", (PyCFunction)unigine_AssetManager_reimport_asset_async, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "reimport_asset_async", (PyCFunction)unigine_AssetManager_reimport_asset_async, METH_STATIC|METH_VARARGS,
         "public (static): reimportAssetAsync"
     },
     {
-        "remove_asset_sync", (PyCFunction)unigine_AssetManager_remove_asset_sync, METH_STATIC|METH_O,
+        "remove_asset_sync", (PyCFunction)unigine_AssetManager_remove_asset_sync, METH_STATIC|METH_VARARGS,
         "public (static): removeAssetSync"
     },
     {
-        "remove_asset_async", (PyCFunction)unigine_AssetManager_remove_asset_async, METH_STATIC|METH_O,
+        "remove_asset_async", (PyCFunction)unigine_AssetManager_remove_asset_async, METH_STATIC|METH_VARARGS,
         "public (static): removeAssetAsync"
     },
     {
-        "move_asset_sync", (PyCFunction)unigine_AssetManager_move_asset_sync, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "move_asset_sync", (PyCFunction)unigine_AssetManager_move_asset_sync, METH_STATIC|METH_VARARGS,
         "public (static): moveAssetSync"
     },
     {
-        "move_asset_async", (PyCFunction)unigine_AssetManager_move_asset_async, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "move_asset_async", (PyCFunction)unigine_AssetManager_move_asset_async, METH_STATIC|METH_VARARGS,
         "public (static): moveAssetAsync"
     },
     {
-        "rename_asset_sync", (PyCFunction)unigine_AssetManager_rename_asset_sync, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "rename_asset_sync", (PyCFunction)unigine_AssetManager_rename_asset_sync, METH_STATIC|METH_VARARGS,
         "public (static): renameAssetSync"
     },
     {
-        "rename_asset_async", (PyCFunction)unigine_AssetManager_rename_asset_async, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "rename_asset_async", (PyCFunction)unigine_AssetManager_rename_asset_async, METH_STATIC|METH_VARARGS,
         "public (static): renameAssetAsync"
     },
     {
-        "copy_asset_sync", (PyCFunction)unigine_AssetManager_copy_asset_sync, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "copy_asset_sync", (PyCFunction)unigine_AssetManager_copy_asset_sync, METH_STATIC|METH_VARARGS,
         "public (static): copyAssetSync"
     },
     {
-        "copy_asset_async", (PyCFunction)unigine_AssetManager_copy_asset_async, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "copy_asset_async", (PyCFunction)unigine_AssetManager_copy_asset_async, METH_STATIC|METH_VARARGS,
         "public (static): copyAssetAsync"
     },
     {
-        "is_asset", (PyCFunction)unigine_AssetManager_is_asset, METH_STATIC|METH_O,
+        "is_asset", (PyCFunction)unigine_AssetManager_is_asset, METH_STATIC|METH_VARARGS,
         "public (static): isAsset"
     },
     {
-        "get_asset_import_parameters", (PyCFunction)unigine_AssetManager_get_asset_import_parameters, METH_STATIC|METH_O,
+        "get_asset_import_parameters", (PyCFunction)unigine_AssetManager_get_asset_import_parameters, METH_STATIC|METH_VARARGS,
         "public (static): getAssetImportParameters"
     },
     {
-        "is_asset_writable", (PyCFunction)unigine_AssetManager_is_asset_writable, METH_STATIC|METH_O,
+        "is_asset_writable", (PyCFunction)unigine_AssetManager_is_asset_writable, METH_STATIC|METH_VARARGS,
         "public (static): isAssetWritable"
     },
     {
@@ -752,67 +1295,67 @@ static PyMethodDef unigine_AssetManager_methods[] = {
         "public (static): getAssetPaths"
     },
     {
-        "get_asset_gui_ds_for_directory", (PyCFunction)unigine_AssetManager_get_asset_gui_ds_for_directory, METH_STATIC|METH_O,
+        "get_asset_gui_ds_for_directory", (PyCFunction)unigine_AssetManager_get_asset_gui_ds_for_directory, METH_STATIC|METH_VARARGS,
         "public (static): getAssetGUIDsForDirectory"
     },
     {
-        "get_asset_paths_for_directory", (PyCFunction)unigine_AssetManager_get_asset_paths_for_directory, METH_STATIC|METH_O,
+        "get_asset_paths_for_directory", (PyCFunction)unigine_AssetManager_get_asset_paths_for_directory, METH_STATIC|METH_VARARGS,
         "public (static): getAssetPathsForDirectory"
     },
     {
-        "get_runtime_gui_ds", (PyCFunction)unigine_AssetManager_get_runtime_gui_ds, METH_STATIC|METH_O,
+        "get_runtime_gui_ds", (PyCFunction)unigine_AssetManager_get_runtime_gui_ds, METH_STATIC|METH_VARARGS,
         "public (static): getRuntimeGUIDs"
     },
     {
-        "get_runtime_alias", (PyCFunction)unigine_AssetManager_get_runtime_alias, METH_STATIC|METH_O,
+        "get_runtime_alias", (PyCFunction)unigine_AssetManager_get_runtime_alias, METH_STATIC|METH_VARARGS,
         "public (static): getRuntimeAlias"
     },
     {
-        "is_runtime_primary", (PyCFunction)unigine_AssetManager_is_runtime_primary, METH_STATIC|METH_O,
+        "is_runtime_primary", (PyCFunction)unigine_AssetManager_is_runtime_primary, METH_STATIC|METH_VARARGS,
         "public (static): isRuntimePrimary"
     },
     {
-        "create_directory", (PyCFunction)unigine_AssetManager_create_directory, METH_STATIC|METH_O,
+        "create_directory", (PyCFunction)unigine_AssetManager_create_directory, METH_STATIC|METH_VARARGS,
         "public (static): createDirectory"
     },
     {
-        "remove_directory_sync", (PyCFunction)unigine_AssetManager_remove_directory_sync, METH_STATIC|METH_O,
+        "remove_directory_sync", (PyCFunction)unigine_AssetManager_remove_directory_sync, METH_STATIC|METH_VARARGS,
         "public (static): removeDirectorySync"
     },
     {
-        "remove_directory_async", (PyCFunction)unigine_AssetManager_remove_directory_async, METH_STATIC|METH_O,
+        "remove_directory_async", (PyCFunction)unigine_AssetManager_remove_directory_async, METH_STATIC|METH_VARARGS,
         "public (static): removeDirectoryAsync"
     },
     {
-        "move_directory_sync", (PyCFunction)unigine_AssetManager_move_directory_sync, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "move_directory_sync", (PyCFunction)unigine_AssetManager_move_directory_sync, METH_STATIC|METH_VARARGS,
         "public (static): moveDirectorySync"
     },
     {
-        "move_directory_async", (PyCFunction)unigine_AssetManager_move_directory_async, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "move_directory_async", (PyCFunction)unigine_AssetManager_move_directory_async, METH_STATIC|METH_VARARGS,
         "public (static): moveDirectoryAsync"
     },
     {
-        "rename_directory_sync", (PyCFunction)unigine_AssetManager_rename_directory_sync, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "rename_directory_sync", (PyCFunction)unigine_AssetManager_rename_directory_sync, METH_STATIC|METH_VARARGS,
         "public (static): renameDirectorySync"
     },
     {
-        "rename_directory_async", (PyCFunction)unigine_AssetManager_rename_directory_async, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "rename_directory_async", (PyCFunction)unigine_AssetManager_rename_directory_async, METH_STATIC|METH_VARARGS,
         "public (static): renameDirectoryAsync"
     },
     {
-        "copy_directory_sync", (PyCFunction)unigine_AssetManager_copy_directory_sync, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "copy_directory_sync", (PyCFunction)unigine_AssetManager_copy_directory_sync, METH_STATIC|METH_VARARGS,
         "public (static): copyDirectorySync"
     },
     {
-        "copy_directory_async", (PyCFunction)unigine_AssetManager_copy_directory_async, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "copy_directory_async", (PyCFunction)unigine_AssetManager_copy_directory_async, METH_STATIC|METH_VARARGS,
         "public (static): copyDirectoryAsync"
     },
     {
-        "is_directory", (PyCFunction)unigine_AssetManager_is_directory, METH_STATIC|METH_O,
+        "is_directory", (PyCFunction)unigine_AssetManager_is_directory, METH_STATIC|METH_VARARGS,
         "public (static): isDirectory"
     },
     {
-        "is_directory_writable", (PyCFunction)unigine_AssetManager_is_directory_writable, METH_STATIC|METH_O,
+        "is_directory_writable", (PyCFunction)unigine_AssetManager_is_directory_writable, METH_STATIC|METH_VARARGS,
         "public (static): isDirectoryWritable"
     },
     {
@@ -820,27 +1363,27 @@ static PyMethodDef unigine_AssetManager_methods[] = {
         "public (static): getDirectoryPathsAll"
     },
     {
-        "get_directory_paths", (PyCFunction)unigine_AssetManager_get_directory_paths, METH_STATIC|METH_O,
+        "get_directory_paths", (PyCFunction)unigine_AssetManager_get_directory_paths, METH_STATIC|METH_VARARGS,
         "public (static): getDirectoryPaths"
     },
     {
-        "create_mount_point", (PyCFunction)unigine_AssetManager_create_mount_point, METH_STATIC|METH_VARARGS|METH_KEYWORDS,
+        "create_mount_point", (PyCFunction)unigine_AssetManager_create_mount_point, METH_STATIC|METH_VARARGS,
         "public (static): createMountPoint"
     },
     {
-        "remove_mount_point", (PyCFunction)unigine_AssetManager_remove_mount_point, METH_STATIC|METH_O,
+        "remove_mount_point", (PyCFunction)unigine_AssetManager_remove_mount_point, METH_STATIC|METH_VARARGS,
         "public (static): removeMountPoint"
     },
     {
-        "is_mount_point", (PyCFunction)unigine_AssetManager_is_mount_point, METH_STATIC|METH_O,
+        "is_mount_point", (PyCFunction)unigine_AssetManager_is_mount_point, METH_STATIC|METH_VARARGS,
         "public (static): isMountPoint"
     },
     {
-        "get_mount_point_parameters", (PyCFunction)unigine_AssetManager_get_mount_point_parameters, METH_STATIC|METH_O,
+        "get_mount_point_parameters", (PyCFunction)unigine_AssetManager_get_mount_point_parameters, METH_STATIC|METH_VARARGS,
         "public (static): getMountPointParameters"
     },
     {
-        "refresh_mount_point_async", (PyCFunction)unigine_AssetManager_refresh_mount_point_async, METH_STATIC|METH_O,
+        "refresh_mount_point_async", (PyCFunction)unigine_AssetManager_refresh_mount_point_async, METH_STATIC|METH_VARARGS,
         "public (static): refreshMountPointAsync"
     },
     {
@@ -856,11 +1399,11 @@ static PyMethodDef unigine_AssetManager_methods[] = {
         "public (static): isAutoRefreshBlocked"
     },
     {
-        "generate_unique_path", (PyCFunction)unigine_AssetManager_generate_unique_path, METH_STATIC|METH_O,
+        "generate_unique_path", (PyCFunction)unigine_AssetManager_generate_unique_path, METH_STATIC|METH_VARARGS,
         "public (static): generateUniquePath"
     },
     {
-        "is_exist", (PyCFunction)unigine_AssetManager_is_exist, METH_STATIC|METH_O,
+        "is_exist", (PyCFunction)unigine_AssetManager_is_exist, METH_STATIC|METH_VARARGS,
         "public (static): isExist"
     },
     {NULL}  /* Sentinel */

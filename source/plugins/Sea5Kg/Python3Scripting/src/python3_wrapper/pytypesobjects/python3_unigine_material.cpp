@@ -107,11 +107,13 @@ static PyObject * unigine_Material_can_render_node(unigine_Material* self) {
 static PyObject * unigine_Material_is_water(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isWater();
     ret = PyBool_FromLong(retOriginal);
+
+    // end 
+    // return: bool
     return ret;
 };
 
@@ -119,11 +121,13 @@ static PyObject * unigine_Material_is_water(unigine_Material* self) {
 static PyObject * unigine_Material_is_deferred(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isDeferred();
     ret = PyBool_FromLong(retOriginal);
+
+    // end 
+    // return: bool
     return ret;
 };
 
@@ -131,11 +135,13 @@ static PyObject * unigine_Material_is_deferred(unigine_Material* self) {
 static PyObject * unigine_Material_is_forward(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isForward();
     ret = PyBool_FromLong(retOriginal);
+
+    // end 
+    // return: bool
     return ret;
 };
 
@@ -143,11 +149,13 @@ static PyObject * unigine_Material_is_forward(unigine_Material* self) {
 static PyObject * unigine_Material_is_alpha_test(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isAlphaTest();
     ret = PyBool_FromLong(retOriginal);
+
+    // end 
+    // return: bool
     return ret;
 };
 
@@ -157,21 +165,17 @@ static PyObject * unigine_Material_is_alpha_test(unigine_Material* self) {
 // public : getBlendSrcFunc
 
 // public : setShadowMask
-static PyObject * unigine_Material_set_shadow_mask(unigine_Material* self, PyObject *arg) {
+static PyObject * unigine_Material_set_shadow_mask(unigine_Material* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // int mask
-    // return: void
-    assert(arg);
+    // parse args:
+    PyObject *pArg1; // int mask;
+    PyArg_ParseTuple(args, "O", &pArg1);
 
-    // int val;
-    // PyArg_ParseTuple(args, "i", &val);
-
+    // pArg1
     // int n = PyInt_AsInt(arg);
-    uint32_t nVal = PyLong_AsLong(arg);
-    // RUN_IN_MAIN_THREAD(self->unigine_object_ptr->setShadowMask(nVal))
-    self->unigine_object_ptr->setShadowMask(nVal);
+    uint32_t mask = PyLong_AsLong(pArg1);
+    self->unigine_object_ptr->setShadowMask(mask);
 
     Py_INCREF(Py_None);
     ret = Py_None;
@@ -182,11 +186,12 @@ except:
     Py_XDECREF(ret);
     ret = NULL;
 finally:
-    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
-     * should do this. See below. */
+    // end
     // Py_DECREF(arg);
+    // return: void
     return ret;
 };
+
 // public : getShadowMask
 static PyObject * unigine_Material_get_shadow_mask(unigine_Material* self) {
     PyErr_Clear();
@@ -352,6 +357,28 @@ static PyObject * unigine_Material_is_overlap(unigine_Material* self) {
 // public : setState
 // public : getNumTextures
 // public : findTexture
+static PyObject * unigine_Material_find_texture(unigine_Material* self, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // const char * name;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    PyObject* pArg1Repr = PyObject_Repr(pArg1);
+    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
+    const char * name = PyBytes_AS_STRING(pArg1Str);
+
+    int retOriginal = self->unigine_object_ptr->findTexture(name);
+    ret = PyLong_FromLong(retOriginal);
+
+    // end 
+    Py_XDECREF(pArg1Repr);
+    Py_XDECREF(pArg1Str);
+    // return: int
+    return ret;
+};
+
 // public : isTextureOverridden
 // public : isTextureLoaded
 // public : isTextureInternal
@@ -388,11 +415,13 @@ static PyObject * unigine_Material_is_overlap(unigine_Material* self) {
 static PyObject * unigine_Material_is_manual(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isManual();
     ret = PyBool_FromLong(retOriginal);
+
+    // end 
+    // return: bool
     return ret;
 };
 
@@ -411,11 +440,13 @@ static PyObject * unigine_Material_is_manual(unigine_Material* self) {
 static PyObject * unigine_Material_save(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->save();
     ret = PyBool_FromLong(retOriginal);
+
+    // end 
+    // return: bool
     return ret;
 };
 
@@ -423,11 +454,13 @@ static PyObject * unigine_Material_save(unigine_Material* self) {
 static PyObject * unigine_Material_reload(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->reload();
     ret = PyBool_FromLong(retOriginal);
+
+    // end 
+    // return: bool
     return ret;
 };
 
@@ -461,7 +494,7 @@ static PyMethodDef unigine_Material_methods[] = {
         "public : getManualName"
     },
     {
-        "set_shadow_mask", (PyCFunction)unigine_Material_set_shadow_mask, METH_O,
+        "set_shadow_mask", (PyCFunction)unigine_Material_set_shadow_mask, METH_VARARGS,
         "public : setShadowMask"
     },
     {
@@ -471,6 +504,10 @@ static PyMethodDef unigine_Material_methods[] = {
     {
         "is_cast_shadow", (PyCFunction)unigine_Material_is_cast_shadow, METH_NOARGS,
         "public : isCastShadow"
+    },
+    {
+        "find_texture", (PyCFunction)unigine_Material_find_texture, METH_VARARGS,
+        "public : findTexture"
     },
     {
         "save", (PyCFunction)unigine_Material_save, METH_NOARGS,

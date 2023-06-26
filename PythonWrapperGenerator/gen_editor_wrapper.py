@@ -280,11 +280,8 @@ class Python3UnigineWriter:
                 # print("arg: ", _arg["@name"])
         if len(_method_json["args"]) == 0:
             _method_json["flags"].append("METH_NOARGS")
-        elif len(_method_json["args"]) == 1:
-            _method_json["flags"].append("METH_O")
         else:
             _method_json["flags"].append("METH_VARARGS")
-            _method_json["flags"].append("METH_KEYWORDS")
         self.__methods.append(_method_json)
 
     def write_header(self):
@@ -352,7 +349,7 @@ class Python3UnigineWriter:
         self.__file_source.write("}\n")
         self.__file_source.write("\n")
         self.__file_source.write("static int unigine_" + self.__classname + "_init(unigine_" + self.__classname + " *self, PyObject *args, PyObject *kwds) {\n")
-        if not self.__can_ptr:
+        if not self.__can_ptr and not self.__is_all_methods_static():
             self.__file_source.write("    self->unigine_object_ptr = new Unigine::" + self.__classname + "();\n")
         else:
             self.__file_source.write("    // nothing\n")
@@ -450,6 +447,41 @@ class Python3UnigineWriter:
             self.__file_source.write("    return pInst->unigine_object_ptr;\n")
             self.__file_source.write("}\n")
 
+    def prepare_parse_tuple_args(self, _args):
+        ret = {
+            "parse": "    // parse args:\n",
+            "end_code": "",
+            "args_to_call": [],
+        }
+        _args_to_call = []
+        counter = 0
+        parse_tuple_o = ""
+        parse_tuple_args = ""
+        convert_objects = ""
+        for _arg in _args:
+            counter += 1
+            var_name = "pArg" + str(counter)
+            ret["parse"] += "    PyObject *" + var_name + "; // " + _arg["type"] + " " + _arg["name"] + ";\n"
+            parse_tuple_o += "O"
+            parse_tuple_args += ", &" + var_name
+            convert_objects += "\n"
+            convert_objects += "    // " + var_name + "\n"
+            # const char *
+            convert_objects += "    PyObject* " + var_name + "Repr = PyObject_Repr(" + var_name + ");\n"
+            convert_objects += "    PyObject* " + var_name + "Str = PyUnicode_AsEncodedString(" + var_name + "Repr, \"utf-8\", \"~E~\");\n"
+            convert_objects += "    " + _arg["type"] + " " + _arg["name"] + " = PyBytes_AS_STRING(" + var_name + "Str);\n"
+            ret["end_code"] += "    Py_XDECREF(" + var_name + "Repr);\n"
+            ret["end_code"] += "    Py_XDECREF(" + var_name + "Str);\n"
+
+        if len(parse_tuple_o) > 0:
+            ret["parse"] += "    PyArg_ParseTuple(args, \"" + parse_tuple_o + "\"" + parse_tuple_args + ");\n"
+            ret["parse"] += convert_objects
+
+        for _arg in _args:
+            # _args += "    " + _arg["type"] + " " + _arg["name"] + ";\n"
+            ret["args_to_call"].append(_arg["name"])
+        return ret
+
     def write_source_methods(self):
         self.__file_source.write("\n")
         methods_table = []
@@ -468,20 +500,15 @@ class Python3UnigineWriter:
             }
             if not _method["static"]:
                 method_info["args"].append("unigine_" + self.__classname + "* self")
+            else:
+                method_info["args"].append("unigine_" + self.__classname + "* self_static_null")
 
             # TODO returns
             if len(_method["args"]) > 0:
-                if len(_method["args"]) == 1:
-                    method_info["args"].append("PyObject *arg")
-                else:
-                    method_info["args"].append("PyObject *args")
-                    method_info["args"].append("PyObject *kwds")
+                method_info["args"].append("PyObject *args")
 
-            _args = "    // args:\n"
-            _args_to_call = []
-            for _arg in _method["args"]:
-                _args += "    " + _arg["type"] + " " + _arg["name"] + ";\n"
-                _args_to_call.append(_arg["name"])
+            parse_args_result = self.prepare_parse_tuple_args(_method["args"])
+
             if not _method["method_name"].endswith("_callback") and not _method["method_name"].endswith("_callbacks"):
                 methods_table.append(method_info)
                 self.__file_source.write(
@@ -489,9 +516,11 @@ class Python3UnigineWriter:
                     "static PyObject * " + method_info["func_name"] + "(" + ", ".join(method_info["args"]) + ") {\n"
                     "    PyErr_Clear();\n"
                     "    PyObject *ret = NULL;\n" +
-                    _args +
+                    parse_args_result["parse"] +
+                    make_method_code(method_info, parse_args_result["args_to_call"]) +
+                    "\n    // end\n" +
+                    parse_args_result["end_code"] +
                     "    // return: " + method_info["return_type"] + "\n" +
-                    make_method_code(method_info, _args_to_call) +
                     "    return ret;\n"
                     "};\n\n"
                 )

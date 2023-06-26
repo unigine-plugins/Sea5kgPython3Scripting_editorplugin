@@ -76,6 +76,7 @@ static PyObject * unigine_UGUID_set_file_system_string(unigine_UGUID* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // args:
+    // const char* s = PyString_AsString(yourObject);
     const char * str_;
     // return: void
 
@@ -217,7 +218,7 @@ static PyMethodDef unigine_UGUID_methods[] = {
         "public : getString"
     },
     {
-        "set_string", (PyCFunction)unigine_UGUID_set_string, METH_O,
+        "set_string", (PyCFunction)unigine_UGUID_set_string, METH_VARARGS,
         "public : setString"
     },
     {
