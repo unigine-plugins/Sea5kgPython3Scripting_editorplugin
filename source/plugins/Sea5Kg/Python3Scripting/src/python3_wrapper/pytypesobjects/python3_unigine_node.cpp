@@ -65,18 +65,18 @@ static PyObject *unigine_Node_rotate(unigine_Node* self, PyObject *args)
             Unigine::Ptr<Unigine::Node> unigine_object_ptr;
             float angle_x, angle_y, angle_z;
     };
-	auto *pRunner = new LocalRunner();
+    auto *pRunner = new LocalRunner();
     pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->angle_x = angle_x;
     pRunner->angle_y = angle_y;
     pRunner->angle_z = angle_z;
-	Python3Runner::runInMainThread(pRunner);
-	while(!pRunner->mutexAsync.tryLock(5)) {
-	}
-	pRunner->mutexAsync.unlock();
-	delete pRunner;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
 
-	// void worldRotate(float angle_x, float angle_y, float angle_z);
+    // void worldRotate(float angle_x, float angle_y, float angle_z);
 
     Py_INCREF(Py_None);
     ret = Py_None;
