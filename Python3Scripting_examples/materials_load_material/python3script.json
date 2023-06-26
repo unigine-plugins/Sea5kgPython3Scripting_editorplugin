@@ -1,0 +1,6 @@
+{
+    "enabled": true,
+    "for": "materials",
+    "id": "materials_load_material",
+    "name": "load_material"
+}

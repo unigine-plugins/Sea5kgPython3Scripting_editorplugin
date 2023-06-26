@@ -78,11 +78,17 @@ static PyObject * unigine_Materials_load_material(unigine_Materials* self_static
     PyObject* pArg1Repr = PyObject_Repr(pArg1);
     PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
     const char * path = PyBytes_AS_STRING(pArg1Str);
+    std::cout << "path: " << path << std::endl;
 
     Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Materials::loadMaterial(path);
-    ret = PyUnigine::Material::NewObject(retOriginal);
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Material::NewObject(retOriginal);
+    }
 
-    // end 
+    // end
     Py_XDECREF(pArg1Repr);
     Py_XDECREF(pArg1Str);
     // return: Unigine::Ptr<Unigine::Material>
