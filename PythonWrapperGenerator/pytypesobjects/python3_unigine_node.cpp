@@ -29,6 +29,7 @@ static PyObject *unigine_Node_new(PyTypeObject *type, PyObject *args, PyObject *
     // Unigine::Log::message("unigine_Node_new\n");
     unigine_Node *self;
     self = (unigine_Node *)type->tp_alloc(type, 0);
+    self->unigine_object_ptr = nullptr;
     return (PyObject *)self;
 }
 
@@ -47,15 +48,30 @@ static PyObject * unigine_Node_to_world(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Math::vec3 & p = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Math::vec3 &
 
-    unknown type 
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->toWorld(p);
+            };
+            // args
+            const Unigine::Math::vec3 & p;
+            // return
+             retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->p = p;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+     retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type ''
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: 
     return ret;
 };
@@ -69,16 +85,35 @@ static PyObject * unigine_Node_get_clone_node(unigine_Node* self_static_null, Py
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Node> & original_node = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Node> &
 
-    Unigine::Ptr<Unigine::Node> retOriginal = Unigine::Node::getCloneNode(original_node);
-    ret = PyUnigine::Node::NewObject(retOriginal);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = Unigine::Node::getCloneNode(original_node);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Node> & original_node;
+            // return
+            Unigine::Ptr<Unigine::Node> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->original_node = original_node;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Node> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Node::NewObject(retOriginal);
+    }
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
@@ -92,16 +127,35 @@ static PyObject * unigine_Node_get_clone_property(unigine_Node* self_static_null
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Property> & original_property = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Property> &
 
-    Unigine::Ptr<Unigine::Property> retOriginal = Unigine::Node::getCloneProperty(original_property);
-    ret = PyUnigine::Property::NewObject(retOriginal);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = Unigine::Node::getCloneProperty(original_property);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Property> & original_property;
+            // return
+            Unigine::Ptr<Unigine::Property> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->original_property = original_property;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Property> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Property::NewObject(retOriginal);
+    }
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::Ptr<Unigine::Property>
     return ret;
 };
@@ -115,16 +169,35 @@ static PyObject * unigine_Node_get_node(unigine_Node* self_static_null, PyObject
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int id = PyBytes_AS_STRING(pArg1Str);
+TODO for int
 
-    Unigine::Ptr<Unigine::Node> retOriginal = Unigine::Node::getNode(id);
-    ret = PyUnigine::Node::NewObject(retOriginal);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = Unigine::Node::getNode(id);
+            };
+            // args
+            int id;
+            // return
+            Unigine::Ptr<Unigine::Node> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->id = id;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Node> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Node::NewObject(retOriginal);
+    }
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
@@ -138,16 +211,30 @@ static PyObject * unigine_Node_is_node(unigine_Node* self_static_null, PyObject 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Node> & node = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Node> &
 
-    int retOriginal = Unigine::Node::isNode(node);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = Unigine::Node::isNode(node);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Node> & node;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->node = node;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -161,16 +248,30 @@ static PyObject * unigine_Node_is_node(unigine_Node* self_static_null, PyObject 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int id = PyBytes_AS_STRING(pArg1Str);
+TODO for int
 
-    int retOriginal = Unigine::Node::isNode(id);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = Unigine::Node::isNode(id);
+            };
+            // args
+            int id;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->id = id;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -184,16 +285,37 @@ static PyObject * unigine_Node_get_type_id(unigine_Node* self_static_null, PyObj
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * type = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * type = PyUnicode_AsUTF8(pArg1);
 
-    Unigine::Node::TYPE retOriginal = Unigine::Node::getTypeID(type);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = Unigine::Node::getTypeID(type);
+            };
+            // args
+            const char * type;
+            // return
+            Unigine::Node::TYPE retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->type = type;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Node::TYPE retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::Node::TYPE
     return ret;
 };
@@ -207,15 +329,30 @@ static PyObject * unigine_Node_get_type_name(unigine_Node* self_static_null, PyO
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    Unigine::Node::TYPE type = PyBytes_AS_STRING(pArg1Str);
+TODO for Unigine::Node::TYPE
 
-    unknown type 
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = Unigine::Node::getTypeName(type);
+            };
+            // args
+            Unigine::Node::TYPE type;
+            // return
+            const char * retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->type = type;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    const char * retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type 'const char *'
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: const char *
     return ret;
 };
@@ -226,8 +363,28 @@ static PyObject * unigine_Node_clone(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->clone();
-    ret = todo;
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->clone();
+            };
+            // args
+            // return
+            Unigine::Ptr<Unigine::Node> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Node> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Node::NewObject(retOriginal);
+    }
 
     // end
     // return: Unigine::Ptr<Unigine::Node>
@@ -243,15 +400,28 @@ static PyObject * unigine_Node_swap(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Node> &
 
-    self->unigine_object_ptr->swap(n);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->swap(n);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Node> & n;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->n = n;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -265,15 +435,28 @@ static PyObject * unigine_Node_set_id(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int id = PyBytes_AS_STRING(pArg1Str);
+TODO for int
 
-    self->unigine_object_ptr->setID(id);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setID(id);
+            };
+            // args
+            int id;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->id = id;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -284,7 +467,22 @@ static PyObject * unigine_Node_get_id(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    int retOriginal = self->unigine_object_ptr->getID();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getID();
+            };
+            // args
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -298,7 +496,22 @@ static PyObject * unigine_Node_get_type(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Node::TYPE retOriginal = self->unigine_object_ptr->getType();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getType();
+            };
+            // args
+            // return
+            Unigine::Node::TYPE retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Node::TYPE retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -312,7 +525,23 @@ static PyObject * unigine_Node_get_type_name(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    unknown type 
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getTypeName();
+            };
+            // args
+            // return
+            const char * retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    const char * retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type 'const char *'
 
     // end
     // return: const char *
@@ -325,7 +554,22 @@ static PyObject * unigine_Node_is_world(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isWorld();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isWorld();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -339,7 +583,22 @@ static PyObject * unigine_Node_is_geodetic(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isGeodetic();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isGeodetic();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -353,7 +612,22 @@ static PyObject * unigine_Node_is_light(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isLight();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isLight();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -367,7 +641,22 @@ static PyObject * unigine_Node_is_decal(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isDecal();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isDecal();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -381,7 +670,22 @@ static PyObject * unigine_Node_is_landscape_layer(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isLandscapeLayer();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isLandscapeLayer();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -395,7 +699,22 @@ static PyObject * unigine_Node_is_object(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isObject();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isObject();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -409,7 +728,22 @@ static PyObject * unigine_Node_is_player(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isPlayer();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isPlayer();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -423,7 +757,22 @@ static PyObject * unigine_Node_is_physical(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isPhysical();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isPhysical();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -437,7 +786,22 @@ static PyObject * unigine_Node_is_navigation(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isNavigation();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isNavigation();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -451,7 +815,22 @@ static PyObject * unigine_Node_is_obstacle(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isObstacle();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isObstacle();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -465,7 +844,22 @@ static PyObject * unigine_Node_is_sound(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isSound();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isSound();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -479,7 +873,22 @@ static PyObject * unigine_Node_is_field(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isField();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isField();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -493,7 +902,22 @@ static PyObject * unigine_Node_is_extern(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isExtern();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isExtern();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -507,7 +931,22 @@ static PyObject * unigine_Node_is_enabled_self(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isEnabledSelf();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isEnabledSelf();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -521,7 +960,22 @@ static PyObject * unigine_Node_get_lifetime_self(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Node::LIFETIME retOriginal = self->unigine_object_ptr->getLifetimeSelf();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getLifetimeSelf();
+            };
+            // args
+            // return
+            Unigine::Node::LIFETIME retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Node::LIFETIME retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -538,15 +992,28 @@ static PyObject * unigine_Node_set_enabled(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    bool enabled = PyBytes_AS_STRING(pArg1Str);
+TODO for bool
 
-    self->unigine_object_ptr->setEnabled(enabled);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setEnabled(enabled);
+            };
+            // args
+            bool enabled;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->enabled = enabled;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -557,7 +1024,22 @@ static PyObject * unigine_Node_is_enabled(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isEnabled();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isEnabled();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -574,15 +1056,28 @@ static PyObject * unigine_Node_set_handled(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    bool handled = PyBytes_AS_STRING(pArg1Str);
+TODO for bool
 
-    self->unigine_object_ptr->setHandled(handled);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setHandled(handled);
+            };
+            // args
+            bool handled;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->handled = handled;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -593,7 +1088,22 @@ static PyObject * unigine_Node_is_handled(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isHandled();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isHandled();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -610,15 +1120,28 @@ static PyObject * unigine_Node_set_immovable(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    bool immovable = PyBytes_AS_STRING(pArg1Str);
+TODO for bool
 
-    self->unigine_object_ptr->setImmovable(immovable);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setImmovable(immovable);
+            };
+            // args
+            bool immovable;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->immovable = immovable;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -629,7 +1152,22 @@ static PyObject * unigine_Node_is_immovable(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isImmovable();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isImmovable();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -646,15 +1184,28 @@ static PyObject * unigine_Node_set_trigger_interaction_enabled(unigine_Node* sel
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    bool enabled = PyBytes_AS_STRING(pArg1Str);
+TODO for bool
 
-    self->unigine_object_ptr->setTriggerInteractionEnabled(enabled);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setTriggerInteractionEnabled(enabled);
+            };
+            // args
+            bool enabled;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->enabled = enabled;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -665,7 +1216,22 @@ static PyObject * unigine_Node_is_trigger_interaction_enabled(unigine_Node* self
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isTriggerInteractionEnabled();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isTriggerInteractionEnabled();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -682,15 +1248,28 @@ static PyObject * unigine_Node_set_grass_interaction_enabled(unigine_Node* self,
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    bool enabled = PyBytes_AS_STRING(pArg1Str);
+TODO for bool
 
-    self->unigine_object_ptr->setGrassInteractionEnabled(enabled);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setGrassInteractionEnabled(enabled);
+            };
+            // args
+            bool enabled;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->enabled = enabled;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -701,7 +1280,22 @@ static PyObject * unigine_Node_is_grass_interaction_enabled(unigine_Node* self) 
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isGrassInteractionEnabled();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isGrassInteractionEnabled();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -718,15 +1312,28 @@ static PyObject * unigine_Node_set_clutter_interaction_enabled(unigine_Node* sel
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    bool enabled = PyBytes_AS_STRING(pArg1Str);
+TODO for bool
 
-    self->unigine_object_ptr->setClutterInteractionEnabled(enabled);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setClutterInteractionEnabled(enabled);
+            };
+            // args
+            bool enabled;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->enabled = enabled;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -737,7 +1344,22 @@ static PyObject * unigine_Node_is_clutter_interaction_enabled(unigine_Node* self
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isClutterInteractionEnabled();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isClutterInteractionEnabled();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -754,15 +1376,28 @@ static PyObject * unigine_Node_set_query(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    bool query = PyBytes_AS_STRING(pArg1Str);
+TODO for bool
 
-    self->unigine_object_ptr->setQuery(query);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setQuery(query);
+            };
+            // args
+            bool query;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->query = query;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -773,7 +1408,22 @@ static PyObject * unigine_Node_is_query(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isQuery();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isQuery();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -787,7 +1437,22 @@ static PyObject * unigine_Node_has_query_force(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->hasQueryForce();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->hasQueryForce();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -804,15 +1469,28 @@ static PyObject * unigine_Node_set_show_in_editor_enabled(unigine_Node* self, Py
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    bool enabled = PyBytes_AS_STRING(pArg1Str);
+TODO for bool
 
-    self->unigine_object_ptr->setShowInEditorEnabled(enabled);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setShowInEditorEnabled(enabled);
+            };
+            // args
+            bool enabled;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->enabled = enabled;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -823,7 +1501,22 @@ static PyObject * unigine_Node_is_show_in_editor_enabled(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isShowInEditorEnabled();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isShowInEditorEnabled();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -840,15 +1533,28 @@ static PyObject * unigine_Node_set_save_to_world_enabled(unigine_Node* self, PyO
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    bool enabled = PyBytes_AS_STRING(pArg1Str);
+TODO for bool
 
-    self->unigine_object_ptr->setSaveToWorldEnabled(enabled);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setSaveToWorldEnabled(enabled);
+            };
+            // args
+            bool enabled;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->enabled = enabled;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -859,7 +1565,22 @@ static PyObject * unigine_Node_is_save_to_world_enabled(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isSaveToWorldEnabled();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isSaveToWorldEnabled();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -876,15 +1597,28 @@ static PyObject * unigine_Node_set_lifetime(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    Unigine::Node::LIFETIME lifetime = PyBytes_AS_STRING(pArg1Str);
+TODO for Unigine::Node::LIFETIME
 
-    self->unigine_object_ptr->setLifetime(lifetime);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setLifetime(lifetime);
+            };
+            // args
+            Unigine::Node::LIFETIME lifetime;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->lifetime = lifetime;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -895,7 +1629,22 @@ static PyObject * unigine_Node_get_lifetime(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Node::LIFETIME retOriginal = self->unigine_object_ptr->getLifetime();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getLifetime();
+            };
+            // args
+            // return
+            Unigine::Node::LIFETIME retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Node::LIFETIME retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -909,7 +1658,22 @@ static PyObject * unigine_Node_is_show_in_editor_enabled_self(unigine_Node* self
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isShowInEditorEnabledSelf();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isShowInEditorEnabledSelf();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -923,7 +1687,22 @@ static PyObject * unigine_Node_is_save_to_world_enabled_self(unigine_Node* self)
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->isSaveToWorldEnabledSelf();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isSaveToWorldEnabledSelf();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -940,15 +1719,28 @@ static PyObject * unigine_Node_set_show_in_editor_enabled_recursive(unigine_Node
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    bool enable = PyBytes_AS_STRING(pArg1Str);
+TODO for bool
 
-    self->unigine_object_ptr->setShowInEditorEnabledRecursive(enable);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setShowInEditorEnabledRecursive(enable);
+            };
+            // args
+            bool enable;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->enable = enable;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -962,15 +1754,28 @@ static PyObject * unigine_Node_set_save_to_world_enabled_recursive(unigine_Node*
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    bool enable = PyBytes_AS_STRING(pArg1Str);
+TODO for bool
 
-    self->unigine_object_ptr->setSaveToWorldEnabledRecursive(enable);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setSaveToWorldEnabledRecursive(enable);
+            };
+            // args
+            bool enable;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->enable = enable;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -984,15 +1789,35 @@ static PyObject * unigine_Node_set_name(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
 
-    self->unigine_object_ptr->setName(name);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setName(name);
+            };
+            // args
+            const char * name;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -1003,7 +1828,23 @@ static PyObject * unigine_Node_get_name(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    unknown type 
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getName();
+            };
+            // args
+            // return
+            const char * retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    const char * retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type 'const char *'
 
     // end
     // return: const char *
@@ -1020,22 +1861,48 @@ static PyObject * unigine_Node_set_data(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    const char * data = PyBytes_AS_STRING(pArg2Str);
+    if (!PyUnicode_Check(pArg2)) {
+        // TODO - error
+        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * data = PyUnicode_AsUTF8(pArg2);
 
-    self->unigine_object_ptr->setData(name, data);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setData(name, data);
+            };
+            // args
+            const char * name;
+            const char * data;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    pRunner->data = data;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: void
     return ret;
 };
@@ -1049,15 +1916,37 @@ static PyObject * unigine_Node_get_data(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
 
-    unknown type 
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getData(name);
+            };
+            // args
+            const char * name;
+            // return
+            const char * retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    const char * retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type 'const char *'
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: const char *
     return ret;
 };
@@ -1071,15 +1960,28 @@ static PyObject * unigine_Node_set_ptr(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    void * ptr = PyBytes_AS_STRING(pArg1Str);
+TODO for void *
 
-    self->unigine_object_ptr->setPtr(ptr);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setPtr(ptr);
+            };
+            // args
+            void * ptr;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->ptr = ptr;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -1090,7 +1992,23 @@ static PyObject * unigine_Node_get_ptr(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    unknown type 
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getPtr();
+            };
+            // args
+            // return
+            void * retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    void * retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type 'void *'
 
     // end
     // return: void *
@@ -1103,7 +2021,22 @@ static PyObject * unigine_Node_get_num_ancestors(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    int retOriginal = self->unigine_object_ptr->getNumAncestors();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getNumAncestors();
+            };
+            // args
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -1120,16 +2053,35 @@ static PyObject * unigine_Node_get_ancestor(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
 
-    Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->getAncestor(num);
-    ret = todo;
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getAncestor(num);
+            };
+            // args
+            int num;
+            // return
+            Unigine::Ptr<Unigine::Node> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Node> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Node::NewObject(retOriginal);
+    }
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
@@ -1143,16 +2095,37 @@ static PyObject * unigine_Node_find_ancestor(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
 
-    int retOriginal = self->unigine_object_ptr->findAncestor();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->findAncestor(name);
+            };
+            // args
+            const char * name;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -1166,16 +2139,30 @@ static PyObject * unigine_Node_find_ancestor(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int type = PyBytes_AS_STRING(pArg1Str);
+TODO for int
 
-    int retOriginal = self->unigine_object_ptr->findAncestor();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->findAncestor(type);
+            };
+            // args
+            int type;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->type = type;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -1189,15 +2176,28 @@ static PyObject * unigine_Node_set_parent(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Node> & parent = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Node> &
 
-    self->unigine_object_ptr->setParent(parent);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setParent(parent);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Node> & parent;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->parent = parent;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -1208,8 +2208,28 @@ static PyObject * unigine_Node_get_parent(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->getParent();
-    ret = todo;
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getParent();
+            };
+            // args
+            // return
+            Unigine::Ptr<Unigine::Node> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Node> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Node::NewObject(retOriginal);
+    }
 
     // end
     // return: Unigine::Ptr<Unigine::Node>
@@ -1225,15 +2245,28 @@ static PyObject * unigine_Node_set_world_parent(unigine_Node* self, PyObject *ar
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Node> &
 
-    self->unigine_object_ptr->setWorldParent(n);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setWorldParent(n);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Node> & n;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->n = n;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -1244,8 +2277,28 @@ static PyObject * unigine_Node_get_root_node(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->getRootNode();
-    ret = todo;
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getRootNode();
+            };
+            // args
+            // return
+            Unigine::Ptr<Unigine::Node> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Node> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Node::NewObject(retOriginal);
+    }
 
     // end
     // return: Unigine::Ptr<Unigine::Node>
@@ -1261,15 +2314,28 @@ static PyObject * unigine_Node_add_child(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Node> &
 
-    self->unigine_object_ptr->addChild(n);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->addChild(n);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Node> & n;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->n = n;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -1283,15 +2349,28 @@ static PyObject * unigine_Node_remove_child(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Node> &
 
-    self->unigine_object_ptr->removeChild(n);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->removeChild(n);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Node> & n;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->n = n;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -1305,15 +2384,28 @@ static PyObject * unigine_Node_add_world_child(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Node> &
 
-    self->unigine_object_ptr->addWorldChild(n);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->addWorldChild(n);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Node> & n;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->n = n;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -1327,15 +2419,28 @@ static PyObject * unigine_Node_remove_world_child(unigine_Node* self, PyObject *
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Node> &
 
-    self->unigine_object_ptr->removeWorldChild(n);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->removeWorldChild(n);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Node> & n;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->n = n;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -1349,16 +2454,30 @@ static PyObject * unigine_Node_is_child(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Node> &
 
-    bool retOriginal = self->unigine_object_ptr->isChild(n);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isChild(n);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Node> & n;
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->n = n;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: bool
     return ret;
 };
@@ -1369,7 +2488,22 @@ static PyObject * unigine_Node_get_num_children(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    int retOriginal = self->unigine_object_ptr->getNumChildren();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getNumChildren();
+            };
+            // args
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -1386,16 +2520,37 @@ static PyObject * unigine_Node_find_child(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
 
-    int retOriginal = self->unigine_object_ptr->findChild();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->findChild(name);
+            };
+            // args
+            const char * name;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -1409,16 +2564,35 @@ static PyObject * unigine_Node_get_child(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
 
-    Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->getChild(num);
-    ret = todo;
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getChild(num);
+            };
+            // args
+            int num;
+            // return
+            Unigine::Ptr<Unigine::Node> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Node> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Node::NewObject(retOriginal);
+    }
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
@@ -1433,22 +2607,34 @@ static PyObject * unigine_Node_set_child_index(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Node> &
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    int index = PyBytes_AS_STRING(pArg2Str);
+TODO for int
 
-    self->unigine_object_ptr->setChildIndex(n, index);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setChildIndex(n, index);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Node> & n;
+            int index;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->n = n;
+    pRunner->index = index;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: void
     return ret;
 };
@@ -1462,16 +2648,30 @@ static PyObject * unigine_Node_get_child_index(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Node> & n = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Node> &
 
-    int retOriginal = self->unigine_object_ptr->getChildIndex();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getChildIndex(n);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Node> & n;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->n = n;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -1486,23 +2686,48 @@ static PyObject * unigine_Node_find_node(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    int recursive = PyBytes_AS_STRING(pArg2Str);
+TODO for int
 
-    Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->findNode(name, recursive);
-    ret = todo;
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->findNode(name, recursive);
+            };
+            // args
+            const char * name;
+            int recursive;
+            // return
+            Unigine::Ptr<Unigine::Node> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    pRunner->recursive = recursive;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Node> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Node::NewObject(retOriginal);
+    }
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: Unigine::Ptr<Unigine::Node>
     return ret;
 };
@@ -1513,8 +2738,28 @@ static PyObject * unigine_Node_get_possessor(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Ptr<Unigine::Node> retOriginal = self->unigine_object_ptr->getPossessor();
-    ret = todo;
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getPossessor();
+            };
+            // args
+            // return
+            Unigine::Ptr<Unigine::Node> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Node> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Node::NewObject(retOriginal);
+    }
 
     // end
     // return: Unigine::Ptr<Unigine::Node>
@@ -1530,15 +2775,28 @@ static PyObject * unigine_Node_get_hierarchy(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    Unigine::Vector<Unigine::Ptr<Unigine::Node>> & hierarchy = PyBytes_AS_STRING(pArg1Str);
+TODO for Unigine::Vector<Unigine::Ptr<Unigine::Node>> &
 
-    self->unigine_object_ptr->getHierarchy(hierarchy);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->getHierarchy(hierarchy);
+            };
+            // args
+            Unigine::Vector<Unigine::Ptr<Unigine::Node>> & hierarchy;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->hierarchy = hierarchy;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -1549,7 +2807,22 @@ static PyObject * unigine_Node_get_num_properties(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    int retOriginal = self->unigine_object_ptr->getNumProperties();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getNumProperties();
+            };
+            // args
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -1566,16 +2839,37 @@ static PyObject * unigine_Node_add_property(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
 
-    int retOriginal = self->unigine_object_ptr->addProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->addProperty(name);
+            };
+            // args
+            const char * name;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -1589,16 +2883,30 @@ static PyObject * unigine_Node_add_property(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::UGUID &
 
-    int retOriginal = self->unigine_object_ptr->addProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->addProperty(guid);
+            };
+            // args
+            const Unigine::UGUID & guid;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->guid = guid;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -1612,16 +2920,30 @@ static PyObject * unigine_Node_add_property(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Property> & property = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Property> &
 
-    int retOriginal = self->unigine_object_ptr->addProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->addProperty(property);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Property> & property;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->property = property;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -1635,16 +2957,37 @@ static PyObject * unigine_Node_find_property(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
 
-    int retOriginal = self->unigine_object_ptr->findProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->findProperty(name);
+            };
+            // args
+            const char * name;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -1658,16 +3001,30 @@ static PyObject * unigine_Node_find_property(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::UGUID &
 
-    int retOriginal = self->unigine_object_ptr->findProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->findProperty(guid);
+            };
+            // args
+            const Unigine::UGUID & guid;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->guid = guid;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -1681,16 +3038,30 @@ static PyObject * unigine_Node_find_property(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Property> & property = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Property> &
 
-    int retOriginal = self->unigine_object_ptr->findProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->findProperty(property);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Property> & property;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->property = property;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -1704,16 +3075,37 @@ static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
 
-    int retOriginal = self->unigine_object_ptr->setProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->setProperty(name);
+            };
+            // args
+            const char * name;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -1727,16 +3119,30 @@ static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::UGUID &
 
-    int retOriginal = self->unigine_object_ptr->setProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->setProperty(guid);
+            };
+            // args
+            const Unigine::UGUID & guid;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->guid = guid;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -1750,16 +3156,30 @@ static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Property> & property = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Property> &
 
-    int retOriginal = self->unigine_object_ptr->setProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->setProperty(property);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Property> & property;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->property = property;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: int
     return ret;
 };
@@ -1774,23 +3194,43 @@ static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg2Str);
+    if (!PyUnicode_Check(pArg2)) {
+        // TODO - error
+        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg2);
 
-    int retOriginal = self->unigine_object_ptr->setProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->setProperty(num, name);
+            };
+            // args
+            int num;
+            const char * name;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    pRunner->name = name;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: int
     return ret;
 };
@@ -1805,23 +3245,36 @@ static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg2Str);
+TODO for const Unigine::UGUID &
 
-    int retOriginal = self->unigine_object_ptr->setProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->setProperty(num, guid);
+            };
+            // args
+            int num;
+            const Unigine::UGUID & guid;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    pRunner->guid = guid;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: int
     return ret;
 };
@@ -1836,23 +3289,36 @@ static PyObject * unigine_Node_set_property(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Property> & property = PyBytes_AS_STRING(pArg2Str);
+TODO for const Unigine::Ptr<Unigine::Property> &
 
-    int retOriginal = self->unigine_object_ptr->setProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->setProperty(num, property);
+            };
+            // args
+            int num;
+            const Unigine::Ptr<Unigine::Property> & property;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    pRunner->property = property;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: int
     return ret;
 };
@@ -1867,23 +3333,43 @@ static PyObject * unigine_Node_insert_property(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg2Str);
+    if (!PyUnicode_Check(pArg2)) {
+        // TODO - error
+        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg2);
 
-    int retOriginal = self->unigine_object_ptr->insertProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->insertProperty(num, name);
+            };
+            // args
+            int num;
+            const char * name;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    pRunner->name = name;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: int
     return ret;
 };
@@ -1898,23 +3384,36 @@ static PyObject * unigine_Node_insert_property(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg2Str);
+TODO for const Unigine::UGUID &
 
-    int retOriginal = self->unigine_object_ptr->insertProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->insertProperty(num, guid);
+            };
+            // args
+            int num;
+            const Unigine::UGUID & guid;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    pRunner->guid = guid;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: int
     return ret;
 };
@@ -1929,23 +3428,36 @@ static PyObject * unigine_Node_insert_property(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Property> & property = PyBytes_AS_STRING(pArg2Str);
+TODO for const Unigine::Ptr<Unigine::Property> &
 
-    int retOriginal = self->unigine_object_ptr->insertProperty();
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->insertProperty(num, property);
+            };
+            // args
+            int num;
+            const Unigine::Ptr<Unigine::Property> & property;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    pRunner->property = property;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: int
     return ret;
 };
@@ -1960,22 +3472,34 @@ static PyObject * unigine_Node_swap_property(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int from_num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    int to_num = PyBytes_AS_STRING(pArg2Str);
+TODO for int
 
-    self->unigine_object_ptr->swapProperty(from_num, to_num);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->swapProperty(from_num, to_num);
+            };
+            // args
+            int from_num;
+            int to_num;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->from_num = from_num;
+    pRunner->to_num = to_num;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: void
     return ret;
 };
@@ -1989,15 +3513,28 @@ static PyObject * unigine_Node_remove_property(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
 
-    self->unigine_object_ptr->removeProperty(num);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->removeProperty(num);
+            };
+            // args
+            int num;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -2011,15 +3548,35 @@ static PyObject * unigine_Node_remove_property(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
 
-    self->unigine_object_ptr->removeProperty(name);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->removeProperty(name);
+            };
+            // args
+            const char * name;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -2033,15 +3590,28 @@ static PyObject * unigine_Node_remove_property(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::UGUID & guid = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::UGUID &
 
-    self->unigine_object_ptr->removeProperty(guid);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->removeProperty(guid);
+            };
+            // args
+            const Unigine::UGUID & guid;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->guid = guid;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -2055,15 +3625,28 @@ static PyObject * unigine_Node_remove_property(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Property> & property = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Property> &
 
-    self->unigine_object_ptr->removeProperty(property);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->removeProperty(property);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Property> & property;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->property = property;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -2074,7 +3657,21 @@ static PyObject * unigine_Node_clear_properties(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    self->unigine_object_ptr->clearProperties();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->clearProperties();
+            };
+            // args
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
     // return: void
@@ -2090,16 +3687,35 @@ static PyObject * unigine_Node_get_property(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
 
-    Unigine::Ptr<Unigine::Property> retOriginal = self->unigine_object_ptr->getProperty(num);
-    ret = todo;
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getProperty(num);
+            };
+            // args
+            int num;
+            // return
+            Unigine::Ptr<Unigine::Property> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Property> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Property::NewObject(retOriginal);
+    }
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::Ptr<Unigine::Property>
     return ret;
 };
@@ -2113,15 +3729,30 @@ static PyObject * unigine_Node_get_property_name(unigine_Node* self, PyObject *a
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
 
-    unknown type 
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getPropertyName(num);
+            };
+            // args
+            int num;
+            // return
+            const char * retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    const char * retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type 'const char *'
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: const char *
     return ret;
 };
@@ -2136,22 +3767,34 @@ static PyObject * unigine_Node_set_property_enabled(unigine_Node* self, PyObject
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    bool enable = PyBytes_AS_STRING(pArg2Str);
+TODO for bool
 
-    self->unigine_object_ptr->setPropertyEnabled(num, enable);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setPropertyEnabled(num, enable);
+            };
+            // args
+            int num;
+            bool enable;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    pRunner->enable = enable;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: void
     return ret;
 };
@@ -2165,16 +3808,30 @@ static PyObject * unigine_Node_is_property_enabled(unigine_Node* self, PyObject 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
 
-    bool retOriginal = self->unigine_object_ptr->isPropertyEnabled(num);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isPropertyEnabled(num);
+            };
+            // args
+            int num;
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: bool
     return ret;
 };
@@ -2188,16 +3845,30 @@ static PyObject * unigine_Node_get_lost_node_property_guid(unigine_Node* self, P
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
 
-    Unigine::UGUID retOriginal = self->unigine_object_ptr->getLostNodePropertyGUID(num);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getLostNodePropertyGUID(num);
+            };
+            // args
+            int num;
+            // return
+            Unigine::UGUID retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::UGUID retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::UGUID
     return ret;
 };
@@ -2211,15 +3882,28 @@ static PyObject * unigine_Node_set_transform(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const & transform = PyBytes_AS_STRING(pArg1Str);
+TODO for const &
 
-    self->unigine_object_ptr->setTransform(transform);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setTransform(transform);
+            };
+            // args
+            const & transform;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->transform = transform;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -2230,7 +3914,23 @@ static PyObject * unigine_Node_get_transform(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    unknown type 
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getTransform();
+            };
+            // args
+            // return
+             retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+     retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type ''
 
     // end
     // return: 
@@ -2246,15 +3946,28 @@ static PyObject * unigine_Node_set_world_transform(unigine_Node* self, PyObject 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const & transform = PyBytes_AS_STRING(pArg1Str);
+TODO for const &
 
-    self->unigine_object_ptr->setWorldTransform(transform);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setWorldTransform(transform);
+            };
+            // args
+            const & transform;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->transform = transform;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -2265,7 +3978,23 @@ static PyObject * unigine_Node_get_world_transform(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    unknown type 
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getWorldTransform();
+            };
+            // args
+            // return
+             retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+     retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type ''
 
     // end
     // return: 
@@ -2281,15 +4010,28 @@ static PyObject * unigine_Node_set_old_world_transform(unigine_Node* self, PyObj
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const & transform = PyBytes_AS_STRING(pArg1Str);
+TODO for const &
 
-    self->unigine_object_ptr->setOldWorldTransform(transform);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setOldWorldTransform(transform);
+            };
+            // args
+            const & transform;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->transform = transform;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -2300,7 +4042,23 @@ static PyObject * unigine_Node_get_old_world_transform(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    unknown type 
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getOldWorldTransform();
+            };
+            // args
+            // return
+             retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+     retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type ''
 
     // end
     // return: 
@@ -2313,7 +4071,23 @@ static PyObject * unigine_Node_get_old_world_position(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    unknown type 
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getOldWorldPosition();
+            };
+            // args
+            // return
+             retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+     retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type ''
 
     // end
     // return: 
@@ -2326,7 +4100,23 @@ static PyObject * unigine_Node_get_i_world_transform(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    unknown type 
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getIWorldTransform();
+            };
+            // args
+            // return
+             retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+     retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type ''
 
     // end
     // return: 
@@ -2342,15 +4132,28 @@ static PyObject * unigine_Node_set_transform_without_children(unigine_Node* self
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const & transform = PyBytes_AS_STRING(pArg1Str);
+TODO for const &
 
-    self->unigine_object_ptr->setTransformWithoutChildren(transform);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setTransformWithoutChildren(transform);
+            };
+            // args
+            const & transform;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->transform = transform;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -2364,15 +4167,28 @@ static PyObject * unigine_Node_set_world_transform_without_children(unigine_Node
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const & transform = PyBytes_AS_STRING(pArg1Str);
+TODO for const &
 
-    self->unigine_object_ptr->setWorldTransformWithoutChildren(transform);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setWorldTransformWithoutChildren(transform);
+            };
+            // args
+            const & transform;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->transform = transform;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -2383,7 +4199,22 @@ static PyObject * unigine_Node_get_bound_box(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getBoundBox();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getBoundBox();
+            };
+            // args
+            // return
+            Unigine::Math::BoundBox retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::BoundBox retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2397,7 +4228,22 @@ static PyObject * unigine_Node_get_bound_sphere(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getBoundSphere();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getBoundSphere();
+            };
+            // args
+            // return
+            Unigine::Math::BoundSphere retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::BoundSphere retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2411,7 +4257,22 @@ static PyObject * unigine_Node_get_world_bound_box(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getWorldBoundBox();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getWorldBoundBox();
+            };
+            // args
+            // return
+            Unigine::Math::BoundBox retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::BoundBox retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2425,7 +4286,22 @@ static PyObject * unigine_Node_get_world_bound_sphere(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getWorldBoundSphere();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getWorldBoundSphere();
+            };
+            // args
+            // return
+            Unigine::Math::BoundSphere retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::BoundSphere retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2439,7 +4315,22 @@ static PyObject * unigine_Node_get_spatial_bound_box(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getSpatialBoundBox();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getSpatialBoundBox();
+            };
+            // args
+            // return
+            Unigine::Math::BoundBox retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::BoundBox retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2453,7 +4344,22 @@ static PyObject * unigine_Node_get_spatial_bound_sphere(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getSpatialBoundSphere();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getSpatialBoundSphere();
+            };
+            // args
+            // return
+            Unigine::Math::BoundSphere retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::BoundSphere retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2467,7 +4373,22 @@ static PyObject * unigine_Node_get_hierarchy_bound_box(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getHierarchyBoundBox();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getHierarchyBoundBox();
+            };
+            // args
+            // return
+            Unigine::Math::BoundBox retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::BoundBox retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2481,7 +4402,22 @@ static PyObject * unigine_Node_get_hierarchy_bound_sphere(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getHierarchyBoundSphere();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getHierarchyBoundSphere();
+            };
+            // args
+            // return
+            Unigine::Math::BoundSphere retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::BoundSphere retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2495,7 +4431,22 @@ static PyObject * unigine_Node_get_hierarchy_world_bound_box(unigine_Node* self)
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getHierarchyWorldBoundBox();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getHierarchyWorldBoundBox();
+            };
+            // args
+            // return
+            Unigine::Math::BoundBox retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::BoundBox retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2509,7 +4460,22 @@ static PyObject * unigine_Node_get_hierarchy_world_bound_sphere(unigine_Node* se
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getHierarchyWorldBoundSphere();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getHierarchyWorldBoundSphere();
+            };
+            // args
+            // return
+            Unigine::Math::BoundSphere retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::BoundSphere retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2523,7 +4489,22 @@ static PyObject * unigine_Node_get_hierarchy_spatial_bound_box(unigine_Node* sel
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::BoundBox retOriginal = self->unigine_object_ptr->getHierarchySpatialBoundBox();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getHierarchySpatialBoundBox();
+            };
+            // args
+            // return
+            Unigine::Math::BoundBox retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::BoundBox retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2537,7 +4518,22 @@ static PyObject * unigine_Node_get_hierarchy_spatial_bound_sphere(unigine_Node* 
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::BoundSphere retOriginal = self->unigine_object_ptr->getHierarchySpatialBoundSphere();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getHierarchySpatialBoundSphere();
+            };
+            // args
+            // return
+            Unigine::Math::BoundSphere retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::BoundSphere retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2554,16 +4550,30 @@ static PyObject * unigine_Node_load_world(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Xml> & xml = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Xml> &
 
-    bool retOriginal = self->unigine_object_ptr->loadWorld(xml);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->loadWorld(xml);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Xml> & xml;
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->xml = xml;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: bool
     return ret;
 };
@@ -2577,16 +4587,30 @@ static PyObject * unigine_Node_save_world(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Xml> & xml = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Xml> &
 
-    bool retOriginal = self->unigine_object_ptr->saveWorld(xml);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->saveWorld(xml);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Xml> & xml;
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->xml = xml;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: bool
     return ret;
 };
@@ -2600,16 +4624,30 @@ static PyObject * unigine_Node_save_state(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Stream> & stream = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Stream> &
 
-    bool retOriginal = self->unigine_object_ptr->saveState(stream);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->saveState(stream);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Stream> & stream;
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->stream = stream;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: bool
     return ret;
 };
@@ -2623,16 +4661,30 @@ static PyObject * unigine_Node_restore_state(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Ptr<Unigine::Stream> & stream = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Ptr<Unigine::Stream> &
 
-    bool retOriginal = self->unigine_object_ptr->restoreState(stream);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->restoreState(stream);
+            };
+            // args
+            const Unigine::Ptr<Unigine::Stream> & stream;
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->stream = stream;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: bool
     return ret;
 };
@@ -2643,8 +4695,28 @@ static PyObject * unigine_Node_get_object_body(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Ptr<Unigine::Body> retOriginal = self->unigine_object_ptr->getObjectBody();
-    ret = todo;
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getObjectBody();
+            };
+            // args
+            // return
+            Unigine::Ptr<Unigine::Body> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Body> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Body::NewObject(retOriginal);
+    }
 
     // end
     // return: Unigine::Ptr<Unigine::Body>
@@ -2657,8 +4729,28 @@ static PyObject * unigine_Node_get_object_body_rigid(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Ptr<Unigine::BodyRigid> retOriginal = self->unigine_object_ptr->getObjectBodyRigid();
-    ret = todo;
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getObjectBodyRigid();
+            };
+            // args
+            // return
+            Unigine::Ptr<Unigine::BodyRigid> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::BodyRigid> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::BodyRigid::NewObject(retOriginal);
+    }
 
     // end
     // return: Unigine::Ptr<Unigine::BodyRigid>
@@ -2671,7 +4763,22 @@ static PyObject * unigine_Node_get_body_linear_velocity(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getBodyLinearVelocity();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getBodyLinearVelocity();
+            };
+            // args
+            // return
+            Unigine::Math::vec3 retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2685,7 +4792,22 @@ static PyObject * unigine_Node_get_body_angular_velocity(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getBodyAngularVelocity();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getBodyAngularVelocity();
+            };
+            // args
+            // return
+            Unigine::Math::vec3 retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2702,16 +4824,30 @@ static PyObject * unigine_Node_get_body_world_velocity(unigine_Node* self, PyObj
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const & point = PyBytes_AS_STRING(pArg1Str);
+TODO for const &
 
-    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getBodyWorldVelocity(point);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getBodyWorldVelocity(point);
+            };
+            // args
+            const & point;
+            // return
+            Unigine::Math::vec3 retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->point = point;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::Math::vec3
     return ret;
 };
@@ -2722,7 +4858,22 @@ static PyObject * unigine_Node_get_num_world_triggers(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    int retOriginal = self->unigine_object_ptr->getNumWorldTriggers();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getNumWorldTriggers();
+            };
+            // args
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2739,16 +4890,35 @@ static PyObject * unigine_Node_get_world_trigger(unigine_Node* self, PyObject *a
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    int num = PyBytes_AS_STRING(pArg1Str);
+TODO for int
 
-    Unigine::Ptr<Unigine::WorldTrigger> retOriginal = self->unigine_object_ptr->getWorldTrigger(num);
-    ret = todo;
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getWorldTrigger(num);
+            };
+            // args
+            int num;
+            // return
+            Unigine::Ptr<Unigine::WorldTrigger> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->num = num;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::WorldTrigger> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::WorldTrigger::NewObject(retOriginal);
+    }
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::Ptr<Unigine::WorldTrigger>
     return ret;
 };
@@ -2762,15 +4932,28 @@ static PyObject * unigine_Node_set_position(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const & pos = PyBytes_AS_STRING(pArg1Str);
+TODO for const &
 
-    self->unigine_object_ptr->setPosition(pos);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setPosition(pos);
+            };
+            // args
+            const & pos;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->pos = pos;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -2781,7 +4964,23 @@ static PyObject * unigine_Node_get_position(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    unknown type 
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getPosition();
+            };
+            // args
+            // return
+             retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+     retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type ''
 
     // end
     // return: 
@@ -2798,22 +4997,34 @@ static PyObject * unigine_Node_set_rotation(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Math::quat & rot = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Math::quat &
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    bool identity = PyBytes_AS_STRING(pArg2Str);
+TODO for bool
 
-    self->unigine_object_ptr->setRotation(rot, identity);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setRotation(rot, identity);
+            };
+            // args
+            const Unigine::Math::quat & rot;
+            bool identity;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->rot = rot;
+    pRunner->identity = identity;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: void
     return ret;
 };
@@ -2824,7 +5035,22 @@ static PyObject * unigine_Node_get_rotation(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::quat retOriginal = self->unigine_object_ptr->getRotation();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getRotation();
+            };
+            // args
+            // return
+            Unigine::Math::quat retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::quat retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2843,29 +5069,40 @@ static PyObject * unigine_Node_set_direction(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Math::vec3 & dir = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Math::vec3 &
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    const Unigine::Math::vec3 & up = PyBytes_AS_STRING(pArg2Str);
+TODO for const Unigine::Math::vec3 &
+
 
     // pArg3
-    PyObject* pArg3Repr = PyObject_Repr(pArg3);
-    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
-    AXIS axis = PyBytes_AS_STRING(pArg3Str);
+TODO for AXIS
 
-    self->unigine_object_ptr->setDirection(dir, up, axis);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setDirection(dir, up, axis);
+            };
+            // args
+            const Unigine::Math::vec3 & dir;
+            const Unigine::Math::vec3 & up;
+            AXIS axis;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->dir = dir;
+    pRunner->up = up;
+    pRunner->axis = axis;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
-    Py_XDECREF(pArg3Repr);
-    Py_XDECREF(pArg3Str);
     // return: void
     return ret;
 };
@@ -2879,16 +5116,30 @@ static PyObject * unigine_Node_get_direction(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    AXIS axis = PyBytes_AS_STRING(pArg1Str);
+TODO for AXIS
 
-    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getDirection(axis);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getDirection(axis);
+            };
+            // args
+            AXIS axis;
+            // return
+            Unigine::Math::vec3 retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->axis = axis;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::Math::vec3
     return ret;
 };
@@ -2902,15 +5153,28 @@ static PyObject * unigine_Node_set_scale(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Math::vec3 & s = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Math::vec3 &
 
-    self->unigine_object_ptr->setScale(s);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setScale(s);
+            };
+            // args
+            const Unigine::Math::vec3 & s;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->s = s;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -2921,7 +5185,22 @@ static PyObject * unigine_Node_get_scale(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getScale();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getScale();
+            };
+            // args
+            // return
+            Unigine::Math::vec3 retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -2938,15 +5217,28 @@ static PyObject * unigine_Node_set_world_position(unigine_Node* self, PyObject *
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const & pos = PyBytes_AS_STRING(pArg1Str);
+TODO for const &
 
-    self->unigine_object_ptr->setWorldPosition(pos);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setWorldPosition(pos);
+            };
+            // args
+            const & pos;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->pos = pos;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -2957,7 +5249,23 @@ static PyObject * unigine_Node_get_world_position(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    unknown type 
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getWorldPosition();
+            };
+            // args
+            // return
+             retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+     retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = TODO: unknown type ''
 
     // end
     // return: 
@@ -2974,22 +5282,34 @@ static PyObject * unigine_Node_set_world_rotation(unigine_Node* self, PyObject *
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Math::quat & rot = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Math::quat &
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    bool identity = PyBytes_AS_STRING(pArg2Str);
+TODO for bool
 
-    self->unigine_object_ptr->setWorldRotation(rot, identity);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setWorldRotation(rot, identity);
+            };
+            // args
+            const Unigine::Math::quat & rot;
+            bool identity;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->rot = rot;
+    pRunner->identity = identity;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: void
     return ret;
 };
@@ -3000,7 +5320,22 @@ static PyObject * unigine_Node_get_world_rotation(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::quat retOriginal = self->unigine_object_ptr->getWorldRotation();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getWorldRotation();
+            };
+            // args
+            // return
+            Unigine::Math::quat retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::quat retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -3019,29 +5354,40 @@ static PyObject * unigine_Node_set_world_direction(unigine_Node* self, PyObject 
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Math::vec3 & dir = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Math::vec3 &
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    const Unigine::Math::vec3 & up = PyBytes_AS_STRING(pArg2Str);
+TODO for const Unigine::Math::vec3 &
+
 
     // pArg3
-    PyObject* pArg3Repr = PyObject_Repr(pArg3);
-    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
-    AXIS axis = PyBytes_AS_STRING(pArg3Str);
+TODO for AXIS
 
-    self->unigine_object_ptr->setWorldDirection(dir, up, axis);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setWorldDirection(dir, up, axis);
+            };
+            // args
+            const Unigine::Math::vec3 & dir;
+            const Unigine::Math::vec3 & up;
+            AXIS axis;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->dir = dir;
+    pRunner->up = up;
+    pRunner->axis = axis;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
-    Py_XDECREF(pArg3Repr);
-    Py_XDECREF(pArg3Str);
     // return: void
     return ret;
 };
@@ -3055,16 +5401,30 @@ static PyObject * unigine_Node_get_world_direction(unigine_Node* self, PyObject 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    AXIS axis = PyBytes_AS_STRING(pArg1Str);
+TODO for AXIS
 
-    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getWorldDirection(axis);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getWorldDirection(axis);
+            };
+            // args
+            AXIS axis;
+            // return
+            Unigine::Math::vec3 retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->axis = axis;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::Math::vec3
     return ret;
 };
@@ -3078,15 +5438,28 @@ static PyObject * unigine_Node_set_world_scale(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Math::vec3 & s = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Math::vec3 &
 
-    self->unigine_object_ptr->setWorldScale(s);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setWorldScale(s);
+            };
+            // args
+            const Unigine::Math::vec3 & s;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->s = s;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -3097,7 +5470,22 @@ static PyObject * unigine_Node_get_world_scale(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->getWorldScale();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getWorldScale();
+            };
+            // args
+            // return
+            Unigine::Math::vec3 retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -3114,15 +5502,28 @@ static PyObject * unigine_Node_translate(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const & t = PyBytes_AS_STRING(pArg1Str);
+TODO for const &
 
-    self->unigine_object_ptr->translate(t);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->translate(t);
+            };
+            // args
+            const & t;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->t = t;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -3138,29 +5539,40 @@ static PyObject * unigine_Node_translate(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-     x = PyBytes_AS_STRING(pArg1Str);
+TODO for 
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-     y = PyBytes_AS_STRING(pArg2Str);
+TODO for 
+
 
     // pArg3
-    PyObject* pArg3Repr = PyObject_Repr(pArg3);
-    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
-     z = PyBytes_AS_STRING(pArg3Str);
+TODO for 
 
-    self->unigine_object_ptr->translate(x, y, z);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->translate(x, y, z);
+            };
+            // args
+             x;
+             y;
+             z;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->x = x;
+    pRunner->y = y;
+    pRunner->z = z;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
-    Py_XDECREF(pArg3Repr);
-    Py_XDECREF(pArg3Str);
     // return: void
     return ret;
 };
@@ -3174,15 +5586,28 @@ static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Math::quat & r = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Math::quat &
 
-    self->unigine_object_ptr->rotate(r);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->rotate(r);
+            };
+            // args
+            const Unigine::Math::quat & r;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->r = r;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -3196,15 +5621,28 @@ static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Math::vec3 & angles = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Math::vec3 &
 
-    self->unigine_object_ptr->rotate(angles);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->rotate(angles);
+            };
+            // args
+            const Unigine::Math::vec3 & angles;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->angles = angles;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -3220,29 +5658,40 @@ static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    float angle_x = PyBytes_AS_STRING(pArg1Str);
+TODO for float
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    float angle_y = PyBytes_AS_STRING(pArg2Str);
+TODO for float
+
 
     // pArg3
-    PyObject* pArg3Repr = PyObject_Repr(pArg3);
-    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
-    float angle_z = PyBytes_AS_STRING(pArg3Str);
+TODO for float
 
-    self->unigine_object_ptr->rotate(angle_x, angle_y, angle_z);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->rotate(angle_x, angle_y, angle_z);
+            };
+            // args
+            float angle_x;
+            float angle_y;
+            float angle_z;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->angle_x = angle_x;
+    pRunner->angle_y = angle_y;
+    pRunner->angle_z = angle_z;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
-    Py_XDECREF(pArg3Repr);
-    Py_XDECREF(pArg3Str);
     // return: void
     return ret;
 };
@@ -3256,15 +5705,28 @@ static PyObject * unigine_Node_world_translate(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const & t = PyBytes_AS_STRING(pArg1Str);
+TODO for const &
 
-    self->unigine_object_ptr->worldTranslate(t);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->worldTranslate(t);
+            };
+            // args
+            const & t;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->t = t;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -3280,29 +5742,40 @@ static PyObject * unigine_Node_world_translate(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-     x = PyBytes_AS_STRING(pArg1Str);
+TODO for 
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-     y = PyBytes_AS_STRING(pArg2Str);
+TODO for 
+
 
     // pArg3
-    PyObject* pArg3Repr = PyObject_Repr(pArg3);
-    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
-     z = PyBytes_AS_STRING(pArg3Str);
+TODO for 
 
-    self->unigine_object_ptr->worldTranslate(x, y, z);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->worldTranslate(x, y, z);
+            };
+            // args
+             x;
+             y;
+             z;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->x = x;
+    pRunner->y = y;
+    pRunner->z = z;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
-    Py_XDECREF(pArg3Repr);
-    Py_XDECREF(pArg3Str);
     // return: void
     return ret;
 };
@@ -3316,15 +5789,28 @@ static PyObject * unigine_Node_world_rotate(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Math::quat & r = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Math::quat &
 
-    self->unigine_object_ptr->worldRotate(r);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->worldRotate(r);
+            };
+            // args
+            const Unigine::Math::quat & r;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->r = r;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -3338,15 +5824,28 @@ static PyObject * unigine_Node_world_rotate(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Math::vec3 & angles = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Math::vec3 &
 
-    self->unigine_object_ptr->worldRotate(angles);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->worldRotate(angles);
+            };
+            // args
+            const Unigine::Math::vec3 & angles;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->angles = angles;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -3362,29 +5861,40 @@ static PyObject * unigine_Node_world_rotate(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    float angle_x = PyBytes_AS_STRING(pArg1Str);
+TODO for float
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    float angle_y = PyBytes_AS_STRING(pArg2Str);
+TODO for float
+
 
     // pArg3
-    PyObject* pArg3Repr = PyObject_Repr(pArg3);
-    PyObject* pArg3Str = PyUnicode_AsEncodedString(pArg3Repr, "utf-8", "~E~");
-    float angle_z = PyBytes_AS_STRING(pArg3Str);
+TODO for float
 
-    self->unigine_object_ptr->worldRotate(angle_x, angle_y, angle_z);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->worldRotate(angle_x, angle_y, angle_z);
+            };
+            // args
+            float angle_x;
+            float angle_y;
+            float angle_z;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->angle_x = angle_x;
+    pRunner->angle_y = angle_y;
+    pRunner->angle_z = angle_z;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
-    Py_XDECREF(pArg3Repr);
-    Py_XDECREF(pArg3Str);
     // return: void
     return ret;
 };
@@ -3398,15 +5908,28 @@ static PyObject * unigine_Node_world_look_at(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const & target = PyBytes_AS_STRING(pArg1Str);
+TODO for const &
 
-    self->unigine_object_ptr->worldLookAt(target);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->worldLookAt(target);
+            };
+            // args
+            const & target;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->target = target;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -3421,22 +5944,34 @@ static PyObject * unigine_Node_world_look_at(unigine_Node* self, PyObject *args)
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const & target = PyBytes_AS_STRING(pArg1Str);
+TODO for const &
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    const Unigine::Math::vec3 & up = PyBytes_AS_STRING(pArg2Str);
+TODO for const Unigine::Math::vec3 &
 
-    self->unigine_object_ptr->worldLookAt(target, up);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->worldLookAt(target, up);
+            };
+            // args
+            const & target;
+            const Unigine::Math::vec3 & up;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->target = target;
+    pRunner->up = up;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: void
     return ret;
 };
@@ -3450,16 +5985,30 @@ static PyObject * unigine_Node_to_local(unigine_Node* self, PyObject *args) {
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const & p = PyBytes_AS_STRING(pArg1Str);
+TODO for const &
 
-    Unigine::Math::vec3 retOriginal = self->unigine_object_ptr->toLocal(p);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->toLocal(p);
+            };
+            // args
+            const & p;
+            // return
+            Unigine::Math::vec3 retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->p = p;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::Math::vec3
     return ret;
 };
@@ -3470,7 +6019,21 @@ static PyObject * unigine_Node_render_visualizer(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    self->unigine_object_ptr->renderVisualizer();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->renderVisualizer();
+            };
+            // args
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
     // return: void
@@ -3486,15 +6049,28 @@ static PyObject * unigine_Node_set_variable(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const Unigine::Variable & variable = PyBytes_AS_STRING(pArg1Str);
+TODO for const Unigine::Variable &
 
-    self->unigine_object_ptr->setVariable(variable);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setVariable(variable);
+            };
+            // args
+            const Unigine::Variable & variable;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->variable = variable;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -3505,7 +6081,22 @@ static PyObject * unigine_Node_get_variable(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Variable retOriginal = self->unigine_object_ptr->getVariable();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getVariable();
+            };
+            // args
+            // return
+            Unigine::Variable retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Variable retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
@@ -3519,7 +6110,22 @@ static PyObject * unigine_Node_has_variable(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    bool retOriginal = self->unigine_object_ptr->hasVariable();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->hasVariable();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
@@ -3537,22 +6143,41 @@ static PyObject * unigine_Node_set_variable(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
+
 
     // pArg2
-    PyObject* pArg2Repr = PyObject_Repr(pArg2);
-    PyObject* pArg2Str = PyUnicode_AsEncodedString(pArg2Repr, "utf-8", "~E~");
-    const Unigine::Variable & variable = PyBytes_AS_STRING(pArg2Str);
+TODO for const Unigine::Variable &
 
-    self->unigine_object_ptr->setVariable(name, variable);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->setVariable(name, variable);
+            };
+            // args
+            const char * name;
+            const Unigine::Variable & variable;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    pRunner->variable = variable;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
-    Py_XDECREF(pArg2Repr);
-    Py_XDECREF(pArg2Str);
     // return: void
     return ret;
 };
@@ -3566,16 +6191,37 @@ static PyObject * unigine_Node_get_variable(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
 
-    Unigine::Variable retOriginal = self->unigine_object_ptr->getVariable(name);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getVariable(name);
+            };
+            // args
+            const char * name;
+            // return
+            Unigine::Variable retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Variable retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: Unigine::Variable
     return ret;
 };
@@ -3589,16 +6235,37 @@ static PyObject * unigine_Node_has_variable(unigine_Node* self, PyObject *args) 
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
 
-    bool retOriginal = self->unigine_object_ptr->hasVariable(name);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->hasVariable(name);
+            };
+            // args
+            const char * name;
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyBool_FromLong(retOriginal);
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: bool
     return ret;
 };
@@ -3612,15 +6279,35 @@ static PyObject * unigine_Node_remove_variable(unigine_Node* self, PyObject *arg
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * name = PyBytes_AS_STRING(pArg1Str);
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
 
-    self->unigine_object_ptr->removeVariable(name);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->removeVariable(name);
+            };
+            // args
+            const char * name;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
     // return: void
     return ret;
 };
@@ -3631,8 +6318,28 @@ static PyObject * unigine_Node_get_geodetic_pivot(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Ptr<Unigine::GeodeticPivot> retOriginal = self->unigine_object_ptr->getGeodeticPivot();
-    ret = todo;
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->getGeodeticPivot();
+            };
+            // args
+            // return
+            Unigine::Ptr<Unigine::GeodeticPivot> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::GeodeticPivot> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::GeodeticPivot::NewObject(retOriginal);
+    }
 
     // end
     // return: Unigine::Ptr<Unigine::GeodeticPivot>
@@ -3645,7 +6352,21 @@ static PyObject * unigine_Node_update_enabled(unigine_Node* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    self->unigine_object_ptr->updateEnabled();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->updateEnabled();
+            };
+            // args
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     // end
     // return: void
@@ -4382,7 +7103,7 @@ static PyTypeObject unigine_NodeType = {
 
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Node",             // tp_name
-    sizeof(unigine_Node) + 16, // tp_basicsize  (magic 16 bytes!!!)
+    sizeof(unigine_Node) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
     0,                         // tp_itemsize
     (destructor)unigine_Node_dealloc,   // tp_dealloc
     0,                         // tp_vectorcall_offset
@@ -4420,23 +7141,6 @@ static PyTypeObject unigine_NodeType = {
     unigine_Node_new, // tp_new
 };
 
-PyObject * Node::NewObject(Unigine::Ptr<Unigine::Node> unigine_object_ptr) {
-
-    std::cout << "sizeof(unigine_Node) = " << sizeof(unigine_Node) << std::endl;
-
-    unigine_Node *pInst = PyObject_New(unigine_Node, &unigine_NodeType);
-    pInst->unigine_object_ptr = unigine_object_ptr;
-    // Py_INCREF(pInst);
-    return (PyObject *)pInst;
-}
-
-Unigine::Ptr<Unigine::Node> Node::Convert(PyObject *pObject) {
-    if (Py_IS_TYPE(pObject, &unigine_NodeType) == 0) {
-        // TODO error
-    }
-    unigine_Node *pInst = (unigine_Node *)pObject;
-    return pInst->unigine_object_ptr;
-}
 
 // UniginePyTypeObjectNode
 
@@ -5121,5 +7825,22 @@ bool Python3UnigineNode::addClassDefinitionToModule(PyObject* pModule) {
     return true;
 }
 
+PyObject * Node::NewObject(Unigine::Ptr<Unigine::Node> unigine_object_ptr) {
+
+    std::cout << "sizeof(unigine_Node) = " << sizeof(unigine_Node) << std::endl;
+
+    unigine_Node *pInst = PyObject_New(unigine_Node, &unigine_NodeType);
+    pInst->unigine_object_ptr = unigine_object_ptr;
+    // Py_INCREF(pInst);
+    return (PyObject *)pInst;
+}
+
+Unigine::Ptr<Unigine::Node> Node::Convert(PyObject *pObject) {
+    if (Py_IS_TYPE(pObject, &unigine_NodeType) == 0) {
+        // TODO error
+    }
+    unigine_Node *pInst = (unigine_Node *)pObject;
+    return pInst->unigine_object_ptr;
+}
 
 }; // namespace PyUnigine

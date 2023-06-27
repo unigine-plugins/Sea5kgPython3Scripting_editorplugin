@@ -40,15 +40,16 @@ static int unigine_Material_init(unigine_Material *self, PyObject *args, PyObjec
 
 
 // public (static): create
-static PyObject * unigine_Material_create() {
+static PyObject * unigine_Material_create(unigine_Material* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: Unigine::Ptr<Unigine::Material>
+    // parse args:
 
     Unigine::Ptr<Unigine::Material> pMat = Unigine::Material::create();
 
     ret = PyUnigine::Material::NewObject(pMat);
+    // end
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 }
 // public : setParent
@@ -68,15 +69,18 @@ static PyObject * unigine_Material_create() {
 // public : getPath
 // public : isNodeTypeSupported
 // public : isNodeSupported
+
 // public : canRenderNode
 static PyObject * unigine_Material_can_render_node(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->canRenderNode();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -113,7 +117,7 @@ static PyObject * unigine_Material_is_water(unigine_Material* self) {
     bool retOriginal = self->unigine_object_ptr->isWater();
     ret = PyBool_FromLong(retOriginal);
 
-    // end 
+    // end
     // return: bool
     return ret;
 };
@@ -127,7 +131,7 @@ static PyObject * unigine_Material_is_deferred(unigine_Material* self) {
     bool retOriginal = self->unigine_object_ptr->isDeferred();
     ret = PyBool_FromLong(retOriginal);
 
-    // end 
+    // end
     // return: bool
     return ret;
 };
@@ -141,7 +145,7 @@ static PyObject * unigine_Material_is_forward(unigine_Material* self) {
     bool retOriginal = self->unigine_object_ptr->isForward();
     ret = PyBool_FromLong(retOriginal);
 
-    // end 
+    // end
     // return: bool
     return ret;
 };
@@ -155,7 +159,7 @@ static PyObject * unigine_Material_is_alpha_test(unigine_Material* self) {
     bool retOriginal = self->unigine_object_ptr->isAlphaTest();
     ret = PyBool_FromLong(retOriginal);
 
-    // end 
+    // end
     // return: bool
     return ret;
 };
@@ -188,7 +192,6 @@ except:
     ret = NULL;
 finally:
     // end
-    // Py_DECREF(arg);
     // return: void
     return ret;
 };
@@ -197,12 +200,16 @@ finally:
 static PyObject * unigine_Material_get_shadow_mask(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    int retOrig = self->unigine_object_ptr->getShadowMask();
-    ret = PyLong_FromLong(retOrig);
-    // args:
+    // parse args:
+
+    int retOriginal = self->unigine_object_ptr->getShadowMask();
+    ret = PyLong_FromLong(retOriginal);
+
+    // end
     // return: int
     return ret;
 };
+
 // public : setViewportMask
 // public : getViewportMask
 // public : setDepthMask
@@ -214,11 +221,13 @@ static PyObject * unigine_Material_get_shadow_mask(unigine_Material* self) {
 static PyObject * unigine_Material_is_cast_shadow(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isCastShadow();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -227,11 +236,13 @@ static PyObject * unigine_Material_is_cast_shadow(unigine_Material* self) {
 static PyObject * unigine_Material_is_cast_world_shadow(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isCastWorldShadow();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -240,11 +251,13 @@ static PyObject * unigine_Material_is_cast_world_shadow(unigine_Material* self) 
 static PyObject * unigine_Material_is_depth_test(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isDepthTest();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -253,11 +266,13 @@ static PyObject * unigine_Material_is_depth_test(unigine_Material* self) {
 static PyObject * unigine_Material_is_two_sided(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isTwoSided();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -266,11 +281,13 @@ static PyObject * unigine_Material_is_two_sided(unigine_Material* self) {
 static PyObject * unigine_Material_is_overlap(unigine_Material* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isOverlap();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -421,7 +438,7 @@ static PyObject * unigine_Material_is_manual(unigine_Material* self) {
     bool retOriginal = self->unigine_object_ptr->isManual();
     ret = PyBool_FromLong(retOriginal);
 
-    // end 
+    // end
     // return: bool
     return ret;
 };
@@ -446,7 +463,7 @@ static PyObject * unigine_Material_save(unigine_Material* self) {
     bool retOriginal = self->unigine_object_ptr->save();
     ret = PyBool_FromLong(retOriginal);
 
-    // end 
+    // end
     // return: bool
     return ret;
 };
@@ -522,41 +539,29 @@ static PyMethodDef unigine_Material_methods[] = {
 };
 
 static PyTypeObject unigine_MaterialType = {
-    // PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    // PyVarObject_HEAD_INIT(NULL, 0)
-    // .tp_name = "unigine.Material",
-    // .tp_basicsize = sizeof(unigine_Material) + 16, // magic!!!
-    // .tp_dealloc = (destructor)unigine_Material_dealloc,
-    // .tp_flags = Py_TPFLAGS_DEFAULT, // | Py_TPFLAGS_BASETYPE,
-    // .tp_doc = "Material Object",
-    // .tp_methods = unigine_Material_methods,
-    // .tp_members = 0,
-    // .tp_dict = 0,
-    // .tp_init = (initproc)unigine_Material_init,
-    // .tp_new = unigine_Material_new,
 
 
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Material",             // tp_name
-    sizeof(unigine_Material) + 256, // tp_basicsize  (magic 16 bytes!!!)
+    sizeof(unigine_Material) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
     0,                         // tp_itemsize
     (destructor)unigine_Material_dealloc,   // tp_dealloc
-    0,                         // tp_vectorcall_offset 
-    0,                         // tp_getattr 
-    0,                         // tp_setattr 
-    0,                         // tp_as_async 
-    0,                         // tp_repr 
-    0,                         // tp_as_number 
-    0,                         // tp_as_sequence 
-    0,                         // tp_as_mapping 
-    0,                         // tp_hash  
-    0,                         // tp_call 
-    0,                         // tp_str 
-    0,                         // tp_getattro 
-    0,                         // tp_setattro 
-    0,                         // tp_as_buffer 
-    Py_TPFLAGS_DEFAULT,        // tp_flags 
-    "Material Object",         // tp_doc 
+    0,                         // tp_vectorcall_offset
+    0,                         // tp_getattr
+    0,                         // tp_setattr
+    0,                         // tp_as_async
+    0,                         // tp_repr
+    0,                         // tp_as_number
+    0,                         // tp_as_sequence
+    0,                         // tp_as_mapping
+    0,                         // tp_hash
+    0,                         // tp_call
+    0,                         // tp_str
+    0,                         // tp_getattro
+    0,                         // tp_setattro
+    0,                         // tp_as_buffer
+    Py_TPFLAGS_DEFAULT,        // tp_flags
+    "Material Object",         // tp_doc
     0,                         // traverseproc tp_traverse
     0,                         // inquiry tp_clear
     0,                         // richcmpfunc tp_richcompare
@@ -574,40 +579,13 @@ static PyTypeObject unigine_MaterialType = {
     (initproc)unigine_Material_init, // tp_init
     0, // tp_alloc
     unigine_Material_new, // tp_new
-    // 0, // tp_free
-    // 0, /* inquiry tp_is_gc; */
-    // 0, /* PyObject *tp_bases; */
-    // 0, /* PyObject *tp_mro; */
-    // 0, /* PyObject *tp_cache; */
-    // 0, /* PyObject *tp_subclasses; */
-    // 0, /* PyObject *tp_weaklist; */
-    // 0, /* destructor tp_del; */
-    // 0, /* unsigned int tp_version_tag; */
-    // 0, /* destructor tp_finalize; */
-    // 0, /* vectorcallfunc tp_vectorcall; */
 };
 
-PyObject * Material::NewObject(Unigine::Ptr<Unigine::Material> unigine_object_ptr) {
-
-    std::cout << "sizeof(unigine_Material) = " << sizeof(unigine_Material) << std::endl;
-
-    unigine_Material *pInst = PyObject_New(unigine_Material, &unigine_MaterialType);
-    // Py_INCREF(pInst);
-    std::cout << "point 1000" << std::endl;
-    pInst->unigine_object_ptr = unigine_object_ptr;
-    std::cout << "point 1001" << std::endl;
-    // Py_INCREF(pInst);
-    // Py_XDECREF(pInst);
-    return (PyObject *)pInst;
-}
 
 // UniginePyTypeObjectMaterial
 
 bool Python3UnigineMaterial::isReady() {
     // Initialize tp_dict with empty dictionary
-    std::cout << "sizeof(unigine_Material) = " << sizeof(unigine_Material) << std::endl;
-    std::cout << "sizeof(Unigine::Ptr<Unigine::Material>) = " << sizeof(Unigine::Ptr<Unigine::Material>) << std::endl;
-        // Unigine::Ptr<Unigine::Material> material
     if (!unigine_MaterialType.tp_dict) {
         unigine_MaterialType.tp_dict = PyDict_New();
 
@@ -751,22 +729,18 @@ bool Python3UnigineMaterial::isReady() {
             unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_BENT_NORMAL",
             Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_BENT_NORMAL)
         );
-        // enum_typename:  
         PyDict_SetItemString(
             unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_SSAO",
             Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_SSAO)
         );
-        // enum_typename:  
         PyDict_SetItemString(
             unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_SSGI",
             Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_SSGI)
         );
-        // enum_typename:  
         PyDict_SetItemString(
             unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_SSR",
             Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_SSR)
         );
-        // enum_typename:  
         PyDict_SetItemString(
             unigine_MaterialType.tp_dict, "TEXTURE_SOURCE_CURVATURE",
             Py_BuildValue("i", Unigine::Material::TEXTURE_SOURCE_CURVATURE)
@@ -1124,6 +1098,24 @@ bool Python3UnigineMaterial::addClassDefinitionToModule(PyObject* pModule) {
         return false;
     }
     return true;
+}
+
+PyObject * Material::NewObject(Unigine::Ptr<Unigine::Material> unigine_object_ptr) {
+
+    std::cout << "sizeof(unigine_Material) = " << sizeof(unigine_Material) << std::endl;
+
+    unigine_Material *pInst = PyObject_New(unigine_Material, &unigine_MaterialType);
+    pInst->unigine_object_ptr = unigine_object_ptr;
+    // Py_INCREF(pInst);
+    return (PyObject *)pInst;
+}
+
+Unigine::Ptr<Unigine::Material> Material::Convert(PyObject *pObject) {
+    if (Py_IS_TYPE(pObject, &unigine_MaterialType) == 0) {
+        // TODO error
+    }
+    unigine_Material *pInst = (unigine_Material *)pObject;
+    return pInst->unigine_object_ptr;
 }
 
 }; // namespace PyUnigine

@@ -166,43 +166,6 @@ def init_namespaces(process_namespaces):
                     ret.append(_id)
     return ret
 
-def make_method_code(method_info, args_to_call):
-    return_type = method_info["return_type"]
-    args_to_call = ", ".join(args_to_call)
-    ret = "\n"
-    if return_type == "void" and not method_info["static"]:
-        ret += "    self->unigine_object_ptr->" + method_info["name"] + "(" + args_to_call + ");\n"
-    elif return_type == "void" and method_info["static"]:
-        ret += "    Unigine::" + method_info["classname"] + "::" + method_info["name"] + "(" + args_to_call + ");\n"
-    elif return_type == "bool" and not method_info["static"]:
-        ret += "    bool retOriginal = self->unigine_object_ptr->" + method_info["name"] + "(" + args_to_call + ");\n"
-        ret += "    ret = PyBool_FromLong(retOriginal);\n"
-    elif return_type == "bool" and method_info["static"]:
-        ret += "    bool retOriginal = Unigine::" + method_info["classname"] + "::" + method_info["name"] + "(" + args_to_call + ");\n"
-        ret += "    ret = PyBool_FromLong(retOriginal);\n"
-    elif return_type == "int" and not method_info["static"]:
-        ret += "    int retOriginal = self->unigine_object_ptr->" + method_info["name"] + "();\n"
-        ret += "    ret = PyLong_FromLong(retOriginal);\n"
-    elif return_type == "int" and method_info["static"]:
-        ret += "    int retOriginal = Unigine::" + method_info["classname"] + "::" + method_info["name"] + "(" + args_to_call + ");\n"
-        ret += "    ret = PyLong_FromLong(retOriginal);\n"
-    elif return_type.startswith("Unigine::Ptr") and not method_info["static"]:
-        ret += "    " + return_type + " retOriginal = self->unigine_object_ptr->" + method_info["name"] + "(" + args_to_call + ");\n"
-        ret += "    ret = todo;\n"
-    elif return_type.startswith("Unigine::Ptr<") and method_info["static"]:
-        ret += "    " + return_type + " retOriginal = Unigine::" + method_info["classname"] + "::" + method_info["name"] + "(" + args_to_call + ");\n"
-        _unigine_type = return_type.split("<")[1].split(">")[0]
-        ret += "    ret = Py" + _unigine_type + "::NewObject(retOriginal);\n"
-    elif return_type.startswith("Unigine::") and not method_info["static"]:
-        ret += "    " + return_type + " retOriginal = self->unigine_object_ptr->" + method_info["name"] + "(" + args_to_call + ");\n"
-        ret += "    ret = PyLong_FromLong(retOriginal);\n"
-    elif return_type.startswith("Unigine::") and method_info["static"]:
-        ret += "    " + return_type + " retOriginal = Unigine::" + method_info["classname"] + "::" + method_info["name"] + "(" + args_to_call + ");\n"
-        ret += "    ret = PyLong_FromLong(retOriginal);\n"
-    else:
-        ret += "    unknown type \n"
-    return ret
-
 class Python3UnigineWriter:
     def __init__(self, classname, _include_filename, can_ptr):
         self.__classname = classname
@@ -345,6 +308,8 @@ class Python3UnigineWriter:
         self.__file_source.write("    // Unigine::Log::message(\"unigine_" + self.__classname + "_new\\n\");\n")
         self.__file_source.write("    unigine_" + self.__classname + " *self;\n")
         self.__file_source.write("    self = (unigine_" + self.__classname + " *)type->tp_alloc(type, 0);\n")
+        if not self.__is_all_methods_static():
+            self.__file_source.write("    self->unigine_object_ptr = nullptr;\n")
         self.__file_source.write("    return (PyObject *)self;\n")
         self.__file_source.write("}\n")
         self.__file_source.write("\n")
@@ -362,7 +327,7 @@ class Python3UnigineWriter:
         # self.__file_source.write("    // PyVarObject_HEAD_INIT(&PyType_Type, 0)\n")
         # self.__file_source.write("    // PyVarObject_HEAD_INIT(NULL, 0)\n")
         # self.__file_source.write("    // .tp_name = \"unigine." + self.__classname + "\",\n")
-        # self.__file_source.write("    // .tp_basicsize = sizeof(unigine_" + self.__classname + ") + 16, // magic!!!\n")
+        # self.__file_source.write("    // .tp_basicsize = sizeof(unigine_" + self.__classname + ") + 256, // magic!!!\n")
         # self.__file_source.write("    // .tp_dealloc = (destructor)unigine_" + self.__classname + "_dealloc,\n")
         # self.__file_source.write("    // .tp_flags = Py_TPFLAGS_DEFAULT, // | Py_TPFLAGS_BASETYPE,\n")
         # self.__file_source.write("    // .tp_doc = \"" + self.__classname + " Object\",\n")
@@ -375,7 +340,7 @@ class Python3UnigineWriter:
         self.__file_source.write("\n")
         self.__file_source.write("    PyVarObject_HEAD_INIT(NULL, 0)\n")
         self.__file_source.write("    \"unigine." + self.__classname + "\",             // tp_name\n")
-        self.__file_source.write("    sizeof(unigine_" + self.__classname + ") + 16, // tp_basicsize  (magic 16 bytes!!!)\n")
+        self.__file_source.write("    sizeof(unigine_" + self.__classname + ") + 256, // tp_basicsize  (TODO magic 256 bytes!!!)\n")
         self.__file_source.write("    0,                         // tp_itemsize\n")
         self.__file_source.write("    (destructor)unigine_" + self.__classname + "_dealloc,   // tp_dealloc\n")
         self.__file_source.write("    0,                         // tp_vectorcall_offset\n")
@@ -424,28 +389,18 @@ class Python3UnigineWriter:
         # self.__file_source.write("    // 0, /* vectorcallfunc tp_vectorcall; */\n")
         self.__file_source.write("};\n")
         self.__file_source.write("\n")
-        self.__file_source.write("PyObject * " + self.__classname + "::NewObject(")
-        if not self.__is_all_methods_static():
-            self.__file_source.write(self.__member_type + " unigine_object_ptr")
-        self.__file_source.write(") {\n")
-        self.__file_source.write("\n")
-        self.__file_source.write("    std::cout << \"sizeof(unigine_" + self.__classname + ") = \" << sizeof(unigine_" + self.__classname + ") << std::endl;\n")
-        self.__file_source.write("\n")
-        self.__file_source.write("    unigine_" + self.__classname + " *pInst = PyObject_New(unigine_" + self.__classname + ", &unigine_" + self.__classname + "Type);\n")
-        if not self.__is_all_methods_static():
-            self.__file_source.write("    pInst->unigine_object_ptr = unigine_object_ptr;\n")
-        self.__file_source.write("    // Py_INCREF(pInst);\n")
-        self.__file_source.write("    return (PyObject *)pInst;\n")
-        self.__file_source.write("}\n")
-        if not self.__is_all_methods_static():
-            self.__file_source.write("\n")
-            self.__file_source.write(self.__member_type + " " + self.__classname + "::Convert(PyObject *pObject) {\n")
-            self.__file_source.write("    if (Py_IS_TYPE(pObject, &unigine_" + self.__classname + "Type) == 0) {\n")
-            self.__file_source.write("        // TODO error\n")
-            self.__file_source.write("    }\n")
-            self.__file_source.write("    unigine_" + self.__classname + " *pInst = (unigine_" + self.__classname + " *)pObject;\n")
-            self.__file_source.write("    return pInst->unigine_object_ptr;\n")
-            self.__file_source.write("}\n")
+
+    def prepare_parse_tuple_args_const_char_pointer(self, _arg, var_name):
+        ret = ""
+        ret += "    if (!PyUnicode_Check(" + var_name + ")) {\n"
+        ret += "        // TODO - error\n"
+        ret += "        std::cout << \"ERROR: " + var_name + " No unicoode \" << std::endl;\n"
+        ret += "        Py_INCREF(Py_None);\n"
+        ret += "        ret = Py_None;\n"
+        ret += "        return ret;\n"
+        ret += "    }\n"
+        ret += "    " + _arg["type"] + " " + _arg["name"] + " = PyUnicode_AsUTF8(" + var_name + ");\n"
+        return ret
 
     def prepare_parse_tuple_args(self, _args):
         ret = {
@@ -464,22 +419,79 @@ class Python3UnigineWriter:
             ret["parse"] += "    PyObject *" + var_name + "; // " + _arg["type"] + " " + _arg["name"] + ";\n"
             parse_tuple_o += "O"
             parse_tuple_args += ", &" + var_name
-            convert_objects += "\n"
-            convert_objects += "    // " + var_name + "\n"
-            # const char *
-            convert_objects += "    PyObject* " + var_name + "Repr = PyObject_Repr(" + var_name + ");\n"
-            convert_objects += "    PyObject* " + var_name + "Str = PyUnicode_AsEncodedString(" + var_name + "Repr, \"utf-8\", \"~E~\");\n"
-            convert_objects += "    " + _arg["type"] + " " + _arg["name"] + " = PyBytes_AS_STRING(" + var_name + "Str);\n"
-            ret["end_code"] += "    Py_XDECREF(" + var_name + "Repr);\n"
-            ret["end_code"] += "    Py_XDECREF(" + var_name + "Str);\n"
 
         if len(parse_tuple_o) > 0:
             ret["parse"] += "    PyArg_ParseTuple(args, \"" + parse_tuple_o + "\"" + parse_tuple_args + ");\n"
-            ret["parse"] += convert_objects
+
+        counter = 0
+        for _arg in _args:
+            counter += 1
+            var_name = "pArg" + str(counter)
+            ret["parse"] += "\n"
+            ret["parse"] += "    // " + var_name + "\n"
+            if _arg["type"] == "const char *":
+                ret["parse"] += self.prepare_parse_tuple_args_const_char_pointer(_arg, var_name)
+            else:
+                ret["parse"] += "TODO for " + _arg["type"] + "\n"
+            ret["parse"] += "\n"
 
         for _arg in _args:
             # _args += "    " + _arg["type"] + " " + _arg["name"] + ";\n"
             ret["args_to_call"].append(_arg["name"])
+        return ret
+
+    def make_method_code(self, method_info, _args, args_to_call):
+        return_type = method_info["return_type"]
+        args_to_call = ", ".join(args_to_call)
+        ret = "\n"
+        ret += "    class LocalRunner : public Python3Runner {\n"
+        ret += "        public:\n"
+        ret += "            virtual void run() override {\n"
+        ret += "                "
+        if return_type != "void":
+            ret += "retOriginal = "
+        if not method_info["static"]:
+            ret += "self->unigine_object_ptr->"
+        else:
+            ret += "Unigine::" + method_info["classname"] + "::"
+        ret += method_info["name"] + "(" + args_to_call + ");\n"
+        ret += "            };\n"
+        ret += "            // args\n"
+        for _arg in _args:
+            ret += "            " + _arg["type"] + " " + _arg["name"] + ";\n"
+        if return_type != "void":
+            ret += "            // return\n"
+            ret += "            " + return_type + " retOriginal;\n"
+        ret += "    };\n"
+        ret += "    auto *pRunner = new LocalRunner();\n"
+        for _arg in _args:
+            ret += "    pRunner->" + _arg["name"] + " = " + _arg["name"] + ";\n"
+        ret += "    Python3Runner::runInMainThread(pRunner);\n"
+        ret += "    while(!pRunner->mutexAsync.tryLock(5)) {\n"
+        ret += "    }\n"
+        ret += "    pRunner->mutexAsync.unlock();\n"
+        if return_type != "void":
+            ret += "    " + return_type + " retOriginal = pRunner->retOriginal;\n"
+        ret += "    delete pRunner;\n"
+        if return_type.startswith("Unigine::Ptr<"):
+            ret += "    if (retOriginal == nullptr) {\n"
+            ret += "        Py_INCREF(Py_None);\n"
+            ret += "        ret = Py_None;\n"
+            ret += "    } else {\n"
+            _unigine_type = return_type.split("<")[1].split(">")[0]
+            ret += "        ret = Py" + _unigine_type + "::NewObject(retOriginal);\n"
+            ret += "    }\n"
+        elif return_type == "bool":
+            ret += "    ret = PyBool_FromLong(retOriginal);\n"
+        elif return_type == "int":
+            ret += "    ret = PyLong_FromLong(retOriginal);\n"
+        elif return_type.startswith("Unigine::"):
+            ret += "    ret = PyLong_FromLong(retOriginal);\n"
+        elif return_type == "void":
+            ret += "    Py_INCREF(Py_None);\n"
+            ret += "    ret = Py_None;\n"
+        else:
+            ret += "    ret = TODO: unknown type '" + return_type + "'\n"
         return ret
 
     def write_source_methods(self):
@@ -517,7 +529,7 @@ class Python3UnigineWriter:
                     "    PyErr_Clear();\n"
                     "    PyObject *ret = NULL;\n" +
                     parse_args_result["parse"] +
-                    make_method_code(method_info, parse_args_result["args_to_call"]) +
+                    self.make_method_code(method_info, _method["args"], parse_args_result["args_to_call"]) +
                     "\n    // end\n" +
                     parse_args_result["end_code"] +
                     "    // return: " + method_info["return_type"] + "\n" +
@@ -580,6 +592,28 @@ class Python3UnigineWriter:
         self.__file_source.write("    return true;\n")
         self.__file_source.write("}\n")
         self.__file_source.write("\n")
+        self.__file_source.write("PyObject * " + self.__classname + "::NewObject(")
+        if not self.__is_all_methods_static():
+            self.__file_source.write(self.__member_type + " unigine_object_ptr")
+        self.__file_source.write(") {\n")
+        self.__file_source.write("\n")
+        self.__file_source.write("    std::cout << \"sizeof(unigine_" + self.__classname + ") = \" << sizeof(unigine_" + self.__classname + ") << std::endl;\n")
+        self.__file_source.write("\n")
+        self.__file_source.write("    unigine_" + self.__classname + " *pInst = PyObject_New(unigine_" + self.__classname + ", &unigine_" + self.__classname + "Type);\n")
+        if not self.__is_all_methods_static():
+            self.__file_source.write("    pInst->unigine_object_ptr = unigine_object_ptr;\n")
+        self.__file_source.write("    // Py_INCREF(pInst);\n")
+        self.__file_source.write("    return (PyObject *)pInst;\n")
+        self.__file_source.write("}\n")
+        if not self.__is_all_methods_static():
+            self.__file_source.write("\n")
+            self.__file_source.write(self.__member_type + " " + self.__classname + "::Convert(PyObject *pObject) {\n")
+            self.__file_source.write("    if (Py_IS_TYPE(pObject, &unigine_" + self.__classname + "Type) == 0) {\n")
+            self.__file_source.write("        // TODO error\n")
+            self.__file_source.write("    }\n")
+            self.__file_source.write("    unigine_" + self.__classname + " *pInst = (unigine_" + self.__classname + " *)pObject;\n")
+            self.__file_source.write("    return pInst->unigine_object_ptr;\n")
+            self.__file_source.write("}\n")
         self.__file_source.write("\n")
         self.__file_source.write("}; // namespace PyUnigine\n")
 

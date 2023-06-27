@@ -44,11 +44,27 @@ static PyObject * unigine_Materials_is_initialized(unigine_Materials* self_stati
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    // args:
-    // return: int
 
-    int retOriginal = Unigine::Materials::isInitialized();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = Unigine::Materials::isInitialized();
+            };
+            // args
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
@@ -58,10 +74,25 @@ static PyObject * unigine_Materials_get_loading_mode(unigine_Materials* self_sta
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Materials::LOADING_MODE retOriginal = Unigine::Materials::getLoadingMode();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = Unigine::Materials::getLoadingMode();
+            };
+            // args
+            // return
+            Unigine::Materials::LOADING_MODE retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Materials::LOADING_MODE retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
 
-    // end 
+    // end
     // return: Unigine::Materials::LOADING_MODE
     return ret;
 };
@@ -75,53 +106,42 @@ static PyObject * unigine_Materials_load_material(unigine_Materials* self_static
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    // PyString_Type
     if (!PyUnicode_Check(pArg1)) {
         // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode: " << std::endl;
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
         Py_INCREF(Py_None);
         ret = Py_None;
         return ret;
     }
     const char * path = PyUnicode_AsUTF8(pArg1);
-    std::cout << "path: " << path << std::endl;
 
-    // class LocalRunner : public Python3Runner {
-    //     public:
-    //         virtual void run() override {
-    //             std::cout << "point0.1 " << std::endl;
-    //             retOriginal = Unigine::Materials::loadMaterial(path);
-    //             std::cout << "point0.2 " << std::endl;
-    //         };
-    //         const char * path; // pArg1
-    //         // return
-    //         Unigine::Ptr<Unigine::Material> retOriginal;
-    // };
-    // auto *pRunner = new LocalRunner();
-    // pRunner->path = path;
-    // Python3Runner::runInMainThread(pRunner);
-    // while(!pRunner->mutexAsync.tryLock(5)) {
-    // }
-    // pRunner->mutexAsync.unlock();
-    // Unigine::Ptr<Unigine::Material> retOriginal = pRunner->retOriginal;
-    // delete pRunner;
 
-    Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Materials::loadMaterial(path);
-    // retOriginal->counterInc();
-    std::cout << "point1 " << std::endl;
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = Unigine::Materials::loadMaterial(path);
+            };
+            // args
+            const char * path;
+            // return
+            Unigine::Ptr<Unigine::Material> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->path = path;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Material> retOriginal = pRunner->retOriginal;
+    delete pRunner;
     if (retOriginal == nullptr) {
         Py_INCREF(Py_None);
         ret = Py_None;
     } else {
-        std::cout << "point2 " << std::endl;
         ret = PyUnigine::Material::NewObject(retOriginal);
-        std::cout << "point3 " << std::endl;
     }
 
     // end
-    // Py_XDECREF(pArg1Repr);
-    // Py_XDECREF(pArg1Str);
-    // Py_XDECREF(pArg1);
     // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
@@ -130,8 +150,8 @@ static PyObject * unigine_Materials_load_material(unigine_Materials* self_static
 static PyObject * unigine_Materials_is_material_guid(unigine_Materials* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    PyObject *pArg1;
+    // parse args:
+    PyObject *pArg1; // const Unigine::UGUID & guid;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     Unigine::UGUID *guid = PyUnigine::UGUID::Convert(pArg1);
@@ -140,6 +160,9 @@ static PyObject * unigine_Materials_is_material_guid(unigine_Materials* self_sta
 
     bool retOriginal = Unigine::Materials::isMaterialGUID(*guid);
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -147,11 +170,28 @@ static PyObject * unigine_Materials_is_material_guid(unigine_Materials* self_sta
 static PyObject * unigine_Materials_get_num_materials(unigine_Materials* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: int
+    // parse args:
 
-    int retOriginal = Unigine::Materials::getNumMaterials();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = Unigine::Materials::getNumMaterials();
+            };
+            // args
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
     ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
@@ -159,10 +199,35 @@ static PyObject * unigine_Materials_get_num_materials(unigine_Materials* self_st
 static PyObject * unigine_Materials_compile_shaders(unigine_Materials* self_static_null, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
+    // parse args:
+    // end
     // return: void
+    return ret;
+}
 
-    Unigine::Materials::compileShaders();
+// public (static): compileShaders
+static PyObject * unigine_Materials_compile_shaders(unigine_Materials* self_static_null) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                Unigine::Materials::compileShaders();
+            };
+            // args
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
+
+    // end
     return ret;
 };
 
@@ -170,10 +235,26 @@ static PyObject * unigine_Materials_compile_shaders(unigine_Materials* self_stat
 static PyObject * unigine_Materials_create_shaders(unigine_Materials* self_static_null) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void
+    // parse args:
 
-    Unigine::Materials::createShaders();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                Unigine::Materials::createShaders();
+            };
+            // args
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
+
+    // end
+    // return: void
     return ret;
 };
 
@@ -211,7 +292,7 @@ static PyTypeObject unigine_MaterialsType = {
 
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Materials",             // tp_name
-    sizeof(unigine_Materials) + 16, // tp_basicsize  (magic 16 bytes!!!)
+    sizeof(unigine_Materials) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
     0,                         // tp_itemsize
     (destructor)unigine_Materials_dealloc,   // tp_dealloc
     0,                         // tp_vectorcall_offset
@@ -249,14 +330,6 @@ static PyTypeObject unigine_MaterialsType = {
     unigine_Materials_new, // tp_new
 };
 
-PyObject * Materials::NewObject() {
-
-    std::cout << "sizeof(unigine_Materials) = " << sizeof(unigine_Materials) << std::endl;
-
-    unigine_Materials *pInst = PyObject_New(unigine_Materials, &unigine_MaterialsType);
-    // Py_INCREF(pInst);
-    return (PyObject *)pInst;
-}
 
 // UniginePyTypeObjectMaterials
 
@@ -296,5 +369,13 @@ bool Python3UnigineMaterials::addClassDefinitionToModule(PyObject* pModule) {
     return true;
 }
 
+PyObject * Materials::NewObject() {
+
+    std::cout << "sizeof(unigine_Materials) = " << sizeof(unigine_Materials) << std::endl;
+
+    unigine_Materials *pInst = PyObject_New(unigine_Materials, &unigine_MaterialsType);
+    // Py_INCREF(pInst);
+    return (PyObject *)pInst;
+}
 
 }; // namespace PyUnigine

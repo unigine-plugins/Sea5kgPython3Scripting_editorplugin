@@ -29,6 +29,7 @@ static PyObject *unigine_UGUID_new(PyTypeObject *type, PyObject *args, PyObject 
     // Unigine::Log::message("unigine_UGUID_new\n");
     unigine_UGUID *self;
     self = (unigine_UGUID *)type->tp_alloc(type, 0);
+    self->unigine_object_ptr = nullptr;
     return (PyObject *)self;
 }
 
@@ -42,8 +43,7 @@ static int unigine_UGUID_init(unigine_UGUID *self, PyObject *args, PyObject *kwd
 static PyObject * unigine_UGUID_generate(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void
+    // parse args:
 
     self->unigine_object_ptr->generate();
 
@@ -57,6 +57,8 @@ except:
     ret = NULL;
 finally:
 
+    // end
+    // return: void
     return ret;
 };
 
@@ -64,10 +66,12 @@ finally:
 static PyObject * unigine_UGUID_get_file_system_string(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
+    // parse args:
     // return: const char *
 
-    // unknown type 
+    // unknown type
+    // end
+    // return: const char *
     return ret;
 };
 
@@ -121,10 +125,12 @@ static PyObject * unigine_UGUID_set_string(unigine_UGUID* self, PyObject *arg) {
 static PyObject * unigine_UGUID_clear(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: void
+    // parse args:
 
     self->unigine_object_ptr->clear();
+
+    // end
+    // return: void
     return ret;
 };
 
@@ -132,11 +138,13 @@ static PyObject * unigine_UGUID_clear(unigine_UGUID* self) {
 static PyObject * unigine_UGUID_is_empty(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isEmpty();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -144,11 +152,13 @@ static PyObject * unigine_UGUID_is_empty(unigine_UGUID* self) {
 static PyObject * unigine_UGUID_is_valid(unigine_UGUID* self) {
     PyErr_Clear();
     PyObject *ret = NULL;
-    // args:
-    // return: bool
+    // parse args:
 
     bool retOriginal = self->unigine_object_ptr->isValid();
     ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
     return ret;
 };
 
@@ -196,6 +206,7 @@ static PyObject * unigine_UGUID_get_str_data(unigine_UGUID* self) {
     return ret;
 };
 
+
 static PyMethodDef unigine_UGUID_methods[] = {
     {
         "generate", (PyCFunction)unigine_UGUID_generate, METH_NOARGS,
@@ -206,7 +217,7 @@ static PyMethodDef unigine_UGUID_methods[] = {
         "public : getFileSystemString"
     },
     {
-        "set_file_system_string", (PyCFunction)unigine_UGUID_set_file_system_string, METH_O,
+        "set_file_system_string", (PyCFunction)unigine_UGUID_set_file_system_string, METH_VARARGS,
         "public : setFileSystemString"
     },
     {
@@ -238,7 +249,7 @@ static PyMethodDef unigine_UGUID_methods[] = {
         "public : get"
     },
     {
-        "get", (PyCFunction)unigine_UGUID_get, METH_O,
+        "get", (PyCFunction)unigine_UGUID_get, METH_VARARGS,
         "public : get"
     },
     {
@@ -257,23 +268,11 @@ static PyMethodDef unigine_UGUID_methods[] = {
 };
 
 static PyTypeObject unigine_UGUIDType = {
-    // PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    // PyVarObject_HEAD_INIT(NULL, 0)
-    // .tp_name = "unigine.UGUID",
-    // .tp_basicsize = sizeof(unigine_UGUID) + 16, // magic!!!
-    // .tp_dealloc = (destructor)unigine_UGUID_dealloc,
-    // .tp_flags = Py_TPFLAGS_DEFAULT, // | Py_TPFLAGS_BASETYPE,
-    // .tp_doc = "UGUID Object",
-    // .tp_methods = unigine_UGUID_methods,
-    // .tp_members = 0,
-    // .tp_dict = 0,
-    // .tp_init = (initproc)unigine_UGUID_init,
-    // .tp_new = unigine_UGUID_new,
 
 
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.UGUID",             // tp_name
-    sizeof(unigine_UGUID) + 16, // tp_basicsize  (magic 16 bytes!!!)
+    sizeof(unigine_UGUID) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
     0,                         // tp_itemsize
     (destructor)unigine_UGUID_dealloc,   // tp_dealloc
     0,                         // tp_vectorcall_offset
@@ -311,29 +310,11 @@ static PyTypeObject unigine_UGUIDType = {
     unigine_UGUID_new, // tp_new
 };
 
-PyObject * UGUID::NewObject(Unigine::UGUID * unigine_object_ptr) {
-
-    std::cout << "sizeof(unigine_UGUID) = " << sizeof(unigine_UGUID) << std::endl;
-
-    unigine_UGUID *pInst = PyObject_New(unigine_UGUID, &unigine_UGUIDType);
-    pInst->unigine_object_ptr = unigine_object_ptr;
-    // Py_INCREF(pInst);
-    return (PyObject *)pInst;
-}
-
-Unigine::UGUID * UGUID::Convert(PyObject *pObject) {
-    if (Py_IS_TYPE(pObject, &unigine_UGUIDType) == 0) {
-        // TODO error
-    }
-    unigine_UGUID *pInst = (unigine_UGUID *)pObject;
-    return pInst->unigine_object_ptr;
-}
 
 // UniginePyTypeObjectUGUID
 
 bool Python3UnigineUGUID::isReady() {
     // Initialize tp_dict with empty dictionary
-    std::cout << "sizeof(unigine_UGUID) = " << sizeof(unigine_UGUID) << std::endl;
     if (!unigine_UGUIDType.tp_dict) {
         unigine_UGUIDType.tp_dict = PyDict_New();
 
@@ -353,5 +334,22 @@ bool Python3UnigineUGUID::addClassDefinitionToModule(PyObject* pModule) {
     return true;
 }
 
+PyObject * UGUID::NewObject(Unigine::UGUID * unigine_object_ptr) {
+
+    std::cout << "sizeof(unigine_UGUID) = " << sizeof(unigine_UGUID) << std::endl;
+
+    unigine_UGUID *pInst = PyObject_New(unigine_UGUID, &unigine_UGUIDType);
+    pInst->unigine_object_ptr = unigine_object_ptr;
+    // Py_INCREF(pInst);
+    return (PyObject *)pInst;
+}
+
+Unigine::UGUID * UGUID::Convert(PyObject *pObject) {
+    if (Py_IS_TYPE(pObject, &unigine_UGUIDType) == 0) {
+        // TODO error
+    }
+    unigine_UGUID *pInst = (unigine_UGUID *)pObject;
+    return pInst->unigine_object_ptr;
+}
 
 }; // namespace PyUnigine
