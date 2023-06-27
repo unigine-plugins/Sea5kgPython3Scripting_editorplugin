@@ -29,6 +29,7 @@ static PyObject *unigine_Material_new(PyTypeObject *type, PyObject *args, PyObje
     // Unigine::Log::message("unigine_Material_new\n");
     unigine_Material *self;
     self = (unigine_Material *)type->tp_alloc(type, 0);
+    self->unigine_object_ptr = nullptr;
     return (PyObject *)self;
 }
 
@@ -372,7 +373,7 @@ static PyObject * unigine_Material_find_texture(unigine_Material* self, PyObject
     int retOriginal = self->unigine_object_ptr->findTexture(name);
     ret = PyLong_FromLong(retOriginal);
 
-    // end 
+    // end
     Py_XDECREF(pArg1Repr);
     Py_XDECREF(pArg1Str);
     // return: int
@@ -459,7 +460,7 @@ static PyObject * unigine_Material_reload(unigine_Material* self) {
     bool retOriginal = self->unigine_object_ptr->reload();
     ret = PyBool_FromLong(retOriginal);
 
-    // end 
+    // end
     // return: bool
     return ret;
 };
@@ -538,7 +539,7 @@ static PyTypeObject unigine_MaterialType = {
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Material",             // tp_name
     sizeof(unigine_Material) + 16, // tp_basicsize  (magic 16 bytes!!!)
-    0,                         // tp_itemsize 
+    0,                         // tp_itemsize
     (destructor)unigine_Material_dealloc,   // tp_dealloc
     0,                         // tp_vectorcall_offset 
     0,                         // tp_getattr 
@@ -591,8 +592,12 @@ PyObject * Material::NewObject(Unigine::Ptr<Unigine::Material> unigine_object_pt
     std::cout << "sizeof(unigine_Material) = " << sizeof(unigine_Material) << std::endl;
 
     unigine_Material *pInst = PyObject_New(unigine_Material, &unigine_MaterialType);
-    pInst->unigine_object_ptr = unigine_object_ptr;
     // Py_INCREF(pInst);
+    std::cout << "point 1000" << std::endl;
+    pInst->unigine_object_ptr = unigine_object_ptr;
+    std::cout << "point 1001" << std::endl;
+    // Py_INCREF(pInst);
+    // Py_XDECREF(pInst);
     return (PyObject *)pInst;
 }
 

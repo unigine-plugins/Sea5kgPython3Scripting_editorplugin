@@ -10,7 +10,7 @@ ModelExtension::ModelExtension(const QString &sScriptDir) {
 }
 
 ModelExtension::~ModelExtension() {
-    
+
 }
 
 bool ModelExtension::loadFromJsonObject(const QJsonObject &jsonExtension) {

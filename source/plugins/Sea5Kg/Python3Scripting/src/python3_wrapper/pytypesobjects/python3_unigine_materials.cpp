@@ -75,22 +75,53 @@ static PyObject * unigine_Materials_load_material(unigine_Materials* self_static
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    PyObject* pArg1Repr = PyObject_Repr(pArg1);
-    PyObject* pArg1Str = PyUnicode_AsEncodedString(pArg1Repr, "utf-8", "~E~");
-    const char * path = PyBytes_AS_STRING(pArg1Str);
+    // PyString_Type
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode: " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * path = PyUnicode_AsUTF8(pArg1);
     std::cout << "path: " << path << std::endl;
 
+    // class LocalRunner : public Python3Runner {
+    //     public:
+    //         virtual void run() override {
+    //             std::cout << "point0.1 " << std::endl;
+    //             retOriginal = Unigine::Materials::loadMaterial(path);
+    //             std::cout << "point0.2 " << std::endl;
+    //         };
+    //         const char * path; // pArg1
+    //         // return
+    //         Unigine::Ptr<Unigine::Material> retOriginal;
+    // };
+    // auto *pRunner = new LocalRunner();
+    // pRunner->path = path;
+    // Python3Runner::runInMainThread(pRunner);
+    // while(!pRunner->mutexAsync.tryLock(5)) {
+    // }
+    // pRunner->mutexAsync.unlock();
+    // Unigine::Ptr<Unigine::Material> retOriginal = pRunner->retOriginal;
+    // delete pRunner;
+
     Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Materials::loadMaterial(path);
+    retOriginal->counterInc();
+    std::cout << "point1 " << std::endl;
     if (retOriginal == nullptr) {
         Py_INCREF(Py_None);
         ret = Py_None;
     } else {
+        std::cout << "point2 " << std::endl;
         ret = PyUnigine::Material::NewObject(retOriginal);
+        std::cout << "point3 " << std::endl;
     }
 
     // end
-    Py_XDECREF(pArg1Repr);
-    Py_XDECREF(pArg1Str);
+    // Py_XDECREF(pArg1Repr);
+    // Py_XDECREF(pArg1Str);
+    // Py_XDECREF(pArg1);
     // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };

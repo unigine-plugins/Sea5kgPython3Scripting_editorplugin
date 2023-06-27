@@ -76,8 +76,6 @@ static PyObject *unigine_Node_rotate(unigine_Node* self, PyObject *args)
     pRunner->mutexAsync.unlock();
     delete pRunner;
 
-    // void worldRotate(float angle_x, float angle_y, float angle_z);
-
     Py_INCREF(Py_None);
     ret = Py_None;
     assert(! PyErr_Occurred());

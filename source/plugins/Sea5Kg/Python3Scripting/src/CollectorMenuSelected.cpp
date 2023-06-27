@@ -10,7 +10,7 @@ CollectorMenuSelected::CollectorMenuSelected(
 }
 
 CollectorMenuSelected::~CollectorMenuSelected() {
-    
+
 }
 
 void CollectorMenuSelected::initMenuSafe(QMenu *pMenuPython3Scripting) {
