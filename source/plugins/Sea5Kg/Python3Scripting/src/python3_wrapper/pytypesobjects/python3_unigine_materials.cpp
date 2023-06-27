@@ -107,7 +107,7 @@ static PyObject * unigine_Materials_load_material(unigine_Materials* self_static
     // delete pRunner;
 
     Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Materials::loadMaterial(path);
-    retOriginal->counterInc();
+    // retOriginal->counterInc();
     std::cout << "point1 " << std::endl;
     if (retOriginal == nullptr) {
         Py_INCREF(Py_None);

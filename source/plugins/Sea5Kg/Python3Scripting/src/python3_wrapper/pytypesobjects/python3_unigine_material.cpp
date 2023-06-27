@@ -538,7 +538,7 @@ static PyTypeObject unigine_MaterialType = {
 
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Material",             // tp_name
-    sizeof(unigine_Material) + 16, // tp_basicsize  (magic 16 bytes!!!)
+    sizeof(unigine_Material) + 256, // tp_basicsize  (magic 16 bytes!!!)
     0,                         // tp_itemsize
     (destructor)unigine_Material_dealloc,   // tp_dealloc
     0,                         // tp_vectorcall_offset 
