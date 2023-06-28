@@ -1,0 +1,6 @@
+{
+    "enabled": true,
+    "for": "materials",
+    "id": "materials_assetmanager_test",
+    "name": "AssetManager_test"
+}

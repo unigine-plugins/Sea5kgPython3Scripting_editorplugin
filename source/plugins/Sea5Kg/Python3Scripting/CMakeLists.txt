@@ -119,6 +119,7 @@ add_library(${current_target} SHARED
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/python3_unigine_stderr.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/python3_unigine_lib.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_pytypeobjects.cpp
+	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_assetmanager.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_uguid.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_material.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_materials.cpp
