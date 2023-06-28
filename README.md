@@ -46,20 +46,3 @@ Build on linux
 ```
 $ docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:v2.16.1 ./build_plugin.py
 ```
-
-
-## Format of package `unexpy3`
-
-Meta:
-- `format-version` - version of format meta
-- `uuid` - unique identidifictor
-- `unigine-editor-version` - version of Unigine Editor
-- `title` - title of extension
-- `description` - description
-- `version` - specify version of extension
-- `tags` - list of tags for extension
-- `authors` - list of authors
-- `icon` - Image for extension
-- `screenshots` - Screens for extension
-- `url` - Uri to extsndion web-site / sourcecode and etc
-- `list-of-files` - List of files
