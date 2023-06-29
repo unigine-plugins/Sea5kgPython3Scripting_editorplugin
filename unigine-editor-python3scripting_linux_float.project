@@ -7783,12 +7783,12 @@
     },
     "sdk": {
         "edition": "community",
-        "internal_version": 53,
-        "key": "tier0_bin_linux-2.16.1",
+        "internal_version": 54,
+        "key": "tier0_bin_linux-2.17",
         "name": "UNIGINE 2 Community",
-        "path": "/home/seakg/.local/share/unigine/browser/sdks/community_linux_2.16.1_bin",
+        "path": "/home/seakg/.local/share/unigine/browser/sdks/community_linux_2.17_bin",
         "type": "bin",
-        "version": "2.16.1"
+        "version": "2.17"
     },
     "version": "2"
 }
