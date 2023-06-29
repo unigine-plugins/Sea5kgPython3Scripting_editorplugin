@@ -38,18 +38,18 @@ zf = zipfile.ZipFile(_zip_filename, 'w', zipfile.ZIP_DEFLATED)
 
 if is_linux:
     zf.write(
-        "bin/editor/libUnigineEditorPlugin_Python3Scripting_x64.so",
-        folder_inside + "/bin/editor/libUnigineEditorPlugin_Python3Scripting_x64.so",
+        "bin/editor/libSea5kgPython3Scripting_editorplugin_x64.so",
+        folder_inside + "/bin/editor/libSea5kgPython3Scripting_editorplugin_x64.so",
     )
     zf.write(
-        "bin/editor_debug/libUnigineEditorPlugin_Python3Scripting_x64d.so",
-        folder_inside + "/bin/editor_debug/libUnigineEditorPlugin_Python3Scripting_x64d.so",
+        "bin/editor_debug/libSea5kgPython3Scripting_editorplugin_x64d.so",
+        folder_inside + "/bin/editor_debug/libSea5kgPython3Scripting_editorplugin_x64d.so",
     )
 
 if is_windows:
     zf.write(
-        "bin/editor/UnigineEditorPlugin_Python3Scripting_x64.dll",
-        folder_inside + "/bin/editor/UnigineEditorPlugin_Python3Scripting_x64.dll",
+        "bin/editor/Sea5kgPython3Scripting_editorplugin_x64.dll",
+        folder_inside + "/bin/editor/Sea5kgPython3Scripting_editorplugin_x64.dll",
     )
     python_libs = [
         "libcrypto-1_1.dll",
@@ -67,14 +67,14 @@ if is_windows:
             folder_inside + "/bin/" + _pydll,
         )
     zf.write(
-        "bin/editor_debug/UnigineEditorPlugin_Python3Scripting_x64d.dll",
-        folder_inside + "/bin/editor_debug/UnigineEditorPlugin_Python3Scripting_x64d.dll",
+        "bin/editor_debug/Sea5kgPython3Scripting_editorplugin_x64d.dll",
+        folder_inside + "/bin/editor_debug/Sea5kgPython3Scripting_editorplugin_x64d.dll",
     )
 
 
 # Python3Home (Lib)
 # rootdir = "UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Lib"
-rootdir = "UnigineEditorPlugin_Python3Scripting/python-bin-linux/lib/python3.10"
+rootdir = "bin/Python3Home/lib/python3.10"
 for root, subdirs, files in os.walk(rootdir):
     for _file in files:
         _src = os.path.join(root, _file)
