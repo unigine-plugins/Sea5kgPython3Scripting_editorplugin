@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -96,6 +95,12 @@ public:
 	static bool convertible(Node *node) { return node && node->isObject(); }
 
 
+	enum STREAMING_OBJECT_MESH
+	{
+		STREAMING_OBJECT_MESH_ON_DEMAND = 0,
+		STREAMING_OBJECT_MESH_BY_PRESENCE,
+	};
+
 	enum SURFACE_SHADOW_MODE
 	{
 		SURFACE_SHADOW_MODE_MIXED = 0,
@@ -116,7 +121,7 @@ public:
 	using Node::getBoundBox;
 	using Node::getWorldBoundBox;
 	using Node::getWorldBoundSphere;
-	void setBody(const Ptr<Body> &body, bool update);
+	bool setBody(const Ptr<Body> &body, bool update);
 	void setBody(const Ptr<Body> &body);
 	Ptr<Body> getBody() const;
 	bool isVisibleCamera() const;
@@ -226,6 +231,11 @@ public:
 	void clearSurfacePropertyInherit(int surface);
 	bool isSurfacePropertyInherited(int surface) const;
 	UGUID getLostSurfacePropertyGUID(int surface) const;
+	int getSurfaceStatDrawCalls(int surface) const;
+	int getSurfaceStatDrawCountViewport(int surface) const;
+	int getSurfaceStatDrawCountReflection(int surface) const;
+	int getSurfaceStatDrawCountShadow(int surface) const;
+	long long getSurfaceStatFrame(int surface) const;
 	Math::BoundBox getBoundBox(int surface) const;
 	Math::BoundSphere getBoundSphere(int surface) const;
 	bool getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, Math::Vec3 *ret_point, Math::vec3 *ret_normal, Math::vec4 *ret_texcoord, int *ret_index, int *ret_instance, int surface) const;
@@ -400,19 +410,31 @@ public:
 		SURFACE_CUSTOM_TEXTURE_MODE_UNIQUE = 0,
 		SURFACE_CUSTOM_TEXTURE_MODE_SURFACE,
 	};
-	static Ptr<ObjectMeshStatic> create(const Ptr<Mesh> &mesh);
-	static Ptr<ObjectMeshStatic> create(const char *path, bool unique = false);
-	bool createMesh(const char *path, bool unique = false);
-	bool loadMesh(const char *path);
-	bool saveMesh(const char *path) const;
-	bool setMesh(const Ptr<Mesh> &mesh, bool unique = true);
-	bool getMesh(const Ptr<Mesh> &mesh) const;
-	Ptr<MeshStatic> getMeshStatic() const;
-	void flushMesh();
-	bool isFlushed() const;
-	void setMeshName(const char *name);
-	const char *getMeshName() const;
-	void setMeshNameForce(const char *path);
+	static Ptr<ObjectMeshStatic> create();
+	static Ptr<ObjectMeshStatic> create(const char *path);
+	Ptr<MeshStatic> getMeshInfo();
+	Ptr<MeshStatic> getMeshForce();
+	Ptr<MeshStatic> getMeshAsync();
+	Ptr<MeshStatic> getMeshForceVRAM();
+	Ptr<MeshStatic> getMeshAsyncVRAM();
+	bool loadAsyncRAM();
+	bool loadAsyncVRAM();
+	bool loadForceRAM();
+	bool loadForceVRAM();
+	bool asyncCalculateNodes(int surface);
+	bool asyncCalculateEdges(int surface);
+	void setMeshProceduralMode(bool mode);
+	bool isMeshProceduralMode() const;
+	bool applyMeshProcedural(const Ptr<Mesh> &mesh);
+	bool isMeshNull() const;
+	bool isMeshLoadedRAM() const;
+	bool isMeshLoadedVRAM() const;
+	void setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH meshstreamingmoderam);
+	Object::STREAMING_OBJECT_MESH getMeshStreamingModeRAM() const;
+	void setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH meshstreamingmodevram);
+	Object::STREAMING_OBJECT_MESH getMeshStreamingModeVRAM() const;
+	void setMeshPath(const char *path);
+	const char *getMeshPath() const;
 	void setLightmapEnabled(bool enabled, int surface);
 	bool isLightmapEnabled(int surface) const;
 	void setLightmapCompression(bool enabled, int surface);
@@ -435,41 +457,6 @@ public:
 	const char *getSurfaceCustomTexturePath(int surface) const;
 	void setSurfaceCustomTexture(const Ptr<Texture> &texture, int surface);
 	Ptr<Texture> getSurfaceCustomTexture(int surface) const;
-	void updateSurfaceBounds(int surface = -1);
-	void setSurfaceTransform(const Math::mat4 &transform, int surface, int target = -1);
-	int addMeshSurface(const char *name, const Ptr<Mesh> &mesh, int surface, int target = -1);
-	int addMeshSurface(const char *name, const Ptr<ObjectMeshStatic> &mesh, int surface, int target = -1);
-	int addMeshSurface(int dest_surface, const Ptr<ObjectMeshStatic> &mesh, int surface, int target = -1);
-	int getMeshSurface(const Ptr<Mesh> &mesh, int surface, int target = -1) const;
-	int addEmptySurface(const char *name, int num_vertex, int num_indices);
-	int addSurfaceTarget(int surface, const char *name = 0);
-	int getNumVertex(int surface) const;
-	void setVertex(int num, const Math::vec3 &vertex, int surface, int target = 0);
-	Math::vec3 getVertex(int num, int surface, int target = 0) const;
-	int getNumTangents(int surface) const;
-	void setTangent(int num, const Math::quat &tangent, int surface, int target = 0);
-	Math::quat getTangent(int num, int surface, int target = 0) const;
-	Math::vec3 getNormal(int num, int surface, int target = 0) const;
-	void setNumTexCoords0(int num, int surface);
-	int getNumTexCoords0(int surface) const;
-	void setTexCoord0(int num, const Math::vec2 &texcoord, int surface);
-	Math::vec2 getTexCoord0(int num, int surface) const;
-	void setNumTexCoords1(int num, int surface);
-	int getNumTexCoords1(int surface) const;
-	void setTexCoord1(int num, const Math::vec2 &texcoord, int surface);
-	Math::vec2 getTexCoord1(int num, int surface) const;
-	int getNumColors(int surface) const;
-	void setColor(int num, const Math::vec4 &color, int surface);
-	Math::vec4 getColor(int num, int surface) const;
-	int getNumCIndices(int surface) const;
-	void setCIndex(int num, int index, int surface);
-	int getCIndex(int num, int surface) const;
-	int getNumTIndices(int surface) const;
-	void setTIndex(int num, int index, int surface);
-	int getTIndex(int num, int surface) const;
-	int getNumSurfaceTargets(int surface) const;
-	const char *getSurfaceTargetName(int surface, int target) const;
-	int findSurfaceTarget(const char *name, int surface) const;
 };
 typedef Ptr<ObjectMeshStatic> ObjectMeshStaticPtr;
 
@@ -527,8 +514,8 @@ public:
 	bool isQuaternion() const;
 	void setControlled(bool controlled);
 	bool isControlled() const;
-	void setLoop(int loop);
-	int getLoop() const;
+	void setLoop(bool loop);
+	bool isLoop() const;
 	void setTime(float time);
 	float getTime() const;
 	void setSpeed(float speed);
@@ -624,8 +611,10 @@ public:
 	Math::mat4 getBoneNotAdditionalBindObjectTransform(int bone) const;
 	Math::Mat4 getBoneNotAdditionalBindWorldTransform(int bone) const;
 	void setBindNode(int bone, const Ptr<Node> &node);
-	void removeBindNode(int bone);
 	Ptr<Node> getBindNode(int bone) const;
+	void removeBindNodeByBone(int bone);
+	void removeBindNodeByNode(const Ptr<Node> &node);
+	void removeAllBindNode();
 	void setBindNodeSpace(int bone, ObjectMeshSkinned::NODE_SPACE space);
 	ObjectMeshSkinned::NODE_SPACE getBindNodeSpace(int bone) const;
 	void setBindBoneSpace(int bone, ObjectMeshSkinned::BONE_SPACE space);
@@ -775,17 +764,32 @@ public:
 	static int type() { return Node::OBJECT_MESH_CLUSTER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	static Ptr<ObjectMeshCluster> create(const char *path, bool unique = false);
-	bool createMesh(const char *path, bool unique = false);
-	bool loadMesh(const char *path);
-	bool saveMesh(const char *path);
-	int setMesh(const Ptr<Mesh> &mesh);
-	int getMesh(Ptr<Mesh> &mesh) const;
-	void flushMesh();
+	static Ptr<ObjectMeshCluster> create();
+	static Ptr<ObjectMeshCluster> create(const char *path);
+	Ptr<MeshStatic> getMeshInfo();
+	Ptr<MeshStatic> getMeshForce();
+	Ptr<MeshStatic> getMeshAsync();
+	Ptr<MeshStatic> getMeshForceVRAM();
+	Ptr<MeshStatic> getMeshAsyncVRAM();
+	bool loadAsyncRAM();
+	bool loadAsyncVRAM();
+	bool loadForceRAM();
+	bool loadForceVRAM();
+	bool asyncCalculateNodes(int surface);
+	bool asyncCalculateEdges(int surface);
+	void setMeshProceduralMode(bool mode);
+	bool isMeshProceduralMode() const;
+	bool applyMeshProcedural(const Ptr<Mesh> &mesh);
+	bool isMeshNull() const;
+	bool isMeshLoadedRAM() const;
+	bool isMeshLoadedVRAM() const;
+	void setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH meshstreamingmoderam);
+	Object::STREAMING_OBJECT_MESH getMeshStreamingModeRAM() const;
+	void setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH meshstreamingmodevram);
+	Object::STREAMING_OBJECT_MESH getMeshStreamingModeVRAM() const;
+	void setMeshPath(const char *path);
+	const char *getMeshPath() const;
 	void updateSpatialTree();
-	void setMeshName(const char *name);
-	const char *getMeshName() const;
-	void setMeshNameForce(const char *name);
 	void setVisibleDistance(float distance);
 	float getVisibleDistance() const;
 	void setFadeDistance(float distance);
@@ -807,9 +811,6 @@ public:
 	bool detachClusterWorldTransformsFromSphere(const Math::WorldBoundSphere &bb, Vector<Math::Mat4> &transforms);
 	bool removeClusterTransforms(const Math::WorldBoundBox &bb);
 	bool removeClusterTransformsFromSphere(const Math::WorldBoundSphere &bb);
-	int getNumSurfaceTargets(int surface) const;
-	const char *getSurfaceTargetName(int surface, int target) const;
-	int findSurfaceTarget(const char *name, int surface) const;
 	bool getInstancesFromSphere(const Math::WorldBoundSphere &bb, Vector<int> &instances);
 };
 typedef Ptr<ObjectMeshCluster> ObjectMeshClusterPtr;
@@ -826,22 +827,41 @@ public:
 	using Object::setCollision;
 	using Object::getIntersection;
 	using Object::setIntersection;
-	static Ptr<ObjectMeshClutter> create(const char *arg1, bool unique = false);
-	bool createMesh(const char *name, bool unique = false);
-	bool loadMesh(const char *name);
-	bool saveMesh(const char *name);
-	int setMesh(const Ptr<Mesh> &mesh);
-	int getMesh(Ptr<Mesh> &mesh) const;
-	void flushMesh();
-	void setMeshName(const char *name);
-	const char *getMeshName() const;
-	void setMeshNameForce(const char *name);
+	using Object::getIntersectionMask;
+	using Object::setIntersectionMask;
+	static Ptr<ObjectMeshClutter> create();
+	static Ptr<ObjectMeshClutter> create(const char *path);
+	Ptr<MeshStatic> getMeshInfo();
+	Ptr<MeshStatic> getMeshForce();
+	Ptr<MeshStatic> getMeshAsync();
+	Ptr<MeshStatic> getMeshForceVRAM();
+	Ptr<MeshStatic> getMeshAsyncVRAM();
+	bool loadAsyncRAM();
+	bool loadAsyncVRAM();
+	bool loadForceRAM();
+	bool loadForceVRAM();
+	bool asyncCalculateNodes(int surface);
+	bool asyncCalculateEdges(int surface);
+	void setMeshProceduralMode(bool mode);
+	bool isMeshProceduralMode() const;
+	bool applyMeshProcedural(const Ptr<Mesh> &mesh);
+	bool isMeshNull() const;
+	bool isMeshLoadedRAM() const;
+	bool isMeshLoadedVRAM() const;
+	void setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH meshstreamingmoderam);
+	Object::STREAMING_OBJECT_MESH getMeshStreamingModeRAM() const;
+	void setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH meshstreamingmodevram);
+	Object::STREAMING_OBJECT_MESH getMeshStreamingModeVRAM() const;
+	void setMeshPath(const char *path);
+	const char *getMeshPath() const;
 	void setCollision(bool collision);
 	bool getCollision() const;
 	void setOrientation(bool orientation);
 	bool getOrientation() const;
 	void setIntersection(bool intersection);
 	bool getIntersection() const;
+	void setIntersectionMask(int mask);
+	int getIntersectionMask() const;
 	void setVisibleDistance(float distance);
 	float getVisibleDistance() const;
 	void setFadeDistance(float distance);
@@ -899,9 +919,6 @@ public:
 	int getCutoutIntersectionMask() const;
 	void setCutoutInverse(int inverse);
 	int getCutoutInverse() const;
-	int getNumSurfaceTargets(int surface) const;
-	const char *getSurfaceTargetName(int surface, int target) const;
-	int findSurfaceTarget(const char *name, int surface) const;
 	void invalidate();
 	void invalidate(const Math::WorldBoundBox &bounds);
 	void createClutterTransforms();
@@ -923,14 +940,11 @@ public:
 	static int type() { return Node::OBJECT_MESH_SPLINE_CLUSTER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
-	const char *getMeshName() const;
+	const char *getMeshPath() const;
 	int getNumMeshes() const;
 	Math::mat4 getMeshTransform(int num) const;
 	bool getClusterTransforms(const Math::WorldBoundBox &bounds, Vector<Math::mat4> &transforms);
 	bool getClusterWorldTransforms(const Math::WorldBoundBox &bounds, Vector<Math::Mat4> &transforms);
-	int getNumSurfaceTargets(int surface) const;
-	const char *getSurfaceTargetName(int surface, int target) const;
-	int findSurfaceTarget(const char *name, int surface) const;
 };
 typedef Ptr<ObjectMeshSplineCluster> ObjectMeshSplineClusterPtr;
 
@@ -958,6 +972,8 @@ public:
 
 	using Object::getIntersection;
 	using Object::setIntersection;
+	using Object::getIntersectionMask;
+	using Object::setIntersectionMask;
 	static Ptr<ObjectGrass> create();
 	void setFieldMask(int mask);
 	int getFieldMask() const;
@@ -969,6 +985,8 @@ public:
 	int getOrientation() const;
 	void setIntersection(int intersection);
 	int getIntersection() const;
+	void setIntersectionMask(int mask);
+	int getIntersectionMask() const;
 	void setNumTextures(int textures);
 	int getNumTextures() const;
 	int getSpawnCount() const;
@@ -1181,11 +1199,8 @@ class LandscapeLayerMap;
 
 class UNIGINE_API Landscape
 {
-protected:
-	
-
 public:
-	static int isInitialized(); 
+	static int isInitialized();
 
 	enum TYPE_DATA
 	{
@@ -1841,6 +1856,19 @@ public:
 	static int type() { return Node::OBJECT_PARTICLES; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
+
+	enum SCREEN_SIZE_MODE
+	{
+		SCREEN_SIZE_MODE_NONE = 0,
+		SCREEN_SIZE_MODE_WIDTH,
+		SCREEN_SIZE_MODE_HEIGHT,
+	};
+	void setScreenSizeMode(ObjectParticles::SCREEN_SIZE_MODE mode);
+	ObjectParticles::SCREEN_SIZE_MODE getScreenSizeMode() const;
+	void setScreenMinSize(float size);
+	float getScreenMinSize() const;
+	void setScreenMaxSize(float size);
+	float getScreenMaxSize() const;
 	using Object::getIntersection;
 	using Object::setIntersection;
 	using Object::getCollision;
@@ -1872,10 +1900,14 @@ public:
 	int getTextureAtlas() const;
 	void setTextureAtlasSize(const Math::ivec2 &size);
 	Math::ivec2 getTextureAtlasSize() const;
-	void setPhysicsIntersection(int intersection);
-	int getPhysicsIntersection() const;
-	void setCollision(int collision);
-	int getCollision() const;
+	void setPhysicsIntersectionEnabled(bool enabled);
+	bool isPhysicsIntersectionEnabled() const;
+	void setPhysicsIntersectionMask(int mask);
+	int getPhysicsIntersectionMask() const;
+	void setCollisionEnabled(bool enabled);
+	bool isCollisionEnabled() const;
+	void setCollisionMask(int mask);
+	int getCollisionMask() const;
 	void setCulling(int culling);
 	int getCulling() const;
 	void setClearOnEnable(bool enable);
@@ -1896,6 +1928,8 @@ public:
 	void getParticleTransforms(Vector<Math::Mat4> &transforms) const;
 	void setPhysicalMask(int mask);
 	int getPhysicalMask() const;
+	void setParticlesFieldMask(int mask);
+	int getParticlesFieldMask() const;
 	void setPhysicalMass(float mass);
 	float getPhysicalMass() const;
 	void setLinearDamping(float damping);
@@ -1955,67 +1989,6 @@ public:
 	Ptr<ParticleModifierVector> getDirectionOverTimeModifier() const;
 	Ptr<ParticleModifierVector> getPositionOverTimeModifier() const;
 	Ptr<ParticleModifierVector> getGravityOverTimeModifier() const;
-	int addForce();
-	void removeForce(int num);
-	void setNumForces(int forces);
-	int getNumForces() const;
-	void setForceEnabled(int num, bool enabled);
-	bool isForceEnabled(int num) const;
-	void setForceAttached(int num, int attached);
-	int isForceAttached(int num) const;
-	void setForceTransform(int num, const Math::Mat4 &transform);
-	Math::Mat4 getForceTransform(int num) const;
-	void setForceRadius(int num, float radius);
-	float getForceRadius(int num) const;
-	void setForceAttenuation(int num, float attenuation);
-	float getForceAttenuation(int num) const;
-	void setForceAttractor(int num, float attractor);
-	float getForceAttractor(int num) const;
-	void setForceRotator(int num, float rotator);
-	float getForceRotator(int num) const;
-	int addNoise();
-	void removeNoise(int num);
-	void setNumNoises(int noises);
-	int getNumNoises() const;
-	void setNoiseEnabled(int num, bool enabled);
-	bool isNoiseEnabled(int num) const;
-	void setNoiseAttached(int num, int attached);
-	int isNoiseAttached(int num) const;
-	void setNoiseTransform(int num, const Math::Mat4 &transform);
-	Math::Mat4 getNoiseTransform(int num) const;
-	void setNoiseOffset(int num, const Math::vec3 &offset);
-	Math::vec3 getNoiseOffset(int num) const;
-	void setNoiseStep(int num, const Math::vec3 &step);
-	Math::vec3 getNoiseStep(int num) const;
-	void setNoiseForce(int num, float force);
-	float getNoiseForce(int num) const;
-	void setNoiseScale(int num, float scale);
-	float getNoiseScale(int num) const;
-	void setNoiseFrequency(int num, int frequency);
-	int getNoiseFrequency(int num) const;
-	void setNoiseSize(int num, int size);
-	int getNoiseSize(int num) const;
-	void setNoiseSeed(int num, int seed);
-	int getNoiseSeed(int num) const;
-	Ptr<Image> getNoiseImage(int num) const;
-	int addDeflector();
-	void removeDeflector(int num);
-	void setNumDeflectors(int deflectors);
-	int getNumDeflectors() const;
-	void setDeflectorType(int num, int type);
-	int getDeflectorType(int num) const;
-	void setDeflectorEnabled(int num, bool enabled);
-	bool isDeflectorEnabled(int num) const;
-	void setDeflectorAttached(int num, int attached);
-	int isDeflectorAttached(int num) const;
-	void setDeflectorTransform(int num, const Math::Mat4 &transform);
-	Math::Mat4 getDeflectorTransform(int num) const;
-	void setDeflectorSize(int num, const Math::vec3 &size);
-	Math::vec3 getDeflectorSize(int num) const;
-	void setDeflectorRestitution(int num, float restitution);
-	float getDeflectorRestitution(int num) const;
-	void setDeflectorRoughness(int num, float roughness);
-	float getDeflectorRoughness(int num) const;
 	int getNumContacts() const;
 	Math::Vec3 getContactPoint(int num) const;
 	Math::vec3 getContactNormal(int num) const;
@@ -2024,12 +1997,6 @@ public:
 	Math::Vec3 getWorldOffset() const;
 	int saveStateSelf(const Ptr<Stream> &stream) const;
 	int restoreStateSelf(const Ptr<Stream> &stream);
-	int saveStateForces(const Ptr<Stream> &stream) const;
-	int restoreStateForces(const Ptr<Stream> &stream);
-	int saveStateNoises(const Ptr<Stream> &stream) const;
-	int restoreStateNoises(const Ptr<Stream> &stream);
-	int saveStateDeflectors(const Ptr<Stream> &stream) const;
-	int restoreStateDeflectors(const Ptr<Stream> &stream);
 	Math::BoundBox getBoundBoxParticles() const;
 	Math::BoundBox getBoundBoxSimulation() const;
 	Math::WorldBoundBox getWorldBoundBoxParticles() const;
@@ -2064,12 +2031,6 @@ public:
 		EMITTER_BOX,
 		EMITTER_RANDOM,
 		EMITTER_SPARK,
-	};
-
-	enum
-	{
-		DEFLECTOR_REFLECTOR = 0,
-		DEFLECTOR_CLIPPER,
 	};
 };
 typedef Ptr<ObjectParticles> ObjectParticlesPtr;
@@ -2234,17 +2195,32 @@ public:
 		MOUSE_STANDARD = 0,
 		MOUSE_VIRTUAL,
 	};
-	static Ptr<ObjectGuiMesh> create(const Ptr<Mesh> &mesh, const char *path = 0);
-	static Ptr<ObjectGuiMesh> create(const char *mesh_name, const char *path = 0, bool unique = false);
+	static Ptr<ObjectGuiMesh> create();
+	static Ptr<ObjectGuiMesh> create(const char *mesh_path, const char *name = 0);
+	Ptr<MeshStatic> getMeshInfo();
+	Ptr<MeshStatic> getMeshForce();
+	Ptr<MeshStatic> getMeshAsync();
+	Ptr<MeshStatic> getMeshForceVRAM();
+	Ptr<MeshStatic> getMeshAsyncVRAM();
+	bool loadAsyncRAM();
+	bool loadAsyncVRAM();
+	bool loadForceRAM();
+	bool loadForceVRAM();
+	bool asyncCalculateNodes(int surface);
+	bool asyncCalculateEdges(int surface);
+	void setMeshProceduralMode(bool mode);
+	bool isMeshProceduralMode() const;
+	bool applyMeshProcedural(const Ptr<Mesh> &mesh);
+	bool isMeshNull() const;
+	bool isMeshLoadedRAM() const;
+	bool isMeshLoadedVRAM() const;
+	void setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH meshstreamingmoderam);
+	Object::STREAMING_OBJECT_MESH getMeshStreamingModeRAM() const;
+	void setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH meshstreamingmodevram);
+	Object::STREAMING_OBJECT_MESH getMeshStreamingModeVRAM() const;
+	void setMeshPath(const char *path);
+	const char *getMeshPath() const;
 	Ptr<Gui> getGui() const;
-	int createMesh(const char *path, bool unique = false);
-	int loadMesh(const char *path);
-	int saveMesh(const char *path);
-	int setMesh(const Ptr<Mesh> &mesh);
-	int getMesh(Ptr<Mesh> &mesh) const;
-	void flushMesh();
-	void setMeshName(const char *name);
-	const char *getMeshName() const;
 	void setMouseShow(bool show);
 	bool isMouseShow() const;
 	void setBackground(bool background);
@@ -2275,8 +2251,8 @@ public:
 	int saveMesh(const char *path);
 	int setMesh(const Ptr<Mesh> &mesh);
 	int getMesh(Ptr<Mesh> &mesh) const;
-	int setMeshName(const char *path, bool force_load = false);
-	const char *getMeshName() const;
+	int setMeshPath(const char *path, bool force_load = false);
+	const char *getMeshPath() const;
 	void setFieldMask(int mask);
 	int getFieldMask() const;
 	void setWave(int num, const Math::vec4 &wave);
@@ -2488,8 +2464,8 @@ public:
 	float getSubsurfaceWaveIntensity() const;
 	void setSubsurfaceWaveFoamIntensity(float intensity);
 	float getSubsurfaceWaveFoamIntensity() const;
-	void setSubsurfaceDiffuseIntensity(float intensity);
-	float getSubsurfaceDiffuseIntensity() const;
+	void setSubsurfaceDecalsIntensity(float intensity);
+	float getSubsurfaceDecalsIntensity() const;
 	void setDepthLUTTexturePath(const char *path);
 	const char *getDepthLUTTexturePath() const;
 	void setUnderwaterFogColor(const Math::vec4 &color);
@@ -2609,10 +2585,12 @@ public:
 	Math::vec4 getAuxiliaryColor() const;
 	void setRefractionScale(float scale);
 	float getRefractionScale() const;
-	void setDiffuseDistortion(float distortion);
-	float getDiffuseDistortion() const;
-	void setSoftIntersection(float intersection);
-	float getSoftIntersection() const;
+	void setDecalsDistortion(float distortion);
+	float getDecalsDistortion() const;
+	void setDecalsSoftInteraction(float interaction);
+	float getDecalsSoftInteraction() const;
+	void setSoftInteraction(float interaction);
+	float getSoftInteraction() const;
 	void setFieldSpacerEnabled(bool enabled);
 	bool isFieldSpacerEnabled() const;
 };
@@ -2682,7 +2660,7 @@ public:
 	virtual int getOrder(const Math::Vec3 &camera, int surface);
 	virtual int getSequence(const Math::Vec3 &camera, int surface);
 	virtual float getTransparentDistance(const Math::Vec3 &camera, int surface);
-	virtual int hasLods();
+	virtual bool hasLods();
 	virtual int getCollision(const Math::BoundBox &bb, Vector<int> &surfaces);
 	virtual int getCollision(const Math::Vec3 &p0, const Math::Vec3 &p1, Vector<int> &surfaces);
 	virtual int getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, Math::Vec3 *ret_point, Math::vec3 *ret_normal, Math::vec4 *ret_texcoord, int *ret_index, int *ret_instance, int surface);
@@ -2690,13 +2668,12 @@ public:
 	virtual int getNumTriangles(int surface);
 	virtual const Math::BoundBox &getBoundBox(int surface) = 0;
 	virtual const Math::BoundSphere &getBoundSphere(int surface) = 0;
-	virtual int hasCreate();
+	virtual bool hasCreate();
 	virtual void create(int surface);
-	virtual int hasRender();
+	virtual bool hasRender();
 	virtual void render(Render::PASS pass, int surface);
-	virtual int hasShadow();
+	virtual bool hasShadow();
 	virtual void renderShadow(Render::PASS pass, int surface);
-	virtual void updatePosition();
 	virtual void updateTransform();
 	virtual void update(float ifps);
 	virtual void flush(float) final {} // This method was given a more meaningful name "preRender", please override it instead.

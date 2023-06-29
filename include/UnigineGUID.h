@@ -1,23 +1,22 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 
 #pragma once
 
 #include <UnigineBase.h>
 #include "UnigineChecksum.h"
 #include "UnigineString.h"
-#include "UnigineMathLib.h"
+#include "UnigineMathLibCommon.h"
 
 namespace Unigine
 {
@@ -38,7 +37,12 @@ public:
 	UNIGINE_INLINE explicit UGUID(unsigned char(&value_)[VALUE_SIZE])
 	{
 		memcpy(value, value_, VALUE_SIZE);
-		write_string(value_int, 5, get_str_data());
+		update_data();
+	}
+	UNIGINE_INLINE explicit UGUID(unsigned int(&value_)[6])
+	{
+		memcpy(value_int, value_, VALUE_SIZE);
+		update_data();
 	}
 
 	UNIGINE_INLINE UGUID(const UGUID &g)
@@ -105,32 +109,28 @@ public:
 		return 0;
 	}
 
-	UNIGINE_INLINE void generate()
-	{
-		get_random_values(value_int, 5);
-		write_string(value_int, 5, get_str_data());
-	}
+	void generate();
 	UNIGINE_INLINE void generate(const char *str_)
 	{
 		Checksum::SHA1(value_int, str_, (int)(sizeof(char) * strlen(str_)));
-		write_string(value_int, 5, get_str_data());
+		update_data();
 	}
 	UNIGINE_INLINE void generate(int &seed_)
 	{
 		for (int i = 0; i < 5; ++i)
-			value_int[i] = seed_ = (unsigned int)((unsigned long long)seed_ * Math::Random::A + Math::Random::C);
-		write_string(value_int, 5, get_str_data());
+			value_int[i] = seed_ = (unsigned int)((unsigned long long)seed_ * 1664525 + 1013904223); // Numerical Recipes: The Art of Scientific Computing
+		update_data();
 	}
 	UNIGINE_INLINE void generate(const void *data, int size)
 	{
 		Checksum::SHA1(value_int, data, size);
-		write_string(value_int, 5, get_str_data());
+		update_data();
 	}
 
 	UNIGINE_INLINE const char *getFileSystemString() const { return str; }
 	void setFileSystemString(const char *str_)
 	{
-		if (!str_)
+		if (!str_ || !*str_)
 		{
 			clear();
 			return;
@@ -149,22 +149,20 @@ public:
 			return;
 		}
 
-		read_string(str_ + PREFIX_SIZE, value_int);
-		write_string(value_int, 5, get_str_data());
+		read_string(str_ + PREFIX_SIZE);
 	}
 
 	UNIGINE_INLINE const unsigned char *getValue() const { return value; }
 	UNIGINE_INLINE const char *getString() const { return str + PREFIX_SIZE; }
 	void setString(const char *str_)
 	{
-		if (!str_ || strlen(str_) != HASH_SIZE)
+		if (!str_ || !*str_ || strlen(str_) != HASH_SIZE)
 		{
 			clear();
 			return;
 		}
 
-		read_string(str_, value_int);
-		write_string(value_int, 5, get_str_data());
+		read_string(str_);
 	}
 
 	UNIGINE_INLINE void clear()
@@ -202,14 +200,15 @@ public:
 private:
 	static constexpr auto PREFIX = "guid://";
 	static constexpr size_t PREFIX_SIZE = constexpr_strlen(PREFIX);
+	static constexpr size_t NUM_VALUE_INT = 5;
 
 	UNIGINE_INLINE char *get_str_data() { return str + PREFIX_SIZE; }
-	void read_string(const char *str, unsigned int *values)
+	void read_string(const char *str)
 	{
 		int index = 0;
 		while (*str)
 		{
-			unsigned int &value = values[index++];
+			unsigned int &value = value_int[index++];
 			int value_size = 8;
 			while (value_size--)
 			{
@@ -222,27 +221,34 @@ private:
 					value = (value << 4) + (c - 'A' + 10);
 			}
 		}
+		update_data();
 	}
-	void write_string(const unsigned int *values, int size, char *str)
+	void update_data()
 	{
-		const unsigned int radix = 16;
-		const char *digits = "0123456789abcdef";
+		// clear last byte for alignment
+		value_int[5] = 0;
 
-		char *p = str + HASH_SIZE;
-		*p = '\0';
-
-		while (size--)
+		// update str
 		{
-			unsigned int value = values[size];
-			int value_size = 8;
-			while (value_size--)
+			const unsigned int radix = 16;
+			const char *digits = "0123456789abcdef";
+
+			char *p = get_str_data() + HASH_SIZE;
+			*p = '\0';
+
+			int size = NUM_VALUE_INT;
+			while (size--)
 			{
-				*--p = digits[value & (radix - 1)];
-				value /= radix;
+				unsigned int value = value_int[size];
+				int value_size = 8;
+				while (value_size--)
+				{
+					*--p = digits[value & (radix - 1)];
+					value /= radix;
+				}
 			}
 		}
 	}
-	static void get_random_values(unsigned int *values, int size);
 
 	union
 	{

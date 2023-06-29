@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -148,7 +147,7 @@ public:
 	void setTexture(const Ptr<Texture> &texture);
 	Ptr<Texture> getTexture() const;
 	int bakeWaterLevel(const Ptr<Image> &image);
-	int createShorelineDistanceField(const Ptr<Image> &image, int shoreline_radius, int blur_radius, int downsample_resolution);
+	int createShorelineDistanceField(const Ptr<Texture> &texture, int shoreline_radius, int blur_radius, int downsample_resolution);
 	void *addProgressCallback(CallbackBase1<float> *func);
 	bool removeProgressCallback(void *id);
 	void clearProgressCallbacks();

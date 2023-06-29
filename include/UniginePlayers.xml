@@ -256,7 +256,7 @@
 			</summary> 
 			<param name="ifps"> Frame duration in seconds. </param> 
 		</member>
-		<member name="M:Unigine.Player.setFovMode(int)">
+		<member name="M:Unigine.Player.setFovMode(Camera::FOV_MODE)">
 			<summary>
 			Sets the value indicating the type of FOV that is used for the player:											For the standard player, the vertical FOV should be set. In this case, FOV is directly set in degrees.						For the physically-based player, the horizontal FOV should be set. In this case, FOV is calculated depending on the film gate and focal length of the player.
 			</summary> 
@@ -419,23 +419,23 @@
 			<param name="mouse_y"> Y-coordinate of the mouse position in world coordinates. </param> 
 			<returns>Vector coordinates.</returns>
 		</member>
-		<member name="M:Unigine.Player.getDirectionFromWindow(Unigine.Math.Vec3,Unigine.Math.Vec3,int,int,Unigine.Ptr{EngineWindow}) const">
+		<member name="M:Unigine.Player.getDirectionFromWindow(Unigine.Math.Vec3,Unigine.Math.Vec3,int,int,Unigine.Ptr{EngineWindowViewport}) const">
 			<summary>
-			Casts the ray to a certain position on the screen and returns coordinates of the start (p0) and end (p1) points of the ray relative to the specified window.
+			Casts the ray to a certain position on the screen and returns coordinates of the start (p0) and end (p1) points of the ray relative to the specified window viewport.
 			</summary> 
 			<param name="p0"> Start coordinates of the ray. </param>
 			<param name="p1"> End coordinates of the ray. </param>
 			<param name="mouse_x"> X-coordinate of the mouse position in world coordinates. </param>
 			<param name="mouse_y"> Y-coordinate of the mouse position in world coordinates. </param>
-			<param name="window"> Window relative to which the directon is returned. </param> 
+			<param name="window"> Window viewport relative to which the directon is returned. </param> 
 		</member>
-		<member name="M:Unigine.Player.getDirectionFromWindow(int,int,Unigine.Ptr{EngineWindow}) const">
+		<member name="M:Unigine.Player.getDirectionFromWindow(int,int,Unigine.Ptr{EngineWindowViewport}) const">
 			<summary>
-			Casts the ray to a certain position on the screen and returns a vector in the direction of this position relative to the specified window.
+			Casts the ray to a certain position on the screen and returns a vector in the direction of this position relative to the specified window viewport.
 			</summary> 
 			<param name="mouse_x"> X-coordinate of the mouse position in world coordinates. </param>
 			<param name="mouse_y"> Y-coordinate of the mouse position in world coordinates. </param>
-			<param name="window"> Window relative to which the directon is returned. </param> 
+			<param name="window"> Window viewport relative to which the directon is returned. </param> 
 			<returns>Vector coordinates.</returns>
 		</member>
 		<member name="M:Unigine.Player.getProjectionFromMainWindow(int,int,int,int) const">
@@ -448,15 +448,15 @@
 			<param name="y1"> Y-coordinate of the second screen position. </param> 
 			<returns>Projection matrix.</returns>
 		</member>
-		<member name="M:Unigine.Player.getProjectionFromWindow(int,int,int,int,Unigine.Ptr{EngineWindow}) const">
+		<member name="M:Unigine.Player.getProjectionFromWindow(int,int,int,int,Unigine.Ptr{EngineWindowViewport}) const">
 			<summary>
-			Creates a projection matrix out of 2 screen positions relative to the specified window. This is required for the frame selection.
+			Creates a projection matrix out of 2 screen positions relative to the specified window viewport. This is required for the frame selection.
 			</summary> 
 			<param name="x0"> X-coordinate of the first screen position. </param>
 			<param name="y0"> Y-coordinate of the first screen position. </param>
 			<param name="x1"> X-coordinate of the second screen position. </param>
 			<param name="y1"> Y-coordinate of the second screen position. </param>
-			<param name="window"> Window relative to which the projection is returned. </param> 
+			<param name="window"> Window viewport relative to which the projection is returned. </param> 
 			<returns>Projection matrix.</returns>
 		</member>
 		<member name="M:Unigine.Player.getMainWindowPosition(int,int,Unigine.Math.Vec3) const">
@@ -468,15 +468,39 @@
 			<param name="point"> Point coordinates. </param> 
 			<returns>1 if the point has been projected successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Player.getWindowPosition(int,int,Unigine.Math.Vec3,Unigine.Ptr{EngineWindow}) const">
+		<member name="M:Unigine.Player.getWindowPosition(int,int,Unigine.Math.Vec3,Unigine.Ptr{EngineWindowViewport}) const">
 			<summary>
-			Projects the point in world coordinates relative to the specified window. The coordinates are written into the first 2 variables passed to the method.
+			Projects the point in world coordinates relative to the specified window viewport. The coordinates are written into the first 2 variables passed to the method.
 			</summary> 
 			<param name="x"> X-coordinate of the screen position. </param>
 			<param name="y"> Y-coordinate of the screen position. </param>
 			<param name="point"> Point coordinates. </param>
-			<param name="window"> Window relative to which the projection is returned. </param> 
+			<param name="window"> Window viewport relative to which the projection is returned. </param> 
 			<returns>1 if the point has been projected successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Player.setProjectionMode(Camera::PROJECTION_MODE)">
+			<summary>
+			Sets the projection mode: orthographic or perspective.
+			</summary> 
+			<param name="mode"> The projection mode, PROJECTION_MODE_ORTHOGRAPHIC for the orthographic mode; PROJECTION_MODE_PERSPECTIVE for the perspective mode. </param> 
+		</member>
+		<member name="M:Unigine.Player.getProjectionMode const">
+			<summary>
+			Returns the current projection mode: orthographic or perspective.
+			</summary>  
+			<returns>The projection mode, PROJECTION_MODE_ORTHOGRAPHIC for the orthographic mode; PROJECTION_MODE_PERSPECTIVE for the perspective mode.</returns>
+		</member>
+		<member name="M:Unigine.Player.setOrthoHeight(float)">
+			<summary>
+			Sets the height of the camera with the orthographic projection mode enabled.
+			</summary> 
+			<param name="height"> The orthographic camera height. </param> 
+		</member>
+		<member name="M:Unigine.Player.getOrthoHeight const">
+			<summary>
+			Returns the current height of the camera with the orthographic projection mode enabled.
+			</summary>  
+			<returns>The orthographic camera height.</returns>
 		</member>
 		<member name="M:Unigine.PlayerActor.#ctor">
 			<summary>

@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -124,16 +123,27 @@ typedef Ptr<RenderEnvironmentPreset> RenderEnvironmentPresetPtr;
 
 class UNIGINE_API Render
 {
-protected:
-	
-
 public:
-	static int isInitialized(); 
+	static int isInitialized();
 
-	enum
+	enum STREAMING_TEXTURES
 	{
-		STREAMING_ASYNC,
-		STREAMING_FORCE,
+		STREAMING_TEXTURES_ASYNC,
+		STREAMING_TEXTURES_FORCE,
+	};
+
+	enum STREAMING_MESHES
+	{
+		STREAMING_MESHES_ASYNC,
+		STREAMING_MESHES_FORCE,
+		STREAMING_MESHES_ALL,
+	};
+
+	enum STREAMING_MESHES_PREFETCH
+	{
+		STREAMING_MESHES_PREFETCH_DISABLE,
+		STREAMING_MESHES_PREFETCH_RADIUS,
+		STREAMING_MESHES_PREFETCH_FULL,
 	};
 
 	enum
@@ -167,6 +177,44 @@ public:
 		TONEMAPPER_MIX_ACES_WITH_REINHARD,
 		TONEMAPPER_REINHARD,
 		TONEMAPPER_REINHARD_LUMA_BASED,
+	};
+
+	enum
+	{
+		TRIANGLES_DISABLED = 0,
+		TRIANGLES_FRONT_LEQUAL,
+		TRIANGLES_FRONT_ALWAYS,
+		TRIANGLES_FRONT_AND_BACK_ALWAYS,
+	};
+
+	enum SHOW_IMMOVABLE
+	{
+		SHOW_IMMOVABLE_DISABLED = 0,
+		SHOW_IMMOVABLE_OPTION_ENABLED,
+		SHOW_IMMOVABLE_OPTION_DISABLED,
+	};
+
+	enum SHOW_VERTEX_COLOR
+	{
+		SHOW_VERTEX_COLOR_DISABLED = 0,
+		SHOW_VERTEX_COLOR_RED,
+		SHOW_VERTEX_COLOR_GREEN,
+		SHOW_VERTEX_COLOR_BLUE,
+		SHOW_VERTEX_COLOR_ALPHA,
+		SHOW_VERTEX_COLOR_RGB,
+	};
+
+	enum SHOW_TEXTURE_RESOLUTION
+	{
+		SHOW_TEXTURE_RESOLUTION_DISABLED = 0,
+		SHOW_TEXTURE_RESOLUTION_BY_MAX_PIXEL_COUNT,
+		SHOW_TEXTURE_RESOLUTION_BY_SCREEN_SIZE,
+	};
+
+	enum SHOW_TEXTURE_RESOLUTION_UV
+	{
+		SHOW_TEXTURE_RESOLUTION_UV_MODE_0,
+		SHOW_TEXTURE_RESOLUTION_UV_MODE_1,
 	};
 
 	enum PASS
@@ -252,13 +300,12 @@ public:
 		ENVIRONMENT_NUM_PRESETS = 3,
 	};
 
-	enum CORRECT_ROUGHNESS
+	enum GGX_MIPMAPS_QUALITY
 	{
-		CORRECT_ROUGHNESS_DISABLED = 0,
-		CORRECT_ROUGHNESS_LOW,
-		CORRECT_ROUGHNESS_MEDIUM,
-		CORRECT_ROUGHNESS_HIGH,
-		CORRECT_ROUGHNESS_ULTRA,
+		GGX_MIPMAPS_QUALITY_LOW = 0,
+		GGX_MIPMAPS_QUALITY_MEDIUM,
+		GGX_MIPMAPS_QUALITY_HIGH,
+		GGX_MIPMAPS_QUALITY_ULTRA,
 	};
 
 	enum
@@ -361,24 +408,28 @@ public:
 		VSYNC_STRICT,
 		VSYNC_ADAPTIVE,
 	};
-	static bool createMipmapsCubeGGXImage(const Ptr<Image> &image, float quality);
-	static bool createMipmapsCubeGGXTexture(const Ptr<Texture> &texture, float quality);
-	static int createShorelineDistanceField(const Ptr<Image> &image, const Ptr<Image> &mask, int shoreline_radius, int blur_radius, int downsample_resolution);
-	static int compressTexture(const Ptr<Texture> &texture, Ptr<Image> &destination, int quality = 1, int new_texture_format = -1, int use_mip_maps = -1);
-	static int compressImage(Ptr<Image> &image, int quality = 1, int new_image_format = -1, int use_mip_maps = -1);
-	static void renderImage2D(const Ptr<Camera> &camera, const Ptr<Image> &image, int skip_flags);
-	static void renderImage2D(const Ptr<Camera> &camera, const Ptr<Image> &image, int width, int height, int hdr, int skip_flags);
-	static void renderImageCube(const Ptr<Camera> &camera, const Ptr<Image> &image, int size, int hdr, int skip_flags, bool local_space = false);
-	static void renderImageCube(const Ptr<Camera> &camera, const Ptr<Image> &image, int skip_flags);
-	static void renderNodeImage2D(const Ptr<Camera> &camera, const Ptr<Node> &node, const Ptr<Image> &image, int skip_flags, int light_usage, const char *environment_texture_name);
-	static void renderNodeImage2D(const Ptr<Camera> &camera, const Ptr<Node> &node, const Ptr<Image> &image, int width, int height, int hdr, int skip_flags, int light_usage, const char *environment_texture_name);
+	static bool createMipmapsCubeGGXImage(const Ptr<Image> &image, const Ptr<Texture> &dest, Render::GGX_MIPMAPS_QUALITY quality);
+	static bool createMipmapsCubeGGXTexture(const Ptr<Texture> &texture, Render::GGX_MIPMAPS_QUALITY quality, bool realtime = true);
+	static int createShorelineDistanceField(const Ptr<Texture> &texture, const Ptr<Image> &mask, int shoreline_radius, int blur_radius, int downsample_resolution);
+	static int compressTexture(CallbackBase1<Ptr<Image>> *on_compressed, const Ptr<Texture> &texture, int quality = 1, int new_texture_format = -1, int use_mip_maps = -1);
+	static int asyncCompressTexture(CallbackBase1<Ptr<Image>> *on_compressed, CallbackBase1<Ptr<Image>> *on_compressed_async, const Ptr<Texture> &texture, int quality = 1, int new_texture_format = -1, int use_mip_maps = -1);
+	static int compressImage(CallbackBase1<Ptr<Image>> *on_compressed, const Ptr<Image> &image, int quality = 1, int new_image_format = -1, int use_mip_maps = -1);
+	static int asyncCompressImage(CallbackBase1<Ptr<Image>> *on_compressed, CallbackBase1<Ptr<Image>> *on_compressed_async, const Ptr<Image> &image, int quality = 1, int new_image_format = -1, int use_mip_maps = -1);
+	static void transferTextureToImage(CallbackBase1<Ptr<Image>> *on_transfered, const Ptr<Texture> &src);
+	static void asyncTransferTextureToImage(CallbackBase1<Ptr<Image>> *on_transfered, CallbackBase1<Ptr<Image>> *on_transfered_async, const Ptr<Texture> &src);
+	static void asyncTransferStructuredBuffer(CallbackBase1<void *> *on_transfered, CallbackBase1<void *> *on_transfered_async, const Ptr<StructuredBuffer> &src);
+	static void transferStructuredBuffer(CallbackBase1<void *> *on_transfered, const Ptr<StructuredBuffer> &src);
+	static void renderTexture2D(const Ptr<Camera> &camera, const Ptr<Texture> &texture, int skip_flags);
+	static void renderTexture2D(const Ptr<Camera> &camera, const Ptr<Texture> &texture, int width, int height, int hdr, int skip_flags);
+	static void renderTextureCube(const Ptr<Camera> &camera, const Ptr<Texture> &texture, int size, int hdr, int skip_flags, bool local_space = false);
+	static void renderTextureCube(const Ptr<Camera> &camera, const Ptr<Texture> &texture, int skip_flags);
+	static void renderNodeTexture2D(const Ptr<Camera> &camera, const Ptr<Node> &node, const Ptr<Texture> &texture, int skip_flags, int light_usage, const char *environment_texture_name);
+	static void renderNodeTexture2D(const Ptr<Camera> &camera, const Ptr<Node> &node, const Ptr<Texture> &texture, int width, int height, int hdr, int skip_flags, int light_usage, const char *environment_texture_name);
 	static void renderScreenMaterial(const char *material_name, const char *texture_name, const Ptr<Texture> &texture);
 	static void renderScreenMaterial(const char *material_name, const Ptr<Texture> &color_texture);
 	static void renderScreenMaterial(const char *material_name);
 	static void renderComputeMaterial(Render::PASS pass, const Ptr<Material> &material, int width, int height, int depth);
 	static void renderTAA(const Ptr<Texture> &color_texture, const Ptr<Texture> &color_old_texture);
-	static void convertColorSpecularToMetalness(Math::vec4 &diffuse, Math::vec4 &specular, Math::vec4 &albedo, Math::vec4 &shading);
-	static void convertImageSpecularToMetalness(const Ptr<Image> &diffuse, const Ptr<Image> &specular, Ptr<Image> &albedo, Ptr<Image> &shading);
 	static void beginDebugGroup(const char *name);
 	static void endDebugGroup();
 	static int getAPI();
@@ -464,24 +515,46 @@ public:
 	static int getTexturesFilter();
 	static void setTexturesAnisotropy(int anisotropy);
 	static int getTexturesAnisotropy();
-	static void setStreamingMode(int mode);
-	static int getStreamingMode();
-	static void setStreamingUseMemoryLimit(bool limit);
-	static bool isStreamingUseMemoryLimit();
+	static void setForceStreaming(bool streaming);
+	static bool isForceStreaming();
+	static void setStreamingFirstFramesForce(int force);
+	static int getStreamingFirstFramesForce();
 	static void setStreamingMaxThreads(int threads);
 	static int getStreamingMaxThreads();
-	static void setStreamingDestroyDuration(int duration);
-	static int getStreamingDestroyDuration();
-	static void setStreamingTexturesMemoryLimit(int limit);
-	static int getStreamingTexturesMemoryLimit();
-	static void setStreamingTexturesCacheResolution(int resolution);
-	static int getStreamingTexturesCacheResolution();
-	static void setStreamingMeshesMemoryLimit(int limit);
-	static int getStreamingMeshesMemoryLimit();
 	static void setStreamingParticlesMemoryLimit(int limit);
 	static int getStreamingParticlesMemoryLimit();
-	static void setStreamingUpdateLimit(float limit);
-	static float getStreamingUpdateLimit();
+	static void setStreamingBudgetLoading(float loading);
+	static float getStreamingBudgetLoading();
+	static void setStreamingBudgetDestroyTextures(float textures);
+	static float getStreamingBudgetDestroyTextures();
+	static void setStreamingBudgetDestroyMeshes(float meshes);
+	static float getStreamingBudgetDestroyMeshes();
+	static void setStreamingTexturesMode(Render::STREAMING_TEXTURES mode);
+	static Render::STREAMING_TEXTURES getStreamingTexturesMode();
+	static void setStreamingTexturesMemoryLimit(int limit);
+	static int getStreamingTexturesMemoryLimit();
+	static void setStreamingTexturesLifeTime(int time);
+	static int getStreamingTexturesLifeTime();
+	static void setStreamingTexturesCacheResolution(int resolution);
+	static int getStreamingTexturesCacheResolution();
+	static void setStreamingMeshesModeVRAM(Render::STREAMING_MESHES streamingmeshesmodevram);
+	static Render::STREAMING_MESHES getStreamingMeshesModeVRAM();
+	static void setStreamingMeshesLimitVRAM(int streamingmesheslimitvram);
+	static int getStreamingMeshesLimitVRAM();
+	static void setStreamingMeshesLifeTimeVRAM(int streamingmesheslifetimevram);
+	static int getStreamingMeshesLifeTimeVRAM();
+	static void setStreamingMeshesModeRAM(Render::STREAMING_MESHES streamingmeshesmoderam);
+	static Render::STREAMING_MESHES getStreamingMeshesModeRAM();
+	static void setStreamingMeshesLimitRAM(int streamingmesheslimitram);
+	static int getStreamingMeshesLimitRAM();
+	static void setStreamingMeshesLifeTimeRAM(int streamingmesheslifetimeram);
+	static int getStreamingMeshesLifeTimeRAM();
+	static void setStreamingMeshesPrefetchCollision(Render::STREAMING_MESHES_PREFETCH collision);
+	static Render::STREAMING_MESHES_PREFETCH getStreamingMeshesPrefetchCollision();
+	static void setStreamingMeshesPrefetchIntersection(Render::STREAMING_MESHES_PREFETCH intersection);
+	static Render::STREAMING_MESHES_PREFETCH getStreamingMeshesPrefetchIntersection();
+	static void setStreamingMeshesPrefetchRadius(float radius);
+	static float getStreamingMeshesPrefetchRadius();
 	static void setShadersPreload(bool preload);
 	static bool isShadersPreload();
 	static void setDistanceOffset(float offset);
@@ -571,6 +644,8 @@ public:
 	static bool isTAACatmullResampling();
 	static void setTAASamples(int samples);
 	static int getTAASamples();
+	static void setTAAEdgesFrameCountMultiplier(float multiplier);
+	static float getTAAEdgesFrameCountMultiplier();
 	static void setFXAA(bool fxaa);
 	static bool isFXAA();
 	static void setFXAAIntensity(float intensity);
@@ -609,12 +684,6 @@ public:
 	static bool isReflectionLods();
 	static void setReflectionDynamicRoughnessOffset(bool offset);
 	static bool isReflectionDynamicRoughnessOffset();
-	static void setGIPreset(int preset);
-	static int getGIPreset();
-	static int getGIPresetNumNames();
-	static const char *getGIPresetName(int num);
-	static void setSSRTGI(bool ssrtgi);
-	static bool isSSRTGI();
 	static void setSSRTGIPreset(int preset);
 	static int getSSRTGIPreset();
 	static int getSSRTGIPresetNumNames();
@@ -633,118 +702,38 @@ public:
 	static int getSSRTGINumRays();
 	static void setSSRTGINumSteps(int steps);
 	static int getSSRTGINumSteps();
-	static void setSSRTGINoiseRay(float ray);
-	static float getSSRTGINoiseRay();
 	static void setSSRTGINoiseStep(float step);
 	static float getSSRTGINoiseStep();
 	static void setSSRTGIStepSize(float size);
 	static float getSSRTGIStepSize();
 	static void setSSAO(bool ssao);
 	static bool isSSAO();
-	static void setSSAOPreset(int preset);
-	static int getSSAOPreset();
-	static int getSSAOPresetNumNames();
-	static const char *getSSAOPresetName(int num);
 	static void setSSAOCavity(bool cavity);
 	static bool isSSAOCavity();
-	static void setSSAONoise(bool noise);
-	static bool isSSAONoise();
-	static void setSSAORayTracing(bool tracing);
-	static bool isSSAORayTracing();
-	static void setSSAORayTracingDenoise(bool denoise);
-	static bool isSSAORayTracingDenoise();
-	static void setSSAOQuality(int quality);
-	static int getSSAOQuality();
-	static void setSSAODenoiseQuality(int quality);
-	static int getSSAODenoiseQuality();
-	static void setSSAODenoiseIntensity(float intensity);
-	static float getSSAODenoiseIntensity();
-	static void setSSAODenoiseGaussianSigma(float sigma);
-	static float getSSAODenoiseGaussianSigma();
-	static void setSSAODenoiseThreshold(float threshold);
-	static float getSSAODenoiseThreshold();
-	static void setSSAODenoiseRadius(int radius);
-	static int getSSAODenoiseRadius();
-	static void setSSAOResolution(int resolution);
-	static int getSSAOResolution();
 	static void setSSAOIntensity(float intensity);
 	static float getSSAOIntensity();
-	static void setSSAOIntensityLightedSide(float side);
-	static float getSSAOIntensityLightedSide();
 	static void setSSAOIntensityReflection(float reflection);
 	static float getSSAOIntensityReflection();
-	static void setSSAORayTracingThreshold(float threshold);
-	static float getSSAORayTracingThreshold();
-	static void setSSAORadius(float radius);
-	static float getSSAORadius();
 	static void setSSAOCavityIntensity(float intensity);
 	static float getSSAOCavityIntensity();
 	static void setSSAOCavityRadius(float radius);
 	static float getSSAOCavityRadius();
 	static void setSSAOThreshold(float threshold);
 	static float getSSAOThreshold();
-	static void setSSAOColorClampingIntensity(float intensity);
-	static float getSSAOColorClampingIntensity();
-	static void setSSAOColorClampingVelocityThreshold(float threshold);
-	static float getSSAOColorClampingVelocityThreshold();
 	static void setSSGI(bool ssgi);
 	static bool isSSGI();
-	static void setSSGIPreset(int preset);
-	static int getSSGIPreset();
-	static int getSSGIPresetNumNames();
-	static const char *getSSGIPresetName(int num);
-	static void setSSGIDenoise(bool denoise);
-	static bool isSSGIDenoise();
-	static void setSSGIDenoiseQuality(int quality);
-	static int getSSGIDenoiseQuality();
-	static void setSSGIDenoiseIntensity(float intensity);
-	static float getSSGIDenoiseIntensity();
-	static void setSSGIDenoiseGaussianSigma(float sigma);
-	static float getSSGIDenoiseGaussianSigma();
-	static void setSSGIDenoiseThreshold(float threshold);
-	static float getSSGIDenoiseThreshold();
-	static void setSSGIDenoiseRadius(int radius);
-	static int getSSGIDenoiseRadius();
-	static void setSSGIResolutionColor(int color);
-	static int getSSGIResolutionColor();
 	static void setSSGIIntensity(float intensity);
 	static float getSSGIIntensity();
 	static void setSSGIThreshold(float threshold);
 	static float getSSGIThreshold();
-	static void setSSGIRadius(float radius);
-	static float getSSGIRadius();
-	static void setSSGIColorClampingIntensity(float intensity);
-	static float getSSGIColorClampingIntensity();
-	static void setSSGIColorClampingVelocityThreshold(float threshold);
-	static float getSSGIColorClampingVelocityThreshold();
 	static void setSSGIIntensityBoost(int boost);
 	static int getSSGIIntensityBoost();
-	static void setBentNormalRayTracing(bool tracing);
-	static bool isBentNormalRayTracing();
-	static void setBentNormalPreset(int preset);
-	static int getBentNormalPreset();
-	static int getBentNormalPresetNumNames();
-	static const char *getBentNormalPresetName(int num);
-	static void setBentNormalRayTracingDenoise(bool denoise);
-	static bool isBentNormalRayTracingDenoise();
-	static void setBentNormalDenoiseQuality(int quality);
-	static int getBentNormalDenoiseQuality();
-	static void setBentNormalDenoiseIntensity(float intensity);
-	static float getBentNormalDenoiseIntensity();
-	static void setBentNormalDenoiseGaussianSigma(float sigma);
-	static float getBentNormalDenoiseGaussianSigma();
-	static void setBentNormalDenoiseThreshold(float threshold);
-	static float getBentNormalDenoiseThreshold();
-	static void setBentNormalDenoiseRadius(int radius);
-	static int getBentNormalDenoiseRadius();
+	static void setBentNormal(bool normal);
+	static bool isBentNormal();
 	static void setBentNormalFixOverlitAreas(bool areas);
 	static bool isBentNormalFixOverlitAreas();
-	static void setBentNormalRayTracingThreshold(float threshold);
-	static float getBentNormalRayTracingThreshold();
-	static void setBentNormalColorClampingIntensity(float intensity);
-	static float getBentNormalColorClampingIntensity();
-	static void setBentNormalColorClampingVelocityThreshold(float threshold);
-	static float getBentNormalColorClampingVelocityThreshold();
+	static void setBentNormalThreshold(float threshold);
+	static float getBentNormalThreshold();
 	static void setSSR(bool ssr);
 	static bool isSSR();
 	static void setSSRPreset(int preset);
@@ -753,18 +742,6 @@ public:
 	static const char *getSSRPresetName(int num);
 	static void setSSRIncreasedAccuracy(bool accuracy);
 	static bool isSSRIncreasedAccuracy();
-	static void setSSRDenoise(bool denoise);
-	static bool isSSRDenoise();
-	static void setSSRDenoiseQuality(int quality);
-	static int getSSRDenoiseQuality();
-	static void setSSRDenoiseIntensity(float intensity);
-	static float getSSRDenoiseIntensity();
-	static void setSSRDenoiseGaussianSigma(float sigma);
-	static float getSSRDenoiseGaussianSigma();
-	static void setSSRDenoiseThreshold(float threshold);
-	static float getSSRDenoiseThreshold();
-	static void setSSRDenoiseRadius(int radius);
-	static int getSSRDenoiseRadius();
 	static void setSSRResolution(int resolution);
 	static int getSSRResolution();
 	static void setSSRResolutionDepth(int depth);
@@ -797,12 +774,46 @@ public:
 	static float getSSRNormalBias();
 	static void setSSRViewBias(float bias);
 	static float getSSRViewBias();
-	static void setSSRColorClampingIntensity(float intensity);
-	static float getSSRColorClampingIntensity();
-	static void setSSRColorClampingVelocityThreshold(float threshold);
-	static float getSSRColorClampingVelocityThreshold();
 	static void setSSRTonemappingGamma(float gamma);
 	static float getSSRTonemappingGamma();
+	static void setIndirectDiffuseTemporalFilteringEnabled(bool enabled);
+	static bool isIndirectDiffuseTemporalFilteringEnabled();
+	static void setIndirectDiffuseTemporalFilteringFrameCount(float count);
+	static float getIndirectDiffuseTemporalFilteringFrameCount();
+	static void setIndirectDiffuseTemporalFilteringColorClampingIntensity(float intensity);
+	static float getIndirectDiffuseTemporalFilteringColorClampingIntensity();
+	static void setIndirectDiffuseTemporalFilteringColorClampingVelocityThreshold(float threshold);
+	static float getIndirectDiffuseTemporalFilteringColorClampingVelocityThreshold();
+	static void setIndirectDiffuseDenoiseEnabled(bool enabled);
+	static bool isIndirectDiffuseDenoiseEnabled();
+	static void setIndirectDiffuseDenoiseMaskEnabled(bool enabled);
+	static bool isIndirectDiffuseDenoiseMaskEnabled();
+	static void setIndirectDiffuseDenoiseThreshold(float threshold);
+	static float getIndirectDiffuseDenoiseThreshold();
+	static void setIndirectSpecularTemporalFilteringEnabled(bool enabled);
+	static bool isIndirectSpecularTemporalFilteringEnabled();
+	static void setIndirectSpecularTemporalFilteringFrameCount(float count);
+	static float getIndirectSpecularTemporalFilteringFrameCount();
+	static void setIndirectSpecularTemporalFilteringColorClampingIntensity(float intensity);
+	static float getIndirectSpecularTemporalFilteringColorClampingIntensity();
+	static void setIndirectSpecularTemporalFilteringColorClampingVelocityThreshold(float threshold);
+	static float getIndirectSpecularTemporalFilteringColorClampingVelocityThreshold();
+	static void setIndirectSpecularDenoiseEnabled(bool enabled);
+	static bool isIndirectSpecularDenoiseEnabled();
+	static void setIndirectSpecularDenoiseMaskEnabled(bool enabled);
+	static bool isIndirectSpecularDenoiseMaskEnabled();
+	static void setIndirectSpecularDenoiseThreshold(float threshold);
+	static float getIndirectSpecularDenoiseThreshold();
+	static void setDenoisePreset(int preset);
+	static int getDenoisePreset();
+	static int getDenoisePresetNumNames();
+	static const char *getDenoisePresetName(int num);
+	static void setDenoiseRadius(int radius);
+	static int getDenoiseRadius();
+	static void setDenoiseNumBlurIterations(int iterations);
+	static int getDenoiseNumBlurIterations();
+	static void setDenoiseDenoiseByVelocityThreshold(float threshold);
+	static float getDenoiseDenoiseByVelocityThreshold();
 	static void setSSSSS(bool sssss);
 	static bool isSSSSS();
 	static void setSSSSSPreset(int preset);
@@ -1116,8 +1127,8 @@ public:
 	static float getEnvironmentHazeColorizationIntensity();
 	static void setEnvironmentCubemapBlendMode(int mode);
 	static int getEnvironmentCubemapBlendMode();
-	static void setEnvironmentCorrectRoughness(Render::CORRECT_ROUGHNESS roughness);
-	static Render::CORRECT_ROUGHNESS getEnvironmentCorrectRoughness();
+	static void setEnvironmentGGXMipmapsQuality(Render::GGX_MIPMAPS_QUALITY quality);
+	static Render::GGX_MIPMAPS_QUALITY getEnvironmentGGXMipmapsQuality();
 	static void setScreenSpaceShadowShaftsMode(int mode);
 	static int getScreenSpaceShadowShaftsMode();
 	static void setScreenSpaceShadowShaftsResolution(int resolution);
@@ -1347,6 +1358,8 @@ public:
 	static float getLandscapeTerrainMaskDithering();
 	static void setLandscapeCacheCPUSize(int size);
 	static int getLandscapeCacheCPUSize();
+	static void setLandscapeCacheCPUPrefetchRadius(float radius);
+	static float getLandscapeCacheCPUPrefetchRadius();
 	static void setLandscapeCacheGPUSize(int size);
 	static int getLandscapeCacheGPUSize();
 	static void setLandscapeCacheGPULifeTime(int time);
@@ -1497,6 +1510,62 @@ public:
 	static bool isTransparentDeferred();
 	static void setTransparentMultipleEnvProbes(bool probes);
 	static bool isTransparentMultipleEnvProbes();
+	static void setShowFieldMask(bool mask);
+	static bool isShowFieldMask();
+	static void setShowFieldMaskBits(int bits);
+	static int getShowFieldMaskBits();
+	static void setShowShadowMask(bool mask);
+	static bool isShowShadowMask();
+	static void setShowShadowMaskBits(int bits);
+	static int getShowShadowMaskBits();
+	static void setShowObstacleMask(bool mask);
+	static bool isShowObstacleMask();
+	static void setShowObstacleMaskBits(int bits);
+	static int getShowObstacleMaskBits();
+	static void setShowMaterialMask(bool mask);
+	static bool isShowMaterialMask();
+	static void setShowMaterialMaskBits(int bits);
+	static int getShowMaterialMaskBits();
+	static void setShowViewportMask(bool mask);
+	static bool isShowViewportMask();
+	static void setShowViewportMaskBits(int bits);
+	static int getShowViewportMaskBits();
+	static void setShowPhysicalMask(bool mask);
+	static bool isShowPhysicalMask();
+	static void setShowPhysicalMaskBits(int bits);
+	static int getShowPhysicalMaskBits();
+	static void setShowCollisionMask(bool mask);
+	static bool isShowCollisionMask();
+	static void setShowCollisionMaskBits(int bits);
+	static int getShowCollisionMaskBits();
+	static void setShowNavigationMask(bool mask);
+	static bool isShowNavigationMask();
+	static void setShowNavigationMaskBits(int bits);
+	static int getShowNavigationMaskBits();
+	static void setShowIntersectionMask(bool mask);
+	static bool isShowIntersectionMask();
+	static void setShowIntersectionMaskBits(int bits);
+	static int getShowIntersectionMaskBits();
+	static void setShowSoundReverbMask(bool mask);
+	static bool isShowSoundReverbMask();
+	static void setShowSoundReverbMaskBits(int bits);
+	static int getShowSoundReverbMaskBits();
+	static void setShowSoundSourceMask(bool mask);
+	static bool isShowSoundSourceMask();
+	static void setShowSoundSourceMaskBits(int bits);
+	static int getShowSoundSourceMaskBits();
+	static void setShowSoundOcclusionMask(bool mask);
+	static bool isShowSoundOcclusionMask();
+	static void setShowSoundOcclusionMaskBits(int bits);
+	static int getShowSoundOcclusionMaskBits();
+	static void setShowPhysicalExclusionMask(bool mask);
+	static bool isShowPhysicalExclusionMask();
+	static void setShowPhysicalExclusionMaskBits(int bits);
+	static int getShowPhysicalExclusionMaskBits();
+	static void setShowPhysicsIntersectionMask(bool mask);
+	static bool isShowPhysicsIntersectionMask();
+	static void setShowPhysicsIntersectionMaskBits(int bits);
+	static int getShowPhysicsIntersectionMaskBits();
 	static void setShowQueries(bool queries);
 	static bool isShowQueries();
 	static void setShowDecals(bool decals);
@@ -1509,18 +1578,38 @@ public:
 	static bool isShowOccluder();
 	static void setShowCascades(bool cascades);
 	static bool isShowCascades();
+	static void setShowVisualizerDistance(float distance);
+	static float getShowVisualizerDistance();
 	static void setShowWorldShadowCasters(bool casters);
 	static bool isShowWorldShadowCasters();
 	static void setShowAlphaTest(bool test);
 	static bool isShowAlphaTest();
+	static void setShowEmission(bool emission);
+	static bool isShowEmission();
 	static void setShowMeshStatics(bool statics);
 	static bool isShowMeshStatics();
 	static void setShowMeshDynamics(bool dynamics);
 	static bool isShowMeshDynamics();
+	static void setShowComplexShadowShader(bool shader);
+	static bool isShowComplexShadowShader();
+	static void setShowSurfaceCustomTextureNotAvailable(bool available);
+	static bool isShowSurfaceCustomTextureNotAvailable();
+	static void setShowSurfaceCustomTextureNotUsed(bool used);
+	static bool isShowSurfaceCustomTextureNotUsed();
+	static void setShowSurfaceCustomTexture(bool texture);
+	static bool isShowSurfaceCustomTexture();
+	static void setShowPhysicsIntersection(bool intersection);
+	static bool isShowPhysicsIntersection();
+	static void setShowIntersection(bool intersection);
+	static bool isShowIntersection();
+	static void setShowManualMaterials(bool materials);
+	static bool isShowManualMaterials();
+	static void setShowNonManualMaterials(bool materials);
+	static bool isShowNonManualMaterials();
 	static void setShowClusters(bool clusters);
 	static bool isShowClusters();
-	static void setShowImmovable(int immovable);
-	static int getShowImmovable();
+	static void setShowImmovable(Render::SHOW_IMMOVABLE immovable);
+	static Render::SHOW_IMMOVABLE getShowImmovable();
 	static void setShowDynamic(bool dynamic);
 	static bool isShowDynamic();
 	static void setShowTransparent(bool transparent);
@@ -1541,6 +1630,12 @@ public:
 	static int getShowVoxelProbeVisualizerGridSize();
 	static void setShowVoxelProbeVisualizerSphereScale(float scale);
 	static float getShowVoxelProbeVisualizerSphereScale();
+	static void setShowNodesInteractionTrigger(bool trigger);
+	static bool isShowNodesInteractionTrigger();
+	static void setShowNodesInteractionClutter(bool clutter);
+	static bool isShowNodesInteractionClutter();
+	static void setShowNodesInteractionGrass(bool grass);
+	static bool isShowNodesInteractionGrass();
 	static void setShowTextures(int textures);
 	static int getShowTextures();
 	static void setShowTexturesOffset(int offset);
@@ -1549,6 +1644,14 @@ public:
 	static int getShowTexturesNumber();
 	static void setShowTriangles(int triangles);
 	static int getShowTriangles();
+	static void setShowVertexColor(Render::SHOW_VERTEX_COLOR color);
+	static Render::SHOW_VERTEX_COLOR getShowVertexColor();
+	static void setShowTextureResolution(Render::SHOW_TEXTURE_RESOLUTION resolution);
+	static Render::SHOW_TEXTURE_RESOLUTION getShowTextureResolution();
+	static void setShowTextureResolutionUVMode(Render::SHOW_TEXTURE_RESOLUTION_UV mode);
+	static Render::SHOW_TEXTURE_RESOLUTION_UV getShowTextureResolutionUVMode();
+	static void setShowTextureResolutionBlend(float blend);
+	static float getShowTextureResolutionBlend();
 	static int getHDRTextureFormat();
 
 	enum
@@ -1617,6 +1720,7 @@ public:
 	static void destroyCacheTexture(const UGUID &guid);
 	static void createCacheTexture(const UGUID &guid);
 	static Ptr<Texture> getCacheTexture(const UGUID &guid);
+	static void reloadCacheTexture(const UGUID &guid);
 	static void destroyCacheTextures();
 	static void unloadCacheTextures();
 	static void createCacheTextures();
@@ -1625,17 +1729,16 @@ public:
 	static void * getD3D11Device();
 	static void * getD3D11Context();
 	static void * getGLContext();
+	static void reloadResource(const char *path);
+	static void reloadResource(const Vector<String> &pathes);
 };
 
 //////////////////////////////////////////////////////////////////////////
 
 class UNIGINE_API RenderState
 {
-protected:
-	
-
 public:
-	static int isInitialized(); 
+	static int isInitialized();
 
 	enum
 	{
@@ -1805,11 +1908,8 @@ public:
 
 class UNIGINE_API Renderer
 {
-protected:
-	
-
 public:
-	static int isInitialized(); 
+	static int isInitialized();
 
 	enum
 	{
@@ -1903,8 +2003,33 @@ public:
 		Math::mat4 moon_rotation;
 	};
 
+
+	struct CBufferTonemapper
+	{
+		Math::vec4 filmic_curve;
+		Math::vec4 filmic_white;
+		float filmic_saturation_recovery;
+
+		float aces_white_clip;
+		float aces_toe;
+		float aces_shoulder_angle;
+		float aces_shoulder_strength;
+		float aces_shoulder_length;
+
+		float aces_with_reinhard_mix;
+		float aces_with_reinhard_white_clip;
+		float aces_with_reinhard_toe;
+		float aces_with_reinhard_shoulder_angle;
+		float aces_with_reinhard_shoulder_strength;
+		float aces_with_reinhard_shoulder_length;
+
+		float reinhard_contribution;
+		float reinhard_luma_based_contribution;
+	};
+
 	static Renderer::CBufferCamera getShaderCBufferCamera();
 	static Renderer::CBufferScattering getShaderCBufferScattering();
+	static Renderer::CBufferTonemapper getShaderCBufferTonemapper();
 	static bool hasGeodeticPivot();
 	static bool isNode();
 	static bool isReflection();
@@ -2015,11 +2140,8 @@ public:
 
 class UNIGINE_API BakeLighting
 {
-protected:
-	
-
 public:
-	static int isInitialized(); 
+	static int isInitialized();
 
 	enum LIGHTMAP_QUALITY
 	{

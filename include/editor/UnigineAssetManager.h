@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -30,11 +29,8 @@ class MountPointParameters;
 
 class UNIGINE_EDITOR_API AssetManager
 {
-protected:
-	
-
 public:
-	static int isInitialized(); 
+	static int isInitialized();
 	// assets
 	static Unigine::UGUID getAssetGUIDFromPath(const char *asset_path);
 	static Unigine::String getAssetPathFromGUID(const Unigine::UGUID &asset_guid);
@@ -54,10 +50,15 @@ public:
 	static Unigine::Ptr<Collection> getAssetImportParameters(const char *asset_path);
 	static bool isAssetWritable(const char *asset_path);
 	static Unigine::Vector<Unigine::UGUID> getAssetGUIDs();
+	static void getAssetGUIDs(Unigine::Vector<Unigine::UGUID> &asset_guids);
 	static Unigine::Vector<Unigine::String> getAssetPaths();
+	static void getAssetPaths(Unigine::Vector<Unigine::String> &asset_paths);
 	static Unigine::Vector<Unigine::UGUID> getAssetGUIDsForDirectory(const char *directory_path);
+	static void getAssetGUIDsForDirectory(const char *directory_path, Unigine::Vector<Unigine::UGUID> &asset_guids);
 	static Unigine::Vector<Unigine::String> getAssetPathsForDirectory(const char *directory_path);
+	static void getAssetPathsForDirectory(const char *directory_path, Unigine::Vector<Unigine::String> &asset_paths);
 	static Unigine::Vector<Unigine::UGUID> getRuntimeGUIDs(const char *asset_path);
+	static void getRuntimeGUIDs(const char *asset_path, Unigine::Vector<Unigine::UGUID> &runtime_guids);
 	static Unigine::String getRuntimeAlias(const Unigine::UGUID &runtime_guid);
 	static bool isRuntimePrimary(const Unigine::UGUID &runtime_guid);
 	// directories
@@ -73,7 +74,9 @@ public:
 	static bool isDirectory(const char *directory_path);
 	static bool isDirectoryWritable(const char *directory_path);
 	static Unigine::Vector<Unigine::String> getDirectoryPathsAll();
+	static void getDirectoryPathsAll(Unigine::Vector<Unigine::String> &directory_paths);
 	static Unigine::Vector<Unigine::String> getDirectoryPaths(const char *directory_path);
+	static void getDirectoryPaths(const char *directory_path, Unigine::Vector<Unigine::String> &directory_paths);
 	// mount points
 	static bool createMountPoint(const char *directory_path, const Unigine::Ptr<MountPointParameters> &mount_creation_parameters);
 	static bool removeMountPoint(const char *directory_path);
@@ -131,8 +134,10 @@ public:
 	const char *getAbsolutePath() const;
 	void addExclusiveFilter(const char *exclusive_filter);
 	Unigine::Vector<Unigine::String> getExclusiveFilters() const;
+	void getExclusiveFilters(Unigine::Vector<Unigine::String> &exclusive_filters) const;
 	void addIgnoreFilter(const char *ignore_filter);
 	Unigine::Vector<Unigine::String> getIgnoreFilters() const;
+	void getIgnoreFilters(Unigine::Vector<Unigine::String> &ignore_filters) const;
 };
 typedef Unigine::Ptr<MountPointParameters> MountPointParametersPtr;
 

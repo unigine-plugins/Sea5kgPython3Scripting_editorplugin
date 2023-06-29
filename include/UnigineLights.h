@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -151,10 +150,10 @@ public:
 	float getShadowDistance() const;
 	void setFadeDistance(float distance);
 	float getFadeDistance() const;
-	void setRenderWater(bool water);
-	bool getRenderWater() const;
-	void setRenderTransparent(bool transparent);
-	bool getRenderTransparent() const;
+	void setRenderOnWater(bool water);
+	bool isRenderOnWater() const;
+	void setRenderOnTransparent(bool transparent);
+	bool isRenderOnTransparent() const;
 	void setShadowMask(int mask);
 	int getShadowMask() const;
 	void setViewportMask(int mask);
@@ -201,9 +200,9 @@ public:
 	Ptr<Texture> getShadowColorTexture() const;
 	void setShadowColorTextureMode(Light::SHADOW_COLOR_MODE mode);
 	Light::SHADOW_COLOR_MODE getShadowColorTextureMode() const;
-	Ptr<Texture> getDepthTexture() const;
-	void setShadowScreenSpace(int space);
-	int getShadowScreenSpace() const;
+	Ptr<Texture> getShadowTexture() const;
+	void setShadowScreenSpace(bool space);
+	bool isShadowScreenSpace() const;
 	void setShadowScreenSpaceNumRays(int rays);
 	int getShadowScreenSpaceNumRays() const;
 	void setShadowScreenSpaceNumSteps(int steps);
@@ -319,10 +318,6 @@ public:
 	bool isBakeVisibilityLightmap() const;
 	void setTexturePath(const char *path);
 	const char *getTexturePath() const;
-	int setTextureImage(const Ptr<Image> &image, bool dynamic = false);
-	int getTextureImage(const Ptr<Image> &image) const;
-	void setTexture(const Ptr<Texture> &texture);
-	Ptr<Texture> getTexture() const;
 	Math::ivec3 getResolution();
 	size_t getVideoMemoryUsage();
 };
@@ -336,77 +331,168 @@ public:
 	static int type() { return Node::LIGHT_ENVIRONMENT_PROBE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
+
+	enum PROJECTION_MODE
+	{
+		PROJECTION_MODE_SPHERE = 0,
+		PROJECTION_MODE_BOX,
+		PROJECTION_MODE_RAYMARCHING,
+	};
+
+	enum SPECULAR_BRDF_MODE
+	{
+		SPECULAR_BRDF_MODE_BLINN = 0,
+		SPECULAR_BRDF_MODE_GGX,
+	};
+
+	enum GRAB_MODE
+	{
+		GRAB_MODE_BAKED = 0,
+		GRAB_MODE_DYNAMIC,
+	};
+
+	enum GRAB_RESOLUTION
+	{
+		GRAB_RESOLUTION_MODE_32,
+		GRAB_RESOLUTION_MODE_64,
+		GRAB_RESOLUTION_MODE_128,
+		GRAB_RESOLUTION_MODE_256,
+		GRAB_RESOLUTION_MODE_512,
+		GRAB_RESOLUTION_MODE_1024,
+		GRAB_RESOLUTION_MODE_2048,
+		GRAB_RESOLUTION_MODE_4096,
+	};
+
+	enum GRAB_SUPERSAMPLING
+	{
+		GRAB_SUPERSAMPLING_MODE_1,
+		GRAB_SUPERSAMPLING_MODE_2,
+		GRAB_SUPERSAMPLING_MODE_4,
+		GRAB_SUPERSAMPLING_MODE_8,
+	};
+
+	enum GRAB_DYNAMIC_FACES_PER_FRAME
+	{
+		GRAB_DYNAMIC_FACES_PER_FRAME_MODE_1,
+		GRAB_DYNAMIC_FACES_PER_FRAME_MODE_2,
+		GRAB_DYNAMIC_FACES_PER_FRAME_MODE_3,
+		GRAB_DYNAMIC_FACES_PER_FRAME_MODE_4,
+		GRAB_DYNAMIC_FACES_PER_FRAME_MODE_5,
+		GRAB_DYNAMIC_FACES_PER_FRAME_MODE_6,
+	};
 	static Ptr<LightEnvironmentProbe> create(const Math::vec4 &color, const Math::vec3 &attenuation_distance, const char *name = 0);
-	void setAttenuationDistance(const Math::vec3 &distance);
-	Math::vec3 getAttenuationDistance() const;
-	void setDynamic(bool dynamic);
-	bool isDynamic() const;
-	void setDynamicCorrectRoughness(Render::CORRECT_ROUGHNESS roughness);
-	Render::CORRECT_ROUGHNESS getDynamicCorrectRoughness() const;
-	void setGrabByBakeLighting(bool lighting);
-	bool isGrabByBakeLighting() const;
-	void setBoxProjection(bool projection);
-	bool isBoxProjection() const;
-	void setUseSunColor(bool color);
-	bool isUseSunColor() const;
-	void setAdditiveBlending(bool blending);
-	bool isAdditiveBlending() const;
-	void setSkyCutout(bool cutout);
-	bool isSkyCutout() const;
-	void setCutoutByShadow(bool shadow);
-	bool isCutoutByShadow() const;
-	void setLocalSpace(bool space);
-	bool isLocalSpace() const;
-	void setBoxGI(float boxgi);
-	float getBoxGI() const;
-	void setBoxGlossCorners(float corners);
-	float getBoxGlossCorners() const;
-	void setBoxSize(const Math::vec3 &size);
-	Math::vec3 getBoxSize() const;
-	void setRenderFacesPerFrame(int frame);
-	int getRenderFacesPerFrame() const;
-	void setResolution(int resolution);
-	int getResolution() const;
-	void setSupersampling(int supersampling);
-	int getSupersampling() const;
-	void setReflectionViewportMask(int mask);
-	int getReflectionViewportMask() const;
-	void setDistanceScale(float scale);
-	float getDistanceScale() const;
-	void setZNear(float znear);
-	float getZNear() const;
-	void setZFar(float zfar);
-	float getZFar() const;
-	void setParallax(float parallax);
-	float getParallax() const;
+	void setProjectionMode(LightEnvironmentProbe::PROJECTION_MODE mode);
+	LightEnvironmentProbe::PROJECTION_MODE getProjectionMode() const;
 	void setAmbientEnabled(bool enabled);
 	bool isAmbientEnabled() const;
 	void setAmbientContrast(float contrast);
 	float getAmbientContrast() const;
+	void setSpecularEnabled(bool enabled);
+	bool isSpecularEnabled() const;
+	void setLocalSpace(bool space);
+	bool isLocalSpace() const;
+	void setSkyCutout(bool cutout);
+	bool isSkyCutout() const;
+	void setMultiplyBySkyColor(bool color);
+	bool isMultiplyBySkyColor() const;
+	void setCutoutByShadow(bool shadow);
+	bool isCutoutByShadow() const;
+	void setAdditiveBlending(bool blending);
+	bool isAdditiveBlending() const;
+	void setAttenuationDistance(const Math::vec3 &distance);
+	Math::vec3 getAttenuationDistance() const;
 	void setTexturePath(const char *path);
 	const char *getTexturePath() const;
-	void setBakeMipmapsQuality(float quality);
-	float getBakeMipmapsQuality() const;
-	void setBakeVisibilityEmission(bool emission);
-	bool isBakeVisibilityEmission() const;
-	void setBakeVisibilitySky(bool sky);
-	bool isBakeVisibilitySky() const;
-	void setBakeVisibilityLightWorld(bool world);
-	bool isBakeVisibilityLightWorld() const;
-	void setBakeVisibilityLightOmni(bool omni);
-	bool isBakeVisibilityLightOmni() const;
-	void setBakeVisibilityLightProj(bool proj);
-	bool isBakeVisibilityLightProj() const;
-	void setBakeVisibilityVoxelProbe(bool probe);
-	bool isBakeVisibilityVoxelProbe() const;
-	void setBakeVisibilityEnvironmentProbe(bool probe);
-	bool isBakeVisibilityEnvironmentProbe() const;
-	void setBakeVisibilityLightmap(bool lightmap);
-	bool isBakeVisibilityLightmap() const;
-	int setTextureImage(const Ptr<Image> &image, bool dynamic = false);
-	int getTextureImage(const Ptr<Image> &image) const;
-	void setTexture(const Ptr<Texture> &texture);
-	Ptr<Texture> getTexture() const;
+	void setBoxAmbientParallax(float parallax);
+	float getBoxAmbientParallax() const;
+	void setBoxGlossCorners(float corners);
+	float getBoxGlossCorners() const;
+	void setBoxSize(const Math::vec3 &size);
+	Math::vec3 getBoxSize() const;
+	void setSphereReflectionParallax(float parallax);
+	float getSphereReflectionParallax() const;
+	void setRaymarchingNoiseFramesNumber(int number);
+	int getRaymarchingNoiseFramesNumber() const;
+	void setRaymarchingDiffuseStepSize(float size);
+	float getRaymarchingDiffuseStepSize() const;
+	void setRaymarchingDiffuseNumRays(int rays);
+	int getRaymarchingDiffuseNumRays() const;
+	void setRaymarchingDiffuseNumSteps(int steps);
+	int getRaymarchingDiffuseNumSteps() const;
+	void setRaymarchingDiffuseThreshold(float threshold);
+	float getRaymarchingDiffuseThreshold() const;
+	void setRaymarchingDiffuseThresholdOcclusion(float occlusion);
+	float getRaymarchingDiffuseThresholdOcclusion() const;
+	void setRaymarchingDiffuseMipOffset(float offset);
+	float getRaymarchingDiffuseMipOffset() const;
+	void setRaymarchingDiffuseInformationLostRaysMultiplier(float multiplier);
+	float getRaymarchingDiffuseInformationLostRaysMultiplier() const;
+	void setRaymarchingDiffuseReconstructionSamplesScreen(int screen);
+	int getRaymarchingDiffuseReconstructionSamplesScreen() const;
+	void setRaymarchingDiffuseReconstructionSamplesCubemap(int cubemap);
+	int getRaymarchingDiffuseReconstructionSamplesCubemap() const;
+	void setRaymarchingDiffuseTranslucenceAnisotropy(float anisotropy);
+	float getRaymarchingDiffuseTranslucenceAnisotropy() const;
+	void setRaymarchingSpecularStepSize(float size);
+	float getRaymarchingSpecularStepSize() const;
+	void setRaymarchingSpecularNumRays(int rays);
+	int getRaymarchingSpecularNumRays() const;
+	void setRaymarchingSpecularNumSteps(int steps);
+	int getRaymarchingSpecularNumSteps() const;
+	void setRaymarchingSpecularNumStepsRoughnessThreshold(float threshold);
+	float getRaymarchingSpecularNumStepsRoughnessThreshold() const;
+	void setRaymarchingSpecularThreshold(float threshold);
+	float getRaymarchingSpecularThreshold() const;
+	void setRaymarchingSpecularThresholdOcclusion(float occlusion);
+	float getRaymarchingSpecularThresholdOcclusion() const;
+	void setRaymarchingSpecularMipOffset(float offset);
+	float getRaymarchingSpecularMipOffset() const;
+	void setRaymarchingSpecularInformationLostRaysMultiplier(float multiplier);
+	float getRaymarchingSpecularInformationLostRaysMultiplier() const;
+	void setRaymarchingSpecularReplaceWithDiffuseRoughnessThreshold(float threshold);
+	float getRaymarchingSpecularReplaceWithDiffuseRoughnessThreshold() const;
+	void setRaymarchingSpecularReconstructionSamplesScreen(int screen);
+	int getRaymarchingSpecularReconstructionSamplesScreen() const;
+	void setRaymarchingSpecularReconstructionSamplesCubemap(int cubemap);
+	int getRaymarchingSpecularReconstructionSamplesCubemap() const;
+	void setRaymarchingSpecularBRDF(LightEnvironmentProbe::SPECULAR_BRDF_MODE raymarchingspecularbrdf);
+	LightEnvironmentProbe::SPECULAR_BRDF_MODE getRaymarchingSpecularBRDF() const;
+	void setGrabMode(LightEnvironmentProbe::GRAB_MODE mode);
+	LightEnvironmentProbe::GRAB_MODE getGrabMode() const;
+	void setGrabGGXMipmapsQuality(Render::GGX_MIPMAPS_QUALITY quality);
+	Render::GGX_MIPMAPS_QUALITY getGrabGGXMipmapsQuality() const;
+	void setGrabResolution(LightEnvironmentProbe::GRAB_RESOLUTION resolution);
+	LightEnvironmentProbe::GRAB_RESOLUTION getGrabResolution() const;
+	void setGrabSupersampling(LightEnvironmentProbe::GRAB_SUPERSAMPLING supersampling);
+	LightEnvironmentProbe::GRAB_SUPERSAMPLING getGrabSupersampling() const;
+	void setGrabDistanceScale(float scale);
+	float getGrabDistanceScale() const;
+	void setGrabZNear(float znear);
+	float getGrabZNear() const;
+	void setGrabZFar(float zfar);
+	float getGrabZFar() const;
+	void setGrabViewportMask(int mask);
+	int getGrabViewportMask() const;
+	void setGrabByBakeLighting(bool lighting);
+	bool isGrabByBakeLighting() const;
+	void setGrabDynamicFacesPerFrame(LightEnvironmentProbe::GRAB_DYNAMIC_FACES_PER_FRAME frame);
+	LightEnvironmentProbe::GRAB_DYNAMIC_FACES_PER_FRAME getGrabDynamicFacesPerFrame() const;
+	void setGrabBakeVisibilityEmission(bool emission);
+	bool isGrabBakeVisibilityEmission() const;
+	void setGrabBakeVisibilitySky(bool sky);
+	bool isGrabBakeVisibilitySky() const;
+	void setGrabBakeVisibilityLightWorld(bool world);
+	bool isGrabBakeVisibilityLightWorld() const;
+	void setGrabBakeVisibilityLightOmni(bool omni);
+	bool isGrabBakeVisibilityLightOmni() const;
+	void setGrabBakeVisibilityLightProj(bool proj);
+	bool isGrabBakeVisibilityLightProj() const;
+	void setGrabBakeVisibilityVoxelProbe(bool probe);
+	bool isGrabBakeVisibilityVoxelProbe() const;
+	void setGrabBakeVisibilityEnvironmentProbe(bool probe);
+	bool isGrabBakeVisibilityEnvironmentProbe() const;
+	void setGrabBakeVisibilityLightmap(bool lightmap);
+	bool isGrabBakeVisibilityLightmap() const;
 };
 typedef Ptr<LightEnvironmentProbe> LightEnvironmentProbePtr;
 

@@ -170,7 +170,57 @@
 		</member>
 		<member name="M:Unigine.Plugins.OpenVR.render(Unigine.Ptr{Player},Unigine.Math.ivec2,bool)">
 			<summary>
+			Calls OpenVR rendering logic.
+			</summary> 
+			<param name="player"> The player camera. </param>
+			<param name="size"> The window size, in pixels. </param>
+			<param name="render_window"> true to enable rendering of a copy to the current render target window; false — to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.OpenVR.fadeToColor(float,Unigine.Math.vec4,bool)">
+			<summary>
+			Fades the view on the head-mounted display to the specified color.
+			</summary> 
+			<param name="time"> Time in seconds that the fade will take. </param>
+			<param name="color"> Fade color. </param>
+			<param name="background">  </param> 
+		</member>
+		<member name="M:Unigine.Plugins.OpenVR.getCurrentFadeColor(bool)">
+			<summary>
+			Returns the current fade color.
+			</summary> 
+			<param name="background">  </param> 
+			<returns>Fade color.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.OpenVR.fadeToGrid(float,bool)">
+			<summary>
+			Fades the grid in or out.
+			</summary> 
+			<param name="time"> Time in seconds that the fade will take. </param>
+			<param name="grid"> true to fade the grid in, false to fade the grid out. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.OpenVR.getCurrentGridAlpha">
+			<summary>
+			Returns the current alpha value of the grid.
 			</summary>  
+			<returns>Grid alpha value.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.OpenVR.setTrackingSpace(OpenVR::TRACKING_SPACE)">
+			<summary>
+			Sets a zero pose for the tracking origin.
+			</summary> 
+			<param name="space"> Zero pose of the tracking origin. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.OpenVR.getTrackingSpace const">
+			<summary>
+			Returns the current zero pose of the tracking origin.
+			</summary>  
+			<returns>Zero pose of the tracking origin.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.OpenVR.resetZeroPose(OpenVR::TRACKING_SPACE)">
+			<summary>
+			Sets the zero pose of the given tracker coordinate system to the current tracker position.
+			</summary> 
+			<param name="space"> Tracker coordinate system. </param> 
 		</member>
 		<member name="F:Unigine.Plugins.OpenVR.VIEWPORT_BLACK_SCREEN">
 			<summary>
@@ -345,6 +395,21 @@
 		<member name="F:Unigine.Plugins.OpenVR.CONTROLLER_ROLE_MAX">
 			<summary>
 			Indicates the maximum number of controller roles.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.OpenVR.TRACKING_SPACE_SEATED">
+			<summary>
+			Poses are provided relative to the seated zero pose.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.OpenVR.TRACKING_SPACE_STANDING">
+			<summary>
+			Poses are provided relative to the safe bounds specified by the user.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.OpenVR.TRACKING_SPACE_RAW">
+			<summary>
+			Poses are provided in the coordinate system defined by the tracker driver.
 		</summary>
 		</member>
 	</members>

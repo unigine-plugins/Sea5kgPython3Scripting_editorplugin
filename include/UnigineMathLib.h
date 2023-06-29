@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 
 #pragma once
 #include "UnigineMathLibCommon.h"
@@ -943,7 +942,11 @@ UNIGINE_INLINE quat rotationFromDir(const vec3 &forward)
 UNIGINE_INLINE vec4 blueNoise(int x, int y)
 {
 	// TODO(victor: 19/11/21): it's not compiled by clang, it's necessary to replace on an aggregate initialization in the future.
+	#ifdef __clang__
+	const static vec4 blue_noise_16x16[] =
+	#else
 	static constexpr vec4 blue_noise_16x16[] =
+	#endif
 	{
 		vec4(0.086275f, 0.149020f, 0.031373f, 0.847059f, ConstexprTag{}), vec4(0.894118f, 0.807843f, 0.835294f, 0.713726f, ConstexprTag{}), vec4(0.356863f, 0.717647f, 0.529412f, 0.956863f, ConstexprTag{}), vec4(0.819608f, 0.090196f, 0.184314f, 0.556863f, ConstexprTag{}), vec4(0.098039f, 0.180392f, 0.003922f, 0.207843f, ConstexprTag{}), vec4(0.254902f, 0.682353f, 0.776471f, 0.294118f, ConstexprTag{}), vec4(0.635294f, 0.341176f, 0.458824f, 0.592157f, ConstexprTag{}), vec4(0.047059f, 0.874510f, 0.992157f, 0.156863f, ConstexprTag{}), vec4(0.160784f, 0.756863f, 0.839216f, 0.976471f, ConstexprTag{}), vec4(0.588235f, 0.247059f, 0.129412f, 0.274510f, ConstexprTag{}), vec4(0.070588f, 0.435294f, 0.698039f, 0.807843f, ConstexprTag{}), vec4(0.756863f, 0.078431f, 0.333333f, 0.368627f, ConstexprTag{}), vec4(0.615686f, 0.623529f, 0.219608f, 0.600000f, ConstexprTag{}), vec4(0.705882f, 0.011765f, 0.980392f, 0.098039f, ConstexprTag{}), vec4(0.121569f, 0.521569f, 0.423529f, 0.690196f, ConstexprTag{}), vec4(0.803922f, 0.658824f, 0.662745f, 0.921569f, ConstexprTag{}),
 		vec4(0.403922f, 0.466667f, 0.603922f, 0.517647f, ConstexprTag{}), vec4(0.035294f, 0.298039f, 0.227451f, 0.105882f, ConstexprTag{}), vec4(0.682353f, 0.937255f, 0.396078f, 0.435294f, ConstexprTag{}), vec4(0.447059f, 0.494118f, 0.874510f, 0.800000f, ConstexprTag{}), vec4(0.552941f, 0.003922f, 0.278431f, 0.066667f, ConstexprTag{}), vec4(0.964706f, 0.749020f, 0.501961f, 0.929412f, ConstexprTag{}), vec4(0.345098f, 0.278431f, 0.090196f, 0.407843f, ConstexprTag{}), vec4(0.847059f, 0.403922f, 0.650980f, 0.819608f, ConstexprTag{}), vec4(0.396078f, 0.047059f, 0.035294f, 0.333333f, ConstexprTag{}), vec4(0.788235f, 0.501961f, 0.517647f, 0.639216f, ConstexprTag{}), vec4(0.537255f, 0.800000f, 0.427451f, 0.709804f, ConstexprTag{}), vec4(0.266667f, 0.549020f, 0.623529f, 0.545098f, ConstexprTag{}), vec4(0.423529f, 0.286275f, 0.756863f, 0.141176f, ConstexprTag{}), vec4(0.968628f, 0.823529f, 0.294118f, 0.301961f, ConstexprTag{}), vec4(0.517647f, 0.407843f, 0.505882f, 0.462745f, ConstexprTag{}), vec4(0.658824f, 1.000000f, 0.905882f, 0.031373f, ConstexprTag{}),
@@ -1009,6 +1012,17 @@ UNIGINE_INLINE const mat4 &hardwareProjection(const mat4 &projection)
 	static mat4 ret;
 	static const mat4 offset = translate(0.0f, 0.0f, 0.5f) * scale(1.0f, 1.0f, 0.5f);
 	return mul(ret, offset, projection);
+}
+
+UNIGINE_INLINE unsigned int reverseBits(unsigned int value)
+{
+	unsigned int retval = 0;
+	for (int i = 31; i >= 0; i--)
+	{
+		retval |= (value & 1) << i;
+		value >>= 1;
+	}
+	return retval;
 }
 
 } // end namespace Math

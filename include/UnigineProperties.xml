@@ -510,24 +510,9 @@
 			Type of the property parameter that allows accepting structures.
 		</summary>
 		</member>
-		<member name="F:Unigine.Property.CALLBACK_DESTROY">
+		<member name="F:Unigine.Property.CALLBACK_RELOADED">
 			<summary>
-			Property destroy callback. This callback is fired when the property is destroyed.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.CALLBACK_PARAMETER_CHANGED">
-			<summary>
-			Property parameter changed callback. This callback is fired when the value of any parameter of the property is changed or reset to default.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.CALLBACK_REPARENTED">
-			<summary>
-			Property reparented callback. This callback is fired when the parent of the property is changed.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.CALLBACK_RENAMED">
-			<summary>
-			Property renamed callback. This callback is fired when the name of the property is changed.
+			Property reloaded callback. This callback is fired when the property is reloaded.
 		</summary>
 		</member>
 		<member name="F:Unigine.Property.CALLBACK_MOVED">
@@ -535,19 +520,24 @@
 			Property moved callback. This callback is fired when the path of the property is changed.
 		</summary>
 		</member>
-		<member name="F:Unigine.Property.CALLBACK_RELOADED">
+		<member name="F:Unigine.Property.CALLBACK_RENAMED">
 			<summary>
-			Property reloaded callback. This callback is fired when the property is reloaded.
+			Property renamed callback. This callback is fired when the name of the property is changed.
 		</summary>
 		</member>
-		<member name="F:Unigine.Property.RESTORE_MODE_MERGE">
+		<member name="F:Unigine.Property.CALLBACK_REPARENTED">
 			<summary>
-			Restore mode, which replaces only unique and overridden values (excluding inherited unchanged values).
+			Property reparented callback. This callback is fired when the parent of the property is changed.
 		</summary>
 		</member>
-		<member name="F:Unigine.Property.RESTORE_MODE_OVERRIDES">
+		<member name="F:Unigine.Property.CALLBACK_PARAMETER_CHANGED">
 			<summary>
-			Restore mode, which replaces only overridden parameter values.
+			Property parameter changed callback. This callback is fired when the value of any parameter of the property is changed or reset to default.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.CALLBACK_DESTROY">
+			<summary>
+			Property destroy callback. This callback is fired when the property is destroyed.
 		</summary>
 		</member>
 		<member name="F:Unigine.Property.RESTORE_MODE_REPLACE">
@@ -555,69 +545,19 @@
 			Restore mode, which replaces all parameter values.
 		</summary>
 		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_FIELD">
+		<member name="F:Unigine.Property.RESTORE_MODE_OVERRIDES">
 			<summary>
-			Field bit mask.
+			Restore mode, which replaces only overridden parameter values.
 		</summary>
 		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_PHYSICAL">
+		<member name="F:Unigine.Property.RESTORE_MODE_MERGE">
 			<summary>
-			Physical bit mask.
+			Restore mode, which replaces only unique and overridden values (excluding inherited unchanged values).
 		</summary>
 		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_OBSTACLE">
+		<member name="F:Unigine.Property.PARAMETER_MASK_GENERAL">
 			<summary>
-			Obstacle bit mask.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_NAVIGATION">
-			<summary>
-			Navigation bit mask.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_SOUND_OCCLUSION">
-			<summary>
-			Sound occlusion bit mask.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_SOUND_REVERB">
-			<summary>
-			Sound reverberation bit mask.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_SOUND_SOURCE">
-			<summary>
-			Sound source bit mask.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_MATERIAL">
-			<summary>
-			Material bit mask.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_SHADOWS">
-			<summary>
-			Shadow bit mask.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_VIEWPORT">
-			<summary>
-			Viewport bit mask.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_EXCLUSION">
-			<summary>
-			Exclusion bit mask.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_COLLISION">
-			<summary>
-			Collision bit mask.
-		</summary>
-		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_INTERSECTION">
-			<summary>
-			Intersection bit mask.
+			Bit mask.
 		</summary>
 		</member>
 		<member name="F:Unigine.Property.PARAMETER_MASK_PHYSICS_INTERSECTION">
@@ -625,9 +565,69 @@
 			Physics Intersection bit mask.
 		</summary>
 		</member>
-		<member name="F:Unigine.Property.PARAMETER_MASK_GENERAL">
+		<member name="F:Unigine.Property.PARAMETER_MASK_INTERSECTION">
 			<summary>
-			Bit mask.
+			Intersection bit mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_MASK_COLLISION">
+			<summary>
+			Collision bit mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_MASK_EXCLUSION">
+			<summary>
+			Exclusion bit mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_MASK_VIEWPORT">
+			<summary>
+			Viewport bit mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_MASK_SHADOWS">
+			<summary>
+			Shadow bit mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_MASK_MATERIAL">
+			<summary>
+			Material bit mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_MASK_SOUND_SOURCE">
+			<summary>
+			Sound source bit mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_MASK_SOUND_REVERB">
+			<summary>
+			Sound reverberation bit mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_MASK_SOUND_OCCLUSION">
+			<summary>
+			Sound occlusion bit mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_MASK_NAVIGATION">
+			<summary>
+			Navigation bit mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_MASK_OBSTACLE">
+			<summary>
+			Obstacle bit mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_MASK_PHYSICAL">
+			<summary>
+			Physical bit mask.
+		</summary>
+		</member>
+		<member name="F:Unigine.Property.PARAMETER_MASK_FIELD">
+			<summary>
+			Field bit mask.
 		</summary>
 		</member>
 		<member name="M:Unigine.PropertyParameter.getID const">

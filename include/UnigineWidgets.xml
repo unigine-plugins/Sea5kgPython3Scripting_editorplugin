@@ -24,7 +24,7 @@
 			<summary>
 			Adds a callback function of the specified type for the widget.
 			The signature of the callback function must be as follows:
-			sender - the widget that caused the callback function to be called, i.e. the one on which the action took place (e.g. a button, that was clicked).
+			sender — the widget that caused the callback function to be called, i.e. the one on which the action took place (e.g. a button, that was clicked).
 			</summary> 
 			<param name="callback"> Callback type number. One of the callbacks defined in the Gui class (for example, CLICK, SHOW, HIDE, etc). </param>
 			<param name="func"> Callback pointer. </param> 
@@ -34,7 +34,7 @@
 			<summary>
 			Adds a callback function of the specified type for the widget.
 			The signature of the callback function must be as follows:
-														sender - the widget that caused the callback function to be called, i.e. the one on which the action took place (e.g. a button, that was clicked).						pointer - this parameter is used to identify a target widget of a Drag-and-Drop operation. You can find an example in the widgets/sprite_03 UnigineScript sample included in the SDK.
+														sender — the widget that caused the callback function to be called, i.e. the one on which the action took place (e.g. a button, that was clicked).						pointer — this parameter is used to identify a target widget of a Drag-and-Drop operation. You can find an example in the widgets/sprite_03 UnigineScript sample included in the SDK.
 			</summary> 
 			<param name="callback"> Callback type number. One of the callbacks defined in the Gui class (for example, CLICK, SHOW, HIDE, etc). </param>
 			<param name="func"> Callback pointer. </param> 
@@ -44,7 +44,7 @@
 			<summary>
 			Adds a callback function of the specified type for the widget.
 			The signature of the callback function must be as follows:
-														sender - the widget that caused the callback function to be called, i.e. the one on which the action took place (e.g. a button, that was clicked).						pointer - this parameter is used to identify a target widget of a Drag-and-Drop operation. You can find an example in the widgets/sprite_03 UnigineScript sample included in the SDK.						data - this parameter is used for getting mouse or keyboard button state, when a widget is clicked or pressed (callbacks: CLICKED, PRESSED, KEY_PRESSED).
+														sender — the widget that caused the callback function to be called, i.e. the one on which the action took place (e.g. a button, that was clicked).						pointer — this parameter is used to identify a target widget of a Drag-and-Drop operation. You can find an example in the widgets/sprite_03 UnigineScript sample included in the SDK.						data — this parameter is used for getting mouse or keyboard button state, when a widget is clicked or pressed (callbacks: CLICKED, PRESSED, KEY_PRESSED).
 			</summary> 
 			<param name="callback"> Callback type number. One of the callbacks defined in the Gui class (for example, CLICK, SHOW, HIDE, etc). </param>
 			<param name="func"> Callback pointer. </param> 
@@ -107,7 +107,7 @@
 			Returns a value indicating if a given callback is enabled.
 			</summary> 
 			<param name="callback"> Callback number: one of the Gui:: Enumeration (for example, SHOW, HIDE, etc). </param> 
-			<returns>Returns 1 if the callback is disabled; otherwise, 0.</returns>
+			<returns>1 if callback is enabled; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Widget.getChild(int) const">
 			<summary>
@@ -121,7 +121,7 @@
 			Checks if a given widget is a child of the current widget.
 			</summary> 
 			<param name="w"> Widget to check. </param> 
-			<returns>Returns 1 if the given widget is a child; otherwise, 0.</returns>
+			<returns>1 if the widget in question is a child; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Widget.setData(char)">
 			<summary>
@@ -139,13 +139,13 @@
 			<summary>
 			Enables or disables the widget.
 			</summary> 
-			<param name="enabled"> 1 to enable the widget, 0 to disable it. </param> 
+			<param name="enabled"> true to enable the widget, false to disable it. </param> 
 		</member>
 		<member name="M:Unigine.Widget.isEnabled const">
 			<summary>
 			Returns a value indicating if the widget is enabled.
 			</summary>  
-			<returns>Returns 1 if the widget is disabled; otherwise, 0.</returns>
+			<returns>Returns true if the widget is enabled; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Widget.setFlags(int)">
 			<summary>
@@ -232,9 +232,9 @@
 		</member>
 		<member name="M:Unigine.Widget.getFontPermanent const">
 			<summary>
-			Returns a flag indicating if color of the widget text is not changed (for example, when the widget becomes non-active or loses focus).
+			Returns a value indicating if color of the widget text is not changed even when it is disabled (non active), transparent (enabled option on non-active window), or widget loses focus.
 			</summary>  
-			<returns>1 if color of the widget text is not changed; otherwise, 0.</returns>
+			<returns>1 if color of the widget text does not change; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Widget.setFontRich(int)">
 			<summary>
@@ -346,7 +346,7 @@
 			<summary>
 			Sets a value indicating if intersection detection is enabled for the widget.
 			</summary> 
-			<param name="enabled"> true to enable intersection detection for the widget, false - to disable it. </param> 
+			<param name="enabled"> true to enable intersection detection for the widget, false — to disable it. </param> 
 		</member>
 		<member name="M:Unigine.Widget.isIntersectionEnabled const">
 			<summary>
@@ -375,15 +375,15 @@
 		</member>
 		<member name="M:Unigine.Widget.getMouseX const">
 			<summary>
-			Returns the X coordinate of the mouse pointer position on the screen.
+			Returns the X coordinate of the mouse pointer position in the widget's local space.
 			</summary>  
-			<returns>X coordinate of the mouse pointer position.</returns>
+			<returns>X coordinate of the mouse pointer position in the widget's local space.</returns>
 		</member>
 		<member name="M:Unigine.Widget.getMouseY const">
 			<summary>
-			Returns the Y coordinate of the mouse pointer position on the screen.
+			Returns the Y coordinate of the mouse pointer position in the widget's local space.
 			</summary>  
-			<returns>Y coordinate of the mouse pointer position.</returns>
+			<returns>Y coordinate of the mouse pointer position in the widget's local space.</returns>
 		</member>
 		<member name="M:Unigine.Widget.setNextFocus(Unigine.Ptr{Unigine.Widget})">
 			<summary>
@@ -474,7 +474,7 @@
 			Sets a tooltip for the widget.
 			</summary> 
 			<param name="str"> Tooltip text. </param>
-			<param name="reset"> 1 to recalculate a tooltip location if the mouse cursor was relocated; otherwise - 0(by default). </param> 
+			<param name="reset"> 1 to recalculate a tooltip location if the mouse cursor was relocated; otherwise — 0(by default). </param> 
 		</member>
 		<member name="M:Unigine.Widget.getToolTip const">
 			<summary>
@@ -607,8 +607,55 @@
 		</member>
 		<member name="M:Unigine.Widget.getLifetime const">
 			<summary>
-			Returns the lifetime management type for the root of the widget, or for the widget itself (if it is not a child for another widget).					Lifetime of each widget in the hierarchy is defined by it's root. Thus, lifetime management type set for a child widget that differs from the one set for the root is ignored.
+			Returns the lifetime management type for the root of the widget, or for the widget itself (if it is not a child for another widget).					Lifetime of each widget in the hierarchy is defined by its root. Thus, lifetime management type set for a child widget that differs from the one set for the root is ignored.
 			</summary>  
+			<returns>Lifetime management type.</returns>
+		</member>
+		<member name="M:Unigine.Widget.getRenderWidth const">
+			<summary>
+			Returns the widget frame width in pixels.
+			</summary>  
+			<returns>The widget frame width in pixels.</returns>
+		</member>
+		<member name="M:Unigine.Widget.getRenderHeight const">
+			<summary>
+			Returns the widget frame height in pixels.
+			</summary>  
+			<returns>The widget frame height in pixels.</returns>
+		</member>
+		<member name="M:Unigine.Widget.getDpiScale const">
+			<summary>
+			Returns the current DPI scale applied to the widget.
+			</summary>  
+			<returns>The current DPI scale applied to the widget.</returns>
+		</member>
+		<member name="M:Unigine.Widget.toRenderSize(int)">
+			<summary>
+			Transforms the unit value to the pixel value.
+			</summary> 
+			<param name="unit_size"> Size in units. </param> 
+			<returns>Size in pixels.</returns>
+		</member>
+		<member name="M:Unigine.Widget.toUnitSize(int)">
+			<summary>
+			Transforms the pixel value to the unit value.
+			</summary> 
+			<param name="render_size"> Size in pixels. </param> 
+			<returns>Size in units.</returns>
+		</member>
+		<member name="M:Unigine.Widget.toRenderSize(Unigine.Math.ivec2)">
+			<summary>
+			Transforms the unit value to the pixel value.
+			</summary> 
+			<param name="unit_size"> Size in units. </param> 
+			<returns>Size in pixels.</returns>
+		</member>
+		<member name="M:Unigine.Widget.toUnitSize(Unigine.Math.ivec2)">
+			<summary>
+			Transforms the pixel value to the unit value.
+			</summary> 
+			<param name="render_size"> Size in pixels. </param> 
+			<returns>Size in units.</returns>
 		</member>
 		<member name="F:Unigine.Widget.WIDGET_VBOX">
 			<summary>
@@ -818,6 +865,11 @@
 		<member name="F:Unigine.Widget.WIDGET_ENGINE">
 			<summary>
 			Engine-specific widget (manipulator). See also: WidgetManipulator.
+		</summary>
+		</member>
+		<member name="F:Unigine.Widget.WIDGET_HIT_TEST_AREA">
+			<summary>
+			Hit-Test Area. See also: WidgetHitTestArea.
 		</summary>
 		</member>
 		<member name="F:Unigine.Widget.NUM_WIDGETS">
@@ -2309,41 +2361,6 @@
 			</summary>  
 			<returns>Text message.</returns>
 		</member>
-		<member name="M:Unigine.WidgetDragArea.#ctor(Unigine.Ptr{Gui})">
-			<summary>
-			Constructor. Creates a drag area and adds it to the specified GUI.
-			</summary> 
-			<param name="gui"> GUI, to which the drag area will belong. </param> 
-		</member>
-		<member name="M:Unigine.WidgetDragArea.#ctor">
-			<summary>
-			Default constructor.
-			</summary>  
-		</member>
-		<member name="M:Unigine.WidgetDragArea.setBackground(int)">
-			<summary>
-			Enables/disables rendering of the background for the drag area.
-			</summary> 
-			<param name="background"> 1 to enable background rendering, 0 to disable it. </param> 
-		</member>
-		<member name="M:Unigine.WidgetDragArea.getBackground const">
-			<summary>
-			Returns the flag indicating if background rendering is enabled or disabled for the drag area.
-			</summary>  
-			<returns>1 if background rendering is enabled; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.WidgetDragArea.setBackgroundColor(Unigine.Math.vec4)">
-			<summary>
-			Sets a color for the background of the drag area.
-			</summary> 
-			<param name="color"> Background color. </param> 
-		</member>
-		<member name="M:Unigine.WidgetDragArea.getBackgroundColor const">
-			<summary>
-			Returns the color of the drag area background.
-			</summary>  
-			<returns>Background color.</returns>
-		</member>
 		<member name="M:Unigine.WidgetEditLine.#ctor(Unigine.Ptr{Gui},char)">
 			<summary>
 			Constructor. Creates a text field and adds it to the specified GUI.
@@ -2515,9 +2532,9 @@
 		</member>
 		<member name="M:Unigine.WidgetEditText.setBackground(int)">
 			<summary>
-			Sets a value indicating if a background texture should be rendered for the text field.
+			Sets a value indicating if a background texture should be rendered for the box.
 			</summary> 
-			<param name="background"> number to render a background texture, 0 not to render. </param> 
+			<param name="background"> 1 to render a background texture, 0 not to render. </param> 
 		</member>
 		<member name="M:Unigine.WidgetEditText.getBackground const">
 			<summary>
@@ -2548,13 +2565,13 @@
 			<summary>
 			Sets a value indicating if the contents of the text field can be edited.
 			</summary> 
-			<param name="editable"> Positive number to make the text field editable, 0 to make it read-only. </param> 
+			<param name="editable"> true to make the text field editable, false to make it read-only. </param> 
 		</member>
 		<member name="M:Unigine.WidgetEditText.isEditable const">
 			<summary>
-			Returns a value indicating if the contents of the text field can be edited. The default is 1.
+			Returns a value indicating if the contents of the text field can be edited. By default, this option is enabled.
 			</summary>  
-			<returns>Positive number if the text field contents can be edited; otherwise, 0.</returns>
+			<returns>true if the text field contents can be edited; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetEditText.setLineText(int,char)">
 			<summary>
@@ -2578,7 +2595,7 @@
 		</member>
 		<member name="M:Unigine.WidgetEditText.setSelection(int,int)">
 			<summary>
-			Sets a line and a position, from which a new selection will start.
+			Sets a line and a position from which a new selection will start.
 			</summary> 
 			<param name="position"> Position number. </param>
 			<param name="line"> Line number. </param> 
@@ -2688,6 +2705,44 @@
 			</summary>  
 			<returns>Four-component vector specifying the color in the RGBA format.</returns>
 		</member>
+		<member name="M:Unigine.WidgetEditText.getCursorPositionX const">
+			<summary>
+			Returns the current value of the text cursor position X coordinate.
+			</summary>  
+			<returns>The current value of the text cursor position X coordinate, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.WidgetEditText.getCursorPositionY const">
+			<summary>
+			Returns the current value of the text cursor position Y coordinate.
+			</summary>  
+			<returns>The current value of the text cursor position Y coordinate, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.WidgetEditText.getCursorWidth const">
+			<summary>
+			Returns the text cursor width.
+			</summary>  
+			<returns>The text cursor width, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.WidgetEditText.getLineWidth(int,int) const">
+			<summary>
+			Returns the text line width (space taken by symbols).
+			</summary> 
+			<param name="line"> The line index from 0 to the total number of lines. </param>
+			<param name="end"> The index of the last symbol up to which the line width is returned. If set to -1, the whole set of symbols in the line is taken. </param> 
+			<returns>The text line width, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.WidgetEditText.setUseScrollWheelEnabled(bool)">
+			<summary>
+			Sets a value indicating if the currently selected line is changed (the cursor moves up or down) when scrolling the mouse wheel.
+			</summary> 
+			<param name="enabled"> true to enable changing the line on scrolling, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.WidgetEditText.isUseScrollWheelEnabled const">
+			<summary>
+			Returns a value indicating if the currently selected line is changed (the cursor moves up or down) when scrolling the mouse wheel.
+			</summary>  
+			<returns>true if the line is changed on scrolling, otherwise false.</returns>
+		</member>
 		<member name="M:Unigine.WidgetExternBase.getClassID">
 			<summary>
 			Returns a unique class ID.
@@ -2755,19 +2810,25 @@
 			</summary> 
 			<param name="unicode"> Virtual key code. </param> 
 		</member>
-		<member name="M:Unigine.WidgetExternBase.render">
-			<summary>
-			Renders the widget.
-			</summary>  
-		</member>
 		<member name="M:Unigine.WidgetExternBase.update(float)">
 			<summary>
 			Widget update function.
 			</summary> 
 			<param name="ifps"> Inverse FPS value. </param> 
 		</member>
+		<member name="M:Unigine.WidgetExternBase.preRender">
+			<summary>
+			Widget pre-render function executed after the update() and before the render() function. This method is used to make necessary preparations for rendering (e.g. prepare a texture) after the update() and is called automatically for WidgetSpriteViewport and WidgetSpriteNode to ensure proper rendering of the widgets during render(). In case you implement a custom GUI or widgets using the WidgetExtern class you should put all such rendering preparations to this method and call preRender() manually after update().
+			</summary>  
+		</member>
+		<member name="M:Unigine.WidgetExternBase.render">
+			<summary>
+			Renders the widget.
+			</summary>  
+		</member>
 		<member name="M:Unigine.WidgetExternBase.updatePositions">
 			<summary>
+			Updates the widget's screen coordinates. This function is called after the arrange() and expand() functions.
 			</summary>  
 		</member>
 		<member name="M:Unigine.WidgetExtern.#ctor(Unigine.Ptr{Gui},int)">
@@ -2999,6 +3060,48 @@
 			</summary> 
 			<param name="x"> Horizontal space between the widgets in the box and between them and the box border. This is an optional parameter. </param>
 			<param name="y"> Vertical space between the widgets in the box and between them and the box border. This is an optional parameter. </param> 
+		</member>
+		<member name="M:Unigine.WidgetHitTestArea.#ctor(Unigine.Ptr{Gui},int)">
+			<summary>
+			Constructor. Creates a hit test area widget and adds it to the specified GUI.
+			</summary> 
+			<param name="gui"> GUI, to which the hit test area widget belongs. </param> 
+		</member>
+		<member name="M:Unigine.WidgetHitTestArea.#ctor(int)">
+			<summary>
+			Constructor. Creates a hit test area widget of the specified type.
+			</summary> 
+			<param name="hit_test"> Hit test area type, one of the HITTEST_* values. </param> 
+		</member>
+		<member name="M:Unigine.WidgetHitTestArea.getHitTestResult const">
+			<summary>
+			Returns the current hit test area type.
+			</summary>  
+			<returns>The hit test area type, one of the HITTEST_* values.</returns>
+		</member>
+		<member name="M:Unigine.WidgetHitTestArea.setBackground(int)">
+			<summary>
+			Enables rendering of the background for the drag area for debug purposes.
+			</summary> 
+			<param name="background"> 1 to enable background rendering, 0 to disable it. </param> 
+		</member>
+		<member name="M:Unigine.WidgetHitTestArea.getBackground const">
+			<summary>
+			Returns the flag indicating if background rendering is enabled or disabled for the drag area.
+			</summary>  
+			<returns>1 if background rendering is enabled; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.WidgetHitTestArea.setBackgroundColor(Unigine.Math.vec4)">
+			<summary>
+			Sets a color for the background of the drag area for debug purposes.
+			</summary> 
+			<param name="color"> Background color. </param> 
+		</member>
+		<member name="M:Unigine.WidgetHitTestArea.getBackgroundColor const">
+			<summary>
+			Returns the color of the drag area background.
+			</summary>  
+			<returns>Background color.</returns>
 		</member>
 		<member name="M:Unigine.WidgetHPaned.#ctor(Unigine.Ptr{Gui})">
 			<summary>
@@ -6556,15 +6659,15 @@
 		</member>
 		<member name="M:Unigine.WidgetWindow.setBlendable(bool)">
 			<summary>
-			Sets a value indicating if the window can fade in and out when changing to the minimized state and back.
+			Sets a value indicating if the window can fade in and out when changing to the minimized state and back. By default, this option is disabled.
 			</summary> 
-			<param name="blendable"> 1 to allow fading in and out, 0 to disallow it. </param> 
+			<param name="blendable"> true to enable fading in and out, false to disable it. </param> 
 		</member>
 		<member name="M:Unigine.WidgetWindow.isBlendable const">
 			<summary>
-			Returns a value indicating if the window can fade in and out when changing to the minimized state and back. The default is 0.
+			Returns a value indicating if the window can fade in and out when changing to the minimized state and back.
 			</summary>  
-			<returns>1 if the window can fade in and out; otherwise, 0.</returns>
+			<returns>true if the window can fade in and out; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetWindow.setColor(Unigine.Math.vec4)">
 			<summary>
@@ -6582,13 +6685,13 @@
 			<summary>
 			Sets a value indicating if the window is animated when changing to the minimized state and back.
 			</summary> 
-			<param name="floatable"> 1 to allow animating the window, 0 not to make it. </param> 
+			<param name="floatable"> true to allow animating the window, false not to make it. </param> 
 		</member>
 		<member name="M:Unigine.WidgetWindow.isFloatable const">
 			<summary>
-			Returns a value indicating if the window is animated when changing to the minimized state and back. The default is 0.
+			Returns a value indicating if the window is animated when changing to the minimized state and back. By default this option is disabled.
 			</summary>  
-			<returns>1 if the window is animated; otherwise, 0.</returns>
+			<returns>true if the window is animated; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetWindow.setMaxHeight(int)">
 			<summary>
@@ -6618,13 +6721,13 @@
 			<summary>
 			Sets a value indicating if the window is movable.
 			</summary> 
-			<param name="moveable"> 1 to set the window as movable; otherwise, 0. </param> 
+			<param name="moveable"> true to set the window as movable; otherwise, false. </param> 
 		</member>
 		<member name="M:Unigine.WidgetWindow.isMoveable const">
 			<summary>
-			Returns a value indicating if the window is movable. The default is 1.
+			Returns a value indicating if the window is movable. By default this option is enabled.
 			</summary>  
-			<returns>1 if the window is movable; otherwise, 0.</returns>
+			<returns>true if the window is movable; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetWindow.setPadding(int,int,int,int)">
 			<summary>
@@ -6661,15 +6764,15 @@
 		</member>
 		<member name="M:Unigine.WidgetWindow.setSizeable(bool)">
 			<summary>
-			Sets a value indicating if the window is resizeable.
+			Sets a value indicating if the window is resizeable. Resizing is disabled by default.
 			</summary> 
-			<param name="sizeable"> 1 to allow resizing the window, 0 to disallow it. </param> 
+			<param name="sizeable"> true to enable resizing the window, false to disable it. </param> 
 		</member>
 		<member name="M:Unigine.WidgetWindow.isSizeable const">
 			<summary>
-			Returns a value indicating if the window is resizeable. The default is 0.
+			Returns a value indicating if the window is resizeable.
 			</summary>  
-			<returns>1 if the window is resizeable; otherwise, 0.</returns>
+			<returns>true if the window is resizeable; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetWindow.setSnapDistance(int)">
 			<summary>
@@ -6728,15 +6831,15 @@
 		</member>
 		<member name="M:Unigine.WidgetWindow.setTitleable(bool)">
 			<summary>
-			Sets a value indicating if the window is minimized when double-clicking on it. The default is 0.
+			Sets a value indicating if the window is minimized when double-clicking on it. By default this option is disabled.
 			</summary> 
-			<param name="titleable"> 1 to allow minimization, 0 to disallow it. </param> 
+			<param name="titleable"> true to enable minimization, false to disable it. </param> 
 		</member>
 		<member name="M:Unigine.WidgetWindow.isTitleable const">
 			<summary>
-			Returns a value indicating if the window is minimized when double-clicking on it. The default is 0.
+			Returns a value indicating if the window is minimized when double-clicking on it. By default this option is disabled.
 			</summary>  
-			<returns>1 if the window is minimized when double-clicking on it; otherwise, 0.</returns>
+			<returns>true if the window is minimized when double-clicking on it; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetWindow.setTransform(Unigine.Math.mat4)">
 			<summary>
@@ -6790,13 +6893,13 @@
 			<summary>
 			Enables/disables rendering of the background for the drag area.
 			</summary> 
-			<param name="background"> 1 to enable background rendering, 0 to disable it. </param> 
+			<param name="background"> true to enable background rendering, false to disable it. </param> 
 		</member>
 		<member name="M:Unigine.WidgetWindow.getDragAreaBackground const">
 			<summary>
 			Returns the value indicating if background rendering is enabled or disabled for the drag area.
 			</summary>  
-			<returns>Value indicating if rendering of the background is enabled: 1 if background rendering is enabled; otherwise, 0.</returns>
+			<returns>Value indicating if rendering of the background is enabled: true if background rendering is enabled; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.WidgetWindow.setDragAreaBackgroundColor(Unigine.Math.vec4)">
 			<summary>
@@ -6842,6 +6945,66 @@
 			Returns the current bottom padding for the drag area.
 			</summary>  
 			<returns>Bottom padding in pixels.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.setOutBoundsCallbacksEnabled(bool)">
+			<summary>
+			Toggles callback processing for the window child widgets if the cursor is outside the window. By default, all callbacks are processed.
+			</summary> 
+			<param name="enabled"> true to enable callback processing for the child widgets if the cursor is outside the window, otherwise false. </param> 
+		</member>
+		<member name="M:Unigine.WidgetWindow.isOutBoundsCallbacksEnabled const">
+			<summary>
+			Returns the value specifying if the callback processing for the window child widgets is enabled when the cursor is outside the window.
+			</summary>  
+			<returns>true if callback processing for the child widgets is enabled, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.setGlobalMovement(bool)">
+			<summary>
+			Toggles moving the window using the mouse cursor across the whole GUI, i.e. not limited by the parent widget. By default, this option is set to false, and the window can be moved only relevant to its parent.
+			</summary> 
+			<param name="movement"> true to enable moving the window across the whole GUI, false to limit the window movement by the parent widget. </param> 
+		</member>
+		<member name="M:Unigine.WidgetWindow.isGlobalMovement const">
+			<summary>
+			Returns the value specifying if the window can be moved across the whole GUI or only within the parent widget.
+			</summary>  
+			<returns>true if the window can be moved across the whole GUI, false if the window can be moved only within the parent widget.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.getMinTextureWidth const">
+			<summary>
+			Returns the minimum width of the window render — the width of the window texture from the GUI skin.
+			</summary>  
+			<returns>The minimum width of the window render, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.getMinTextureHeight const">
+			<summary>
+			Returns the minimum height of the window render — the height of the window texture from the GUI skin.
+			</summary>  
+			<returns>The minimum height of the window render, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.getTextWidth const">
+			<summary>
+			Returns the window header width.
+			</summary>  
+			<returns>The window header width, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.getTextHeight const">
+			<summary>
+			Returns the window header height.
+			</summary>  
+			<returns>The window header height, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.WidgetWindow.setStencil(int)">
+			<summary>
+			Sets a value indicating if a widget cuts off its children along its bounds. Everything that lies outside of them, is not rendered. The default is 0.
+			</summary> 
+			<param name="stencil"> 1 to enable cutting, 0 to disable it. </param> 
+		</member>
+		<member name="M:Unigine.WidgetWindow.getStencil const">
+			<summary>
+			Returns a value indicating if a widget cuts off its children along its set bounds. Everything that lies outside of them, is not rendered. This option works only if children have ALIGN_OVERLAP flag set (otherwise, they will expand the box widget bounds and no cutting will be done).
+			</summary>  
+			<returns>1 if cutting is enabled; otherwise, 0.</returns>
 		</member>
 	</members>
 </doc>

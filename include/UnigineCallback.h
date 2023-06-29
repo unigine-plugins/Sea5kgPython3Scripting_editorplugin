@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 
 #pragma once
 
@@ -891,7 +890,7 @@ template <class T>
 class CallbackCallable : public CallbackBase
 {
 public:
-	CallbackCallable(const T& f) : func(f) {}
+	CallbackCallable(const T &f) : func(f) {}
 
 	virtual void run() { func(); }
 
@@ -903,74 +902,89 @@ template <class T, class A0>
 class CallbackCallable1 : public CallbackBase1<A0>
 {
 public:
-	CallbackCallable1(const T& f) : func(f) {}
+	CallbackCallable1(const T &f) : func(f) {}
 
-	virtual void run() { func(A0{}); }
+	virtual void run() { func(a0); }
 	virtual void run(A0 arg0) { func(arg0); }
 
 private:
 	T func;
+	typename std::decay<A0>::type a0;
 };
 
 template <class T, class A0, class A1>
 class CallbackCallable2 : public CallbackBase2<A0, A1>
 {
 public:
-	CallbackCallable2(const T& f) : func(f) {}
+	CallbackCallable2(const T &f) : func(f) {}
 
-	virtual void run() { func(A0{}, A1{}); }
-	virtual void run(A0 arg0) { func(arg0, A1{}); }
+	virtual void run() { func(a0, a1); }
+	virtual void run(A0 arg0) { func(arg0, a1); }
 	virtual void run(A0 arg0, A1 arg1) { func(arg0, arg1); }
 
 private:
 	T func;
+	typename std::decay<A0>::type a0;
+	typename std::decay<A1>::type a1;
 };
 
 template <class T, class A0, class A1, class A2>
 class CallbackCallable3 : public CallbackBase3<A0, A1, A2>
 {
 public:
-	CallbackCallable3(const T& f) : func(f) {}
+	CallbackCallable3(const T &f) : func(f) {}
 
-	virtual void run() { func(A0{}, A1{}, A2{}); }
-	virtual void run(A0 arg0) { func(arg0, A1{}, A2{}); }
+	virtual void run() { func(a0, a1, a2); }
+	virtual void run(A0 arg0) { func(arg0, a1, a2); }
 	virtual void run(A0 arg0, A1 arg1, A2 arg2) { func(arg0, arg1, arg2); }
 
 private:
 	T func;
+	typename std::decay<A0>::type a0;
+	typename std::decay<A1>::type a1;
+	typename std::decay<A2>::type a2;
 };
 
 template <class T, class A0, class A1, class A2, class A3>
 class CallbackCallable4 : public CallbackBase4<A0, A1, A2, A3>
 {
 public:
-	CallbackCallable4(const T& f) : func(f) {}
+	CallbackCallable4(const T &f) : func(f) {}
 
-	virtual void run() { func(A0{}, A1{}, A2{}, A3{}); }
-	virtual void run(A0 arg0) { func(arg0, A1{}, A2{}, A3{}); }
-	virtual void run(A0 arg0, A1 arg1) { func(arg0, arg1, A2{}, A3{}); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2) { func(arg0, arg1, arg2, A3{}); }
+	virtual void run() { func(a0, a1, a2, a3); }
+	virtual void run(A0 arg0) { func(arg0, a1, a2, a3); }
+	virtual void run(A0 arg0, A1 arg1) { func(arg0, arg1, a2, a3); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2) { func(arg0, arg1, arg2, a3); }
 	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { func(arg0, arg1, arg2, arg3); }
 
 private:
 	T func;
+	typename std::decay<A0>::type a0;
+	typename std::decay<A1>::type a1;
+	typename std::decay<A2>::type a2;
+	typename std::decay<A3>::type a3;
 };
 
 template <class T, class A0, class A1, class A2, class A3, class A4>
 class CallbackCallable5 : public CallbackBase5<A0, A1, A2, A3, A4>
 {
 public:
-	CallbackCallable5(const T& f) : func(f) {}
+	CallbackCallable5(const T &f) : func(f) {}
 
-	virtual void run() { func(A0{}, A1{}, A2{}, A3{}, A4{}); }
-	virtual void run(A0 arg0) { func(arg0, A1{}, A2{}, A3{}, A4{}); }
-	virtual void run(A0 arg0, A1 arg1) { func(arg0, arg1, A2{}, A3{}, A4{}); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2) { func(arg0, arg1, arg2, A3{}, A4{}); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { func(arg0, arg1, arg2, arg3, A4{}); }
+	virtual void run() { func(a0, a1, a2, a3, a4); }
+	virtual void run(A0 arg0) { func(arg0, a1, a2, a3, a4); }
+	virtual void run(A0 arg0, A1 arg1) { func(arg0, arg1, a2, a3, a4); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2) { func(arg0, arg1, arg2, a3, a4); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { func(arg0, arg1, arg2, arg3, a4); }
 	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3, A4 arg4) { func(arg0, arg1, arg2, arg3, arg4); }
 
 private:
 	T func;
+	typename std::decay<A0>::type a0;
+	typename std::decay<A1>::type a1;
+	typename std::decay<A2>::type a2;
+	typename std::decay<A3>::type a3;
+	typename std::decay<A4>::type a4;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -980,30 +994,30 @@ template<class T>
 class CallableToCallbackTransformer
 {
 public:
-	CallableToCallbackTransformer(const T& f) : func(f) {}
+	CallableToCallbackTransformer(const T &f) : func(f) {}
 
-	operator CallbackBase* () { return new CallbackCallable<T>(func); }
+	operator CallbackBase *() { return new CallbackCallable<T>(func); }
 
 	template<class A0>
-	operator CallbackBase1<A0>* () {return new CallbackCallable1<T, A0>(func); }
+	operator CallbackBase1<A0> *() {return new CallbackCallable1<T, A0>(func); }
 
 	template<class A0, class A1>
-	operator CallbackBase2<A0, A1>* () { return new CallbackCallable2<T, A0, A1>(func); }
+	operator CallbackBase2<A0, A1> *() { return new CallbackCallable2<T, A0, A1>(func); }
 
 	template<class A0, class A1, class A2>
-	operator CallbackBase3<A0, A1, A2>* () { return new CallbackCallable3<T, A0, A1, A2>(func); }
+	operator CallbackBase3<A0, A1, A2> *() { return new CallbackCallable3<T, A0, A1, A2>(func); }
 
 	template<class A0, class A1, class A2, class A3>
-	operator CallbackBase4<A0, A1, A2, A3>* () { return new CallbackCallable4<T, A0, A1, A2, A3>(func); }
+	operator CallbackBase4<A0, A1, A2, A3> *() { return new CallbackCallable4<T, A0, A1, A2, A3>(func); }
 
 	template<class A0, class A1, class A2, class A3, class A4>
-	operator CallbackBase5<A0, A1, A2, A3, A4>* () { return new CallbackCallable5<T, A0, A1, A2, A3, A4>(func); }
+	operator CallbackBase5<A0, A1, A2, A3, A4> *() { return new CallbackCallable5<T, A0, A1, A2, A3, A4>(func); }
 
 private:
 	T func;
 };
 
 template<class Callable>
-CallableToCallbackTransformer<Callable> MakeCallback(const Callable& f) { return f; }
+CallableToCallbackTransformer<Callable> MakeCallback(const Callable &f) { return f; }
 
 } // namespace Unigine

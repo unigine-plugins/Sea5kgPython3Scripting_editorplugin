@@ -4,13 +4,13 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.World.isAutoReloadNodeReferences">
+		<member name="M:Unigine.World.isAutoReloadNodeReferences const">
 			<summary>
 			Returns a value indicating if automatic reloading of NodeReferences is enabled. If enabled all NodeReference nodes will reload their *.node files, when the saveNode() method is called.					This option can be used if you modify and save reference nodes at runtime. Otherwise you'll have to manually update pointers for all NodeReferences referring to the changed node.
 			</summary>  
 			<returns>1 if automatic reloading of NodeReferences is enabled; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.World.setAutoReloadNodeReferences(int)">
+		<member name="M:Unigine.World.setAutoReloadNodeReferences(bool)">
 			<summary>
 			Enables automatic reloading of NodeReferences. If enabled all NodeReference nodes will reload their *.node files, when the saveNode() method is called.					This option can be used if you modify and save reference nodes at runtime. Otherwise you'll have to manually update pointers for all NodeReferences referring to the changed node.
 			</summary> 
@@ -22,7 +22,7 @@
 			</summary> 
 			<param name="budget"> The budget value in seconds. </param> 
 		</member>
-		<member name="M:Unigine.World.getBudget">
+		<member name="M:Unigine.World.getBudget const">
 			<summary>
 			Returns the value of the world generation budget for Grass and Clutter objects. New objects are not created when time is out of the budget.
 			</summary>  
@@ -41,6 +41,14 @@
 			Searches for all collider objects within a given bounding sphere.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
 			<param name="bs"> Bounding sphere. </param>
+			<param name="objects"> Array with collider objects' smart pointers. </param> 
+			<returns>1 if collider objects are found; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.World.getCollision(Unigine.Math.WorldBoundFrustum,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
+			<summary>
+			Searches for all collider objects within a given bounding frustum.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+			</summary> 
+			<param name="bf"> Bounding frustum. </param>
 			<param name="objects"> Array with collider objects' smart pointers. </param> 
 			<returns>1 if collider objects are found; otherwise, 0.</returns>
 		</member>
@@ -73,7 +81,7 @@
 			</summary> 
 			<param name="distance"> New distance in units. </param> 
 		</member>
-		<member name="M:Unigine.World.getDistance">
+		<member name="M:Unigine.World.getDistance const">
 			<summary>
 			Returns a distance, at which (and farther) nothing will be rendered or simulated.
 			</summary>  
@@ -161,13 +169,14 @@
 			<param name="intersection"> Pointer to the WorldIntersectionTexCoord object to be filled. </param> 
 			<returns>Pointer to the first intersected object.</returns>
 		</member>
-		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator},bool)">
 			<summary>
 								Performs tracing from the p0 point to the p1 point to find objects intersected by the line. This function detects intersection with objects' bounds.										As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
 			<param name="p0"> Coordinates of the line start point. </param>
 			<param name="p1"> Coordinates of the line end point. </param>
-			<param name="objects"> Array of intersected objects' smart pointers. </param> 
+			<param name="objects"> Array of intersected objects' smart pointers. </param>
+			<param name="check_surface_flags"> true if surface Intersection flags are to be taken into account when checking for intersections with objects; otherwise, false. When set to true objects with surface Intersection flags disabled (default setting) will be ignored as non-intersectable. </param> 
 			<returns>true if intersections are found; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
@@ -186,7 +195,7 @@
 			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
 			<returns>true if intersections are found; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundBox,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundBox,Node::TYPE,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
 								Searches for intersections with specified type of nodes that are found in a given bounding box.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
@@ -211,7 +220,7 @@
 			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
 			<returns>true if intersections are found; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundSphere,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundSphere,Node::TYPE,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
 								Searches for intersections with nodes of the specified type that are found in a given bounding sphere.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
@@ -228,12 +237,20 @@
 			<param name="objects"> Array of intersected objects' smart pointers. </param> 
 			<returns>true if intersections are found; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundFrustum,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundFrustum,Node::TYPE,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
 								Searches for intersections with nodes of the specified type that are found in a given bounding frustum. This method catches all nodes of the specified type independent of their visibility (i.e., if an object is disabled, any of its LODs are disabled, or it is out of the  visibility distance range, but is located within the bounding frustum, the intersection shall be detected). To check for intersections while taking into account the visibility aspect, use getVisibleIntersection().					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary> 
 			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
 			<param name="type"> Node type filter. Only the nodes of the specified type will be checked. </param>
+			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
+			<returns>true if intersections are found; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundFrustum,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+			<summary>
+								Searches for intersections with nodes of the specified type that are found in a given bounding frustum. This method catches all nodes independent of their visibility (i.e., if an object is disabled, any of its LODs are disabled, or it is out of the  visibility distance range, but is located within the bounding frustum, the intersection shall be detected). To check for intersections while taking into account the visibility aspect, use getVisibleIntersection().					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+			</summary> 
+			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
 			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
 			<returns>true if intersections are found; otherwise, false.</returns>
 		</member>
@@ -288,7 +305,7 @@
 			<param name="partial_path"> true if the path to the world file is partial; or false if it is a full path. </param> 
 			<returns>true if the world is loaded successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.isLoaded">
+		<member name="M:Unigine.World.isLoaded const">
 			<summary>
 			Returns a value indicating if the current world is fully loaded.
 			</summary>  
@@ -344,7 +361,7 @@
 			</summary> 
 			<param name="path"> Path to the *.world-file. </param> 
 		</member>
-		<member name="M:Unigine.World.getPath">
+		<member name="M:Unigine.World.getPath const">
 			<summary>
 			Returns the current path to the *.world-file where the world is stored.
 			</summary>  
@@ -356,7 +373,7 @@
 			</summary> 
 			<param name="settings"> Name of the default *.physics asset to be used for the world. </param> 
 		</member>
-		<member name="M:Unigine.World.getPhysicsSettings">
+		<member name="M:Unigine.World.getPhysicsSettings const">
 			<summary>
 			Returns the name of the *.physics file containing default physics settings currently used by the world.
 			</summary>  
@@ -368,7 +385,7 @@
 			</summary> 
 			<param name="settings"> Name of the default *.render asset to be used for the world. </param> 
 		</member>
-		<member name="M:Unigine.World.getRenderSettings">
+		<member name="M:Unigine.World.getRenderSettings const">
 			<summary>
 			Returns the name of the *.render file containing default render settings currently used by the world.
 			</summary>  
@@ -380,7 +397,7 @@
 			</summary> 
 			<param name="settings"> Name of the default *.sound asset to be used for the world. </param> 
 		</member>
-		<member name="M:Unigine.World.getSoundSettings">
+		<member name="M:Unigine.World.getSoundSettings const">
 			<summary>
 			Returns the name of the *.sound file containing default sound settings currently used by the world.
 			</summary>  
@@ -392,41 +409,41 @@
 			</summary> 
 			<param name="name"> Name of the world script file *.usc. </param> 
 		</member>
-		<member name="M:Unigine.World.getScriptName">
+		<member name="M:Unigine.World.getScriptName const">
 			<summary>
 			Returns the name of the world script file *.usc.
 			</summary>  
 			<returns>Name of the world script file *.usc.</returns>
 		</member>
-		<member name="M:Unigine.World.isNode(int)">
+		<member name="M:Unigine.World.isNode(int) const">
 			<summary>
 			Checks if a node with a given ID exists in the world.
 			</summary> 
 			<param name="id"> Node ID. </param> 
 			<returns>true if the node with the given ID exists; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.getNodes(Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.getNodes(Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator}) const">
 			<summary>
-			Returns all instances of all nodes (either loaded from the *.world file or created dynamically at run time), including cache, Node Reference internals, etc.					If you need only root nodes to be returned, use getRootNodes() instead
+			Collects all instances of all nodes (either loaded from the *.world file or created dynamically at run time), including cache, Node Reference internals, etc. and puts them to the specified output list.					If you need only root nodes to be returned, use getRootNodes() instead
 			</summary> 
 			<param name="nodes"> Array with node smart pointers. </param> 
 		</member>
-		<member name="M:Unigine.World.clearNode(char)">
+		<member name="M:Unigine.World.clearNode(char) const">
 			<summary>
-			Clears cached nodes of the given node file. 					When the node is cached and you try to access it, take into account the following:													if the node was loaded by the name — the node gets stored in the cache by its name;							if the node was loaded from the parent node reference — the node is stored in the cache by its GUID. 												Here is an example on how to clear cached nodes in both cases:
+			Clears cached nodes of the given node file.					When the node is cached and you try to access it, take into account the following:													if the node was loaded by the name — the node gets stored in the cache by its name;							if the node was loaded from the parent node reference — the node is stored in the cache by its GUID.						Here is an example on how to clear cached nodes in both cases:
 			</summary> 
 			<param name="name"> Path to the *.node file. </param> 
 			<returns>1 if the cache is cleared successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.World.loadNode(char,int)">
 			<summary>
-								Loads a node (or a hierarchy of nodes) from a .node / .fbx file. If the node is loaded successfully, it is managed by the current world (its Lifetime is World).										Cached nodes remain in the memory. If you don't intend to load more node references from a certain .node asset, set the cache argument to 0 or you can delete cached nodes from the list of world nodes afterwards by using the clearNode() method.
+			Loads a node (or a hierarchy of nodes) from a .node / .fbx file. If the node is loaded successfully, it is managed by the current world (its Lifetime is World). Cached nodes remain in the memory. If you don't intend to load more node references from a certain .node asset, set the cache argument to 0 or you can delete cached nodes from the list of world nodes afterwards by using the clearNode() method.
 			</summary> 
 			<param name="name"> Path to the *.node file. </param>
 			<param name="cache"> 1 to use caching of nodes, 0 not to use. </param> 
 			<returns>Loaded node; NULL if the node cannot be loaded.</returns>
 		</member>
-		<member name="M:Unigine.World.loadNodes(char,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.loadNodes(char,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator}) const">
 			<summary>
 			Loads nodes from a file.
 			</summary> 
@@ -443,7 +460,7 @@
 			<param name="binary"> If set to 1, the node is saved to the binary *.xml. This file cannot be read, but using it speeds up the saving of the node and requires less disk space. </param> 
 			<returns>1 if the node is saved successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.World.saveNodes(char,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},int)">
+		<member name="M:Unigine.World.saveNodes(char,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},int) const">
 			<summary>
 			Saves nodes to a file.
 			</summary> 
@@ -452,13 +469,13 @@
 			<param name="binary"> If set to 1, the node is saved to the binary *.xml. This file cannot be read, but using it speeds up the saving of the node and requires less disk space. </param> 
 			<returns>1 if the nodes are saved successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.World.setUnpackNodeReferences(int)">
+		<member name="M:Unigine.World.setUnpackNodeReferences(bool)">
 			<summary>
 			Enables or disables automatic unpacking of node references at run time. This option can be used to simplify hierarchy management, as when it is enabled all nodes contained in node references will be present in the world hierarchy. When disabled you have to check the hierarchy of each node reference individually (e.g. to find the number of children or manage some of them). The content of NodeReference nodes is unpacked only at run time and does not affect your *.world and *.node files. So, you can use all advantages of node references when building worlds in the UnigineEditor and manage a clear and straightforward hierarchy at run time. This option is available only via code, can be enabled in the System Script and works for all worlds used in your project.Auto-unpacking is disabled in C++ and UnigineScript only projects by default for backward compatibility.
 			</summary> 
 			<param name="references"> 1 - to enable automatic unpacking of node references at run time, 0 - to disable it. </param> 
 		</member>
-		<member name="M:Unigine.World.isUnpackNodeReferences">
+		<member name="M:Unigine.World.isUnpackNodeReferences const">
 			<summary>
 			Returns the value indicating if automatic unpacking of node references at run time is enabled. This option can be used to simplify hierarchy management, as when it is enabled all nodes contained in node references will be present in the world hierarchy. When disabled you have to check the hierarchy of each node reference individually (e.g. to find the number of children or manage some of them). The content of NodeReference nodes is unpacked only at run time and does not affect your *.world and *.node files. So, you can use all advantages of node references when building worlds in the UnigineEditor and manage a clear and straightforward hierarchy at run time.					This option is available only via code, can be enabled in the System Script and works for all worlds used in your project.Auto-unpacking is disabled in C++ and UnigineScript only projects by default for backward compatibility.
 			</summary>  
@@ -475,39 +492,39 @@
 			</summary> 
 			<param name="size"> New grid size, in units. The default value is 1000 units. </param> 
 		</member>
-		<member name="M:Unigine.World.getUpdateGridSize">
+		<member name="M:Unigine.World.getUpdateGridSize const">
 			<summary>
 			Returns the current size of the grid to be used for spatial tree update. The default value is an average one, and can be adjusted when necessary depending on the scene.
 			</summary>  
 			<returns>Current grid size, in units. The default value is 1000 units.</returns>
 		</member>
-		<member name="M:Unigine.World.setScriptExecute(int)">
+		<member name="M:Unigine.World.setScriptExecute(bool)">
 			<summary>
 			Sets a value indicating if a logic script associated with the world is to be loaded with it.
 			</summary> 
 			<param name="execute"> 1 - to load the world along with the associated logic script (if any), 0 - to ignore it. </param> 
 		</member>
-		<member name="M:Unigine.World.isScriptExecute">
+		<member name="M:Unigine.World.isScriptExecute const">
 			<summary>
 			Returns a value indicating if a logic script associated with the world is to be loaded with it.
 			</summary>  
 			<returns>1 if a logic script associated with the world is to be loaded with it; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.World.getNodeByID(int)">
+		<member name="M:Unigine.World.getNodeByID(int) const">
 			<summary>
 			Returns a node by its identifier if it exists.
 			</summary> 
 			<param name="node_id"> Node ID. </param> 
 			<returns>Node, if it exists in the world; otherwise, nullptr.</returns>
 		</member>
-		<member name="M:Unigine.World.getNodeByName(char)">
+		<member name="M:Unigine.World.getNodeByName(char) const">
 			<summary>
 			Returns a node by its name if it exists. If the world contains multiple nodes having the same name, only the first one found shall be returned. To get all nodes having the same name, use the getNodesByName() method.method filters out isolated node hierarchies and cache nodes, so it does not return nodes having a possessor (NodeReference / Clutter / Cluster) among its predecessors or nodes from cache.
 			</summary> 
 			<param name="name"> Node name. </param> 
 			<returns>Node, if it exists in the world; otherwise, nullptr.</returns>
 		</member>
-		<member name="M:Unigine.World.getNodesByName(char,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.World.getNodesByName(char,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator}) const">
 			<summary>
 			Generates a list of nodes in the world with a given name and puts it to nodes.
 			</summary> 
@@ -528,7 +545,7 @@
 			<param name="type"> Node type identifier, one of the NODE_* values. </param>
 			<param name="nodes"> List of nodes of the given type (if any); otherwise, nullptr. </param> 
 		</member>
-		<member name="M:Unigine.World.isNode(char)">
+		<member name="M:Unigine.World.isNode(char) const">
 			<summary>
 			Checks if a node  with a given name exists in the world.
 			</summary> 
@@ -546,7 +563,7 @@
 			</summary> 
 			<param name="nodes"> Vector, to which all root nodes of the world hierarchy are to be put. </param> 
 		</member>
-		<member name="M:Unigine.World.getRootNodeIndex(Unigine.Ptr{Unigine.Node})">
+		<member name="M:Unigine.World.getRootNodeIndex(Unigine.Ptr{Unigine.Node}) const">
 			<summary>
 			Returns the index for the specified root node, that belongs to the world hierarchy.
 			</summary> 
@@ -590,6 +607,31 @@
 			</summary> 
 			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param> 
 		</member>
+		<member name="M:Unigine.World.setMovingImmovableNodeMode(World::MOVING_IMMOVABLE_NODES_MODE)">
+			<summary>
+								Sets a new mode of handling attempts to move nodes having the Immovable flag enabled.					Please be aware that there are two cases when you may disable warnings and allow movement of Immovable nodes:											At run-time for procedural generation of levels. This may cause some freezing but won't affect performance much. Upon completion of the generation process you should enable warnings again.						On world initialization, this will change world loading time but won't affect overall performance.
+			</summary> 
+			<param name="mode"> New handling mode for attempts to move Immovable nodes to be set. </param> 
+		</member>
+		<member name="M:Unigine.World.getMovingImmovableNodeMode const">
+			<summary>
+							Returns the current mode of handling attempts to move nodes having the Immovable flag enabled.				Please be aware that there are two cases when you may disable warnings and allow movement of Immovable nodes:											At run-time for procedural generation of levels. This may cause some freezing but won't affect performance much. Upon completion of the generation process you should enable warnings again.						On world initialization, this will change world loading time but won't affect overall performance.
+			</summary>  
+			<returns>Current handling mode for attempts to move Immovable nodes.</returns>
+		</member>
+		<member name="M:Unigine.World.setNodeIdSeed(unsignedint)">
+			<summary>
+			Sets a seed value for random generation of a node ID. This method is used for deterministic generation.
+			</summary> 
+			<param name="seed"> A seed value. </param> 
+		</member>
+		<member name="M:Unigine.World.setNodeIdRange(int,int)">
+			<summary>
+			Sets a range for random generation of a node ID. This method can be used, for example, to generate IDs for nodes divided in several groups: within a group, IDs will be generated in a separate range.
+			</summary> 
+			<param name="from"> Beginning of the range. </param>
+			<param name="to"> End of the range. </param> 
+		</member>
 		<member name="F:Unigine.World.CALLBACK_POST_WORLD_CLEAR">
 			<summary>
 			Callback to be fired after clearing the world.
@@ -632,7 +674,7 @@
 		</member>
 		<member name="F:Unigine.World.CALLBACK_POST_WORLD_INIT">
 			<summary>
-			Callback to be fired after calling all WorldLogic::init() methods.
+			Callback to be fired after calling all WorldLogic::init() methods.					Forced closing of the Engine should be disabled with the -auto_quit 0						 command-line option.
 		</summary>
 		</member>
 		<member name="F:Unigine.World.CALLBACK_PRE_WORLD_INIT">
@@ -648,6 +690,21 @@
 		<member name="F:Unigine.World.CALLBACK_PRE_NODE_SAVE">
 			<summary>
 			Callback to be fired before calling the World::saveNode() method.
+		</summary>
+		</member>
+		<member name="F:Unigine.World.MOVING_IMMOVABLE_NODES_MODE_BAN">
+			<summary>
+			Moving of the nodes having the Immovable flag is prohibited.
+		</summary>
+		</member>
+		<member name="F:Unigine.World.MOVING_IMMOVABLE_NODES_MODE_WARNING">
+			<summary>
+			Moving of the nodes having the Immovable flag is accompanied by a warning in the console.
+		</summary>
+		</member>
+		<member name="F:Unigine.World.MOVING_IMMOVABLE_NODES_MODE_ALLOW">
+			<summary>
+			Moving of the nodes having the Immovable flag is allowed.
 		</summary>
 		</member>
 		<member name="M:Unigine.WorldExternBase.getClassID">
@@ -721,11 +778,6 @@
 		<member name="M:Unigine.WorldExternBase.updateEnabled">
 			<summary>
 			Updates enabled.
-			</summary>  
-		</member>
-		<member name="M:Unigine.WorldExternBase.updatePosition">
-			<summary>
-			Updates a position of the external world.
 			</summary>  
 		</member>
 		<member name="M:Unigine.WorldExternBase.updateTransform">

@@ -53,12 +53,6 @@
 			</summary> 
 			<param name="q"> Source quaternion. </param> 
 		</member>
-		<member name="M:Unigine.Math.mat3.#ctor(float)">
-			<summary>
-			Constructor. Initializes the matrix using a given pointer to the array of float elements.
-			</summary> 
-			<param name="m"> Pointer to the array of float elements. </param> 
-		</member>
 		<member name="M:Unigine.Math.mat3.#ctor(float,ConstexprTag)">
 			<summary>
 			Constructor. Initializes the matrix using a given constant float value.
@@ -81,6 +75,12 @@
 			<param name="m22_"> m22_ element. </param>
 			<param name=""> Auxiliary tag. </param> 
 		</member>
+		<member name="M:Unigine.Math.mat3.#ctor(mat3x3_values)">
+			<summary>
+			Constructor. Initializes the matrix using a given source matrix values.
+			</summary> 
+			<param name="m"> The source value storing matrix float values. </param> 
+		</member>
 		<member name="M:Unigine.Math.mat3.set(int,int,float)">
 			<summary>
 			Sets a new value of the matrix element specified by row and column.
@@ -101,11 +101,11 @@
 			</summary> 
 			<param name="m"> Source matrix (4x4). </param> 
 		</member>
-		<member name="M:Unigine.Math.mat3.set(float)">
+		<member name="M:Unigine.Math.mat3.set(mat3x3_values)">
 			<summary>
-			Sets new matrix values using a pointer to the source matrix.
+			Sets the matrix using the argument float values.
 			</summary> 
-			<param name="m"> Pointer to the source matrix. </param> 
+			<param name="m"> The source value storing matrix float values. </param> 
 		</member>
 		<member name="M:Unigine.Math.mat3.set(Unigine.quat)">
 			<summary>
@@ -125,17 +125,23 @@
 			</summary> 
 			<param name="m"> Source matrix (2x2). </param> 
 		</member>
+		<member name="M:Unigine.Math.mat3.get(mat3x3_values) const">
+			<summary>
+			Returns the matrix values by filling the specified argument.
+			</summary> 
+			<param name="m"> The destination value to store matrix float values. </param> 
+		</member>
 		<member name="M:Unigine.Math.mat3.get">
 			<summary>
-			Returns the pointer to the matrix.
+			Returns the value storing matrix float values.
 			</summary>  
-			<returns>Pointer to the matrix.</returns>
+			<returns>The value storing matrix float values.</returns>
 		</member>
 		<member name="M:Unigine.Math.mat3.get const">
 			<summary>
-			Returns the constant pointer to the matrix.
+			Returns the constant value storing matrix float values.
 			</summary>  
-			<returns>Constant pointer to the matrix.</returns>
+			<returns>The constant value storing matrix float values.</returns>
 		</member>
 		<member name="M:Unigine.Math.mat3.get(int,int)">
 			<summary>
@@ -152,12 +158,6 @@
 			<param name="row"> Row. </param>
 			<param name="column"> Column. </param> 
 			<returns>Matrix element value.</returns>
-		</member>
-		<member name="M:Unigine.Math.mat3.get(float) const">
-			<summary>
-			Fills the destination matrix, specified by the given pointer, with matrix values.
-			</summary> 
-			<param name="m"> Destination matrix pointer. </param> 
 		</member>
 		<member name="M:Unigine.Math.mat3.setColumn(int,Unigine.vec3)">
 			<summary>

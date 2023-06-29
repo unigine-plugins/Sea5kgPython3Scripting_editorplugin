@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -68,11 +67,8 @@ struct FilePath
 
 class UNIGINE_API FileSystem
 {
-protected:
-	
-
 public:
-	static int isInitialized(); 
+	static int isInitialized();
 
 	enum CALLBACK_INDEX
 	{
@@ -165,6 +161,7 @@ public:
 	static void removeModifier(const char *name);
 	static void clearModifiers();
 	static void *addCallback(FileSystem::CALLBACK_INDEX callback, CallbackBase1<const Vector<FilePath> &> *func);
+	static void *addCallback(FileSystem::CALLBACK_INDEX callback, CallbackBase *func);
 	static void *addCallback(FileSystem::CALLBACK_INDEX callback, CallbackBase2<const char *, UGUID> *func);
 	static bool removeCallback(FileSystem::CALLBACK_INDEX callback, void *id);
 	static void clearCallbacks(FileSystem::CALLBACK_INDEX callback);
@@ -174,11 +171,8 @@ public:
 
 class UNIGINE_API FileSystemAssets
 {
-protected:
-	
-
 public:
-	static int isInitialized(); 
+	static int isInitialized();
 	static UGUID addRuntime(const UGUID &asset_guid, const char *alias, int primary = 0);
 	static UGUID addRuntime(const char *asset_path, const char *alias, int primary = 0);
 	static bool addRuntime(const UGUID &asset_guid, const char *alias, const UGUID &runtime_guid, int primary = 0);

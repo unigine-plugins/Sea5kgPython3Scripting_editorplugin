@@ -15,7 +15,6 @@
 // #include "UnigineRenderWindow.h"
 #include "UnigineSelection.h"
 #include "UnigineSelector.h"
-#include "UnigineSettingManager.h"
 #include "UnigineUndo.h"
 #include "UnigineViewportManager.h"
 #include "UnigineWindowManager.h"

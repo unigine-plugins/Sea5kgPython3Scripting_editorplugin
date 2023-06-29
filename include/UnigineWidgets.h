@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -80,7 +79,7 @@ public:
 		WIDGET_MANIPULATOR_SCALER,
 		WIDGET_EXTERN,
 		WIDGET_ENGINE,
-		WIDGET_DRAG_AREA,
+		WIDGET_HIT_TEST_AREA,
 		NUM_WIDGETS,
 	};
 
@@ -129,8 +128,16 @@ public:
 	int getScreenPositionY() const;
 	void setWidth(int width);
 	int getWidth() const;
+	int getRenderWidth() const;
 	void setHeight(int height);
 	int getHeight() const;
+	int getRenderHeight() const;
+	float getDpiScale() const;
+	int toRenderSize(int unit_size);
+	int toUnitSize(int render_size);
+	Math::ivec2 toRenderSize(const Math::ivec2 &unit_size);
+	Math::ivec2 toUnitSize(const Math::ivec2 &render_size);
+	Math::ivec2 getTextRenderSize(const char *text) const;
 	bool getIntersection(int local_pos_x, int local_pos_y) const;
 	Ptr<Widget> getHierarchyIntersection(int screen_pos_x, int screen_pos_y);
 	void setIntersectionEnabled(bool enabled);
@@ -613,7 +620,7 @@ public:
 	void removeSkipFlags(int flags);
 	void setIFps(float ifps);
 	float getIFps() const;
-	void renderImage(const Ptr<Image> &image);
+	void renderTexture(const Ptr<Texture> &texture);
 };
 typedef Ptr<WidgetSpriteViewport> WidgetSpriteViewportPtr;
 
@@ -655,7 +662,7 @@ public:
 	float getIFps() const;
 	void setNode(const Ptr<Node> &node);
 	Ptr<Node> getNode() const;
-	void renderImage(const Ptr<Image> &image);
+	void renderTexture(const Ptr<Texture> &texture);
 };
 typedef Ptr<WidgetSpriteNode> WidgetSpriteNodePtr;
 
@@ -700,6 +707,7 @@ public:
 	int getTextHeight(int text) const;
 	void setTextAlign(int text, int align);
 	int getTextAlign(int text) const;
+	void setTextFont(int text, const char *path);
 	int addLine(int order = 0);
 	void removeLine(int line);
 	int getNumLines() const;
@@ -1229,9 +1237,15 @@ public:
 	void setCursor(int position, int line);
 	int getCursorPosition() const;
 	int getCursorLine() const;
+	int getCursorPositionX() const;
+	int getCursorPositionY() const;
+	int getCursorWidth() const;
 	void setSelection(int position, int line);
 	int getSelectionPosition() const;
 	int getSelectionLine() const;
+	int getLineWidth(int line, int end = -1) const;
+	void setUseScrollWheelEnabled(bool enabled);
+	bool isUseScrollWheelEnabled() const;
 	String getSelectionText() const;
 	void clearSelectionText();
 	int addLine(const char *str = 0);
@@ -1276,6 +1290,10 @@ public:
 	bool isBlendable() const;
 	void setFloatable(bool floatable);
 	bool isFloatable() const;
+	void setOutBoundsCallbacksEnabled(bool enabled);
+	bool isOutBoundsCallbacksEnabled() const;
+	void setGlobalMovement(bool movement);
+	bool isGlobalMovement() const;
 	void setSnapDistance(int distance);
 	int getSnapDistance() const;
 	void setColor(const Math::vec4 &color);
@@ -1290,6 +1308,10 @@ public:
 	int getMaxWidth() const;
 	void setMaxHeight(int height);
 	int getMaxHeight() const;
+	int getMinTextureWidth() const;
+	int getMinTextureHeight() const;
+	int getTextWidth() const;
+	int getTextHeight() const;
 	void setSpace(int x, int y);
 	int getSpaceX() const;
 	int getSpaceY() const;
@@ -1298,6 +1320,8 @@ public:
 	int getPaddingRight() const;
 	int getPaddingTop() const;
 	int getPaddingBottom() const;
+	void setStencil(int stencil);
+	int getStencil() const;
 	void setDragAreaEnabled(bool enabled);
 	bool isDragAreaEnabled() const;
 	void setDragAreaBackground(int background);
@@ -1535,18 +1559,19 @@ public:
 typedef Ptr<WidgetManipulatorScaler> WidgetManipulatorScalerPtr;
 
 
-class UNIGINE_API WidgetDragArea : public Widget
+class UNIGINE_API WidgetHitTestArea : public Widget
 {
 public:
-	static bool convertible(Widget *obj) { return obj && obj->getType() == Widget::WIDGET_DRAG_AREA; }
-	static Ptr<WidgetDragArea> create(const Ptr<Gui> &gui);
-	static Ptr<WidgetDragArea> create();
+	static bool convertible(Widget *obj) { return obj && obj->getType() == Widget::WIDGET_HIT_TEST_AREA; }
+	static Ptr<WidgetHitTestArea> create(const Ptr<Gui> &gui, int hit_test);
+	static Ptr<WidgetHitTestArea> create(int hit_test);
+	int getHitTestResult() const;
 	void setBackground(int background);
 	int getBackground() const;
 	void setBackgroundColor(const Math::vec4 &color);
 	Math::vec4 getBackgroundColor() const;
 };
-typedef Ptr<WidgetDragArea> WidgetDragAreaPtr;
+typedef Ptr<WidgetHitTestArea> WidgetHitTestAreaPtr;
 
 class WidgetExternBase;
 
@@ -1584,7 +1609,9 @@ public:
 	virtual void expand(int width, int height);
 	virtual void updatePositions();
 	virtual void destroy();
+	virtual void preRender();
 	virtual void render();
+	virtual void render(int x0, int y0, int x1, int y1);
 protected:
 	int get_position_x() const;
 	int get_position_y() const;
@@ -1605,13 +1632,18 @@ protected:
 	Math::vec4 get_selection_color(float fade, int enabled = 1) const;
 	Math::vec4 get_text_color(const Math::vec4 &color, float fade, int enabled = 1) const;
 	Math::vec4 get_text_color(float fade, int enabled = 1) const;
-	int get_text_height() const;
-	int get_text_width(unsigned int code) const;
-	int get_text_space_width() const;
-	void get_text_size(const char *str, int &width, int &height, int expand = 0) const;
-	void render_text(int x, int y, const Math::vec4 &color, const char *str, int width, int height) const;
-	void get_text_size(const unsigned int *str, int &width, int &height) const;
-	void render_text(int x, int y, const Math::vec4 &color, const unsigned int *str) const;
+	int get_text_unit_height() const;
+	int get_text_render_height() const;
+	int get_text_unit_width(unsigned int code) const;
+	int get_text_render_width(unsigned int code) const;
+	int get_text_space_unit_width() const;
+	int get_text_space_render_width() const;
+	void get_text_unit_size(const char *str, int &unit_width, int &unit_height, int expand = 0) const;
+	void get_text_render_size(const char *str, int &render_width, int &render_height, int expand = 0) const;
+	void render_text(int unit_x, int unit_y, const Math::vec4 &color, const char *str, int unit_width, int unit_height) const;
+	void get_text_unit_size(const unsigned int *str, int &unit_width, int &unit_height) const;
+	void get_text_render_size(const unsigned int *str, int &render_width, int &render_height) const;
+	void render_text(int unit_x, int unit_y, const Math::vec4 &color, const unsigned int *str) const;
 	void push_color() const;
 	void pop_color() const;
 	void set_color(const Math::vec4 &color) const;
@@ -1621,6 +1653,32 @@ protected:
 	void set_translate(int x, int y) const;
 	void set_scale(float x, float y) const;
 	void set_blend_func(int src, int dest) const;
+	void get_blend_func(int *out_src, int *out_dest);
+	void stencil_begin() const;
+	void stencil_end() const;
+	void stencil_enable() const;
+	void stencil_disable() const;
+	void stencil_ref_incr_begin() const;
+	void stencil_ref_decr_begin() const;
+	void stencil_ref_end() const;
+	void render_polygon_begin(const TexturePtr &texture) const;
+	void render_polygon_end() const;
+	void render_triangle(const float *v0, const float *t0, const Math::vec4 &c0, const float *v1, const float *t1, const Math::vec4 &c1, const float *v2, const float *t2, const Math::vec4 &c2);
+	void render_quad(float x0, float y0, float tx0, float ty0, const Math::vec4 &c0, const Math::vec4 &c1, float x1, float y1, float tx1, float ty1, const Math::vec4 &c2, const Math::vec4 &c3) const;
+	void render_quad(const float *v0, const Math::vec4 &c0, const float *v1, const Math::vec4 &c1, const float *v2, const Math::vec4 &c2, const float *v3, const Math::vec4 &c3) const;
+	void render_quad(int x0, int y0, float tx0, float ty0, const Math::vec4 &c0, const Math::vec4 &c1, int x1, int y1, float tx1, float ty1, const Math::vec4 &c2, const Math::vec4 &c3) const;
+	void render_quad(int x0, int y0, float tx0, float ty0, int x1, int y1, float tx1, float ty1, const Math::vec4 &color) const;
+	void render_quad(int x0, int y0, int x1, int y1, const Math::vec4 &color) const;
+	void render_quad_h(int x0, int y0, float tx0, float ty0, const Math::vec4 &c0, int x1, int y1, float tx1, float ty1, const Math::vec4 &c1) const;
+	void render_quad_v(int x0, int y0, float tx0, float ty0, const Math::vec4 &c0, int x1, int y1, float tx1, float ty1, const Math::vec4 &c1) const;
+	void render_border(int w, int h, int x0, int y0, int x1, int y1, const Math::vec4 &color) const;
+	void render_button(int w, int h, int width, int height, float tx0, float ty0, float tx1, float ty1, const Math::vec4 &color) const;
+	void render_slider_button_h(int w, int h, int x, int y, int width, float tx0, float ty0, const Math::vec4 &color) const;
+	void render_slider_button_v(int w, int h, int x, int y, int height, float tx0, float ty0, const Math::vec4 &color) const;
+	void render_line_begin() const;
+	void render_line_end() const;
+	void render_line(const float *v0, const Math::vec4 &c0, const float *v1, const Math::vec4 &c1) const;
+	void render_line(float x, float y, const Math::vec4 &c) const;
 private:
 	template <class Type> static WidgetExternBase *constructor(void *widget) { return new Type(widget); }
 	struct WidgetExternData;

@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -24,20 +23,22 @@ namespace Unigine
 {
 
 class InputGamePad;
+class InputJoystick;
 class InputEvent;
 class InputEventMouseButton;
 class InputEventKeyboard;
 class InputEventTouch;
+class InputEventPadButton;
+class InputEventPadTouchMotion;
+class InputEventJoyButton;
+class InputEventJoyPovMotion;
 int inputEventsFilterFunc(Ptr<InputEvent> &e);
 //////////////////////////////////////////////////////////////////////////
 
 class UNIGINE_API Input
 {
-protected:
-	
-
 public:
-	static int isInitialized(); 
+	static int isInitialized();
 
 	enum MOUSE_HANDLE
 	{
@@ -84,9 +85,7 @@ public:
 
 	enum
 	{
-		NUM_GAME_PADS = 4,
 		NUM_TOUCHES = 16,
-		NUM_JOYSTICKS = 16,
 	};
 
 	enum KEY : unsigned int
@@ -242,21 +241,81 @@ public:
 		CALLBACK_TOUCH_DOWN,
 		CALLBACK_TOUCH_UP,
 		CALLBACK_TOUCH_MOTION,
+		CALLBACK_GAMEPAD_CONNECTED,
+		CALLBACK_GAMEPAD_DISCONNECTED,
+		CALLBACK_GAMEPAD_BUTTON_DOWN,
+		CALLBACK_GAMEPAD_BUTTON_UP,
+		CALLBACK_GAMEPAD_AXIS_MOTION,
+		CALLBACK_GAMEPAD_TOUCH_DOWN,
+		CALLBACK_GAMEPAD_TOUCH_UP,
+		CALLBACK_GAMEPAD_TOUCH_MOTION,
+		CALLBACK_JOY_CONNECTED,
+		CALLBACK_JOY_DISCONNECTED,
+		CALLBACK_JOY_BUTTON_DOWN,
+		CALLBACK_JOY_BUTTON_UP,
+		CALLBACK_JOY_AXIS_MOTION,
+		CALLBACK_JOY_POV_MOTION,
 		CALLBACK_IMMEDIATE_INPUT,
 		NUM_CALLBACKS,
 	};
 
-	enum DEVICE_TYPE
+	enum DEVICE
 	{
-		DEVICE_TYPE_UNKNOWN = 0,
-		DEVICE_TYPE_GAME_CONTROLLER,
-		DEVICE_TYPE_WHEEL,
-		DEVICE_TYPE_ARCADE_STICK,
-		DEVICE_TYPE_FLIGHT_STICK,
-		DEVICE_TYPE_DANCE_PAD,
-		DEVICE_TYPE_GUITAR,
-		DEVICE_TYPE_DRUM_KIT,
-		DEVICE_TYPE_THROTTLE,
+		DEVICE_UNKNOWN = 0,
+		DEVICE_GAME_CONTROLLER,
+		DEVICE_WHEEL,
+		DEVICE_ARCADE_STICK,
+		DEVICE_FLIGHT_STICK,
+		DEVICE_DANCE_PAD,
+		DEVICE_GUITAR,
+		DEVICE_DRUM_KIT,
+		DEVICE_THROTTLE,
+	};
+
+	enum GAMEPAD_BUTTON
+	{
+		GAMEPAD_BUTTON_A = 0,
+		GAMEPAD_BUTTON_B,
+		GAMEPAD_BUTTON_X,
+		GAMEPAD_BUTTON_Y,
+		GAMEPAD_BUTTON_BACK,
+		GAMEPAD_BUTTON_START,
+		GAMEPAD_BUTTON_DPAD_UP,
+		GAMEPAD_BUTTON_DPAD_DOWN,
+		GAMEPAD_BUTTON_DPAD_LEFT,
+		GAMEPAD_BUTTON_DPAD_RIGHT,
+		GAMEPAD_BUTTON_THUMB_LEFT,
+		GAMEPAD_BUTTON_THUMB_RIGHT,
+		GAMEPAD_BUTTON_SHOULDER_LEFT,
+		GAMEPAD_BUTTON_SHOULDER_RIGHT,
+		GAMEPAD_BUTTON_GUIDE,
+		GAMEPAD_BUTTON_MISC1,
+		GAMEPAD_BUTTON_TOUCHPAD,
+		NUM_GAMEPAD_BUTTONS,
+	};
+
+	enum GAMEPAD_AXIS
+	{
+		GAMEPAD_AXIS_LEFT_X = 0,
+		GAMEPAD_AXIS_LEFT_Y,
+		GAMEPAD_AXIS_RIGHT_X,
+		GAMEPAD_AXIS_RIGHT_Y,
+		GAMEPAD_AXIS_LEFT_TRIGGER,
+		GAMEPAD_AXIS_RIGHT_TRIGGER,
+		NUM_GAMEPAD_AXES,
+	};
+
+	enum JOYSTICK_POV
+	{
+		JOYSTICK_POV_NOT_PRESSED = 0,
+		JOYSTICK_POV_UP,
+		JOYSTICK_POV_UP_RIGHT,
+		JOYSTICK_POV_RIGHT,
+		JOYSTICK_POV_DOWN_RIGHT,
+		JOYSTICK_POV_DOWN,
+		JOYSTICK_POV_DOWN_LEFT,
+		JOYSTICK_POV_LEFT,
+		JOYSTICK_POV_UP_LEFT,
 	};
 	static bool isModifierEnabled(Input::MODIFIER modifier);
 	static const char *getModifierName(Input::MODIFIER modifier);
@@ -295,10 +354,10 @@ public:
 	static Math::ivec2 getTouchDelta(int index);
 	static Ptr<InputEventTouch> getTouchEvent(int index);
 	static int getTouchEvents(int index, Vector<Ptr<InputEventTouch>> &events);
-	static int getCountGamePads();
+	static int getNumGamePads();
 	static Ptr<InputGamePad> getGamePad(int num);
-	static int getCountActiveGamePads();
-	static Ptr<InputGamePad> getActiveGamePad(int num);
+	static int getNumJoysticks();
+	static Ptr<InputJoystick> getJoystick(int num);
 	static bool isEmptyClipboard();
 	static void setClipboard(const char *clipboard);
 	static const char *getClipboard();
@@ -320,6 +379,10 @@ public:
 	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase2<int, int> *func);
 	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase1<Input::KEY> *func);
 	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase1<unsigned int> *func);
+	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase2<unsigned int, Input::GAMEPAD_BUTTON> *func);
+	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase2<unsigned int, Input::GAMEPAD_AXIS> *func);
+	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase3<unsigned int, int, int> *func);
+	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase2<unsigned int, int> *func);
 	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase1<Ptr<InputEvent>> *func);
 	static bool removeCallback(Input::CALLBACK_INDEX callback, void *id);
 	static void clearCallbacks(Input::CALLBACK_INDEX callback);
@@ -342,41 +405,11 @@ public:
 		MODEL_TYPE_PS4,
 		MODEL_TYPE_PS5,
 	};
-
-	enum BUTTON
-	{
-		BUTTON_A = 0,
-		BUTTON_B,
-		BUTTON_X,
-		BUTTON_Y,
-		BUTTON_BACK,
-		BUTTON_START,
-		BUTTON_DPAD_UP,
-		BUTTON_DPAD_DOWN,
-		BUTTON_DPAD_LEFT,
-		BUTTON_DPAD_RIGHT,
-		BUTTON_THUMB_LEFT,
-		BUTTON_THUMB_RIGHT,
-		BUTTON_SHOULDER_LEFT,
-		BUTTON_SHOULDER_RIGHT,
-		NUM_BUTTONS,
-	};
-
-	enum AXIS
-	{
-		AXIS_LEFT_X = 0,
-		AXIS_LEFT_Y,
-		AXIS_RIGHT_X,
-		AXIS_RIGHT_Y,
-		AXIS_LEFT_TRIGGER,
-		AXIS_RIGHT_TRIGGER,
-		NUM_AXES,
-	};
 	bool isAvailable() const;
 	int getNumber() const;
 	int getPlayerIndex() const;
 	const char *getName() const;
-	Input::DEVICE_TYPE getDeviceType() const;
+	Input::DEVICE getDeviceType() const;
 	InputGamePad::MODEL_TYPE getModelType() const;
 	void setFilter(float filter);
 	float getFilter() const;
@@ -388,12 +421,56 @@ public:
 	float getTriggerLeftDelta() const;
 	float getTriggerRight() const;
 	float getTriggerRightDelta() const;
-	bool isButtonPressed(InputGamePad::BUTTON button) const;
-	bool isButtonDown(InputGamePad::BUTTON button) const;
-	bool isButtonUp(InputGamePad::BUTTON button) const;
+	bool isButtonPressed(Input::GAMEPAD_BUTTON button) const;
+	bool isButtonDown(Input::GAMEPAD_BUTTON button) const;
+	bool isButtonUp(Input::GAMEPAD_BUTTON button) const;
+	int getNumTouches() const;
+	int getNumTouchFingers(int touch) const;
+	bool isTouchPressed(int touch, int finger) const;
+	bool isTouchDown(int touch, int finger) const;
+	bool isTouchUp(int touch, int finger) const;
+	Math::vec2 getTouchPosition(int touch, int finger) const;
+	Math::vec2 getTouchDelta(int touch, int finger) const;
+	float getTouchPressure(int touch, int finger) const;
+	Ptr<InputEventPadButton> getButtonEvent(Input::GAMEPAD_BUTTON button) const;
+	int getButtonEvents(Input::GAMEPAD_BUTTON button, Vector<Ptr<InputEventPadButton>> &events);
 	void setVibration(float low_frequency, float high_frequency, float duration_ms = 100.0f);
 };
 typedef Ptr<InputGamePad> InputGamePadPtr;
+
+
+class UNIGINE_API InputJoystick : public APIInterface
+{
+public:
+	int getNumber() const;
+	int getPlayerIndex() const;
+	bool isAvailable() const;
+	const char *getName() const;
+	Input::DEVICE getDeviceType() const;
+	void setFilter(float filter);
+	float getFilter() const;
+	int getNumAxes() const;
+	float getAxis(unsigned int axis) const;
+	float getAxisDelta(unsigned int axis) const;
+	const char *getAxisName(unsigned int axis) const;
+	int getNumPovs() const;
+	Input::JOYSTICK_POV getPov(unsigned int pov) const;
+	const char *getPovName(unsigned int pov) const;
+	int getNumButtons() const;
+	bool isButtonPressed(unsigned int key) const;
+	bool isButtonDown(unsigned int key) const;
+	bool isButtonUp(unsigned int key) const;
+	const char *getButtonName(unsigned int button) const;
+	Ptr<InputEventJoyButton> getButtonEvent(int button) const;
+	int getButtonEvents(int button, Vector<Ptr<InputEventJoyButton>> &events) const;
+	Ptr<InputEventJoyPovMotion> getPovEvent(int pov) const;
+	int getPovEvents(int pov, Vector<Ptr<InputEventJoyPovMotion>> &events) const;
+	const char *getGuid() const;
+	int getVendor() const;
+	int getProduct() const;
+	int getProductVersion() const;
+};
+typedef Ptr<InputJoystick> InputJoystickPtr;
 
 
 class UNIGINE_API InputEvent : public APIInterface
@@ -417,6 +494,7 @@ public:
 		INPUT_EVENT_PAD_DEVICE,
 		INPUT_EVENT_PAD_BUTTON,
 		INPUT_EVENT_PAD_AXIS_MOTION,
+		INPUT_EVENT_PAD_TOUCH_MOTION,
 		INPUT_EVENT_SYSTEM,
 		NUM_INPUT_EVENTS,
 	};
@@ -670,8 +748,8 @@ public:
 	InputEventPadButton::ACTION getAction() const;
 	void setConnectionID(int connectionid);
 	int getConnectionID() const;
-	void setButton(InputGamePad::BUTTON button);
-	InputGamePad::BUTTON getButton() const;
+	void setButton(Input::GAMEPAD_BUTTON button);
+	Input::GAMEPAD_BUTTON getButton() const;
 };
 typedef Ptr<InputEventPadButton> InputEventPadButtonPtr;
 
@@ -685,12 +763,42 @@ public:
 	static Ptr<InputEventPadAxisMotion> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos, int connection_id, int axis, float value);
 	void setConnectionID(int connectionid);
 	int getConnectionID() const;
-	void setAxis(InputGamePad::AXIS axis);
-	InputGamePad::AXIS getAxis() const;
+	void setAxis(Input::GAMEPAD_AXIS axis);
+	Input::GAMEPAD_AXIS getAxis() const;
 	void setValue(float value);
 	float getValue() const;
 };
 typedef Ptr<InputEventPadAxisMotion> InputEventPadAxisMotionPtr;
+
+
+class UNIGINE_API InputEventPadTouchMotion : public InputEvent
+{
+public:
+	static bool convertible(InputEvent *obj) { return obj && obj->getType() == InputEvent::INPUT_EVENT_PAD_TOUCH_MOTION; }
+
+	enum ACTION
+	{
+		ACTION_DOWN = 0,
+		ACTION_MOTION,
+		ACTION_UP,
+	};
+	static Ptr<InputEventPadTouchMotion> create();
+	static Ptr<InputEventPadTouchMotion> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos);
+	static Ptr<InputEventPadTouchMotion> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos, int connection_id, int action, int touch, int finger, float pressure, const Math::vec2 &position);
+	void setConnectionID(int connectionid);
+	int getConnectionID() const;
+	void setAction(InputEventPadTouchMotion::ACTION action);
+	InputEventPadTouchMotion::ACTION getAction() const;
+	void setTouch(int touch);
+	int getTouch() const;
+	void setTouchFinger(int finger);
+	int getTouchFinger() const;
+	void setPosition(const Math::vec2 &position);
+	Math::vec2 getPosition() const;
+	void setPressure(float pressure);
+	float getPressure() const;
+};
+typedef Ptr<InputEventPadTouchMotion> InputEventPadTouchMotionPtr;
 
 
 class UNIGINE_API InputEventSystem : public InputEvent

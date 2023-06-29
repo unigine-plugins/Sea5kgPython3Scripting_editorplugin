@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 #include "UnigineMathLibCommon.h"
 #include "UnigineMathLibVec2.h"
@@ -468,11 +467,11 @@ UNIGINE_INLINE int compare(const vec4 &v0, const vec4 &v1, float epsilon)
 UNIGINE_INLINE int operator==(const vec4 &v0, const vec4 &v1) { return compare(v0, v1); }
 UNIGINE_INLINE int operator!=(const vec4 &v0, const vec4 &v1) { return !compare(v0, v1); }
 
-UNIGINE_INLINE int operator<(const vec4& v0, const vec4& v1) { return v0.x < v1.x && v0.y < v1.y && v0.z < v1.z && v0.w < v1.w; }
-UNIGINE_INLINE int operator>(const vec4& v0, const vec4& v1) { return v0.x > v1.x && v0.y > v1.y && v0.z > v1.z && v0.w > v1.w; }
+UNIGINE_INLINE int operator<(const vec4 &v0, const vec4 &v1) { return v0.x < v1.x && v0.y < v1.y && v0.z < v1.z && v0.w < v1.w; }
+UNIGINE_INLINE int operator>(const vec4 &v0, const vec4 &v1) { return v0.x > v1.x && v0.y > v1.y && v0.z > v1.z && v0.w > v1.w; }
 
-UNIGINE_INLINE int operator<=(const vec4& v0, const vec4& v1) { return v0.x <= v1.x && v0.y <= v1.y && v0.z <= v1.z && v0.w <= v1.w; }
-UNIGINE_INLINE int operator>=(const vec4& v0, const vec4& v1) { return v0.x >= v1.x && v0.y >= v1.y && v0.z >= v1.z && v0.w >= v1.w; }
+UNIGINE_INLINE int operator<=(const vec4 &v0, const vec4 &v1) { return v0.x <= v1.x && v0.y <= v1.y && v0.z <= v1.z && v0.w <= v1.w; }
+UNIGINE_INLINE int operator>=(const vec4 &v0, const vec4 &v1) { return v0.x >= v1.x && v0.y >= v1.y && v0.z >= v1.z && v0.w >= v1.w; }
 
 UNIGINE_INLINE vec4 &mul(vec4 &ret, const vec4 &v0, float v1)
 {

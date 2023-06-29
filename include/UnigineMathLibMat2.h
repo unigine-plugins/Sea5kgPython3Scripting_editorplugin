@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 #include "UnigineMathLibCommon.h"
 
@@ -57,7 +56,7 @@ struct alignas(16) mat2
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
-	UNIGINE_INLINE explicit mat2(const float *m): m00(m[0]), m10(m[2]), m01(m[1]), m11(m[3]) 
+	UNIGINE_INLINE explicit mat2(const mat2x2_values &m): m00(m[0]), m10(m[2]), m01(m[1]), m11(m[3])
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
@@ -159,7 +158,7 @@ struct alignas(16) mat2
 	UNIGINE_INLINE void set(const mat3 &m);
 	UNIGINE_INLINE void set(const mat4 &m);
 	UNIGINE_INLINE void set(const dmat4 &m);
-	UNIGINE_INLINE void set(const float *m)
+	UNIGINE_INLINE void set(const mat2x2_values &m)
 	{
 		m00 = m[0];
 		m01 = m[2];
@@ -167,15 +166,15 @@ struct alignas(16) mat2
 		m11 = m[3];
 	}
 
-	UNIGINE_INLINE void get(float *m) const
+	UNIGINE_INLINE void get(mat2x2_values &m) const
 	{
 		m[0] = m00;
 		m[2] = m01;
 		m[1] = m10;
 		m[3] = m11;
 	}
-	UNIGINE_INLINE float *get() { return mat; }
-	UNIGINE_INLINE const float *get() const { return mat; }
+	UNIGINE_INLINE mat2x2_values &get() { return mat; }
+	UNIGINE_INLINE const mat2x2_values &get() const { return mat; }
 
 	UNIGINE_INLINE void setRow(int row, const vec2 &v)
 	{

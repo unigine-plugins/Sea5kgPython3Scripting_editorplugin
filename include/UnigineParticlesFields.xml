@@ -1,0 +1,207 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.ParticlesField.setInteractParticleMode(ParticlesField::INTERACT_PARTICLE_MODE)">
+			<summary>
+			Sets a new interaction mode for the Particles Field. Interaction can be triggered on a contact of the field either with particle's center position or with its bounding box.
+			</summary> 
+			<param name="mode"> New interaction mode to be set. One of the INTERACT_PARTICLE_MODE* values. </param> 
+		</member>
+		<member name="M:Unigine.ParticlesField.getInteractParticleMode const">
+			<summary>
+			Returns the current interaction mode for the Particles Field. Interaction can be triggered on a contact of the field either with particle's center position or with its bounding box.
+			</summary>  
+			<returns>Current interaction mode of the Particles Field. One of the INTERACT_PARTICLE_MODE* values.</returns>
+		</member>
+		<member name="M:Unigine.ParticlesField.setParticlesFieldMask(int)">
+			<summary>
+			Sets a new Particles Field bit mask enabling you to control interactions with particles. The Particles Field will interact with a Particles System if they both have matching Particles Field masks (one bit at least).
+			</summary> 
+			<param name="mask"> New mask to be set for the field. Integer, each bit of which is a mask. </param> 
+		</member>
+		<member name="M:Unigine.ParticlesField.getParticlesFieldMask const">
+			<summary>
+			Returns the current Particles Field bit mask enabling you to control interactions with particles. The Particles Field will interact with a Particles System if they both have matching Particles Field masks (one bit at least).
+			</summary>  
+			<returns>Current mask of the field. Integer, each bit of which is a mask.</returns>
+		</member>
+		<member name="M:Unigine.ParticlesField.setViewportMask(int)">
+			<summary>
+			Sets a new Viewport mask enabling you to control rendering of the field. The Particles Field will be rendered in the viewport if it has a matching Viewport mask (one bit at least).
+			</summary> 
+			<param name="mask"> New Viewport mask to be set for the field. Integer, each bit of which is a mask. </param> 
+		</member>
+		<member name="M:Unigine.ParticlesField.getViewportMask const">
+			<summary>
+			Returns the current Viewport mask enabling you to control rendering of the field. The Particles Field will be rendered in the viewport if it has a matching Viewport mask (one bit at least).
+			</summary>  
+			<returns>Current Viewport mask of the field. Integer, each bit of which is a mask.</returns>
+		</member>
+		<member name="F:Unigine.ParticlesField.INTERACT_PARTICLE_MODE_POSITION">
+			<summary>
+			Position mode. Interaction between the Particles Field and a particle takes place if the position of the particle's center comes into contact (intersection) with the field (its volume or surface in case of a deflector field).
+		</summary>
+		</member>
+		<member name="F:Unigine.ParticlesField.INTERACT_PARTICLE_MODE_BOUND">
+			<summary>
+			Bound mode. Interaction between the Particles Field and a particle takes place if the bounding box of the particle comes into contact (intersection) with the field (its volume or surface in case of a deflector field).
+		</summary>
+		</member>
+		<member name="F:Unigine.ParticlesField.NUM_INTERACT_PARTICLE_MODES">
+			<summary>
+			Number of interaction modes for Particles Fields.
+		</summary>
+		</member>
+		<member name="M:Unigine.ParticlesFieldDeflector.#ctor">
+			<summary>
+			Constructor. Creates a new Particles Field Deflector with default parameters.
+			</summary>  
+		</member>
+		<member name="M:Unigine.ParticlesFieldDeflector.#ctor(Unigine.Math.vec2)">
+			<summary>
+			Constructor. Creates a new Particles Field Deflector of the specified size.
+			</summary> 
+			<param name="size"> Size of the Particles Field Deflector along the X and Y axes, in units. </param> 
+		</member>
+		<member name="M:Unigine.ParticlesFieldDeflector.type">
+			<summary>
+			Returns the type of the Particles Field Deflector node.
+			</summary>  
+			<returns>ParticlesFieldDeflector type identifier.</returns>
+		</member>
+		<member name="M:Unigine.ParticlesFieldDeflector.setSize(Unigine.Math.vec2)">
+			<summary>
+			Sets a new size of the Particles Field Deflector along the X and Y axes. Deflectors are represented as planes.
+			</summary> 
+			<param name="size"> New size of the Particles Field Deflector along the X and Y axes to be set in units. </param> 
+		</member>
+		<member name="M:Unigine.ParticlesFieldDeflector.getSize const">
+			<summary>
+			Returns the current size of the Particles Field Deflector along the X and Y axes. Deflectors are represented as planes.
+			</summary>  
+			<returns>Current size of the Particles Field Deflector along the X and Y axes.</returns>
+		</member>
+		<member name="M:Unigine.ParticlesFieldDeflector.setRoughness(float)">
+			<summary>
+			Sets a new roughness coefficient for the Particles Field Deflector. This coefficient defines roughness of the deflector surface the particles collide with, and the range of angles at which particles shall bounce from the deflector.
+			</summary> 
+			<param name="roughness"> New roughness coefficient for the deflector:The minimum value of 0 means the surface is smooth and bouncing particles are scattered in a uniform direction.The maximum value of 1 means the surface is uneven and bouncing particles are scattered in different directions. </param> 
+		</member>
+		<member name="M:Unigine.ParticlesFieldDeflector.getRoughness const">
+			<summary>
+			Returns the current roughness coefficient for the Particles Field Deflector. This coefficient defines roughness of the deflector surface the particles collide with, and the range of angles at which particles shall bounce from the deflector.
+			</summary>  
+			<returns>Current roughness coefficient of the deflector:The minimum value of 0 means the surface is smooth and bouncing particles are scattered in a uniform direction.The maximum value of 1 means the surface is uneven and bouncing particles are scattered in different directions.</returns>
+		</member>
+		<member name="M:Unigine.ParticlesFieldDeflector.setRestitution(float)">
+			<summary>
+			Sets a new restitution coefficient for the Particles Field Deflector. This coefficient defines the value of the bouncing impulse a particle will receive on a contact with the deflector (how fast a particle shall bounce from the deflector).
+			</summary> 
+			<param name="restitution"> New restitution coefficient for the deflector:The minimum value of 0 means the particles do not bounce off, but rather slide along deflector surface.The maximum value of 1 makes the angle of bouncing equal to the angle at which the particles fall. </param> 
+		</member>
+		<member name="M:Unigine.ParticlesFieldDeflector.getRestitution const">
+			<summary>
+			Returns the current restitution coefficient for the Particles Field Deflector. This coefficient defines the value of the bouncing impulse a particle will receive on a contact with the deflector (how fast a particle shall bounce from the deflector).
+			</summary>  
+			<returns>Current restitution coefficient of the deflector:The minimum value of 0 means the particles do not bounce off, but rather slide along deflector surface.The maximum value of 1 makes the angle of bouncing equal to the angle at which the particles fall.</returns>
+		</member>
+		<member name="M:Unigine.ParticlesFieldSpacer.#ctor">
+			<summary>
+			Constructor. Creates a new Particles Field Spacer with default parameters.
+			</summary>  
+		</member>
+		<member name="M:Unigine.ParticlesFieldSpacer.#ctor(Unigine.Math.vec3)">
+			<summary>
+			Constructor. Creates a new box-shaped Particles Field Spacer of the specified size.
+			</summary> 
+			<param name="size"> Size of the Particles Field Spacer along the X, Y, and Z axes to be set, in units. In case the spacer has an ellipse shape, each component of the vector sets a radius along the corresponding axis. </param> 
+		</member>
+		<member name="M:Unigine.ParticlesFieldSpacer.type">
+			<summary>
+			Returns the type of the Particles Field Spacer node.
+			</summary>  
+			<returns>ParticlesFieldSpacer type identifier.</returns>
+		</member>
+		<member name="M:Unigine.ParticlesFieldSpacer.setShapeType(ParticlesFieldSpacer::SHAPE_TYPE)">
+			<summary>
+			Sets a new shape for the Particles Field Spacer.
+			</summary> 
+			<param name="type"> New shape type to be set for the Particles Field Spacer. One of the SHAPE_TYPE* values. </param> 
+		</member>
+		<member name="M:Unigine.ParticlesFieldSpacer.getShapeType const">
+			<summary>
+			Returns the current shape of the Particles Field Spacer.
+			</summary>  
+			<returns>Current shape type of the Particles Field Spacer. One of the SHAPE_TYPE* values.</returns>
+		</member>
+		<member name="M:Unigine.ParticlesFieldSpacer.setSize(Unigine.Math.vec3)">
+			<summary>
+			Sets a new size for the Particles Field Spacer.
+			</summary> 
+			<param name="size"> New size of the Particles Field Spacer along the X, Y, and Z axes to be set, in units. In case the spacer has an ellipse shape, each component of the vector sets a radius along the corresponding axis. </param> 
+		</member>
+		<member name="M:Unigine.ParticlesFieldSpacer.getSize const">
+			<summary>
+			Returns the size of the Particles Field Spacer
+			</summary>  
+			<returns>Current size of the Particles Field Spacer along the X, Y, and Z axes, in units. In case the spacer has an ellipse shape, each component of the vector sets a radius along the corresponding axis.</returns>
+		</member>
+		<member name="M:Unigine.ParticlesFieldSpacer.setRadius(float)">
+			<summary>
+			Sets a new radius for the Particles Field Spacer.
+			</summary> 
+			<param name="radius"> New radius to be set for the Particles Field Spacer, in units. </param> 
+		</member>
+		<member name="M:Unigine.ParticlesFieldSpacer.getRadius const">
+			<summary>
+			Returns the current radius of the Particles Field Spacer.
+			</summary>  
+			<returns>Current radius of the Particles Field Spacer, in units.</returns>
+		</member>
+		<member name="M:Unigine.ParticlesFieldSpacer.setHeight(float)">
+			<summary>
+			Sets a new height value for the Particles Field Spacer.
+			</summary> 
+			<param name="height"> New height value to be set for the Particles Field Spacer, in units. </param> 
+		</member>
+		<member name="M:Unigine.ParticlesFieldSpacer.getHeight const">
+			<summary>
+			Returns the current height of the Particles Field Spacer.
+			</summary>  
+			<returns>Current height of the Particles Field Spacer, in units.</returns>
+		</member>
+		<member name="F:Unigine.ParticlesFieldSpacer.SHAPE_TYPE_BOX">
+			<summary>
+			Box shape.
+		</summary>
+		</member>
+		<member name="F:Unigine.ParticlesFieldSpacer.SHAPE_TYPE_CYLINDER">
+			<summary>
+			Cylinder shape.
+		</summary>
+		</member>
+		<member name="F:Unigine.ParticlesFieldSpacer.SHAPE_TYPE_CAPSULE">
+			<summary>
+			Capsule shape.
+		</summary>
+		</member>
+		<member name="F:Unigine.ParticlesFieldSpacer.SHAPE_TYPE_SPHERE">
+			<summary>
+			Sphere shape.
+		</summary>
+		</member>
+		<member name="F:Unigine.ParticlesFieldSpacer.SHAPE_TYPE_ELLIPSE">
+			<summary>
+			Ellipse shape.
+		</summary>
+		</member>
+		<member name="F:Unigine.ParticlesFieldSpacer.NUM_SHAPE_TYPES">
+			<summary>
+			Number of shape types for the Particles Field Spacer.
+		</summary>
+		</member>
+	</members>
+</doc>

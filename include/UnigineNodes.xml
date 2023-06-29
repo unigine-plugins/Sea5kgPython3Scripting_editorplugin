@@ -131,11 +131,6 @@
 			Updates enabled.
 			</summary>  
 		</member>
-		<member name="M:Unigine.NodeExternBase.updatePosition">
-			<summary>
-			Updates a position of the custom node.
-			</summary>  
-		</member>
 		<member name="M:Unigine.NodeExternBase.updateTransform">
 			<summary>
 			Updates transformation matrix of the custom node.

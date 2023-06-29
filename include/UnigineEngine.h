@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 
 #pragma once
 
@@ -51,8 +50,8 @@ class Plugin;
 class Variable;
 
 /// Free functions for internal usage.
-UNIGINE_API Engine* Engine_internal_init(int compilation_flags, CustomSystemProxy *system_proxy, const char* window_title, const char* window_icon_path, const char* app_path, const char* home_path, const char* project, const char* password, int argc, char **argv);
-UNIGINE_API Engine* Engine_internal_init(int compilation_flags, CustomSystemProxy *system_proxy, const char* window_title, const char* window_icon_path, const char* app_path, const char* home_path, const char* project, const char* password, int argc, wchar_t **argv);
+UNIGINE_API Engine *Engine_internal_init(int compilation_flags, CustomSystemProxy *system_proxy, const char *window_title, const char *window_icon_path, const char *app_path, const char *home_path, const char *project, const char *password, int argc, char **argv);
+UNIGINE_API Engine *Engine_internal_init(int compilation_flags, CustomSystemProxy *system_proxy, const char *window_title, const char *window_icon_path, const char *app_path, const char *home_path, const char *project, const char *password, int argc, wchar_t **argv);
 
 class Engine
 {
@@ -92,12 +91,6 @@ public:
 			  CALLBACK_END_WORLD_MANAGER_UPDATE,
 			CALLBACK_BEGIN_SOUND_MANAGER_UPDATE,
 			  CALLBACK_END_SOUND_MANAGER_UPDATE,
-			CALLBACK_BEGIN_RENDER_MANAGER_UPDATE,
-			  CALLBACK_END_RENDER_MANAGER_UPDATE,
-			CALLBACK_BEGIN_LANDSCAPE_UPDATE,
-			  CALLBACK_END_LANDSCAPE_UPDATE,
-			CALLBACK_BEGIN_LANDSCAPE_ASYNC_UPDATE,
-			  CALLBACK_END_LANDSCAPE_ASYNC_UPDATE,
 			CALLBACK_BEGIN_GAME_UPDATE,
 			  CALLBACK_END_GAME_UPDATE,
 			CALLBACK_BEGIN_RENDER_UPDATE,
@@ -130,13 +123,16 @@ public:
 
 			CALLBACK_BEGIN_SPATIAL_UPDATE,
 			  CALLBACK_END_SPATIAL_UPDATE,
-			CALLBACK_BEGIN_ASYNC_TASKS_UPDATE,
-			  CALLBACK_END_ASYNC_TASKS_UPDATE,
 			CALLBACK_BEGIN_FILESYSTEM_UPDATE,
 			  CALLBACK_END_FILESYSTEM_UPDATE,
-			CALLBACK_BEGIN_PHYSICS,
 			CALLBACK_BEGIN_PATHFINDING,
 		CALLBACK_END_UPDATE,
+
+		CALLBACK_SYNC_BEGIN_FRAME_PHYSICS,
+		CALLBACK_SYNC_END_FRAME_PHYSICS,
+
+		CALLBACK_ASYNC_BEGIN_FRAME_PHYSICS,
+		CALLBACK_ASYNC_END_FRAME_PHYSICS,
 
 		// Engine::render()
 		CALLBACK_BEGIN_RENDER,
@@ -148,15 +144,12 @@ public:
 			  CALLBACK_END_RENDER_WORLD,
 			CALLBACK_BEGIN_PLUGINS_GUI,
 			  CALLBACK_END_PLUGINS_GUI,
-			CALLBACK_BEGIN_GUI_RENDER,
-			  CALLBACK_END_GUI_RENDER,
 			CALLBACK_BEGIN_POST_RENDER,
 			  CALLBACK_END_POST_RENDER,
 		CALLBACK_END_RENDER,
 
 		// Engine::swap()
 		CALLBACK_BEGIN_SWAP,
-			CALLBACK_END_PHYSICS,
 			CALLBACK_END_PATHFINDING,
 			CALLBACK_BEGIN_WORLD_SWAP,
 			  CALLBACK_END_WORLD_SWAP,
@@ -171,6 +164,13 @@ public:
 		CALLBACK_FOCUS_LOST,
 
 		NUM_CALLBACKS,
+	};
+
+	enum BACKGROUND_UPDATE
+	{
+		BACKGROUND_UPDATE_DISABLED = 0,
+		BACKGROUND_UPDATE_RENDER_NON_MINIMIZED,
+		BACKGROUND_UPDATE_RENDER_ALWAYS,
 	};
 
 	/// Additional parameters to initialize a new Engine instance
@@ -259,6 +259,9 @@ public:
 	/// Returns the name of the loaded plugin by its index.
 	virtual const char *getPluginName(int num) const = 0;
 
+	/// Returns the absolute path of the loaded plugin by its index.
+	virtual const char *getPluginAbsolutePath(int num) const = 0;
+
 	/// Returns the pointer to the main interface of the loaded plugin by its name.
 	template <class SingletonClass> SingletonClass *getPlugin(const char *name)
 	{
@@ -285,7 +288,7 @@ public:
 	virtual bool addPlugin(Plugin *plugin) = 0;
 
 	/// Removes a plugin instance from Engine runtime.
-	virtual bool removePlugin(Plugin *plugin) = 0;
+	virtual bool destroyPlugin(Plugin *plugin) = 0;
 
 	/// Returns the number of registered SystemLogic instances.
 	virtual int getNumSystemLogics() const = 0;
@@ -368,11 +371,11 @@ public:
 	/// Returns Unigine Script defines specified at startup (provided with -extern_define command line argument).
 	virtual const char *getExternDefine() const = 0;
 
-	/// Sets the value indicating whether an application windows is updated when all window is hidden or out of focus.
-	virtual void setBackgroundUpdate(bool enabled) = 0;
+	/// Sets the value indicating the way application windows are updated when hidden or out of focus.
+	virtual void setBackgroundUpdate(BACKGROUND_UPDATE mode) = 0;
 
-	/// Returns a value indicating whether an application windows is updated when all window is hidden or out of focus.
-	virtual bool isBackgroundUpdate() const = 0;
+	/// Returns a value indicating the way application windows are updated when hidden or out of focus.
+	virtual BACKGROUND_UPDATE getBackgroundUpdate() const = 0;
 
 	/// Return the active state of engine
 	virtual bool isActive() const = 0;
@@ -391,6 +394,9 @@ public:
 
 	/// The engine requests to exit the application.
 	virtual void quit() = 0;
+
+	virtual void beginOutsideLoopRender() = 0;
+	virtual void endOutsideLoopRender() = 0;
 
 	/// Stops the FPS counter.
 	virtual void stopFps() = 0;

@@ -2756,6 +2756,48 @@
 			<param name="v"> const char ptr value. </param> 
 			<returns>Boolean value.</returns>
 		</member>
+		<member name="M:Unigine.Math.unsafeToMat2x2(float)">
+			<summary>
+			Performs an unsafe conversion of the specified pointer to a source array containing matrix data to the dedicated type used to store elements of a 2x2 matrix. Make sure that the number of elements and their positions in the pointed source array matches the target type, otherwise you may get wrong data or end up with a crash.
+			</summary> 
+			<param name="data"> Pointer to the matrix data. </param> 
+			<returns>The value storing matrix float values.</returns>
+		</member>
+		<member name="M:Unigine.Math.unsafeToMat3x3(float)">
+			<summary>
+			Performs an unsafe conversion of the specified pointer to a source array containing matrix data to the dedicated type used to store elements of a 3x3 matrix. Make sure that the number of elements and their positions in the pointed source array matches the target type, otherwise you may get wrong data or end up with a crash.
+			</summary> 
+			<param name="data"> Pointer to the matrix data. </param> 
+			<returns>The value storing matrix float values.</returns>
+		</member>
+		<member name="M:Unigine.Math.unsafeToMat4x3(float)">
+			<summary>
+			Performs an unsafe conversion of the specified pointer to a source array containing matrix data to the dedicated type used to store elements of a 4x3 matrix. Make sure that the number of elements and their positions in the pointed source array matches the target type, otherwise you may get wrong data or end up with a crash.
+			</summary> 
+			<param name="data"> Pointer to the matrix data. </param> 
+			<returns>The value storing matrix float values.</returns>
+		</member>
+		<member name="M:Unigine.Math.unsafeToMat4x4(float)">
+			<summary>
+			Performs an unsafe conversion of the specified pointer to a source array containing matrix data to the dedicated type used to store elements of a 4x4 matrix. Make sure that the number of elements and their positions in the pointed source array matches the target type, otherwise you may get wrong data or end up with a crash.
+			</summary> 
+			<param name="data"> Pointer to the matrix data. </param> 
+			<returns>The value storing matrix float values.</returns>
+		</member>
+		<member name="M:Unigine.Math.unsafeToDMat4x3(double)">
+			<summary>
+			Performs an unsafe conversion of the specified pointer to a source array containing matrix data to the dedicated type used to store elements of a 4x3 matrix. Make sure that the number of elements and their positions in the pointed source array matches the target type, otherwise you may get wrong data or end up with a crash.
+			</summary> 
+			<param name="data"> Pointer to the matrix data. </param> 
+			<returns>The value storing matrix double values.</returns>
+		</member>
+		<member name="M:Unigine.Math.unsafeToDMat4x4(double)">
+			<summary>
+			Performs an unsafe conversion of the specified pointer to a source array containing matrix data to the dedicated type used to store elements of a 4x4 matrix. Make sure that the number of elements and their positions in the pointed source array matches the target type, otherwise you may get wrong data or end up with a crash.
+			</summary> 
+			<param name="data"> Pointer to the matrix data. </param> 
+			<returns>The value storing matrix double values.</returns>
+		</member>
 		<member name="M:Unigine.Math.udiv(int,int)">
 			<summary>
 			Performs integer division with rounding up.

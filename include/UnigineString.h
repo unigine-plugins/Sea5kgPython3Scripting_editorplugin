@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 
 #pragma once
 
@@ -889,7 +888,7 @@ public:
 
 	static StringStack<> memory(size_t memory);
 
-	static StringStack<> format(const char *format, va_list argptr);
+	static StringStack<> vformat(const char *format, va_list argptr);
 	static StringStack<> format(const char *format, ...) UNIGINE_PRINTF(1, 2);
 
 	static StringStack<> prettyFormat(int value);
@@ -928,6 +927,7 @@ public:
 	static int getStringArray(const char *str, Vector<String> &dest);
 	static void split(StringArray<> &ret, const char *str, const char *delimiters);
 	static StringArray<> split(const char *str, const char *delimiters);
+	static StringStack<> join(const Vector<String> &strings, const char *delimiter);
 	static StringStack<> substr(const char *str, int pos, int size = -1);
 	static StringStack<> substr(const String &str, int pos, int size = -1);
 	static StringStack<> addslashes(const char *str);

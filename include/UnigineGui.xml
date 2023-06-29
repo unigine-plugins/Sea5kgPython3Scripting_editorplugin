@@ -628,17 +628,6 @@
 			Removes focus from the GUI.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Gui.render">
-			<summary>
-			Renders the GUI.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Gui.render(int)">
-			<summary>
-			Renders the GUI.
-			</summary> 
-			<param name="custom_mouse_buttons"> Pressed mouse button. </param> 
-		</member>
 		<member name="M:Unigine.Gui.replaceChild(Unigine.Ptr{Unigine.Widget},Unigine.Ptr{Unigine.Widget},int)">
 			<summary>
 			Replaces a given widget in the GUI with another widget.
@@ -665,6 +654,27 @@
 		<member name="M:Unigine.Gui.update">
 			<summary>
 			Updates GUI.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Gui.preRender">
+			<summary>
+			Method executed after the update() and before the render() function. This method is used to make necessary preparations for rendering (e.g. prepare a texture) after the update() and is called automatically for WidgetSpriteViewport and WidgetSpriteNode to ensure proper rendering of the widgets during render(). In case you implement a custom GUI or widgets using the WidgetExtern class you should put all such rendering preparations to  and call preRender() for GUI manually after update().
+			</summary>  
+		</member>
+		<member name="M:Unigine.Gui.render">
+			<summary>
+			Renders the GUI.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Gui.render(int)">
+			<summary>
+			Renders the GUI.
+			</summary> 
+			<param name="custom_mouse_buttons"> Pressed mouse button. </param> 
+		</member>
+		<member name="M:Unigine.Gui.updateHierarchy">
+			<summary>
+			Updates the hierarchy for all widgets — the widgets are arranged, expanded to the required sizes and then their positions are updated. Updating the hierarchy may be required, for example, for getting the screen position immediately after the widget has been added to the hierarchy.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Gui.isRenderingBootScreen">
@@ -858,6 +868,32 @@
 			</summary> 
 			<param name="key"> One of the standard ASCII control codes or one of the KEY_* pre-defined variables. </param> 
 			<returns>true if the key is pressed; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Gui.setDpiScale(float)">
+			<summary>
+			Sets the DPI scale to be applied to the GUI.
+			</summary> 
+			<param name="scale"> The DPI scale to be applied to the GUI. </param> 
+		</member>
+		<member name="M:Unigine.Gui.getDpiScale const">
+			<summary>
+			Returns the current DPI scale applied to the GUI.
+			</summary>  
+			<returns>The current DPI scale applied to the GUI.</returns>
+		</member>
+		<member name="M:Unigine.Gui.toRenderSize(int) const">
+			<summary>
+			Transforms the unit value to the pixel value.
+			</summary> 
+			<param name="unit_size"> Size in units. </param> 
+			<returns>Size in pixels.</returns>
+		</member>
+		<member name="M:Unigine.Gui.toUnitSize(int) const">
+			<summary>
+			Transforms the pixel value to the unit value.
+			</summary> 
+			<param name="render_size"> Size in pixels. </param> 
+			<returns>Size in units.</returns>
 		</member>
 		<member name="F:Unigine.Gui.ALIGN_CENTER">
 			<summary>

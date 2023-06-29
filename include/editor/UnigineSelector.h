@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 
 
@@ -22,6 +21,7 @@
 #include <UnigineNode.h>
 #include <UnigineVector.h>
 
+#include <QVariant>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Forward decl.
@@ -273,11 +273,8 @@ public:
 	/// </summary>
 	void resetCache();
 
-	// `expand` flag is a shitty solution to pass a param to the `WorldModel.`. Refactor this.
-	[[deprecated]]
-	void setNeedExpand(bool value);
-	[[deprecated]]
-	bool isNeedExpand() const;
+	void setUserData(const char *name, QVariant value);
+	QVariant getUserData(const char *name) const;
 
 private:
 	::UnigineEditor::Internal::SelectorNodesPrivate *d;

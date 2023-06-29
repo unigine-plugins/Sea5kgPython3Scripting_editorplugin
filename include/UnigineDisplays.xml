@@ -145,6 +145,13 @@
 			<param name="refresh_rate"> Refresh rate. </param> 
 			<returns>Index of the display mode from 0 to the total number of available display modes, or -1 if the mode is not found.</returns>
 		</member>
+		<member name="M:Unigine.Displays.getByPoint(Unigine.Math.ivec2) const">
+			<summary>
+			Returns the index of the display that is located at the specified point. For example, you can submit the mouse coordinates as the argument to obtain the index of the display over which the cursor is hovering.
+			</summary> 
+			<param name="point"> The point position in global coordinates. </param> 
+			<returns>The index of the display located at the specified point.</returns>
+		</member>
 		<member name="F:Unigine.Displays.ORIENTATION_UNKNOWN">
 			<summary>
 			Another undefined type of orientation.

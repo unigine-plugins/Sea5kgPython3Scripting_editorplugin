@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 #include "UnigineMathLibCommon.h"
 
@@ -130,12 +129,12 @@ struct alignas(16) mat4
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(q);
 	}
-	UNIGINE_INLINE explicit mat4(const float *m, int transpose)
+	UNIGINE_INLINE explicit mat4(const mat4x4_values &m, int transposed)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
-		set(m, transpose);
+		set(m, transposed);
 	}
-	UNIGINE_INLINE explicit mat4(const float *m)
+	UNIGINE_INLINE explicit mat4(const mat4x4_values &m)
 		: m00(m[0])
 		, m10(m[1])
 		, m20(m[2])
@@ -152,6 +151,31 @@ struct alignas(16) mat4
 		, m13(m[13])
 		, m23(m[14])
 		, m33(m[15])
+	{
+		UNIGINE_ASSERT_ALIGNED16(this);
+	}
+	UNIGINE_INLINE explicit mat4(const dmat4x4_values &m, int transpose)
+	{
+		UNIGINE_ASSERT_ALIGNED16(this);
+		set(m, transpose);
+	}
+	UNIGINE_INLINE explicit mat4(const dmat4x4_values &m)
+		: m00(toFloat(m[0]))
+		, m10(toFloat(m[1]))
+		, m20(toFloat(m[2]))
+		, m30(toFloat(m[3]))
+		, m01(toFloat(m[4]))
+		, m11(toFloat(m[5]))
+		, m21(toFloat(m[6]))
+		, m31(toFloat(m[7]))
+		, m02(toFloat(m[8]))
+		, m12(toFloat(m[9]))
+		, m22(toFloat(m[10]))
+		, m32(toFloat(m[11]))
+		, m03(toFloat(m[12]))
+		, m13(toFloat(m[13]))
+		, m23(toFloat(m[14]))
+		, m33(toFloat(m[15]))
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
@@ -227,9 +251,9 @@ struct alignas(16) mat4
 	}
 	UNIGINE_INLINE void set(const dmat4 &m);
 	UNIGINE_INLINE void set(const quat &q);
-	UNIGINE_INLINE void set(const float *m, int transpose = 0)
+	UNIGINE_INLINE void set(const mat4x4_values &m, int transposed = 0)
 	{
-		if (transpose)
+		if (transposed)
 		{
 			m00 = m[0];
 			m01 = m[1];
@@ -267,6 +291,46 @@ struct alignas(16) mat4
 			m33 = m[15];
 		}
 	}
+	UNIGINE_INLINE void set(const dmat4x4_values &m, int transpose = 0)
+	{
+		if (transpose)
+		{
+			m00 = toFloat(m[0]);
+			m01 = toFloat(m[1]);
+			m02 = toFloat(m[2]);
+			m03 = toFloat(m[3]);
+			m10 = toFloat(m[4]);
+			m11 = toFloat(m[5]);
+			m12 = toFloat(m[6]);
+			m13 = toFloat(m[7]);
+			m20 = toFloat(m[8]);
+			m21 = toFloat(m[9]);
+			m22 = toFloat(m[10]);
+			m23 = toFloat(m[11]);
+			m30 = toFloat(m[12]);
+			m31 = toFloat(m[13]);
+			m32 = toFloat(m[14]);
+			m33 = toFloat(m[15]);
+		} else
+		{
+			m00 = toFloat(m[0]);
+			m01 = toFloat(m[4]);
+			m02 = toFloat(m[8]);
+			m03 = toFloat(m[12]);
+			m10 = toFloat(m[1]);
+			m11 = toFloat(m[5]);
+			m12 = toFloat(m[9]);
+			m13 = toFloat(m[13]);
+			m20 = toFloat(m[2]);
+			m21 = toFloat(m[6]);
+			m22 = toFloat(m[10]);
+			m23 = toFloat(m[14]);
+			m30 = toFloat(m[3]);
+			m31 = toFloat(m[7]);
+			m32 = toFloat(m[11]);
+			m33 = toFloat(m[15]);
+		}
+	}
 	UNIGINE_INLINE void set(const mat3 &m, const vec3 &v)
 	{
 		m00 = m.m00;
@@ -288,7 +352,7 @@ struct alignas(16) mat4
 	}
 	UNIGINE_INLINE void set(const quat &q, const vec3 &v);
 
-	UNIGINE_INLINE void get(float *m, int transpose = 0) const
+	UNIGINE_INLINE void get(mat4x4_values &m, int transpose = 0) const
 	{
 		if (transpose)
 		{
@@ -328,8 +392,8 @@ struct alignas(16) mat4
 			m[15] = m33;
 		}
 	}
-	UNIGINE_INLINE float *get() { return mat; }
-	UNIGINE_INLINE const float *get() const { return mat; }
+	UNIGINE_INLINE mat4x4_values &get() { return mat; }
+	UNIGINE_INLINE const mat4x4_values &get() const { return mat; }
 	UNIGINE_INLINE float &get(int row, int column)
 	{
 		assert((unsigned int)row < 4 && "mat4::get(): bad row");
@@ -1978,9 +2042,12 @@ UNIGINE_INLINE mat4 symmetryProjection(const mat4 &projection)
 	);
 }
 
+UNIGINE_INLINE bool isOrthoProjection(const mat4 &projection) { return projection.m32 == 0.0f; }
+UNIGINE_INLINE bool isPerspectiveProjection(const mat4 &projection) { return projection.m32 != 0.0f; }
+
 UNIGINE_INLINE void decomposeProjection(const mat4 &projection, float &znear, float &zfar)
 {
-	if (projection.m32 == 0.0f)
+	if (isOrthoProjection(projection))
 	{
 		znear = (projection.m23 + 1.0f) / projection.m22;
 		zfar = (projection.m23 - 1.0f) / projection.m22;
@@ -1989,6 +2056,22 @@ UNIGINE_INLINE void decomposeProjection(const mat4 &projection, float &znear, fl
 		znear = projection.m23 / (projection.m22 - 1.0f);
 		zfar = projection.m23 / (projection.m22 + 1.0f);
 	}
+}
+
+UNIGINE_INLINE mat4 composeProjection(const mat4 &projection, float znear, float zfar)
+{
+	mat4 proj = projection;
+	if (isOrthoProjection(projection))
+	{
+		proj.m22 = -2.0f / (zfar - znear);
+		proj.m23 = -(zfar + znear) / (zfar - znear);
+	} else
+	{
+		proj.m22 = -(zfar + znear) / (zfar - znear);
+		proj.m23 = -2.0f * zfar * znear / (zfar - znear);
+	}
+
+	return proj;
 }
 
 UNIGINE_INLINE mat4 composeRotationXYZ(const vec3 &r);

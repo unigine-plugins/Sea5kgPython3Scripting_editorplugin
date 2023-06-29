@@ -105,22 +105,32 @@
 			<param name="exclude"> List of nodes to be ignored when searching for intersection by the traced line. </param> 
 			<returns>The first intersected node found at the line (except for the ones passed in the exclude list); otherwise, nullptr pointer.</returns>
 		</member>
+		<member name="M:Unigine.Editor.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Vector{Node::TYPE,int,Unigine.VectorAllocator})">
+			<summary>
+			Searches for all of the nodes intersected by the line traced from p0 to p1, ignoring the ones passed in the exclude list and except the ones of the types passed in the exclude_types list. The node closest to the start point is returned.
+			</summary> 
+			<param name="p0"> Line start point coordinates. </param>
+			<param name="p1"> Line end point coordinates. </param>
+			<param name="exclude"> Array of the nodes to exclude; all these nodes will be skipped while checking for intersection. </param>
+			<param name="exclude_types"> Array of the node types to exclude; nodes of the specified types will be skipped while checking for intersection. </param> 
+			<returns>The first intersected node smart pointer if found; otherwise, nullptr pointer.</returns>
+		</member>
 		<member name="M:Unigine.Editor.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Ptr{WorldIntersection})">
 			<summary>
-			Searches for all of the nodes intersecting the line. The node closest to the start point is returned. The intersection result will be presented as a WorldIntersection node.
+			Searches for all of the nodes intersecting the line. The node closest to the start point is returned. The intersection result will be presented as a WorldIntersection instance.
 			</summary> 
-			<param name="p0"> Start point of the line. </param>
-			<param name="p1"> End point of the line. </param>
-			<param name="intersection"> Pointer to WorldIntersection. </param> 
+			<param name="p0"> Line start point coordinates. </param>
+			<param name="p1"> Line end point coordinates. </param>
+			<param name="intersection"> WorldIntersection class instance containing the intersection information. </param> 
 			<returns>The first intersected node smart pointer if found; otherwise, nullptr pointer.</returns>
 		</member>
 		<member name="M:Unigine.Editor.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Ptr{WorldIntersectionNormal})">
 			<summary>
-			Searches for all of the nodes intersecting the line. The node closest to the start point is returned. The intersection result will be presented as a WorldIntersectionNormal node.
+			Searches for all of the nodes intersecting the line. The node closest to the start point is returned. The intersection result will be presented as a WorldIntersectionNormal instance.
 			</summary> 
-			<param name="p0"> Start point of the line. </param>
-			<param name="p1"> End point of the line. </param>
-			<param name="intersection"> Pointer to WorldIntersectionNormal. </param> 
+			<param name="p0"> Line start point coordinates. </param>
+			<param name="p1"> Line end point coordinates. </param>
+			<param name="intersection"> WorldIntersectionNormal class instance containing the intersection information. </param> 
 			<returns>The first intersected node smart pointer if found; otherwise, nullptr pointer.</returns>
 		</member>
 		<member name="M:Unigine.Editor.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Ptr{WorldIntersectionTexCoord})">
@@ -134,12 +144,23 @@
 		</member>
 		<member name="M:Unigine.Editor.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{WorldIntersection})">
 			<summary>
-			Searches for all of the nodes intersecting the line. The node closest to the start point is returned. The intersection result will be presented as a WorldIntersection node.
+			Searches for all of the nodes intersecting the line. The node closest to the start point is returned. The intersection result will be presented as a WorldIntersection instance.
 			</summary> 
 			<param name="p0"> Start point of the line. </param>
 			<param name="p1"> End point of the line. </param>
 			<param name="exclude"> Array of the nodes to exclude; all these nodes will be skipped while checking for intersection. </param>
-			<param name="intersection"> Pointer to WorldIntersection. </param> 
+			<param name="intersection"> WorldIntersection class instance containing the intersection information. </param> 
+			<returns>The first intersected node smart pointer if found; otherwise, nullptr pointer.</returns>
+		</member>
+		<member name="M:Unigine.Editor.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Vector{Node::TYPE,int,Unigine.VectorAllocator},Unigine.Ptr{WorldIntersection})">
+			<summary>
+			Searches for all of the nodes intersecting the line, ignoring the ones passed in the exclude list and except the ones of the types passed in the exclude_types list. The node closest to the start point is returned. The intersection result will be presented as a WorldIntersection instance.
+			</summary> 
+			<param name="p0"> Line start point coordinates. </param>
+			<param name="p1"> Line end point coordinates. </param>
+			<param name="exclude"> Array of the nodes to exclude; all these nodes will be skipped while checking for intersection. </param>
+			<param name="exclude_types"> Array of the node types to exclude; nodes of the specified types will be skipped while checking for intersection. </param>
+			<param name="intersection"> WorldIntersection class instance containing the intersection information. </param> 
 			<returns>The first intersected node smart pointer if found; otherwise, nullptr pointer.</returns>
 		</member>
 		<member name="M:Unigine.Editor.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{WorldIntersectionNormal})">

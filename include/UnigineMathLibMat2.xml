@@ -39,12 +39,6 @@
 			</summary> 
 			<param name="m"> Source matrix (3x4). </param> 
 		</member>
-		<member name="M:Unigine.Math.mat2.#ctor(float)">
-			<summary>
-			Constructor. Initializes the matrix using a given pointer to the source matrix.
-			</summary> 
-			<param name="m"> Pointer to the source matrix. </param> 
-		</member>
 		<member name="M:Unigine.Math.mat2.#ctor(Unigine.vec2,Unigine.vec2)">
 			<summary>
 			Constructor. Initializes the matrix by given two vec2 vectors.
@@ -78,11 +72,17 @@
 			<param name="v"> Value. </param>
 			<param name=""> Auxiliary tag. </param> 
 		</member>
-		<member name="M:Unigine.Math.mat2.set(float)">
+		<member name="M:Unigine.Math.mat2.#ctor(mat2x2_values)">
 			<summary>
-			Sets new matrix values using a pointer to the source matrix.
+			Constructor. Initializes the matrix using a given source matrix values.
 			</summary> 
-			<param name="m"> Pointer to the source matrix. </param> 
+			<param name="m"> The source value storing matrix float values. </param> 
+		</member>
+		<member name="M:Unigine.Math.mat2.set(mat2x2_values)">
+			<summary>
+			Sets the matrix using the argument float values.
+			</summary> 
+			<param name="m"> The source value storing matrix float values. </param> 
 		</member>
 		<member name="M:Unigine.Math.mat2.set(mat2)">
 			<summary>
@@ -116,23 +116,23 @@
 			<param name="column"> Column. </param>
 			<param name="v"> The value to be set. </param> 
 		</member>
+		<member name="M:Unigine.Math.mat2.get(mat2x2_values) const">
+			<summary>
+			Returns the matrix values by filling the specified argument.
+			</summary> 
+			<param name="m"> The destination value to store matrix float values. </param> 
+		</member>
 		<member name="M:Unigine.Math.mat2.get">
 			<summary>
-			Returns the pointer to the matrix.
+			Returns the value storing matrix float values.
 			</summary>  
-			<returns>Pointer to the matrix.</returns>
+			<returns>The value storing matrix float values.</returns>
 		</member>
 		<member name="M:Unigine.Math.mat2.get const">
 			<summary>
-			Returns the constant pointer to the matrix.
+			Returns the constant value storing matrix float values.
 			</summary>  
-			<returns>Constant pointer to the matrix.</returns>
-		</member>
-		<member name="M:Unigine.Math.mat2.get(float) const">
-			<summary>
-			Fills the destination matrix, specified by the given pointer, with matrix values.
-			</summary> 
-			<param name="m"> Destination matrix pointer. </param> 
+			<returns>The constant value storing matrix float values.</returns>
 		</member>
 		<member name="M:Unigine.Math.mat2.get(int,int)">
 			<summary>

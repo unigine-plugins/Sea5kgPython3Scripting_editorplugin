@@ -123,25 +123,25 @@
 			</summary> 
 			<param name="damping"> New angular damping. If a negative value is provided, 0 will be used instead. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getAngularDamping">
+		<member name="M:Unigine.Physics.getAngularDamping const">
 			<summary>
 			Returns the current angular damping value.
 			</summary>  
 			<returns>Angular damping.</returns>
 		</member>
-		<member name="M:Unigine.Physics.getBody(int)">
+		<member name="M:Unigine.Physics.getBody(int) const">
 			<summary>
 			Returns a body with a given ID.
 			</summary> 
 			<param name="id"> Body ID. </param> 
 			<returns>Body with a given ID or NULL (0), if there is no body with a given ID.</returns>
 		</member>
-		<member name="M:Unigine.Physics.isBody(int)">
+		<member name="M:Unigine.Physics.isBody(int) const">
 			<summary>
 			Checks if a body with a given ID exists.
 			</summary> 
 			<param name="id"> Body ID. </param> 
-			<returns>1 if a body with a given ID exists; otherwise, 0.</returns>
+			<returns>true if a body with a given ID exists; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Physics.setBudget(float)">
 			<summary>
@@ -149,7 +149,7 @@
 			</summary> 
 			<param name="budget"> The budget value in seconds. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getBudget">
+		<member name="M:Unigine.Physics.getBudget const">
 			<summary>
 			Returns the physics simulation budget. Physics isn't simulated when time is out of the budget.
 			</summary>  
@@ -161,9 +161,9 @@
 			</summary> 
 			<param name="data"> New user data. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getData">
+		<member name="M:Unigine.Physics.getData const">
 			<summary>
-			Returns user string data associated with the world. This string is written directly into the data tag of the *.world file.
+			Returns the user string data associated with the world. This string is written directly into the data tag of the *.world file.
 			</summary>  
 			<returns>User string data.</returns>
 		</member>
@@ -173,23 +173,23 @@
 			</summary> 
 			<param name="distance"> Distance in units. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getDistance">
+		<member name="M:Unigine.Physics.getDistance const">
 			<summary>
 			Returns a distance after which the physics will not be simulated.
 			</summary>  
 			<returns>Distance in units.</returns>
 		</member>
-		<member name="M:Unigine.Physics.setEnabled(int)">
+		<member name="M:Unigine.Physics.setEnabled(bool)">
 			<summary>
 			Enables or disables physics simulation.
 			</summary> 
-			<param name="enable"> 1 to enable physics, 0 to disable it. </param> 
+			<param name="enable"> true to enable physics, false to disable it. </param> 
 		</member>
-		<member name="M:Unigine.Physics.isEnabled">
+		<member name="M:Unigine.Physics.isEnabled const">
 			<summary>
 			Returns a value indicating if physics simulation is enabled. The default is 1.
 			</summary>  
-			<returns>1 if physics is enabled; otherwise, 0.</returns>
+			<returns>true if physics is enabled; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Physics.setSyncEngineUpdateWithPhysics(bool)">
 			<summary>
@@ -197,13 +197,13 @@
 			</summary> 
 			<param name="fixed"> true to synchronize the Engine FPS to physics one; false to interpolate physics if the Engine FPS is higher. </param> 
 		</member>
-		<member name="M:Unigine.Physics.isSyncEngineUpdateWithPhysics">
+		<member name="M:Unigine.Physics.isSyncEngineUpdateWithPhysics const">
 			<summary>
 			Returns a flag indicating if the Engine FPS is synchronized to physics one. Such FPS limitation allows to calculate physics each rendered frame (rather then interpolate it when this flag is unset). In this mode, there are no twitching of physical objects if they have non-linear velocities. If the Engine FPS is lower than the physics one, this flag has no effect.
 			</summary>  
 			<returns>true if the Engine FPS is synchronized to physics one; false if the physics is interpolated if the Engine FPS is higher.</returns>
 		</member>
-		<member name="M:Unigine.Physics.getFrame">
+		<member name="M:Unigine.Physics.getFrame const">
 			<summary>
 			Returns the current frame of physics update.
 			</summary>  
@@ -239,7 +239,7 @@
 			</summary> 
 			<param name="gravity"> New gravity. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getGravity">
+		<member name="M:Unigine.Physics.getGravity const">
 			<summary>
 			Returns the current gravity value.
 			</summary>  
@@ -251,26 +251,32 @@
 			</summary> 
 			<param name="ifps"> Frame duration (1/FPS). </param> 
 		</member>
-		<member name="M:Unigine.Physics.getIFps">
+		<member name="M:Unigine.Physics.getIFps const">
 			<summary>
 			Returns a physics frame duration.
 			</summary>  
 			<returns>Frame duration (1 / FPS).</returns>
 		</member>
-		<member name="M:Unigine.Physics.getIntegrateTime">
-			<summary>
-			Returns the duration of the integrate phase, in which physics simulation results are applied to bodies.
-			</summary>  
-			<returns>An integrate phase duration value, milliseconds.</returns>
-		</member>
 		<member name="M:Unigine.Physics.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{PhysicsIntersection})">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find a collision object located on that line. If an object is assigned a body, intersection occurs with its shape. If an object has no body, this function detects intersection with surfaces (polygons) of objects with intersection flag set. Intersection is found only for objects with a matching mask if their ID is not found in the exclude list. Intersection is Intersection does not work for disabled objects. 					This function uses world space coordinates.
+								Performs tracing from the p0 point to the p1 point to find a collision object located on that line. If an object is assigned a body, intersection occurs with its shape. If an object has no body, this function detects intersection with surfaces (polygons) of objects with intersection flag set. Intersection is found only for objects with a matching mask if their ID is not found in the exclude list. Intersection does not work for disabled objects. 					This function uses world space coordinates.
 			</summary> 
 			<param name="p0"> Line start point coordinates. </param>
 			<param name="p1"> Line end point coordinates. </param>
 			<param name="mask"> Physics intersection mask. If 0 is passed, the function will return NULL. </param>
 			<param name="exclude"> Array of nodes to be excluded. </param>
+			<param name="intersection"> PhysicsIntersection class instance containing intersection data. </param> 
+			<returns>The first intersected object, if found; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Physics.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Vector{Shape::TYPE,int,Unigine.VectorAllocator},Unigine.Ptr{PhysicsIntersection})">
+			<summary>
+								Performs tracing from the p0 point to the p1 point to find a collision object located on that line. If an object is assigned a body, intersection occurs with its shape. If an object has no body, this function detects intersection with surfaces (polygons) of objects with intersection flag set. Intersection is found only for objects with a matching mask if their ID is not found in the exclude list and only for shape types not mentioned in the exclude_types list. Intersection does not work for disabled objects. 					This function uses world space coordinates.
+			</summary> 
+			<param name="p0"> Line start point coordinates. </param>
+			<param name="p1"> Line end point coordinates. </param>
+			<param name="mask"> Physics intersection mask. If 0 is passed, the function will return NULL. </param>
+			<param name="exclude"> Array of nodes to be excluded. </param>
+			<param name="exclude_types"> Array of shape types to be excluded. </param>
 			<param name="intersection"> PhysicsIntersection class instance containing intersection data. </param> 
 			<returns>The first intersected object, if found; otherwise, 0.</returns>
 		</member>
@@ -296,7 +302,7 @@
 		</member>
 		<member name="M:Unigine.Physics.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{PhysicsIntersectionNormal})">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find a collision object located on that line. If an object is assigned a body, intersection occurs with its shape. If an object has no body, this function detects intersection with surfaces (polygons) of objects with intersection flag set. Intersection is found only for objects with a matching mask if their ID is not found in the exclude list. Intersection is Intersection does not work for disabled objects. 					This function uses world space coordinates.
+								Performs tracing from the p0 point to the p1 point to find a collision object located on that line. If an object is assigned a body, intersection occurs with its shape. If an object has no body, this function detects intersection with surfaces (polygons) of objects with intersection flag set. Intersection is found only for objects with a matching mask if their ID is not found in the exclude list. Intersection does not work for disabled objects. 					This function uses world space coordinates.
 			</summary> 
 			<param name="p0"> Line start point coordinates. </param>
 			<param name="p1"> Line end point coordinates. </param>
@@ -305,19 +311,19 @@
 			<param name="intersection"> PhysicsIntersectionNormal class instance containing intersection data. </param> 
 			<returns>The first intersected object, if found; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Physics.getJoint(int)">
+		<member name="M:Unigine.Physics.getJoint(int) const">
 			<summary>
 			Returns a joint with a given ID.
 			</summary> 
 			<param name="id"> Joint ID. </param> 
 			<returns>Joint with a given ID or NULL (0), if there is no joint with a given ID.</returns>
 		</member>
-		<member name="M:Unigine.Physics.isJoint(int)">
+		<member name="M:Unigine.Physics.isJoint(int) const">
 			<summary>
 			Checks if a joint with a given ID exists.
 			</summary> 
 			<param name="id"> Joint ID. </param> 
-			<returns>1 if a joint with a given ID exists; otherwise, 0.</returns>
+			<returns>true if a joint with a given ID exists; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Physics.setLinearDamping(float)">
 			<summary>
@@ -325,7 +331,7 @@
 			</summary> 
 			<param name="damping"> New linear damping. If a negative value is provided, 0 will be used instead. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getLinearDamping">
+		<member name="M:Unigine.Physics.getLinearDamping const">
 			<summary>
 			Returns the current linear damping value.
 			</summary>  
@@ -337,7 +343,7 @@
 			</summary> 
 			<param name="velocity"> New maximum velocity value. If a negative value is provided, 0 will be used instead. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getMaxAngularVelocity">
+		<member name="M:Unigine.Physics.getMaxAngularVelocity const">
 			<summary>
 			Returns the current maximum possible angular velocity.
 			</summary>  
@@ -349,25 +355,25 @@
 			</summary> 
 			<param name="velocity"> New maximum velocity value. If a negative value is provided, 0 will be used instead. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getMaxLinearVelocity">
+		<member name="M:Unigine.Physics.getMaxLinearVelocity const">
 			<summary>
 			Returns the current maximum possible linear velocity.
 			</summary>  
 			<returns>Maximum possible linear velocity.</returns>
 		</member>
-		<member name="M:Unigine.Physics.getCollisionTime">
+		<member name="M:Unigine.Physics.getCollisionTime const">
 			<summary>
 			Returns the duration of the collision detection phase, during which collisions between objects are found.
 			</summary>  
 			<returns>Collision detection phase duration, in milliseconds.</returns>
 		</member>
-		<member name="M:Unigine.Physics.getNumBodies">
+		<member name="M:Unigine.Physics.getNumBodies const">
 			<summary>
 			Returns the number of bodies present within the physics radius.
 			</summary>  
 			<returns>The number of bodies.</returns>
 		</member>
-		<member name="M:Unigine.Physics.getNumContacts">
+		<member name="M:Unigine.Physics.getNumContacts const">
 			<summary>
 			Returns the number of contacts within the physics radius; it includes contacts between the bodies (their shapes) and body-mesh contacts.
 			</summary>  
@@ -379,13 +385,13 @@
 			</summary> 
 			<param name="frames"> Number of frames. If a non-positive value is provided, 1 will be used instead. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getNumFrozenFrames">
+		<member name="M:Unigine.Physics.getNumFrozenFrames const">
 			<summary>
 			Returns the current number of frames, during which an object should keep certain angular and linear velocities to become frozen.
 			</summary>  
 			<returns>Number of frames.</returns>
 		</member>
-		<member name="M:Unigine.Physics.getNumIslands">
+		<member name="M:Unigine.Physics.getNumIslands const">
 			<summary>
 			Returns the number of physical islands within the physics radius that could be calculated separately. The lower this number, the less efficient multi-threading is, if enabled.
 			</summary>  
@@ -397,13 +403,13 @@
 			</summary> 
 			<param name="iterations"> New number of iterations. If a non-positive value is provided, 1 will be used instead. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getNumIterations">
+		<member name="M:Unigine.Physics.getNumIterations const">
 			<summary>
 			Returns the current number of iterations used to solve contacts and constraints.
 			</summary>  
 			<returns>Current number of iterations.</returns>
 		</member>
-		<member name="M:Unigine.Physics.getNumJoints">
+		<member name="M:Unigine.Physics.getNumJoints const">
 			<summary>
 			Returns the number of joints within the physics radius.
 			</summary>  
@@ -415,7 +421,7 @@
 			</summary> 
 			<param name="factor"> New penetration factor. 0 means no penalty force in contacts. The provided value is saturated in the range [0; 1]. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getPenetrationFactor">
+		<member name="M:Unigine.Physics.getPenetrationFactor const">
 			<summary>
 			Returns a penalty force factor. 0 means no penalty force in contacts. The maximum value is 1.
 			</summary>  
@@ -427,17 +433,11 @@
 			</summary> 
 			<param name="tolerance"> New penetration tolerance. If a negative value is provided, 0 will be used instead, however, this value should be greater than 0 for stable simulation. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getPenetrationTolerance">
+		<member name="M:Unigine.Physics.getPenetrationTolerance const">
 			<summary>
 			Returns a value indicating how deeply one object can penetrate another.
 			</summary>  
 			<returns>Current penetration tolerance.</returns>
-		</member>
-		<member name="M:Unigine.Physics.getResponseTime">
-			<summary>
-			Returns the duration value of the response phase, in which collision response is calculated and joints are solved.
-			</summary>  
-			<returns>A response phase duration value, milliseconds.</returns>
 		</member>
 		<member name="M:Unigine.Physics.setScale(float)">
 			<summary>
@@ -445,41 +445,47 @@
 			</summary> 
 			<param name="scale"> Scaling factor. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getScale">
+		<member name="M:Unigine.Physics.getScale const">
 			<summary>
 			Returns a value used to scale a frame duration.
 			</summary>  
 			<returns>Value to scale the frame duration.</returns>
 		</member>
-		<member name="M:Unigine.Physics.getShape(int)">
+		<member name="M:Unigine.Physics.getShape(int) const">
 			<summary>
 			Returns a shape with a given ID.
 			</summary> 
 			<param name="id"> Shape ID. </param> 
 			<returns>Shape with a given ID or NULL (0), if there is no shape with a given ID.</returns>
 		</member>
-		<member name="M:Unigine.Physics.isShape(int)">
+		<member name="M:Unigine.Physics.isShape(int) const">
 			<summary>
 			Checks if a shape with a given ID exists.
 			</summary> 
 			<param name="id"> Shape ID. </param> 
-			<returns>1 if a shape with a given ID exists; otherwise, 0.</returns>
+			<returns>true if a shape with a given ID exists; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Physics.getSimulationTime">
+		<member name="M:Unigine.Physics.getSimulationTime const">
 			<summary>
 			Returns the duration of all of the simulation phases added together.
 			</summary>  
 			<returns>A simulation phases duration value, milliseconds.</returns>
 		</member>
+		<member name="M:Unigine.Physics.getWaitTime const">
+			<summary>
+			Returns the time period during which the physics module waits for the completion of rendering process.
+			</summary>  
+			<returns>Waiting phase duration value, milliseconds.</returns>
+		</member>
 		<member name="M:Unigine.Physics.setDeterminism(bool)">
 			<summary>
-			Sets a value indicating if objects are updated in a definite order or not. Deterministic mode ensures that all contacts are solved in the predefined order and visualization of physics in the world is repetitive (on one computer). When this mode is enabled the Engine performs additional sorting of bodies, shapes and joints inside islands after building them. Deterministic mode is unavailable in case there are missed frames - it is simply impossible. Moreover, there may be differences between visualization of physics on different hardware (e.g., AMD and Intel).					Determinism is guaranteed if there are no missed frames, the same Engine version is used, and the CPUs perform SSE operations similarly.Please note that deterministic mode does not come for free, it may eat up 10-20% of the frame rate, and it also depends on the scene a lot.
+			Sets a value indicating if objects are updated in a definite order or not. Deterministic mode ensures that all contacts are solved in the predefined order and visualization of physics in the world is repetitive (on one computer). When this mode is enabled the Engine performs additional sorting of bodies, shapes and joints inside islands after building them. Deterministic mode is unavailable in case there are missed frames — it is simply impossible. Moreover, there may be differences between visualization of physics on different hardware (e.g., AMD and Intel).					Determinism is guaranteed if there are no missed frames, the same Engine version is used, and the CPUs perform SSE operations similarly.Please note that deterministic mode does not come for free, it may eat up 10-20% of the frame rate, and it also depends on the scene a lot.
 			</summary> 
-			<param name="stable"> true to indicate that the objects are updated in a definite order; false to indicate that an objects update order may change. The default is false (the update order may change). </param> 
+			<param name="determinism"> true to indicate that the objects are updated in a definite order; false to indicate that an objects update order may change. The default is false (the update order may change). </param> 
 		</member>
-		<member name="M:Unigine.Physics.isDeterminism">
+		<member name="M:Unigine.Physics.isDeterminism const">
 			<summary>
-			Returns a value indicating if objects are updated in a definite order or not.Deterministic mode ensures that all contacts are solved in the predefined order and visualization of physics in the world is repetitive (on one computer). When this mode is enabled the Engine performs additional sorting of bodies, shapes and joints inside islands after building them. Deterministic mode is unavailable in case there are missed frames - it is simply impossible. Moreover, there may be differences between visualization of physics on different hardware (e.g., AMD and Intel).					Determinism is guaranteed if there are no missed frames, the same Engine version is used, and the CPUs perform SSE operations similarly.Please note that deterministic mode does not come for free, it may eat up 10-20% of the frame rate, and it also depends on the scene a lot.
+			Returns a value indicating if objects are updated in a definite order or not.Deterministic mode ensures that all contacts are solved in the predefined order and visualization of physics in the world is repetitive (on one computer). When this mode is enabled the Engine performs additional sorting of bodies, shapes and joints inside islands after building them. Deterministic mode is unavailable in case there are missed frames — it is simply impossible. Moreover, there may be differences between visualization of physics on different hardware (e.g., AMD and Intel).					Determinism is guaranteed if there are no missed frames, the same Engine version is used, and the CPUs perform SSE operations similarly.Please note that deterministic mode does not come for free, it may eat up 10-20% of the frame rate, and it also depends on the scene a lot.
 			</summary>  
 			<returns>true if the objects are updated in a definite order; otherwise false. The default is false (the update order may change).</returns>
 		</member>
@@ -489,13 +495,13 @@
 			</summary> 
 			<param name="time"> Time to continue updating physics in seconds. </param> 
 		</member>
-		<member name="M:Unigine.Physics.getCurrentSubframeTime">
+		<member name="M:Unigine.Physics.getCurrentSubframeTime const">
 			<summary>
 			Returns the current time that can be used when shifting between physics update frames.
 			</summary>  
 			<returns>Time in seconds.</returns>
 		</member>
-		<member name="M:Unigine.Physics.getTotalTime">
+		<member name="M:Unigine.Physics.getTotalTime const">
 			<summary>
 			Returns the total time that both rendering and calculating of the frame took (the duration of the main loop in the application execution sequence).
 			</summary>  
@@ -513,64 +519,63 @@
 			</summary> 
 			<param name="nodes"> Nodes to be updated. </param> 
 		</member>
-		<member name="M:Unigine.Physics.loadSettings(char,bool) const">
+		<member name="M:Unigine.Physics.loadSettings(char) const">
 			<summary>
-			Loads the physics settings from a given file.
+			Loads physics settings from a given file.
 			</summary> 
-			<param name="name"> Path to an XML file with desired settings. </param>
-			<param name="clear"> Clear flag. Set true to clear settings before loading (new settings shall be applied right after loading them), or false not to clear. </param> 
-			<returns>Returns 1 if the settings are loaded successfully; otherwise, 0.</returns>
+			<param name="name"> Path to an XML file with desired settings. </param> 
+			<returns>true if settings are loaded successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Physics.loadWorld(Unigine.Ptr{Unigine.Xml})">
+		<member name="M:Unigine.Physics.loadWorld(Unigine.Ptr{Unigine.Xml}) const">
 			<summary>
 			Loads physics settings from the Xml.
 			</summary> 
 			<param name="xml"> Xml smart pointer. </param> 
-			<returns>Returns 1 if settings are loaded successfully; otherwise, 0.</returns>
+			<returns>true if settings are loaded successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Physics.saveScene">
+		<member name="M:Unigine.Physics.saveScene const">
 			<summary>
-			Saves the current physics scene (physical properties of all objects) into the buffer.
+			Saves the current physics scene (physical properties of all objects) into the buffer with the specified ID.
 			</summary>  
 			<returns>Scene buffer ID.</returns>
 		</member>
-		<member name="M:Unigine.Physics.restoreScene(int)">
+		<member name="M:Unigine.Physics.restoreScene(bool) const">
 			<summary>
-			Restores the previously saved physics scene from the buffer.
+			Restores the previously saved physics scene from the buffer with the specified ID.
 			</summary> 
 			<param name="id"> Buffer ID. </param> 
-			<returns>Returns 1 if the scene is restored successfully; otherwise, 0.</returns>
+			<returns>true if the scene was restored successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Physics.removeScene(int)">
+		<member name="M:Unigine.Physics.removeScene(int) const">
 			<summary>
 			Removes the previously saved physics scene.
 			</summary> 
 			<param name="id"> Buffer ID. </param> 
-			<returns>Returns 1 if the scene is removed successfully; otherwise, 0.</returns>
+			<returns>true if the scene was removed successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Physics.saveState(Unigine.Ptr{Unigine.Stream})">
+		<member name="M:Unigine.Physics.saveState(Unigine.Ptr{Unigine.Stream}) const">
 			<summary>
 			Saves physics settings into the stream.					Example using saveState() and restoreState() methods:
 			</summary> 
 			<param name="stream"> Stream smart pointer. </param> 
 			<returns>true if settings are saved successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Physics.restoreState(Unigine.Ptr{Unigine.Stream})">
+		<member name="M:Unigine.Physics.restoreState(Unigine.Ptr{Unigine.Stream}) const">
 			<summary>
 			Restores physics settings from the stream.					Example using saveState() and restoreState() methods:
 			</summary> 
 			<param name="stream"> Stream smart pointer. </param> 
 			<returns>true if settings are restored successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Physics.saveSettings(char,int)">
+		<member name="M:Unigine.Physics.saveSettings(char,int) const">
 			<summary>
 			Saves the current physics settings to a given file.
 			</summary> 
-			<param name="name"> Path to an xml file to which the settings will be saved. </param>
+			<param name="name"> Path to a target xml file to which the settings will be saved. </param>
 			<param name="force"> Forced saving of physics settings. </param> 
 			<returns>true if the settings are saved successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Physics.saveWorld(Unigine.Ptr{Unigine.Xml},int)">
+		<member name="M:Unigine.Physics.saveWorld(Unigine.Ptr{Unigine.Xml},int) const">
 			<summary>
 			Saves physics settings to the given Xml node.
 			</summary> 
@@ -582,7 +587,7 @@
 			<summary>
 			Returns a value indicating if frame time stabilization is enabled. In case the current Engine framerate is much higher than the fixed Physics framerate (e.g. 120 FPS vs 60 FPS), the physics won't be updated each rendering frame (e.g. it may update during every second frame). The resulting frame time will become unstable, shorter-longer-shorter-longer (render -&gt; render+physics -&gt; render -&gt; render+physics...). This option ensures stable frame time for smoother user experience removing unwanted "hiccups" (however, the average framerate is decreased).By default, this option is enabled. But you can disable it to increase average framerate in case the application is used for machine learning or for grabbing frame sequences (video grabber), when smoothness is not important.
 			</summary> 
-			<param name="stablefps"> true to enable frame time stabilization; false - to disable it. </param> 
+			<param name="stablefps"> true to enable frame time stabilization; false — to disable it. </param> 
 		</member>
 		<member name="M:Unigine.Physics.isStableFPS const">
 			<summary>
@@ -614,14 +619,89 @@
 			</summary>  
 			<returns>Lifetime for missing frame, in milliseconds. Setting too high values may result in significant memory consumption in case of low hardware capabilities (no catching-up performed with a growing number of missed frames).</returns>
 		</member>
+		<member name="M:Unigine.Physics.setShowShapes(Physics::SHOW_TYPE)">
+			<summary>
+			Sets the shape visualization mode.
+			</summary> 
+			<param name="shapes"> The helper visualization mode. </param> 
+		</member>
+		<member name="M:Unigine.Physics.getShowShapes const">
+			<summary>
+			Returns the shape visualization mode.
+			</summary>  
+			<returns>The shape visualization mode.</returns>
+		</member>
+		<member name="M:Unigine.Physics.setShowShapesDistance(float)">
+			<summary>
+			Sets the distance from the camera within which the shapes are visualized.
+			</summary> 
+			<param name="distance"> The distance from the camera within which the shapes are visualized. </param> 
+		</member>
+		<member name="M:Unigine.Physics.getShowShapesDistance const">
+			<summary>
+			Returns the distance from the camera within which the shapes are visualized.
+			</summary>  
+			<returns>The distance from the camera within which the shapes are visualized.</returns>
+		</member>
+		<member name="M:Unigine.Physics.setShowCollisionSurfaces(bool)">
+			<summary>
+			Sets the value indicating if the collision surface visualization is enabled.
+			</summary> 
+			<param name="surfaces"> true to enable the collision surface visualization; false — to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Physics.isShowCollisionSurfaces const">
+			<summary>
+			Returns a value indicating if the collision surface visualization is enabled.
+			</summary>  
+			<returns>true if the collision surface visualization is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Physics.setShowContacts(bool)">
+			<summary>
+			Sets the value indicating if the visualization of physical interactions between the physical bodies is enabled.
+			</summary> 
+			<param name="contacts"> true to enable the visualization of physical interactions between the physical bodies; false — to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Physics.isShowContacts const">
+			<summary>
+			Returns a value indicating if the visualization of physical interactions between the physical bodies is enabled.
+			</summary>  
+			<returns>true if the visualization of physical interactions between the physical bodies is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Physics.setShowJoints(bool)">
+			<summary>
+			Sets the value indicating if the visualization of joints that connect physical bodies is enabled.
+			</summary> 
+			<param name="joints"> true to enable the visualization of joints that connect physical bodies; false — to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Physics.isShowJoints const">
+			<summary>
+			Returns a value indicating if the visualization of joints that connect physical bodies is enabled.
+			</summary>  
+			<returns>true if the visualization of joints that connect physical bodies is enabled; otherwise, false.</returns>
+		</member>
+		<member name="F:Unigine.Physics.UPDATE_MODE_BEFORE_RENDERING">
+			<summary>
+			Update Before Rendering. Physics update (along with the spatial tree update and user callbacks) is executed in the Main thread just before rendering is performed (render). The number of physics ticks executed before the rendering frame here is defined by the physics and the Engine framerates. This mode is the most clear and straightforward (everything is executed safely in a strictly determined order) with no frame lag (results of physics calculations are applied in the current frame). But, on the other hand, this mode is the slowest as there are no asynchronous parallel calculations (everything's in the Main thread). Use this mode in case the time lag is unacceptabe for your application (you need all physics calculations to be applied in the current frame) and you want maximum simplicity and strictly determined order of execution for user code (physicsUpdate and physics callbacks).
+		</summary>
+		</member>
 		<member name="F:Unigine.Physics.UPDATE_MODE_ASYNC_RENDERING">
 			<summary>
 			Asynchronous update mode. Physics update is performed asynchronously to rendering. In case of several physics ticks per one rendering frame (when the Engine framerate is lower, or catching up is performed), only the first one is executed in parallel, then the physics module waits for the completion of the rendering process, returns to the Main thread and executes the rest of the physics ticks. There is a frame lag (results of physics calculations are applied in the next frame) and there is some ambiguity regarding the time, when user code (physicsUpdate and physics callbacks) is to be executed in case of several physics ticks per one rendering frame (some part is executed before rendering while the other just after it). This mode is the fastest one and is used by default.
 		</summary>
 		</member>
-		<member name="F:Unigine.Physics.UPDATE_MODE_BEFORE_RENDERING">
+		<member name="F:Unigine.Physics.SHOW_TYPE_DISABLED">
 			<summary>
-			Update Before Rendering. Physics update (along with the spatial tree update and user callbacks) is executed in the Main thread just before rendering is performed (render). The number of physics ticks executed before the rendering frame here is defined by the physics and the Engine framerates. This mode is the most clear and straightforward (everything is executed safely in a strictly determined order) with no frame lag (results of physics calculations are applied in the current frame). But, on the other hand, this mode is the slowest as there are no asynchronous parallel calculations (everything's in the Main thread). Use this mode in case the time lag is unacceptabe for your application (you need all physics calculations to be applied in the current frame) and you want maximum simplicity and strictly determined order of execution for user code (physicsUpdate and physics callbacks).
+			The helper is not visualized.
+		</summary>
+		</member>
+		<member name="F:Unigine.Physics.SHOW_TYPE_WIREFRAME">
+			<summary>
+			The helper is visualized as a wireframe.
+		</summary>
+		</member>
+		<member name="F:Unigine.Physics.SHOW_TYPE_SOLID">
+			<summary>
+			The helper is visualized as a a solid object.
 		</summary>
 		</member>
 		<member name="M:Unigine.PhysicsIntersection.#ctor">
@@ -755,6 +835,7 @@
 			</summary> 
 			<param name="object"> Object to approximate. </param>
 			<param name="update"> Update flag: 1 to update the object after assigning the body (by default), 0 not to update right after body assignment. </param> 
+			<returns>true if the body is assigned to the specified object successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Body.setObject(Unigine.Ptr{Unigine.Object})">
 			<summary>
@@ -1402,29 +1483,9 @@
 			<param name="stream"> Stream with saved body state data. </param> 
 			<returns>true if the body state is successfully restored; otherwise, false.</returns>
 		</member>
-		<member name="F:Unigine.Body.BODY_CLOTH">
-			<summary>
-			This body simulates cloth.
-		</summary>
-		</member>
 		<member name="F:Unigine.Body.BODY_DUMMY">
 			<summary>
 			This body is used to create an immovable collider for an object.
-		</summary>
-		</member>
-		<member name="F:Unigine.Body.BODY_FRACTURE">
-			<summary>
-			This body simulates breakable objects.
-		</summary>
-		</member>
-		<member name="F:Unigine.Body.BODY_PATH">
-			<summary>
-			This body simulates a path along which rigid bodies are moving, for example, like a train along the railtrack.
-		</summary>
-		</member>
-		<member name="F:Unigine.Body.BODY_RAGDOLL">
-			<summary>
-			This body contains joints connecting parts of the body (represented with rigid bodies).
 		</summary>
 		</member>
 		<member name="F:Unigine.Body.BODY_RIGID">
@@ -1432,14 +1493,34 @@
 			This is a basic type of body describing a rigid object.
 		</summary>
 		</member>
+		<member name="F:Unigine.Body.BODY_RAGDOLL">
+			<summary>
+			This body contains joints connecting parts of the body (represented with rigid bodies).
+		</summary>
+		</member>
+		<member name="F:Unigine.Body.BODY_FRACTURE">
+			<summary>
+			This body simulates breakable objects.
+		</summary>
+		</member>
 		<member name="F:Unigine.Body.BODY_ROPE">
 			<summary>
 			This body simulates ropes.
 		</summary>
 		</member>
+		<member name="F:Unigine.Body.BODY_CLOTH">
+			<summary>
+			This body simulates cloth.
+		</summary>
+		</member>
 		<member name="F:Unigine.Body.BODY_WATER">
 			<summary>
 			This body simulates water and other fluids.
+		</summary>
+		</member>
+		<member name="F:Unigine.Body.BODY_PATH">
+			<summary>
+			This body simulates a path along which rigid bodies are moving, for example, like a train along the railtrack.
 		</summary>
 		</member>
 		<member name="F:Unigine.Body.NUM_BODIES">
@@ -4258,7 +4339,7 @@
 			</summary> 
 			<param name="damping"> Angular damping. If a negative value is provided, 0 will be used instead.  </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getAngularDamping">
+		<member name="M:Unigine.JointWheel.getAngularDamping const">
 			<summary>
 			Returns the angular damping of the joint (wheel rotation damping).
 			</summary>  
@@ -4270,7 +4351,7 @@
 			</summary> 
 			<param name="torque"> Maximum torque. If a negative value is provided, 0 will be used instead.  </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getAngularTorque">
+		<member name="M:Unigine.JointWheel.getAngularTorque const">
 			<summary>
 			Returns the maximum torque of the attached angular motor.
 			</summary>  
@@ -4282,7 +4363,7 @@
 			</summary> 
 			<param name="velocity"> Velocity in radians per second. </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getAngularVelocity">
+		<member name="M:Unigine.JointWheel.getAngularVelocity const">
 			<summary>
 			Returns the target velocity of wheel rotation.
 			</summary>  
@@ -4294,7 +4375,7 @@
 			</summary> 
 			<param name="axis00"> Suspension axis. </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getAxis00">
+		<member name="M:Unigine.JointWheel.getAxis00 const">
 			<summary>
 			Returns suspension axis coordinates.
 			</summary>  
@@ -4306,7 +4387,7 @@
 			</summary> 
 			<param name="axis10"> Wheel spindle axis in coordinates of the frame (body 0). </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getAxis10">
+		<member name="M:Unigine.JointWheel.getAxis10 const">
 			<summary>
 			Returns the wheel spindle axis in coordinates of the frame (body 0).
 			</summary>  
@@ -4318,7 +4399,7 @@
 			</summary> 
 			<param name="axis11"> Wheel spindle axis in coordinates of the wheel (body 1). </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getAxis11">
+		<member name="M:Unigine.JointWheel.getAxis11 const">
 			<summary>
 			Returns the wheel spindle in coordinates of the wheel (body 1).
 			</summary>  
@@ -4330,7 +4411,7 @@
 			</summary> 
 			<param name="angle"> Coefficient characterizing the tire lateral impulse. If a negative value is provided, 0 will be used instead.  </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getBinormalAngle">
+		<member name="M:Unigine.JointWheel.getBinormalAngle const">
 			<summary>
 			Returns the coefficient specifying how fast the optimal lateral force can be achieved. The larger this value, the more is the impulse produced by the tire.
 			</summary>  
@@ -4342,37 +4423,37 @@
 			</summary> 
 			<param name="friction"> Lateral friction. If a negative value is provided, 0 will be used instead.  </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getBinormalFriction">
+		<member name="M:Unigine.JointWheel.getBinormalFriction const">
 			<summary>
 			Returns the lateral (sideways) friction of the tire.
 			</summary>  
 			<returns>Lateral friction.</returns>
 		</member>
-		<member name="M:Unigine.JointWheel.getContactNormal">
+		<member name="M:Unigine.JointWheel.getContactNormal const">
 			<summary>
 			Returns a normal of a point of contact with the ground, in world coordinates.
 			</summary>  
 			<returns>Normal.</returns>
 		</member>
-		<member name="M:Unigine.JointWheel.getContactObject">
+		<member name="M:Unigine.JointWheel.getContactObject const">
 			<summary>
 			Returns an object representing the ground.
 			</summary>  
 			<returns>Ground object.</returns>
 		</member>
-		<member name="M:Unigine.JointWheel.getContactPoint">
+		<member name="M:Unigine.JointWheel.getContactPoint const">
 			<summary>
 			Returns a point of contact with the ground, in world coordinates.
 			</summary>  
 			<returns>Point coordinates.</returns>
 		</member>
-		<member name="M:Unigine.JointWheel.getContactShape">
+		<member name="M:Unigine.JointWheel.getContactShape const">
 			<summary>
 			Returns a shape of the object representing the ground.
 			</summary>  
 			<returns>Shape of the ground object.</returns>
 		</member>
-		<member name="M:Unigine.JointWheel.getContactSurface">
+		<member name="M:Unigine.JointWheel.getContactSurface const">
 			<summary>
 			Returns a surface of a ground object, which is in contact.
 			</summary>  
@@ -4384,7 +4465,7 @@
 			</summary> 
 			<param name="velocity"> Angular velocity in radians per second. </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getCurrentAngularVelocity">
+		<member name="M:Unigine.JointWheel.getCurrentAngularVelocity const">
 			<summary>
 			Returns the current rotation velocity of the attached wheels.
 			</summary>  
@@ -4396,19 +4477,19 @@
 			</summary> 
 			<param name="distance"> Suspension length in units. </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getCurrentLinearDistance">
+		<member name="M:Unigine.JointWheel.getCurrentLinearDistance const">
 			<summary>
 			Returns the current suspension compression (i.e. the length of the suspension).
 			</summary>  
 			<returns>Current suspension length in units.</returns>
 		</member>
-		<member name="M:Unigine.JointWheel.getCurrentSlipAngle">
+		<member name="M:Unigine.JointWheel.getCurrentSlipAngle const">
 			<summary>
 			Returns the current angle between the wheel direction and the frame direction.
 			</summary>  
 			<returns>Current slip angle in degrees.</returns>
 		</member>
-		<member name="M:Unigine.JointWheel.getCurrentSlipRatio">
+		<member name="M:Unigine.JointWheel.getCurrentSlipRatio const">
 			<summary>
 			Returns the current ratio of wheel spin to ground speed.
 			</summary>  
@@ -4420,7 +4501,7 @@
 			</summary> 
 			<param name="mask"> Integer, each bit of which is a mask. </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getPhysicsIntersectionMask">
+		<member name="M:Unigine.JointWheel.getPhysicsIntersectionMask const">
 			<summary>
 			Returns an physics intersection mask mask of the joint.
 			</summary>  
@@ -4432,7 +4513,7 @@
 			</summary> 
 			<param name="damping"> Linear damping. If a negative value is provided, 0 will be used instead.  </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getLinearDamping">
+		<member name="M:Unigine.JointWheel.getLinearDamping const">
 			<summary>
 			Returns the linear damping of the suspension.
 			</summary>  
@@ -4444,7 +4525,7 @@
 			</summary> 
 			<param name="distance"> Height in units. </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getLinearDistance">
+		<member name="M:Unigine.JointWheel.getLinearDistance const">
 			<summary>
 			Returns the target height of the suspension.
 			</summary>  
@@ -4456,7 +4537,7 @@
 			</summary> 
 			<param name="from"> Limit in units. </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getLinearLimitFrom">
+		<member name="M:Unigine.JointWheel.getLinearLimitFrom const">
 			<summary>
 			Returns the low limit of the suspension ride.
 			</summary>  
@@ -4468,7 +4549,7 @@
 			</summary> 
 			<param name="to"> Limit in units. </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getLinearLimitTo">
+		<member name="M:Unigine.JointWheel.getLinearLimitTo const">
 			<summary>
 			Returns the high limit of the suspension ride.
 			</summary>  
@@ -4480,7 +4561,7 @@
 			</summary> 
 			<param name="spring"> Rigidity coefficient. If a negative value is provided, 0 will be used instead.  </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getLinearSpring">
+		<member name="M:Unigine.JointWheel.getLinearSpring const">
 			<summary>
 			Returns the rigidity coefficient of the suspension.
 			</summary>  
@@ -4492,7 +4573,7 @@
 			</summary> 
 			<param name="angle"> Coefficient characterizing the tire longitudinal impulse. If a negative value is provided, 0 will be used instead.  </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getTangentAngle">
+		<member name="M:Unigine.JointWheel.getTangentAngle const">
 			<summary>
 			Returns the coefficient specifying how fast the optimal longitudinal force can be achieved. The larger this value, the more is the impulse produced by the tire.
 			</summary>  
@@ -4504,7 +4585,7 @@
 			</summary> 
 			<param name="friction"> Longitudinal friction. If a negative value is provided, 0 will be used instead.  </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getTangentFriction">
+		<member name="M:Unigine.JointWheel.getTangentFriction const">
 			<summary>
 			Returns the longitudinal (forward) friction of the tire.
 			</summary>  
@@ -4516,7 +4597,7 @@
 			</summary> 
 			<param name="mass"> Mass of the wheel. If a negative value is provided, 0 will be used instead.  </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getWheelMass">
+		<member name="M:Unigine.JointWheel.getWheelMass const">
 			<summary>
 			Returns the mass of the attached wheel.					If g (Earth's gravity) equals to 9.8 m/s						2, and 1 unit equals to 1 m, the mass is measured in kilograms.
 			</summary>  
@@ -4528,7 +4609,7 @@
 			</summary> 
 			<param name="radius"> Radius of the wheel in units. If a negative value is provided, 0 will be used instead.  </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getWheelRadius">
+		<member name="M:Unigine.JointWheel.getWheelRadius const">
 			<summary>
 			Returns the radius of the attached wheel.
 			</summary>  
@@ -4540,7 +4621,7 @@
 			</summary> 
 			<param name="threshold"> Difference threshold. If a negative value is provided, 0 will be used instead.  </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getWheelThreshold">
+		<member name="M:Unigine.JointWheel.getWheelThreshold const">
 			<summary>
 			Returns the threshold difference between the wheel and ground velocities. When it is too small, the longitudinal force will be scaled down to prevent unnatural vibrations.
 			</summary>  
@@ -4552,7 +4633,7 @@
 			</summary> 
 			<param name="axis0"> Suspension axis in the world coordinates. </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getWorldAxis0">
+		<member name="M:Unigine.JointWheel.getWorldAxis0 const">
 			<summary>
 			Returns the suspension axis in the world coordinates.
 			</summary>  
@@ -4564,13 +4645,19 @@
 			</summary> 
 			<param name="axis1"> Wheel spindle axis in the world coordinates. </param> 
 		</member>
-		<member name="M:Unigine.JointWheel.getWorldAxis1">
+		<member name="M:Unigine.JointWheel.getWorldAxis1 const">
 			<summary>
 			Returns the wheel spindle axis in the world coordinates.
 			</summary>  
 			<returns>Wheel spindle axis in the world coordinates.</returns>
 		</member>
-		<member name="M:Unigine.Shape.getArea">
+		<member name="M:Unigine.JointWheel.setCanBeUnderTerrain(bool)">
+			<summary>
+			Sets a value indicating if the Wheel Joint should be used under the surface of the terrain (drive in an underground parking or tunnel). This flag ensures proper behavior of the joint underground , otherwise the Wheel Joint will tend to pop up on the terrain surface above.
+			</summary> 
+			<param name="val"> true if the Wheel Joint is to be used under the surface of the terrain; otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.Shape.getArea const">
 			<summary>
 			Returns areas of shape projections on three axes: x, y, and z.
 			</summary>  
@@ -4582,7 +4669,7 @@
 			</summary> 
 			<param name="body"> Body, to which the shape belongs. </param> 
 		</member>
-		<member name="M:Unigine.Shape.getBody">
+		<member name="M:Unigine.Shape.getBody const">
 			<summary>
 			Returns the body, to which the shape belongs.
 			</summary>  
@@ -4594,19 +4681,19 @@
 			</summary> 
 			<param name="transform"> Transformation matrix </param> 
 		</member>
-		<member name="M:Unigine.Shape.getBodyShapeTransform">
+		<member name="M:Unigine.Shape.getBodyShapeTransform const">
 			<summary>
 			Returns the transformation matrix of the shape (in the coordinates of the body). This matrix describes position and orientation of the shape. This method is identical to getShapeTransform().
 			</summary>  
 			<returns>Transformation matrix</returns>
 		</member>
-		<member name="M:Unigine.Shape.getCenterOfMass">
+		<member name="M:Unigine.Shape.getCenterOfMass const">
 			<summary>
 			Returns local coordinates of the center of mass of the shape.
 			</summary>  
 			<returns>Coordinates of the center of mass.</returns>
 		</member>
-		<member name="M:Unigine.Shape.getCollision(Unigine.Vector{Unigine.Ptr{ShapeContact},int,Unigine.VectorAllocator},float)">
+		<member name="M:Unigine.Shape.getCollision(Unigine.Vector{Unigine.Ptr{ShapeContact},int,Unigine.VectorAllocator},float) const">
 			<summary>
 			Performs collision check for the shape and puts information on all contacts to the output buffer.					Collisions with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Collision flag is enabled.						The surface has a material assigned.																The shape must be enabled.
 			</summary> 
@@ -4614,7 +4701,7 @@
 			<param name="ifps"> Inverse FPS value. </param> 
 			<returns>1 if collisions are found; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Shape.getCollision(Unigine.Ptr{Unigine.Object},Unigine.Vector{Unigine.Ptr{ShapeContact},int,Unigine.VectorAllocator},float)">
+		<member name="M:Unigine.Shape.getCollision(Unigine.Ptr{Unigine.Object},Unigine.Vector{Unigine.Ptr{ShapeContact},int,Unigine.VectorAllocator},float) const">
 			<summary>
 			Performs collision check for the shape and puts information on all contacts and contact object to the output buffer.					Collisions with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Collision flag is enabled.						The surface has a material assigned.																The shape must be enabled.
 			</summary> 
@@ -4629,19 +4716,19 @@
 			</summary> 
 			<param name="mask"> Integer, each bit of which is a mask. </param> 
 		</member>
-		<member name="M:Unigine.Shape.getCollisionMask">
+		<member name="M:Unigine.Shape.getCollisionMask const">
 			<summary>
 			Returns the collision mask of the actor. Two objects collide if they both have matching masks.See also details on additional collision exclusion mask.
 			</summary>  
 			<returns>Integer, each bit of which is a mask.</returns>
 		</member>
-		<member name="M:Unigine.Shape.setContinuous(int)">
+		<member name="M:Unigine.Shape.setContinuous(bool)">
 			<summary>
 			Enables or disables continuous collision detection for spheres or capsules. Enabled CDD incurs almost no performance penalty. Disabling CCD allows to avoid physics artifacts, if there are any.
 			</summary> 
 			<param name="continuous"> Positive value to enable CCD; 0 to disable. </param> 
 		</member>
-		<member name="M:Unigine.Shape.isContinuous">
+		<member name="M:Unigine.Shape.isContinuous const">
 			<summary>
 			Returns a value indicating if continuous collision detection for spheres or capsules is enabled. Enabled CCD incurs almost no performance penalty. Disabling CCD allows to avoid physics artifacts, if there are any.
 			</summary>  
@@ -4653,25 +4740,25 @@
 			</summary> 
 			<param name="density"> Density value. If a negative value is provided, 0 will be used instead. </param> 
 		</member>
-		<member name="M:Unigine.Shape.getDensity">
+		<member name="M:Unigine.Shape.getDensity const">
 			<summary>
 			Returns the current density of a shape.
 			</summary>  
 			<returns>Density value.</returns>
 		</member>
-		<member name="M:Unigine.Shape.setEnabled(int)">
+		<member name="M:Unigine.Shape.setEnabled(bool)">
 			<summary>
 			Enables or disables physical interactions with the shape.
 			</summary> 
 			<param name="enable"> Positive number to enable physical interactions, 0 to disable them.  </param> 
 		</member>
-		<member name="M:Unigine.Shape.isEnabled">
+		<member name="M:Unigine.Shape.isEnabled const">
 			<summary>
 			Returns a value indicating if physical interactions with the shape are enabled.
 			</summary>  
 			<returns>1 if physical interactions with the shape are enabled; otherwise, 0. </returns>
 		</member>
-		<member name="M:Unigine.Shape.isEnabledSelf">
+		<member name="M:Unigine.Shape.isEnabledSelf const">
 			<summary>
 			Returns a value indicating if the shape is enabled.
 			</summary>  
@@ -4683,7 +4770,7 @@
 			</summary> 
 			<param name="mask"> Integer, each bit of which is a mask. </param> 
 		</member>
-		<member name="M:Unigine.Shape.getExclusionMask">
+		<member name="M:Unigine.Shape.getExclusionMask const">
 			<summary>
 			Returns the bit mask that prevents collisions of the shape with other ones. This mask is independent of the collision mask. For shape with matching collision masks not to collide, at least one bit of their exclusion mask should match.
 			</summary>  
@@ -4691,15 +4778,15 @@
 		</member>
 		<member name="M:Unigine.Shape.setFriction(float)">
 			<summary>
-			Sets a friction of the shape surface.
+			Sets a friction coefficient for the shape surface.
 			</summary> 
-			<param name="friction"> Friction of the shape surface. If a negative value is provided, 0 will be used instead.  </param> 
+			<param name="friction"> Friction coefficient for the shape surface. If a negative value is provided, 0 will be used instead.  </param> 
 		</member>
-		<member name="M:Unigine.Shape.getFriction">
+		<member name="M:Unigine.Shape.getFriction const">
 			<summary>
-			Returns the friction of the shape surface.
+			Returns the friction coefficient for the shape surface.
 			</summary>  
-			<returns>Friction of the shape surface.</returns>
+			<returns>Friction coefficient for the shape surface.</returns>
 		</member>
 		<member name="M:Unigine.Shape.setID(int)">
 			<summary>
@@ -4707,19 +4794,19 @@
 			</summary> 
 			<param name="id"> Unique ID. </param> 
 		</member>
-		<member name="M:Unigine.Shape.getID">
+		<member name="M:Unigine.Shape.getID const">
 			<summary>
 			Returns the unique ID of the shape.
 			</summary>  
 			<returns>Unique ID.</returns>
 		</member>
-		<member name="M:Unigine.Shape.getInertia">
+		<member name="M:Unigine.Shape.getInertia const">
 			<summary>
 			Returns a matrix that represents inertia tensor describing the resistance of the body to rotation in different directions. It is determined by the distribution of mass throughout the body volume.
 			</summary>  
 			<returns>Inertia tensor.</returns>
 		</member>
-		<member name="M:Unigine.Shape.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Ptr{PhysicsIntersectionNormal})">
+		<member name="M:Unigine.Shape.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Ptr{PhysicsIntersectionNormal}) const">
 			<summary>
 								Performs tracing from the p0 point to the p1 point to find a shape intersected by this line. Intersection is found only for objects with a matching intersection mask.					World space coordinates are used for this function.
 			</summary> 
@@ -4728,7 +4815,7 @@
 			<param name="intersection"> PhysicsIntersectionNormal class instance containing intersection information </param> 
 			<returns>1 if an intersection was detected; otherwise - 0.</returns>
 		</member>
-		<member name="M:Unigine.Shape.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Ptr{PhysicsIntersection})">
+		<member name="M:Unigine.Shape.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Ptr{PhysicsIntersection}) const">
 			<summary>
 								Performs tracing from the p0 point to the p1 point to find a shape intersected by this line. Intersection is found only for objects with a matching intersection mask.					World space coordinates are used for this function.										Usage Example					The following example shows how you can get the intersection information by using the PhysicsIntersection class. In this example the line is an invisible traced line from the point of the camera (vec3 p0) to the point of the mouse pointer (vec3 p1). It is supposed that you have a dynamic mesh with a body and a shape assigned. The executing sequence is the following:													Define and initialize two points (p0 and p1) by using the Player::getDirectionFromScreen() function.							Create an instance of the PhysicsIntersection class to get the information of the intersection point.							Check, if there is a intersection with a shape and save the result in the integer variable.							In this example, if there is an intersection of mouse direction with a shape, the PhysicsIntersection class instance gets the intersection point. The result is shown in the console.
 			</summary> 
@@ -4737,7 +4824,7 @@
 			<param name="intersection"> PhysicsIntersection class instance containing intersection information. </param> 
 			<returns>1 if an intersection was detected; otherwise - 0.</returns>
 		</member>
-		<member name="M:Unigine.Shape.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Math.vec3)">
+		<member name="M:Unigine.Shape.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Math.vec3) const">
 			<summary>
 								Performs tracing from the p0 point to the p1 point to find a shape intersected by this line. Intersection is found only for objects with a matching intersection mask.					World space coordinates are used for this function.
 			</summary> 
@@ -4753,7 +4840,7 @@
 			</summary> 
 			<param name="mask"> Integer, each bit of which is a mask. </param> 
 		</member>
-		<member name="M:Unigine.Shape.getPhysicsIntersectionMask">
+		<member name="M:Unigine.Shape.getPhysicsIntersectionMask const">
 			<summary>
 			Returns a physics intersection mask of the shape.
 			</summary>  
@@ -4765,7 +4852,7 @@
 			</summary> 
 			<param name="mass"> Mass of the shape. If a negative value is provided, 0 will be used instead.  </param> 
 		</member>
-		<member name="M:Unigine.Shape.getMass">
+		<member name="M:Unigine.Shape.getMass const">
 			<summary>
 			Returns the mass of the shape.					If g (Earth's gravity) equals to 9.8 m/s						2, and 1 unit equals to 1 m, the mass is measured in kilograms.
 			</summary>  
@@ -4777,13 +4864,13 @@
 			</summary> 
 			<param name="name"> Name of the shape. </param> 
 		</member>
-		<member name="M:Unigine.Shape.getName">
+		<member name="M:Unigine.Shape.getName const">
 			<summary>
 			Returns the name of the shape.
 			</summary>  
 			<returns>Name of the shape.</returns>
 		</member>
-		<member name="M:Unigine.Shape.getNumber">
+		<member name="M:Unigine.Shape.getNumber const">
 			<summary>
 			Returns the number of shape instances.
 			</summary>  
@@ -4795,7 +4882,7 @@
 			</summary> 
 			<param name="restitution"> Restitution of the shape surface. The provided value will be saturated in the range [0; 1].  </param> 
 		</member>
-		<member name="M:Unigine.Shape.getRestitution">
+		<member name="M:Unigine.Shape.getRestitution const">
 			<summary>
 			Returns the restitution of the shape surface.
 			</summary>  
@@ -4807,13 +4894,13 @@
 			</summary> 
 			<param name="position"> New shape's position, in world coordinates. </param> 
 		</member>
-		<member name="M:Unigine.Shape.getPosition">
+		<member name="M:Unigine.Shape.getPosition const">
 			<summary>
 			Returns the current shape position of the object, in world coordinates.
 			</summary>  
 			<returns>Current shape's position, in world coordinates.</returns>
 		</member>
-		<member name="M:Unigine.Shape.isIdentity">
+		<member name="M:Unigine.Shape.isIdentity const">
 			<summary>
 			Returns a value indicating if the shape has a scale equal to 1 and no rotation.
 			</summary>  
@@ -4825,23 +4912,23 @@
 			</summary> 
 			<param name="transform"> Transformation matrix </param> 
 		</member>
-		<member name="M:Unigine.Shape.getTransform">
+		<member name="M:Unigine.Shape.getTransform const">
 			<summary>
 			Returns the transformation matrix of the shape of the object (in world coordinates). This matrix describes position and orientation of the shape.
 			</summary>  
 			<returns>Transformation matrix</returns>
 		</member>
-		<member name="M:Unigine.Shape.getType">
+		<member name="M:Unigine.Shape.getType const">
 			<summary>
 			Returns the type of the shape.
 			</summary>  
 			<returns>One of the SHAPE_* pre-defined variables. </returns>
 		</member>
-		<member name="M:Unigine.Shape.getTypeName">
+		<member name="M:Unigine.Shape.getTypeName const">
 			<summary>
 			Returns the name of the shape type.
 			</summary>  
-			<returns>Type name.</returns>
+			<returns>Shape type name.</returns>
 		</member>
 		<member name="M:Unigine.Shape.getTypeName(int)">
 			<summary>
@@ -4857,19 +4944,19 @@
 			<param name="velocity"> Velocity vector, each component represents shape's velocity along the corresponding axis, in units per second. </param>
 			<param name="ifps"> Inverse FPS value. </param> 
 		</member>
-		<member name="M:Unigine.Shape.getVelocity">
+		<member name="M:Unigine.Shape.getVelocity const">
 			<summary>
 			Returns the current velocity vector of the shape.
 			</summary>  
 			<returns>Current celocity vector, each component represents shape's velocity along the corresponding axis, in units per second.</returns>
 		</member>
-		<member name="M:Unigine.Shape.getVolume">
+		<member name="M:Unigine.Shape.getVolume const">
 			<summary>
 			Returns the volume of the shape.
 			</summary>  
 			<returns>Volume of the shape in cubic units.</returns>
 		</member>
-		<member name="M:Unigine.Shape.clone">
+		<member name="M:Unigine.Shape.clone const">
 			<summary>
 			Clones the shape.
 			</summary>  
@@ -4881,7 +4968,7 @@
 			</summary> 
 			<param name="color"> Color, in which the shape will be rendered. </param> 
 		</member>
-		<member name="M:Unigine.Shape.saveState(Unigine.Ptr{Unigine.Stream})">
+		<member name="M:Unigine.Shape.saveState(Unigine.Ptr{Unigine.Stream}) const">
 			<summary>
 			Saves the state of a given node into a binary stream.											If a node is a parent for other nodes, states of these child nodes need to be saved manually.						To save the state from a buffer, file or a message from a socket, make sure the stream is opened. For buffers and files, you also need to set the proper position for reading.										Example using saveState() and restoreState() methods:
 			</summary> 
@@ -4915,9 +5002,21 @@
 			<param name="type_name"> Shape type name. </param> 
 			<returns>New created shape smart pointer.</returns>
 		</member>
-		<member name="F:Unigine.Shape.SHAPE_BOX">
+		<member name="M:Unigine.Shape.getTypeID(char)">
 			<summary>
-			Box.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shape.getBoundBox const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Shape.getBoundSphere const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="F:Unigine.Shape.SHAPE_SPHERE">
+			<summary>
+			Sphere.
 		</summary>
 		</member>
 		<member name="F:Unigine.Shape.SHAPE_CAPSULE">
@@ -4925,19 +5024,24 @@
 			Capsule.
 		</summary>
 		</member>
-		<member name="F:Unigine.Shape.SHAPE_CONVEX">
-			<summary>
-			Convex hull.
-		</summary>
-		</member>
 		<member name="F:Unigine.Shape.SHAPE_CYLINDER">
 			<summary>
 			Cylinder.
 		</summary>
 		</member>
-		<member name="F:Unigine.Shape.SHAPE_SPHERE">
+		<member name="F:Unigine.Shape.SHAPE_BOX">
 			<summary>
-			Sphere.
+			Box.
+		</summary>
+		</member>
+		<member name="F:Unigine.Shape.SHAPE_CONVEX">
+			<summary>
+			Convex hull.
+		</summary>
+		</member>
+		<member name="F:Unigine.Shape.NUM_SHAPES">
+			<summary>
+			Number of shape types for the Particles Field Spacer.
 		</summary>
 		</member>
 		<member name="M:Unigine.ShapeBox.#ctor">

@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -25,7 +24,7 @@
 namespace Unigine
 {
 
-class EngineWindow;
+class EngineWindowViewport;
 //////////////////////////////////////////////////////////////////////////
 
 class UNIGINE_API Player : public Node
@@ -36,9 +35,11 @@ public:
 	void setProjection(const Math::mat4 &projection);
 	Math::mat4 getProjection() const;
 	Math::mat4 getAspectCorrectedProjection(int width = -1, int height = -1) const;
-	void setFovMode(int mode);
-	int getFovMode() const;
-	int getFovFixed() const;
+	void setProjectionMode(Camera::PROJECTION_MODE mode);
+	Camera::PROJECTION_MODE getProjectionMode() const;
+	void setFovMode(Camera::FOV_MODE mode);
+	Camera::FOV_MODE getFovMode() const;
+	Camera::FOV_FIXED getFovFixed() const;
 	void setFov(float fov);
 	float getFov() const;
 	void setFilmGate(float gate);
@@ -49,6 +50,8 @@ public:
 	float getZNear() const;
 	void setZFar(float zfar);
 	float getZFar() const;
+	void setOrthoHeight(float height);
+	float getOrthoHeight() const;
 	void setUp(const Math::vec3 &up);
 	Math::vec3 getUp() const;
 	void setObliqueFrustumPlane(const Math::Vec4 &plane);
@@ -92,15 +95,15 @@ public:
 	void flushTransform() const;
 	void getDirectionFromMainWindow(Math::Vec3 &p0, Math::Vec3 &p1, int mouse_x, int mouse_y) const;
 	Math::vec3 getDirectionFromMainWindow(int mouse_x, int mouse_y) const;
-	void getDirectionFromWindow(Math::Vec3 &p0, Math::Vec3 &p1, int mouse_x, int mouse_y, const Ptr<EngineWindow> &window) const;
-	Math::vec3 getDirectionFromWindow(int mouse_x, int mouse_y, const Ptr<EngineWindow> &window) const;
+	void getDirectionFromWindow(Math::Vec3 &p0, Math::Vec3 &p1, int mouse_x, int mouse_y, const Ptr<EngineWindowViewport> &window) const;
+	Math::vec3 getDirectionFromWindow(int mouse_x, int mouse_y, const Ptr<EngineWindowViewport> &window) const;
 	void getDirectionFromScreen(Math::Vec3 &p0, Math::Vec3 &p1, int mouse_x, int mouse_y, int screen_x, int screen_y, int screen_width, int screen_height) const;
 	Math::vec3 getDirectionFromScreen(int mouse_x, int mouse_y, int screen_x, int screen_y, int screen_width, int screen_height) const;
 	Math::mat4 getProjectionFromMainWindow(int x0, int y0, int x1, int y1) const;
-	Math::mat4 getProjectionFromWindow(int x0, int y0, int x1, int y1, const Ptr<EngineWindow> &window) const;
+	Math::mat4 getProjectionFromWindow(int x0, int y0, int x1, int y1, const Ptr<EngineWindowViewport> &window) const;
 	Math::mat4 getProjectionFromScreen(int x0, int y0, int x1, int y1, int screen_width, int screen_height) const;
 	int getMainWindowPosition(int &x, int &y, const Math::Vec3 &point) const;
-	int getWindowPosition(int &x, int &y, const Math::Vec3 &point, const Ptr<EngineWindow> &window) const;
+	int getWindowPosition(int &x, int &y, const Math::Vec3 &point, const Ptr<EngineWindowViewport> &window) const;
 	int getScreenPosition(int &x, int &y, const Math::Vec3 &point, int screen_width, int screen_height) const;
 };
 typedef Ptr<Player> PlayerPtr;

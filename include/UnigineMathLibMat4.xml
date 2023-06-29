@@ -62,13 +62,6 @@
 			<param name="q"> Source quaternion. </param>
 			<param name="v"> Source vector. </param> 
 		</member>
-		<member name="M:Unigine.Math.mat4.#ctor(float,int)">
-			<summary>
-			Constructor. Initializes the matrix using a given pointer to the source matrix.
-			</summary> 
-			<param name="m"> Pointer to the source matrix. </param>
-			<param name="transpose"> If transpose is 0 (by default), the matrix is specified in the column major style. </param> 
-		</member>
 		<member name="M:Unigine.Math.mat4.set(int,int,float)">
 			<summary>
 			Sets a new value of the matrix element specified by row and column.
@@ -82,12 +75,6 @@
 			Constructor. Initializes the matrix using a given mat2 source matrix (2x2). The matrix elements are filled using corresponding elements of the source matrix.
 			</summary> 
 			<param name="m"> Source matrix (2x2). </param> 
-		</member>
-		<member name="M:Unigine.Math.mat4.#ctor(float)">
-			<summary>
-			Constructor. Initializes the matrix using a given pointer to the array of float elements.
-			</summary> 
-			<param name="m"> Pointer to the array of float elements. </param> 
 		</member>
 		<member name="M:Unigine.Math.mat4.#ctor(float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float)">
 			<summary>
@@ -139,12 +126,45 @@
 			<param name="v"> Value. </param>
 			<param name=""> Auxiliary tag. </param> 
 		</member>
-		<member name="M:Unigine.Math.mat4.set(float,int)">
+		<member name="M:Unigine.Math.mat4.#ctor(mat4x4_values)">
 			<summary>
-			Sets new matrix values using a pointer to the source matrix.
+			Constructor. Initializes the matrix using the given source matrix values.
 			</summary> 
-			<param name="m"> Pointer to the source matrix. </param>
-			<param name="transpose"> If transpose is 0 (by default), the matrix is specified in the column major style. </param> 
+			<param name="m"> The source value storing matrix float values. </param> 
+		</member>
+		<member name="M:Unigine.Math.mat4.#ctor(mat4x4_values,int)">
+			<summary>
+			Constructor. Initializes the matrix using the given source matrix values.
+			</summary> 
+			<param name="m"> The source value storing matrix float values. </param>
+			<param name="transposed"> If set to 0 (by default), the matrix is specified in the column-major style; if set to 1, the matrix is transposed. </param> 
+		</member>
+		<member name="M:Unigine.Math.mat4.#ctor(dmat4x4_values)">
+			<summary>
+			Constructor. Initializes the matrix with float values using the given source matrix double values.
+			</summary> 
+			<param name="m"> The source value storing matrix double values. </param> 
+		</member>
+		<member name="M:Unigine.Math.mat4.#ctor(dmat4x4_values,int)">
+			<summary>
+			Constructor. Initializes the matrix with float values using the given source matrix double values.
+			</summary> 
+			<param name="m"> The source value storing matrix double values. </param>
+			<param name="transpose"> If set to 0 (by default), the matrix is specified in the column-major style; if set to 1, the matrix is transposed. </param> 
+		</member>
+		<member name="M:Unigine.Math.mat4.set(mat4x4_values,int)">
+			<summary>
+			Sets the matrix using the argument float values.
+			</summary> 
+			<param name="m"> The source value storing matrix float values. </param>
+			<param name="transposed"> If set to 0 (by default), the matrix is specified in the column-major style; if set to 1, the matrix is transposed. </param> 
+		</member>
+		<member name="M:Unigine.Math.mat4.set(dmat4x4_values,int)">
+			<summary>
+			Sets the matrix with float values using the argument with double values.
+			</summary> 
+			<param name="m"> The source value storing matrix double values. </param>
+			<param name="transpose"> If set to 0 (by default), the matrix is specified in the column-major style; if set to 1, the matrix is transposed. </param> 
 		</member>
 		<member name="M:Unigine.Math.mat4.set(mat2)">
 			<summary>
@@ -206,24 +226,24 @@
 			<param name="column"> Column. </param> 
 			<returns>Matrix element value.</returns>
 		</member>
-		<member name="M:Unigine.Math.mat4.get(float,int) const">
+		<member name="M:Unigine.Math.mat4.get(mat4x4_values,int) const">
 			<summary>
-			Fills the destination matrix, specified by the given pointer, with matrix values.
+			Returns the matrix values by filling the specified argument.
 			</summary> 
-			<param name="m"> Destination matrix pointer. </param>
-			<param name="transpose"> If transpose is 0 (by default), the matrix is specified in the column major style. </param> 
+			<param name="m"> The destination value to store matrix float values. </param>
+			<param name="transpose"> If set to 0 (by default), the matrix is specified in the column-major style; if set to 1, the matrix is transposed. </param> 
 		</member>
 		<member name="M:Unigine.Math.mat4.get">
 			<summary>
-			Returns the pointer to the matrix.
+			Returns the value storing matrix float values.
 			</summary>  
-			<returns>Pointer to the matrix.</returns>
+			<returns>The value storing matrix float values.</returns>
 		</member>
 		<member name="M:Unigine.Math.mat4.get const">
 			<summary>
-			Returns the constant pointer to the matrix.
+			Returns the constant value storing matrix float values.
 			</summary>  
-			<returns>Constant pointer to the matrix.</returns>
+			<returns>The constant value storing matrix float values.</returns>
 		</member>
 		<member name="M:Unigine.Math.mat4.setColumn(int,Unigine.vec4)">
 			<summary>

@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -139,6 +138,14 @@ public:
 		FILTER_LINEAR,
 		FILTER_MIN,
 	};
+
+	enum GGX_MIPMAPS_QUALITY
+	{
+		GGX_MIPMAPS_QUALITY_LOW = 0,
+		GGX_MIPMAPS_QUALITY_MEDIUM,
+		GGX_MIPMAPS_QUALITY_HIGH,
+		GGX_MIPMAPS_QUALITY_ULTRA,
+	};
 	bool create2D(int width, int height, int format, int num_mipmaps = 1, bool clear = true, bool allocate = true);
 	bool create3D(int width, int height, int depth, int format, int num_mipmaps = 1, bool clear = true, bool allocate = true);
 	bool createCube(int width, int height, int format, int num_mipmaps = 1, bool clear = true, bool allocate = true);
@@ -243,6 +250,7 @@ public:
 	void changeRange(const Math::dvec4 &range_r, const Math::dvec4 &range_g, const Math::dvec4 &range_b, const Math::dvec4 &range_a);
 	void normalizeRange(bool per_cahnnel);
 	bool createMipmaps(Image::FILTER filter = Image::FILTER_LINEAR, float gamma = 1.0f);
+	bool createMipmapsCubeGGX(Image::GGX_MIPMAPS_QUALITY quality);
 	bool removeMipmaps();
 	bool combineMipmaps();
 	bool decombineMipmaps();
@@ -381,8 +389,8 @@ public:
 	ImageConverter::MIPMAPS_MODE getMipmapsMode() const;
 	void setMipmapsGamma(float gamma);
 	float getMipmapsGamma() const;
-	void setGGXMipmapsQuality(float quality);
-	float getGGXMipmapsQuality() const;
+	void setGGXMipmapsQuality(Image::GGX_MIPMAPS_QUALITY quality);
+	Image::GGX_MIPMAPS_QUALITY getGGXMipmapsQuality() const;
 	void setRangeMode(ImageConverter::RANGE_MODE mode);
 	ImageConverter::RANGE_MODE getRangeMode() const;
 	Math::dvec4 getRange(int channel) const;
@@ -405,13 +413,8 @@ public:
 	void load(const Ptr<Json> &json);
 	void save(const Ptr<Json> &json) const;
 	void updateParameters(const Ptr<Image> &image);
-	bool run(Ptr<Image> &image);
-	void *addBeginCallback(CallbackBase2<Ptr<ImageConverter>, Ptr<Image>> *func);
-	bool removeBeginCallback(void *id);
-	void clearBeginCallbacks();
-	void *addEndCallback(CallbackBase2<Ptr<ImageConverter>, Ptr<Image>> *func);
-	bool removeEndCallback(void *id);
-	void clearEndCallbacks();
+	bool runCpu(const Ptr<Image> &image);
+	bool run(CallbackBase1<Ptr<Image>> *on_converted, const Ptr<Image> &image);
 };
 typedef Ptr<ImageConverter> ImageConverterPtr;
 

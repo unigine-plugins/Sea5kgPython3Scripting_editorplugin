@@ -46,6 +46,12 @@
 			</summary> 
 			<param name="image"> Image smart pointer to an image to be used as a custom loading screen. </param> 
 		</member>
+		<member name="M:Unigine.LoadingScreen.getImage(Unigine.Ptr{Unigine.Image}) const">
+			<summary>
+			Returns the current image for a custom loading screen.
+			</summary> 
+			<param name="image"> Image used as a custom loading screen. </param> 
+		</member>
 		<member name="M:Unigine.LoadingScreen.setTransform(Unigine.Math.vec4)">
 			<summary>
 			Sets transformation of the loading screen texture.

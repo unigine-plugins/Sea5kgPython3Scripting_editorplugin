@@ -166,26 +166,26 @@
 			<summary>
 			Sets the thread priority.
 			</summary> 
-			<param name="priority"> Thread priority to set in range [-3;3]                             . The default thread priority is 0.  </param> 
-			<returns>Returns 1                             if the operation was a success; otherwise, 0                             is returned. </returns>
+			<param name="priority"> Thread priority to set in range [-3;3]. The default thread priority is 0. </param> 
+			<returns>Returns 1 if the operation was a success; otherwise, 0 is returned.</returns>
 		</member>
 		<member name="M:Unigine.Thread.getPriority const">
 			<summary>
 			Gets the thread priority.
 			</summary>  
-			<returns>Returns the thread priority in range [-3;3]                             . </returns>
+			<returns>Returns the thread priority in range [-3;3].</returns>
 		</member>
 		<member name="M:Unigine.Thread.isRunning const">
 			<summary>
 			Checks if the thread is running.
 			</summary>  
-			<returns>Returns 1                             if the thread is running; otherwise, 0                             is returned. </returns>
+			<returns>Returns 1 if the thread is running; otherwise, 0 is returned.</returns>
 		</member>
 		<member name="M:Unigine.Thread.isWaiting const">
 			<summary>
 			Checks if the thread is waiting.
 			</summary>  
-			<returns>Returns 1                             if the thread is waiting; otherwise, 0                             is returned. </returns>
+			<returns>Returns 1 if the thread is waiting; otherwise, 0 is returned.</returns>
 		</member>
 		<member name="M:Unigine.Thread.process">
 			<summary>
@@ -197,25 +197,25 @@
 			Runs the thread.
 			</summary> 
 			<param name="size"> Thread stack size in bytes. </param> 
-			<returns>Returns 1 if the thread was successfully run; otherwise, 0. </returns>
+			<returns>Returns 1 if the thread was successfully run; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Thread.signal">
 			<summary>
 			Signals the thread.
 			</summary>  
-			<returns>Returns 1                             if the operation was a success; otherwise, 0                             is returned. </returns>
+			<returns>Returns 1 if the operation was a success; otherwise, 0 is returned.</returns>
 		</member>
 		<member name="M:Unigine.Thread.stop">
 			<summary>
 			Stops the thread.
 			</summary>  
-			<returns>Returns 1                             if the operation was a success; otherwise, 0                             is returned. </returns>
+			<returns>Returns 1 if the operation was a success; otherwise, 0 is returned.</returns>
 		</member>
 		<member name="M:Unigine.Thread.terminate">
 			<summary>
 			Terminates the thread.
 			</summary>  
-			<returns>Returns 1                             if the operation was a success; otherwise, 0                             is returned. </returns>
+			<returns>Returns 1 if the operation was a success; otherwise, 0 is returned.</returns>
 		</member>
 		<member name="M:Unigine.Thread.sleep(unsignedint)">
 			<summary>

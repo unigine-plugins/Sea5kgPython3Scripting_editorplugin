@@ -169,7 +169,7 @@
 			<summary>
 			Sets a new Console command(s) to be used at the Engine startup (corresponds to the console_command element of the .boot configuration file).
 			</summary> 
-			<param name="command"> Console command(s) to be used at the engine startup. Several commands can be separated using the &amp;&amp; sequence. </param> 
+			<param name="command"> Console command(s) to be used at the engine startup. Several commands can be separated using the &amp;amp;&amp;amp; sequence. </param> 
 		</member>
 		<member name="M:Unigine.BootConfig.getConsoleCommand const">
 			<summary>

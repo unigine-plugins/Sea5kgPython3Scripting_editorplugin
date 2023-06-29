@@ -32,7 +32,7 @@
 		</member>
 		<member name="M:Unigine.Xml.getArg(char) const">
 			<summary>
-			Gets an XML argument.
+			Returns an XML argument.
 			</summary> 
 			<param name="name"> The XML argument name. </param> 
 			<returns>Value of the argument, if it is found; otherwise, 0.</returns>
@@ -131,7 +131,7 @@
 		</member>
 		<member name="M:Unigine.Xml.getChildData(char) const">
 			<summary>
-			Gets the data from the XML child node.
+			Returns the data from the XML child node.
 			</summary> 
 			<param name="name"> Name of the child node. </param>
 			<param name="value"> Type of the child (int, float, vec3, vec4, dvec3, dvec4, ivec3, ivec4, mat4, dmat4, quat, string). </param> 
@@ -146,7 +146,7 @@
 		</member>
 		<member name="M:Unigine.Xml.getData const">
 			<summary>
-			Gets a data from the XML file.
+			Returns a data from the XML file.
 			</summary>  
 			<returns>Data.</returns>
 		</member>
@@ -1166,6 +1166,20 @@
 			</summary> 
 			<param name="name"> Child node name. </param>
 			<param name="value"> Target ivec4 variable. </param> 
+		</member>
+		<member name="M:Unigine.Xml.readChildData(char,Unigine.Math.mat4) const">
+			<summary>
+			Reads a mat4 matrix interpretation of the data stored in the node with the specified name and puts it to the specified target variable.
+			</summary> 
+			<param name="name"> Child node name. </param>
+			<param name="value"> Target mat4 variable. </param> 
+		</member>
+		<member name="M:Unigine.Xml.readChildData(char,Unigine.Math.dmat4) const">
+			<summary>
+			Reads a dmat4 matrix interpretation of the data stored in the node with the specified name and puts it to the specified target variable.
+			</summary> 
+			<param name="name"> Child node name. </param>
+			<param name="value"> Target dmat4 variable. </param> 
 		</member>
 		<member name="M:Unigine.Xml.readChildData(char,Palette) const">
 			<summary>

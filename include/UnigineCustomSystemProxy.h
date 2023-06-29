@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 
 #pragma once
 
@@ -106,12 +105,12 @@ public:
 	bool resizeExternalWindowBuffers(WIN_HANDLE win_handle, const Math::ivec2 &size);
 	bool shutdownExternalWindowBuffers(WIN_HANDLE win_handle);
 
-	virtual bool needRenderExternalWindow(WIN_HANDLE win_handle) { return true; }
-	virtual void onExternalWindowRender(WIN_HANDLE win_handle) {}
+	virtual bool needRenderExternalWindow(WIN_HANDLE win_handle) { UNIGINE_UNUSED(win_handle); return true; }
+	virtual void onExternalWindowRender(WIN_HANDLE win_handle) { UNIGINE_UNUSED(win_handle); }
 
 protected:
 
-	bool isDragAreaIntersection(uint64_t win_handle, int global_pos_x, int global_pos_y);
+	int getHitTestAreaIntersection(uint64_t win_handle, int global_pos_x, int global_pos_y);
 
 	// invokers
 	void invokeWindowEvent(WindowEventPtr e);
@@ -158,19 +157,13 @@ protected:
 
 	virtual int getWindowDisplayIndex(WIN_HANDLE win_handle) const = 0;
 
-	virtual EngineWindow::HITTEST getWindowHitTestResult(WIN_HANDLE win_handle) = 0;
-
 	virtual Math::ivec4 getWindowSystemBorderSize(WIN_HANDLE win_handle) = 0;
-	virtual void setWindowResizeBorderSize(WIN_HANDLE win_handle, int size) = 0;
 
 	virtual void setWindowModal(WIN_HANDLE win_handle, WIN_HANDLE parent_handle) = 0;
 
 	virtual void setWindowAlwaysOnTop(WIN_HANDLE win_handle, bool state) = 0;
 
 	virtual WIN_HANDLE getWindowIntersection(const Math::ivec2 &global_pos, const Vector<WIN_HANDLE> &excludes) = 0;
-
-	virtual WIN_HANDLE getDraggableWindow() const = 0;
-	virtual WIN_HANDLE getResizableWindow() const = 0;
 
 	// mouse
 	virtual void setGlobalMousePosition(const Math::ivec2 &pos) = 0;
@@ -239,6 +232,8 @@ protected:
 	virtual int getGamepadModelType(int32_t pad_id) const = 0;
 	virtual const char *getGamepadName(int32_t pad_id) const = 0;
 	virtual const char *getGamepadModelGUID(int32_t pad_id) const = 0;
+	virtual int getGamepadNumTouches(int32_t pad_id) const = 0;
+	virtual int getGamepadNumTouchFingers(int32_t pad_id, int touch) const = 0;
 	virtual void setGamepadVibration(int32_t pad_id, float low_frequency, float high_frequency, float duration_ms) = 0;
 
 	// other
@@ -249,6 +244,8 @@ protected:
 	virtual bool showDialogMessage(const char *title, const char *message, WIN_HANDLE parent_window_handle) = 0;
 	virtual bool showDialogWarning(const char *title, const char *warning, WIN_HANDLE parent_window_handle) = 0;
 	virtual bool showDialogError(const char *title, const char *error, WIN_HANDLE parent_window_handle) = 0;
+
+	virtual bool isDpiAwarenessSupported(int32_t mode) const = 0;
 
 private:
 	friend SystemProxyWrapper;

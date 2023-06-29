@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -26,11 +25,8 @@ namespace Unigine
 
 class UNIGINE_API ControlsApp
 {
-protected:
-	
-
 public:
-	static int isInitialized(); 
+	static int isInitialized();
 	static void setPath(const char *path);
 	static const char *getPath();
 	static void setAutosave(bool autosave);
@@ -82,8 +78,6 @@ public:
 	{
 		CONTROLS_APP,
 		CONTROLS_DUMMY,
-		CONTROLS_GAMEPAD,
-		CONTROLS_JOYSTICK,
 	};
 
 	enum
@@ -147,91 +141,5 @@ public:
 	static Ptr<ControlsDummy> create();
 };
 typedef Ptr<ControlsDummy> ControlsDummyPtr;
-
-
-class UNIGINE_API ControlsJoystick : public Controls
-{
-public:
-	static bool convertible(Controls *obj) { return obj && obj->getType() == Controls::CONTROLS_JOYSTICK; }
-
-	enum POV
-	{
-		POV_NOT_PRESSED = -1,
-		POV_UP = 0,
-		POV_UP_RIGHT = 4500,
-		POV_RIGHT = 9000,
-		POV_DOWN_RIGHT = 13500,
-		POV_DOWN = 18000,
-		POV_DOWN_LEFT = 22500,
-		POV_LEFT = 27000,
-		POV_UP_LEFT = 31500,
-	};
-	static Ptr<ControlsJoystick> create(int num);
-	int getNumber() const;
-	int getPlayerIndex() const;
-	bool isAvailable() const;
-	const char *getName() const;
-	Input::DEVICE_TYPE getDeviceType() const;
-	void setFilter(float filter);
-	float getFilter() const;
-	int updateEvents();
-	int getNumAxes() const;
-	float getAxis(int axis) const;
-	float getAxisInitialValue(int axis) const;
-	const char *getAxisName(int axis) const;
-	int getNumPovs() const;
-	ControlsJoystick::POV getPov(int pov) const;
-	const char *getPovName(int pov) const;
-	int getNumButtons() const;
-	int getButton(int button) const;
-	int clearButton(int button);
-	const char *getButtonName(int button) const;
-	const char *getGuid() const;
-	int getVendor() const;
-	int getProduct() const;
-	int getProductVersion() const;
-	void setStateButton(int state, int button);
-	int getStateButton(int state) const;
-	String getStateName(int state) const;
-	int saveState(const Ptr<Stream> &stream) const;
-	int restoreState(const Ptr<Stream> &stream);
-	void getStateEvent(int state);
-	int isStateEvent() const;
-};
-typedef Ptr<ControlsJoystick> ControlsJoystickPtr;
-
-
-class UNIGINE_API ControlsGamepad : public Controls
-{
-public:
-	static bool convertible(Controls *obj) { return obj && obj->getType() == Controls::CONTROLS_GAMEPAD; }
-	static Ptr<ControlsGamepad> create(int num);
-	int getNumber() const;
-	int getPlayerIndex() const;
-	bool isAvailable() const;
-	const char *getName() const;
-	Input::DEVICE_TYPE getDeviceType() const;
-	InputGamePad::MODEL_TYPE getModelType() const;
-	void setFilter(float filter);
-	float getFilter() const;
-	int updateEvents();
-	float getLeftX() const;
-	float getLeftY() const;
-	float getRightX() const;
-	float getRightY() const;
-	float getLeftTrigger() const;
-	float getRightTrigger() const;
-	void setVibration(float low_frequency, float high_frequency, float duration_ms = 100.0f);
-	int getButton(InputGamePad::BUTTON button) const;
-	int clearButton(InputGamePad::BUTTON button);
-	void setStateButton(int state, int button);
-	int getStateButton(int state) const;
-	String getStateName(int state) const;
-	int saveState(const Ptr<Stream> &stream) const;
-	int restoreState(const Ptr<Stream> &stream);
-	void getStateEvent(int state);
-	bool isStateEvent() const;
-};
-typedef Ptr<ControlsGamepad> ControlsGamepadPtr;
 
 } // namespace Unigine

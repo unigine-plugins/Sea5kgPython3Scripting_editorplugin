@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -87,11 +86,8 @@ typedef Ptr<WorldIntersectionTexCoord> WorldIntersectionTexCoordPtr;
 
 class UNIGINE_API World
 {
-protected:
-	
-
 public:
-	static int isInitialized(); 
+	static int isInitialized();
 
 	enum CALLBACK_INDEX
 	{
@@ -107,6 +103,13 @@ public:
 		CALLBACK_POST_WORLD_INIT,
 		CALLBACK_PRE_WORLD_SHUTDOWN,
 		CALLBACK_POST_WORLD_SHUTDOWN,
+	};
+
+	enum MOVING_IMMOVABLE_NODES_MODE
+	{
+		MOVING_IMMOVABLE_NODES_MODE_BAN = 0,
+		MOVING_IMMOVABLE_NODES_MODE_WARNING,
+		MOVING_IMMOVABLE_NODES_MODE_ALLOW,
 	};
 	static void setPath(const char *path);
 	static const char *getPath();
@@ -131,6 +134,8 @@ public:
 	static bool isAutoReloadNodeReferences();
 	static void setUnpackNodeReferences(bool references);
 	static bool isUnpackNodeReferences();
+	static void setMovingImmovableNodeMode(World::MOVING_IMMOVABLE_NODES_MODE mode);
+	static World::MOVING_IMMOVABLE_NODES_MODE getMovingImmovableNodeMode();
 	static void setData(const char *name, const char *data);
 	static const char *getData(const char *name);
 	static bool loadWorld(const char *path);
@@ -147,6 +152,8 @@ public:
 	static void updateSpatial();
 	static bool isNode(int id);
 	static void getNodes(Vector<Ptr<Node>> &nodes);
+	static void setNodeIdSeed(unsigned int seed);
+	static void setNodeIdRange(int from, int to);
 	static bool clearNode(const char *name);
 	static Ptr<Node> loadNode(const char *name, int cache = 1);
 	static int loadNodes(const char *name, Vector<Ptr<Node>> &nodes);
@@ -163,6 +170,7 @@ public:
 	static bool isNode(const char *name);
 	static bool getCollision(const Math::WorldBoundBox &bb, Vector<Ptr<Object>> &objects);
 	static bool getCollision(const Math::WorldBoundSphere &bs, Vector<Ptr<Object>> &objects);
+	static bool getCollision(const Math::WorldBoundFrustum &bf, Vector<Ptr<Object>> &objects);
 	static bool getCollision(const Math::Vec3 &p0, const Math::Vec3 &p1, Vector<Ptr<Object>> &objects);
 	static bool getIntersection(const Math::WorldBoundBox &bb, Vector<Ptr<Node>> &nodes);
 	static bool getIntersection(const Math::WorldBoundBox &bb, Vector<Ptr<Object>> &objects);
@@ -171,10 +179,11 @@ public:
 	static bool getIntersection(const Math::WorldBoundSphere &bs, Vector<Ptr<Object>> &objects);
 	static bool getIntersection(const Math::WorldBoundSphere &bs, Node::TYPE type, Vector<Ptr<Node>> &nodes);
 	static bool getIntersection(const Math::WorldBoundFrustum &bf, Vector<Ptr<Object>> &objects);
+	static bool getIntersection(const Math::WorldBoundFrustum &bf, Vector<Ptr<Node>> &nodes);
 	static bool getIntersection(const Math::WorldBoundFrustum &bf, Node::TYPE type, Vector<Ptr<Node>> &nodes);
 	static bool getVisibleIntersection(const Math::Vec3 &camera, const Math::WorldBoundFrustum &bf, Vector<Ptr<Object>> &objects, float max_distance);
 	static bool getVisibleIntersection(const Math::Vec3 &camera, const Math::WorldBoundFrustum &bf, Node::TYPE type, Vector<Ptr<Node>> &nodes, float max_distance);
-	static bool getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, Vector<Ptr<Object>> &objects);
+	static bool getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, Vector<Ptr<Object>> &objects, bool check_surface_flags = true);
 	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask);
 	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<WorldIntersection> &intersection);
 	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<WorldIntersectionNormal> &intersection);
@@ -220,7 +229,6 @@ public:
 	static void addClassID(int class_id, ConstructorFunc func);
 	template <class Type> static void addClassID(int class_id) { addClassID(class_id, constructor<Type>); }
 	virtual void updateEnabled();
-	virtual void updatePosition();
 	virtual void updateTransform();
 	virtual void update(float ifps);
 	virtual void preRender(float ifps);

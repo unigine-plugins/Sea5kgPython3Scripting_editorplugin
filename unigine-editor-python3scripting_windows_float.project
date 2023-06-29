@@ -7915,6 +7915,7 @@
         "launcher_console": true,
         "launcher_gui": false,
         "name": "unigine-editor-python3scripting_windows_float",
+        "plugin_name": "Python3Scripting",
         "plugins": [
             "FbxImporter",
             "GLTFImporter",

@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -67,13 +66,31 @@ public:
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<DecalMesh> create();
-	void setMeshName(const char *path, bool force_load);
-	void setMeshName(const char *name);
-	const char *getMeshName() const;
-	int setMesh(const Ptr<Mesh> &mesh, bool unique = true);
-	int getMesh(const Ptr<Mesh> &mesh) const;
-	void loadMesh(const char *path, bool unique = false);
-	int saveMesh(const char *path) const;
+	static Ptr<DecalMesh> create(const char *path);
+	Ptr<MeshStatic> getMeshInfo();
+	Ptr<MeshStatic> getMeshForce();
+	Ptr<MeshStatic> getMeshAsync();
+	Ptr<MeshStatic> getMeshForceVRAM();
+	Ptr<MeshStatic> getMeshAsyncVRAM();
+	bool loadAsyncRAM();
+	bool loadAsyncVRAM();
+	bool loadForceRAM();
+	bool loadForceVRAM();
+	bool asyncCalculateNodes(int surface);
+	bool asyncCalculateEdges(int surface);
+	void setMeshProceduralMode(bool mode);
+	bool isMeshProceduralMode() const;
+	bool applyMeshProcedural(const Ptr<Mesh> &mesh);
+	bool isMeshNull() const;
+	bool isMeshLoadedRAM() const;
+	bool isMeshLoadedVRAM() const;
+	void setMeshPath(const char *path);
+	const char *getMeshPath() const;
+	int getStatDrawCalls() const;
+	int getStatDrawCountViewport() const;
+	int getStatDrawCountReflection() const;
+	int getStatDrawCountShadow() const;
+	long long getStatFrame() const;
 };
 typedef Ptr<DecalMesh> DecalMeshPtr;
 

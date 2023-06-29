@@ -163,62 +163,167 @@
 		</member>
 		<member name="M:Unigine.DecalMesh.#ctor">
 			<summary>
-			Constructor. Creates a new mesh decal.
+			Constructor. Creates a new Mesh Decal.
 			</summary>  
 		</member>
-		<member name="M:Unigine.DecalMesh.setMesh(Unigine.Ptr{Unigine.Mesh},bool)">
+		<member name="M:Unigine.DecalMesh.#ctor(char)">
 			<summary>
-			Copies a given source mesh into the current decal mesh.
+			DecalMesh constructor. Creates a Mesh Decal with a base mesh loaded from the specified file.
 			</summary> 
-			<param name="mesh"> Mesh to be set.The mesh should contain a single surface. In case if the mesh contains several surfaces, only the one with the 0 index will be used. Thus, the area of the decal will differ from the initial mesh. </param>
-			<param name="unique"> Unique flag used when you create several objects out of a single Mesh instance:0 - An instance of source mesh geometry is created. If the source geometry is changed at runtime, its instances will be changed as well.1 - A copy of source mesh geometry is created and changes made to the source geometry do not affect the mesh. </param> 
-			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
+			<param name="path"> Path to the base mesh file. </param> 
 		</member>
-		<member name="M:Unigine.DecalMesh.getMesh(Unigine.Ptr{Unigine.Mesh}) const">
+		<member name="M:Unigine.DecalMesh.setMeshPath(char)">
 			<summary>
-			Copies the current decal mesh into the received mesh. For example, you can obtain geometry of the decal mesh and then change it:
+			Sets a new path to the source mesh for the current decal mesh. If the mesh is in the procedural mode, it will be reset.					The mesh should contain a single surface. In case if the mesh contains several surfaces, only the one with the 0 index will be used. Thus, the area of the decal will differ from the initial mesh.
 			</summary> 
-			<param name="mesh"> Current mesh. </param> 
-			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
+			<param name="path"> New path to the source .mesh-file to be set. </param> 
 		</member>
-		<member name="M:Unigine.DecalMesh.setMeshName(char,bool)">
+		<member name="M:Unigine.DecalMesh.getMeshPath const">
 			<summary>
-			Sets a new name for the mesh and forces loading of the mesh with the new name for the current decal mesh.					The mesh should contain a single surface. In case if the mesh contains several surfaces, only the one with the 0 index will be used. Thus, the area of the decal will differ from the initial mesh.
-			</summary> 
-			<param name="path"> A new name to be set for the mesh. </param>
-			<param name="force_load"> Force flag.If 1 is specified, the mesh with the new name will be loaded immediately with the unique flag set to 0.If 0 is specified, only the mesh name will be updated. </param> 
-		</member>
-		<member name="M:Unigine.DecalMesh.setMeshName(char)">
-			<summary>
-			Sets a name for the mesh.
-			</summary> 
-			<param name="name"> New name to be set for the mesh. </param> 
-		</member>
-		<member name="M:Unigine.DecalMesh.getMeshName const">
-			<summary>
-			Returns a name of the mesh used as a base for the decal.
+			Returns the path to the source .mesh-file currently used as a base for the decal.
 			</summary>  
-			<returns>Name of the mesh.</returns>
-		</member>
-		<member name="M:Unigine.DecalMesh.loadMesh(char,bool)">
-			<summary>
-			Loads a mesh for the current mesh from the file. This function doesn't change the mesh name.
-			</summary> 
-			<param name="path"> The name of the mesh file.The mesh should contain a single surface. In case if the mesh contains several surfaces, only the one with the 0 index will be used. Thus, the area of the decal will differ from the initial mesh. </param>
-			<param name="unique"> Unique flag used when you create several objects out of a single .mesh file:0 - An instance of source mesh geometry is created. If the source geometry is changed at runtime, its instances will be changed as well.1 - A copy of source mesh geometry is created and changes made to the source geometry do not affect the mesh. </param> 
-		</member>
-		<member name="M:Unigine.DecalMesh.saveMesh(char) const">
-			<summary>
-			Saves the decal mesh into a file.
-			</summary> 
-			<param name="path"> Mesh file name. </param> 
-			<returns>1 if the mesh is saved successfully; otherwise, 0.</returns>
+			<returns>Path to the source .mesh-file.</returns>
 		</member>
 		<member name="M:Unigine.DecalMesh.type">
 			<summary>
 			Returns a DecalMesh type identifier.
 			</summary>  
 			<returns>Type identifier.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.getMeshInfo">
+			<summary>
+			Returns the base mesh that stores data on mesh bounds, surfaces, their number, names, and bounds, but doesn't contain any geometry.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.getMeshForce">
+			<summary>
+			Returns the base mesh used for the object. The returned static mesh won't be loaded to VRAM.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.getMeshAsync">
+			<summary>
+			Returns the base mesh used for the object asynchronously. This function can be called if the mesh hasn't been loaded yet.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.getMeshForceVRAM">
+			<summary>
+			Returns the base mesh used for the object and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.getMeshAsyncVRAM">
+			<summary>
+			Returns the base mesh used for the object asynchronously and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.loadAsyncVRAM">
+			<summary>
+			Asynchronously loads the mesh to video memory (VRAM) if the async streaming mode for meshes is enabled. Otherwise, the forced loading is performed. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to video memory before they are used).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to VRAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.loadAsyncRAM">
+			<summary>
+			Asynchronously loads the mesh to memory (RAM) if the async streaming mode for meshes is enabled. Otherwise, the forced loading is performed.  This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to video memory before they are used).
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to RAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.loadForceVRAM">
+			<summary>
+			Performs force-loading of the mesh to video memory (VRAM) immediately. The forced loading to VRAM is performed in the main thread.				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to VRAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.loadForceRAM">
+			<summary>
+			Performs force-loading of the mesh to memory (RAM) immediately.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to RAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.asyncCalculateNodes(int)">
+			<summary>
+			Asynchronously calculates the mesh surface internal spatial tree used for quick calculation of collisions and intersections. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>true if the internal tree is calculated successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.asyncCalculateEdges(int)">
+			<summary>
+			Asynchronously calculates the edges of the mesh surface geometry. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>true if the edges are calculated successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.setMeshProceduralMode(bool)">
+			<summary>
+			Sets a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			</summary> 
+			<param name="meshproceduralmode"> true to switch the base mesh used for the object to procedural mode; otherwise, false - normal mode (the base mesh is streamed from a source file). </param> 
+		</member>
+		<member name="M:Unigine.DecalMesh.isMeshProceduralMode const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>true if the base mesh used for the object is procedural; otherwise, false - normal mode (the base mesh is streamed from a source file).</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.isMeshNull const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
+			</summary>  
+			<returns>true if the base mesh used for the object is null; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.isMeshLoadedRAM const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is loaded to memory (RAM).
+			</summary>  
+			<returns>true if the base mesh used for the object is loaded to RAM; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.isMeshLoadedVRAM const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is loaded to video memory (VRAM).
+			</summary>  
+			<returns>true if the base mesh used for the object is loaded to VRAM; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.applyMeshProcedural(Unigine.Ptr{Unigine.Mesh})">
+			<summary>
+			Sets the specified mesh as the source mesh for the object.
+			
+			</summary> 
+			<param name="mesh"> Source mesh to be applied. </param> 
+		</member>
+		<member name="M:Unigine.DecalMesh.getStatDrawCalls const">
+			<summary>
+			Returns the number of draw calls (DIP) for the decal during the last frame.
+			</summary>  
+			<returns>Number of draw calls (DIP) for the decal during the last frame.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.getStatDrawCountViewport const">
+			<summary>
+			Returns the number of times the decal was drawn in the viewport last frame.
+			</summary>  
+			<returns>Number of times the decal was drawn in the viewport last frame.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.getStatDrawCountReflection const">
+			<summary>
+			Returns the number of times the decal was drawn during reflections rendering in the last frame.
+			</summary>  
+			<returns>Number of times the decal was drawn during rendering in the last frame.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.getStatDrawCountShadow const">
+			<summary>
+			Returns the number of times the decal was drawn during shadows rendering in the last frame.
+			</summary>  
+			<returns>Number of times the decal was drawn during shadows rendering in the last frame.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.getStatFrame const">
+			<summary>
+			Returns the number of Engine frame, in which the decal was drawn last time.
+			</summary>  
+			<returns>Number of frame, in which the decal was drawn last time.</returns>
 		</member>
 		<member name="M:Unigine.DecalOrtho.#ctor">
 			<summary>

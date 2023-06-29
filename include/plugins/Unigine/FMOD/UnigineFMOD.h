@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -294,6 +293,87 @@ public:
 		_3DATTRIBUTES_MULTI = -5,
 		ATTENUATION_RANGE = -6,
 	};
+
+	enum DSP_PARAMETER_TYPE
+	{
+		DSP_PARAMETER_TYPE_FLOAT,
+		DSP_PARAMETER_TYPE_INT,
+		DSP_PARAMETER_TYPE_BOOL,
+		DSP_PARAMETER_TYPE_DATA,
+		DSP_PARAMETER_TYPE_MAX,
+	};
+
+	enum DSP_PARAMETER_FLOAT_MAPPING_TYPE
+	{
+		DSP_PARAMETER_FLOAT_MAPPING_TYPE_LINEAR,
+		DSP_PARAMETER_FLOAT_MAPPING_TYPE_AUTO,
+		DSP_PARAMETER_FLOAT_MAPPING_TYPE_PIECEWISE_LINEAR,
+	};
+};
+
+
+class FMODStructs
+{
+protected:
+	virtual ~FMODStructs(){}
+public:
+	typedef bool FMOD_BOOL;
+
+	struct DSP_PARAMETER_FLOAT_MAPPING_PIECEWISE_LINEAR
+	{
+	int     numpoints;
+		float   *pointparamvalues;
+		float   *pointpositions;
+	};
+
+	struct DSP_PARAMETER_FLOAT_MAPPING
+	{
+		FMODEnums::DSP_PARAMETER_FLOAT_MAPPING_TYPE    type;
+		DSP_PARAMETER_FLOAT_MAPPING_PIECEWISE_LINEAR   piecewiselinearmapping;
+	};
+
+	struct DSP_PARAMETER_DESC_FLOAT
+	{
+		float min;
+		float max;
+		float defaultval;
+		DSP_PARAMETER_FLOAT_MAPPING   mapping;
+	};
+
+	struct DSP_PARAMETER_DESC_INT
+	{
+		int                  min;
+		int                  max;
+		int                  defaultval;
+		FMOD_BOOL            goestoinf;
+		const char* const*   valuenames;
+	};
+
+	struct DSP_PARAMETER_DESC_BOOL
+	{
+		FMOD_BOOL            defaultval;
+		const char* const*   valuenames;
+	};
+
+	struct DSP_PARAMETER_DESC_DATA
+	{
+		int datatype;
+	};
+
+	struct DSP_PARAMETER_DESC
+	{
+		FMODEnums::DSP_PARAMETER_TYPE type;
+		char                            name[16];
+		char                            label[16];
+		const char                     *description;
+		union
+		{
+			DSP_PARAMETER_DESC_FLOAT   floatdesc;
+			DSP_PARAMETER_DESC_INT     intdesc;
+			DSP_PARAMETER_DESC_BOOL    booldesc;
+			DSP_PARAMETER_DESC_DATA    datadesc;
+		};
+	};
 };
 
 
@@ -302,7 +382,7 @@ class SoundGroup
 protected:
 	virtual ~SoundGroup(){}
 public:
-	virtual void* getFMOD() = 0;
+	virtual void *getFMOD() = 0;
 };
 
 
@@ -311,7 +391,7 @@ class Geometry
 protected:
 	virtual ~Geometry(){}
 public:
-	virtual void* getFMOD() = 0;
+	virtual void *getFMOD() = 0;
 };
 
 
@@ -320,16 +400,7 @@ class Reverb3D
 protected:
 	virtual ~Reverb3D(){}
 public:
-	virtual void* getFMOD() = 0;
-};
-
-
-class ChannelControl
-{
-protected:
-	virtual ~ChannelControl(){}
-public:
-	virtual void* getFMOD() = 0;
+	virtual void *getFMOD() = 0;
 };
 
 
@@ -338,11 +409,28 @@ class DSP
 protected:
 	virtual ~DSP(){}
 public:
+	virtual int getNumParameters() const = 0;
+	virtual FMODStructs::DSP_PARAMETER_DESC *getParameterInfo(int index) const = 0;
+	virtual void setParameterData(int index, void *data, int size) = 0;
 	virtual void setParameterFloat(int index, float value) = 0;
 	virtual void setParameterInt(int index, int value) = 0;
+	virtual void setParameterBool(int index, bool value) = 0;
+	virtual void getParameterData(int index, void **data, unsigned int *size, char *value_str, int value_strlen) const = 0;
+	virtual float getParameterFloat(int index, char *value_str, int value_strlen) const = 0;
+	virtual int getParameterInt(int index, char *value_str, int value_strlen) const = 0;
+	virtual int getParameterBool(int index, char *value_str, int value_strlen) const = 0;
+	virtual void setWetDryMix(float prewet, float postwet, float dry) = 0;
+	virtual void getWetDryMix(float *prewet, float *postwet, float *dry) const = 0;
+	virtual void setActive(bool active) = 0;
+	virtual bool isActive() const = 0;
+	virtual void setBypass(bool bypass) = 0;
+	virtual bool isBypass() const = 0;
+	virtual bool isIdle() const = 0;
+	virtual DSPType::TYPE getType() const = 0;
+	virtual void getInfo(char *name, unsigned int *version, int *channels, int *configwidth, int *configheight) const = 0;
 	virtual void release() = 0;
 	virtual void releaseFromChannel() = 0;
-	virtual void* getFMOD() = 0;
+	virtual void *getFMOD() = 0;
 };
 
 
@@ -353,8 +441,8 @@ protected:
 public:
 	virtual void unregisterDSP(void *fmod_dsp) = 0;
 	virtual bool containsDSP(void *fmod_dsp) const = 0;
-	virtual Unigine::Plugins::FMOD::DSP* getDSP(void *fmod_dsp) = 0;
-	virtual void addDSP(Unigine::Plugins::FMOD::DSP* fmod_dsp) = 0;
+	virtual Unigine::Plugins::FMOD::DSP *getDSP(void *fmod_dsp) = 0;
+	virtual void addDSP(Unigine::Plugins::FMOD::DSP *fmod_dsp) = 0;
 	virtual void setPaused(bool paused) = 0;
 	virtual bool isPaused() const = 0;
 	virtual void setVolume(float volume) = 0;
@@ -374,6 +462,7 @@ public:
 	virtual DSP * addDSP(int index, DSPType::TYPE dsp_type) = 0;
 	virtual void removeDSP(int index) = 0;
 	virtual DSP * getDSP(int index) = 0;
+	virtual int getNumDSPs() const = 0;
 	virtual void setFrequency(float frequency) = 0;
 	virtual float getFrequency() const = 0;
 	virtual void setPitch(float pitch) = 0;
@@ -383,10 +472,11 @@ public:
 	virtual void setLoopCount(int count) = 0;
 	virtual int getLoopCount() const = 0;
 	virtual float getAudibility() const = 0;
+	virtual int getIndex() const = 0;
 	virtual void setPan(float pan) = 0;
 	virtual bool isSoundOnChannel(void *sound) const = 0;
 	virtual bool isVirtual() const = 0;
-	virtual void* getFMOD() = 0;
+	virtual void *getFMOD() = 0;
 };
 
 
@@ -399,7 +489,16 @@ public:
 	virtual int getChannelCount() = 0;
 	virtual void setVolume(float volume) = 0;
 	virtual void addChannel(Channel *channel) = 0;
-	virtual void* getFMOD() = 0;
+	virtual void unregisterDSP(void *fmod_dsp) = 0;
+	virtual bool containsDSP(void *fmod_dsp) const = 0;
+	virtual Unigine::Plugins::FMOD::DSP *getDSP(void *fmod_dsp) = 0;
+	virtual void addDSP(Unigine::Plugins::FMOD::DSP *fmod_dsp) = 0;
+	virtual DSP * addDSP(int index, DSPType::TYPE dsp_type) = 0;
+	virtual void removeDSP(int index) = 0;
+	virtual DSP * getDSP(int index) = 0;
+	virtual int getNumDSPs() const = 0;
+	virtual void release() = 0;
+	virtual void *getFMOD() = 0;
 };
 
 
@@ -411,7 +510,7 @@ public:
 	virtual Channel * play() = 0;
 	virtual void release() = 0;
 	virtual unsigned int getLength(FMODEnums::TIME_UNIT time_unit) = 0;
-	virtual void* getFMOD() = 0;
+	virtual void *getFMOD() = 0;
 };
 
 
@@ -424,14 +523,15 @@ public:
 	virtual void release() = 0;
 	virtual void update() = 0;
 	virtual void initCore(int max_channels, FMODEnums::INIT_FLAGS flags) = 0;
+	virtual ChannelGroup * createChannelGroup(const char *name) = 0;
 	virtual Sound * createSound(const char *name_of_data, FMODEnums::FMOD_MODE mode) = 0;
 	virtual Sound * createStream(const char *url) = 0;
 	virtual Channel * playSound(Sound *sound, ChannelGroup *channel_group, bool paused) = 0;
 	virtual void setListener3DAttributes(int listener, const Math::Vec3 &position, const Math::Vec3 &up, const Math::Vec3 &forward, const Math::Vec3 &velocity) = 0;
 	virtual void getListener3DAttributes(int listener, Math::Vec3 &position, Math::Vec3 &up, Math::Vec3 &forward, Math::Vec3 &velocity) = 0;
 	virtual Channel * getChannel(int index) = 0;
-	virtual void* getFMOD() = 0;
-	virtual Unigine::Plugins::FMOD::Sound* getSound(void* fmod_sound) = 0;
+	virtual void *getFMOD() = 0;
+	virtual Unigine::Plugins::FMOD::Sound *getSound(void *fmod_sound) = 0;
 };
 
 
@@ -466,6 +566,7 @@ public:
 	virtual bool isValid() const = 0;
 	virtual void play() = 0;
 	virtual void stop() = 0;
+	virtual void stopWithFadeout() = 0;
 	virtual void release() = 0;
 	virtual void update() = 0;
 	virtual void setParameter(const char *name, float value) = 0;
@@ -474,7 +575,7 @@ public:
 	virtual void setParent(const Ptr<Node> &parent) = 0;
 	virtual void releaseFromDefinition() = 0;
 	virtual String getDescriptionPath() const = 0;
-	virtual void* getFMOD() = 0;
+	virtual void *getFMOD() = 0;
 };
 
 
@@ -500,7 +601,7 @@ public:
 	virtual void releaseFromStudio() = 0;
 	virtual void update() = 0;
 	virtual String getPath() const = 0;
-	virtual void* getFMOD() = 0;
+	virtual void *getFMOD() = 0;
 };
 
 
@@ -516,10 +617,13 @@ public:
 	virtual void setMuted(bool muted) = 0;
 	virtual bool isMuted() const = 0;
 	virtual bool isValid() const = 0;
+	virtual ChannelGroup * getChannelGroup() const = 0;
+	virtual void lockChannelGroup() = 0;
+	virtual void unlockChannelGroup() = 0;
 	virtual void stopAllEvents() = 0;
 	virtual void release() = 0;
 	virtual String getPath() const = 0;
-	virtual void* getFMOD() = 0;
+	virtual void *getFMOD() = 0;
 };
 
 
@@ -534,7 +638,7 @@ public:
 	virtual void releaseFromStudio() = 0;
 	virtual bool isValid() const = 0;
 	virtual String getPath() const = 0;
-	virtual void* getFMOD() = 0;
+	virtual void *getFMOD() = 0;
 };
 
 
@@ -559,7 +663,7 @@ public:
 	virtual void unloadSampleData() = 0;
 	virtual void release() = 0;
 	virtual String getPath() const = 0;
-	virtual void* getFMOD() = 0;
+	virtual void *getFMOD() = 0;
 };
 
 
@@ -575,8 +679,6 @@ public:
 	 int capacity;
 	 int stall_count;
 	 float stall_time;
-
-
 	};
 
 	struct BufferUsage
@@ -639,10 +741,10 @@ public:
 	virtual bool containsBus(void *fmod_bus) = 0;
 	virtual bool containsVCA(void *fmod_vca) = 0;
 	virtual bool containsEventDescription(void *fmod_event_description) = 0;
-	virtual Unigine::Plugins::FMOD::Bank* getBank(void *fmod_bank) = 0;
-	virtual Unigine::Plugins::FMOD::Bus* getBus(void *fmod_bus) = 0;
-	virtual Unigine::Plugins::FMOD::VCA* getVCA(void *fmod_vca) = 0;
-	virtual Unigine::Plugins::FMOD::EventDescription* getEventDescription(void *fmod_event_description) = 0;
+	virtual Unigine::Plugins::FMOD::Bank *getBank(void *fmod_bank) = 0;
+	virtual Unigine::Plugins::FMOD::Bus *getBus(void *fmod_bus) = 0;
+	virtual Unigine::Plugins::FMOD::VCA *getVCA(void *fmod_vca) = 0;
+	virtual Unigine::Plugins::FMOD::EventDescription *getEventDescription(void *fmod_event_description) = 0;
 	virtual void *getFMOD() = 0;
 	virtual void release() = 0;
 	virtual void releaseBuses() = 0;
@@ -658,17 +760,18 @@ class FMOD
 protected:
 	virtual ~FMOD(){}
 public:
-	UNIGINE_INLINE static FMOD *get() { return Unigine::Engine::get()->getPlugin<FMOD>("FMOD"); }
+	UNIGINE_INLINE static FMOD *get() { return Unigine::Engine::get()->getPlugin<FMOD>("UnigineFMOD"); }
 	virtual FMODCore * getCore() const = 0;
 	virtual FMODStudio * getStudio() const = 0;
 	virtual void update() = 0;
 	virtual bool hasErrors(int &error_type) = 0;
 public:
-	static void checkPlugin(FMOD* plugin)
+	static bool checkPlugin()
 	{
-	if (!plugin)
+	bool is_plugin_loaded = Engine::get()->findPlugin("UnigineFMOD") != -1;
+	if (!is_plugin_loaded)
 	{
-		String name = "FMOD";
+			StringStack<180> name = "UnigineFMOD";
 	#if defined(USE_DOUBLE) || defined(UNIGINE_DOUBLE)
 			name += "_double";
 	#endif
@@ -676,9 +779,16 @@ public:
 	#ifndef NDEBUG
 			name += "d";
 	#endif
+	#ifdef _WIN32
 			name += ".dll";
-			Log::fatal("Can not find FMOD plugin. Please check %s and fmod.dll, fmodL.dll, fmodstudio.dll, fmodstudioL.dll(You can download this files from official site) in bin directory", name.getRaw());
+			Log::error("Cannot find FMOD plugin. Please check %s and fmod.dll, fmodL.dll, fmodstudio.dll, fmodstudioL.dll (You can download these files from official site) in bin directory.", name.getRaw());
+	#else
+			name = "lib" + name;
+			name += ".so";
+			Log::error("Cannot find FMOD plugin. Please check %s and libfmod.so, libfmodL.so, libfmodstudio.so, libfmodstudioL.so (You can download these files from official site) in bin directory.", name.getRaw());
+	#endif
 	}
+	return is_plugin_loaded;
 	}
 };
 

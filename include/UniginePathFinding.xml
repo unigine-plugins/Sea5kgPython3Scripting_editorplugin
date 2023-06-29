@@ -136,19 +136,19 @@
 			<param name="mesh"> A mesh into which the current mesh is copied. </param> 
 			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.NavigationMesh.setMeshName(char,int)">
+		<member name="M:Unigine.NavigationMesh.setMeshPath(char,int)">
 			<summary>
-			Sets a new name for the mesh used as a base for the navigation mesh and forces loading of the mesh with the new name for the current navigation mesh.
+			Sets a new path for the mesh used as a base for the navigation mesh and forces loading of the mesh with the new path for the current navigation mesh.
 			</summary> 
-			<param name="path"> A mesh name to be set. </param>
-			<param name="force_load"> Force flag.If 1 is specified, the mesh with the new name will be loaded immediately.If 0 is specified, only the mesh name will be updated. </param> 
-			<returns>true if:The current mesh name coincides the new name.The mesh with the new name has been loaded successfully.The force flag is set to 0. In other cases,false.</returns>
+			<param name="path"> Path to the .mesh-file to be set. </param>
+			<param name="force_load"> Force flag.If 1 is specified, the mesh with the new path will be loaded immediately.If 0 is specified, only the mesh path will be updated. </param> 
+			<returns>true if:The current mesh path coincides the new path.The mesh with the new path has been loaded successfully.The force flag is set to 0. In other cases,false.</returns>
 		</member>
-		<member name="M:Unigine.NavigationMesh.getMeshName">
+		<member name="M:Unigine.NavigationMesh.getMeshPath">
 			<summary>
-			Returns the name of the mesh used as a base for the navigation mesh.
+			Returns the path to the .mesh-file containing a base mesh for the navigation mesh.
 			</summary>  
-			<returns>The mesh name.</returns>
+			<returns>Path to the .mesh-file.</returns>
 		</member>
 		<member name="M:Unigine.NavigationMesh.loadMesh(char)">
 			<summary>

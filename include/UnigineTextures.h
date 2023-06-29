@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -159,7 +158,6 @@ public:
 	bool setImage(const Ptr<Image> &image);
 	bool setImage2D(const Ptr<Image> &image, int offset_x, int offset_y, int texture_format = -1);
 	bool setImageLayer(const Ptr<Image> &image, int layer, int texture_format = -1);
-	bool getImage(const Ptr<Image> &image) const;
 	bool setBlob(const Ptr<Blob> &blob) const;
 	void clear();
 	void destroy();
@@ -168,6 +166,7 @@ public:
 	bool isOwnership() const;
 	int getType() const;
 	const char *getTypeName() const;
+	static const char *getTypeName(int type);
 	bool is2DType() const;
 	bool is3DType() const;
 	bool isCubeType() const;
@@ -337,6 +336,7 @@ public:
 	void copy(const Ptr<TextureRamp> &src_texture_ramp);
 	Ptr<TextureRamp> clone() const;
 	Ptr<Curve2d> getCurve(int channel) const;
+	void setDefaultCurve(const Ptr<Curve2d> &default_curve);
 	void setDefaultCurve(int channel, const Ptr<Curve2d> &default_curve);
 	bool isDefault(int channel);
 	bool isDefaultAll();

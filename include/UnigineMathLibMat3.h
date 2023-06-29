@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 #include "UnigineMathLibCommon.h"
 
@@ -85,7 +84,7 @@ struct alignas(16) mat3
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
-	UNIGINE_INLINE explicit mat3(const float *m)
+	UNIGINE_INLINE explicit mat3(const mat3x3_values &m)
 		: m00(m[0])
 		, m10(m[1])
 		, m20(m[2])
@@ -180,7 +179,7 @@ struct alignas(16) mat3
 	UNIGINE_INLINE void set(const mat4 &m);
 	UNIGINE_INLINE void set(const dmat4 &m);
 	UNIGINE_INLINE void set(const quat &q);
-	UNIGINE_INLINE void set(const float *m)
+	UNIGINE_INLINE void set(const mat3x3_values &m)
 	{
 		m00 = m[0];
 		m01 = m[3];
@@ -193,7 +192,7 @@ struct alignas(16) mat3
 		m22 = m[8];
 	}
 
-	UNIGINE_INLINE void get(float *m) const
+	UNIGINE_INLINE void get(mat3x3_values &m) const
 	{
 		m[0] = m00;
 		m[3] = m01;
@@ -205,8 +204,8 @@ struct alignas(16) mat3
 		m[5] = m21;
 		m[8] = m22;
 	}
-	UNIGINE_INLINE float *get() { return mat; }
-	UNIGINE_INLINE const float *get() const { return mat; }
+	UNIGINE_INLINE mat4x3_values &get() { return mat; }
+	UNIGINE_INLINE const mat4x3_values &get() const { return mat; }
 	UNIGINE_INLINE float &get(int row, int column)
 	{
 		assert((unsigned int)row < 3 && "mat3::get(): bad row");

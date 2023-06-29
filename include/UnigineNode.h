@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -68,6 +67,10 @@ public:
 		FIELD_SHORELINE,
 		FIELD_WEATHER,
 		FIELD_END = FIELD_WEATHER,
+		PARTICLES_FIELD_BEGIN,	// particles fields
+		PARTICLES_FIELD_SPACER = PARTICLES_FIELD_BEGIN,
+		PARTICLES_FIELD_DEFLECTOR,
+		PARTICLES_FIELD_END = PARTICLES_FIELD_DEFLECTOR,
 		LIGHT_BEGIN,	// lights
 		LIGHT_VOXEL_PROBE = LIGHT_BEGIN,
 		LIGHT_ENVIRONMENT_PROBE,
@@ -141,6 +144,7 @@ public:
 		NUM_WORLDS = WORLD_END - WORLD_BEGIN + 1,
 		NUM_GEODETICS = GEODETIC_END - GEODETIC_BEGIN + 1,
 		NUM_FIELDS = FIELD_END - FIELD_BEGIN + 1,
+		NUM_PARTICLES_FIELDS = PARTICLES_FIELD_END - PARTICLES_FIELD_BEGIN + 1,
 		NUM_LIGHTS = LIGHT_END - LIGHT_BEGIN + 1,
 		NUM_DECALS = DECAL_END - DECAL_BEGIN + 1,
 		NUM_OBJECTS = OBJECT_END - OBJECT_BEGIN + 1,
@@ -204,6 +208,7 @@ public:
 	bool isObstacle() const;
 	bool isSound() const;
 	bool isField() const;
+	bool isParticlesField() const;
 	bool isExtern() const;
 	bool isEnabledSelf() const;
 	Node::LIFETIME getLifetimeSelf() const;
@@ -213,6 +218,7 @@ public:
 	bool isHandled() const;
 	void setImmovable(bool immovable);
 	bool isImmovable() const;
+	bool isImmovableSupported() const;
 	void setTriggerInteractionEnabled(bool enabled);
 	bool isTriggerInteractionEnabled() const;
 	void setGrassInteractionEnabled(bool enabled);
@@ -221,6 +227,8 @@ public:
 	bool isClutterInteractionEnabled() const;
 	void setQuery(bool query);
 	bool isQuery() const;
+	bool isSurfacesIntersectionSupported() const;
+	bool isSurfacesCollisionSupported() const;
 	bool hasQueryForce() const;
 	void setShowInEditorEnabled(bool enabled);
 	bool isShowInEditorEnabled() const;
@@ -302,12 +310,12 @@ public:
 	Math::WorldBoundSphere getWorldBoundSphere() const;
 	Math::WorldBoundBox getSpatialBoundBox() const;
 	Math::WorldBoundSphere getSpatialBoundSphere() const;
-	Math::WorldBoundBox getHierarchyBoundBox() const;
-	Math::WorldBoundSphere getHierarchyBoundSphere() const;
-	Math::WorldBoundBox getHierarchyWorldBoundBox() const;
-	Math::WorldBoundSphere getHierarchyWorldBoundSphere() const;
-	Math::WorldBoundBox getHierarchySpatialBoundBox() const;
-	Math::WorldBoundSphere getHierarchySpatialBoundSphere() const;
+	Math::WorldBoundBox getHierarchyBoundBox(bool only_enabled_nodes = false) const;
+	Math::WorldBoundSphere getHierarchyBoundSphere(bool only_enabled_nodes = false) const;
+	Math::WorldBoundBox getHierarchyWorldBoundBox(bool only_enabled_nodes = false) const;
+	Math::WorldBoundSphere getHierarchyWorldBoundSphere(bool only_enabled_nodes = false) const;
+	Math::WorldBoundBox getHierarchySpatialBoundBox(bool only_enabled_nodes = false) const;
+	Math::WorldBoundSphere getHierarchySpatialBoundSphere(bool only_enabled_nodes = false) const;
 	bool loadWorld(const Ptr<Xml> &xml);
 	bool saveWorld(const Ptr<Xml> &xml) const;
 	bool saveState(const Ptr<Stream> &stream) const;

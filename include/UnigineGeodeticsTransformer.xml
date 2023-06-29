@@ -15,7 +15,7 @@
 			Transforms geodetic coordinates of the selected coordinate system to the 3D world coordinates: position and rotation (the Y axis is directed to the North, the X axis — to the East, and the Z axis — upwards).
 			</summary> 
 			<param name="geo_coords"> Geodetic coordinates (lat,lon,alt). </param>
-			<param name="rotate_to_en"> true to rotate data as follows: East =&gt; X, North =&gt; Y (ENU and similar systems); false if the data source uses another alignment (for example NED). </param> 
+			<param name="rotate_to_en"> true to rotate data as follows: East =&amp;gt; X, North =&amp;gt; Y (ENU and similar systems); false if the data source uses another alignment (for example NED). </param> 
 			<returns>World position and orientation.</returns>
 		</member>
 		<member name="M:Unigine.GeodeticsTransformer.geodeticToWorldPosition(Unigine.dvec3,bool)">
@@ -23,7 +23,7 @@
 			Transforms geodetic coordinates of the selected coordinate system to the 3D world coordinates (position).
 			</summary> 
 			<param name="geo_coords"> Geodetic coordinates (lat,lon,alt). </param>
-			<param name="rotate_to_en"> true to rotate data as follows: East =&gt; X, North =&gt; Y (ENU and similar systems); false if the data source uses another alignment (for example NED). </param> 
+			<param name="rotate_to_en"> true to rotate data as follows: East =&amp;gt; X, North =&amp;gt; Y (ENU and similar systems); false if the data source uses another alignment (for example NED). </param> 
 			<returns>World position.</returns>
 		</member>
 		<member name="M:Unigine.GeodeticsTransformer.worldToGeodetic(Unigine.dvec3,bool)">
@@ -31,7 +31,7 @@
 			Transforms the 3D world coordinates to geodetic coordinates of the selected coordinate system.
 			</summary> 
 			<param name="world_pos"> World position. </param>
-			<param name="rotate_to_en"> true to rotate data as follows: East =&gt; X, North =&gt; Y (ENU and similar systems); false if the data source uses another alignment (for example NED). </param> 
+			<param name="rotate_to_en"> true to rotate data as follows: East =&amp;gt; X, North =&amp;gt; Y (ENU and similar systems); false if the data source uses another alignment (for example NED). </param> 
 			<returns>Geodetic coordinates (lat,lon,alt).</returns>
 		</member>
 		<member name="M:Unigine.GeodeticsTransformer.setProjectionWkt(char,Unigine.dvec3,char,int)">

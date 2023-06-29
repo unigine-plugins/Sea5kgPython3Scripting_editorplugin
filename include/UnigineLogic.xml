@@ -28,11 +28,11 @@
 			</summary>  
 			<returns>1 if there were no errors during the editor post update; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.EditorLogic.render(EngineWindowPtr)">
+		<member name="M:Unigine.EditorLogic.render(EngineWindowViewportPtr)">
 			<summary>
 			Engine calls this function before rendering each render frame for the specified Engine window, when editor is loaded. Similar to the editor script's render() function.
 			</summary> 
-			<param name="window"> Target Engine window. </param> 
+			<param name="window"> Target Engine window viewport. </param> 
 			<returns>1 if there were no errors during the editor rendering; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.EditorLogic.worldInit">

@@ -4,107 +4,149 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.EngineWindow.#ctor(char,int,int,int)">
+		<member name="M:Unigine.SystemDialog.#ctor">
 			<summary>
-			Constructor. Creates the engine window of the specified size with the specified name using the specified flags.
-			</summary> 
-			<param name="title"> The title of the window, in UTF-8 encoding. </param>
-			<param name="width"> Window width. </param>
-			<param name="height"> Window height. </param>
-			<param name="flags"> Mask containing window flags. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.#ctor(int,int,int)">
-			<summary>
-			Constructor. Creates the engine window of the specified size using the specified flags.
-			</summary> 
-			<param name="width"> Window width. </param>
-			<param name="height"> Window height. </param>
-			<param name="flags"> Mask containing window flags. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.#ctor(Unigine.Math.ivec2,int)">
-			<summary>
-			Constructor. Creates the engine window of the specified size using the specified flags.
-			</summary> 
-			<param name="size"> Window size. </param>
-			<param name="flags"> Mask containing window flags. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.setMain(bool)">
-			<summary>
-			Sets the window as the main window.					There may be several windows that are set as main, or no main windows at all.
-			</summary> 
-			<param name="main"> true to set the window as the main window, otherwise false. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.isMain const">
-			<summary>
-			Returns a value indicating if this window is the main window.
+			Constructor.
 			</summary>  
-			<returns>true if the window is the main window, otherwise false.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.setCamera(Unigine.Ptr{Unigine.Camera})">
+		<member name="M:Unigine.SystemDialog.setType(int)">
 			<summary>
-			Sets the camera the image from which is rendered to the engine window. This value has a higher priority over the main camera flag.
+			Sets the type of the system dialog.
 			</summary> 
-			<param name="camera"> Camera. </param> 
+			<param name="type"> Dialog type to be set: one of the TYPE_* values. </param> 
 		</member>
-		<member name="M:Unigine.EngineWindow.getCamera const">
+		<member name="M:Unigine.SystemDialog.getType">
 			<summary>
-			Returns the camera the image from which is rendered to the engine window. This value has a higher priority over the main camera flag.
+			Returns the current type of the system dialog.
 			</summary>  
-			<returns>The camera the image from which is rendered to the engine window.</returns>
+			<returns>Dialog type to be set: one of the TYPE_* values.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.setTitle(char)">
+			<summary>
+			Sets a new title for the system dialog.
+			</summary> 
+			<param name="title"> Dialog title to be set. </param> 
+		</member>
+		<member name="M:Unigine.SystemDialog.getTitle">
+			<summary>
+			Returns the current title of the system dialog.
+			</summary>  
+			<returns>Current dialog title.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.setMessage(char)">
+			<summary>
+			Sets a new message of the system dialog.
+			</summary> 
+			<param name="message"> Dialog message to be set. </param> 
+		</member>
+		<member name="M:Unigine.SystemDialog.getMessage">
+			<summary>
+			Returns the current message of the system dialog.
+			</summary>  
+			<returns>Current dialog message.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.setDefaultButtonReturn(int)">
+			<summary>
+			Sets a default button to be pressed by default when the user hits the Return key on the keyboard.
+			</summary> 
+			<param name="val"> Number of the button to be set, in the range from 0 to the total number of buttons. </param> 
+		</member>
+		<member name="M:Unigine.SystemDialog.getDefaultButtonReturn">
+			<summary>
+			Returns the current default button to be pressed by default when the user hits the Return key on the keyboard.
+			</summary>  
+			<returns>Number of the button, in the range from 0 to the total number of buttons.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.setDefaultButtonEscape(int)">
+			<summary>
+			Sets a default button to be pressed by default when the user hits the Escape key on the keyboard.
+			</summary> 
+			<param name="escape"> Number of the button to be set, in the range from 0 to the total number of buttons. </param> 
+		</member>
+		<member name="M:Unigine.SystemDialog.getDefaultButtonEscape">
+			<summary>
+			Returns the current default button to be pressed by default when the user hits the Escape key on the keyboard.
+			</summary>  
+			<returns>Number of the button, in the range from 0 to the total number of buttons.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.getNumButtons">
+			<summary>
+			Returns the total number of buttons of the system dialog.
+			</summary>  
+			<returns>Total number of dialog buttons.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.addButton">
+			<summary>
+			Adds a new button to the system dialog.
+			</summary>  
+			<returns>Number of the new added button.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.addButton(char)">
+			<summary>
+			Adds a new button to the system dialog.
+			</summary> 
+			<param name="name"> Name of the button to be added. </param> 
+			<returns>Number of the new added button.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.removeButton(int)">
+			<summary>
+			Removes the button with the specified number from the system dialog.
+			</summary> 
+			<param name="num"> Number of the button to be removed, in the range from 0 to the total number of buttons. </param> 
+		</member>
+		<member name="M:Unigine.SystemDialog.swapButtons(int,int)">
+			<summary>
+			Swaps two buttons with the specified numbers.
+			</summary> 
+			<param name="num_0"> Number of the first button, in the range from 0 to the total number of buttons. </param>
+			<param name="num_1"> Number of the second button, in the range from 0 to the total number of buttons. </param> 
+		</member>
+		<member name="M:Unigine.SystemDialog.getButtonName(int)">
+			<summary>
+			Returns the name of the button by its number.
+			</summary> 
+			<param name="num"> Number of the button, in the range from 0 to the total number of buttons. </param> 
+			<returns>Name of the button with the specified number.</returns>
+		</member>
+		<member name="M:Unigine.SystemDialog.setButtonName(int,char)">
+			<summary>
+			Sets as new name for the button with the specified number.
+			</summary> 
+			<param name="num"> Number of the button to be renamed, in the range from 0 to the total number of buttons. </param>
+			<param name="name"> New name to be set for the button with the specified number. </param> 
+		</member>
+		<member name="F:Unigine.SystemDialog.TYPE_ERROR">
+			<summary>
+			Error dialog.
+		</summary>
+		</member>
+		<member name="F:Unigine.SystemDialog.TYPE_WARNING">
+			<summary>
+			Warning dialog.
+		</summary>
+		</member>
+		<member name="F:Unigine.SystemDialog.TYPE_INFORMATION">
+			<summary>
+			Information dialog.
+		</summary>
 		</member>
 		<member name="M:Unigine.EngineWindow.getGui const">
 			<summary>
-			Returns the parent Gui for a nested engine window.
+			Returns the parent Gui for a window. If the window is nested, this Gui differs from SelfGui.
 			</summary>  
 			<returns>Gui instance.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.getSelfGui const">
 			<summary>
-			Returns Gui instance for a fully-featured system window. For a nested window, may return nullptr.
+			Returns Gui instance for a window. This Gui remains unchanged during the whole lifecycle of the window.
 			</summary>  
 			<returns>Gui instance.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.getDisplayIndex const">
 			<summary>
-			Returns the number of the display, on which the window is currently displayed.
+			Returns the number of the display, on which the window is currently displayed. For separate windows, this index is requested from the system proxy; for nested windows, the index is provided based on the location of the client center point.
 			</summary>  
 			<returns>The number of the display, on which the window is currently displayed.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.isSeparateWindow const">
-			<summary>
-			Returns a value indicating if this window is an independent system window.
-			</summary>  
-			<returns>true if the window is a separate window, otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.isSeparateGroup const">
-			<summary>
-			Returns a value indicating if this window group is an independent group of windows located on the desktop.
-			</summary>  
-			<returns>true if the window group is an independent group of windows, otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.isNestedWindow const">
-			<summary>
-			Returns a value indicating if this window is a part of a window group.
-			</summary>  
-			<returns>true if the window is a nested window, otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.isNestedGroup const">
-			<summary>
-			Returns a value indicating if this window group is a part of a window group.
-			</summary>  
-			<returns>true if the window group is nested to another window group, otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.isWindow const">
-			<summary>
-			Returns a value indicating if the object is a separate or a nested window.
-			</summary>  
-			<returns>true for a separate or a nested window, otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.isGroup const">
-			<summary>
-			Returns a value indicating if the object is a separate or a nested group of windows.
-			</summary>  
-			<returns>true for a separate or a nested group of windows, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.isNested const">
 			<summary>
@@ -118,528 +160,294 @@
 			</summary>  
 			<returns>true for a separate window or group of windows, otherwise false.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.getState const">
-			<summary>
-			Returns the window state: if it's a separate or nested window or group of windows.
-			</summary>  
-			<returns>The window state.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.getGroupType const">
-			<summary>
-			Returns the window group type — vertical, horizontal, tab arrangement of windows, or an independent window inside a group.
-			</summary>  
-			<returns>The window group type.</returns>
-		</member>
 		<member name="M:Unigine.EngineWindow.setPosition(Unigine.Math.ivec2)">
 			<summary>
-			Sets the position of the left top corner of the engine window in the screen coordinates. In case of several displays, the position is relative to the main display.
+			Sets the position of the top left corner of the window in the screen coordinates. In case of several displays, the position is relative to the main display.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary> 
-			<param name="position"> The engine window screen position — coordinates of the left top corner. </param> 
+			<param name="position"> The window screen position (coordinates of the top left corner). </param> 
 		</member>
 		<member name="M:Unigine.EngineWindow.getPosition const">
 			<summary>
-			Returns the position of the left top corner of the engine window in the screen coordinates. In case of several displays, the position is relative to the main display.
+			Returns the position of the top left corner of the window in the screen coordinates. In case of several displays, the position is relative to the main display.					This method should be applied to a separate or parent window, for a nested window it will return the value of the global parent group.
 			</summary>  
-			<returns>The engine window screen position — coordinates of the left top corner.</returns>
+			<returns>The window screen position (coordinates of the top left corner).</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.setClientPosition(Unigine.Math.ivec2)">
+			<summary>
+			Sets the position of the top left corner of the client (the window content area without the top bar and borders) in the screen coordinates. In case of several displays, the position is relative to the main display.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
+			</summary> 
+			<param name="position"> The screen position of the client (coordinates of the top left corner). </param> 
 		</member>
 		<member name="M:Unigine.EngineWindow.getClientPosition const">
 			<summary>
-			Sets the position of the left top corner of the window content area (without the top bar and border of the system window) in the screen coordinates. In case of several displays, the position is relative to the main display.
+			Returns the position of the top left corner of the client (the window content area without the top bar and borders) in the screen coordinates. In case of several displays, the position is relative to the main display. For a nested window, the window position is returned.
 			</summary>  
-			<returns>The screen position of the window content area — coordinates of the left top corner.</returns>
+			<returns>The screen position of the client (coordinates of the top left corner).</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.getClientLocalPosition const">
 			<summary>
-			Returns the position of the left top corner of the window content area (without the top bar and border of the system window) in coordinates of the GUI used for rendering of this window.
+			Returns the position of the top left corner of the client (the window content area without the top bar and borders) relative to the window position.
 			</summary>  
-			<returns>The screen position of the window content area — coordinates of the left top corner, in coordinates of the current window GUI.</returns>
+			<returns>The screen position of the client (coordinates of the top left corner) relative to the window position.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.moveToCenter">
 			<summary>
-			Moves the engine window to the center of the current screen.
+			Positions the window so that the client center coincides with the center of the current display.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary>  
 		</member>
 		<member name="M:Unigine.EngineWindow.setSize(Unigine.Math.ivec2)">
 			<summary>
-			Sets the engine window size.
+			Sets the engine window size (i.e. including the sizing border).					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary> 
 			<param name="size"> The engine window size. </param> 
 		</member>
 		<member name="M:Unigine.EngineWindow.getSize const">
 			<summary>
-			Returns the engine window size.
+			Returns the engine window size (i.e. including the sizing border).					This method should be applied to a separate or parent window, for a nested window it will return the value of the global parent group.
 			</summary>  
 			<returns>The engine window size.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.getClientSize const">
 			<summary>
-			Returns the size of the window client (content) area.
+			Returns the size of the window lient (content) area.
 			</summary>  
-			<returns>The size of the window client area.</returns>
+			<returns>The size of the client area.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.setMinSize(Unigine.Math.ivec2)">
 			<summary>
-			Sets the minimum possible window size when resizing the window.
+			Sets the minimum possible window size when resizing the window. If the value is more than the current maximum size, use the setMinAndMaxSize() method, to change both values at once. Otherwise the value will be clamped to the current maximum size.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary> 
 			<param name="size"> The minimum possible size of the window. </param> 
 		</member>
 		<member name="M:Unigine.EngineWindow.getMinSize const">
 			<summary>
-			Returns the minimum possible window size when resizing the window.
+			Returns the minimum possible window size when resizing the window.					This method should be applied to a separate or parent window, for a nested window it will return zero values.
 			</summary>  
 			<returns>The minimum possible size of the window.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.setMaxSize(Unigine.Math.ivec2)">
 			<summary>
-			Sets the maximum possible window size when resizing the window..
+			Sets the maximum possible window size when resizing the window. If the value is less than the current minimum size, use the setMinAndMaxSize() method, to change both values at once. Otherwise the value will be clamped to the current minimum size.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary> 
 			<param name="size"> The maximum possible size of the window. </param> 
 		</member>
 		<member name="M:Unigine.EngineWindow.getMaxSize const">
 			<summary>
-			Returns the maximum possible window size when resizing the window..
+			Returns the maximum possible window size when resizing the window.					This method should be applied to a separate or parent window, for a nested window it will return (1000000, 1000000).
 			</summary>  
 			<returns>The maximum possible size of the window.</returns>
 		</member>
+		<member name="M:Unigine.EngineWindow.setMinAndMaxSize(Unigine.Math.ivec2,Unigine.Math.ivec2)">
+			<summary>
+			Sets the minimum and maximum possible window size when resizing the window.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
+			</summary> 
+			<param name="min_size"> The minimum possible size of the window. </param>
+			<param name="max_size"> The maximum possible size of the window. </param> 
+		</member>
 		<member name="M:Unigine.EngineWindow.setTitle(char)">
 			<summary>
-			Sets the text of the title for the engine window.
+			Sets the text of the title for the window. For a separate window, the title is set via system proxy in the title bar only; for a nested window, it is also set in the tab of the parent group.
 			</summary> 
-			<param name="title"> The title of the engine window. </param> 
+			<param name="title"> The title of the window. </param> 
 		</member>
 		<member name="M:Unigine.EngineWindow.getTitle const">
 			<summary>
-			Returns the text of the title for the engine window.
+			Returns the text of the title for the window. For a separate window, the icon is set via system proxy in the title bar only; for a nested window, it is also set in the tab of the parent group.
 			</summary>  
 			<returns>The title for the engine window.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.setIcon(Unigine.Ptr{Unigine.Image})">
 			<summary>
-			Sets the icon for the engine window.
+			Sets the icon for the window.
 			</summary> 
-			<param name="icon"> The icon for the engine window. </param> 
-			<returns>true if the specified icon is successfully set for the engine window, otherwise false.</returns>
+			<param name="image"> The icon for the window. </param> 
+			<returns>1 if the specified icon is successfully set for the window, otherwise 0.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.getIcon">
+		<member name="M:Unigine.EngineWindow.getIcon const">
 			<summary>
 			Returns the icon for the engine window.
 			</summary>  
-			<returns>The icon for the engine window.</returns>
+			<returns>1 if the icon for the window is returned successfully, otherwise 0.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.setOpacity(float)">
 			<summary>
-			Sets the opacity for the engine window.
+			Sets the opacity for the window.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary> 
-			<param name="opacity"> The opacity for the engine window. </param> 
+			<param name="opacity"> Opacity for the window. </param> 
 		</member>
 		<member name="M:Unigine.EngineWindow.getOpacity const">
 			<summary>
-			Returns the current opacity for the engine window.
+			Returns the current opacity for the window.					This method should be applied to a separate or parent window, for a nested window it will always return 1.0f.
 			</summary>  
-			<returns>The opacity for the engine window.</returns>
+			<returns>The opacity for the window.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.setBordersEnabled(bool)">
 			<summary>
-			Enables and disables the borders for the engine window.
+			Enables and disables the borders for the window.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary> 
-			<param name="enabled"> true to enable the borders for the engine window, otherwise false. </param> 
+			<param name="enabled"> true to enable the borders for the window, otherwise false. </param> 
 		</member>
 		<member name="M:Unigine.EngineWindow.isBordersEnabled const">
 			<summary>
-			Returns the value indicating if the borders are enabled for the engine window.
+			Returns the value indicating if the borders are enabled for the window.					This method should be applied to a separate or parent window, for a nested window it will return false.
 			</summary>  
-			<returns>true if the borders are enabled for the engine window, otherwise false.</returns>
+			<returns>true if the borders are enabled for the window, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.setBorderSize(int)">
 			<summary>
-			Sets the engine window border size.
+			Sets the engine window border size.																		This value is applied to the windows in the engine style only. For system-style windows system settings are applied.							This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary> 
 			<param name="size"> The engine window border size. </param> 
 		</member>
 		<member name="M:Unigine.EngineWindow.getBorderSize const">
 			<summary>
-			Returns the engine window border size.
+			Returns the engine window border size.																		This value is applied to the windows in the engine style only. For system-style windows system settings are applied.							This method should be applied to a separate or parent window, for a nested window it will return 0.
 			</summary>  
 			<returns>The engine window border size.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.setConsoleUsage(bool)">
-			<summary>
-			Enables and disables usage of the console for the engine window in focus.
-			</summary> 
-			<param name="usage"> true to enable usage of the console for the engine window in focus, otherwise false. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.isConsoleUsage const">
-			<summary>
-			Returns the value indicating if usage of the console is enabled for the engine window.
-			</summary>  
-			<returns>true if usage of the console is enabled for the engine window, otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.setProfilerUsage(bool)">
-			<summary>
-			Enables and disables usage of the profiler for the engine window.
-			</summary> 
-			<param name="usage"> true to enable usage of the profiler for the engine window, otherwise false. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.isProfilerUsage const">
-			<summary>
-			Returns the value indicating if usage of the profiler is enabled for the engine window.
-			</summary>  
-			<returns>true if usage of the profiler is enabled for the engine window, otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.setVisualizerUsage(bool)">
-			<summary>
-			Enables and disables usage of the visualizer for the engine window.
-			</summary> 
-			<param name="usage"> true to enable usage of the visualizer for the engine window, otherwise false. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.isVisualizerUsage const">
-			<summary>
-			Returns the value indicating if usage of the visualizer is enabled for the engine window.
-			</summary>  
-			<returns>true if usage of the visualizer is enabled for the engine window, otherwise false.</returns>
-		</member>
 		<member name="M:Unigine.EngineWindow.setResizable(bool)">
 			<summary>
-			Enables and disables the possibility to resize the engine window by the mouse.
+			Enables and disables the possibility to resize the engine window by the mouse.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary> 
 			<param name="resizable"> true to make the engine window resizable by the mouse, otherwise false. </param> 
 		</member>
 		<member name="M:Unigine.EngineWindow.isResizable const">
 			<summary>
-			Returns the value indicating if the engine window is resizable by the mouse.
+			Returns the value indicating if the engine window is resizable by the mouse.					This method should be applied to a separate or parent window, for a nested window it will return false.
 			</summary>  
 			<returns>true if the engine window is resizable by the mouse, otherwise false.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.setResizeBorderSize(int)">
-			<summary>
-			Sets the size of the border that is manipulated to resize the window.
-			</summary> 
-			<param name="size"> The size of the border that is manipulated to resize the window, in pixels. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.getResizeBorderSize const">
-			<summary>
-			Returns the size of the border that is manipulated to resize the window.
-			</summary>  
-			<returns>The size of the border that is manipulated to resize the window, in pixels.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.isFullscreen const">
-			<summary>
-			Returns the value indicating if the window is in a fullscreen state.
-			</summary>  
-			<returns>true if the engine window is the fullscreen state, false if it's in the window mode.</returns>
-		</member>
 		<member name="M:Unigine.EngineWindow.show">
 			<summary>
-			Enables rendering of the engine window.
+			Enables rendering of the engine window.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary>  
 		</member>
 		<member name="M:Unigine.EngineWindow.isShown const">
 			<summary>
-			Returns a value indicating if a widget is rendered.
+			Returns a value indicating if a widget is rendered.					This method should be applied to a separate or parent window, for a nested window it will return the value of the global parent group.
 			</summary>  
 			<returns>true if the engine window is rendered, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.hide">
 			<summary>
-			Disables rendering of the engine window.
+			Disables rendering of the engine window.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary>  
 		</member>
 		<member name="M:Unigine.EngineWindow.isHidden const">
 			<summary>
-			Returns a value indicating if a widget is hidden.
+			Returns a value indicating if a widget is hidden.					This method should be applied to a separate or parent window, for a nested window it will return the value of the global parent group.
 			</summary>  
 			<returns>true if the engine window isn't rendered, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.setFocus">
 			<summary>
-			Sets the focus to the engine window.
+			Sets the focus to the window.
 			</summary>  
 		</member>
 		<member name="M:Unigine.EngineWindow.isFocused const">
 			<summary>
-			Returns the value if the engine window is currently in focus.
+			Returns the value indicating if the window is currently in focus. For a separate or parent window, the returned value coinsides with the value returned by isSystemFocused().
+			</summary>  
+			<returns>true if the engine window is in focus, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.setSystemFocus">
+			<summary>
+			Sets the focus to the engine window.					This method is applied to a separate or parent window, for nested windows use setFocus().
+			</summary>  
+		</member>
+		<member name="M:Unigine.EngineWindow.isSystemFocused const">
+			<summary>
+			Returns the value indicating if the engine window is currently in focus.					This method should be applied to a separate or parent window, for a nested window it will return the value of the global parent group.
 			</summary>  
 			<returns>true if the engine window is in focus, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.minimize">
 			<summary>
-			Minimizes the engine window to an iconic representation.
+			Minimizes the engine window to an iconic representation.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary>  
 		</member>
 		<member name="M:Unigine.EngineWindow.isMinimized const">
 			<summary>
-			Returns the value indicating if the engine window is minimized to tray.
+			Returns the value indicating if the engine window is minimized to tray.					This method should be applied to a separate or parent window, for a nested window it will return the value of the global parent group.
 			</summary>  
 			<returns>true if the engine window is minimized, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.maximize">
 			<summary>
-			Makes the engine window as large as possible.
+			Makes the engine window as large as possible.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary>  
 		</member>
 		<member name="M:Unigine.EngineWindow.isMaximized const">
 			<summary>
-			Returns the value indicating if the engine window is maximized.
+			Returns the value indicating if the engine window is maximized.					This method should be applied to a separate or parent window, for a nested window it will return the value of the global parent group.
 			</summary>  
 			<returns>true if the engine window is maximized, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.restore">
 			<summary>
-			Restores the size and position of the minimized or maximized engine window.
+			Restores the size and position of the minimized or maximized engine window via the system proxy.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary>  
 		</member>
-		<member name="M:Unigine.EngineWindow.setMouseGrab(bool)">
+		<member name="M:Unigine.EngineWindow.getHitTestResult(Unigine.Math.ivec2)">
 			<summary>
-			Sets a value indicating if the mouse pointer is bound to the engine window.
+			Returns a value indicating in which area of the engine window the mouse is located.					This method is used for interaction with system windows only, i.e. it cannot be used for nested windows.
 			</summary> 
-			<param name="value"> true if the pointer cannot leave the engine window, otherwise false. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.getHitTestResult const">
-			<summary>
-			Returns a value indicating in which area of the engine window the mouse is located.
-			</summary>  
+			<param name="global_pos"> Global coordinates of the hit-test point. </param> 
 			<returns>Value indicating the window area, one of the HITTEST_* values.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.getHitTestResultName(EngineWindow::HITTEST) const">
+			<summary>
+			Returns the string representation of the hit test result value.
+			</summary> 
+			<param name="hit_test"> Value indicating the window area, one of the HITTEST_* values. </param> 
+			<returns>The string representation of the hit test result value (e.g., HITTEST_RESIZE_RIGHT is RESIZE RIGHT).</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.getOrder const">
 			<summary>
-			Returns the order of the window. This value allows comparing which window is closer to the viewer (a relatively smaller value).
+			Returns the order of the window. This value allows comparing which window is closer to the viewer (a relatively smaller value).					This method should be applied to a separate or parent window, for a nested window it will return the value of the global parent group.
 			</summary>  
 			<returns>The order of the window.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.toTop">
 			<summary>
-			Makes the window appear on top of all other windows.
+			Makes the window appear on top of all other windows.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary>  
 		</member>
-		<member name="M:Unigine.EngineWindow.addChild(Unigine.Ptr{Unigine.Widget},int)">
+		<member name="M:Unigine.EngineWindow.setAlwaysOnTop(bool)">
 			<summary>
-			Adds the specified widget as a child to the client area of the engine window.
+			Sets the window to always be rendered above the other windows.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary> 
-			<param name="widget"> Child widget to be added. </param>
-			<param name="flags"> Widget flags: one of the ALIGN_* pre-defined variables. This is an optional parameter. </param> 
+			<param name="top"> true to render the window always on top; otherwise, false. </param> 
 		</member>
-		<member name="M:Unigine.EngineWindow.removeChild(Unigine.Ptr{Unigine.Widget})">
+		<member name="M:Unigine.EngineWindow.isAlwaysOnTop const">
 			<summary>
-			Removes the specified widget from the engine window.
-			</summary> 
-			<param name="widget"> Child widget to be removed. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.getChild(int) const">
-			<summary>
-			Returns the child widget by its index.
-			</summary> 
-			<param name="index"> Widget index. </param> 
-			<returns>Child widget.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.getNumChildren const">
-			<summary>
-			Returns the total number of children widgets of the engine window.
+			Returns the value indicating if the window is always rendered above the other windows.					This method should be applied to a separate or parent window, for a nested window it will return the value of the global parent group.
 			</summary>  
-			<returns>The total number of children widgets.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.setGroupUsage(bool)">
-			<summary>
-			Sets the value indicating if the engine window can become a group.
-			</summary> 
-			<param name="usage"> true to enable usage of the engine window as a group, otherwise false. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.isGroupUsage const">
-			<summary>
-			Returns the value indicating if the engine window can become a group.
-			</summary>  
-			<returns>true if usage of the engine window as a group is enabled, otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.setNestedUsage(bool)">
-			<summary>
-			Sets the value indicating if the engine window can be used as a nested window.
-			</summary> 
-			<param name="usage"> true to enable usage of the engine window as a nested window, otherwise false. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.isNestedUsage const">
-			<summary>
-			Returns the value indicating if the engine window can be used as a nested window.
-			</summary>  
-			<returns>true if usage of the engine window as a nested window is enabled, otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.getNumNestedWindows const">
-			<summary>
-			Returns the total number of nested windows in the group.
-			</summary>  
-			<returns>The total number of nested windows in the group.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.getNestedWindow(int) const">
-			<summary>
-			Returns the nested engine window by its index.
-			</summary> 
-			<param name="index"> Index of the nested window. </param> 
-			<returns>Nested engine window.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.getNestedWindowIndex(Unigine.Ptr{EngineWindow})">
-			<summary>
-			Returns the index of the specified nested engine window.
-			</summary> 
-			<param name="window"> Nested engine window. </param> 
-			<returns>Index of the nested window.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.containsNestedWindow(Unigine.Ptr{EngineWindow}) const">
-			<summary>
-			Returns the value indicating if the specified window is a direct child of the current window.
-			</summary> 
-			<param name="window"> Window to be checked. </param> 
-			<returns>true if the specified window is a direct child of the current one, otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.containsNestedWindowGlobal(Unigine.Ptr{EngineWindow}) const">
-			<summary>
-			Returns the value indicating if the specified window is a child of the current window or any of its children.
-			</summary> 
-			<param name="window"> Window to be checked. </param> 
-			<returns>true if the specified window is a child of the current one, otherwise false.</returns>
+			<returns>true if the window is always on top; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.getParentGroup const">
 			<summary>
-			Returns the group into which the current window is nested, or nullptr if it's a separate window.
+			Returns the group into which the current window is nested, or nullptr if it is a separate window.
 			</summary>  
-			<returns>The group into which the current window is nested, or nullptr if it's a separate window.</returns>
+			<returns>The group into which the current window is nested, or nullptr if it is a separate window.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.getGlobalParentGroup const">
 			<summary>
-			Returns the top group of the hierarchy into which the current window is nested, or nullptr if it's a separate window.
+			Returns the top group of the hierarchy into which the current window is nested, or nullptr if it is a separate window.
 			</summary>  
-			<returns>The top group of the hierarchy into which the current window is nested, or nullptr if it's a separate window.</returns>
+			<returns>The top group of the hierarchy into which the current window is nested, or nullptr if it is a separate window.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.isGlobalChildOf(Unigine.Ptr{EngineWindow})">
+		<member name="M:Unigine.EngineWindow.isGlobalChildOf(Unigine.Ptr{EngineWindowGroup})">
 			<summary>
 			Returns the value specifying if the current window is a part of a hierarchy of the specified window.
 			</summary> 
-			<param name="window"> Window to be checked. </param> 
+			<param name="group"> Window to be checked. </param> 
 			<returns>true if the current window is globally a child of the specified one, otherwise false.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.getCurrentTab const">
+		<member name="M:Unigine.EngineWindow.updateGuiHierarchy">
 			<summary>
-			Returns the index of the currently active tab in a tab group.
+			Updates the hierarchy for all widgets — the widgets are arranged, expanded to the required sizes and then their positions are updated. Updating the hierarchy may be required, for example, for getting the screen position immediately after the widget has been added to the hierarchy. For a separate window, the hierarchy in self gui is updated; for a nested window, the hierarchy in self gui of the global parent group is updated.
 			</summary>  
-			<returns>The index of the currently active tab.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.getTabWidth(int) const">
-			<summary>
-			Returns the width of the tab.
-			</summary> 
-			<param name="index"> The index of the tab. </param> 
-			<returns>The width of the the tab.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.getTabHeight(int) const">
-			<summary>
-			Returns the height of the tab.
-			</summary> 
-			<param name="index"> The index of the tab. </param> 
-			<returns>The height of the tab.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.getTabBarWidth(int) const">
-			<summary>
-			Returns the width of the tab bar.
-			</summary> 
-			<param name="index"> The index of the tab. </param> 
-			<returns>The width of the tab bar.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.getTabBarHeight(int) const">
-			<summary>
-			Returns the height of the tab bar.
-			</summary> 
-			<param name="index"> The index of the tab. </param> 
-			<returns>The height of the tab bar.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.getTabLocalPosition(int) const">
-			<summary>
-			Returns the screen position of the tab relatively to the parent group (global window). The coordinates represent the displacement from the top left corner of the parent group (global window).
-			</summary> 
-			<param name="index"> The index of the tab. </param> 
-			<returns>The screen position of the tab relatively to the parent group (global window).</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.getTabBarLocalPosition(int) const">
-			<summary>
-			Returns the screen position of the tab bar relatively to the parent group (global window). The coordinates represent the displacement from the top left corner of the parent group (global window).
-			</summary> 
-			<param name="index"> The index of the tab. </param> 
-			<returns>The screen position of the tab bar relatively to the parent group (global window).</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.setHorizontalTabWidth(int,int)">
-			<summary>
-			Sets the width of the tab in the group of tabs arranged horizontally.
-			</summary> 
-			<param name="index"> The index of the tab. </param>
-			<param name="width"> The width of the tab in the group of tabs arranged horizontally. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.setVerticalTabHeight(int,int)">
-			<summary>
-			Sets the height of the tab in the group of tabs arranged vertically.
-			</summary> 
-			<param name="index"> The index of the tab. </param>
-			<param name="height"> The height of the tab in the group of tabs arranged vertically. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.setSeparatorPosition(int,int)">
-			<summary>
-			Sets the position of the line separating a tab group from the rest of the area. The separator line can be horizontal or vertical depending on the group type.
-			</summary> 
-			<param name="index"> Index of the tab. </param>
-			<param name="pos"> Position of the separation line, in pixels, from the top-left corner of the window. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.getSeparatorPosition(int) const">
-			<summary>
-			Returns the position of the line separating a tab group from the rest of the area. The separator line can be horizontal or vertical depending on the group type.
-			</summary> 
-			<param name="index"> Index of the tab. </param> 
-			<returns>Position of the separation line, in pixels, from the top-left corner of the window.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.setSeparatorValue(int,float)">
-			<summary>
-			Sets the size of the tab separator.
-			</summary> 
-			<param name="index"> Index of the tab. </param>
-			<param name="value"> Size of the tab separator. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.getSeparatorValue(int) const">
-			<summary>
-			Returns the size of the tab separator.
-			</summary> 
-			<param name="index"> Index of the tab. </param> 
-			<returns>Size of the tab separator.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.swapTabs(int,int)">
-			<summary>
-			Swaps the specified tabs.
-			</summary> 
-			<param name="first"> Index of the first tab. </param>
-			<param name="second"> Index of the second tab. </param> 
-		</member>
-		<member name="M:Unigine.EngineWindow.isHover(Unigine.Math.ivec2) const">
-			<summary>
-			Returns the value indicating if the mouse is hovering over the window.
-			</summary> 
-			<param name="global_mouse_pos"> Global screen coordinates of the mouse relative to the main display. </param> 
-			<returns>true if the mouse hovers over the current window, otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.isClientHover(Unigine.Math.ivec2) const">
-			<summary>
-			Returns the value indicating if the mouse is hovering over the client area of the window.
-			</summary> 
-			<param name="global_mouse_pos"> Global screen coordinates of the mouse relative to the main display. </param> 
-			<returns>true if the mouse hovers over the client area of the window, otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.getHoverTabBar(Unigine.Math.ivec2,Unigine.Math.ivec2,Unigine.Math.ivec2) const">
-			<summary>
-			Returns the index of the tab over the bar of which the mouse hovers.
-			</summary> 
-			<param name="global_mouse_pos"> Global screen coordinates of the mouse relative to the main display. </param>
-			<param name="out_bar_pos"> Position of the tab bar. </param>
-			<param name="out_bar_size"> Size of the tab bar. </param> 
-			<returns>Index of the tab.</returns>
-		</member>
-		<member name="M:Unigine.EngineWindow.getHoverTabBarArea(Unigine.Math.ivec2,Unigine.Math.ivec2,Unigine.Math.ivec2) const">
-			<summary>
-			Returns the index of the tab over the bar area of which the mouse hovers.
-			</summary> 
-			<param name="global_mouse_pos"> Global screen coordinates of the mouse relative to the main display. </param> 
-			<returns>Index of the tab.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.getNumDroppedItems const">
 			<summary>
@@ -647,7 +455,7 @@
 			</summary>  
 			<returns>The number of dropped files and/or folders.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.getDroppedItem(int)">
+		<member name="M:Unigine.EngineWindow.getDroppedItem(int) const">
 			<summary>
 			Returns the absolute path to the file or folder dropped to the window.
 			</summary> 
@@ -656,19 +464,13 @@
 		</member>
 		<member name="M:Unigine.EngineWindow.getID const">
 			<summary>
-			Returns the ID of the engine window, if the window is external, i.e. not nested in any window and can be moved independently on the desktop.
+			Returns the ID of the engine window, which is unchanged during the whole lifecycle of the window.
 			</summary>  
 			<returns>ID of the engine window, if the window is external.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.getVideoModeName const">
-			<summary>
-			Returns the window size and name of the current video mode.
-			</summary>  
-			<returns>The window size and name of the current video mode: fullscreen or windowed.</returns>
-		</member>
 		<member name="M:Unigine.EngineWindow.screenshot(char)">
 			<summary>
-			Creates a screenshot after the rendering stage is completed.
+			Creates a screenshot after the rendering stage is completed.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary> 
 			<param name="path"> Path to save the screenshot. </param> 
 		</member>
@@ -696,113 +498,277 @@
 			</summary>  
 			<returns>If true, the window can't be closed using the OS methods.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.disableFullscreen">
-			<summary>
-			Disables the fullscreen mode for the window in the fullscreen mode and sets the focus to this window.
-			</summary>  
-		</member>
-		<member name="M:Unigine.EngineWindow.enableFullscreen(int,int)">
-			<summary>
-			Enables the specified fullscreen mode for the specified display.
-			</summary> 
-			<param name="display"> Display index. </param>
-			<param name="mode"> Index of the mode supported by the display. </param> 
-			<returns>true if the specified fullscreen mode has been enabled for the specified display; otherwise, false.</returns>
-		</member>
 		<member name="M:Unigine.EngineWindow.setModal(Unigine.Ptr{EngineWindow})">
 			<summary>
-			Sets the current window modal to the specified parent window. Both the parent and the child windows must be separate.
+			Sets the current window modal to the specified parent window. Both the parent and the child windows must be separate. The concept of modal assumes that if a window has modal children, it cannot be closed. Any other interaction with a parent window is possible.					This method should be applied to a separate or parent window, a nested window can't be a parent for a modal window.
 			</summary> 
 			<param name="parent_window"> Parent window. </param> 
 		</member>
 		<member name="M:Unigine.EngineWindow.isModal const">
 			<summary>
-			Checks if the window is modal.
+			Checks if the window is modal. The concept of modal assumes that if a window has modal children, it cannot be closed. Any other interaction with a parent window is possible.					This method should be applied to a separate or parent window, for a nested window it will return false.
 			</summary>  
 			<returns>true if the window is modal; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.isModalParent const">
 			<summary>
-			Checks if this window is parent for any modal window.
+			Checks if this window is parent for any modal window. The concept of modal assumes that if a window has modal children, it cannot be closed. Any other interaction with a parent window is possible.					This method should be applied to a separate or parent window, for a nested window it will return false.
 			</summary>  
 			<returns>true if the window is parent for any modal window; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.getModalParent const">
 			<summary>
-			Returns the modal parent of the window.
+			Returns the modal parent of the window. The concept of modal assumes that if a window has modal children, it cannot be closed. Any other interaction with a parent window is possible.					This method should be applied to a separate or parent window, for a nested window it will return nullptr.
 			</summary>  
 			<returns>The modal parent of the window.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.addModalWindow(Unigine.Ptr{EngineWindow})">
 			<summary>
-			Adds the argument window as modal to the current window. Both the parent and the child windows must be separate.
+			Adds the argument window as modal to the current window. Both the parent and the child windows must be separate. The concept of modal assumes that if a window has modal children, it cannot be closed. Any other interaction with a parent window is possible.					This method should be applied to a separate or parent window, a nested window can't be a parent for a modal window.
 			</summary> 
 			<param name="window"> Window to be added as modal. </param> 
 		</member>
 		<member name="M:Unigine.EngineWindow.removeModalWindow(Unigine.Ptr{EngineWindow})">
 			<summary>
-			Removes the argument modal window from this window.
+			Removes the argument modal window from this window. The concept of modal assumes that if a window has modal children, it cannot be closed. Any other interaction with a parent window is possible.					This method should be applied to a separate or parent window, a nested window can't be a parent for a modal window.
 			</summary> 
 			<param name="window"> Engine window. </param> 
 		</member>
 		<member name="M:Unigine.EngineWindow.getNumModalWindows const">
 			<summary>
-			Returns the total number of modal windows for this window.
+			Returns the total number of modal windows for this window. The concept of modal assumes that if a window has modal children, it cannot be closed. Any other interaction with a parent window is possible.					This method should be applied to a separate or parent window, for a nested window it will return 0.
 			</summary>  
 			<returns>The total number of modal windows.</returns>
 		</member>
 		<member name="M:Unigine.EngineWindow.getModalWindow(int) const">
 			<summary>
-			Returns the modal window for this window by its index.
+			Returns the modal window for this window by its index. The concept of modal assumes that if a window has modal children, it cannot be closed. Any other interaction with a parent window is possible.					This method should be applied to a separate or parent window, for a nested window it will return nullptr.
 			</summary> 
 			<param name="index"> Index of the modal window. </param> 
 			<returns>Modal window.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.isChild(Unigine.Ptr{Unigine.Widget}) const">
-			<summary>
-			Checks if the argument widget is the child of the current window.
-			</summary> 
-			<param name="widget"> Widget. </param> 
-			<returns>true if the widget is the child of the current window; otherwise, false.</returns>
-		</member>
 		<member name="M:Unigine.EngineWindow.unstack">
 			<summary>
-			Removes the current window from a parent group. If there is only one window left, the group is automatically deleted after removing the window from it.
+			Removes the current window from a parent group.
 			</summary>  
 		</member>
-		<member name="M:Unigine.EngineWindow.arrange">
+		<member name="M:Unigine.EngineWindow.getType const">
 			<summary>
-			Rearranges the widgets of the window to lay them out neatly. The function forces to recalculate sizes of window widgets so that they fit the current layout. If this function is not called, widget modifications (adding a new widget or changing the size and/or position of the existing one) made in the current update() will be available only in the next frame (i.e. with one-frame lag). After rearranging, the expand() function should be called.
+			Returns the type of the engine window.
 			</summary>  
+			<returns>The type of the engine window.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.expand">
+		<member name="M:Unigine.EngineWindow.getTypeName const">
 			<summary>
-			Adapts positions of window widgets to the current window size after rearranging widgets by using the arrange() function. If there is an additional space in the window that exceeds the minimum required space for widgets, the widgets will use it.
+			Returns the name of the engine window type as a string.
 			</summary>  
+			<returns>The string representation of the engine window type.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.setSkipRenderEngine(bool)">
+		<member name="M:Unigine.EngineWindow.setTitleBarEnabled(bool)">
 			<summary>
-			Disables the Engine rendering for the current window (even if it has the main camera flag or the user camera set). This doesn't disable the Gui instance, so widgets and the console remain available.
+			Enables and disables the title bar for the window.																		This value is applied to the windows in the engine style only. For system-style windows system settings are applied.							This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary> 
-			<param name="engine"> true to disable rendering, false to enable it. </param> 
+			<param name="enabled"> true to enable the title bar for the engine window, otherwise false. </param> 
 		</member>
-		<member name="M:Unigine.EngineWindow.isSkipRenderEngine const">
+		<member name="M:Unigine.EngineWindow.isTitleBarEnabled const">
 			<summary>
-			Returns the value indicating whether the Engine rendering is disabled or not.
+			Returns the value indicating if the title bar is enabled for the window.																		This value is applied to the windows in the engine style only. For system-style windows system settings are applied.							This method should be applied to a separate or parent window, for a nested window it will return false.
 			</summary>  
-			<returns>true if the Engine rendering is disabled; otherwise, false.</returns>
+			<returns>true if the title bar is enabled for the engine window, otherwise false.</returns>
 		</member>
-		<member name="M:Unigine.EngineWindow.setAlwaysOnTop(bool)">
+		<member name="M:Unigine.EngineWindow.setTitleBarHeight(int)">
 			<summary>
-			Sets the window to always be rendered above the other windows.
+			Sets the height of the window title bar.																		This value is applied to the windows in the engine style only. For system-style windows system settings are applied.							This method can be applied to a separate or parent window, using this method for a nested window is not allowed.
 			</summary> 
-			<param name="top"> true to render the window always on top; otherwise, false. </param> 
+			<param name="height"> The engine window title bar height. </param> 
 		</member>
-		<member name="M:Unigine.EngineWindow.isAlwaysOnTop const">
+		<member name="M:Unigine.EngineWindow.getTitleBarHeight const">
 			<summary>
-			Returns the value indicating if the window is always rendered above the other windows.
+			Returns the height of the window title bar.																		This value is applied to the windows in the engine style only. For system-style windows system settings are applied.							This method should be applied to a separate or parent window, for a nested window it will return 0.
 			</summary>  
-			<returns>true if the window is always on top; otherwise, false.</returns>
+			<returns>The engine window title bar height.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.setSystemStyle(bool)">
+			<summary>
+			Sets the system style for the engine window.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
+			</summary> 
+			<param name="style"> true to set the default system style for the engine window, false to set the engine-style window. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindow.isSystemStyle const">
+			<summary>
+			Returns the value indicating if the default system style is set for the engine window.					This method should be applied to a separate or parent window, for a nested window it will return false.
+			</summary>  
+			<returns>true if the default system style is set for the engine window; false if the engine style is set for the window.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.setEngineStyle(bool)">
+			<summary>
+			Sets the engine style for the engine window.					This method should be applied to a separate or parent window, using this method for a nested window is not allowed.
+			</summary> 
+			<param name="style"> true to set the engine style for the engine window, false to set the default system style. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindow.isEngineStyle const">
+			<summary>
+			Returns the value indicating if the engine style is set for the engine window.					This method should be applied to a separate or parent window, for a nested window it will return true.
+			</summary>  
+			<returns>true if the engine style is set for the engine window; false if the default system style is set for the window.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.setSizingBorderSize(int)">
+			<summary>
+			Sets the size of the border in the widget that is manipulated to resize the window.																		This method should not be applied to a system-style window with enabled borders, as the system settings cannot be changed.							This method should not be applied to nested windows.
+			</summary> 
+			<param name="size"> The size of the border that is manipulated to resize the window, in pixels. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindow.getSizingBorderSize const">
+			<summary>
+			Returns the size of the border in the widget that is manipulated to resize the window.																		This method should be applied to an engine-style window, for an unmodified system-style window (i.e. with the enabled border size), the system value is applied.							This method should be applied to a separate or parent window, for a nested window it will return 0.
+			</summary>  
+			<returns>The size of the border in the widget that is manipulated to resize the window, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.close">
+			<summary>
+			Deletes the window if this window is not a modal parent or a member of a fixed group. If a window is a member of a fixed group, it cannot be closed (i.e. deleted).
+			</summary>  
+		</member>
+		<member name="M:Unigine.EngineWindow.setCanBeNested(bool)">
+			<summary>
+			Sets the value indicating if the engine window can be used as a nested window.
+			</summary> 
+			<param name="nested"> true to enable usage of the engine window as a nested window, otherwise false. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindow.isCanBeNested const">
+			<summary>
+			Returns the value indicating if the engine window can be used as a nested window.
+			</summary>  
+			<returns>true if usage of the engine window as a nested window is enabled, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.setCanCreateGroup(bool)">
+			<summary>
+			Sets the value indicating if the engine window can become a group.
+			</summary> 
+			<param name="group"> true to enable usage of the engine window as a group, otherwise false. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindow.isCanCreateGroup const">
+			<summary>
+			Returns the value indicating if the engine window can become a group.
+			</summary>  
+			<returns>true if usage of the engine window as a group is enabled, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.isHiddenByTab const">
+			<summary>
+			Returns the value indicating if the window is overlapped by any other tab (either by switching to another tab or resizing this window to have zero client area).
+			</summary>  
+			<returns>true if the window is overlapped by any other tab, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.getIntersection(Unigine.Math.ivec2) const">
+			<summary>
+			Returns the value indicating if the mouse is hovering over the window.
+			</summary> 
+			<param name="global_mouse_pos"> Global screen coordinates of the mouse relative to the main display. </param> 
+			<returns>true if the mouse hovers over the current window, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.getClientIntersection(Unigine.Math.ivec2) const">
+			<summary>
+			Returns the value indicating if the mouse is hovering over the client area of the window.
+			</summary> 
+			<param name="global_mouse_pos"> Global screen coordinates of the mouse relative to the main display. </param> 
+			<returns>true if the mouse hovers over the client area of the window, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.getClient9Area(Unigine.Math.ivec2) const">
+			<summary>
+			Returns the area over which the mouse hovers, one of the nine areas into which the window is segmented.
+			</summary> 
+			<param name="global_mouse_pos"> Global screen coordinates of the mouse relative to the main display. </param> 
+			<returns>One of the nine segments the screen area is split into.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.get9AreaName(EngineWindow::AREA) const">
+			<summary>
+			Returns the name of the screen segment as a string.
+			</summary> 
+			<param name="area"> One of the nine segments the screen area is split into. </param> 
+			<returns>The string representation of the segment value (e.g., AREA_TOP_LEFT is TOP LEFT).</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.globalToLocalUnitPosition(Unigine.Math.ivec2) const">
+			<summary>
+			Transforms the global screen coordinates in pixels into units relative to the window client area.
+			</summary> 
+			<param name="global_pos"> The position in global coordinates. </param> 
+			<returns>The coordinates in units relative to the window client area.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.localUnitToGlobalPosition(Unigine.Math.ivec2) const">
+			<summary>
+			Transforms the position in units relative to the window client area into the global screen coordinates in pixels.
+			</summary> 
+			<param name="unit_pos"> The coordinates in units relative to the window client area. </param> 
+			<returns>The position in global coordinates.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.getRenderSize const">
+			<summary>
+			Returns the engine window frame size in pixels.
+			</summary>  
+			<returns>The engine window frame size in pixels.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.getClientRenderSize const">
+			<summary>
+			Returns the client area size in pixels.
+			</summary>  
+			<returns>The client area size in pixels.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.getMinRenderSize const">
+			<summary>
+			Returns the minimum window size in pixels.
+			</summary>  
+			<returns>The minimum window size in pixels.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.getMaxRenderSize const">
+			<summary>
+			Returns the maximum window size in pixels.
+			</summary>  
+			<returns>The maximum window size in pixels.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.getDpi const">
+			<summary>
+			Returns the current DPI level for the window.
+			</summary>  
+			<returns>The current DPI level for the window.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.getDpiScale const">
+			<summary>
+			Returns the current DPI scale applied to the elements inside the window.
+			</summary>  
+			<returns>The current DPI scale applied to the elements inside the window.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.toRenderSize(int)">
+			<summary>
+			Transforms the unit value to the pixel value.
+			</summary> 
+			<param name="unit_size"> Size in units. </param> 
+			<returns>Size in pixels.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.toUnitSize(int)">
+			<summary>
+			Transforms the pixel value to the unit value.
+			</summary> 
+			<param name="render_size"> Size in pixels. </param> 
+			<returns>Size in units.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.toRenderSize(Unigine.Math.ivec2)">
+			<summary>
+			Transforms the unit value to the pixel value.
+			</summary> 
+			<param name="unit_size"> Size in units. </param> 
+			<returns>Size in pixels.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindow.toUnitSize(Unigine.Math.ivec2)">
+			<summary>
+			Transforms the pixel value to the unit value.
+			</summary> 
+			<param name="render_size"> Size in pixels. </param> 
+			<returns>Size in units.</returns>
+		</member>
+		<member name="F:Unigine.EngineWindow.HITTEST_INVALID">
+			<summary>
+			The hittest result is invalid.
+		</summary>
 		</member>
 		<member name="F:Unigine.EngineWindow.HITTEST_NORMAL">
 			<summary>
@@ -852,46 +818,6 @@
 		<member name="F:Unigine.EngineWindow.HITTEST_RESIZE_LEFT">
 			<summary>
 			Area of the window that can be dragged to resize the window to the left direction.
-		</summary>
-		</member>
-		<member name="F:Unigine.EngineWindow.STATE_SEPARATE_WINDOW">
-			<summary>
-			Separate system window.
-		</summary>
-		</member>
-		<member name="F:Unigine.EngineWindow.STATE_SEPARATE_GROUP">
-			<summary>
-			Separate system window group.
-		</summary>
-		</member>
-		<member name="F:Unigine.EngineWindow.STATE_NESTED_WINDOW">
-			<summary>
-			Nested window, a part of a window group.
-		</summary>
-		</member>
-		<member name="F:Unigine.EngineWindow.STATE_NESTED_GROUP">
-			<summary>
-			Nested group of windows, a part of a window group.
-		</summary>
-		</member>
-		<member name="F:Unigine.EngineWindow.GROUP_TYPE_NONE">
-			<summary>
-			A separate window inside the group.
-		</summary>
-		</member>
-		<member name="F:Unigine.EngineWindow.GROUP_TYPE_TAB">
-			<summary>
-			Windows are arranged into a group of tabs with a selected window displayed atop the others in the group.
-		</summary>
-		</member>
-		<member name="F:Unigine.EngineWindow.GROUP_TYPE_HORIZONTAL">
-			<summary>
-			Windows are arranged into a horizontally displayed group.
-		</summary>
-		</member>
-		<member name="F:Unigine.EngineWindow.GROUP_TYPE_VERTICAL">
-			<summary>
-			Windows are arranged into a vertically displayed group.
 		</summary>
 		</member>
 		<member name="F:Unigine.EngineWindow.CALLBACK_WINDOW_EVENT">
@@ -974,11 +900,620 @@
 			Engine can't stop operating while this window is open.
 		</summary>
 		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_UNSTACK">
+			<summary>
+			Window is unstacked.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_STACK">
+			<summary>
+			Window is stacked.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_UNSTACK_MOVE">
+			<summary>
+			Window is unstacked and moved.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_ITEM_DROP">
+			<summary>
+			Item is dropped to the window.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_CLOSE">
+			<summary>
+			Window is closed.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_RESTORED">
+			<summary>
+			Window is restored.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_MAXIMIZED">
+			<summary>
+			Window is maximized.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_MINIMIZED">
+			<summary>
+			Window is minimized.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_HIDDEN">
+			<summary>
+			Window is hidden.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_SHOWN">
+			<summary>
+			Window is shown.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_MOUSE_LEAVE">
+			<summary>
+			Mouse leaves the window area.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_MOUSE_ENTER">
+			<summary>
+			Mouse enters the window area.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_UNFOCUSED">
+			<summary>
+			Window loses the focus.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_FOCUSED">
+			<summary>
+			Window gains the focus.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_RESIZED">
+			<summary>
+			Window is resized.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.CALLBACK_MOVED">
+			<summary>
+			Window is moved.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.AREA_BOTTOM_RIGHT">
+			<summary>
+			Bottom right area of the window split into 9 parts.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.AREA_BOTTOM_CENTER">
+			<summary>
+			Bottom center area of the window split into 9 parts.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.AREA_BOTTOM_LEFT">
+			<summary>
+			Bottom left area of the window split into 9 parts.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.AREA_CENTER_RIGHT">
+			<summary>
+			Center right area of the window split into 9 parts.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.AREA_CENTER_CENTER">
+			<summary>
+			Center area of the window split into 9 parts.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.AREA_CENTER_LEFT">
+			<summary>
+			Center left area of the window split into 9 parts.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.AREA_TOP_RIGHT">
+			<summary>
+			Top right area of the window split into 9 parts.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.AREA_TOP_CENTER">
+			<summary>
+			Top center area of the window split into 9 parts.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.AREA_TOP_LEFT">
+			<summary>
+			Top left area of the window split into 9 parts.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.AREA_NONE">
+			<summary>
+			None of the areas of the window split into 9 parts is selected.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.ENGINE_WINDOW">
+			<summary>
+			Engine window.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.ENGINE_WINDOW_VIEWPORT">
+			<summary>
+			Engine viewport window.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.ENGINE_WINDOW_GROUP">
+			<summary>
+			Engine window group.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindow.NUM_ENGINE_WINDOWS">
+			<summary>
+			Total number of engine windows.
+		</summary>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.#ctor(EngineWindowGroup::GROUP_TYPE,Unigine.Math.ivec2,int)">
+			<summary>
+			Constructor. Creates the window group of the specified type and size with the specified flags.
+			</summary> 
+			<param name="group_type"> The type of the group. </param>
+			<param name="size"> The size of the window group. </param>
+			<param name="flags"> Mask containing window flags. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.#ctor(EngineWindowGroup::GROUP_TYPE,int,int,int)">
+			<summary>
+			Constructor. Creates the window group of the specified type and size with the specified flags.
+			</summary> 
+			<param name="group_type"> The type of the group. </param>
+			<param name="width"> Window width. </param>
+			<param name="height"> Window height. </param>
+			<param name="flags"> Mask containing window flags. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.#ctor(EngineWindowGroup::GROUP_TYPE,char,int,int,int)">
+			<summary>
+			Constructor. Creates the window group of the specified type and size with the specified title and flags.
+			</summary> 
+			<param name="group_type"> The type of the group. </param>
+			<param name="window_title"> The title of the window, in UTF-8 encoding. </param>
+			<param name="width"> Window width. </param>
+			<param name="height"> Window height. </param>
+			<param name="flags"> Mask containing window flags. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getGroupType const">
+			<summary>
+			Returns the window group type set in the constructor — vertical, horizontal, tab arrangement of windows, or an independent window inside a group.
+			</summary>  
+			<returns>The window group type.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.setFixed(bool)">
+			<summary>
+			Sets a value specifying if windows can be added to this group or removed from it.
+			</summary> 
+			<param name="fixed"> true to disable adding or removing windows from this group, otherwise false. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.isFixed const">
+			<summary>
+			Returns a value specifying if windows can be added to this group or removed from it.
+			</summary>  
+			<returns>true if adding or removing windows from this group is disabled, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.setAutoDeleteMode(EngineWindowGroup::AUTO_DELETE_MODE)">
+			<summary>
+			Sets the automatic window deletion mode.
+			</summary> 
+			<param name="mode"> The automatic window deletion mode. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getAutoDeleteMode const">
+			<summary>
+			Returns the automatic window deletion mode.
+			</summary>  
+			<returns>The automatic window deletion mode.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.add(Unigine.Ptr{EngineWindow},int)">
+			<summary>
+			Adds a window at a specified index. The window becomes nested (i.e. its borders, style, title bar, etc. are disabled).						If the group is fixed, a window won't be added to the group and the console will display a corresponding warning.
+			</summary> 
+			<param name="window"> Window to be added. </param>
+			<param name="target_index"> The window order. If no index is set, the window is added as the last one. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.remove(Unigine.Ptr{EngineWindow})">
+			<summary>
+			Removes the specified window from the group. The window's settings are the same as before adding it to the group.						If the group is fixed, a window won't be removed from the group and the console will display a corresponding warning.
+			</summary> 
+			<param name="window"> Window to be removed. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.removeByIndex(int)">
+			<summary>
+			Removes the window at a specified index from the group. The window's settings are the same as before adding it to the group.						If the group is fixed, a window won't be removed from the group and the console will display a corresponding warning.
+			</summary> 
+			<param name="index"> The index of the window to be removed. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getNumNestedWindows const">
+			<summary>
+			Returns the total number of nested windows in the group.
+			</summary>  
+			<returns>The total number of nested windows in the group.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getNestedWindow(int) const">
+			<summary>
+			Returns the nested engine window by its index.
+			</summary> 
+			<param name="index"> Index of the nested window. </param> 
+			<returns>Nested engine window.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getNestedWindowIndex(Unigine.Ptr{EngineWindow})">
+			<summary>
+			Returns the index of the specified nested engine window.
+			</summary> 
+			<param name="window"> Nested engine window. </param> 
+			<returns>Index of the nested window.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.containsNestedWindow(Unigine.Ptr{EngineWindow}) const">
+			<summary>
+			Returns the value indicating if the specified window is a direct child of the current group.
+			</summary> 
+			<param name="window"> Window to be checked. </param> 
+			<returns>true if the specified window is a direct child of the current one, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.containsNestedWindowInHierarchy(Unigine.Ptr{EngineWindow}) const">
+			<summary>
+			Returns the value indicating if the specified window is a child of the current group or any of its children.
+			</summary> 
+			<param name="window"> Window to be checked. </param> 
+			<returns>true if the specified window is a child of the current one, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.setTabTitle(int,char)">
+			<summary>
+			Adds the title to the specified tab and the window itself.
+			</summary> 
+			<param name="index"> Index of the tab. </param>
+			<param name="title"> Title to be added. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.setTabIcon(int,Unigine.Ptr{Unigine.Image})">
+			<summary>
+			Adds the image to the specified tab and the window itself.
+			</summary> 
+			<param name="index"> Index of the tab. </param>
+			<param name="image"> Image to be added. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getCurrentTab const">
+			<summary>
+			Returns the index of the currently active tab in a tab group.
+			</summary>  
+			<returns>The index of the currently active tab.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getTabWidth(int) const">
+			<summary>
+			Returns the width of the tab. Available for horizontal groups only.
+			</summary> 
+			<param name="index"> The index of the tab. </param> 
+			<returns>The width of the the tab.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getTabHeight(int) const">
+			<summary>
+			Returns the height of the tab. Available for vertical groups only.
+			</summary> 
+			<param name="index"> The index of the tab. </param> 
+			<returns>The height of the tab.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getTabBarWidth(int) const">
+			<summary>
+			Returns the width of the tab bar.
+			</summary> 
+			<param name="index"> The index of the tab. </param> 
+			<returns>The width of the tab bar.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getTabBarHeight(int) const">
+			<summary>
+			Returns the height of the tab bar.
+			</summary> 
+			<param name="index"> The index of the tab. </param> 
+			<returns>The height of the tab bar.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getTabLocalPosition(int) const">
+			<summary>
+			Returns the screen position of the tab relatively to the parent group (global window). The coordinates represent the displacement from the top left corner of the parent group (global window).
+			</summary> 
+			<param name="index"> The index of the tab. </param> 
+			<returns>The screen position of the tab relatively to the parent group (global window).</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getTabBarLocalPosition(int) const">
+			<summary>
+			Returns the screen position of the tab bar relatively to the parent group (global window). The coordinates represent the displacement from the top left corner of the parent group (global window).
+			</summary> 
+			<param name="index"> The index of the tab. </param> 
+			<returns>The screen position of the tab bar relatively to the parent group (global window).</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.setHorizontalTabWidth(int,int)">
+			<summary>
+			Sets the width of the tab in the group of tabs arranged horizontally.
+			</summary> 
+			<param name="index"> The index of the tab. </param>
+			<param name="width"> The width of the tab in the group of tabs arranged horizontally. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.setVerticalTabHeight(int,int)">
+			<summary>
+			Sets the height of the tab in the group of tabs arranged vertically.
+			</summary> 
+			<param name="index"> The index of the tab. </param>
+			<param name="height"> The height of the tab in the group of tabs arranged vertically. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getSeparatorWidth const">
+			<summary>
+			Returns the width of the vertical line separating a tab group from the rest of the area.
+			</summary>  
+			<returns>The width of the separation line, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getSeparatorHeight const">
+			<summary>
+			Returns the height of the horizontal line separating a tab group from the rest of the area.
+			</summary>  
+			<returns>The height of the separation line, in pixels.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.setSeparatorPosition(int,int)">
+			<summary>
+			Sets the position of the line separating a tab group from the rest of the area. The separator line can be horizontal or vertical depending on the group type.
+			</summary> 
+			<param name="index"> Index of the tab. </param>
+			<param name="pos"> Position of the separation line, in pixels, from the top-left corner of the window. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getSeparatorPosition(int) const">
+			<summary>
+			Returns the position of the line separating a tab group from the rest of the area. The separator line can be horizontal or vertical depending on the group type.
+			</summary> 
+			<param name="index"> Index of the tab. </param> 
+			<returns>Position of the separation line, in pixels, from the top-left corner of the window.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.setSeparatorValue(int,float)">
+			<summary>
+			Sets the relative position of the tab separator.
+			</summary> 
+			<param name="index"> Index of the tab. </param>
+			<param name="value"> Position of the tab separator, the value from 0 to 1 that is recalculated to pixels. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getSeparatorValue(int) const">
+			<summary>
+			Returns the relative position of the tab separator.
+			</summary> 
+			<param name="index"> Index of the tab. </param> 
+			<returns>Position of the tab separator, the value from 0 to 1.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.swapTabs(int,int)">
+			<summary>
+			Swaps the specified tabs.						If the group is fixed, tabs won't be swapped and the console will display a corresponding warning.
+			</summary> 
+			<param name="first"> Index of the first tab. </param>
+			<param name="second"> Index of the second tab. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getIntersectionTabBar(Unigine.Math.ivec2)">
+			<summary>
+			Returns the value indicating if the mouse is hovering over the window tab bar.
+			</summary> 
+			<param name="global_mouse_pos"> Global screen coordinates of the mouse relative to the main display. </param> 
+			<returns>1 if the mouse hovers over the window tab bar, otherwise 0.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getIntersectionTabBarArea(Unigine.Math.ivec2)">
+			<summary>
+			Returns the value indicating if the mouse is hovering over the window tab bar area.
+			</summary> 
+			<param name="global_mouse_pos"> Global screen coordinates of the mouse relative to the main display. </param> 
+			<returns>1 if the mouse hovers over the window tab bar area, otherwise 0.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getIntersectedItemPosition const">
+			<summary>
+			Returns the position of the left top corner of the intersected group item in the screen coordinates. In case of several displays, the position is relative to the main display.
+			</summary>  
+			<returns>The screen position of the intersected item — coordinates of the left top corner.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowGroup.getIntersectedItemSize const">
+			<summary>
+			Returns the size of the intersected item.
+			</summary>  
+			<returns>The size of the intersected item, in pixels.</returns>
+		</member>
+		<member name="F:Unigine.EngineWindowGroup.GROUP_TYPE_NONE">
+			<summary>
+			A separate window inside the group.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindowGroup.GROUP_TYPE_TAB">
+			<summary>
+			Windows are arranged into a group of tabs with a selected window displayed atop the others in the group.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindowGroup.GROUP_TYPE_HORIZONTAL">
+			<summary>
+			Windows are arranged into a horizontally displayed group.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindowGroup.GROUP_TYPE_VERTICAL">
+			<summary>
+			Windows are arranged into a vertically displayed group.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindowGroup.AUTO_DELETE_MODE_NONE">
+			<summary>
+			Automatic deletion of the window is disabled.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindowGroup.AUTO_DELETE_MODE_EMPTY">
+			<summary>
+			A window group is deleted automatically if it doesn't contain any nested windows.
+		</summary>
+		</member>
+		<member name="F:Unigine.EngineWindowGroup.AUTO_DELETE_MODE_SINGLE_WINDOW">
+			<summary>
+			A group is deleted automatically, if only one window is left. If this was a child group, it is automatically transformed to a child window.
+		</summary>
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.#ctor(Unigine.Math.ivec2,int)">
+			<summary>
+			Constructor. Creates the window viewport of the specified size with the specified flags.
+			</summary> 
+			<param name="flags"> Mask containing window flags. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.#ctor(int,int,int)">
+			<summary>
+			Constructor. Creates the window viewport of the specified size with the specified flags.
+			</summary> 
+			<param name="width"> Window width. </param>
+			<param name="height"> Window height. </param>
+			<param name="flags"> Mask containing window flags. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.#ctor(char,int,int,int)">
+			<summary>
+			Constructor. Creates the window viewport of the specified size with the specified title and flags.
+			</summary> 
+			<param name="window_title"> The title of the window, in UTF-8 encoding. </param>
+			<param name="width"> Window width. </param>
+			<param name="height"> Window height. </param>
+			<param name="flags"> Mask containing window flags. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.getViewport const">
+			<summary>
+			Returns the window viewport.
+			</summary>  
+			<returns>The window viewport.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.setCamera(Unigine.Ptr{Unigine.Camera})">
+			<summary>
+			Sets the camera the image from which is rendered to the engine window. This value has a higher priority over the main camera flag.
+			</summary> 
+			<param name="camera"> Camera. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.getCamera const">
+			<summary>
+			Returns the camera the image from which is rendered to the engine window. This value has a higher priority over the main camera flag.
+			</summary>  
+			<returns>The camera the image from which is rendered to the engine window.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.setMain(bool)">
+			<summary>
+			Sets the window as the main window in order to use its size in logic, render from the main player into it, grab controls, etc.						There may be several windows that are set as main, or no main windows at all.
+			</summary> 
+			<param name="main"> true to set the window as the main window, otherwise false. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.isMain const">
+			<summary>
+			Returns a value indicating if this window is the main window (its size is used in logic, image from the main player is rendered into it, controls are grabbed, etc.)						There may be several windows that are set as main, or no main windows at all.
+			</summary>  
+			<returns>true if the window is the main window, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.setConsoleUsage(bool)">
+			<summary>
+			Enables and disables display of the console for the window currently in focus.
+			</summary> 
+			<param name="usage"> true to display the console for the window in focus, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.isConsoleUsage const">
+			<summary>
+			Returns the value indicating if the console is displayed for the window currently in focus.
+			</summary>  
+			<returns>true if the console is displayed for the window in focus, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.setProfilerUsage(bool)">
+			<summary>
+			Enables and disables the profiler display for the viewport of the window currently in focus.
+			</summary> 
+			<param name="usage"> true to enable the profiler display for the window in focus, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.isProfilerUsage const">
+			<summary>
+			Returns the value indicating if the profiler is displayed for the window currently in focus.
+			</summary>  
+			<returns>true if the profiler is displayed for the window in focus, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.setVisualizerUsage(bool)">
+			<summary>
+			Enables and disables the visualizer display for the window currently in focus.
+			</summary> 
+			<param name="usage"> true to enable the visualizer display for the window currently in focus, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.isVisualizerUsage const">
+			<summary>
+			Returns the value indicating if the visualizer is displayed for the window currently in focus.
+			</summary>  
+			<returns>true if the visualizer is displayed for the window currently in focus, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.setSkipRenderEngine(bool)">
+			<summary>
+			Disables the Engine rendering for the current window (even if it has the main camera flag or the user camera set). This doesn't disable the Gui instance, so widgets and the console remain available.
+			</summary> 
+			<param name="engine"> true to disable rendering, false to enable it. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.isSkipRenderEngine const">
+			<summary>
+			Returns the value indicating whether the Engine rendering is disabled.
+			</summary>  
+			<returns>true if the Engine rendering is disabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.isFullscreen const">
+			<summary>
+			Returns the value indicating if the window is in a fullscreen state. A nested window will be withdrawn from the group if set to fullscreen.
+			</summary>  
+			<returns>true if the engine window is the fullscreen state, false if it is in the window mode.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.disableFullscreen">
+			<summary>
+			Disables the fullscreen mode for the window in the fullscreen mode and sets the focus to this window. States and positions of other windows are restored.						This method can't be applied to nested windows.
+			</summary>  
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.enableFullscreen(int,int)">
+			<summary>
+			Enables the specified fullscreen mode for the specified display. The states of other displayed windows are stored in order to restore their states and positions when the fullscreen mode is disabled. A nested window will be withdrawn from the group if set to fullscreen.
+			</summary> 
+			<param name="display"> Display index. </param>
+			<param name="mode"> Index of the mode supported by the display. </param> 
+			<returns>true if the specified fullscreen mode has been enabled for the specified display; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.setMouseGrab(bool)">
+			<summary>
+			Sets a value indicating if the mouse pointer is bound to the engine window viewport.						This method can be applied to a separate or parent window, using this method for a nested window is not allowed.
+			</summary> 
+			<param name="value"> true if the pointer cannot leave the engine window viewport, otherwise false. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.isMouseGrab const">
+			<summary>
+			Returns a value indicating if the mouse pointer is bound to the engine window viewport.						This method can be applied to a separate or parent window, for nested windows, it returns false.
+			</summary>  
+			<returns>true if the pointer cannot leave the engine window viewport, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.addChild(Unigine.Ptr{Unigine.Widget},int)">
+			<summary>
+			Adds the specified widget as a child to the client area of the engine window.
+			</summary> 
+			<param name="widget"> Child widget to be added. </param>
+			<param name="flags"> Widget flags: one of the ALIGN_* pre-defined variables. This is an optional parameter. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.removeChild(Unigine.Ptr{Unigine.Widget})">
+			<summary>
+			Removes the specified widget from the engine window.
+			</summary> 
+			<param name="widget"> Child widget to be removed. </param> 
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.getChild(int) const">
+			<summary>
+			Returns the child widget by its index.
+			</summary> 
+			<param name="index"> Widget index. </param> 
+			<returns>Child widget.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.getNumChildren const">
+			<summary>
+			Returns the total number of children widgets of the engine window.
+			</summary>  
+			<returns>The total number of children widgets.</returns>
+		</member>
+		<member name="M:Unigine.EngineWindowViewport.isChild(Unigine.Ptr{Unigine.Widget}) const">
+			<summary>
+			Checks if the argument widget is the child of the current window viewport.
+			</summary> 
+			<param name="widget"> Widget. </param> 
+			<returns>true if the widget is the child of the current window viewport; otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.WindowManager.getMainWindow const">
 			<summary>
-								Returns the window that is set as the main window by default.					There may be several windows that are set as main, or no main windows at all.
+								Returns the window viewport that is set as the main window by default.					There may be several windows that are set as main, or no main windows at all.
 			</summary>  
-			<returns>The engine window.</returns>
+			<returns>Engine window viewport.</returns>
 		</member>
 		<member name="M:Unigine.WindowManager.getNumWindows const">
 			<summary>
@@ -1000,57 +1535,55 @@
 			<param name="window"> Engine window. </param> 
 			<returns>Index of the window.</returns>
 		</member>
-		<member name="M:Unigine.WindowManager.stack(Unigine.Ptr{EngineWindow},Unigine.Ptr{EngineWindow},int,EngineWindow::GROUP_TYPE,bool)">
+		<member name="M:Unigine.WindowManager.stack(Unigine.Ptr{EngineWindow},Unigine.Ptr{EngineWindow},EngineWindowGroup::GROUP_TYPE,int,bool)">
 			<summary>
-			Returns the group of windows. If the first argument is a window, a new group is always created. If the first argument is a group, the second element is added to this group.  The order of stacking can be changed by passing the index argument. To combine two groups into a new one, use the stackGroups() method.
+			Stacks the window to the other window. If the first argument is the separate window, a new window group is returned. If the first argument is the nested window, the window is added to its group.					group_1 will consist of 3 windows: window_1 and window_3 stacked vertically and window_2 stacked horizontally.
 			</summary> 
-			<param name="first"> The first window or group for merging. </param>
-			<param name="second"> The second window for merging. </param>
-			<param name="index"> A place where a window or a group should be placed in a group. </param>
-			<param name="group_type"> Type of a group to be created, if the first argument is a window and not a group. </param>
-			<param name="decompose_second"> Flag to decompose the second argument of the merge, if it is a group, and combine with the first window or a group. </param> 
-			<returns>Group of windows.</returns>
+			<param name="first_window"> The parent window to which another window is stacked. </param>
+			<param name="second_window"> The window to be stacked. </param>
+			<param name="group_type"> Type of a group to be created. </param>
+			<param name="decompose_second"> Flag to decompose the second argument of the merge, if it is a group, and combine with the first group. </param> 
+			<returns>Group of stacked windows.</returns>
 		</member>
 		<member name="M:Unigine.WindowManager.stackToParentGroup(Unigine.Ptr{EngineWindow},Unigine.Ptr{EngineWindow},int,bool)">
 			<summary>
 			Stacks the second window to the parent window group of the first window. In the result, both windows passed as arguments will be on the same level in the group hierarchy. If the first window has no parent group, the function will return it as is.
 			</summary> 
-			<param name="destination"> The window into the parent group of which the other window is stacked. </param>
+			<param name="window_in_group"> The window into the parent group of which the other window is stacked. </param>
 			<param name="window"> The window to be stacked. </param>
 			<param name="index"> A place where a window or a group should be placed in a group. </param>
 			<param name="decompose_second"> Flag to decompose the second argument of the merge, if it is a group, and combine with the first window or a group. </param> 
 			<returns>Group of windows.</returns>
 		</member>
-		<member name="M:Unigine.WindowManager.stackWindows(Unigine.Ptr{EngineWindow},Unigine.Ptr{EngineWindow},EngineWindow::GROUP_TYPE)">
+		<member name="M:Unigine.WindowManager.stackWindows(Unigine.Ptr{EngineWindowViewport},Unigine.Ptr{EngineWindowViewport},EngineWindowGroup::GROUP_TYPE)">
 			<summary>
 			Returns a newly created group of the separate and/or nested windows. You cannot stack the window group to the separate window, however, you can stack a window nested in the window group: in this case, the window will be unstacked from its parent group and added to the new one. The windows are stacked in the default order. For example:					group_1 will be a vertical group of window_3 and window_1.
 			</summary> 
-			<param name="first"> The window to be stacked. </param>
-			<param name="second"> The window to be stacked. </param>
+			<param name="first_viewport"> The window to be stacked. </param>
+			<param name="second_viewport"> The window to be stacked. </param>
 			<param name="group_type"> Type of a group to be created. </param> 
 			<returns>Group of windows.</returns>
 		</member>
-		<member name="M:Unigine.WindowManager.stackGroups(Unigine.Ptr{EngineWindow},Unigine.Ptr{EngineWindow},EngineWindow::GROUP_TYPE,bool)">
+		<member name="M:Unigine.WindowManager.stackWithWindow(Unigine.Ptr{EngineWindowViewport},Unigine.Ptr{EngineWindow},EngineWindowGroup::GROUP_TYPE,bool)">
 			<summary>
-			Returns the group of window groups. The second group is added to the first group. To combine two windows or a group and a window, use the stack() method.
+			Returns a newly created group of the engine window viewport and any other engine window — another viewport or a window group.
 			</summary> 
-			<param name="first"> The first window group for merging. </param>
-			<param name="second"> The second window group for merging. </param>
-			<param name="group_type"> Type of a group to be created. </param>
+			<param name="window_viewport"> The window viewport to be stacked. </param>
+			<param name="window"> The window to be stacked. </param>
+			<param name="group_type"> Type of a window group to be created. </param>
 			<param name="decompose_second"> Flag to decompose the second argument of the merge, if it is a group, and combine with the first group. </param> 
 			<returns>Group of windows.</returns>
 		</member>
-		<member name="M:Unigine.WindowManager.stackToWindow(Unigine.Ptr{EngineWindow},Unigine.Ptr{EngineWindow},EngineWindow::GROUP_TYPE,bool)">
+		<member name="M:Unigine.WindowManager.stackGroups(Unigine.Ptr{EngineWindowGroup},Unigine.Ptr{EngineWindowGroup},EngineWindowGroup::GROUP_TYPE)">
 			<summary>
-			Stacks the window to the other window. If the first argument is the separate window, a new window group is returned. If the first argument is the nested window, the window is added to its group.					group_1 will consist of 3 windows: window_1 and window_3 stacked vertically and window_2 stacked horizontally.
+			Returns the group of window groups. The second group is added to the first group. To combine two windows or a group and a window, use the stack() method.
 			</summary> 
-			<param name="destination_window"> The parent window to which another window is stacked. </param>
-			<param name="window"> The window to be stacked. </param>
-			<param name="group_type"> Type of a group to be created. </param>
-			<param name="decompose_second"> Flag to decompose the second argument of the merge, if it is a group, and combine with the first group. </param> 
-			<returns>Group of stacked windows.</returns>
+			<param name="first_group"> The first window group for merging. </param>
+			<param name="second_group"> The second window group for merging. </param>
+			<param name="group_type"> Type of a group to be created. </param> 
+			<returns>Group of windows.</returns>
 		</member>
-		<member name="M:Unigine.WindowManager.stackToGroup(Unigine.Ptr{EngineWindow},Unigine.Ptr{EngineWindow},int,bool)">
+		<member name="M:Unigine.WindowManager.stackToGroup(Unigine.Ptr{EngineWindowGroup},Unigine.Ptr{EngineWindow},int,bool)">
 			<summary>
 			Stacks the window or window group to another window group. The updated group of windows is returned.
 			</summary> 
@@ -1078,17 +1611,18 @@
 			</summary>  
 			<returns>true if the window is the fullscreen state, false if it's in the window mode.</returns>
 		</member>
+		<member name="M:Unigine.WindowManager.isFullscreenWindow(Unigine.Ptr{EngineWindow})">
+			<summary>
+			Returns the value indicating if the specified window is in a fullscreen state.
+			</summary> 
+			<param name="window"> The window to be checked. </param> 
+			<returns>true if the engine window is the fullscreen state, false if it is in the window mode.</returns>
+		</member>
 		<member name="M:Unigine.WindowManager.getFullscreenWindow const">
 			<summary>
-			Returns the first window that is in the fullscreen state.
+			Returns the first engine window viewport that is in the fullscreen state.
 			</summary>  
-			<returns>Window in the fullscreen state, or nullptr if no window is found.</returns>
-		</member>
-		<member name="M:Unigine.WindowManager.getGuiFocusedWindow const">
-			<summary>
-			Returns the window the content (internal widget) of which is clicked. The window itself doesn't have any nested windows.
-			</summary>  
-			<returns>The window the GUI of which is in focus, or nullptr if no window is found.</returns>
+			<returns>The viewport in the fullscreen state, or nullptr if no window is found.</returns>
 		</member>
 		<member name="M:Unigine.WindowManager.getWindowByID(unsignedlonglong) const">
 			<summary>
@@ -1212,9 +1746,15 @@
 		</member>
 		<member name="M:Unigine.WindowManager.getFocusedWindow const">
 			<summary>
-			Returns the window which is currently in focus.
+			Returns the window viewport which is currently in focus.
 			</summary>  
-			<returns>The window which is currently in focus.</returns>
+			<returns>The window viewport which is currently in focus.</returns>
+		</member>
+		<member name="M:Unigine.WindowManager.getSystemFocusedWindow const">
+			<summary>
+			Returns the engine window viewport that has the isSystemFocused() flag enabled, either a window itself or its parent group with the system focus is enabled. If there is no window with such a flag, nullptr is returned.
+			</summary>  
+			<returns>The engine window viewport that has the isSystemFocused() flag enabled, or nullptr if there is no such window.</returns>
 		</member>
 		<member name="M:Unigine.WindowManager.getIntersection(Unigine.Math.ivec2,Unigine.Vector{Unigine.Ptr{EngineWindow},int,Unigine.VectorAllocator}) const">
 			<summary>
@@ -1233,14 +1773,32 @@
 		</member>
 		<member name="M:Unigine.WindowManager.forceUpdateWindowOrders">
 			<summary>
-			Updates the Z order of all windows.It is recommended to use this method only when required, because it is very slow.
+			Updates the Z order of all windows.					It is recommended to use this method only when required, because it is very slow.
 			</summary>  
 		</member>
-		<member name="M:Unigine.WindowManager.setEventsFilter(int(*)(constPtr{InputEvent}&))">
+		<member name="M:Unigine.WindowManager.setEventsFilter(Unigine.Ptr{InputEvent})">
 			<summary>
 			Sets a callback function to be executed on receiving input events. This input event filter enables you to reject certain input events for the Engine and get necessary information on all input events.
 			</summary> 
 			<param name="func"> Input event callback. </param> 
+		</member>
+		<member name="M:Unigine.WindowManager.getDpiAwareness const">
+			<summary>
+			Returns the DPI awareness mode, the value indicating how the application processes the DPI scaling. The value is set to PER_MONITOR_AWARE by default. On Windows, if a specified mode cannot be set, it will switch to a possible lower value with a corresponding warning. On Linux, PER_MONITOR_AWARE is currently not supported, setting this value will switch the mode to the SYSTEM_AWARE mode with the corresponding warning in the console.					This value is stored in the boot config file and can be changed only at the application startup. It cannot be changed at runtime, thus at an attempt to change the value the console will show the corresponding warning.
+			</summary>  
+			<returns>The DPI awareness mode, the value indicating how the application processes the DPI scaling.</returns>
+		</member>
+		<member name="M:Unigine.WindowManager.getCurrentDpiAwareness const">
+			<summary>
+			Returns the current actual DPI awareness mode, the value indicating how the application processes the DPI scaling. The value is set to PER_MONITOR_AWARE by default. On Windows, if a specified mode cannot be set, it will switch to a possible lower value with a corresponding warning. On Linux, PER_MONITOR_AWARE is currently not supported, setting this value will switch the mode to the SYSTEM_AWARE mode with the corresponding warning in the console.					This is an actual value, it may differ from the mode stored in the boot config file (in case the system cannot set the specified mode it will try to use the one that is suitable instead).
+			</summary>  
+			<returns>Current actual DPI awareness mode, the value indicating how the application processes the DPI scaling.</returns>
+		</member>
+		<member name="M:Unigine.WindowManager.isAutoDpiScaling const">
+			<summary>
+			Returns the value specifying if automatic DPI scaling is applied to the window. If automatic DPI scaling is disabled, all GUI elements have the 100% size, only the system window size is scaled.					This value is stored in the boot config file and can be changed only at the application startup. It cannot be changed at runtime, thus at an attempt to change the value the console will show the corresponding warning.
+			</summary>  
+			<returns>true if all GUI elements of the window are scaled; otherwise, false.</returns>
 		</member>
 		<member name="F:Unigine.WindowManager.CALLBACKS_WINDOW_CREATED">
 			<summary>
@@ -1252,7 +1810,7 @@
 			Callback after the window has been removed.
 		</summary>
 		</member>
-		<member name="F:Unigine.WindowManager.CALLBACKS_WINDOWS_STACKED">
+		<member name="F:Unigine.WindowManager.CALLBACKS_WINDOW_STACKED">
 			<summary>
 			Callback after the window has been stacked.
 		</summary>
@@ -1265,6 +1823,26 @@
 		<member name="F:Unigine.WindowManager.CALLBACKS_NUM">
 			<summary>
 			Callback counter.
+		</summary>
+		</member>
+		<member name="F:Unigine.WindowManager.DPI_AWARENESS_PER_MONITOR_AWARE">
+			<summary>
+			Windows get the DPI level from each display individually.Not available on Linux.
+		</summary>
+		</member>
+		<member name="F:Unigine.WindowManager.DPI_AWARENESS_SYSTEM_AWARE">
+			<summary>
+			The DPI level of the main system display is obtained. Only with this DPI level the image is displayed clearly. Displays with another DPI level of changing of the DPI value on the main system display while running the application will cause the image blurring.
+		</summary>
+		</member>
+		<member name="F:Unigine.WindowManager.DPI_AWARENESS_UNAWARE">
+			<summary>
+			Scaling is not taken into account. Windows are displayed with the default DPI level of 96 (100%). The operating system will stretch the raster part of the window and it will look blurry.
+		</summary>
+		</member>
+		<member name="F:Unigine.WindowManager.DPI_AWARENESS_CUSTOM">
+			<summary>
+			The DPI awareness is set not on the engine side. For example, when the application is integrated via CustomSystemProxy, the user sets the required mode.
 		</summary>
 		</member>
 		<member name="M:Unigine.WindowEvent.getType const">
@@ -1295,7 +1873,7 @@
 			<summary>
 			Sets the identifier of the window.
 			</summary> 
-			<param name="id"> Identifier of the window. </param> 
+			<param name="winid"> Identifier of the window. </param> 
 		</member>
 		<member name="M:Unigine.WindowEvent.getWinID const">
 			<summary>
@@ -1307,7 +1885,7 @@
 			<summary>
 			Sets the position of the mouse at the event creation.
 			</summary> 
-			<param name="pos"> Position of the mouse at the event creation. </param> 
+			<param name="position"> Position of the mouse at the event creation. </param> 
 		</member>
 		<member name="M:Unigine.WindowEvent.getMousePosition const">
 			<summary>
@@ -1319,7 +1897,7 @@
 			<summary>
 			Sets the window position at the event creation.
 			</summary> 
-			<param name="pos"> Position of the window at the event creation. </param> 
+			<param name="position"> Position of the window at the event creation. </param> 
 		</member>
 		<member name="M:Unigine.WindowEvent.getPosition const">
 			<summary>
@@ -1351,18 +1929,6 @@
 			</summary>  
 			<returns>The window for which the event has been created.</returns>
 		</member>
-		<member name="M:Unigine.WindowEvent.getGeneric const">
-			<summary>
-			Returns the current window event cast to the generic event or nullptr.
-			</summary>  
-			<returns>The window event cast to the generic event.</returns>
-		</member>
-		<member name="M:Unigine.WindowEvent.getDrop const">
-			<summary>
-			Returns the current window event cast to the drop event or nullptr.
-			</summary>  
-			<returns>The window event cast to the drop event.</returns>
-		</member>
 		<member name="F:Unigine.WindowEvent.WINDOW_EVENT">
 			<summary>
 			Window state change.
@@ -1378,9 +1944,90 @@
 			Event of dragging and dropping a file or folder into a window.
 		</summary>
 		</member>
+		<member name="F:Unigine.WindowEvent.WINDOW_EVENT_DPI">
+			<summary>
+			Event of changing the DPI level.
+		</summary>
+		</member>
 		<member name="F:Unigine.WindowEvent.NUM_WINDOW_EVENTS">
 			<summary>
 			Event counter.
+		</summary>
+		</member>
+		<member name="M:Unigine.WindowEventDpi.#ctor">
+			<summary>
+			Default constructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.WindowEventDpi.#ctor(unsignedlonglong,unsignedlonglong)">
+			<summary>
+			Window DPI event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="win_id"> The window for which DPI is set. </param> 
+		</member>
+		<member name="M:Unigine.WindowEventDpi.#ctor(unsignedlonglong,unsignedlonglong,Unigine.Math.ivec2)">
+			<summary>
+			Window DPI event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="win_id"> The window for which DPI is set. </param>
+			<param name="mouse_pos"> Position of the mouse. </param> 
+		</member>
+		<member name="M:Unigine.WindowEventDpi.#ctor(unsignedlonglong,unsignedlonglong,Unigine.Math.ivec2,Unigine.Math.ivec2,Unigine.Math.ivec2)">
+			<summary>
+			Window DPI event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="win_id"> The window for which DPI is set. </param>
+			<param name="mouse_pos"> Position of the mouse. </param>
+			<param name="position"> Position of the window. </param>
+			<param name="size"> Size of the window. </param> 
+		</member>
+		<member name="M:Unigine.WindowEventDpi.#ctor(unsignedlonglong,unsignedlonglong,Unigine.Math.ivec2,Unigine.Math.ivec2,Unigine.Math.ivec2,WindowEventDrop::ACTION,int)">
+			<summary>
+			Window DPI event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="win_id"> The window for which DPI is set. </param>
+			<param name="mouse_pos"> Position of the mouse. </param>
+			<param name="position"> Position of the window. </param>
+			<param name="size"> Size of the window. </param>
+			<param name="action"> Type of the DPI action performed with the window during the event. </param>
+			<param name="dpi"> The DPI level. </param> 
+		</member>
+		<member name="M:Unigine.WindowEventDpi.setAction(WindowEventDpi::ACTION)">
+			<summary>
+			Sets the type of the DPI action performed with the window during the event.
+			</summary> 
+			<param name="action"> Type of the DPI action performed with the window during the event. </param> 
+		</member>
+		<member name="M:Unigine.WindowEventDpi.getAction const">
+			<summary>
+			Returns the type of the DPI action performed with the window during the event.
+			</summary>  
+			<returns>The type of the DPI action performed with the window during the event.</returns>
+		</member>
+		<member name="M:Unigine.WindowEventDpi.setDpi(int)">
+			<summary>
+			Sets the DPI level.
+			</summary> 
+			<param name="dpi"> The DPI level. </param> 
+		</member>
+		<member name="M:Unigine.WindowEventDpi.getDpi const">
+			<summary>
+			Returns the current DPI level.
+			</summary>  
+			<returns>The DPI level.</returns>
+		</member>
+		<member name="F:Unigine.WindowEventDpi.ACTION_DPI_CHANGED">
+			<summary>
+			DPI level has been changed.
+		</summary>
+		</member>
+		<member name="F:Unigine.WindowEventDpi.ACTION_SIZE_SCALED">
+			<summary>
+			Window size has been scaled.
 		</summary>
 		</member>
 		<member name="M:Unigine.WindowEventDrop.#ctor">
@@ -1421,7 +2068,8 @@
 			<param name="win_id"> The window that was dropped on, if any. </param>
 			<param name="mouse_pos"> Position of the mouse. </param>
 			<param name="position"> Position of the window. </param>
-			<param name="size"> Size of the window. </param> 
+			<param name="size"> Size of the window. </param>
+			<param name="action"> Type of the drop action performed with the window during the event. </param> 
 		</member>
 		<member name="M:Unigine.WindowEventDrop.setAction(WindowEventDrop::ACTION)">
 			<summary>

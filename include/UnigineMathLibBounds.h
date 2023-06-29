@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 
 #include "UnigineBase.h"
@@ -1246,13 +1245,14 @@ struct alignas(16) BoundFrustum
 		points[7].set(1.0f, 1.0f, 1.0f);
 		Simd::projMat4Vec3(points, sizeof(vec3), iproj, points, sizeof(vec3), 8);
 
+		// TODO: Add enum
 		// clipping planes
-		planes[0].set(proj.m30 + proj.m00, proj.m31 + proj.m01, proj.m32 + proj.m02, proj.m33 + proj.m03);
-		planes[1].set(proj.m30 - proj.m00, proj.m31 - proj.m01, proj.m32 - proj.m02, proj.m33 - proj.m03);
-		planes[2].set(proj.m30 + proj.m10, proj.m31 + proj.m11, proj.m32 + proj.m12, proj.m33 + proj.m13);
-		planes[3].set(proj.m30 - proj.m10, proj.m31 - proj.m11, proj.m32 - proj.m12, proj.m33 - proj.m13);
-		planes[4].set(proj.m30 + proj.m20, proj.m31 + proj.m21, proj.m32 + proj.m22, proj.m33 + proj.m23);
-		planes[5].set(proj.m30 - proj.m20, proj.m31 - proj.m21, proj.m32 - proj.m22, proj.m33 - proj.m23);
+		planes[0].set(proj.m30 + proj.m00, proj.m31 + proj.m01, proj.m32 + proj.m02, proj.m33 + proj.m03); // Left
+		planes[1].set(proj.m30 - proj.m00, proj.m31 - proj.m01, proj.m32 - proj.m02, proj.m33 - proj.m03); // Right
+		planes[2].set(proj.m30 + proj.m10, proj.m31 + proj.m11, proj.m32 + proj.m12, proj.m33 + proj.m13); // Bottom
+		planes[3].set(proj.m30 - proj.m10, proj.m31 - proj.m11, proj.m32 - proj.m12, proj.m33 - proj.m13); // Top
+		planes[4].set(proj.m30 + proj.m20, proj.m31 + proj.m21, proj.m32 + proj.m22, proj.m33 + proj.m23); // Near
+		planes[5].set(proj.m30 - proj.m20, proj.m31 - proj.m21, proj.m32 - proj.m22, proj.m33 - proj.m23); // Far
 		for (int i = 0; i < 6; i++)
 			planes[i] /= length(planes[i].xyz);
 

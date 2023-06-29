@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 
 #include <editor/UnigineEditorGlobal.h>
@@ -123,6 +122,12 @@ public:
 	/// <param name="nodes">Vector containing nodes to be focused on.</param>
 	static void focusOnNodeList(ViewportWindowId viewport_id,
 		const Unigine::Vector<Unigine::NodePtr> &nodes);
+
+	static void focusOnNodeBoundBased(ViewportWindowId viewport_id, const Unigine::NodePtr &node);
+
+	static void focusOnNodeListBoundBased(ViewportWindowId viewport_id,
+		const Unigine::Vector<Unigine::NodePtr> &nodes);
+
 	/// <summary> Sets the camera focus for the viewport window with the specified ID on the specified surface of the specified object (the viewport will be adjusted to display the specified surface).</summary>
 	/// <param name="viewport_id">ID of the viewport window.</param>
 	/// <param name="object">Object to be focused on.</param>

@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -27,16 +26,22 @@ class UNIGINE_API Camera : public APIInterface
 {
 public:
 
-	enum
+	enum FOV_MODE
 	{
 		FOV_MODE_VERTICAL = 0,
 		FOV_MODE_PHYSICALLY_BASED_CAMERA,
 	};
 
-	enum
+	enum FOV_FIXED
 	{
 		FOV_FIXED_VERTICAL = 0,
 		FOV_FIXED_HORIZONTAL,
+	};
+
+	enum PROJECTION_MODE
+	{
+		PROJECTION_MODE_PERSPECTIVE = 0,
+		PROJECTION_MODE_ORTHOGRAPHIC,
 	};
 	static Ptr<Camera> create();
 	void setModelview(const Math::Mat4 &modelview);
@@ -49,9 +54,13 @@ public:
 	void setProjection(const Math::mat4 &projection);
 	Math::mat4 getProjection() const;
 	Math::mat4 getAspectCorrectedProjection(float aspect) const;
-	void setFovMode(int mode);
-	int getFovMode() const;
-	int getFovFixed() const;
+	void setFovMode(Camera::FOV_MODE mode);
+	Camera::FOV_MODE getFovMode() const;
+	void setProjectionMode(Camera::PROJECTION_MODE mode);
+	Camera::PROJECTION_MODE getProjectionMode() const;
+	void setOrthoHeight(float height);
+	float getOrthoHeight() const;
+	Camera::FOV_FIXED getFovFixed() const;
 	void setFov(float fov);
 	float getFov() const;
 	void setFilmGate(float gate);

@@ -969,9 +969,9 @@
 			<param name="height"> Image height, in pixels. </param>
 			<param name="format"> Texture format. See the FORMAT_* variables. </param>
 			<param name="num_mipmaps"> Number of mipmaps to create. This is an optional argument. </param>
-			<param name="clear"> 1 to fill the image with black color, 0 is not to fill. This optional argument can be set to 0 if new data will fully overwrite the data existing in the memory. </param>
-			<param name="allocate"> 1 to allocate memory for the created image. This value should be always set to 1. </param> 
-			<returns>1 if the cube image is successfully created; otherwise, 0.</returns>
+			<param name="clear"> true to fill the image with black color, false is not to fill. This optional argument can be set to false if new data will fully overwrite the data existing in the memory. </param>
+			<param name="allocate"> true to allocate memory for the created image. This value should be always set to true. </param> 
+			<returns>true if the cube image is successfully created; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Image.createCubeArray(int,int,int,int,int,bool,bool)">
 			<summary>
@@ -982,9 +982,9 @@
 			<param name="num_layers"> Number of image layers. </param>
 			<param name="format"> Texture format. See the FORMAT_* variables. </param>
 			<param name="num_mipmaps"> Number of mipmaps to create. This is an optional argument. </param>
-			<param name="clear"> 1 to fill the image with black color, 0 is not to fill. This optional argument can be set to 0 if new data will fully overwrite the data existing in the memory. </param>
-			<param name="allocate"> 1 to allocate memory for the created image. This value should be always set to 1. </param> 
-			<returns>1 if the cube array image is successfully created; otherwise, 0.</returns>
+			<param name="clear"> 1 to fill the image with black color, false is not to fill. This optional argument can be set to false if new data will fully overwrite the data existing in the memory. </param>
+			<param name="allocate"> true to allocate memory for the created image. This value should be always set to true. </param> 
+			<returns>true if the cube array image is successfully created; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Image.createMipmaps(Image::FILTER,float)">
 			<summary>
@@ -992,6 +992,13 @@
 			</summary> 
 			<param name="filter"> Filter type to be used: linear or point. The default filter is linear. See the Unigine::Image Enumerations with FILTER_* prefixes. </param>
 			<param name="gamma"> Gamma correction value. If 1 is provided, no gamma correction is applied. This is an optional argument. </param> 
+			<returns>true if the mipmaps are generated successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Image.createMipmapsCubeGGX(Image::GGX_MIPMAPS_QUALITY)">
+			<summary>
+			Generates GGX mipmaps on CPU with the specified quality, of course slower and with lower quality than on GPU but it provides the result synchronously (actually this should be the only case, when this method is to be used).
+			</summary> 
+			<param name="quality"> Quality of GGX mipmaps. One of the GGX_MIPMAPS_QUALITY values. </param> 
 			<returns>true if the mipmaps are generated successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Image.removeMipmaps">
@@ -1004,7 +1011,7 @@
 			<summary>
 			Automatically converts the image from the combined format to a correct one. The following conversions are available:											RGB565 to RGB8						RGBA4 to RGBA8						RGB5A1 to RGBA8						RGB10A2 to RGBA16
 			</summary>  
-			<returns>1 if the image is successfully converted from the combined format; otherwise, 0.</returns>
+			<returns>true if the image is successfully converted from the combined format; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Image.decombineMipmaps">
 			<summary>
@@ -1496,19 +1503,9 @@
 			A cube texture array.
 		</summary>
 		</member>
-		<member name="F:Unigine.Image.FILE_COMPRESSION_LZ4_HIGH">
+		<member name="F:Unigine.Image.FILE_COMPRESSION_DISABLE">
 			<summary>
-			LZ4 lossless data compression algorithm that is focused on compression and decompression speed. It belongs to the LZ77 family of byte-oriented compression schemes (smaller file size, slower comression).
-		</summary>
-		</member>
-		<member name="F:Unigine.Image.FILE_COMPRESSION_LZ4_LOW">
-			<summary>
-			LZ4 lossless data compression algorithm that is focused on compression and decompression speed. It belongs to the LZ77 family of byte-oriented compression schemes (greater file size, faster comression).
-		</summary>
-		</member>
-		<member name="F:Unigine.Image.FILE_COMPRESSION_ZLC_HIGH">
-			<summary>
-			Compression used for images stored in the system memory (based on zlib library). It is used when a smaller file size is required, compared to ZLC LOW (compression is slower).
+			Image data is uncompressed.
 		</summary>
 		</member>
 		<member name="F:Unigine.Image.FILE_COMPRESSION_ZLC_LOW">
@@ -1516,9 +1513,39 @@
 			Fast compression used for images stored in the system memory (based on zlib library).
 		</summary>
 		</member>
-		<member name="F:Unigine.Image.FILE_COMPRESSION_DISABLE">
+		<member name="F:Unigine.Image.FILE_COMPRESSION_ZLC_HIGH">
 			<summary>
-			Image data is uncompressed.
+			Compression used for images stored in the system memory (based on zlib library). It is used when a smaller file size is required, compared to ZLC LOW (compression is slower).
+		</summary>
+		</member>
+		<member name="F:Unigine.Image.FILE_COMPRESSION_LZ4_LOW">
+			<summary>
+			LZ4 lossless data compression algorithm that is focused on compression and decompression speed. It belongs to the LZ77 family of byte-oriented compression schemes (greater file size, faster comression).
+		</summary>
+		</member>
+		<member name="F:Unigine.Image.FILE_COMPRESSION_LZ4_HIGH">
+			<summary>
+			LZ4 lossless data compression algorithm that is focused on compression and decompression speed. It belongs to the LZ77 family of byte-oriented compression schemes (smaller file size, slower comression).
+		</summary>
+		</member>
+		<member name="F:Unigine.Image.GGX_MIPMAPS_QUALITY_LOW">
+			<summary>
+			Low quality of GGX mipmaps.
+		</summary>
+		</member>
+		<member name="F:Unigine.Image.GGX_MIPMAPS_QUALITY_MEDIUM">
+			<summary>
+			Medium quality of GGX mipmaps.
+		</summary>
+		</member>
+		<member name="F:Unigine.Image.GGX_MIPMAPS_QUALITY_HIGH">
+			<summary>
+			High quality of GGX mipmaps.
+		</summary>
+		</member>
+		<member name="F:Unigine.Image.GGX_MIPMAPS_QUALITY_ULTRA">
+			<summary>
+			Ultra quality of GGX mipmaps.
 		</summary>
 		</member>
 		<member name="M:Unigine.ImageConverter.#ctor">
@@ -1676,17 +1703,17 @@
 			</summary>  
 			<returns>Gamma correction value used for the mipmaps.</returns>
 		</member>
-		<member name="M:Unigine.ImageConverter.setGGXMipmapsQuality(float)">
+		<member name="M:Unigine.ImageConverter.setGGXMipmapsQuality(Image::GGX_MIPMAPS_QUALITY)">
 			<summary>
 			Sets the quality for mipmaps generated for cubemap images using the GGX BRDF microfacet model. The value is applied when the mipmap mode is set to GGX.
 			</summary> 
-			<param name="quality"> Quality of the GGX mipmaps for the cubemap image. </param> 
+			<param name="quality"> Quality of the GGX mipmaps for the cubemap image. One of the  values. </param> 
 		</member>
 		<member name="M:Unigine.ImageConverter.getGGXMipmapsQuality const">
 			<summary>
 			Returns the quality of mipmaps generated for cubemap images using the GGX BRDF microfacet model.
 			</summary>  
-			<returns>Quality of the GGX mipmaps for the cubemap image.</returns>
+			<returns>Quality of the GGX mipmaps for the cubemap image. One of the  values.</returns>
 		</member>
 		<member name="M:Unigine.ImageConverter.setRangeMode(ImageConverter::RANGE_MODE)">
 			<summary>
@@ -1825,10 +1852,18 @@
 			</summary> 
 			<param name="image"> Image to be converted. </param> 
 		</member>
-		<member name="M:Unigine.ImageConverter.run(Unigine.Ptr{Unigine.Image})">
+		<member name="M:Unigine.ImageConverter.runCpu(Unigine.Ptr{Unigine.Image})">
+			<summary>
+			Runs the image converter on CPU.
+			</summary> 
+			<param name="image"> Image to be converted. </param> 
+			<returns>true if the image has been converted successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ImageConverter.run(Unigine.CallbackBase1{Unigine.Ptr{Unigine.Image}},Unigine.Ptr{Unigine.Image})">
 			<summary>
 			Runs the image converter.
 			</summary> 
+			<param name="on_converted"> Callback to be fired after image conversion. </param>
 			<param name="image"> Image to be converted. </param> 
 			<returns>true if the image has been converted successfully; otherwise, false.</returns>
 		</member>

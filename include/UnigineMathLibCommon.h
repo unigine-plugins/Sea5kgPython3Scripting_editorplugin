@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 
 #ifdef _MSC_VER
@@ -119,6 +118,13 @@ struct mat4;
 struct dmat4;
 struct quat;
 
+using mat2x2_values = float[4];
+using mat3x3_values = float[9];
+using dmat4x3_values = double[12];
+using dmat4x4_values = double[16];
+using mat4x3_values = float[12];
+using mat4x4_values = float[16];
+
 #if defined(USE_DOUBLE) || defined(UNIGINE_DOUBLE)
 	typedef double Scalar;
 	typedef Unigine::Math::dvec2 Vec2;
@@ -132,6 +138,13 @@ struct quat;
 	typedef Unigine::Math::vec4 Vec4;
 	typedef Unigine::Math::mat4 Mat4;
 #endif
+
+UNIGINE_INLINE mat2x2_values &unsafeToMat2x2(float *data) { return *reinterpret_cast<float(*)[4]>(data); }
+UNIGINE_INLINE mat3x3_values &unsafeToMat3x3(float *data) { return *reinterpret_cast<float(*)[9]>(data); }
+UNIGINE_INLINE dmat4x3_values &unsafeToDMat4x3(double *data) { return *reinterpret_cast<double(*)[12]>(data); }
+UNIGINE_INLINE dmat4x4_values &unsafeToDMat4x4(double *data) { return *reinterpret_cast<double(*)[16]>(data); }
+UNIGINE_INLINE mat4x3_values &unsafeToMat4x3(float *data) { return *reinterpret_cast<float(*)[12]>(data); }
+UNIGINE_INLINE mat4x4_values &unsafeToMat4x4(float *data) { return *reinterpret_cast<float(*)[16]>(data); }
 
 // Half float type
 struct half
@@ -905,6 +918,7 @@ UNIGINE_INLINE int min(int v0, int v1) { return (v0 < v1) ? v0 : v1; }
 UNIGINE_INLINE char min(char v0, char v1) { return (v0 < v1) ? v0 : v1; }
 UNIGINE_INLINE size_t min(size_t v0, size_t v1) { return (v0 < v1) ? v0 : v1; }
 UNIGINE_INLINE long long min(long long v0, long long v1) { return (v0 < v1) ? v0 : v1; }
+UNIGINE_INLINE long int min(long int v0, long int v1) { return (v0 < v1) ? v0 : v1; }
 
 UNIGINE_INLINE float max(float v0, float v1) { return (v0 > v1) ? v0 : v1; }
 UNIGINE_INLINE double max(double v0, double v1) { return (v0 > v1) ? v0 : v1; }
@@ -912,6 +926,7 @@ UNIGINE_INLINE int max(int v0, int v1) { return (v0 > v1) ? v0 : v1; }
 UNIGINE_INLINE char max(char v0, char v1) { return (v0 > v1) ? v0 : v1; }
 UNIGINE_INLINE size_t max(size_t v0, size_t v1) { return (v0 > v1) ? v0 : v1; }
 UNIGINE_INLINE long long max(long long v0, long long v1) { return (v0 > v1) ? v0 : v1; }
+UNIGINE_INLINE long int max(long int v0, long int v1) { return (v0 > v1) ? v0 : v1; }
 
 UNIGINE_INLINE float clamp(float v, float v0, float v1) { return (v < v0) ? v0 : ((v > v1) ? v1 : v); }
 UNIGINE_INLINE double clamp(double v, double v0, double v1) { return (v < v0) ? v0 : ((v > v1) ? v1 : v); }
@@ -919,6 +934,7 @@ UNIGINE_INLINE int clamp(int v, int v0, int v1) { return (v < v0) ? v0 : ((v > v
 UNIGINE_INLINE char clamp(char v, char v0, char v1) { return (v < v0) ? v0 : ((v > v1) ? v1 : v); }
 UNIGINE_INLINE size_t clamp(size_t v, size_t v0, size_t v1) { return (v < v0) ? v0 : ((v > v1) ? v1 : v); }
 UNIGINE_INLINE long long clamp(long long v, long long v0, long long v1) { return (v < v0) ? v0 : ((v > v1) ? v1 : v); }
+UNIGINE_INLINE long int clamp(long int v, long int v0, long int v1) { return (v < v0) ? v0 : ((v > v1) ? v1 : v); }
 
 UNIGINE_INLINE float saturate(float v) { return (v < 0.0f) ? 0.0f : ((v > 1.0f) ? 1.0f : v); }
 UNIGINE_INLINE double saturate(double v) { return (v < 0.0) ? 0.0 : ((v > 1.0) ? 1.0 : v); }
@@ -1203,8 +1219,10 @@ UNIGINE_INLINE unsigned int hashCast64To32(unsigned long long value) { return st
 template<class A, class B>
 inline A makeAligned(A location, B align_value)
 {
+	if (align_value == 0)
+		return location;
+
 	UNIGINE_ASSERT((align_value & (align_value - 1)) == 0);
-	UNIGINE_ASSERT(align_value != 0);
 	return ((location + (align_value - 1)) & ~(align_value - 1));
 }
 

@@ -48,26 +48,6 @@
 			Clears the mesh (including its surfaces and bounds).
 			</summary>  
 		</member>
-		<member name="M:Unigine.MeshStatic.destroy">
-			<summary>
-			Destroys the mesh.
-			</summary>  
-		</member>
-		<member name="M:Unigine.MeshStatic.flush">
-			<summary>
-			Flushes the mesh geometry into the video memory.
-			</summary>  
-		</member>
-		<member name="M:Unigine.MeshStatic.asyncCreate">
-			<summary>
-			Creates the mesh asynchronously (in anoher thread).
-			</summary>  
-		</member>
-		<member name="M:Unigine.MeshStatic.asyncDestroy">
-			<summary>
-			Destroys the mesh asynchronously (in anoher thread).
-			</summary>  
-		</member>
 		<member name="M:Unigine.MeshStatic.bind">
 			<summary>
 			Binds static mesh data (index and vertex buffers) to the input assembler stage.
@@ -251,7 +231,7 @@
 		</member>
 		<member name="M:Unigine.MeshStatic.addEmptySurface(char,int,int)">
 			<summary>
-			Appends a new empty surface to the current mesh.						This function allocates only vertex and index arrays. Texture coordinates, tangent basis, weights and color arrays must be allocated manually.
+			Appends a new empty surface to the current mesh.					This function allocates only vertex and index arrays. Texture coordinates, tangent basis, weights and color arrays must be allocated manually.
 			</summary> 
 			<param name="name"> Surface name. </param>
 			<param name="num_vertex"> Number of surface vertices. </param>
@@ -268,7 +248,7 @@
 		</member>
 		<member name="M:Unigine.MeshStatic.getCollision(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Vector{int,int,Unigine.VectorAllocator})">
 			<summary>
-			Performs the search for the collision of the given surfaces with the given traced line.						Mesh local space coordinates are used for this method.
+			Performs the search for the collision of the given surfaces with the given traced line.					Mesh local space coordinates are used for this method.
 			</summary> 
 			<param name="p0"> Start point coordinates. </param>
 			<param name="p1"> End point coordinates. </param>
@@ -284,7 +264,7 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>1 if the collision is found; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.MeshStatic.getCollision(Unigine.BoundBox,Unigine.Vector{int,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.MeshStatic.getCollision(Unigine.Math.BoundBox,Unigine.Vector{int,int,Unigine.VectorAllocator})">
 			<summary>
 			Performs the search for the collision of the given surfaces with the given bounding box.
 			</summary> 
@@ -292,14 +272,14 @@
 			<param name="surfaces"> Mesh surfaces. </param> 
 			<returns>1 if the collision is found; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.MeshStatic.getCollision(Unigine.BoundBox,Unigine.Vector{int,int,Unigine.VectorAllocator},int)">
+		<member name="M:Unigine.MeshStatic.getCollision(Unigine.Math.BoundBox,Unigine.Vector{int,int,Unigine.VectorAllocator},int)">
 			<summary>
 			</summary> 
 			<param name="bb"> Bounding box. </param>
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>1 if the collision is found; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.MeshStatic.getCollision(BoundFrustum,Unigine.Vector{int,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.MeshStatic.getCollision(Unigine.Math.BoundFrustum,Unigine.Vector{int,int,Unigine.VectorAllocator})">
 			<summary>
 			Performs the search for the collision of the given surfaces with the given bounding frustum.
 			</summary> 
@@ -307,7 +287,7 @@
 			<param name="surfaces"> Mesh surfaces. </param> 
 			<returns>1 if the collision is found; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.MeshStatic.getCollision(BoundFrustum,Unigine.Vector{int,int,Unigine.VectorAllocator},int)">
+		<member name="M:Unigine.MeshStatic.getCollision(Unigine.Math.BoundFrustum,Unigine.Vector{int,int,Unigine.VectorAllocator},int)">
 			<summary>
 			</summary> 
 			<param name="bf"> Bounding frustum. </param>
@@ -323,7 +303,7 @@
 		</member>
 		<member name="M:Unigine.MeshStatic.getIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec4,int,int,int)">
 			<summary>
-			Performs the search for the intersection of the given surface target with the given traced line.						Mesh local space coordinates are used for this method.
+			Performs the search for the intersection of the given surface target with the given traced line.					Mesh local space coordinates are used for this method.
 			</summary> 
 			<param name="p0"> Start point coordinates. </param>
 			<param name="p1"> End point coordinates. </param>
@@ -337,7 +317,7 @@
 		</member>
 		<member name="M:Unigine.MeshStatic.getIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.vec3,Unigine.Math.vec4,int,int,int)">
 			<summary>
-			Performs the search for the intersection of the given surface target with the given traced line.						Mesh local space coordinates are used for this method.
+			Performs the search for the intersection of the given surface target with the given traced line.					Mesh local space coordinates are used for this method.
 			</summary> 
 			<param name="p0"> Start point coordinates. </param>
 			<param name="p1"> End point coordinates. </param>
@@ -349,13 +329,13 @@
 			<param name="target"> Surface target number. The default value is 0. </param> 
 			<returns>1 if the intersection is found; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.MeshStatic.setBoundBox(Unigine.BoundBox)">
+		<member name="M:Unigine.MeshStatic.setBoundBox(Unigine.Math.BoundBox)">
 			<summary>
 			Sets the bounding box for the mesh.
 			</summary> 
 			<param name="bb"> Bounding box to be set. </param> 
 		</member>
-		<member name="M:Unigine.MeshStatic.setBoundBox(Unigine.BoundBox,int)">
+		<member name="M:Unigine.MeshStatic.setBoundBox(Unigine.Math.BoundBox,int)">
 			<summary>
 			Sets the bounding box for the given mesh surface.
 			</summary> 
@@ -375,13 +355,13 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Bounding box.</returns>
 		</member>
-		<member name="M:Unigine.MeshStatic.setBoundSphere(Unigine.BoundSphere)">
+		<member name="M:Unigine.MeshStatic.setBoundSphere(Unigine.Math.BoundSphere)">
 			<summary>
 			Sets the bounding sphere for the mesh.
 			</summary> 
 			<param name="bs"> Bounding sphere to be set. </param> 
 		</member>
-		<member name="M:Unigine.MeshStatic.setBoundSphere(Unigine.BoundSphere,int)">
+		<member name="M:Unigine.MeshStatic.setBoundSphere(Unigine.Math.BoundSphere,int)">
 			<summary>
 			Sets the bounding sphere for the given mesh surface.
 			</summary> 
@@ -400,14 +380,6 @@
 			</summary> 
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Bounding sphere.</returns>
-		</member>
-		<member name="M:Unigine.MeshStatic.getVertex(int,int)">
-			<summary>
-			Returns coordinates of the given coordinate vertex of the given surface target.
-			</summary> 
-			<param name="surface"> Mesh surface number. </param>
-			<param name="target"> Surface target number. The default value is 0. </param> 
-			<returns>Vertex coordinates.</returns>
 		</member>
 		<member name="M:Unigine.MeshStatic.getTangents(int,int)">
 			<summary>
@@ -473,6 +445,225 @@
 			<summary>
 			Forced creation of the Mesh Static internal tree for quick calculation of collisions and intersections.
 			</summary>  
+		</member>
+		<member name="M:Unigine.MeshStatic.isLoadedRAM const">
+			<summary>
+			Returns a value indicating if the mesh is loaded to memory (RAM) (i.e. the mesh contains geometry).
+			</summary>  
+			<returns>true if the mesh is loaded to RAM; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.isLoadedVRAM const">
+			<summary>
+			Returns a value indicating if the mesh is loaded to video memory (VRAM).
+			</summary>  
+			<returns>true if the mesh is loaded to VRAM; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.loadVRAM">
+			<summary>
+			Loads the mesh to video memory (VRAM). The method can be used to implement custom streaming logic for static meshes.				It is recommended NOT to call the method for static meshes obtained from a mesh-based objects (such as ObjectMeshStatic, ObjectMeshClutter, DecalMesh and so on).
+			</summary>  
+		</member>
+		<member name="M:Unigine.MeshStatic.clearVRAM">
+			<summary>
+			Unloads the mesh from video memory (VRAM). The method can be used to implement custom streaming logic for static meshes.				It is recommended NOT to call the method for static meshes obtained from a mesh-based objects (such as ObjectMeshStatic, ObjectMeshClutter, DecalMesh and so on).
+			</summary>  
+		</member>
+		<member name="M:Unigine.MeshStatic.reloadVRAM">
+			<summary>
+			Reloads the mesh in video memory (VRAM) (deletes the mesh from VRAM and loads a new one). This method must be called after the mesh has been modified to load the changes to VRAM for further rendering.				It is recommended NOT to call the method for static meshes obtained from a mesh-based objects (such as ObjectMeshStatic, ObjectMeshClutter, DecalMesh and so on).
+			</summary>  
+		</member>
+		<member name="M:Unigine.MeshStatic.getRandomPoint(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,int)">
+			<summary>
+			Returns a random point from the given mesh surface.
+			</summary> 
+			<param name="ret_point"> Random point coordinates. </param>
+			<param name="ret_normal"> Random point normal vector. </param>
+			<param name="ret_velocity">  Random point velocity vector. </param>
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Returns true if the random point is valid.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.setVertex(int,Unigine.Math.vec3,int,int)">
+			<summary>
+			Sets the coordinates of the given coordinate vertex of the given surface target.
+			</summary> 
+			<param name="num"> Coordinate vertex number in the range from 0 to the total number of coordinate vertices for the given surface.To get the total number of coordinate vertices for the given surface, use the getNumCVertex() method. </param>
+			<param name="vertex"> Vertex coordinates to be set. </param>
+			<param name="surface"> Mesh surface number. </param>
+			<param name="target"> Surface target number. The default value is 0. </param> 
+		</member>
+		<member name="M:Unigine.MeshStatic.getVertex(int,int,int) const">
+			<summary>
+			Returns coordinates of the given coordinate vertex of the given surface and surface target.
+			</summary> 
+			<param name="num"> Coordinate vertex number in the range from 0 to the total number of coordinate vertices for the given surface.To get the total number of coordinate vertices for the given surface, use the getNumCVertex() method. </param>
+			<param name="surface"> Mesh surface number. </param>
+			<param name="target"> Surface target number. The default value is 0. </param> 
+			<returns>Vertex coordinates.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.getVertices(int,int)">
+			<summary>
+			Returns coordinates of all coordinate vertices of the given surface and surface target.
+			</summary> 
+			<param name="surface"> Mesh surface number. </param>
+			<param name="target"> Surface target number. The default value is 0. </param> 
+			<returns>Vertex coordinates.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.getNumVertices(int) const">
+			<summary>
+			Returns the number of coordinate vertices for the given mesh surface.
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Number of the surface vertices.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.setTangent(int,Unigine.Math.quat,int,int)">
+			<summary>
+			Sets the new tangent for the given triangle vertex of the given surface target.
+			</summary> 
+			<param name="num"> Triangle vertex number in the range from 0 to the total number of vertex tangent entries of the given surface.To get the total number of vertex tangent entries for the surface, call the getNumTangents() method. </param>
+			<param name="tangent"> Tangent to be set. </param>
+			<param name="surface"> Mesh surface number. </param>
+			<param name="target"> Surface target number. The default value is 0. </param> 
+		</member>
+		<member name="M:Unigine.MeshStatic.getTangent(int,int,int) const">
+			<summary>
+			Returns the tangent for the given triangle vertex of the given surface target.
+			</summary> 
+			<param name="num"> Triangle vertex number in the range from 0 to the total number of vertex tangent entries of the given surface.To get the total number of vertex tangent entries for the surface, call the getNumTangents() method. </param>
+			<param name="surface"> Mesh surface number. </param>
+			<param name="target"> Surface target number. The default value is 0. </param> 
+			<returns>Vertex tangent.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.getNormal(int,int,int) const">
+			<summary>
+			Returns the normal for the given triangle vertex of the given surface target.
+			</summary> 
+			<param name="num"> Triangle vertex number in the range from 0 to the total number of vertex tangent entries of the given surface target.Vertex normals are calculated using vertex tangents. To get the total number of vertex tangent entries for the surface target, call the getNumTangents() method. </param>
+			<param name="surface"> Mesh surface number. </param>
+			<param name="target"> Surface target number. The default value is 0. </param> 
+			<returns>Vertex normal.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.getNumTangents(int) const">
+			<summary>
+			Returns the number of vertex tangent entries of the given mesh surface.					Tangents are specified for triangle vertices.
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Number of surface tangent vectors.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.setTexCoord0(int,Unigine.Math.vec2,int)">
+			<summary>
+			Sets first UV map texture coordinates for the given triangle vertex of the given surface.
+			</summary> 
+			<param name="num"> Triangle vertex number in the range from 0 to the total number of first UV map texture coordinate entries of the given surface.To get the total number of first UV map texture coordinate entries for the surface, call the getNumTexCoords0() method. </param>
+			<param name="texcoord"> First UV map texture coordinates to be set. </param>
+			<param name="surface"> Mesh surface number. </param> 
+		</member>
+		<member name="M:Unigine.MeshStatic.getTexCoord0(int,int) const">
+			<summary>
+			Returns first UV map texture coordinates for the given triangle vertex of the given surface.
+			</summary> 
+			<param name="num"> Triangle vertex number in the range from 0 to the total number of first UV map texture coordinate entries of the given surface.To get the total number of first UV map texture coordinate entries for the surface, call the getNumTexCoords0() method. </param>
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>First UV map texture coordinates.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.getNumTexCoords0(int) const">
+			<summary>
+			Returns the number of the first UV map texture coordinates for the given mesh surface.					First UV map texture coordinates are specified for triangle vertices.
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Number of the first UV map texture coordinates.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.setTexCoord1(int,Unigine.Math.vec2,int)">
+			<summary>
+			Sets second UV map texture coordinates for the given triangle vertex of the given surface.
+			</summary> 
+			<param name="num"> Triangle vertex number in the range from 0 to the total number of second UV map texture coordinate entries of the given surface.To get the total number of second UV map texture coordinate entries for the surface, call the getNumTexCoords1() method. </param>
+			<param name="texcoord"> Second UV map texture coordinates to be set. </param>
+			<param name="surface"> Mesh surface number. </param> 
+		</member>
+		<member name="M:Unigine.MeshStatic.getTexCoord1(int,int) const">
+			<summary>
+			Returns second UV map texture coordinates for the given triangle vertex of the given surface.
+			</summary> 
+			<param name="num"> Triangle vertex number in the range from 0 to the total number of second UV map texture coordinate entries of the given surface.To get the total number of second UV map texture coordinate entries for the surface, call the getNumTexCoords1() method. </param>
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Second UV map texture coordinates.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.getNumTexCoords1(int) const">
+			<summary>
+			Returns the number of the second UV map texture coordinates for the given mesh surface.					Second UV map texture coordinates are specified for triangle vertices.
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Number of the second UV map texture coordinates.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.setColor(int,Unigine.Math.vec4,int)">
+			<summary>
+			Sets the color for the given triangle vertex of the given surface.
+			</summary> 
+			<param name="num"> Triangle vertex number in the range from 0 to the total number of vertex color entries of the given surface.To get the total number of vertex color entries for the surface, call the getNumColors() method. </param>
+			<param name="color"> Vertex color to be set. </param>
+			<param name="surface"> Mesh surface number. </param> 
+		</member>
+		<member name="M:Unigine.MeshStatic.getColor(int,int) const">
+			<summary>
+			Returns the color of the given triangle vertex of the given surface.
+			</summary> 
+			<param name="num"> Triangle vertex number in the range from 0 to the total number of vertex color entries of the given surface.To get the total number of vertex color entries for the surface, call the getNumColors() method. </param>
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Vertex color.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.getNumColors(int) const">
+			<summary>
+			Returns the total number of vertex color entries for the given surface.					Colors are specified for triangle vertices.
+			</summary> 
+			<param name="surface"> Surface number. </param> 
+			<returns>Number of vertex color entries.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.setCIndex(int,int,int)">
+			<summary>
+			Sets the new coordinate index for the given vertex of the given surface.
+			</summary> 
+			<param name="num"> Vertex number in the range from 0 to the total number of coordinate indices for the given surface.To get the total number of coordinate indices for the given surface, use the getNumCIndices() method. </param>
+			<param name="index"> Coordinate index to be set in the range from 0 to the total number of coordinate vertices for the given surface.To get the total number of coordinate vertices for the given surface, use the getNumVertices() method. </param>
+			<param name="surface"> Mesh surface number. </param> 
+		</member>
+		<member name="M:Unigine.MeshStatic.getCIndex(int,int) const">
+			<summary>
+			Returns the coordinate index for the given vertex of the given surface.
+			</summary> 
+			<param name="num"> Vertex number in the range from 0 to the total number of coordinate indices for the given surface.To get the total number of coordinate indices for the given surface, use the getNumCIndices() method. </param>
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Coordinate index.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.getNumCIndices(int) const">
+			<summary>
+			Returns the number of coordinate indices for the given mesh surface.
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Number of coordinate indices.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.setTIndex(int,int,int)">
+			<summary>
+			Sets the new triangle index for the given vertex of the given surface.
+			</summary> 
+			<param name="num"> Vertex number in the range from 0 to the total number of triangle indices for the given surface. </param>
+			<param name="index"> Triangle index to be set in the range from 0 to the total number of triangle vertices for the given surface. </param>
+			<param name="surface"> Mesh surface number. </param> 
+		</member>
+		<member name="M:Unigine.MeshStatic.getTIndex(int,int) const">
+			<summary>
+			Returns the triangle index for the given surface by using the index number.
+			</summary> 
+			<param name="num"> Vertex number in the range from 0 to the total number of triangle indices for the given surface. </param>
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Triangle index.</returns>
+		</member>
+		<member name="M:Unigine.MeshStatic.getNumTIndices(int) const">
+			<summary>
+			Returns the number of triangle indices for the given mesh surface.
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>Number of triangle indices.</returns>
 		</member>
 		<member name="F:Unigine.MeshStatic.MODE_TRIANGLES">
 			<summary>

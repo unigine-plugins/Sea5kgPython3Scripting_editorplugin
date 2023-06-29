@@ -665,8 +665,8 @@
 			Sets texture data using the data of the specified 2D or 2D array image.					The following conditions must be satisfied:													Both texture and image types must be either 2D or 2D_ARRAY.							Texture resolution must be greater or equal to the image resolution.							Image and texture mipmap counts must be equal (the same is for layer counts of 2D arrays).
 			</summary> 
 			<param name="image"> Source image to be used for setting texture data. </param>
-			<param name="offset_x"> Offset along the X axis (in pixels) starting from which the data of the specified image is to be taken. The following condition must be satisfied: offset_x &lt; texture_width - image_width. </param>
-			<param name="offset_y"> Offset along the Y axis (in pixels) starting from which the data of the specified image is to be taken. The following condition must be satisfied: offset_y &lt; texture_height - image_height. </param>
+			<param name="offset_x"> Offset along the X axis (in pixels) starting from which the data of the specified image is to be taken. The following condition must be satisfied: offset_x &amp;lt; texture_width - image_width. </param>
+			<param name="offset_y"> Offset along the Y axis (in pixels) starting from which the data of the specified image is to be taken. The following condition must be satisfied: offset_y &amp;lt; texture_height - image_height. </param>
 			<param name="texture_format"> Texture format identifier (see the FORMAT_* variables), or -1 - auto-detect. </param> 
 			<returns>1 if the data was set successfully; otherwise, 0.</returns>
 		</member>

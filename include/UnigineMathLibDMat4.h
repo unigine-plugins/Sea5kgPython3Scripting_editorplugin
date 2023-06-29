@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 #include "UnigineMathLibCommon.h"
 
@@ -55,9 +54,6 @@ struct alignas(16) dmat4
 		, m03(v), m13(v), m23(v)
 	{
 	}
-
-
-	
 	UNIGINE_INLINE dmat4(
 		double m00_, double m10_, double m20_,
 		double m01_, double m11_, double m21_,
@@ -127,31 +123,25 @@ struct alignas(16) dmat4
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(q);
 	}
-	UNIGINE_INLINE explicit dmat4(const double *m, int transpose = 0)
+	UNIGINE_INLINE explicit dmat4(const dmat4x3_values &m, int transposed = 0)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
-		set(m, transpose);
+		set(m, transposed);
 	}
-	UNIGINE_INLINE explicit dmat4(const float *m, int transpose)
+	UNIGINE_INLINE explicit dmat4(const mat4x3_values &m, int transposed = 0)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
-		set(m, transpose);
+		set(m, transposed);
 	}
-	UNIGINE_INLINE explicit dmat4(const float *m)
-		: m00(m[0])
-		, m10(m[1])
-		, m20(m[2])
-		, m01(m[4])
-		, m11(m[5])
-		, m21(m[6])
-		, m02(m[8])
-		, m12(m[9])
-		, m22(m[10])
-		, m03(m[12])
-		, m13(m[13])
-		, m23(m[14])
+	UNIGINE_INLINE explicit dmat4(const dmat4x4_values &m, int transposed = 0)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
+		set(m, transposed);
+	}
+	UNIGINE_INLINE explicit dmat4(const mat4x4_values &m, int transposed = 0)
+	{
+		UNIGINE_ASSERT_ALIGNED16(this);
+		set(m, transposed);
 	}
 	UNIGINE_INLINE explicit dmat4(const mat3 &m, const dvec3 &v)
 	{
@@ -241,9 +231,76 @@ struct alignas(16) dmat4
 		sse.v5 = m.sse.v5;
 	}
 	UNIGINE_INLINE void set(const quat &q);
-	UNIGINE_INLINE void set(const double *m, int transpose = 0)
+
+	UNIGINE_INLINE void set(const dmat4x3_values &m, int transposed = 0)
 	{
-		if (transpose)
+		if (transposed)
+		{
+			m00 = m[0];
+			m01 = m[1];
+			m02 = m[2];
+			m03 = m[3];
+			m10 = m[4];
+			m11 = m[5];
+			m12 = m[6];
+			m13 = m[7];
+			m20 = m[8];
+			m21 = m[9];
+			m22 = m[10];
+			m23 = m[11];
+		} else
+		{
+			m00 = m[0];
+			m01 = m[3];
+			m02 = m[6];
+			m03 = m[9];
+			m10 = m[1];
+			m11 = m[4];
+			m12 = m[7];
+			m13 = m[10];
+			m20 = m[2];
+			m21 = m[5];
+			m22 = m[8];
+			m23 = m[11];
+		}
+	}
+
+	UNIGINE_INLINE void set(const mat4x3_values &m, int transposed = 0)
+	{
+		if (transposed)
+		{
+			m00 = m[0];
+			m01 = m[1];
+			m02 = m[2];
+			m03 = m[3];
+			m10 = m[4];
+			m11 = m[5];
+			m12 = m[6];
+			m13 = m[7];
+			m20 = m[8];
+			m21 = m[9];
+			m22 = m[10];
+			m23 = m[11];
+		} else
+		{
+			m00 = m[0];
+			m01 = m[3];
+			m02 = m[6];
+			m03 = m[9];
+			m10 = m[1];
+			m11 = m[4];
+			m12 = m[7];
+			m13 = m[10];
+			m20 = m[2];
+			m21 = m[5];
+			m22 = m[8];
+			m23 = m[11];
+		}
+	}
+
+	UNIGINE_INLINE void set(const dmat4x4_values &m, int transposed = 0)
+	{
+		if (transposed)
 		{
 			m00 = m[0];
 			m01 = m[1];
@@ -273,9 +330,10 @@ struct alignas(16) dmat4
 			m23 = m[14];
 		}
 	}
-	UNIGINE_INLINE void set(const float *m, int transpose = 0)
+
+	UNIGINE_INLINE void set(const mat4x4_values &m, int transposed = 0)
 	{
-		if (transpose)
+		if (transposed)
 		{
 			m00 = m[0];
 			m01 = m[1];
@@ -305,6 +363,7 @@ struct alignas(16) dmat4
 			m23 = m[14];
 		}
 	}
+
 	UNIGINE_INLINE void set(const mat3 &m, const dvec3 &v)
 	{
 		m00 = m.m00;
@@ -322,7 +381,7 @@ struct alignas(16) dmat4
 	}
 	UNIGINE_INLINE void set(const quat &q, const dvec3 &v);
 
-	UNIGINE_INLINE void get(double *m, int transpose = 0) const
+	UNIGINE_INLINE void get(dmat4x3_values &m, int transpose = 0) const
 	{
 		if (transpose)
 		{
@@ -343,6 +402,42 @@ struct alignas(16) dmat4
 			m[0] = m00;
 			m[4] = m01;
 			m[8] = m02;
+			m[1] = m03;
+			m[5] = m10;
+			m[9] = m11;
+			m[2] = m12;
+			m[6] = m13;
+			m[10] = m20;
+			m[3] = m21;
+			m[7] = m22;
+			m[11] = m23;
+		}
+	}
+	UNIGINE_INLINE void get(dmat4x4_values &m, int transpose = 0) const
+	{
+		if (transpose)
+		{
+			m[0] = m00;
+			m[1] = m01;
+			m[2] = m02;
+			m[3] = m03;
+			m[4] = m10;
+			m[5] = m11;
+			m[6] = m12;
+			m[7] = m13;
+			m[8] = m20;
+			m[9] = m21;
+			m[10] = m22;
+			m[11] = m23;
+			m[12] = 0.0;
+			m[13] = 0.0;
+			m[14] = 0.0;
+			m[15] = 1.0;
+		} else
+		{
+			m[0] = m00;
+			m[4] = m01;
+			m[8] = m02;
 			m[12] = m03;
 			m[1] = m10;
 			m[5] = m11;
@@ -352,10 +447,15 @@ struct alignas(16) dmat4
 			m[6] = m21;
 			m[10] = m22;
 			m[14] = m23;
+			m[3] = 0.0;
+			m[7] = 0.0;
+			m[11] = 0.0;
+			m[15] = 1.0;
 		}
 	}
-	UNIGINE_INLINE double *get() { return mat; }
-	UNIGINE_INLINE const double *get() const { return mat; }
+
+	UNIGINE_INLINE dmat4x3_values &get() { return mat; }
+	UNIGINE_INLINE const dmat4x3_values &get() const { return mat; }
 	UNIGINE_INLINE double &get(int row, int column)
 	{
 		assert((unsigned int)row < 3 && "dmat4::get(): bad row");

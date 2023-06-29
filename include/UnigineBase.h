@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 
 #pragma once
 /*
@@ -155,6 +154,12 @@ struct ConstexprTag {};
 constexpr size_t constexpr_strlen(const char *str)
 {
 	return *str ? 1 + constexpr_strlen(str + 1) : 0;
+}
+
+constexpr bool constexpr_strcmp(const char *str0, const char *str1)
+{
+	return (*str0 && *str1 && (*str0 == *str1)) ? constexpr_strcmp(str0 + 1, str1 + 1)
+												: (*str0 == *str1) && (*str0 == 0);
 }
 
 template <class F>

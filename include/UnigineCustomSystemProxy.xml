@@ -252,13 +252,6 @@
 			<param name="win_handle"> Engine window handle. </param> 
 			<returns>Display index.</returns>
 		</member>
-		<member name="M:Unigine.CustomSystemProxy.getWindowHitTestResult(WIN_HANDLE)">
-			<summary>
-			Returns a value indicating in which area of the engine window the mouse is located.
-			</summary> 
-			<param name="win_handle"> Engine window handle. </param> 
-			<returns>Value indicating the window area, one of the HITTEST_* values.</returns>
-		</member>
 		<member name="M:Unigine.CustomSystemProxy.getWindowSystemBorderSize(WIN_HANDLE)">
 			<summary>
 			Returns the size of the system window borders.
@@ -266,16 +259,14 @@
 			<param name="win_handle"> Engine window handle. </param> 
 			<returns>Size of the system window borders.</returns>
 		</member>
-		<member name="M:Unigine.CustomSystemProxy.setWindowResizeBorderSize(WIN_HANDLE,int)">
+		<member name="M:Unigine.CustomSystemProxy.getHitTestAreaIntersection(uint64_t,int,int)">
 			<summary>
-			Sets the size of the border that is manipulated to resize the window.
+			Returns a value indicating if intersection of the cursor with the window drag area is detected.
 			</summary> 
 			<param name="win_handle"> Engine window handle. </param>
-			<param name="size"> Size of the border resize area. </param> 
-		</member>
-		<member name="M:Unigine.CustomSystemProxy.isDragAreaIntersection(uint64_t,int,int)">
-			<summary>
-			</summary>  
+			<param name="global_pos_x"> X coordinate of the cursor in global coordinates. </param>
+			<param name="global_pos_y"> Y coordinate of the cursor in global coordinates. </param> 
+			<returns>1 if intersection is detected; otherwise 0.</returns>
 		</member>
 		<member name="M:Unigine.CustomSystemProxy.setGlobalMousePosition(Unigine.ivec2)">
 			<summary>
@@ -623,6 +614,21 @@
 			<param name="high_frequency"> High-frequency (right) motor speed. </param>
 			<param name="duration_ms"> Duration of vibration, in milliseconds. </param> 
 		</member>
+		<member name="M:Unigine.CustomSystemProxy.getGamepadNumTouches(int32_t) const">
+			<summary>
+			Returns the total number of touch panels for the specified gamepad.
+			</summary> 
+			<param name="pad_id"> Gamepad ID. </param> 
+			<returns>Total number of touch panels for the specified gamepad.</returns>
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.getGamepadNumTouchFingers(int32_t,int) const">
+			<summary>
+			Returns the total number of fingers supported by the specified gamepad touch panel.
+			</summary> 
+			<param name="pad_id"> Gamepad ID. </param>
+			<param name="touch"> Index of the gamepad touch panel, the number from 0 to the total number of touch panels. </param> 
+			<returns>Total number of the fingers supported by the specified gamepad touch panel.</returns>
+		</member>
 		<member name="M:Unigine.CustomSystemProxy.getDisplayRefreshRate(int) const">
 			<summary>
 			Returns the refresh rate of the display.
@@ -650,6 +656,13 @@
 			</summary> 
 			<param name="display_index"> Display index. </param> 
 			<returns>Display orientation.</returns>
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.isDpiAwarenessSupported(int32_t) const">
+			<summary>
+			Returns a value indicating if the specified DPI awareness mode is supported.
+			</summary> 
+			<param name="mode"> DPI awareness mode, the value indicating how the application processes the DPI scaling. </param> 
+			<returns>true the specified DPI awareness mode is supported; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.CustomSystemProxy.isKeyboardModifierEnabled(int) const">
 			<summary>
@@ -713,18 +726,6 @@
 			<param name="global_pos"> The coordinates of the intersection point in global coordinates. </param>
 			<param name="excludes"> The windows to be excluded from the intersection detection. </param> 
 			<returns>The handle of the window the intersection with which is detected.</returns>
-		</member>
-		<member name="M:Unigine.CustomSystemProxy.getDraggableWindow const">
-			<summary>
-			Returns the handle of the draggable window.
-			</summary>  
-			<returns>Handle of the draggable window.</returns>
-		</member>
-		<member name="M:Unigine.CustomSystemProxy.getResizableWindow const">
-			<summary>
-			Returns the handle of the resizable window.
-			</summary>  
-			<returns>Handle of the resizable window.</returns>
 		</member>
 		<member name="F:Unigine.CustomSystemProxy.SYSTEM_PROXY_WINDOWS">
 			<summary>

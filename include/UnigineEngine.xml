@@ -126,12 +126,6 @@
 			<param name="num"> Number of the EditorLogic instance. </param> 
 			<returns>EditorLogic instance.</returns>
 		</member>
-		<member name="M:Unigine.Engine.getEditorScript">
-			<summary>
-			Returns a path to the editor script (provided by the					-editor_scriptcommand line argument).
-			</summary>  
-			<returns>Path to the editor script.</returns>
-		</member>
 		<member name="M:Unigine.Engine.setEditorVariable(char,Unigine.Variable)">
 			<summary>
 			Sets the editor script variable by its name.
@@ -165,17 +159,17 @@
 			</summary>  
 			<returns>The list of external definitions.</returns>
 		</member>
-		<member name="M:Unigine.Engine.setBackgroundUpdate(bool)">
+		<member name="M:Unigine.Engine.setBackgroundUpdate(Engine::BACKGROUND_UPDATE)">
 			<summary>
-			Sets the value indicating whether the application window is updated when the window is hidden or out of focus (rendering frames in background). By default your UNIGINE application stops rendering frames and updating its main window, when it window goes out of focus (e.g. user switches to another window). Setting the background update mode enables constant rendering regardless of whether the Engine window is focused or in the background.
+			Sets a value indicating the way application windows are updated when hidden or out of focus (rendering frames in background). By default your UNIGINE application stops rendering frames and updating its main window, when it window goes out of focus (e.g. user switches to another window). Changing the background update mode enables constant rendering regardless of whether the Engine window is focused or in the background.
 			</summary> 
-			<param name="update"> Engine window update mode: true for constantly repeating update cycle (i.e. the application is updated even if the window is hidden or out of focus); otherwise, false. </param> 
+			<param name="update"> Engine window update mode. One of the BACKGROUND_UPDATE_ values. </param> 
 		</member>
 		<member name="M:Unigine.Engine.isBackgroundUpdate">
 			<summary>
-			Returns a value indicating whether the Engine window is updated when the window is hidden or out of focus.
+			Returns a value indicating the way application windows are updated when hidden or out of focus.
 			</summary>  
-			<returns>true if the update cycle is constantly repeated (i.e. the application is updated even if the window is hidden or out of focus); otherwise, false.</returns>
+			<returns>Engine window update mode. One of the BACKGROUND_UPDATE_ values.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getFeatures">
 			<summary>
@@ -493,18 +487,6 @@
 			<param name="logic"> WorldLogic instance. </param> 
 			<returns>true if the WorldLogic instance has been added successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Engine.dialogError(char)">
-			<summary>
-			Displays a dialog window with errors set using the error() function.
-			</summary> 
-			<param name="title"> Title to be displayed in the error window. </param> 
-		</member>
-		<member name="M:Unigine.Engine.dialogMessage(char)">
-			<summary>
-			Displays a dialog window with the last message set using the message() function.
-			</summary> 
-			<param name="title"> Title to be displayed in the message window. </param> 
-		</member>
 		<member name="M:Unigine.Engine.findPlugin(char) const">
 			<summary>
 			Searches the index of the loaded plugin by its name.
@@ -527,9 +509,9 @@
 			<param name="logic"> An EditorLogic instance. </param> 
 			<returns>true if the instance has been removed successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Engine.removePlugin(Plugin)">
+		<member name="M:Unigine.Engine.destroyPlugin(Plugin)">
 			<summary>
-			Removes a plugin by using a pointer to this plugin.
+			Removes the specified plugin.
 			</summary> 
 			<param name="plugin"> Plugin pointer to remove. </param> 
 			<returns>true if the plugin has been removed successfully; otherwise, false.</returns>
@@ -1210,6 +1192,16 @@
 			</summary>  
 			<returns>true if the evaluation version of the Engine is used; otherwise, false.</returns>
 		</member>
+		<member name="M:Unigine.Engine.beginOutsideLoopRender">
+			<summary>
+			Starts a block of code where you can call Render class methods from outside the Engine's Loop. The end of this block should be marked with a call to the  method.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Engine.endOutsideLoopRender">
+			<summary>
+			Closes a block of code where you can call Render class methods from outside the Engine's Loop started with a call to the  method.
+			</summary>  
+		</member>
 		<member name="M:Unigine.Engine.startFps">
 			<summary>
 			Starts the FPS counter if it was stopped. All function calls are placed into a stack, so the number of calls to this function should correspond to the number of calls to the stopFps() function.
@@ -1341,6 +1333,21 @@
 		<member name="F:Unigine.Engine.GCMODE_WORLD_SHUTDOWN">
 			<summary>
 			The garbage collector is called on closing the world. This mode is ideal if the number of memory allocations is your code is insignificant.
+		</summary>
+		</member>
+		<member name="F:Unigine.Engine.BACKGROUND_UPDATE_DISABLED">
+			<summary>
+			Background update is disabled.
+		</summary>
+		</member>
+		<member name="F:Unigine.Engine.BACKGROUND_UPDATE_RENDER_NON_MINIMIZED">
+			<summary>
+			Background update is enabled (rendering is performed when the window is out of focus, but stops if the window is minimized).
+		</summary>
+		</member>
+		<member name="F:Unigine.Engine.BACKGROUND_UPDATE_RENDER_ALWAYS">
+			<summary>
+			Background update is always enabled (rendering is performed all the time, regardless of the window state.
 		</summary>
 		</member>
 		<member name="F:Unigine.Engine.BUILD_CONFIG_DEBUG">

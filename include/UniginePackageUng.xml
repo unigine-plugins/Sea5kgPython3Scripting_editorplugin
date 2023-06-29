@@ -28,7 +28,7 @@
 			<param name="name"> Package name. </param> 
 			<returns>1 if a package was created successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.PackageUng.getCompressionType">
+		<member name="M:Unigine.PackageUng.getCompressionType const">
 			<summary>
 			Returns the type of compression used in the package.
 			</summary>  
@@ -41,7 +41,7 @@
 			<param name="num"> File ID. A number between 0 and the total number of files in the package. </param> 
 			<returns>File name.</returns>
 		</member>
-		<member name="M:Unigine.PackageUng.getNumFiles">
+		<member name="M:Unigine.PackageUng.getNumFiles const">
 			<summary>
 			Returns the number of files in the package.
 			</summary>  
@@ -81,6 +81,10 @@
 			<param name="data"> Data to be written. </param>
 			<param name="size"> Size of the data to be written, in bytes. </param> 
 			<returns>1 if the data was successfully written to a file; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.PackageUng.containsFile(char)">
+			<summary>
+			</summary>  
 		</member>
 		<member name="F:Unigine.PackageUng.COMPRESSION_NONE">
 			<summary>

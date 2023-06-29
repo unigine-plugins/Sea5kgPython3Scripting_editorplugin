@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 
 #include "UnigineBase.h"
@@ -19,7 +18,7 @@
 
 #ifdef _WIN32
 	#include <intrin.h>
-#elif _LINUX
+#elif _LINUX || UNIGINE_PS5
 	#include <pthread.h>
 #else
 	#error "Platform unsupported"
@@ -31,6 +30,9 @@
 namespace Unigine
 {
 
+class UNIGINE_API CPUShader;
+class UNIGINE_API PoolCPUShaders;
+
 //////////////////////////////////////////////////////////////////////////
 /// Atomics and locks.
 //////////////////////////////////////////////////////////////////////////
@@ -41,7 +43,7 @@ UNIGINE_INLINE bool AtomicCAS(volatile char *ptr, char old_value, char new_value
 	assert((((size_t)ptr) % (sizeof(char))) == 0 && "unaligned atomic!");
 	#ifdef _WIN32
 		return (_InterlockedCompareExchange8(ptr, new_value, old_value) == old_value);
-	#elif _LINUX
+	#elif _LINUX || UNIGINE_PS5
 		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
 	#endif
 }
@@ -52,7 +54,7 @@ UNIGINE_INLINE bool AtomicCAS(volatile short *ptr, short old_value, short new_va
 	assert((((size_t)ptr) % (sizeof(short))) == 0 && "unaligned atomic!");
 	#ifdef _WIN32
 		return (_InterlockedCompareExchange16(ptr, new_value, old_value) == old_value);
-	#elif _LINUX
+	#elif _LINUX || UNIGINE_PS5
 		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
 	#endif
 }
@@ -63,7 +65,7 @@ UNIGINE_INLINE bool AtomicCAS(volatile int *ptr, int old_value, int new_value)
 	assert((((size_t)ptr) % (sizeof(int))) == 0 && "unaligned atomic!");
 	#ifdef _WIN32
 		return (_InterlockedCompareExchange((volatile long *)ptr, new_value, old_value) == old_value);
-	#elif _LINUX
+	#elif _LINUX || UNIGINE_PS5
 		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
 	#endif
 }
@@ -74,7 +76,7 @@ UNIGINE_INLINE bool AtomicCAS(volatile long long *ptr, long long old_value, long
 	assert((((size_t)ptr) % (sizeof(int))) == 0 && "unaligned atomic!");
 	#ifdef _WIN32
 		return (_InterlockedCompareExchange64(ptr, new_value, old_value) == old_value);
-	#elif _LINUX
+	#elif _LINUX || UNIGINE_PS5
 		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
 	#endif
 }
@@ -84,7 +86,7 @@ UNIGINE_INLINE bool AtomicCAS(void *volatile * ptr, void *old_value, void *new_v
 	assert((((size_t)ptr) % (sizeof(int))) == 0 && "unaligned atomic!");
 	#ifdef _WIN32
 		return (_InterlockedCompareExchangePointer(ptr, new_value, old_value) == old_value);
-	#elif _LINUX
+	#elif _LINUX || UNIGINE_PS5
 		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
 	#endif
 }
@@ -144,6 +146,13 @@ UNIGINE_INLINE char AtomicGet(volatile char *ptr)
 	return AtomicAdd(ptr, 0);
 }
 
+/// Atomic bool, 8-bit.
+/// Because simply accessing the variable directly is actually unsafe!
+UNIGINE_INLINE bool AtomicGet(volatile bool *ptr)
+{
+	return AtomicAdd(reinterpret_cast<volatile char *>(ptr), 0) != 0;
+}
+
 /// Atomic read, 16-bit.
 /// Because simply accessing the variable directly is actually unsafe!
 UNIGINE_INLINE short AtomicGet(volatile short *ptr)
@@ -175,6 +184,13 @@ UNIGINE_INLINE char AtomicSet(volatile char *ptr, char value)
 		if (AtomicCAS(ptr, old, value))
 			return old;
 	}
+}
+
+/// Atomic set, 8-bit.
+/// Returns the previous value.
+UNIGINE_INLINE bool AtomicSet(volatile bool *ptr, bool value)
+{
+	return AtomicSet(reinterpret_cast<volatile char *>(ptr), char(value)) != 0;
 }
 
 /// Atomic set, 16-bit.
@@ -238,11 +254,11 @@ public:
 
 	// Checks if the thread is running.
 	// Returns 1 if the thread is running; otherwise, 0 is returned.
-	int isRunning() const { return running; }
+	bool isRunning() const { return running; }
 
 	// Checks if the thread is waiting.
 	// Returns 1 if the thread is waiting; otherwise, 0 is returned.
-	int isWaiting() const { return is_waiting && (AtomicGet(&need_wait) == 1); }
+	bool isWaiting() const { return is_waiting && AtomicGet(&need_wait); }
 
 	// Sets the thread priority.
 	// Acceptable priority values are in the range [-3;3].
@@ -272,8 +288,10 @@ public:
 	#else
 		typedef pthread_t ID;
 	#endif
+	ID getRunningID() { return thread_id ;}
 	// Returns the current thread identifier.
 	static ID getID();
+	bool isCurrentThread() { return getID() == getRunningID(); }
 
 	// Suspends thread execution.
 	// Timeout value is provided in milliseconds.
@@ -282,11 +300,14 @@ public:
 	static void switchThread();
 
 protected:
+	struct WaitVariable;
+	friend PoolCPUShaders;
+
 	// Thread process function.
 	virtual void process() = 0;
 
 	// Puts the thread into the waiting state.
-	void wait(int force);
+	void wait();
 
 	#ifdef _WIN32
 		static unsigned long __stdcall thread_handler(void *data);
@@ -297,19 +318,15 @@ protected:
 		pthread_mutex_t mutex;
 	#endif
 
-	long long affinity_mask;
-
 	volatile bool running{false};
+	volatile bool is_waiting{false};
+	volatile bool clean_stopped; // set to 1 by thread_handler() on clean exit from process()
+	mutable volatile bool need_wait{false};
+
+	long long affinity_mask;
 	mutable int priority;
-
-private:
-
-	struct WaitVariable;
+	ID thread_id;
 	WaitVariable *wait_variable{nullptr};
-	mutable volatile int need_wait{false};
-	volatile int is_waiting{false};
-
-	volatile int clean_stopped; // set to 1 by thread_handler() on clean exit from process()
 };
 
 class BackoffSpinner
@@ -347,6 +364,22 @@ UNIGINE_INLINE void SpinLock(volatile int *ptr, int old_value, int new_value)
 		{
 			if (*ptr == old_value && AtomicCAS(ptr, old_value, new_value))
 				return;
+			_mm_pause();
+		}
+		spinner.spin();
+	}
+}
+UNIGINE_INLINE void SpinLock(volatile char *ptr, char old_value, char new_value)
+{
+	const int TRIES = 3;
+	BackoffSpinner spinner;
+	while (true)
+	{
+		for (int i = 0; i < TRIES; i++)
+		{
+			if (*ptr == old_value && AtomicCAS(ptr, old_value, new_value))
+				return;
+			_mm_pause();
 		}
 		spinner.spin();
 	}
@@ -360,8 +393,26 @@ UNIGINE_INLINE void WaitLock(volatile int *ptr, int value)
 	while (true)
 	{
 		for (int i = 0; i < TRIES; i++)
+		{
 			if (*ptr == value && AtomicCAS(ptr, value, value))
 				return;
+			_mm_pause();
+		}
+		spinner.spin();
+	}
+}
+UNIGINE_INLINE void WaitLock(volatile char *ptr, char value)
+{
+	const int TRIES = 3;
+	BackoffSpinner spinner;
+	while (true)
+	{
+		for (int i = 0; i < TRIES; i++)
+		{
+			if (*ptr == value && AtomicCAS(ptr, value, value))
+				return;
+			_mm_pause();
+		}
 		spinner.spin();
 	}
 }
@@ -376,7 +427,7 @@ public:
 	bool isLocked() const { return AtomicGet(&locked) != 0; }
 	void wait() { WaitLock(&locked, 0); }
 private:
-	mutable volatile int locked;
+	mutable volatile char locked{0};
 };
 
 /// Scoped lock, based on simple mutex.
@@ -523,100 +574,93 @@ private:
 /// CPUShader
 ////////////////////////////////////////////////////////////////////////////////
 
-class UNIGINE_API CPUShader;
-
 class UNIGINE_API PoolCPUShaders
 {
 public:
-	enum
-	{
-		MAX_THREADS = 64
-	};
+	static int isInitialized() { return is_initialized; }
 
-	// check CPU runtime
-	static int isInitialized();
+	static int getNumThreads() { return num_threads; }
 
-	// get CPU parameters
-	static int getNumSyncThreads();
-	static int getNumAsyncThreads();
-
-	// check CPU status
-	static int isRunning();
+	static bool isRunning() { return AtomicGet(&num_active_tasks) != 0; }
 	static void wait();
+	static void signal();
 
 public:  // only internal methods
-
-	static int internal_init();
-	static int internal_shutdown();
+	static bool internal_init();
+	static void internal_shutdown();
 
 private:
 	friend CPUShader;
 
-	struct CPUThreadShader
-	{
-		constexpr CPUThreadShader(): id(-1), shader(nullptr) {}
-		constexpr CPUThreadShader(int id_, CPUShader *shader_): id(id_), shader(shader_) {}
+	static bool init_shader_run(CPUShader *shader, int &num_threads);
+	static void run_sync(CPUShader *shader, int num_threads);
+	static void run_async(CPUShader *shader, int num_threads);
+	static void wait(CPUShader *shader);
 
-		int id{-1};
-		CPUShader *shader{nullptr};
-	};
-	struct CPUThreadQueue;
+	static void run_process(CPUShader *shader, int id);
+	static void run_shaders();
+
+	////////////////////////////////////////////////////////////////////////////////
+	/// CPUShader
+	////////////////////////////////////////////////////////////////////////////////
+
 	class CPUThread;
+	static CPUThread **threads;
 
-	static void run_sync(CPUShader *shader);
-	static void run_async(CPUShader *shader);
-	static void signal_queue(CPUThreadQueue *queue);
-	static void internal_dec_active_threads();
+	class SignalThread;
+	static SignalThread *signal_thread;
 
-	static CPUThread *sync_threads[MAX_THREADS];
-	static CPUThread *async_threads[MAX_THREADS];
+	struct Queue
+	{
+		Mutex mutex;
+		Vector<CPUShader*> shaders;
+	};
+	static Queue queue;
 
-	static CPUThreadQueue *queue_sync;
-	static CPUThreadQueue *queue_async;
-
-	static int is_initialized;
-	static int num_sync_threads;
-	static int num_async_threads;
+	static bool is_initialized;
+	static volatile int num_active_tasks;
+	static int num_threads;
 };
 
-class UNIGINE_API CPUShader
+class CPUShader
 {
-	friend class PoolCPUShaders;
 public:
-	CPUShader() {};
-	virtual ~CPUShader() { wait(); };
+	UNIGINE_INLINE CPUShader() {};
+	virtual ~CPUShader() { wait(); }
 
-	void runSync(int threads_count = -1);
-	void runAsync(int threads_count = -1);
+	UNIGINE_INLINE void runSync(int num_threads_ = -1) { PoolCPUShaders::run_sync(this, num_threads_); }
+	UNIGINE_INLINE void runAsync(int num_threads_ = -1) { PoolCPUShaders::run_async(this, num_threads_); }
+	UNIGINE_INLINE void wait() { PoolCPUShaders::wait(this); }
 
-	void wait();
+	UNIGINE_INLINE bool isRunning() const { return AtomicGet(&num_active_threads) != 0; }
+	UNIGINE_INLINE int getNumThreads() { return num_threads; }
 
-	int isRunning() const { return AtomicGet(&num_active_threads) != 0; }
-	int getNumThreads() { return num_threads; }
-
-	virtual void process(int thread_num, int threads_count) = 0;
-
-private:
-	void internal_dec_active_threads();
-	void set_current_queue(PoolCPUShaders::CPUThreadQueue *queue) { current_queue = queue; }
+	virtual void process(int thread_num, int num_threads) = 0;
 
 private:
+	friend class PoolCPUShaders;
+
+	mutable volatile int queue_threads{ -1 };
 	mutable volatile int num_active_threads{ 0 };
-	int num_threads{ 0 };
-	PoolCPUShaders::CPUThreadQueue* current_queue{nullptr};
+	mutable volatile int num_threads{ 0 };
 };
+
 
 template<typename State, typename Process, typename Destroy>
-class CPUShaderCallable: public CPUShader
+class CPUShaderCallable final: public CPUShader
 {
 public:
-	CPUShaderCallable(Process func_process_, Destroy func_destroy_)
+	UNIGINE_INLINE CPUShaderCallable(Process func_process_, Destroy func_destroy_)
 		: func_process(func_process_)
 		, func_destroy(func_destroy_)
 		, state()
 	{}
-	~CPUShaderCallable() override { func_destroy(state); }
-	void process(int thread_num, int threads_count) override { func_process(this, thread_num, threads_count); }
+	~CPUShaderCallable() override
+	{
+		wait();
+		func_destroy(state);
+	}
+	void process(int thread_num, int num_threads) override { func_process(this, thread_num, num_threads); }
 
 private:
 	Process func_process;
@@ -625,15 +669,17 @@ private:
 };
 
 template<typename Process>
-class CPUShaderCallableStateless: public CPUShader
+class CPUShaderCallableStateless final: public CPUShader
 {
 public:
-	CPUShaderCallableStateless(Process func_process_)
+	UNIGINE_INLINE CPUShaderCallableStateless(Process func_process_)
 		: func_process(func_process_)
 	{}
-	void process(int thread_num, int threads_count) override
+	~CPUShaderCallableStateless() override { wait(); }
+
+	void process(int thread_num, int num_threads) override
 	{
-		func_process(this, thread_num, threads_count);
+		func_process(this, thread_num, num_threads);
 	}
 
 private:
@@ -658,5 +704,19 @@ CPUShader *makeCPUShaderStateless(Process func_process)
 {
 	return new CPUShaderCallableStateless<Process>(std::move(func_process));
 }
+
+template <typename Process>
+auto makeScopeCPUShaderStateless(Process func_process)
+{
+	return CPUShaderCallableStateless<Process>(std::move(func_process));
+}
+
+template <typename Process>
+void runSyncMultiThreadFunc(Process func_process, int num_threads = -1)
+{
+	CPUShaderCallableStateless<Process> shader(std::move(func_process));
+	shader.runSync(num_threads);
+}
+
 
 } /* namespace Unigine */

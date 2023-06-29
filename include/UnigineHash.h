@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 
 #pragma once
 
@@ -118,14 +117,6 @@ public:
 		UNIGINE_INLINE bool operator!=(const IteratorTemplate<T0, T1> &o) const noexcept { return ptr != o.get(); }
 		template<typename T0, typename T1>
 		UNIGINE_INLINE bool operator==(const IteratorTemplate<T0, T1> &o) const noexcept { return ptr == o.get(); }
-		template<typename T0, typename T1>
-		UNIGINE_INLINE bool operator<(const IteratorTemplate<T0, T1> &it) const noexcept { return ptr < it.get(); }
-		template<typename T0, typename T1>
-		UNIGINE_INLINE bool operator>(const IteratorTemplate<T0, T1> &it) const noexcept { return ptr > it.get(); }
-		template<typename T0, typename T1>
-		UNIGINE_INLINE bool operator<=(const IteratorTemplate<T0, T1> &it) const noexcept { return ptr <= it.get(); }
-		template<typename T0, typename T1>
-		UNIGINE_INLINE bool operator>=(const IteratorTemplate<T0, T1> &it) const noexcept { return ptr >= it.get(); }
 
 		UNIGINE_INLINE IteratorType &operator*() noexcept { return **ptr; }
 		UNIGINE_INLINE IteratorType *operator->() noexcept { return *ptr; }

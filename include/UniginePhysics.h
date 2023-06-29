@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -65,100 +64,6 @@ public:
 };
 typedef Ptr<PhysicsIntersectionNormal> PhysicsIntersectionNormalPtr;
 
-//////////////////////////////////////////////////////////////////////////
-
-class UNIGINE_API Physics
-{
-protected:
-	
-
-public:
-	static int isInitialized(); 
-
-	enum UPDATE_MODE
-	{
-		UPDATE_MODE_BEFORE_RENDERING = 0,
-		UPDATE_MODE_ASYNC_RENDERING,
-	};
-	static void setEnabled(bool enable);
-	static bool isEnabled();
-	static void setStableFPS(bool stablefps);
-	static bool isStableFPS();
-	static void setDeterminism(bool determinism); ///< "determinism" mode means that objects are updated in a specific order
-	static bool isDeterminism();
-	static void setSyncEngineUpdateWithPhysics(bool physics); ///< "fixed" mode caps render FPS to physics FPS (otherwise physics state can be interpolated between rendered frames)
-	static bool isSyncEngineUpdateWithPhysics();
-	static void setUpdateMode(Physics::UPDATE_MODE mode);
-	static Physics::UPDATE_MODE getUpdateMode();
-	static void setMissedFrameLifetime(float lifetime);
-	static float getMissedFrameLifetime();
-	static void setBudget(float budget); ///< physics time budget, in seconds, defaults to 0.05 sec
-	static float getBudget();
-	static void setDistance(float distance); ///< max physics simulation distance
-	static float getDistance();
-	static void setNumIterations(int iterations);
-	static int getNumIterations();
-	static void setIFps(float ifps);
-	static float getIFps();
-	static void setScale(float scale);
-	static float getScale();
-	static void setLinearDamping(float damping);
-	static float getLinearDamping();
-	static void setAngularDamping(float damping);
-	static float getAngularDamping();
-	static void setMaxAngularVelocity(float velocity);
-	static float getMaxAngularVelocity();
-	static void setMaxLinearVelocity(float velocity);
-	static float getMaxLinearVelocity();
-	static void setFrozenLinearVelocity(float velocity);
-	static float getFrozenLinearVelocity();
-	static void setFrozenAngularVelocity(float velocity);
-	static float getFrozenAngularVelocity();
-	static void setNumFrozenFrames(int frames);
-	static int getNumFrozenFrames();
-	static void setPenetrationFactor(float factor);
-	static float getPenetrationFactor();
-	static void setPenetrationTolerance(float tolerance);
-	static float getPenetrationTolerance();
-	static void setGravity(const Math::vec3 &gravity);
-	static Math::vec3 getGravity();
-	static void setData(const char *data); ///< world user data, stored as is in a "data" element in .world XML
-	static const char *getData();
-	static void setCurrentSubframeTime(float time);
-	static float getCurrentSubframeTime();
-	static int getFrame();
-	static int getNumBodies();
-	static int getNumContacts();
-	static int getNumIslands();
-	static int getNumJoints();
-	static float getCollisionTime();
-	static float getIntegrateTime();
-	static float getResponseTime();
-	static float getSimulationTime();
-	static float getTotalTime();
-	static int saveScene();
-	static int restoreScene(int id);
-	static int removeScene(int id);
-	static bool loadSettings(const char *name, bool clear = false);
-	static bool saveSettings(const char *name, int force = 0);
-	static bool loadWorld(const Ptr<Xml> &xml);
-	static bool saveWorld(const Ptr<Xml> &xml, int force = 0);
-	static bool saveState(const Ptr<Stream> &stream);
-	static bool restoreState(const Ptr<Stream> &stream);
-	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<PhysicsIntersection> &intersection);
-	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<PhysicsIntersectionNormal> &intersection);
-	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Vector<Ptr<Node>> &exclude, const Ptr<PhysicsIntersection> &intersection);
-	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Vector<Ptr<Node>> &exclude, const Ptr<PhysicsIntersectionNormal> &intersection);
-	static bool isBody(int id);
-	static Ptr<Body> getBody(int id);
-	static bool isJoint(int id);
-	static Ptr<Joint> getJoint(int id);
-	static bool isShape(int id);
-	static Ptr<Shape> getShape(int id);
-	static void addUpdateNode(const Ptr<Node> &node);
-	static void addUpdateNodes(const Vector<Ptr<Node>> &nodes);
-};
-
 
 class UNIGINE_API ShapeContact : public APIInterface
 {
@@ -206,6 +111,7 @@ public:
 	int getID() const;
 	Shape::TYPE getType() const;
 	static const char *getTypeName(int type);
+	static Shape::TYPE getTypeID(const char *type);
 	const char *getTypeName() const;
 	int getNumber() const;
 	void setBody(const Ptr<Body> &body);
@@ -244,6 +150,8 @@ public:
 	bool isIdentity() const;
 	void setVelocity(const Math::vec3 &velocity, float ifps);
 	Math::vec3 getVelocity() const;
+	Math::WorldBoundBox getBoundBox() const;
+	Math::WorldBoundSphere getBoundSphere() const;
 	int getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, Math::Vec3 *ret_point, Math::vec3 *ret_normal) const;
 	int getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, const Ptr<PhysicsIntersection> &intersection) const;
 	int getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, const Ptr<PhysicsIntersectionNormal> &intersection) const;
@@ -708,6 +616,7 @@ public:
 	Math::Vec3 getContactPoint() const;
 	Ptr<Shape> getContactShape() const;
 	int getContactSurface() const;
+	void setCanBeUnderTerrain(bool val);
 	float getCurrentSlipAngle() const;
 	float getCurrentSlipRatio() const;
 };
@@ -740,7 +649,7 @@ public:
 	const char *getTypeName() const;
 	void setObject(const Ptr<Object> &val);
 	Ptr<Object> getObject() const;
-	void setObject(const Ptr<Object> &object, bool update);
+	bool setObject(const Ptr<Object> &object, bool update);
 	void setEnabled(bool enable);
 	bool isEnabled() const;
 	bool isEnabledSelf() const;
@@ -1138,5 +1047,113 @@ public:
 	static Ptr<BodyRope> create(const Ptr<Object> &object);
 };
 typedef Ptr<BodyRope> BodyRopePtr;
+
+//////////////////////////////////////////////////////////////////////////
+
+class UNIGINE_API Physics
+{
+public:
+	static int isInitialized();
+
+	enum UPDATE_MODE
+	{
+		UPDATE_MODE_BEFORE_RENDERING = 0,
+		UPDATE_MODE_ASYNC_RENDERING,
+	};
+
+	enum SHOW_TYPE
+	{
+		SHOW_TYPE_DISABLED = 0,
+		SHOW_TYPE_WIREFRAME = 1,
+		SHOW_TYPE_SOLID = 2,
+	};
+	static void setEnabled(bool enable);
+	static bool isEnabled();
+	static void setStableFPS(bool stablefps);
+	static bool isStableFPS();
+	static void setDeterminism(bool determinism); ///< "determinism" mode means that objects are updated in a specific order
+	static bool isDeterminism();
+	static void setSyncEngineUpdateWithPhysics(bool physics); ///< "fixed" mode caps render FPS to physics FPS (otherwise physics state can be interpolated between rendered frames)
+	static bool isSyncEngineUpdateWithPhysics();
+	static void setUpdateMode(Physics::UPDATE_MODE mode);
+	static Physics::UPDATE_MODE getUpdateMode();
+	static void setMissedFrameLifetime(float lifetime);
+	static float getMissedFrameLifetime();
+	static void setBudget(float budget); ///< physics time budget, in seconds, defaults to 0.05 sec
+	static float getBudget();
+	static void setDistance(float distance); ///< max physics simulation distance
+	static float getDistance();
+	static void setNumIterations(int iterations);
+	static int getNumIterations();
+	static void setIFps(float ifps);
+	static float getIFps();
+	static void setScale(float scale);
+	static float getScale();
+	static void setLinearDamping(float damping);
+	static float getLinearDamping();
+	static void setAngularDamping(float damping);
+	static float getAngularDamping();
+	static void setMaxAngularVelocity(float velocity);
+	static float getMaxAngularVelocity();
+	static void setMaxLinearVelocity(float velocity);
+	static float getMaxLinearVelocity();
+	static void setFrozenLinearVelocity(float velocity);
+	static float getFrozenLinearVelocity();
+	static void setFrozenAngularVelocity(float velocity);
+	static float getFrozenAngularVelocity();
+	static void setNumFrozenFrames(int frames);
+	static int getNumFrozenFrames();
+	static void setPenetrationFactor(float factor);
+	static float getPenetrationFactor();
+	static void setPenetrationTolerance(float tolerance);
+	static float getPenetrationTolerance();
+	static void setGravity(const Math::vec3 &gravity);
+	static Math::vec3 getGravity();
+	static void setData(const char *data); ///< world user data, stored as is in a "data" element in .world XML
+	static const char *getData();
+	static void setCurrentSubframeTime(float time);
+	static float getCurrentSubframeTime();
+	static int getFrame();
+	static int getNumBodies();
+	static int getNumContacts();
+	static int getNumIslands();
+	static int getNumJoints();
+	static float getCollisionTime();
+	static float getSimulationTime();
+	static float getTotalTime();
+	static float getWaitTime();
+	static int saveScene();
+	static int restoreScene(int id);
+	static int removeScene(int id);
+	static bool loadSettings(const char *name);
+	static bool saveSettings(const char *name, int force = 0);
+	static bool loadWorld(const Ptr<Xml> &xml);
+	static bool saveWorld(const Ptr<Xml> &xml, int force = 0);
+	static bool saveState(const Ptr<Stream> &stream);
+	static bool restoreState(const Ptr<Stream> &stream);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<PhysicsIntersection> &intersection);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Ptr<PhysicsIntersectionNormal> &intersection);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Vector<Ptr<Node>> &exclude, const Ptr<PhysicsIntersection> &intersection);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Vector<Ptr<Node>> &exclude, const Vector<Shape::TYPE> &exclude_types, const Ptr<PhysicsIntersection> &intersection);
+	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Vector<Ptr<Node>> &exclude, const Ptr<PhysicsIntersectionNormal> &intersection);
+	static bool isBody(int id);
+	static Ptr<Body> getBody(int id);
+	static bool isJoint(int id);
+	static Ptr<Joint> getJoint(int id);
+	static bool isShape(int id);
+	static Ptr<Shape> getShape(int id);
+	static void setShowShapes(Physics::SHOW_TYPE shapes);
+	static Physics::SHOW_TYPE getShowShapes();
+	static void setShowShapesDistance(float distance);
+	static float getShowShapesDistance();
+	static void setShowCollisionSurfaces(bool surfaces);
+	static bool isShowCollisionSurfaces();
+	static void setShowContacts(bool contacts);
+	static bool isShowContacts();
+	static void setShowJoints(bool joints);
+	static bool isShowJoints();
+	static void addUpdateNode(const Ptr<Node> &node);
+	static void addUpdateNodes(const Vector<Ptr<Node>> &nodes);
+};
 
 } // namespace Unigine

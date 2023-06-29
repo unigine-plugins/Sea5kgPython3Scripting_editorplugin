@@ -10,6 +10,7 @@
 			</summary> 
 			<param name="body"> Physical body to be assigned to the object. </param>
 			<param name="update"> Update flag. Set this flag to update the object after assigning the specified body to it. </param> 
+			<returns>true if the specified body is set successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Object.setBody(Unigine.Ptr{Unigine.Body})">
 			<summary>
@@ -55,7 +56,7 @@
 			Returns a value indicating if the specified surface is to be baked to environment probes.
 			</summary> 
 			<param name="surface"> Surface number. </param> 
-			<returns>1 if the specified surface is to be baked to environment probes; otherwise, 0.</returns>
+			<returns>true if the specified surface is to be baked to environment probes; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Object.setBakeToGI(bool,int)">
 			<summary>
@@ -934,19 +935,55 @@
 			<param name="mat"> Material smart pointer. </param>
 			<param name="pattern"> Pattern (string with a regular expression), against which surface names will be matched. </param> 
 		</member>
-		<member name="F:Unigine.Object.SURFACE_SHADOW_MODE_DYNAMIC">
+		<member name="M:Unigine.Object.getSurfaceStatDrawCalls(int) const">
 			<summary>
-			Mode to cast shadows only if the surface is lit by a dynamic light source.
-		</summary>
+			Returns the number of draw calls (DIP) for the surface with the specified number during the last frame.
+			</summary> 
+			<param name="surface"> Surface number. </param> 
+			<returns>Number of draw calls (DIP) for the specified surface during the last frame.</returns>
+		</member>
+		<member name="M:Unigine.Object.getSurfaceStatDrawCountViewport(int) const">
+			<summary>
+			Returns the number of times the surface with the specified number was drawn in the viewport last frame.
+			</summary> 
+			<param name="surface"> Surface number. </param> 
+			<returns>Number of times the specified surface was drawn in the viewport last frame.</returns>
+		</member>
+		<member name="M:Unigine.Object.getSurfaceStatDrawCountReflection(int) const">
+			<summary>
+			Returns the number of times the surface with the specified index was drawn during reflections rendering in the last frame.
+			</summary> 
+			<param name="surface"> Surface number. </param> 
+			<returns>Number of times the specified surface was drawn during reflections rendering in the last frame.</returns>
+		</member>
+		<member name="M:Unigine.Object.getSurfaceStatDrawCountShadow(int) const">
+			<summary>
+			Returns the number of times the surface with the specified index was drawn during shadows rendering in the last frame.
+			
+			</summary> 
+			<param name="surface"> Surface number. </param> 
+			<returns>Number of times the specified surface was drawn during shadows rendering in the last frame.</returns>
+		</member>
+		<member name="M:Unigine.Object.getSurfaceStatFrame(int) const">
+			<summary>
+			Returns the number of Engine frame, in which the surface with the specified number was drawn last time.
+			</summary> 
+			<param name="surface"> Surface number. </param> 
+			<returns>Number of frame, in which the specified surface was drawn last time.</returns>
 		</member>
 		<member name="F:Unigine.Object.SURFACE_SHADOW_MODE_MIXED">
 			<summary>
 			Mode to cast shadows from both static and dynamic light sources.
 		</summary>
 		</member>
-		<member name="F:Unigine.Object.SURFACE_LIGHTING_MODE_ADVANCED">
+		<member name="F:Unigine.Object.SURFACE_SHADOW_MODE_DYNAMIC">
 			<summary>
-			Enables manual adjustment of all lighting-related settings.
+			Mode to cast shadows only if the surface is lit by a dynamic light source.
+		</summary>
+		</member>
+		<member name="F:Unigine.Object.SURFACE_LIGHTING_MODE_STATIC">
+			<summary>
+			Optimized for use in static GI, static reflections and cached shadows.
 		</summary>
 		</member>
 		<member name="F:Unigine.Object.SURFACE_LIGHTING_MODE_DYNAMIC">
@@ -954,9 +991,19 @@
 			Excludes the surface from use in static GI and static reflections and is suitable for dynamic shadows.
 		</summary>
 		</member>
-		<member name="F:Unigine.Object.SURFACE_LIGHTING_MODE_STATIC">
+		<member name="F:Unigine.Object.SURFACE_LIGHTING_MODE_ADVANCED">
 			<summary>
-			Optimized for use in static GI, static reflections and cached shadows.
+			Enables manual adjustment of all lighting-related settings.
+		</summary>
+		</member>
+		<member name="F:Unigine.Object.STREAMING_OBJECT_MESH_ON_DEMAND">
+			<summary>
+			Mesh streaming mode to load mesh to RAM/VRAM on demand.
+		</summary>
+		</member>
+		<member name="F:Unigine.Object.STREAMING_OBJECT_MESH_BY_PRESENCE">
+			<summary>
+			Mesh streaming mode to load mesh to and hold in RAM/VRAM by its presence. The mesh remains loaded while it exists. This mode can be set for a single mesh participating in collisions and intersections to avoid incorrect physical behavior of objects in the scene.
 		</summary>
 		</member>
 		<member name="M:Unigine.ObjectBillboards.#ctor">
@@ -1903,7 +1950,7 @@
 		</member>
 		<member name="M:Unigine.ObjectExternBase.preRender(float)">
 			<summary>
-			Pre-render function, i.e. after the update() and before the render() function.
+			Pre-render function, i.e. after the update() and before the render() function. This method can be used to make necessary preparations for rendering (e.g. prepare a texture) after the update().
 			</summary> 
 			<param name="ifps"> Inverse FPS value. </param> 
 		</member>
@@ -1973,11 +2020,6 @@
 			Updates enabled.
 			</summary> 
 			<param name="surface"> Surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectExternBase.updatePosition">
-			<summary>
-			Updates a position.
-			</summary>  
 		</member>
 		<member name="M:Unigine.ObjectExternBase.updateSurfaces const">
 			<summary>
@@ -2667,20 +2709,16 @@
 			Standard mouse control mode.
 		</summary>
 		</member>
-		<member name="M:Unigine.ObjectGuiMesh.#ctor(Unigine.Ptr{Unigine.Mesh},char)">
+		<member name="M:Unigine.ObjectGuiMesh.#ctor(char,char)">
 			<summary>
-			ObjectGuiMesh constructor. Creates a new GUI mesh from a given file.
+			An ObjectGuiMesh constructor. The Gui Mesh will be created on the basis of the mesh loaded from the specified path.
 			</summary> 
-			<param name="mesh"> Source Mesh to be used. </param>
-			<param name="path"> A name of a new GUI mesh. </param> 
+			<param name="mesh_path"> Path to the source .mesh-file used as a base for the object </param> 
 		</member>
-		<member name="M:Unigine.ObjectGuiMesh.#ctor(char,char,bool)">
+		<member name="M:Unigine.ObjectGuiMesh.#ctor">
 			<summary>
-			An ObjectGuiMesh constructor. The ObjectGuiMesh will be created on the basis of the specified mesh.
-			</summary> 
-			<param name="mesh_name"> Path to the .mesh file. </param>
-			<param name="path"> Name of the new GUI mesh. </param>
-			<param name="unique"> When you create several objects out of a single .mesh file, the instance of the mesh geometry is created. If you then change the source geometry, its instances will be changed as well. To avoid this, set the unique flag to 1, so a copy of the mesh geometry will be created and changes won't be applied.This argument is available only if the first argument is string. </param> 
+			Constructor. Creates a new Gui Mesh object.
+			</summary>  
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.setControlDistance(float)">
 			<summary>
@@ -2700,39 +2738,25 @@
 			</summary>  
 			<returns>Gui smart pointer.</returns>
 		</member>
-		<member name="M:Unigine.ObjectGuiMesh.setMesh(Unigine.Ptr{Unigine.Mesh})">
+		<member name="M:Unigine.ObjectGuiMesh.setMeshPath(char)">
 			<summary>
-			Copies the source mesh into the current mesh.
+			Sets a new path to the source mesh for the Gui Mesh object. If the mesh is in the procedural mode, it will be reset.					The mesh should contain a single surface. In case if the mesh contains several surfaces, only the one with the 0 index will be used.
 			</summary> 
-			<param name="mesh"> Pointer to the source mesh that must be copied. </param> 
-			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
+			<param name="path"> New path to the source .mesh-file to be set. </param> 
 		</member>
-		<member name="M:Unigine.ObjectGuiMesh.getMesh(Unigine.Ptr{Unigine.Mesh}) const">
+		<member name="M:Unigine.ObjectGuiMesh.getMeshPath const">
 			<summary>
-			Copies the current mesh into the source mesh passed as an argument. For example, you can obtain geometry of the gui mesh and then change it:
-			</summary> 
-			<param name="mesh"> Pointer to the source mesh. </param> 
-			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectGuiMesh.setMeshName(char)">
-			<summary>
-			Sets a new mesh name.
-			</summary> 
-			<param name="name"> Name to be set for the mesh. </param> 
-		</member>
-		<member name="M:Unigine.ObjectGuiMesh.getMeshName const">
-			<summary>
-			Returns the mesh name.
+			Returns the path to the source .mesh-file currently used as a base for the Gui Mesh object.
 			</summary>  
-			<returns>Mesh name.</returns>
+			<returns>Path to the source .mesh-file.</returns>
 		</member>
-		<member name="M:Unigine.ObjectGuiMesh.setMouse(Unigine.Math.Vec3,Unigine.Math.Vec3,int,int)">
+		<member name="M:Unigine.ObjectGuiMesh.setMouse(Unigine.Math.Vec3,Unigine.Math.Vec3,int,bool)">
 			<summary>
 			Sets mouse cursor position in the virtual control mode.
 			</summary> 
 			<param name="p0"> Start point. A line segment between the start and the end points must intersect ObjectGui. The point of intersection determines x and y coordinates on the ObjectGui. </param>
 			<param name="p1"> End point. A line segment between the start and the end points must intersect ObjectGui. The point of intersection determines x and y coordinates on the ObjectGui. </param>
-			<param name="mouse_button"> Mouse button status. Set 1 to indicate that the button is clicked; otherwise, 0. </param>
+			<param name="mouse_buttons"> Mouse button status. Set 1 to indicate that the button is clicked; otherwise, 0. </param>
 			<param name="mouse_show"> Mouse cursor status. Set 1 to show mouse cursor; otherwise, 0. </param> 
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.setMouseMode(int)">
@@ -2790,47 +2814,149 @@
 			</summary>  
 			<returns>Width in pixels.</returns>
 		</member>
-		<member name="M:Unigine.ObjectGuiMesh.createMesh(char,bool)">
-			<summary>
-			Creates the GUI mesh with the specified parameters.
-			</summary> 
-			<param name="path"> Path to the *.mesh file. </param>
-			<param name="unique"> Dynamic flag:false - If the mesh vertices are changed in run-time, meshes loaded from the same file will be also changed.true - If the mesh vertices are changed in run-time, meshes loaded from the same file won't be changed </param> 
-			<returns>true if the mesh is created successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectGuiMesh.flushMesh">
-			<summary>
-			Flushes the mesh geometry into the video memory.
-			</summary>  
-		</member>
-		<member name="M:Unigine.ObjectGuiMesh.loadMesh(char)">
-			<summary>
-			Loads a mesh file.
-			</summary> 
-			<param name="path"> Path to the .mesh file. </param> 
-			<returns>1 if the mesh is loaded successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectGuiMesh.saveMesh(char)">
-			<summary>
-			Saves the mesh into the .mesh format.
-			</summary> 
-			<param name="path"> Path to the .mesh file. </param> 
-			<returns>1 if the mesh is saved successfully; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.ObjectGuiMesh.type">
 			<summary>
-			Returns the type identifier of ObjectMeshStatic.
+			Returns the type identifier of					ObjectMeshStatic.
 			</summary>  
 			<returns>ObjectMeshStatic type identifier.</returns>
 		</member>
-		<member name="F:Unigine.ObjectGuiMesh.MOUSE_VIRTUAL">
+		<member name="M:Unigine.ObjectGuiMesh.getMeshInfo">
 			<summary>
-			Virtual mouse control mode.
-		</summary>
+			Returns the base mesh that stores data on mesh bounds, surfaces, their number, names, and bounds, but doesn't contain any geometry.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.getMeshForce">
+			<summary>
+			Returns the base mesh used for the object. The returned static mesh won't be loaded to VRAM.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.getMeshAsync">
+			<summary>
+			Returns the base mesh used for the object asynchronously. This function can be called if the mesh hasn't been loaded yet.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.getMeshForceVRAM">
+			<summary>
+			Returns the base mesh used for the object and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.getMeshAsyncVRAM">
+			<summary>
+			Returns the base mesh used for the object asynchronously and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.loadAsyncVRAM">
+			<summary>
+			Asynchronously loads the mesh to video memory (VRAM) if the async streaming mode for meshes is enabled. Otherwise, the forced loading is performed. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to video memory before they are used).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to VRAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.loadAsyncRAM">
+			<summary>
+			Asynchronously loads the mesh to memory (RAM) if the async streaming mode for meshes is enabled. Otherwise, the forced loading is performed. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to RAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.loadForceVRAM">
+			<summary>
+			Performs force-loading of the mesh to video memory (VRAM) immediately. The forced loading to VRAM is performed in the main thread.				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to VRAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.loadForceRAM">
+			<summary>
+			Performs force-loading of the mesh to memory (RAM) immediately.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to RAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.asyncCalculateNodes(int)">
+			<summary>
+			Asynchronously calculates the mesh surface internal spatial tree used for quick calculation of collisions and intersections. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>true if the internal tree is calculated successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.asyncCalculateEdges(int)">
+			<summary>
+			Asynchronously calculates the edges of the mesh surface geometry. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>true if the edges are calculated successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.applyMeshProcedural(Unigine.Ptr{Unigine.Mesh})">
+			<summary>
+			Sets the specified mesh as the base mesh for the object. The object must be in the procedural mesh mode.					The mesh should contain a single surface. In case if the mesh contains several surfaces, only the one with the 0 index will be used. Thus, the area of the decal will differ from the initial mesh.
+			
+			</summary> 
+			<param name="mesh"> Mesh to be applied. </param> 
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.setMeshProceduralMode(bool)">
+			<summary>
+			Sets a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			</summary> 
+			<param name="meshproceduralmode"> true to switch the base mesh used for the object to procedural mode; otherwise, false - normal mode (the base mesh is streamed from a source file). </param> 
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.isMeshProceduralMode const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>true if the base mesh used for the object is procedural; otherwise, false - normal mode (the base mesh is streamed from a source file).</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.isMeshNull const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
+			</summary>  
+			<returns>true if the base mesh used for the object is null; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.isMeshLoadedRAM const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is loaded to memory (RAM).
+			</summary>  
+			<returns>true if the base mesh used for the object is loaded to RAM; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.isMeshLoadedVRAM const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is loaded to video memory (VRAM).
+			</summary>  
+			<returns>true if the base mesh used for the object is loaded to VRAM; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH)">
+			<summary>
+			Sets the streaming mode for loading the mesh to memory (RAM).
+			</summary> 
+			<param name="meshstreamingmoderam"> Mesh streaming mode. </param> 
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.getMeshStreamingModeRAM const">
+			<summary>
+			Returns the current streaming mode for loading the mesh to memory (RAM).
+			</summary>  
+			<returns>Mesh streaming mode.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH)">
+			<summary>
+			Sets the streaming mode for loading the mesh to video memory (VRAM).
+			</summary> 
+			<param name="meshstreamingmodevram"> Mesh streaming mode. </param> 
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.getMeshStreamingModeVRAM const">
+			<summary>
+			Returns the current streaming mode for loading the mesh to video memory (VRAM).
+			</summary>  
+			<returns>Mesh streaming mode.</returns>
 		</member>
 		<member name="F:Unigine.ObjectGuiMesh.MOUSE_STANDARD">
 			<summary>
 			Standard mouse control mode.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectGuiMesh.MOUSE_VIRTUAL">
+			<summary>
+			Virtual mouse control mode.
 		</summary>
 		</member>
 		<member name="M:Unigine.ObjectIntersection.#ctor">
@@ -5289,380 +5415,35 @@
 			Clears all levels of the textures of all data layers (fills all elements with 0-values).
 			</summary>  
 		</member>
-		<member name="M:Unigine.ObjectMeshStatic.#ctor(Unigine.Ptr{Unigine.Mesh})">
+		<member name="M:Unigine.ObjectMeshStatic.#ctor(char)">
 			<summary>
-			ObjectMeshStatic constructor. Creates a new mesh object from a given file.
+			ObjectMeshCluster constructor. Creates a Static Mesh object with mesh loaded from the specified file.
 			</summary> 
-			<param name="mesh"> A mesh smart pointer. </param> 
+			<param name="path"> Path to the base .mesh-file. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshStatic.ObjectMeshStatic(char,bool)">
+		<member name="M:Unigine.ObjectMeshStatic.#ctor">
 			<summary>
-			ObjectMeshStatic constructor. Creates a new mesh object from a given file.
-			</summary> 
-			<param name="path"> Path to the mesh file. </param>
-			<param name="v"> A variable of one of the following types:Mesh mesh - The source mesh.string name - The path to the .mesh file. </param>
-			<param name="unique"> When you create several objects out of a single .mesh file, the instance of the mesh geometry is created. If you then change the source geometry, its instances will be changed as well. To avoid this, set the unique flag to true (1), so a copy of the mesh geometry will be created and changes won't be applied. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setCIndex(int,int,int)">
-			<summary>
-			Sets the new coordinate index for the given vertex of the given surface.
-			</summary> 
-			<param name="num"> Vertex number in the range from 0 to the total number of coordinate indices for the given surface.To get the total number of coordinate indices for the given surface, use the getNumCIndices() method. </param>
-			<param name="index"> Coordinate index to be set in the range from 0 to the total number of coordinate vertices for the given surface.To get the total number of coordinate vertices for the given surface, use the getNumVertex() method. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getCIndex(int,int) const">
-			<summary>
-			Returns the coordinate index for the given vertex of the given surface.
-			</summary> 
-			<param name="num"> Vertex number in the range from 0 to the total number of coordinate indices for the given surface.To get the total number of coordinate indices for the given surface, use the getNumCIndices() method. </param>
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Coordinate index.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setColor(int,Unigine.Math.vec4,int)">
-			<summary>
-			Sets the color for the given triangle vertex of the given surface.
-			</summary> 
-			<param name="num"> Triangle vertex number in the range from 0 to the total number of vertex color entries of the given surface.To get the total number of vertex color entries for the surface, call the getNumColors() method. </param>
-			<param name="color"> Vertex color to be set. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getColor(int,int) const">
-			<summary>
-			Returns the color of the given triangle vertex of the given surface.
-			</summary> 
-			<param name="num"> Triangle vertex number in the range from 0 to the total number of vertex color entries of the given surface.To get the total number of vertex color entries for the surface, call the getNumColors() method. </param>
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Vertex color.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getMesh(Unigine.Ptr{Unigine.Mesh}) const">
-			<summary>
-			Copies the current mesh into the destination mesh. For example, you can obtain geometry of the static mesh and then change it:
-			</summary> 
-			<param name="mesh"> Destination mesh. </param> 
-			<returns>true if the mesh is copied successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setMesh(Unigine.Ptr{Unigine.Mesh},bool)">
-			<summary>
-			Copies a given source mesh into the current mesh. For example, you can copy a mesh into another one as follows:
-			</summary> 
-			<param name="mesh"> Source mesh to be copied. </param>
-			<param name="unique"> Unique flag used when you create several objects out of a single Mesh instance :false (0) - An instance of source mesh geometry is created. If the source geometry is changed at runtime, its instances will be changed as well.true (1) - A copy of source mesh geometry is created and changes made to the source geometry do not affect the mesh. </param> 
-			<returns>true if the mesh is copied successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setMeshName(char)">
-			<summary>
-			Sets the new path to the mesh. Does not update mesh immediately using the new path, unlike the setMeshNameForce() method
-			</summary> 
-			<param name="name"> Path to the mesh file. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setMeshNameForce(char)">
-			<summary>
-			Sets the new path to the mesh and forces mesh creation using the new path. The new mesh is created from the specified path immediately with the unique flag set to 0.
-			</summary> 
-			<param name="path"> Path to the mesh file. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getMeshName const">
-			<summary>
-			Returns the path to the current mesh file.
-			</summary>  
-			<returns>Path to the mesh file.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getMeshSurface(Unigine.Ptr{Unigine.Mesh},int,int) const">
-			<summary>
-			Copies the specified mesh surface into the destination mesh.
-			</summary> 
-			<param name="mesh"> Destination mesh pointer to copy a surface into. </param>
-			<param name="surface"> Number of the mesh surface to be copied. </param>
-			<param name="target"> Number of the surface target to be copied. The default value is -1 (all targets). </param> 
-			<returns>Number of the added mesh surface.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getNormal(int,int,int) const">
-			<summary>
-			Returns the normal for the given triangle vertex of the given surface target.
-			</summary> 
-			<param name="num"> Triangle vertex number in the range from 0 to the total number of vertex tangent entries of the given surface target.Vertex normals are calculated using vertex tangents. To get the total number of vertex tangent entries for the surface target, call the getNumTangents() method. </param>
-			<param name="surface"> Mesh surface number. </param>
-			<param name="target"> Surface target number. The default value is 0. </param> 
-			<returns>Vertex normal.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getNumCIndices(int) const">
-			<summary>
-			Returns the number of coordinate indices for the given mesh surface.
-			</summary> 
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Number of coordinate indices.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getNumColors(int) const">
-			<summary>
-			Returns the total number of vertex color entries for the given surface.					Colors are specified for triangle vertices.
-			</summary> 
-			<param name="surface"> Surface number. </param> 
-			<returns>Number of vertex color entries.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getNumSurfaceTargets(int) const">
-			<summary>
-			Returns the number of surface targets for the given mesh surface.
-			</summary> 
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Number of surface targets.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getNumTangents(int) const">
-			<summary>
-			Returns the number of vertex tangent entries of the given mesh surface.					Tangents are specified for triangle vertices.
-			</summary> 
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Number of surface tangent vectors.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setNumTexCoords0(int,int)">
-			<summary>
-			Sets the number of the first UV map texture coordinates for the given mesh surface.					First UV map texture coordinates are specified for triangle vertices.
-			</summary> 
-			<param name="num"> Number of the first UV map texture coordinates to be set. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getNumTexCoords0(int) const">
-			<summary>
-			Returns the number of the first UV map texture coordinates for the given mesh surface.					First UV map texture coordinates are specified for triangle vertices.
-			</summary> 
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Number of the first UV map texture coordinates.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setNumTexCoords1(int,int)">
-			<summary>
-			Sets the number of the second UV map texture coordinates for the given mesh surface.					Second UV map texture coordinates are specified for triangle vertices.
-			</summary> 
-			<param name="num"> Number of the second UV map texture coordinates to be set. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getNumTexCoords1(int) const">
-			<summary>
-			Returns the number of the second UV map texture coordinates for the given mesh surface.					Second UV map texture coordinates are specified for triangle vertices.
-			</summary> 
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Number of the second UV map texture coordinates.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getNumTIndices(int) const">
-			<summary>
-			Returns the number of triangle indices for the given mesh surface.
-			</summary> 
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Number of triangle indices.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getNumVertex(int) const">
-			<summary>
-			Returns the number of coordinate vertices for the given mesh surface.
-			</summary> 
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Number of the surface vertices.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getSurfaceTargetName(int,int) const">
-			<summary>
-			Returns the name of the target for the given mesh surface by the target number.
-			</summary> 
-			<param name="surface"> Mesh surface number. </param>
-			<param name="target"> Number of the surface target. </param> 
-			<returns>Surface target name.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setSurfaceTransform(Unigine.Math.mat4,int,int)">
-			<summary>
-			Updates the transformation of the specified mesh surface.
-			</summary> 
-			<param name="transform"> Transformation matrix. </param>
-			<param name="surface"> Mesh surface number. </param>
-			<param name="target"> Number of the surface target. The default value is -1 (all targets). </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setTangent(int,Unigine.Math.quat,int,int)">
-			<summary>
-			Sets the new tangent for the given triangle vertex of the given surface target.
-			</summary> 
-			<param name="num"> Triangle vertex number in the range from 0 to the total number of vertex tangent entries of the given surface.To get the total number of vertex tangent entries for the surface, call the getNumTangents() method. </param>
-			<param name="tangent"> Tangent to be set. </param>
-			<param name="surface"> Mesh surface number. </param>
-			<param name="target"> Surface target number. The default value is 0. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getTangent(int,int,int) const">
-			<summary>
-			Returns the tangent for the given triangle vertex of the given surface target.
-			</summary> 
-			<param name="num"> Triangle vertex number in the range from 0 to the total number of vertex tangent entries of the given surface.To get the total number of vertex tangent entries for the surface, call the getNumTangents() method. </param>
-			<param name="surface"> Mesh surface number. </param>
-			<param name="target"> Surface target number. The default value is 0. </param> 
-			<returns>Vertex tangent.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setTexCoord0(int,Unigine.Math.vec2,int)">
-			<summary>
-			Sets first UV map texture coordinates for the given triangle vertex of the given surface.
-			</summary> 
-			<param name="num"> Triangle vertex number in the range from 0 to the total number of first UV map texture coordinate entries of the given surface.To get the total number of first UV map texture coordinate entries for the surface, call the getNumTexCoords0() method. </param>
-			<param name="texcoord"> First UV map texture coordinates to be set. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getTexCoord0(int,int) const">
-			<summary>
-			Returns first UV map texture coordinates for the given triangle vertex of the given surface.
-			</summary> 
-			<param name="num"> Triangle vertex number in the range from 0 to the total number of first UV map texture coordinate entries of the given surface.To get the total number of first UV map texture coordinate entries for the surface, call the getNumTexCoords0() method. </param>
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>First UV map texture coordinates.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setTexCoord1(int,Unigine.Math.vec2,int)">
-			<summary>
-			Sets second UV map texture coordinates for the given triangle vertex of the given surface.
-			</summary> 
-			<param name="num"> Triangle vertex number in the range from 0 to the total number of second UV map texture coordinate entries of the given surface.To get the total number of second UV map texture coordinate entries for the surface, call the getNumTexCoords1() method. </param>
-			<param name="texcoord"> Second UV map texture coordinates to be set. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getTexCoord1(int,int) const">
-			<summary>
-			Returns second UV map texture coordinates for the given triangle vertex of the given surface.
-			</summary> 
-			<param name="num"> Triangle vertex number in the range from 0 to the total number of second UV map texture coordinate entries of the given surface.To get the total number of second UV map texture coordinate entries for the surface, call the getNumTexCoords1() method. </param>
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Second UV map texture coordinates.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setTIndex(int,int,int)">
-			<summary>
-			Sets the new triangle index for the given vertex of the given surface.
-			</summary> 
-			<param name="num"> Vertex number in the range from 0 to the total number of triangle indices for the given surface. </param>
-			<param name="index"> Triangle index to be set in the range from 0 to the total number of triangle vertices for the given surface. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getTIndex(int,int) const">
-			<summary>
-			Returns the triangle index for the given surface by using the index number.
-			</summary> 
-			<param name="num"> Vertex number in the range from 0 to the total number of triangle indices for the given surface. </param>
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Triangle index.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setVertex(int,Unigine.Math.vec3,int,int)">
-			<summary>
-			Sets the coordinates of the given coordinate vertex of the given surface target.
-			</summary> 
-			<param name="num"> Coordinate vertex number in the range from 0 to the total number of coordinate vertices for the given surface.To get the total number of coordinate vertices for the given surface, use the getNumCVertex() method. </param>
-			<param name="vertex"> Vertex coordinates to be set. </param>
-			<param name="surface"> Mesh surface number. </param>
-			<param name="target"> Surface target number. The default value is 0. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getVertex(int,int,int) const">
-			<summary>
-			Returns coordinates of the given coordinate vertex of the given surface target.
-			</summary> 
-			<param name="num"> Coordinate vertex number in the range from 0 to the total number of coordinate vertices for the given surface.To get the total number of coordinate vertices for the given surface, use the getNumCVertex() method. </param>
-			<param name="surface"> Mesh surface number. </param>
-			<param name="target"> Surface target number. The default value is 0. </param> 
-			<returns>Vertex coordinates.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.addEmptySurface(char,int,int)">
-			<summary>
-			Appends a new empty surface to the current mesh.
-			</summary> 
-			<param name="name"> The name of the new surface. </param>
-			<param name="num_vertex"> Number of the new surface vertices. </param>
-			<param name="num_indices"> Number of the new surface indices. </param> 
-			<returns>Number of the appended surface.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.addMeshSurface(int,Unigine.Ptr{ObjectMeshStatic},int,int)">
-			<summary>
-			Appends a new mesh surface to the current mesh.
-			</summary> 
-			<param name="dest_surface"> Number of the surface to copy the mesh to. </param>
-			<param name="v0"> Argument of one of the following types:string name - The name of the new surface.int dest_surface - The number of the new surface. </param>
-			<param name="v1"> Argument of one of the following types:Mesh mesh - The source mesh to copy the surface from.ObjectMeshStatic mesh - The source mesh to copy the surface from. </param>
-			<param name="mesh"> Source ObjectMeshStatic to copy a surface from. </param>
-			<param name="surface"> Mesh surface number to copy. </param>
-			<param name="target"> Mesh target number to copy. The default value is -1 (all targets). </param> 
-			<returns>Number of the last added surface.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.addMeshSurface(char,Unigine.Ptr{Unigine.Mesh},int,int)">
-			<summary>
-			Appends a new mesh surface to the current mesh.
-			</summary> 
-			<param name="name"> Name of the new surface of the current mesh. </param>
-			<param name="mesh"> Mesh pointer to copy a surface from. </param>
-			<param name="surface"> Mesh surface number to copy. </param>
-			<param name="target"> Mesh target number to copy. The default value is -1 (all targets). </param> 
-			<returns>Number of the last added surface.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.addMeshSurface(char,Unigine.Ptr{ObjectMeshStatic},int,int)">
-			<summary>
-			Appends a new mesh surface to the current mesh.
-			</summary> 
-			<param name="name"> Name of the new surface of the current mesh. </param>
-			<param name="mesh"> Mesh pointer to copy a surface from. </param>
-			<param name="surface"> Mesh surface number to copy. </param>
-			<param name="target"> Mesh target number to copy. The default value is -1 (all targets). </param> 
-			<returns>Number of the last added surface.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.addSurfaceTarget(int,char)">
-			<summary>
-			Adds a new target to the specified surface of the current mesh.
-			</summary> 
-			<param name="surface"> Surface number. </param>
-			<param name="name"> The name of the new target. </param> 
-			<returns>Number of the added target.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.createMesh(char,bool)">
-			<summary>
-			Creates the static mesh with the specified parameters.
-			</summary> 
-			<param name="path"> Path to the mesh file. </param> 
-			<returns>true if the mesh is created successfully; otherwise - false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.findSurfaceTarget(char,int) const">
-			<summary>
-			Searches for the target number by the target name.
-			</summary> 
-			<param name="name"> The name of the target. </param>
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Target number if it is exists; otherwise, -1.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.flushMesh">
-			<summary>
-			Flushes the mesh geometry into the video memory.
+			ObjectMeshCluster constructor. Creates an empty Static Mesh object.
 			</summary>  
 		</member>
-		<member name="M:Unigine.ObjectMeshStatic.loadMesh(char)">
+		<member name="M:Unigine.ObjectMeshStatic.setMeshPath(char)">
 			<summary>
-			Loads the mesh for the current mesh from the .mesh file. This function doesn't change the mesh name.
+			Sets the new path to the base mesh. Does not update mesh immediately using the new path. If the mesh is in the procedural mode, it will be reset.
 			</summary> 
-			<param name="path"> Path to the .mesh file. </param> 
-			<returns>true if the mesh is loaded successfully; otherwise, false.</returns>
+			<param name="path"> Path to the base .mesh-file. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshStatic.saveMesh(char) const">
+		<member name="M:Unigine.ObjectMeshStatic.getMeshPath const">
 			<summary>
-			Saves the mesh to the .mesh format.					Before saving the mesh to a file, you should set a name for it via the setMeshName() method.
+			Returns the path to the current base mesh file.
+			</summary>  
+			<returns>Path to the base .mesh-file.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.applyMeshProcedural(Unigine.Ptr{Unigine.Mesh})">
+			<summary>
+			Sets the specified mesh as the base mesh for the object. The object must be in the procedural mesh mode.
 			
 			</summary> 
-			<param name="path"> Path to the file, to which the mesh is to be saved. </param> 
-			<returns>true if the mesh is saved successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.type">
-			<summary>
-			Returns the type of the node.
-			</summary>  
-			<returns>Node type identifier.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.updateSurfaceBounds(int)">
-			<summary>
-			Updates mesh bounds. This method is to be called to recalculate bounds after changing a mesh surface (e.g. modifying positions of coordinate vertices).
-			</summary> 
-			<param name="surface"> Surface number (use -1 for all surfaces). </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getMeshStatic const">
-			<summary>
-			Returns a MeshStatic class instance for the object.
-			</summary>  
-			<returns>MeshStatic class instance for the object.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.isFlushed const">
-			<summary>
-			Returns a value indicating if vertex data of the mesh was flushed (create/upload operation) to video memory.
-			</summary>  
-			<returns>true if vertex data of the mesh was flushed (create/upload operation) to video memory; otherwise, false.</returns>
+			<param name="mesh"> Mesh to be applied. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.setLightmapEnabled(bool,int)">
 			<summary>
@@ -5706,7 +5487,7 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Source mesh surface number.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshStatic.isLightmapCompression(int)">
+		<member name="M:Unigine.ObjectMeshStatic.isLightmapCompression(int) const">
 			<summary>
 			Returns a value indicating if the lightmap texture baked for the surface with the specified number is to be compressed. Compressed lightmaps are lightweight, but please note that some compression artifacts may appear.
 			</summary> 
@@ -5818,6 +5599,128 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Texture used as a custom texture for the specified surface.</returns>
 		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getMeshInfo">
+			<summary>
+			Returns the base mesh that stores data on mesh bounds, surfaces, their number, names, and bounds, but doesn't contain any geometry.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getMeshForce">
+			<summary>
+			Returns the base mesh used for the object. The returned static mesh won't be loaded to VRAM.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getMeshAsync">
+			<summary>
+			Returns the base mesh used for the object asynchronously. This function can be called if the mesh hasn't been loaded yet.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getMeshForceVRAM">
+			<summary>
+			Returns the base mesh used for the object and loads it to video memory (VRAM) immediately. At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getMeshAsyncVRAM">
+			<summary>
+			Returns the base mesh used for the object asynchronously and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.loadAsyncVRAM">
+			<summary>
+			Asynchronously loads the mesh to video memory (VRAM) if the async streaming mode for meshes is enabled. Otherwise, the forced loading is performed. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to video memory before they are used).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to VRAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.loadAsyncRAM">
+			<summary>
+			Asynchronously loads the mesh to memory (RAM) if the async streaming mode for meshes is enabled. Otherwise, the forced loading is performed. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to RAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.loadForceVRAM">
+			<summary>
+			Performs force-loading of the mesh to video memory (VRAM) immediately.				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to VRAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.loadForceRAM">
+			<summary>
+			Performs force-loading of the mesh to memory (RAM) immediately.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to RAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.asyncCalculateNodes(int)">
+			<summary>
+			Asynchronously calculates the mesh surface internal spatial tree used for quick calculation of collisions and intersections. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>true if the internal tree is calculated successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.asyncCalculateEdges(int)">
+			<summary>
+			Asynchronously calculates the edges of the mesh surface geometry. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>true if the edges are calculated successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.setMeshProceduralMode(bool)">
+			<summary>
+			Sets a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			</summary> 
+			<param name="meshproceduralmode"> true to switch the base mesh used for the object to procedural mode; otherwise, false - normal mode (the base mesh is streamed from a source file). </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.isMeshProceduralMode const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>true if the base mesh used for the object is procedural; otherwise, false - normal mode (the base mesh is streamed from a source file).</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.isMeshNull const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
+			</summary>  
+			<returns>true if the base mesh used for the object is null; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.isMeshLoadedRAM const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is loaded to memory (RAM).
+			</summary>  
+			<returns>true if the base mesh used for the object is loaded to RAM; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.isMeshLoadedVRAM const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is loaded to video memory (VRAM).
+			</summary>  
+			<returns>true if the base mesh used for the object is loaded to VRAM; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH)">
+			<summary>
+			Sets the streaming mode for loading the mesh to memory (RAM).
+			</summary> 
+			<param name="meshstreamingmoderam"> Mesh streaming mode. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getMeshStreamingModeRAM const">
+			<summary>
+			Returns the current streaming mode for loading the mesh to memory (RAM).
+			</summary>  
+			<returns>Mesh streaming mode.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH)">
+			<summary>
+			Sets the streaming mode for loading the base mesh used for the object to video memory (VRAM).
+			</summary> 
+			<param name="meshstreamingmodevram"> Mesh streaming mode. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getMeshStreamingModeVRAM const">
+			<summary>
+			Returns the current streaming mode for loading the mesh to video memory (VRAM).
+			</summary>  
+			<returns>Mesh streaming mode.</returns>
+		</member>
 		<member name="F:Unigine.ObjectMeshStatic.LIGHTMAP_QUALITY_ULTRA">
 			<summary>
 			Ultra quality preset for lightmaps.
@@ -5873,12 +5776,16 @@
 			Use the custom texture from another surface. This option is intended for use with LODs having the same UV maps.
 		</summary>
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.#ctor(char,bool)">
+		<member name="M:Unigine.ObjectMeshCluster.#ctor(char)">
 			<summary>
-			ObjectMeshCluster constructor.
+			ObjectMeshCluster constructor. Creates a mesh cluster with a base mesh loaded from the specified file.
 			</summary> 
-			<param name="path"> Name of the mesh file. </param>
-			<param name="unique"> When you create several objects out of a single .mesh file, the instance of the mesh geometry is created. If you then change the source geometry, its instances will be changed as well. To avoid this, set the unique flag to true (1), so a copy of the mesh geometry will be created and changes won't be applied. </param> 
+			<param name="path"> Path to the base mesh file. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.#ctor">
+			<summary>
+			ObjectMeshCluster constructor. Creates an empty mesh cluster
+			</summary>  
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.setFadeDistance(float)">
 			<summary>
@@ -5892,41 +5799,21 @@
 			</summary>  
 			<returns>Fading distance for meshes in units.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.setMesh(Unigine.Ptr{Unigine.Mesh})">
+		<member name="M:Unigine.ObjectMeshCluster.setMeshPath(char)">
 			<summary>
-			Copies the source mesh into the current mesh.
+			Sets a path to the mesh hadled by the Mesh Cluster. Does not update mesh immediately using the new path. If the mesh is in the procedural mode, it will be reset.
 			</summary> 
-			<param name="mesh"> Source mesh to be copied. </param> 
-			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
+			<param name="path"> New path to the source .mesh-file to be set. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.getMesh(Unigine.Ptr{Unigine.Mesh}) const">
+		<member name="M:Unigine.ObjectMeshCluster.getMeshPath const">
 			<summary>
-			Copies the current mesh into the target mesh.
-			</summary> 
-			<param name="mesh"> Target mesh. </param> 
-			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshCluster.setMeshName(char)">
-			<summary>
-			Sets a new path to the mesh handled by the mesh cluster. Does not update mesh immediately using the new path, unlike the setMeshNameForce() method.
-			</summary> 
-			<param name="name"> Path to the mesh to be set. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshCluster.setMeshNameForce(char)">
-			<summary>
-			Sets a new path to the mesh handled by the mesh cluster and forces mesh creation using the new path. The new mesh is created from the specified path immediately with the unique flag set to 0.
-			</summary> 
-			<param name="name"> Path to the mesh file. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshCluster.getMeshName const">
-			<summary>
-			Returns the path to the mesh handled by a mesh cluster.
+			Returns the path to the source .mesh-file of the base mesh handled by Mesh Cluster.
 			</summary>  
-			<returns>Path to the mesh.</returns>
+			<returns>Path to the source .mesh-file.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.addMeshTransform">
 			<summary>
-			Adds a new mesh instance transformation to the cluster. To set the new added transformation pass the return value of this method to the setMeshTransform() method.
+			Adds a new mesh instance transformation to the Mesh Cluster. To set the new added transformation pass the return value of this method to the setMeshTransform() method.
 			</summary>  
 			<returns>Number of the last added mesh instance.</returns>
 		</member>
@@ -5967,21 +5854,6 @@
 			</summary>  
 			<returns>Number of meshes.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.getNumSurfaceTargets(int) const">
-			<summary>
-			Returns the total number of surface targets.
-			</summary> 
-			<param name="surface"> Surface number. </param> 
-			<returns>Total number of surface targets.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshCluster.getSurfaceTargetName(int,int) const">
-			<summary>
-			Returns the name of a given surface target.
-			</summary> 
-			<param name="surface"> Surface number. </param>
-			<param name="target"> Target number. </param> 
-			<returns>Target name.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshCluster.setVisibleDistance(float)">
 			<summary>
 			Sets the distance up to which meshes handled by the mesh cluster will be rendered. The default is infinity (in this case, fade distance will be ignored).
@@ -5999,52 +5871,24 @@
 			Deletes all meshes currently baked into mesh cluster.
 			</summary>  
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.createMesh(char,bool)">
-			<summary>
-			Creates a mesh.
-			</summary> 
-			<param name="path"> Path to the mesh file. </param>
-			<param name="unique"> When you create several objects out of a single .mesh file, the instance of the mesh geometry is created. If you then change the source geometry, its instances will be changed as well. To avoid this, set the unique flag to 1, so a copy of the mesh geometry will be created and changes won't be applied. </param> 
-			<returns>true if the mesh is created successfully; otherwise, false.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshCluster.createMeshes(Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator})">
 			<summary>
 			Creates meshes is accordance with the transformations vector (world coordinates) and bakes them into the cluster. All baked meshes are identical to the source mesh and have the same material applied to their surfaces.
 			</summary> 
-			<param name="transforms"> Transformations vector in world coordinates. </param> 
+			<param name="world_transforms"> Transformations vector in world coordinates. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.appendMeshes(Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator})">
 			<summary>
 			Appends new meshes with transformations stored in the specified vector (world coordinates) and bakes them into the cluster. All baked meshes are identical to the source mesh and have the same material applied to their surfaces.
 			</summary> 
-			<param name="transforms"> Transformations vector in world coordinates. </param> 
+			<param name="world_transforms"> Transformations vector in world coordinates. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.findSurfaceTarget(char,int) const">
+		<member name="M:Unigine.ObjectMeshCluster.applyMeshProcedural(Unigine.Ptr{Unigine.Mesh})">
 			<summary>
-			Searches for a surface target with a given name.
+			Sets the specified mesh as the base mesh for the object. The object must be in the procedural mesh mode.
+			
 			</summary> 
-			<param name="name"> Target name. </param>
-			<param name="surface"> Surface number. </param> 
-			<returns>Target number if it exists; otherwise, -1.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshCluster.flushMesh">
-			<summary>
-			Flushes the mesh geometry into the video memory.
-			</summary>  
-		</member>
-		<member name="M:Unigine.ObjectMeshCluster.loadMesh(char)">
-			<summary>
-			Loads the mesh for the current mesh from the .mesh file. This function doesn't change the mesh name.
-			</summary> 
-			<param name="path"> Path to the .mesh file. </param> 
-			<returns>true if the mesh is loaded successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshCluster.saveMesh(char)">
-			<summary>
-			Saves the cluster mesh to a .mesh file.
-			</summary> 
-			<param name="path"> Path to the .mesh file. </param> 
-			<returns>true if the mesh is saved successfully; otherwise, false.</returns>
+			<param name="mesh"> Mesh to be applied. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.type">
 			<summary>
@@ -6116,18 +5960,144 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.getInstancesFromSphere(Unigine.Math.WorldBoundSphere,Unigine.Vector{int,int,Unigine.VectorAllocator})">
 			<summary>
-			Returns the indices of instances inside the bounding sphere.
+			Returns the indices of instances inside the bounding sphere.					The returned list of instance indices is unsorted.
 			</summary> 
 			<param name="bb"> Bounding sphere defining the area within which instances are to be collected. </param>
 			<param name="instances"> Vector containing instance indices. </param> 
 			<returns>true, if there is at least one instance inside the bounding sphere; or false.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshClutter.#ctor(char,bool)">
+		<member name="M:Unigine.ObjectMeshCluster.getMeshInfo">
 			<summary>
-			ObjectMeshClutter constructor.
+			Returns the base mesh that stores data on mesh bounds, surfaces, their number, names, and bounds, but doesn't contain any geometry.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.getMeshForce">
+			<summary>
+			Returns the base mesh used for the object. The returned static mesh won't be loaded to VRAM.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.getMeshAsync">
+			<summary>
+			Returns the base mesh used for the object asynchronously. This function can be called if the mesh hasn't been loaded yet.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.getMeshForceVRAM">
+			<summary>
+			Returns the base mesh used for the object and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.getMeshAsyncVRAM">
+			<summary>
+			Returns the base mesh used for the object asynchronously and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.loadAsyncVRAM">
+			<summary>
+			Asynchronously loads the mesh to video memory (VRAM) if the async streaming mode for meshes is enabled. Otherwise, the forced loading is performed.  This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to video memory before they are used).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to VRAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.loadAsyncRAM">
+			<summary>
+			Asynchronously loads the mesh to memory (RAM) if the async streaming mode for meshes is enabled. Otherwise, the forced loading is performed. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to RAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.loadForceVRAM">
+			<summary>
+			Performs force-loading of the mesh to video memory (VRAM) immediately. The forced loading to VRAM is performed in the main thread.				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to VRAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.loadForceRAM">
+			<summary>
+			Performs force-loading of the mesh to memory (RAM) immediately.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to RAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.asyncCalculateNodes(int)">
+			<summary>
+			Asynchronously calculates the mesh surface internal spatial tree used for quick calculation of collisions and intersections. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
 			</summary> 
-			<param name="arg1"> Name of the mesh file. </param>
-			<param name="unique"> When you create several objects out of a single .mesh file, the instance of the mesh geometry is created. If you then change the source geometry, its instances will be changed as well. To avoid this, set the unique flag to true (1), so a copy of the mesh geometry will be created and changes won't be applied. </param> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>true if the internal tree is calculated successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.asyncCalculateEdges(int)">
+			<summary>
+			Asynchronously calculates the edges of the mesh surface geometry. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>true if the edges are calculated successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.setMeshProceduralMode(bool)">
+			<summary>
+			Sets a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			</summary> 
+			<param name="meshproceduralmode"> true to switch the base mesh used for the object to procedural mode; otherwise, false - normal mode (the base mesh is streamed from a source file). </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.isMeshProceduralMode const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>true if the base mesh used for the object is procedural; otherwise, false - normal mode (the base mesh is streamed from a source file).</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.isMeshNull const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
+			</summary>  
+			<returns>true if the base mesh used for the object is null; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.isMeshLoadedRAM const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is loaded to memory (RAM).
+			</summary>  
+			<returns>true if the base mesh used for the object is loaded to RAM; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.isMeshLoadedVRAM const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is loaded to video memory (VRAM).
+			</summary>  
+			<returns>true if the base mesh used for the object is loaded to VRAM; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH)">
+			<summary>
+			Sets the streaming mode for loading the mesh to memory (RAM).
+			</summary> 
+			<param name="meshstreamingmoderam"> Mesh streaming mode. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.getMeshStreamingModeRAM const">
+			<summary>
+			Returns the current streaming mode for loading the mesh to memory (RAM).
+			</summary>  
+			<returns>Mesh streaming mode.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH)">
+			<summary>
+			Sets the streaming mode for loading the mesh to video memory (VRAM).
+			</summary> 
+			<param name="meshstreamingmodevram"> Mesh streaming mode. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.getMeshStreamingModeVRAM const">
+			<summary>
+			Returns the current streaming mode for loading the mesh to video memory (VRAM).
+			</summary>  
+			<returns>Mesh streaming mode.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.#ctor(char)">
+			<summary>
+			ObjectMeshClutter constructor. Creates a clutter using the path to the base mesh provided.
+			</summary> 
+			<param name="path"> Path to the base mesh file. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.#ctor">
+			<summary>
+			Default ObjectMeshClutter constructor. Creates an empty clutter.
+			</summary>  
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.setAngle(float)">
 			<summary>
@@ -6155,7 +6125,7 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.setDensity(float)">
 			<summary>
-			Sets the density factor that defines the number of meshes per square unit.
+			Sets the density factor that defines the number of meshes per square unit.					The number of clutter elements in each cell is determined by the clutter Size along X and Y axes, as well as by Density and Step values. Relationship between these values in internal calculations may result in an invisible clutter. When setting these values, please consider this information.
 			</summary> 
 			<param name="density"> Density factor. If a negative value is provided, 0 will be used instead. </param> 
 		</member>
@@ -6353,20 +6323,6 @@
 			</summary>  
 			<returns>Scale spread value.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshClutter.setMesh(Unigine.Ptr{Unigine.Mesh})">
-			<summary>
-			Copies the source mesh into the current mesh.
-			</summary> 
-			<param name="mesh"> The source mesh to be copied. </param> 
-			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshClutter.getMesh(Unigine.Ptr{Unigine.Mesh}) const">
-			<summary>
-			Copies the current mesh into the source mesh.
-			</summary> 
-			<param name="mesh"> The source mesh. </param> 
-			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshClutter.setMeshesRotation(Unigine.Math.vec3,Unigine.Math.vec3)">
 			<summary>
 			Sets the parameters of pseudo-random rotation of meshes along X, Y and Z axes.
@@ -6386,23 +6342,17 @@
 			</summary>  
 			<returns>Maximum spread values of meshes rotation angles, in degrees.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshClutter.setMeshName(char)">
+		<member name="M:Unigine.ObjectMeshClutter.setMeshPath(char)">
 			<summary>
-			Sets a path to the mesh scattered by the mesh clutter. Does not update mesh immediately using the new path, unlike the setMeshNameForce() method.
+			Sets a path to the mesh scattered by the mesh clutter. Does not update mesh immediately using the new path. If the mesh is in the procedural mode, it will be reset.
 			</summary> 
-			<param name="name"> Path to the mesh to be set. </param> 
+			<param name="path"> New path to the source .mesh-file to be set. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshClutter.setMeshNameForce(char)">
+		<member name="M:Unigine.ObjectMeshClutter.getMeshPath const">
 			<summary>
-			Sets a new path to the mesh handled by the mesh clutter and forces mesh creation using the new path. The new mesh is created from the specified path immediately with the unique flag set to 0.
-			</summary> 
-			<param name="name"> Path to the mesh file. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshClutter.getMeshName const">
-			<summary>
-			Returns the name of the mesh scattered by mesh clutter.
+			Returns the path to the source .mesh-file of the base mesh scattered by mesh clutter.
 			</summary>  
-			<returns>Mesh name.</returns>
+			<returns>Path to the source .mesh-file.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.setMinScale(float,float)">
 			<summary>
@@ -6422,13 +6372,6 @@
 			Returns the scale spread value that controls the range of mesh scales in the areas with low density (according to the mask).
 			</summary>  
 			<returns>Scale spread value.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshClutter.getNumSurfaceTargets(int) const">
-			<summary>
-			Returns the total number of surface targets.
-			</summary> 
-			<param name="surface"> Surface number. </param> 
-			<returns>Total number of surface targets.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.setOffset(float,float)">
 			<summary>
@@ -6475,7 +6418,7 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.setSizeX(float)">
 			<summary>
-			Sets the width of the mesh clutter along the X-coordinate.
+			Sets the width of the mesh clutter along the X-coordinate.					The number of clutter elements in each cell is determined by the clutter Size along X and Y axes, as well as by Density and Step values. Relationship between these values in internal calculations may result in an invisible clutter. When setting these values, please consider this information.
 			</summary> 
 			<param name="sizex"> X-coordinate width in units. If a negative value is provided, 0 will be used instead. </param> 
 		</member>
@@ -6487,7 +6430,7 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.setSizeY(float)">
 			<summary>
-			Sets the length of the mesh clutter along the Y-coordinate.
+			Sets the length of the mesh clutter along the Y-coordinate.					The number of clutter elements in each cell is determined by the clutter Size along X and Y axes, as well as by Density and Step values. Relationship between these values in internal calculations may result in an invisible clutter. When setting these values, please consider this information.
 			</summary> 
 			<param name="sizey"> Y-coordinate length in units. If a negative value is provided, 0 will be used instead. </param> 
 		</member>
@@ -6505,7 +6448,7 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.setStep(float)">
 			<summary>
-			Sets the step for cells used to render mesh clutter.
+			Sets the step for cells used to render mesh clutter.					The number of clutter elements in each cell is determined by the clutter Size along X and Y axes, as well as by Density and Step values. Relationship between these values in internal calculations may result in an invisible clutter. When setting these values, please consider this information.
 			</summary> 
 			<param name="step"> Step for clutter cells in units. </param> 
 		</member>
@@ -6514,14 +6457,6 @@
 			Returns the step for cells used to render meshes scattered by the mesh clutter.
 			</summary>  
 			<returns>Step for clutter cells in units.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshClutter.getSurfaceTargetName(int,int) const">
-			<summary>
-			Returns the name of a given surface target.
-			</summary> 
-			<param name="surface"> Surface number. </param>
-			<param name="target"> Target number. </param> 
-			<returns>Target name.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.setThreshold(float)">
 			<summary>
@@ -6547,26 +6482,12 @@
 			</summary>  
 			<returns>Distance of visibility for meshes in units.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshClutter.createMesh(char,bool)">
+		<member name="M:Unigine.ObjectMeshClutter.applyMeshProcedural(Unigine.Ptr{Unigine.Mesh})">
 			<summary>
-			Creates the clutter mesh with the specified parameters.
+			Sets the specified mesh as the base mesh for the object. The object must be in the procedural mesh mode.
+			
 			</summary> 
-			<param name="name"> Path to the mesh file. </param>
-			<param name="unique"> When you create several objects out of a single .mesh file, the instance of the mesh geometry is created. If you then change the source geometry, its instances will be changed as well. To avoid this, set the unique flag to 1, so a copy of the mesh geometry will be created and changes won't be applied. </param> 
-			<returns>true if the mesh is created successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshClutter.findSurfaceTarget(char,int) const">
-			<summary>
-			Searches for a surface target with a given name.
-			</summary> 
-			<param name="name"> Target name. </param>
-			<param name="surface"> Surface number. </param> 
-			<returns>Target number if it exists; otherwise, -1.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshClutter.flushMesh">
-			<summary>
-			Flushes the clutter mesh geometry into the video memory.
-			</summary>  
+			<param name="mesh"> Mesh to be applied. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.invalidate">
 			<summary>
@@ -6578,19 +6499,6 @@
 			Invalidates all mesh clutter cells within the area specified by the given bounding box. All invalidated cells will be regenerated.
 			</summary> 
 			<param name="bounds"> Bounding box, defining the area, where mesh clutter cells will be regenerated. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshClutter.loadMesh(char)">
-			<summary>
-			Loads a new mesh instead of the current mesh from the .mesh file. This function doesn't change the mesh name.
-			</summary> 
-			<param name="name"> Path to the mesh file. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshClutter.saveMesh(char)">
-			<summary>
-			Saves the mesh into the .mesh format.
-			</summary> 
-			<param name="name"> Path to the mesh file. </param> 
-			<returns>1 if the mesh is saved successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.type">
 			<summary>
@@ -6644,7 +6552,7 @@
 			<param name="transforms"> Buffer to store transformations of clutter meshes, in world coordinates. </param> 
 			<returns>1, if there are transformations of clutter meshes; or 0, if there are no transformations of clutter meshes found.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshClutter.getClutterLocalTransforms(Unigine.BoundBox,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator},int,int) const">
+		<member name="M:Unigine.ObjectMeshClutter.getClutterLocalTransforms(Unigine.Math.BoundBox,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator},int,int) const">
 			<summary>
 			Collects transformations (in local coordinates) for all clutter meshes within the generated cells and puts them to the specified buffer.					Generation of clutter cells is performed in separate threads. Some of the cells may have their lifetime expired. Therefore, the content of certain cells might be unavailable at the moment, such cells are considered as not generated.
 			</summary> 
@@ -6677,6 +6585,128 @@
 			Returns a value indicating if the clutter objects is rendered inside or outside the areas determined by the cutout intersection mask.
 			</summary>  
 			<returns>0 if clutter objects are rendered outside the areas determined by the cutout intersection mask; 1 if inside.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.getMeshInfo">
+			<summary>
+			Returns the base mesh that stores data on mesh bounds, surfaces, their number, names, and bounds, but doesn't contain any geometry.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.getMeshForce">
+			<summary>
+			Returns the base mesh used for the object. The returned static mesh won't be loaded to VRAM.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.getMeshAsync">
+			<summary>
+			Returns the base mesh used for the object asynchronously. This function can be called if the mesh hasn't been loaded yet.				It's highly recommended NOT to edit the returned mesh.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.getMeshForceVRAM">
+			<summary>
+			Returns the base mesh used for the object and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.getMeshAsyncVRAM">
+			<summary>
+			Returns the base mesh used for the object asynchronously and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>A base static mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.loadAsyncVRAM">
+			<summary>
+			Asynchronously loads the mesh to video memory (VRAM) if the async streaming mode for meshes is enabled. Otherwise, the forced loading is performed. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to video memory before they are used).				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to VRAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.loadAsyncRAM">
+			<summary>
+			Asynchronously loads the mesh to memory (RAM) if the async streaming mode for meshes is enabled. Otherwise, the forced loading is performed. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to RAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.loadForceVRAM">
+			<summary>
+			Performs force-loading of the mesh to video memory (VRAM) immediately.				Loading to VRAM must be performed in the main thread only.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to VRAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.loadForceRAM">
+			<summary>
+			Performs force-loading of the mesh to memory (RAM) immediately.
+			</summary>  
+			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to RAM, true will be returned.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.asyncCalculateNodes(int)">
+			<summary>
+			Asynchronously calculates the mesh surface internal spatial tree used for quick calculation of collisions and intersections. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>true if the internal tree is calculated successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.asyncCalculateEdges(int)">
+			<summary>
+			Asynchronously calculates the edges of the mesh surface geometry. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to memory before they are used).
+			</summary> 
+			<param name="surface"> Mesh surface number. </param> 
+			<returns>true if the edges are calculated successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.setMeshProceduralMode(bool)">
+			<summary>
+			Sets a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			</summary> 
+			<param name="meshproceduralmode"> true to switch the base mesh used for the object to procedural mode; otherwise, false - normal mode (the base mesh is streamed from a source file). </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.isMeshProceduralMode const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>true if the base mesh used for the object is procedural; otherwise, false - normal mode (the base mesh is streamed from a source file).</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.isMeshNull const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
+			</summary>  
+			<returns>true if the base mesh used for the object is null; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.isMeshLoadedRAM const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is loaded to memory (RAM).
+			</summary>  
+			<returns>true if the base mesh used for the object is loaded to RAM; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.isMeshLoadedVRAM const">
+			<summary>
+			Returns a value indicating if the base mesh used for the object is loaded to video memory (VRAM).
+			</summary>  
+			<returns>true if the base mesh used for the object is loaded to VRAM; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH)">
+			<summary>
+			Sets the streaming mode for loading the mesh to memory (RAM).
+			</summary> 
+			<param name="meshstreamingmoderam"> Mesh streaming mode. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.getMeshStreamingModeRAM const">
+			<summary>
+			Returns the current streaming mode for loading the mesh to memory (RAM).
+			</summary>  
+			<returns>Mesh streaming mode.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH)">
+			<summary>
+			Sets the streaming mode for loading the mesh to video memory (VRAM).
+			</summary> 
+			<param name="meshstreamingmodevram"> Mesh streaming mode. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.getMeshStreamingModeVRAM const">
+			<summary>
+			Returns the current streaming mode for loading the mesh to video memory (VRAM).
+			</summary>  
+			<returns>Mesh streaming mode.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshDynamic.ObjectMeshDynamic(Unigine.Ptr{Unigine.Mesh},int)">
 			<summary>
@@ -7970,7 +8000,7 @@
 			<summary>
 			Loads the additional animation from an external file.
 			</summary> 
-			<param name="path"> Path to the animation file. The path can be represented by either a path to the file or its GUID, which is the recommended approach. After loading the animation, its internal representation is identified by the path when using findAnimation, setAnimation, etc. When you import your model with animations from an FBX container, the following path to your *.anim files should be used: &lt;path_to_your_fbx_file&gt;/&lt;file.fbx&gt;/&lt;your_anim_file.anim&gt;For example: object-&gt;addAnimation("models/soldier/soldier.fbx/run.anim"); </param> 
+			<param name="path"> Path to the animation file. The path can be represented by either a path to the file or its GUID, which is the recommended approach. After loading the animation, its internal representation is identified by the path when using findAnimation, setAnimation, etc. When you import your model with animations from an FBX container, the following path to your *.anim files should be used: &amp;lt;path_to_your_fbx_file&amp;gt;/&amp;lt;file.fbx&amp;gt;/&amp;lt;your_anim_file.anim&amp;gt;For example: object-&amp;gt;addAnimation("models/soldier/soldier.fbx/run.anim"); </param> 
 			<returns>Animation identifier.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.addEmptySurface(char,int,int)">
@@ -8401,11 +8431,11 @@
 			</summary>  
 			<returns>Node type identifier.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSplineCluster.getMeshName const">
+		<member name="M:Unigine.ObjectMeshSplineCluster.getMeshPath const">
 			<summary>
-			Returns the name of the mesh handled by a mesh spline cluster.
+			Returns the path to the current base mesh file for the object.
 			</summary>  
-			<returns>Mesh name.</returns>
+			<returns>Path to the base mesh file.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSplineCluster.getNumMeshes const">
 			<summary>
@@ -8436,29 +8466,6 @@
 			<param name="transforms"> Buffer to store transformations of spline cluster meshes. </param> 
 			<returns>true, if there are transformations of spline cluster meshes; or false, if there are no transformations of spline cluster meshes found.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSplineCluster.getNumSurfaceTargets(int) const">
-			<summary>
-			Returns the total number of surface targets.
-			</summary> 
-			<param name="surface"> Surface number. </param> 
-			<returns>Total number of surface targets.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSplineCluster.getSurfaceTargetName(int,int) const">
-			<summary>
-			Returns the name of a given surface target.
-			</summary> 
-			<param name="surface"> Surface number. </param>
-			<param name="target"> Target number. </param> 
-			<returns>Target name.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSplineCluster.findSurfaceTarget(char,int) const">
-			<summary>
-			Searches for a surface target with a given name.
-			</summary> 
-			<param name="name"> Target name. </param>
-			<param name="surface"> Surface number. </param> 
-			<returns>Target number if it exists; otherwise, -1.</returns>
-		</member>
 		<member name="M:Unigine.ObjectParticles.ObjectParticles">
 			<summary>
 			Constructor. Creates a particle system.
@@ -8480,31 +8487,67 @@
 			<summary>
 			Enables or disables re-initialization of the particle system each time it is enabled. When this option is disabled, turning on the particle system will restore the state it had before it was turned off.
 			</summary> 
-			<param name="enable"> 1 to re-initialize particle system each time it is enabled; otherwise, 0. </param> 
+			<param name="enable"> true to re-initialize particle system each time it is enabled; otherwise, false. </param> 
 		</member>
 		<member name="M:Unigine.ObjectParticles.isClearOnEnable const">
 			<summary>
 			Returns a value indicating if particle system is to be re-initialized each time it is enabled.
 			</summary>  
-			<returns>1 if particle system is to be re-initialized each time it is enabled; otherwise, 0.</returns>
+			<returns>true if particle system is to be re-initialized each time it is enabled; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.ObjectParticles.setCollision(int)">
+		<member name="M:Unigine.ObjectParticles.setCollisionEnabled(bool)">
 			<summary>
-			Enables or disables detecting collision by the outer surface of the sphere that approximates the particles (each particle is approximated with the sphere). This method is slower than intersection detection, but more precise.
+			Enables or disables collision detection for spheres that approximate each particle. This method is slower than intersection detection, but more precise.
 			</summary> 
-			<param name="collision"> 1 to enable sphere-based collision detection, 0 to disable it. </param> 
+			<param name="enabled"> true to enable sphere-based collision detection for particles, false to disable it. </param> 
 		</member>
-		<member name="M:Unigine.ObjectParticles.getCollision const">
+		<member name="M:Unigine.ObjectParticles.isCollisionEnabled const">
 			<summary>
-			Returns a value indicating if collision is detected by the outer surface of the sphere that approximates the particles. This method is slower than sphere center-based intersection detection, but more precise.
+			Returns a value indicating if collision detection for spheres that approximate each particle. This method is slower than sphere center-based intersection detection, but more precise.
 			</summary>  
-			<returns>1 if the sphere-based collision detection is enabled; otherwise, 0.</returns>
+			<returns>true if the sphere-based collision detection for particles is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectParticles.setCollisionMask(int)">
+			<summary>
+			Sets a new Collision Mask to be used for particles. Particles will collide with an object, if they both have matching masks.
+			</summary> 
+			<param name="mask"> New Collision Mask to be used for particles. </param> 
+		</member>
+		<member name="M:Unigine.ObjectParticles.getCollisionMask const">
+			<summary>
+			Returns the current Collision Mask to be used for particles. Particles will collide with an object, if they both have matching masks.
+			</summary>  
+			<returns>Collision Mask currently used for particles.</returns>
+		</member>
+		<member name="M:Unigine.ObjectParticles.setPhysicsIntersectionEnabled(bool)">
+			<summary>
+			Enables or disables detecting collision by the center of the sphere that approximates the particles. This method is faster than collision detection, but less precise. Physics intersections are detected only for matching bit masks.
+			</summary> 
+			<param name="enabled"> true to detect intersections, false not to detect. </param> 
+		</member>
+		<member name="M:Unigine.ObjectParticles.isPhysicsIntersectionEnabled const">
+			<summary>
+			Returns a value indicating if collisions are to be detected by the center of the sphere that approximates the particles. This method is faster than sphere-based collision detection, but less precise. Physics intersections are detected only for matching bit masks.
+			</summary>  
+			<returns>true if the sphere center-based intersection detection is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectParticles.setPhysicsIntersectionMask(int)">
+			<summary>
+			Sets a new Physics Intersection Mask to be used for particles. Physics intersections are detected only for matching bit masks.
+			</summary> 
+			<param name="mask"> New Physics Intersection Mask to be used for particles. </param> 
+		</member>
+		<member name="M:Unigine.ObjectParticles.getPhysicsIntersectionMask const">
+			<summary>
+			Returns the current Physics Intersection Mask for particles. Physics intersections are detected only for matching bit masks.
+			</summary>  
+			<returns>Current Physics Intersection Mask used for particles.</returns>
 		</member>
 		<member name="M:Unigine.ObjectParticles.getContactNormal(int) const">
 			<summary>
 			Returns the point of the particles collision with other objects.
 			</summary> 
-			<param name="num"> The collision point number. </param> 
+			<param name="num"> Collision point number. </param> 
 			<returns>Collision point coordinates.</returns>
 		</member>
 		<member name="M:Unigine.ObjectParticles.getContactObject(int) const">
@@ -8540,104 +8583,6 @@
 			</summary>  
 			<returns>1 if particles would disappear; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.ObjectParticles.setDeflectorAttached(int,int)">
-			<summary>
-			Attaches or detaches a given deflector to the particle system.
-			</summary> 
-			<param name="num"> The deflector number. </param>
-			<param name="attached"> 1 to attach the deflector, 0 to detach it. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.isDeflectorAttached(int) const">
-			<summary>
-			Returns a value indicating if a given deflector is attached to the particle system.
-			</summary> 
-			<param name="num"> The deflector number. </param> 
-			<returns>1 if the deflector is attached; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setDeflectorEnabled(int,bool)">
-			<summary>
-			Enables or disables the given deflector.
-			</summary> 
-			<param name="num"> The deflector number. </param>
-			<param name="enabled"> true to enable the deflector, false to disable it. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.isDeflectorEnabled(int) const">
-			<summary>
-			Returns a value indicating if the given deflector is enabled.
-			</summary> 
-			<param name="num"> The deflector number. </param> 
-			<returns>true if the deflector is enabled; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setDeflectorRestitution(int,float)">
-			<summary>
-			Sets restitution of the deflector. Makes sense only for reflectors.
-			</summary> 
-			<param name="num"> The deflector number. </param>
-			<param name="restitution"> A new restitution. The provided value will be saturated in the range [0; 1]. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getDeflectorRestitution(int) const">
-			<summary>
-			Returns the current restitution of the deflector. Makes sense only for reflectors.
-			</summary> 
-			<param name="num"> The deflector number. </param> 
-			<returns>The current restitution.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setDeflectorRoughness(int,float)">
-			<summary>
-			Sets roughness of the deflector surface. Makes sense only for reflectors.
-			</summary> 
-			<param name="num"> The deflector number. </param>
-			<param name="roughness"> A new roughness. The provided value will be saturated in the range [0; 1]. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getDeflectorRoughness(int) const">
-			<summary>
-			Returns the current roughness of the deflector. Makes sense only for reflectors.
-			</summary> 
-			<param name="num"> The deflector number. </param> 
-			<returns>The current roughness.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setDeflectorSize(int,Unigine.Math.vec3)">
-			<summary>
-			Sets dimensions of a given deflector.
-			</summary> 
-			<param name="num"> The deflector number. </param>
-			<param name="size"> New dimensions. Only the first two components are taken into account (x and y). </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getDeflectorSize(int) const">
-			<summary>
-			Returns the current dimensions of the given deflector.
-			</summary> 
-			<param name="num"> The deflector number. </param> 
-			<returns>The current dimensions. Only the first two components should be taken into account (x and y).</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setDeflectorTransform(int,Unigine.Math.Mat4)">
-			<summary>
-			Sets a transformation matrix for a given deflector. This matrix describes the position and orientation of the deflector.
-			</summary> 
-			<param name="num"> The deflector number. </param>
-			<param name="transform"> A new transformation matrix. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getDeflectorTransform(int) const">
-			<summary>
-			Returns the transformation matrix of a given deflector. This matrix describes the position and orientation of the deflector. The default is the identity matrix.
-			</summary> 
-			<param name="num"> The deflector number. </param> 
-			<returns>The transformation matrix.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setDeflectorType(int,int)">
-			<summary>
-			Sets a type of a given deflector.
-			</summary> 
-			<param name="num"> The deflector number. </param>
-			<param name="type"> DEFLECTOR_REFLECTOR or DEFLECTOR_CLIPPER. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getDeflectorType(int) const">
-			<summary>
-			Returns a type of a given deflector.
-			</summary> 
-			<param name="num"> The deflector number. </param> 
-			<returns>DEFLECTOR_REFLECTOR or DEFLECTOR_CLIPPER.</returns>
-		</member>
 		<member name="M:Unigine.ObjectParticles.setDelay(float,float)">
 			<summary>
 			Sets delay of particle system initialization relative to the parent particle one.
@@ -8657,17 +8602,17 @@
 			</summary>  
 			<returns>The spread value in seconds.</returns>
 		</member>
-		<member name="M:Unigine.ObjectParticles.setDepthSort(int)">
+		<member name="M:Unigine.ObjectParticles.setDepthSort(bool)">
 			<summary>
-			Enables or disables depth sorting of particles. The depth sorting is required, if particles use alpha blending.
+			Enables or disables depth sorting of particles. Depth sorting is required, if particles use alpha blending.
 			</summary> 
-			<param name="sort"> 1 to enable the depth sorting, 0 to disable it. </param> 
+			<param name="sort"> true to enable the depth sorting, false to disable it. </param> 
 		</member>
 		<member name="M:Unigine.ObjectParticles.getDepthSort const">
 			<summary>
 			Returns a value indicating if depth sorting of particles is enabled. Depth sorting is required, if particles use alpha blending.
 			</summary>  
-			<returns>1 if the depth sorting is enabled; otherwise, 0.</returns>
+			<returns>true if the depth sorting is enabled; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectParticles.setDuration(float,float)">
 			<summary>
@@ -8796,116 +8741,6 @@
 			</summary>  
 			<returns>The emitter velocity in units per second.</returns>
 		</member>
-		<member name="M:Unigine.ObjectParticles.setForceAttached(int,int)">
-			<summary>
-			Attaches or detaches the given force to the particle system.
-			</summary> 
-			<param name="num"> Force number in the range from 0 to the total number of forces. </param>
-			<param name="attached"> 1 to attach the force, 0 to detach it. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.isForceAttached(int) const">
-			<summary>
-			Returns a value indicating if the given force is attached to the particle system.
-			</summary> 
-			<param name="num"> Force number in the range from 0 to the total number of forces. </param> 
-			<returns>1 if the force is attached; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setForceAttenuation(int,float)">
-			<summary>
-			Sets an attenuation factor for the specified force.
-			</summary> 
-			<param name="num"> Force number in the range from 0 to the total number of forces. </param>
-			<param name="attenuation"> An attenuation factor. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getForceAttenuation(int) const">
-			<summary>
-			Returns the current attenuation factor for the specified force.
-			</summary> 
-			<param name="num"> Force number in the range from 0 to the total number of forces. </param> 
-			<returns>The current attenuation factor.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setForceAttractor(int,float)">
-			<summary>
-			Sets the attraction force that will be applied to the particles in the specified force radius.
-			</summary> 
-			<param name="num"> The attraction force number. </param>
-			<param name="attractor"> The force value. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getForceAttractor(int) const">
-			<summary>
-			Returns the current attraction force applied to the particles in the specified force radius.
-			</summary> 
-			<param name="num"> The attraction force number. </param> 
-			<returns>The force value.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setForceEnabled(int,bool)">
-			<summary>
-			Enables or disables the given force.
-			</summary> 
-			<param name="num"> The force number. </param>
-			<param name="enabled"> 1 to enable the force, 0 to disable it. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.isForceEnabled(int) const">
-			<summary>
-			Returns a value indicating if the given force is enabled.
-			</summary> 
-			<param name="num"> The force number. </param> 
-			<returns>1 if the force is enabled; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setForceRadius(int,float)">
-			<summary>
-			Sets a radius for applying the force.
-			</summary> 
-			<param name="num"> The force number. </param>
-			<param name="radius"> A radius in units. If a negative value is provided, 0 will be used instead. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getForceRadius(int) const">
-			<summary>
-			Returns the current radius set for applying the force.
-			</summary> 
-			<param name="num"> The force number. </param> 
-			<returns>The current radius in units.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setForceRotator(int,float)">
-			<summary>
-			Sets a rotation force that will be applied to the particles in the specified force radius.
-			</summary> 
-			<param name="num"> The rotation force number. </param>
-			<param name="rotator"> The force value. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getForceRotator(int) const">
-			<summary>
-			Returns the current rotation force applied to the particles in the specified force radius.
-			</summary> 
-			<param name="num"> The rotation force number. </param> 
-			<returns>The force value.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setForceTransform(int,Unigine.Math.Mat4)">
-			<summary>
-			Sets a transformation matrix for the specified force.
-			</summary> 
-			<param name="num"> The force number. </param>
-			<param name="transform"> A transformation matrix. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getForceTransform(int) const">
-			<summary>
-			Returns the current transformation matrix for the specified force.
-			</summary> 
-			<param name="num"> The force number. </param> 
-			<returns>The transformation matrix.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setPhysicsIntersection(int)">
-			<summary>
-			Enables or disables detecting collision by the center of the sphere that approximates the particles. This method is faster than collision detection, but less precise. Physics intersections are detected only for matching bit masks.
-			</summary> 
-			<param name="intersection"> 1 to detect intersections, 0 not to detect. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getPhysicsIntersection const">
-			<summary>
-			Returns a value indicating if collisions are to be detected by the center of the sphere that approximates the particles. This method is faster than sphere-based collision detection, but less precise. Physics intersections are detected only for matching bit masks.
-			</summary>  
-			<returns>1 if the sphere center-based intersection detection is enabled; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.ObjectParticles.setLife(float,float)">
 			<summary>
 			Sets a lifetime duration of particles in seconds.
@@ -8949,180 +8784,11 @@
 			</summary>  
 			<returns>Time, in seconds.</returns>
 		</member>
-		<member name="M:Unigine.ObjectParticles.setNoiseAttached(int,int)">
-			<summary>
-			Sets the noise as an attached.
-			</summary> 
-			<param name="num"> Target noise number. </param>
-			<param name="attached"> 1 to enable the Attached flag, 0 to disable it. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.isNoiseAttached(int) const">
-			<summary>
-			Returns a value indicating if the given noise is attached to the particle system.
-			</summary> 
-			<param name="num"> Target noise number. </param> 
-			<returns>1 if the noise is attached; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setNoiseEnabled(int,bool)">
-			<summary>
-			Enables or disables the given noise.
-			</summary> 
-			<param name="num"> Target noise number. </param>
-			<param name="enabled"> 1 to enable the noise, 0 to disable it. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.isNoiseEnabled(int) const">
-			<summary>
-			Returns a value indicating if the given noise is enabled.
-			</summary> 
-			<param name="num"> Target noise number. </param> 
-			<returns>1 if the noise is enabled; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setNoiseForce(int,float)">
-			<summary>
-			Sets the Force parameter value for the required noise.
-			</summary> 
-			<param name="num"> Target noise number. </param>
-			<param name="force"> The noise force value. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getNoiseForce(int) const">
-			<summary>
-			Returns the Force parameter value for the required noise.
-			</summary> 
-			<param name="num"> Target noise number. </param> 
-			<returns>The noise force value.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setNoiseFrequency(int,int)">
-			<summary>
-			Sets the Frequency parameter value for the required noise.
-			</summary> 
-			<param name="num"> Target noise number. </param>
-			<param name="frequency"> The noise frequency value. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getNoiseFrequency(int) const">
-			<summary>
-			Returns the Frequency parameter value for the required noise.
-			</summary> 
-			<param name="num"> The target noise number. </param> 
-			<returns>The noise frequency value.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.getNoiseImage(int) const">
-			<summary>
-			Returns the spatial texture for the required noise.
-			</summary> 
-			<param name="num"> Target noise number. </param> 
-			<returns>The texture of the noise.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setNoiseOffset(int,Unigine.Math.vec3)">
-			<summary>
-			Sets the Offset parameter coordinates values for the required noise.
-			</summary> 
-			<param name="num"> Target noise number. </param>
-			<param name="offset"> Offset coordinates values. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getNoiseOffset(int) const">
-			<summary>
-			Returns the Offset parameter coordinates values for the required noise.
-			</summary> 
-			<param name="num"> Target noise number. </param> 
-			<returns>Offset coordinates values.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setNoiseScale(int,float)">
-			<summary>
-			Sets the Scale parameter value for the required noise.
-			</summary> 
-			<param name="num"> Target noise number. </param>
-			<param name="scale"> The noise scale value. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getNoiseScale(int) const">
-			<summary>
-			Returns the Scale parameter value for the required noise.
-			</summary> 
-			<param name="num"> Target noise number. </param> 
-			<returns>The noise scale value.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setNoiseSize(int,int)">
-			<summary>
-			Sets the Size parameter value for the required noise.
-			</summary> 
-			<param name="num"> The target noise number. </param>
-			<param name="size"> The noise size value. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getNoiseSize(int) const">
-			<summary>
-			Returns the Size parameter value for the required noise.
-			</summary> 
-			<param name="num"> Target noise number. </param> 
-			<returns>The noise size value.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setNoiseStep(int,Unigine.Math.vec3)">
-			<summary>
-			Sets the Step parameter coordinates values for the required noise.
-			</summary> 
-			<param name="num"> Target noise number. </param>
-			<param name="step"> Step coordinates values. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getNoiseStep(int) const">
-			<summary>
-			Returns the Step parameter coordinates values for the required noise.
-			</summary> 
-			<param name="num"> Target noise number. </param> 
-			<returns>Step coordinates values.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setNoiseTransform(int,Unigine.Math.Mat4)">
-			<summary>
-			Sets the transformation matrix for the required noise.
-			</summary> 
-			<param name="num"> Target noise number. </param>
-			<param name="transform"> The noise transformation matrix. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getNoiseTransform(int) const">
-			<summary>
-			Returns the transformation matrix for the required noise.
-			</summary> 
-			<param name="num"> Target noise number. </param> 
-			<returns>The noise transformation matrix.</returns>
-		</member>
 		<member name="M:Unigine.ObjectParticles.getNumContacts const">
 			<summary>
 			Returns the total number of particles collisions with other objects.
 			</summary>  
 			<returns>Number of collisions.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setNumDeflectors(int)">
-			<summary>
-			Sets the new number of deflectors.
-			</summary> 
-			<param name="deflectors"> Number of deflectors. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getNumDeflectors const">
-			<summary>
-			Returns the current number of deflectors.
-			</summary>  
-			<returns>The number of deflectors.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setNumForces(int)">
-			<summary>
-			Sets the new number of forces.
-			</summary> 
-			<param name="forces"> Number of forces. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getNumForces const">
-			<summary>
-			Returns the number of the currently acting forces.
-			</summary>  
-			<returns>The number of forces.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setNumNoises(int)">
-			<summary>
-			Sets the new number of noises.
-			</summary> 
-			<param name="noises"> Number of noises. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getNumNoises const">
-			<summary>
-			Returns the current number of noises.
-			</summary>  
-			<returns>Number of noises.</returns>
 		</member>
 		<member name="M:Unigine.ObjectParticles.getNumParticles const">
 			<summary>
@@ -9190,7 +8856,7 @@
 		</member>
 		<member name="M:Unigine.ObjectParticles.setPhysicalMask(int)">
 			<summary>
-			Sets a bit mask for interactions with physicals. Two objects interact, if they both have matching masks.
+			Sets the bit mask for interactions with physicals. Two objects interact, if they both have matching masks.
 			</summary> 
 			<param name="mask"> Integer, each bit of which is a mask. </param> 
 		</member>
@@ -9403,54 +9069,18 @@
 			</summary>  
 			<returns>Offset coordinates values.</returns>
 		</member>
-		<member name="M:Unigine.ObjectParticles.addDeflector">
-			<summary>
-			Adds a deflector with default settings.
-			</summary>  
-			<returns>The number of the new deflector in the list of deflectors.</returns>
-		</member>
 		<member name="M:Unigine.ObjectParticles.addEmitterSpark(Unigine.Math.Vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
 			<summary>
 			Adds a spark emitter in the given point.
 			</summary> 
 			<param name="point"> Point for sparks emission. </param>
-			<param name="normal"> Normal vector of the point of spark emission. </param>
+			<param name="normal"> Normal vector at the point of spark emission. </param>
 			<param name="velocity"> Velocity in the point of spark emission (velocity of source particles or node by contact). </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.addForce">
-			<summary>
-			Adds a force with default settings.
-			</summary>  
-			<returns>The number of the new force in the list of forces.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.addNoise">
-			<summary>
-			Adds a new noise with default settings.
-			</summary>  
-			<returns>The number of the new noise in the list of noises.</returns>
 		</member>
 		<member name="M:Unigine.ObjectParticles.clearParticles">
 			<summary>
 			Deletes all particles spawned by the emitter.
 			</summary>  
-		</member>
-		<member name="M:Unigine.ObjectParticles.removeDeflector(int)">
-			<summary>
-			Removes a given point deflector.
-			</summary> 
-			<param name="num"> The number of the deflector to remove. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.removeForce(int)">
-			<summary>
-			Removes the given force.
-			</summary> 
-			<param name="num"> The number of the force to remove. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.removeNoise(int)">
-			<summary>
-			Removes the given noise.
-			</summary> 
-			<param name="num"> Target noise number. </param> 
 		</member>
 		<member name="M:Unigine.ObjectParticles.type">
 			<summary>
@@ -9460,72 +9090,17 @@
 		</member>
 		<member name="M:Unigine.ObjectParticles.saveStateSelf(Unigine.Ptr{Unigine.Stream}) const">
 			<summary>
-			Saves the object's state to the stream.					This method saves all object's parameters, including forces, noises, and deflectors. To save any of these parameters individually, use saveStateForces(), saveStateNoises(), or saveStateDeflectors() respectively.					Saving into the stream requires creating a blob to save into. To restore the saved state the restoreStateSelf() method is used:
+			Saves the object's state to the stream.					This method saves all object's parameters.					Saving into the stream requires creating a blob to save into. To restore the saved state the restoreStateSelf() method is used:
 			</summary> 
 			<param name="stream"> Stream smart pointer. </param> 
 			<returns>true on success; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectParticles.restoreStateSelf(Unigine.Ptr{Unigine.Stream})">
 			<summary>
-			Restores the object's state from the stream.					This method restores all object's parameters, including forces, noises, and deflectors. To restore any of these parameters individually, use restoreStateForces(), restoreStateNoises(), or restoreStateDeflectors() respectively.					Restoring from the stream requires creating a blob to save into and saving the state using the saveStateSelf() method:
+			Restores the object's state from the stream.					This method restores all object's parameters.					Restoring from the stream requires creating a blob to save into and saving the state using the saveStateSelf() method:
 			</summary> 
 			<param name="stream"> Stream smart pointer. </param> 
 			<returns>true on success; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.saveStateForces(Unigine.Ptr{Unigine.Stream}) const">
-			<summary>
-			Saves the state of the object's forces to the specified stream.					Saving into the stream requires creating a blob to save into. To restore the saved state the restoreStateForces() method is used:
-			</summary> 
-			<param name="stream"> Stream smart pointer. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.restoreStateForces(Unigine.Ptr{Unigine.Stream})">
-			<summary>
-			Restores the state of the object's forces from the specified stream.					Restoring from the stream requires creating a blob to save into and saving the state using the saveStateForces() method:
-			</summary> 
-			<param name="stream"> Stream smart pointer. </param> 
-			<returns>true on success; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.saveStateNoises(Unigine.Ptr{Unigine.Stream}) const">
-			<summary>
-			Saves the state of the object's noises to the specified stream.					Saving into the stream requires creating a blob to save into. To restore the saved state the restoreStateNoises() method is used:
-			</summary> 
-			<param name="stream"> Stream smart pointer. </param> 
-			<returns>true on success; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.restoreStateNoises(Unigine.Ptr{Unigine.Stream})">
-			<summary>
-			Restores the state of the object's noises from the specified stream.					Restoring from the stream requires creating a blob to save into and saving the state using the saveStateNoises() method:
-			</summary> 
-			<param name="stream"> Stream smart pointer. </param> 
-			<returns>true on success; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.saveStateDeflectors(Unigine.Ptr{Unigine.Stream}) const">
-			<summary>
-			Saves the state of the object's deflectors to the specified stream.					Saving into the stream requires creating a blob to save into. To restore the saved state the restoreStateDeflectors() method is used:
-			</summary> 
-			<param name="stream"> Stream smart pointer. </param> 
-			<returns>true on success; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.restoreStateDeflectors(Unigine.Ptr{Unigine.Stream})">
-			<summary>
-			Restores the state of the object's deflectors from the specified stream.					Restoring from the stream requires creating a blob to save into and saving the state using the saveStateDeflectors() method:
-			</summary> 
-			<param name="stream"> Stream smart pointer. </param> 
-			<returns>true on success; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setNoiseSeed(int,int)">
-			<summary>
-			Sets a new random seed value to be used for the noise with the specified number. This parameter is used to synchronize pseudorandom number generators for particle system noises.
-			</summary> 
-			<param name="num"> Target noise number. </param>
-			<param name="seed"> Random seed value to be used for the target noise. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getNoiseSeed(int) const">
-			<summary>
-			Returns the random seed value currently used for the noise with the specified number. This parameter is used to synchronize pseudorandom number generators for particle system noises.
-			</summary> 
-			<param name="num"> Target noise number. </param> 
-			<returns>Random seed value currently used for the target noise.</returns>
 		</member>
 		<member name="M:Unigine.ObjectParticles.setSyncMode(ObjectParticles::SYNC_MODE)">
 			<summary>
@@ -9683,19 +9258,62 @@
 			</summary>  
 			<returns>The size of the texture atlas.</returns>
 		</member>
-		<member name="F:Unigine.ObjectParticles.DEFLECTOR_CLIPPER">
+		<member name="M:Unigine.ObjectParticles.setScreenSizeMode(ObjectParticles::SCREEN_SIZE_MODE)">
 			<summary>
-			When a particle hits a deflector of this type, the particle is removed.
+			Sets a new screen size mode for particles. This mode defines whether the maximum and minimum sizes of emitted particles should be limited relative to screen size or not (e.g., to avoid cases when snowflakes or raindrops obscure the view if they are too close to the camera or when they become invisible as the distance to the camera increases). Three modes are available: 											NONE - minimum and maximum sizes of particles on the screen are not limited.						WIDTH - minimum and maximum sizes of particles on the screen are limited relative to screen width.						HEIGHT - minimum and maximum sizes of particles on the screen are limited relative to screen height.
+			</summary> 
+			<param name="mode"> New screen size mode to be set for particles. One of the SCREEN_SIZE_MODE* values. </param> 
+		</member>
+		<member name="M:Unigine.ObjectParticles.getScreenSizeMode const">
+			<summary>
+			Returns the current screen size mode for particles. This mode defines whether the maximum and minimum sizes of emitted particles should be limited relative to screen size or not (e.g., to avoid cases when snowflakes or raindrops obscure the view if they are too close to the camera or when they become invisible as the distance to the camera increases). Three modes are available: 											NONE - minimum and maximum sizes of particles on the screen are not limited.						WIDTH - minimum and maximum sizes of particles on the screen are limited relative to screen width.						HEIGHT - minimum and maximum sizes of particles on the screen are limited relative to screen height.
+			</summary>  
+			<returns>Current screen size mode for particles. One of the SCREEN_SIZE_MODE* values.</returns>
+		</member>
+		<member name="M:Unigine.ObjectParticles.setScreenMinSize(float)">
+			<summary>
+			Sets a new minimum screen size for particles (minimum fraction of the screen a single particle can occupy).
+			</summary> 
+			<param name="size"> New minimum screen size to be set for particles. Minimum fraction of the screen a single particle can occupy:The minimum value of 0 means the particle has a zero size and therefore is invisible on the screen (occupies no space at all).The maximum value of 1 means the particle occupies the whole screen. </param> 
+		</member>
+		<member name="M:Unigine.ObjectParticles.getScreenMinSize const">
+			<summary>
+			Returns the current minimum screen size for particles (minimum fraction of the screen a single particle can occupy). Any particle shall occupy at least the specified fraction of the screen.
+			</summary>  
+			<returns>Current minimum screen size for particles. Minimum fraction of the screen a single particle can occupy:The minimum value of 0 means the particle has a zero size and therefore is invisible on the screen (occupies no space at all).The maximum value of 1 means the particle occupies the whole screen.</returns>
+		</member>
+		<member name="M:Unigine.ObjectParticles.setScreenMaxSize(float)">
+			<summary>
+			Sets a new maximum screen size for particles (maximum fraction of the screen a single particle can occupy). Any particle shall occupy no more than the specified fraction of the screen, no matter how close the camera approaches it.
+			</summary> 
+			<param name="size"> New maximum screen size to be set for particles. Maximum fraction of the screen a single particle can occupy:The minimum value of 0 means the particle has a zero size and therefore is invisible on the screen (occupies no space at all).The maximum value of 1 means the particle occupies the whole screen. </param> 
+		</member>
+		<member name="M:Unigine.ObjectParticles.getScreenMaxSize const">
+			<summary>
+			Returns the current maximum screen size for particles (maximum fraction of the screen a single particle can occupy). Any particle shall occupy no more than the specified fraction of the screen, no matter how close the camera approaches it.
+			</summary>  
+			<returns>Current maximum screen size for particles. Maximum fraction of the screen a single particle can occupy:The minimum value of 0 means the particle has a zero size and therefore is invisible on the screen (occupies no space at all).The maximum value of 1 means the particle occupies the whole screen.</returns>
+		</member>
+		<member name="M:Unigine.ObjectParticles.setParticlesFieldMask(int)">
+			<summary>
+			Sets a new Particles Field bit mask enabling you to control interactions with Particles Fields. A Particles Field will interact with particles generated by a Particles System if they both have matching Particles Field masks (one bit at least).
+			</summary> 
+			<param name="mask"> New Particles Field bit mask to be set for the particle system. Integer, each bit of which is a mask. </param> 
+		</member>
+		<member name="M:Unigine.ObjectParticles.getParticlesFieldMask const">
+			<summary>
+			Returns the current Particles Field bit mask enabling you to control interactions with Particles Fields. A Particles Field will interact with particles generated by a Particles System if they both have matching Particles Field masks (one bit at least).
+			</summary>  
+			<returns>Current Particles Field bit mask of the particle system. Integer, each bit of which is a mask.</returns>
+		</member>
+		<member name="F:Unigine.ObjectParticles.EMITTER_POINT">
+			<summary>
+			Point emitter. Particles are emitted from one single point.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectParticles.DEFLECTOR_REFLECTOR">
+		<member name="F:Unigine.ObjectParticles.EMITTER_SPHERE">
 			<summary>
-			When a particle hits a deflector of this type, the particle bounces off it.
-		</summary>
-		</member>
-		<member name="F:Unigine.ObjectParticles.EMITTER_BOX">
-			<summary>
-			Box emitter. Particles are emitted from a random point of the box.
+			Sphere emitter. Particles are emitted from a random point of the sphere.
 		</summary>
 		</member>
 		<member name="F:Unigine.ObjectParticles.EMITTER_CYLINDER">
@@ -9703,9 +9321,9 @@
 			Cylinder emitter. Particles are emitted from a random point of the cylinder.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectParticles.EMITTER_POINT">
+		<member name="F:Unigine.ObjectParticles.EMITTER_BOX">
 			<summary>
-			Point emitter. Particles are emitted from one single point.
+			Box emitter. Particles are emitted from a random point of the box.
 		</summary>
 		</member>
 		<member name="F:Unigine.ObjectParticles.EMITTER_RANDOM">
@@ -9718,19 +9336,9 @@
 			Spark emitter. Particles are emitted from a single point and imitate sparks.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectParticles.EMITTER_SPHERE">
-			<summary>
-			Sphere emitter. Particles are emitted from a random point of the sphere.
-		</summary>
-		</member>
 		<member name="F:Unigine.ObjectParticles.TYPE_BILLBOARD">
 			<summary>
 			Particles of this type are camera-oriented and rotating.
-		</summary>
-		</member>
-		<member name="F:Unigine.ObjectParticles.TYPE_CHAIN">
-			<summary>
-			Particles of this type are camera-oriented and connected with each other at vertices forming continuous flow.
 		</summary>
 		</member>
 		<member name="F:Unigine.ObjectParticles.TYPE_FLAT">
@@ -9738,14 +9346,14 @@
 			Particles of this type are perpendicular to the z-axis of their particle system.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectParticles.TYPE_LENGTH">
-			<summary>
-			Particles of this type are similar to billboard particles, but stretched along the direction of their motion and do not rotate.
-		</summary>
-		</member>
 		<member name="F:Unigine.ObjectParticles.TYPE_POINT">
 			<summary>
 			Particles of this type are similar to billboard particles, but do not rotate.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectParticles.TYPE_LENGTH">
+			<summary>
+			Particles of this type are similar to billboard particles, but stretched along the direction of their motion and do not rotate.
 		</summary>
 		</member>
 		<member name="F:Unigine.ObjectParticles.TYPE_RANDOM">
@@ -9758,9 +9366,14 @@
 			Particles of this type can be used to create tracks from moving objects (for example, foam after a ship). Each Route particle is flat (just like flat particles), but is oriented on the plane in the same way as the emitter when it spawned it.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectParticles.SYNC_MODE_SLAVE">
+		<member name="F:Unigine.ObjectParticles.TYPE_CHAIN">
 			<summary>
-			This mode makes a particle system take the stored synchronization data from the master particle system.
+			Particles of this type are camera-oriented and connected with each other at vertices forming continuous flow.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectParticles.SYNC_MODE_NONE">
+			<summary>
+			In this mode, the particle system neither provides nor takes any synchronization data.
 		</summary>
 		</member>
 		<member name="F:Unigine.ObjectParticles.SYNC_MODE_MASTER">
@@ -9768,9 +9381,24 @@
 			This mode enables storing of the particle system data used for synchronization by the slave system.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectParticles.SYNC_MODE_NONE">
+		<member name="F:Unigine.ObjectParticles.SYNC_MODE_SLAVE">
 			<summary>
-			In this mode, the particle system neither provides nor takes any synchronization data.
+			This mode makes a particle system take the stored synchronization data from the master particle system.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectParticles.SCREEN_SIZE_MODE_NONE">
+			<summary>
+			Minimum and maximum sizes of particles on the screen are not limited.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectParticles.SCREEN_SIZE_MODE_WIDTH">
+			<summary>
+			Minimum and maximum sizes of particles on the screen are limited relative to screen width.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectParticles.SCREEN_SIZE_MODE_HEIGHT">
+			<summary>
+			Minimum and maximum sizes of particles on the screen are limited relative to screen height.
 		</summary>
 		</member>
 		<member name="M:Unigine.ParticleModifier.isSignedValues const">
@@ -11437,19 +11065,19 @@
 			<param name="mesh"> The received mesh smart pointer. </param> 
 			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.ObjectWaterMesh.setMeshName(char,int)">
+		<member name="M:Unigine.ObjectWaterMesh.setMeshPath(char,int)">
 			<summary>
-			Sets a new name for the water mesh and forces loading of the mesh with the new name for the current water mesh.
+			Sets a new path to the .mesh fileto be used as the base mesh for the object and forces loading of the mesh.
 			</summary> 
-			<param name="path"> A new name to be set for the water mesh. </param>
+			<param name="path"> New path to the .mesh file to be set. </param>
 			<param name="force_load"> Force flag.If 1 is specified, the mesh with the new name will be loaded immediately from the file specified as the first argument for this function.If 0 is specified, only the mesh name will be updated. </param> 
 			<returns>1 if:The current mesh name coincides the new name.The mesh with the new name has been loaded successfully.The force flag is set to 0.In other cases,0.</returns>
 		</member>
-		<member name="M:Unigine.ObjectWaterMesh.getMeshName">
+		<member name="M:Unigine.ObjectWaterMesh.getMeshPath">
 			<summary>
-			Returns the name of the current water mesh.
+			Returns the path to the .mesh file currently used as the base mesh for the object.
 			</summary>  
-			<returns>The mesh name.</returns>
+			<returns>Path to the .mesh file.</returns>
 		</member>
 		<member name="M:Unigine.ObjectWaterMesh.getNormal(Unigine.Math.Vec3)">
 			<summary>
@@ -11929,13 +11557,13 @@
 			</summary>  
 			<returns>Steepness quality.</returns>
 		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.setSoftIntersection(float)">
+		<member name="M:Unigine.ObjectWaterGlobal.setSoftInteraction(float)">
 			<summary>
 			Sets soft intersection of water with the shoreline and surfaces of objects.
 			</summary> 
 			<param name="intersection"> Soft intersection value. </param> 
 		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.getSoftIntersection const">
+		<member name="M:Unigine.ObjectWaterGlobal.getSoftInteraction const">
 			<summary>
 			Returns the current soft intersection of water with the shoreline and surfaces of objects.
 			</summary>  
@@ -12409,17 +12037,17 @@
 			</summary>  
 			<returns>Intensity value.</returns>
 		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.setSubsurfaceDiffuseIntensity(float)">
+		<member name="M:Unigine.ObjectWaterGlobal.setSubsurfaceDecalsIntensity(float)">
 			<summary>
-			Sets the intensity of subsurface scattering for diffuse lighting.
+			Sets the intensity of subsurface scattering of diffuse lighting for decals.
 			</summary> 
-			<param name="intensity"> Intensity value. </param> 
+			<param name="intensity"> New subsurface scattering intensity value to be set. </param> 
 		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.getSubsurfaceDiffuseIntensity const">
+		<member name="M:Unigine.ObjectWaterGlobal.getSubsurfaceDecalsIntensity const">
 			<summary>
-			Returns the current intensity of subsurface scattering for diffuse lighting.
+			Returns the current intensity of subsurface scattering of diffuse lighting for decals.
 			</summary>  
-			<returns>Intensity value.</returns>
+			<returns>Current subsurface scattering intensity value.</returns>
 		</member>
 		<member name="M:Unigine.ObjectWaterGlobal.setDepthLUTTexturePath(char)">
 			<summary>
@@ -12865,17 +12493,29 @@
 			</summary>  
 			<returns>Refraction scale value.</returns>
 		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.setDiffuseDistortion(float)">
+		<member name="M:Unigine.ObjectWaterGlobal.setDecalsDistortion(float)">
 			<summary>
 			Distortion of decals projected onto water.
 			</summary> 
 			<param name="distortion"> Distortion value. </param> 
 		</member>
-		<member name="M:Unigine.ObjectWaterGlobal.getDiffuseDistortion const">
+		<member name="M:Unigine.ObjectWaterGlobal.getDecalsDistortion const">
 			<summary>
 			Returns the current distortion of decals projected onto water.
 			</summary>  
 			<returns>Distortion value.</returns>
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.setDecalsSoftInteraction(float)">
+			<summary>
+			Sets a new soft intersection of water with decals.
+			</summary> 
+			<param name="interaction"> Soft intersection value. </param> 
+		</member>
+		<member name="M:Unigine.ObjectWaterGlobal.getDecalsSoftInteraction const">
+			<summary>
+			Returns the current soft intersection of water with decals.
+			</summary>  
+			<returns>Soft intersection value.</returns>
 		</member>
 		<member name="M:Unigine.ObjectWaterGlobal.setFieldHeightSteepness(float)">
 			<summary>

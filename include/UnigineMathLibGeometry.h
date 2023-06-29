@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 
 #include "UnigineMathLibCommon.h"
@@ -991,7 +990,7 @@ UNIGINE_INLINE bool irayBoundBoxIntersection(const dvec3 &point, const dvec3 &id
 	return tmax >= 0 && tmin <= tmax;
 }
 
-UNIGINE_INLINE bool rayTriangleIntersection(const vec3& point, const vec3& direction, const vec3& v0, const vec3& v1, const vec3& v2)
+UNIGINE_INLINE bool rayTriangleIntersection(const vec3 &point, const vec3 &direction, const vec3 &v0, const vec3 &v1, const vec3 &v2)
 {
 	vec3 sxyz;
 	vec3 a;
@@ -1063,7 +1062,7 @@ UNIGINE_INLINE bool rayTriangleIntersection(const vec3& point, const vec3& direc
 #undef WATERTIGHT
 }
 
-UNIGINE_INLINE bool rayTriangleIntersection(const dvec3& point, const dvec3& direction, const dvec3& v0, const dvec3& v1, const dvec3& v2)
+UNIGINE_INLINE bool rayTriangleIntersection(const dvec3 &point, const dvec3 &direction, const dvec3 &v0, const dvec3 &v1, const dvec3 &v2)
 {
 #define WATERTIGHT(KX,KY,KZ)\
 	double sx = direction[KX] / direction[KZ];\

@@ -203,39 +203,40 @@
 			</summary> 
 			<param name="camera"> Camera, an image from which should be rendered. </param> 
 		</member>
-		<member name="M:Unigine.Viewport.renderImage2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Image})">
+		<member name="M:Unigine.Viewport.renderTexture2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Texture})">
 			<summary>
-			Renders an image from the camera to the given 2D image.					This method sets the format of the 2D image to one of the following values:													RGBA16F - in case if initial image format was 16-bit or 32-bit per channel float							RGBA8 - otherwise
+			Renders an image from the camera to the specified 2D texture.
 			</summary> 
 			<param name="camera"> Camera, an image from which should be rendered. </param>
-			<param name="image"> Target 2D image to save the result to. </param> 
+			<param name="texture"> Target 2D texture to save the result to. </param> 
 		</member>
-		<member name="M:Unigine.Viewport.renderImage2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Image},int,int,bool)">
+		<member name="M:Unigine.Viewport.renderTexture2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Texture},int,int,bool)">
 			<summary>
-			Renders an image of the specified size from the camera to the 2D image.
+			Renders an image of the specified size from the camera to a 2D texture.
 			</summary> 
 			<param name="camera"> Camera, an image from which should be rendered. </param>
-			<param name="image"> Target 2D image to save the result to. </param>
-			<param name="width"> Image width, in pixels. </param>
-			<param name="height"> Image height, in pixels. </param>
-			<param name="hdr"> HDR flag.This parameter determines the format of the 2D image:1 - image format will be set to RGBA16F0 - image format will be set to RGBA8 </param> 
+			<param name="texture"> Target 2D texture to save the result to. </param>
+			<param name="width"> Texture width, in pixels. </param>
+			<param name="height"> Texture height, in pixels. </param>
+			<param name="hdr"> HDR flag.This parameter determines the format of the 2D texture:1 - texture format will be set to RGBA16F0 - texture format will be set to RGBA8 </param> 
 		</member>
-		<member name="M:Unigine.Viewport.renderImageCube(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Image},int,bool,bool)">
+		<member name="M:Unigine.Viewport.renderTextureCube(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Texture},bool)">
+			<summary>
+			Renders the image from the camera to the cubemap texture.
+			</summary> 
+			<param name="camera"> Camera, an image from which should be rendered. </param>
+			<param name="texture"> Target Cube texture to save the result to. </param>
+			<param name="local_space"> A flag indicating if the camera angle should be used for the cube map rendering. </param> 
+		</member>
+		<member name="M:Unigine.Viewport.renderTextureCube(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Texture},int,bool,bool)">
 			<summary>
 			Renders the image from the camera to the cube map of the specified size.
 			</summary> 
 			<param name="camera"> Camera, an image from which should be rendered. </param>
-			<param name="image"> Target cube map to save the result to. </param>
+			<param name="texture"> Target cube map to save the result to. </param>
 			<param name="size"> Cube map edge size. </param>
-			<param name="hdr"> HDR flag.This parameter determines the format of the 2D image:1 - image format will be set to RGBA16F0 - image format will be set to RGBA8 </param>
+			<param name="hdr"> HDR flag.This parameter determines the format of the 2D texture:1 - texture format will be set to RGBA16F0 - texture format will be set to RGBA8 </param>
 			<param name="local_space"> A flag indicating if the camera angle should be used for the cube map rendering. </param> 
-		</member>
-		<member name="M:Unigine.Viewport.renderImageCube(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Image})">
-			<summary>
-			Renders the image from the camera into the cube map.
-			</summary> 
-			<param name="camera"> Camera, an image from which should be rendered. </param>
-			<param name="image"> Target cube map to save the result to. </param> 
 		</member>
 		<member name="M:Unigine.Viewport.renderNode(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Node})">
 			<summary>
@@ -253,24 +254,16 @@
 			<param name="width"> Image width, in pixels. </param>
 			<param name="height"> Image height, in pixels. </param> 
 		</member>
-		<member name="M:Unigine.Viewport.renderNodeImage2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Node},Unigine.Ptr{Unigine.Image},int,int,bool)">
+		<member name="M:Unigine.Viewport.renderNodeTexture2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Node},Unigine.Ptr{Unigine.Texture},int,int,bool)">
 			<summary>
-			Renders the given node with all children to the 2D image of the specified size.
+			Renders the given node with all children to the 2D texture of the specified size.
 			</summary> 
 			<param name="camera"> Camera, an image from which should be rendered. </param>
 			<param name="node"> Pointer to the node to be rendered. </param>
-			<param name="image"> Target 2D image to save the result to. </param>
-			<param name="width"> Image width, in pixels. </param>
-			<param name="height"> Image height, in pixels. </param>
-			<param name="hdr"> HDR flag.This parameter determines the format of the 2D image:1 - image format will be set to RGBA16F0 - image format will be set to RGBA8 </param> 
-		</member>
-		<member name="M:Unigine.Viewport.renderNodeImage2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Node},Unigine.Ptr{Unigine.Image})">
-			<summary>
-			Renders the given node with all children to the specified 2D image.
-			</summary> 
-			<param name="camera"> Camera, an image from which should be rendered. </param>
-			<param name="node"> Pointer to the node to be rendered. </param>
-			<param name="image"> Target 2D image to save the result to. </param> 
+			<param name="texture"> Target 2D texture to save the result to. </param>
+			<param name="width"> Texture width, in pixels. </param>
+			<param name="height"> Texture height, in pixels. </param>
+			<param name="hdr"> HDR flag.This parameter determines the format of the 2D texture:1 - texture format will be set to RGBA16F0 - texture format will be set to RGBA8 </param> 
 		</member>
 		<member name="M:Unigine.Viewport.renderNodeTexture2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Node},Unigine.Ptr{Unigine.Texture})">
 			<summary>
@@ -296,24 +289,16 @@
 			<param name="width"> Image width, in pixels. </param>
 			<param name="height"> Image height, in pixels. </param> 
 		</member>
-		<member name="M:Unigine.Viewport.renderNodesImage2D(Unigine.Ptr{Unigine.Camera},Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{Unigine.Image})">
+		<member name="M:Unigine.Viewport.renderNodesTexture2D(Unigine.Ptr{Unigine.Camera},Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{Unigine.Image},int,int,int)">
 			<summary>
-			Renders given nodes with all their children to the specified 2D image.
+			Renders given nodes with all their children to the 2D texture of the specified size.
 			</summary> 
 			<param name="camera"> Camera, an image from which should be rendered. </param>
 			<param name="nodes"> List of the nodes to be rendered. </param>
-			<param name="image"> Target 2D image to save the result to. </param> 
-		</member>
-		<member name="M:Unigine.Viewport.renderNodesImage2D(Unigine.Ptr{Unigine.Camera},Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{Unigine.Image},int,int,int)">
-			<summary>
-			Renders given nodes with all their children to the 2D image of the specified size.
-			</summary> 
-			<param name="camera"> Camera, an image from which should be rendered. </param>
-			<param name="nodes"> List of the nodes to be rendered. </param>
-			<param name="image"> Target 2D image to save the result to. </param>
-			<param name="width"> Image width, in pixels. </param>
-			<param name="height"> Image height, in pixels. </param>
-			<param name="hdr"> HDR flag.This parameter determines the format of the 2D image:1 - image format will be set to RGBA16F0 - image format will be set to RGBA8 </param> 
+			<param name="texture"> Target 2D texture to save the result to. </param>
+			<param name="width"> Texture width, in pixels. </param>
+			<param name="height"> Texture height, in pixels. </param>
+			<param name="hdr"> HDR flag.This parameter determines the format of the 2D image:1 - texture format will be set to RGBA16F0 - texture format will be set to RGBA8 </param> 
 		</member>
 		<member name="M:Unigine.Viewport.renderNodesTexture2D(Unigine.Ptr{Unigine.Camera},Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{Unigine.Texture})">
 			<summary>
@@ -333,25 +318,17 @@
 		</member>
 		<member name="M:Unigine.Viewport.renderStereoPeripheral(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Texture},Unigine.Ptr{Unigine.Texture},Unigine.Ptr{Unigine.Texture},Unigine.Ptr{Unigine.Texture},char)">
 			<summary>
+			Renders a stereo image for HMDs having context (peripheral) and focus displays. This method saves performance on shadows and reflections along with other optimizations reducing rendering load, such as reduced resolutions for textures.
 			</summary> 
-			<param name="camera_left"> Camera that renders an image for the left eye. </param>
-			<param name="camera_right"> Camera that renders an image for the right eye. </param>
+			<param name="camera_left"> Camera that renders an image for the left context (low-res) display. </param>
+			<param name="camera_right"> Camera that renders an image for the right context (low-res) display. </param>
+			<param name="camera_focus_left"> Camera that renders an image for the left focus (high-res) display. </param>
+			<param name="camera_focus_right"> Camera that renders an image for the right focus (high-res) display. </param>
+			<param name="texture_left"> Texture to save the image rendered for the left context (low-res) display. </param>
+			<param name="texture_right"> Texture to save the image rendered for the right context (low-res) display. </param>
+			<param name="texture_focus_left"> Texture to save the image rendered for the left focus (high-res) display. </param>
+			<param name="texture_focus_right"> Texture to save the image rendered for the right focus (high-res) display. </param>
 			<param name="stereo_material"> List of names of stereo materials to be used. </param> 
-		</member>
-		<member name="M:Unigine.Viewport.renderTexture2D(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Texture})">
-			<summary>
-			Renders an image from the camera to the specified 2D texture.
-			</summary> 
-			<param name="camera"> Camera, an image from which should be rendered. </param>
-			<param name="texture"> Target 2D texture to save the result to. </param> 
-		</member>
-		<member name="M:Unigine.Viewport.renderTextureCube(Unigine.Ptr{Unigine.Camera},Unigine.Ptr{Unigine.Texture},bool)">
-			<summary>
-			Renders the image from the camera to the cubemap texture.
-			</summary> 
-			<param name="camera"> Camera, an image from which should be rendered. </param>
-			<param name="texture"> Target Cube texture to save the result to. </param>
-			<param name="local_space"> A flag indicating if the camera angle should be used for the cube map rendering. </param> 
 		</member>
 		<member name="M:Unigine.Viewport.setStereoHiddenAreaMesh(Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{Unigine.Mesh})">
 			<summary>

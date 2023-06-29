@@ -15,7 +15,7 @@
 			</summary> 
 			<param name="palette"> Source Palette. </param> 
 		</member>
-		<member name="M:Unigine.Palette.#ctor(float(&)[12])">
+		<member name="M:Unigine.Palette.#ctor(float)">
 			<summary>
 			Constructor. Initializes the structure using the given array of floats.
 			</summary> 
@@ -41,7 +41,7 @@
 			<param name="palette"> The second palette. </param> 
 			<returns>Returns true if the palettes are the same; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Palette.operator==(float(&)[12]) const">
+		<member name="M:Unigine.Palette.operator==(float) const">
 			<summary>
 			Check if two palettes are the same.
 			</summary> 
@@ -62,7 +62,7 @@
 			<param name="palette"> The second palette. </param> 
 			<returns>Returns true if the palettes are not the same; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Palette.operator!=(float(&)[]) const">
+		<member name="M:Unigine.Palette.operator!=(float) const">
 			<summary>
 			Check if two palettes are not the same.
 			</summary> 

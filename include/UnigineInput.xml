@@ -6,9 +6,9 @@
 	<members>
 		<member name="M:Unigine.Input.getMousePosition const">
 			<summary>
-			Returns a vector containing integer values of mouse pointer position. In case of a mouse button event, the mouse position at the moment of the processed event is returned. In case of no such event, the mouse position at the beginning of the frame is returned. To get the mouse position during another type of event, get this event (for example getKeyEvent()) and get the mouse position stored inside it.
+			Returns a vector containing the global coordinates of the mouse cursor. In case of a mouse button event, the cursor position at the moment of the processed event is returned. In case of no such event, the mouse position at the beginning of the frame is returned. To get the cursor position during another type of event, get this event (for example getKeyEvent()) and get the cursor position stored inside it.
 			</summary>  
-			<returns>Integer mouse pointer position.</returns>
+			<returns>Global coordinates of the cursor.</returns>
 		</member>
 		<member name="M:Unigine.Input.getMouseDeltaPosition">
 			<summary>
@@ -40,31 +40,31 @@
 			</summary>  
 			<returns>true if the mouse cannot leave the application window; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Input.getCountGamePads const">
+		<member name="M:Unigine.Input.getNumGamePads const">
 			<summary>
-			Returns the number of all game pads.
+			Returns the total number of all gamepads.
 			</summary>  
-			<returns>Number of all game pads.</returns>
+			<returns>Number of all gamepads.</returns>
 		</member>
 		<member name="M:Unigine.Input.getGamePad(int) const">
 			<summary>
-			Returns a game pad of the given index.
+			Returns a gamepad of the given index.
 			</summary> 
 			<param name="num"> Gamepad index. </param> 
 			<returns>InputGamepad object.</returns>
 		</member>
-		<member name="M:Unigine.Input.getCountActiveGamePads const">
+		<member name="M:Unigine.Input.getNumJoysticks const">
 			<summary>
-			Returns the number of active game pads.
+			Returns the total number of all joysticks.
 			</summary>  
-			<returns>Number of active game pads.</returns>
+			<returns>Number of all joysticks.</returns>
 		</member>
-		<member name="M:Unigine.Input.getActiveGamePad(int) const">
+		<member name="M:Unigine.Input.getJoystick(int) const">
 			<summary>
-			Returns an active game pad of the given index.
+			Returns a joystick with the given index.
 			</summary> 
-			<param name="num"> Gamepad index. </param> 
-			<returns>InputGamePad object.</returns>
+			<param name="num"> Joystick index. </param> 
+			<returns>InputJoystick object.</returns>
 		</member>
 		<member name="M:Unigine.Input.isKeyPressed(Input::KEY) const">
 			<summary>
@@ -168,6 +168,7 @@
 			</summary> 
 			<param name="index"> Touch input index. </param>
 			<param name="events"> The buffer with touch input events. </param> 
+			<returns>Number of touch input events.</returns>
 		</member>
 		<member name="M:Unigine.Input.getKeyEvent(Input::KEY)">
 			<summary>
@@ -231,7 +232,7 @@
 			</summary> 
 			<param name="e"> Input event. </param> 
 		</member>
-		<member name="M:Unigine.Input.setEventsFilter(int(*)(constPtr{InputEvent}&))">
+		<member name="M:Unigine.Input.setEventsFilter(Unigine.Ptr{InputEvent})">
 			<summary>
 			Sets a callback function to be executed on receiving input events. This input event filter enables you to reject certain input events for the Engine and get necessary information on all input events.
 			</summary> 
@@ -361,9 +362,11 @@
 		</member>
 		<member name="M:Unigine.Input.getMouseButtonEvents(Input::MOUSE_BUTTON,Unigine.Vector{Unigine.Ptr{InputEventMouseButton},int,Unigine.VectorAllocator})">
 			<summary>
-			Returns the buffer with events for the specified mouse button.
+			Returns the number of input events for the specified mouse button and puts the events to the specified output buffer.
 			</summary> 
-			<param name="events"> The buffer with input events. </param> 
+			<param name="button"> One of the preset MOUSE_BUTTON_ codes. </param>
+			<param name="events"> Buffer with input events. </param> 
+			<returns>Number of input events for the specified mouse button.</returns>
 		</member>
 		<member name="M:Unigine.Input.getForceMousePosition">
 			<summary>
@@ -411,7 +414,7 @@
 			Adds a callback of the specified type for a unicode key or a touch event. Callback functions can be used to determine actions to be performed when various input events occur.
 			</summary> 
 			<param name="callback"> Callback type. One of the following: </param>
-			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(unsigined int code); </param>
+			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(unsigned int code); </param>
 			<param name="func">  code - unicode value displayed for the key or touch index (depending on the callback type). </param> 
 			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
 		</member>
@@ -422,6 +425,36 @@
 			<param name="callback"> Callback type. One of the following: </param>
 			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(InputEventPtr event); </param>
 			<param name="func">  event - input event. </param> 
+			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
+		</member>
+		<member name="M:Unigine.Input.addCallback(Unigine.Input.CALLBACK_INDEX,Unigine.CallbackBase2{unsignedint,Input::GAMEPAD_BUTTON})">
+			<summary>
+			Adds a callback of the specified type for a gamepad button event. Callback functions can be used to determine actions to be performed when various input events occur.
+			</summary> 
+			<param name="callback"> Callback type. One of the following: </param>
+			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(unsigned int index, Input::GAMEPAD_BUTTON button); </param>
+			<param name="func">  index - gamepad index. </param>
+			<param name="func">  button - gamepad button index. </param> 
+			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
+		</member>
+		<member name="M:Unigine.Input.addCallback(Unigine.Input.CALLBACK_INDEX,Unigine.CallbackBase2{unsignedint,Input::GAMEPAD_AXIS})">
+			<summary>
+			Adds a callback of the specified type for a gamepad axis event. Callback functions can be used to determine actions to be performed when various input events occur.
+			</summary> 
+			<param name="callback"> Callback type. One of the following: </param>
+			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(unsigned int index, Input::GAMEPAD_AXIS axis); </param>
+			<param name="func">  index - gamepad index. </param>
+			<param name="func">  axis - gamepad axis index. </param> 
+			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
+		</member>
+		<member name="M:Unigine.Input.addCallback(Unigine.Input.CALLBACK_INDEX,Unigine.CallbackBase2{unsignedint,int})">
+			<summary>
+			Adds a callback of the specified type for an action event. Callback functions can be used to determine actions to be performed when various input events occur.
+			</summary> 
+			<param name="callback"> Callback type. One of the following: </param>
+			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(unsigned int index, int action); </param>
+			<param name="func">  index - device index. </param>
+			<param name="func">  action - action index. </param> 
 			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
 		</member>
 		<member name="M:Unigine.Input.removeCallback(Unigine.Input.CALLBACK_INDEX,void)">
@@ -502,19 +535,9 @@
 			Number of mouse buttons.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.NUM_GAME_PADS">
-			<summary>
-			Number of game pads
-		</summary>
-		</member>
 		<member name="F:Unigine.Input.NUM_TOUCHES">
 			<summary>
 			The current number of touches
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.NUM_JOYSTICKS">
-			<summary>
-			The number of joysticks
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_UNKNOWN">
@@ -1262,6 +1285,76 @@
 			Callback when the touch is moved.
 		</summary>
 		</member>
+		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_CONNECTED">
+			<summary>
+			index - gamepad index.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_DISCONNECTED">
+			<summary>
+			index - gamepad index.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_BUTTON_DOWN">
+			<summary>
+			index - gamepad index, b - gamepad button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_BUTTON_UP">
+			<summary>
+			index - gamepad index, b - gamepad button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_AXIS_MOTION">
+			<summary>
+			index - gamepad index, a - gamepad axis.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_TOUCH_DOWN">
+			<summary>
+			index - gamepad index, touch - touch index, finger - finger index.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_TOUCH_UP">
+			<summary>
+			index - gamepad index, touch - touch index, finger - finger index.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_TOUCH_MOTION">
+			<summary>
+			index - gamepad index, touch - touch index, finger - finger index.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.CALLBACK_JOY_CONNECTED">
+			<summary>
+			index - joystick index.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.CALLBACK_JOY_DISCONNECTED">
+			<summary>
+			index - joystick index.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.CALLBACK_JOY_BUTTON_DOWN">
+			<summary>
+			index - joystick index, b - button index.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.CALLBACK_JOY_BUTTON_UP">
+			<summary>
+			index - joystick index, b - button index.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.CALLBACK_JOY_AXIS_MOTION">
+			<summary>
+			index - joystick index, a - axis index.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.CALLBACK_JOY_POV_MOTION">
+			<summary>
+			index - joystick index, pov - pov index.
+		</summary>
+		</member>
 		<member name="F:Unigine.Input.CALLBACK_IMMEDIATE_INPUT">
 			<summary>
 			Callback that allows receiving input events immediately from proxy before being processed by the engine. This callback can be called in different threads depending on the proxy implementation.
@@ -1272,49 +1365,219 @@
 			Callback counter.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.DEVICE_TYPE_UNKNOWN">
+		<member name="F:Unigine.Input.DEVICE_UNKNOWN">
 			<summary>
 			Unknown device.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.DEVICE_TYPE_GAME_CONTROLLER">
+		<member name="F:Unigine.Input.DEVICE_GAME_CONTROLLER">
 			<summary>
 			Game controller device.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.DEVICE_TYPE_WHEEL">
+		<member name="F:Unigine.Input.DEVICE_WHEEL">
 			<summary>
 			Wheel device.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.DEVICE_TYPE_ARCADE_STICK">
+		<member name="F:Unigine.Input.DEVICE_ARCADE_STICK">
 			<summary>
 			Arcade stick device.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.DEVICE_TYPE_FLIGHT_STICK">
+		<member name="F:Unigine.Input.DEVICE_FLIGHT_STICK">
 			<summary>
 			Flight stick device.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.DEVICE_TYPE_DANCE_PAD">
+		<member name="F:Unigine.Input.DEVICE_DANCE_PAD">
 			<summary>
 			Dance pad device.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.DEVICE_TYPE_GUITAR">
+		<member name="F:Unigine.Input.DEVICE_GUITAR">
 			<summary>
 			Guitar.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.DEVICE_TYPE_DRUM_KIT">
+		<member name="F:Unigine.Input.DEVICE_DRUM_KIT">
 			<summary>
 			Drum kit.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.DEVICE_TYPE_THROTTLE">
+		<member name="F:Unigine.Input.DEVICE_THROTTLE">
 			<summary>
 			Throttle device.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_A">
+			<summary>
+			Button A of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_B">
+			<summary>
+			Button B of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_X">
+			<summary>
+			Button X of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_Y">
+			<summary>
+			Button Y of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_BACK">
+			<summary>
+			Button "Back" of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_START">
+			<summary>
+			Button "Start" of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_DPAD_UP">
+			<summary>
+			Button "Up" of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_DPAD_DOWN">
+			<summary>
+			Button "Down" of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_DPAD_LEFT">
+			<summary>
+			Button "Left" of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_DPAD_RIGHT">
+			<summary>
+			Button "Right" of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_THUMB_LEFT">
+			<summary>
+			Left thumbstick button of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_THUMB_RIGHT">
+			<summary>
+			Right thumbstick button of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_SHOULDER_LEFT">
+			<summary>
+			Left shoulder (bumper) button of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_SHOULDER_RIGHT">
+			<summary>
+			Right shoulder (bumper) button of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_GUIDE">
+			<summary>
+			Button "Guide" of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_MISC1">
+			<summary>
+			The miscellaneous button of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_BUTTON_TOUCHPAD">
+			<summary>
+			Touchpad of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.NUM_GAMEPAD_BUTTONS">
+			<summary>
+			Number of buttons on a gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_AXIS_LEFT_X">
+			<summary>
+			X axis of the left stick of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_AXIS_LEFT_Y">
+			<summary>
+			Y axis of the left stick of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_AXIS_RIGHT_X">
+			<summary>
+			X axis of the right stick of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_AXIS_RIGHT_Y">
+			<summary>
+			Y axis of the right stick of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_AXIS_LEFT_TRIGGER">
+			<summary>
+			Left trigger of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.GAMEPAD_AXIS_RIGHT_TRIGGER">
+			<summary>
+			Right trigger of the gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.NUM_GAMEPAD_AXES">
+			<summary>
+			Number of axes on a gamepad.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_POV_NOT_PRESSED">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) button is not pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_POV_UP">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in up position.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_POV_UP_RIGHT">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in right-up position.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_POV_RIGHT">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in right position.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_POV_DOWN_RIGHT">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in down-right position.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_POV_DOWN">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in down position.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_POV_DOWN_LEFT">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in down-left position.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_POV_LEFT">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in left position.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_POV_UP_LEFT">
+			<summary>
+			POV (Point-of-View) hat switch or D-Pad (directional pad) is in left-up position.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_LEFT_SHIFT">
@@ -1511,6 +1774,11 @@
 		<member name="F:Unigine.InputEvent.INPUT_EVENT_PAD_AXIS_MOTION">
 			<summary>
 			Game pad axis has been moved.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputEvent.INPUT_EVENT_PAD_TOUCH_MOTION">
+			<summary>
+			Touch panel has been touched.
 		</summary>
 		</member>
 		<member name="F:Unigine.InputEvent.INPUT_EVENT_SYSTEM">
@@ -1816,7 +2084,7 @@
 			<param name="device_id"> Device identifier. </param>
 			<param name="touch_id"> Touch identifier. </param>
 			<param name="pos"> Touch position. </param>
-			<param name="delta"> Delta of the mouse position from the previous event. </param>
+			<param name="delta"> Delta of the touch position from the previous event. </param>
 			<param name="pressure"> Pressure with which the finger is currently pressed. </param> 
 		</member>
 		<member name="M:Unigine.InputEventTouch.setAction(InputEventTouch::ACTION)">
@@ -2171,6 +2439,74 @@
 			</summary>  
 			<returns>Position of the POV hat.</returns>
 		</member>
+		<member name="M:Unigine.InputEventPadButton.#ctor">
+			<summary>
+			Default constructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.InputEventPadButton.#ctor(unsignedlonglong,Unigine.Math.ivec2)">
+			<summary>
+			game pad button input event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="mouse_pos"> Position of the mouse. </param> 
+		</member>
+		<member name="M:Unigine.InputEventPadButton.#ctor(unsignedlonglong,Unigine.Math.ivec2,InputEventJoyButton::ACTION,int,int)">
+			<summary>
+			game pad button input event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="mouse_pos"> Position of the mouse. </param>
+			<param name="action"> Type of the game pad button input event, one of the  values. </param>
+			<param name="connection_id"> Connection identifier. </param>
+			<param name="button"> game pad button index. </param> 
+		</member>
+		<member name="M:Unigine.InputEventPadButton.setAction(InputEventPadButton::ACTION)">
+			<summary>
+			Sets the type of the game pad button input event.
+			</summary> 
+			<param name="action"> Type of the game pad button input event, one of the  values. </param> 
+		</member>
+		<member name="M:Unigine.InputEventPadButton.getAction const">
+			<summary>
+			Returns the type of the game pad button input event.
+			</summary>  
+			<returns>Type of the game pad button input event, one of the  values.</returns>
+		</member>
+		<member name="M:Unigine.InputEventPadButton.setConnectionID(int)">
+			<summary>
+			Sets the connection identifier.
+			</summary> 
+			<param name="id"> Connection identifier. </param> 
+		</member>
+		<member name="M:Unigine.InputEventPadButton.getConnectionID const">
+			<summary>
+			Returns the current connection identifier.
+			</summary>  
+			<returns>Connection identifier.</returns>
+		</member>
+		<member name="M:Unigine.InputEventPadButton.setButton(Input::GAMEPAD_BUTTON)">
+			<summary>
+			Sets the game pad button.
+			</summary> 
+			<param name="button"> Game pad button, one of the  values. </param> 
+		</member>
+		<member name="M:Unigine.InputEventPadButton.getButton const">
+			<summary>
+			Returns the game pad button.
+			</summary>  
+			<returns>Game pad button, one of the  values.</returns>
+		</member>
+		<member name="F:Unigine.InputEventPadButton.ACTION_DOWN">
+			<summary>
+			Button state is "pressed".
+		</summary>
+		</member>
+		<member name="F:Unigine.InputEventPadButton.ACTION_UP">
+			<summary>
+			Button state is "released".
+		</summary>
+		</member>
 		<member name="M:Unigine.InputEventPadDevice.#ctor">
 			<summary>
 			Default constructor.
@@ -2252,74 +2588,6 @@
 			Game pad state is "disconnected".
 		</summary>
 		</member>
-		<member name="M:Unigine.InputEventPadButton.#ctor">
-			<summary>
-			Default constructor.
-			</summary>  
-		</member>
-		<member name="M:Unigine.InputEventPadButton.#ctor(unsignedlonglong,Unigine.Math.ivec2)">
-			<summary>
-			game pad button input event constructor.
-			</summary> 
-			<param name="timestamp"> Timestamp of the event. </param>
-			<param name="mouse_pos"> Position of the mouse. </param> 
-		</member>
-		<member name="M:Unigine.InputEventPadButton.#ctor(unsignedlonglong,Unigine.Math.ivec2,InputEventJoyButton::ACTION,int,int)">
-			<summary>
-			game pad button input event constructor.
-			</summary> 
-			<param name="timestamp"> Timestamp of the event. </param>
-			<param name="mouse_pos"> Position of the mouse. </param>
-			<param name="action"> Type of the game pad button input event, one of the ACTION_* values. </param>
-			<param name="connection_id"> Connection identifier. </param>
-			<param name="button"> game pad button index. </param> 
-		</member>
-		<member name="M:Unigine.InputEventPadButton.setAction(InputEventPadButton::ACTION)">
-			<summary>
-			Sets the type of the game pad button input event.
-			</summary> 
-			<param name="action"> Type of the game pad button input event, one of the ACTION_* values. </param> 
-		</member>
-		<member name="M:Unigine.InputEventPadButton.getAction const">
-			<summary>
-			Returns the type of the game pad button input event.
-			</summary>  
-			<returns>Type of the game pad button input event, one of the ACTION_* values.</returns>
-		</member>
-		<member name="M:Unigine.InputEventPadButton.setConnectionID(int)">
-			<summary>
-			Sets the connection identifier.
-			</summary> 
-			<param name="id"> Connection identifier. </param> 
-		</member>
-		<member name="M:Unigine.InputEventPadButton.getConnectionID const">
-			<summary>
-			Returns the current connection identifier.
-			</summary>  
-			<returns>Connection identifier.</returns>
-		</member>
-		<member name="M:Unigine.InputEventPadButton.setButton(InputGamePad::BUTTON)">
-			<summary>
-			Sets the game pad button.
-			</summary> 
-			<param name="button"> Game pad button, one of the BUTTON_* values. </param> 
-		</member>
-		<member name="M:Unigine.InputEventPadButton.getButton const">
-			<summary>
-			Returns the game pad button.
-			</summary>  
-			<returns>Game pad button, one of the BUTTON_* values.</returns>
-		</member>
-		<member name="F:Unigine.InputEventPadButton.ACTION_DOWN">
-			<summary>
-			Button state is "pressed".
-		</summary>
-		</member>
-		<member name="F:Unigine.InputEventPadButton.ACTION_UP">
-			<summary>
-			Button state is "released".
-		</summary>
-		</member>
 		<member name="M:Unigine.InputEventPadAxisMotion.#ctor">
 			<summary>
 			Default constructor.
@@ -2354,17 +2622,17 @@
 			</summary>  
 			<returns>Connection identifier.</returns>
 		</member>
-		<member name="M:Unigine.InputEventPadAxisMotion.setAxis(InputGamePad::AXIS)">
+		<member name="M:Unigine.InputEventPadAxisMotion.setAxis(Input::GAMEPAD_AXIS)">
 			<summary>
 			Sets the game pad axis.
 			</summary> 
-			<param name="axis"> The game pad axis, one of the AXIS_* values. </param> 
+			<param name="axis"> The game pad axis, one of the  values. </param> 
 		</member>
 		<member name="M:Unigine.InputEventPadAxisMotion.getAxis const">
 			<summary>
 			Returns the game pad axis.
 			</summary>  
-			<returns>The game pad axis, one of the AXIS_* values.</returns>
+			<returns>The game pad axis, one of the  values.</returns>
 		</member>
 		<member name="M:Unigine.InputEventPadAxisMotion.setValue(float)">
 			<summary>
@@ -2378,17 +2646,129 @@
 			</summary>  
 			<returns>The axis position value.</returns>
 		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.#ctor">
+			<summary>
+			Default constructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.#ctor(unsignedlonglong,Unigine.Math.ivec2)">
+			<summary>
+			Touch panel input event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="mouse_pos"> Position of the mouse. </param> 
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.#ctor(unsignedlonglong,Unigine.Math.ivec2,int,int,int,int,float,Unigine.Math.vec2)">
+			<summary>
+			Touch panel input event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="mouse_pos"> Position of the mouse. </param>
+			<param name="connection_id"> The connection identifier. </param>
+			<param name="action"> The type of the touch input event, one of the ACTION_* values. </param>
+			<param name="touch"> The index of the gamepad touch panel, the number from 0 to the total number of touch panels. </param>
+			<param name="finger"> The index of the finger, the number from 0 to the total number of supported fingers. </param>
+			<param name="pressure"> Pressure with which the finger is currently pressed. </param>
+			<param name="position"> The normalized position of the touch along the axes from (0,0) to (1,1). </param> 
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.setConnectionID(int)">
+			<summary>
+			Sets the connection identifier.
+			</summary> 
+			<param name="connectionid"> The connection identifier. </param> 
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.getConnectionID const">
+			<summary>
+			Returns the connection identifier.
+			</summary>  
+			<returns>The connection identifier.</returns>
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.setAction(InputEventPadTouchMotion::ACTION)">
+			<summary>
+			Sets the type of the touch panel input event.
+			</summary> 
+			<param name="action"> The type of the touch input event, one of the ACTION_* values. </param> 
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.getAction const">
+			<summary>
+			Returns the type of the touch panel input event.
+			</summary>  
+			<returns>The type of the touch input event, one of the ACTION_* values.</returns>
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.setTouch(int)">
+			<summary>
+			Sets the index of the gamepad touch panel.
+			</summary> 
+			<param name="touch"> The index of the gamepad touch panel, the number from 0 to the total number of touch panels. </param> 
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.getTouch const">
+			<summary>
+			Returns the index of the gamepad touch panel.
+			</summary>  
+			<returns>The index of the gamepad touch panel, the number from 0 to the total number of touch panels.</returns>
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.setTouchFinger(int)">
+			<summary>
+			Sets the index of the finger.
+			</summary> 
+			<param name="finger"> The index of the finger, the number from 0 to the total number of supported fingers. </param> 
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.getTouchFinger const">
+			<summary>
+			Returns the index of the finger.
+			</summary>  
+			<returns>The index of the finger, the number from 0 to the total number of supported fingers.</returns>
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.setPosition(Unigine.Math.vec2)">
+			<summary>
+			Sets the touch position.
+			</summary> 
+			<param name="position"> The normalized position of the touch along the axes from (0,0) to (1,1). </param> 
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.getPosition const">
+			<summary>
+			Returns the current touch position.
+			</summary>  
+			<returns>The normalized position of the touch along the axes from (0,0) to (1,1).</returns>
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.setPressure(float)">
+			<summary>
+			Sets the pressure with which the finger is pressed.
+			</summary> 
+			<param name="pressure"> The pressure with which the finger is pressed, a value from 0 (not pressed) to 1 (fully pressed). </param> 
+		</member>
+		<member name="M:Unigine.InputEventPadTouchMotion.getPressure const">
+			<summary>
+			Returns the pressure with which the finger is pressed.
+			</summary>  
+			<returns>The pressure with which the finger is currently pressed, a value from 0 (not pressed) to 1 (fully pressed).</returns>
+		</member>
+		<member name="F:Unigine.InputEventPadTouchMotion.ACTION_DOWN">
+			<summary>
+			Touch state is "pressed".
+		</summary>
+		</member>
+		<member name="F:Unigine.InputEventPadTouchMotion.ACTION_MOTION">
+			<summary>
+			Touch state is "pressed and moving".
+		</summary>
+		</member>
+		<member name="F:Unigine.InputEventPadTouchMotion.ACTION_UP">
+			<summary>
+			Touch state is "released".
+		</summary>
+		</member>
 		<member name="M:Unigine.InputGamePad.getNumber const">
 			<summary>
-			Returns the game pad number (up to four game pads are supported).
+			Returns the gamepad number (up to four gamepads are supported).
 			</summary>  
-			<returns>Game pad number.</returns>
+			<returns>Gamepad number.</returns>
 		</member>
 		<member name="M:Unigine.InputGamePad.getName const">
 			<summary>
-			Returns the name of the game pad.
+			Returns the name of the gamepad.
 			</summary>  
-			<returns>User-friendly name of the game pad. One of the following:GamePadWheelArcade StickFlight StickDance PadGuitarDrum KitUnknown</returns>
+			<returns>User-friendly name of the gamepad. One of the following:GamePadWheelArcade StickFlight StickDance PadGuitarDrum KitUnknown</returns>
 		</member>
 		<member name="M:Unigine.InputGamePad.setFilter(float)">
 			<summary>
@@ -2460,30 +2840,45 @@
 		</member>
 		<member name="M:Unigine.InputGamePad.isAvailable const">
 			<summary>
-			Checks if the game pad is available.
+			Checks if the gamepad is available.
 			</summary>  
-			<returns>true if the game pad is available; otherwise, false.</returns>
+			<returns>true if the gamepad is available; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.InputGamePad.isButtonPressed(InputGamePad::BUTTON) const">
+		<member name="M:Unigine.InputGamePad.isButtonPressed(Input::GAMEPAD_BUTTON) const">
 			<summary>
 			Returns a value indicating if the given button is pressed.
 			</summary> 
-			<param name="button"> One of the preset BUTTON_ codes. </param> 
+			<param name="button"> One of the preset Input::GAMEPAD_BUTTON_ codes. </param> 
 			<returns>true if the button is pressed; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.InputGamePad.isButtonDown(InputGamePad::BUTTON) const">
+		<member name="M:Unigine.InputGamePad.isButtonDown(Input::GAMEPAD_BUTTON) const">
 			<summary>
 			Returns a value indicating if the given button was pressed during the current frame.
 			</summary> 
-			<param name="button"> One of the preset BUTTON_ codes. </param> 
+			<param name="button"> One of the preset Input::GAMEPAD_BUTTON_ codes. </param> 
 			<returns>true if the button was pressed during the current frame; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.InputGamePad.isButtonUp(InputGamePad::BUTTON) const">
+		<member name="M:Unigine.InputGamePad.isButtonUp(Input::GAMEPAD_BUTTON) const">
 			<summary>
 			Returns a value indicating if the given button was released during the current frame.
 			</summary> 
-			<param name="button"> One of the preset BUTTON_ codes. </param> 
+			<param name="button"> One of the preset Input::GAMEPAD_BUTTON_ codes. </param> 
 			<returns>true if the button was released during the current frame; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.getButtonEvent(Input::GAMEPAD_BUTTON) const">
+			<summary>
+			Returns the currently processed gamepad button input event.
+			</summary> 
+			<param name="button"> One of the preset Input::GAMEPAD_BUTTON_ codes. </param> 
+			<returns>Gamepad button input event, or nullptr if there are no events for the specified gamepad button in the current frame.</returns>
+		</member>
+		<member name="M:Unigine.InputGamePad.getButtonEvents(Input::GAMEPAD_BUTTON,Unigine.Vector{Unigine.Ptr{InputEventPadButton},int,Unigine.VectorAllocator})">
+			<summary>
+			Returns the number of input events for the specified gamepad button and puts the events to the specified output buffer.
+			</summary> 
+			<param name="button"> One of the preset Input::GAMEPAD_BUTTON_ codes. </param>
+			<param name="events"> Buffer with input events. </param> 
+			<returns>Number of input events for the specified gamepad button.</returns>
 		</member>
 		<member name="M:Unigine.InputGamePad.getPlayerIndex const">
 			<summary>
@@ -2495,123 +2890,74 @@
 			<summary>
 			Returns a value indicating the type of the device (wheel, throttle, etc.).
 			</summary>  
-			<returns>Device type. One of the Input::DEVICE_TYPE_* values.</returns>
+			<returns>Device type. One of the Input::DEVICE_* values.</returns>
 		</member>
 		<member name="M:Unigine.InputGamePad.getModelType const">
 			<summary>
-			Returns a value indicating the game pad model type.
+			Returns a value indicating the gamepad model type.
 			</summary>  
-			<returns>Game pad model type identifier.</returns>
+			<returns>Gamepad model type identifier.</returns>
 		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_A">
+		<member name="M:Unigine.InputGamePad.getNumTouches const">
 			<summary>
-			Button A.
-		</summary>
+			Returns the total number of the gamepad touch panels.
+			</summary>  
+			<returns>The total number of the gamepad touch panels.</returns>
 		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_B">
+		<member name="M:Unigine.InputGamePad.getNumTouchFingers(int) const">
 			<summary>
-			Button B.
-		</summary>
+			Returns the total number of the fingers supported by the specified gamepad touch panel.
+			</summary> 
+			<param name="touch"> The index of the gamepad touch panel, the number from 0 to the total number of touch panels. </param> 
+			<returns>The total number of the fingers supported by the gamepad touch panel.</returns>
 		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_X">
+		<member name="M:Unigine.InputGamePad.isTouchPressed(int,int) const">
 			<summary>
-			Button X.
-		</summary>
+			Returns the value indicating if the given touch panel has been pressed.
+			</summary> 
+			<param name="touch"> The index of the gamepad touch panel, the number from 0 to the total number of touch panels. </param>
+			<param name="finger"> The index of the finger, the number from 0 to the total number of supported fingers. </param> 
+			<returns>true if the touch panel is pressed, otherwise false.</returns>
 		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_Y">
+		<member name="M:Unigine.InputGamePad.isTouchDown(int,int) const">
 			<summary>
-			Button Y.
-		</summary>
+			Returns a value indicating if the given touch panel has been touched during the current frame.
+			</summary> 
+			<param name="touch"> The index of the gamepad touch panel, the number from 0 to the total number of touch panels. </param>
+			<param name="finger"> The index of the finger, the number from 0 to the total number of supported fingers. </param> 
+			<returns>true if the touch panel has been touched during the current frame, otherwise false.</returns>
 		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_BACK">
+		<member name="M:Unigine.InputGamePad.isTouchUp(int,int) const">
 			<summary>
-			Button "Back".
-		</summary>
+			Returns a value indicating if the given touch panel has been released during the current frame.
+			</summary> 
+			<param name="touch"> The index of the gamepad touch panel, the number from 0 to the total number of touch panels. </param>
+			<param name="finger"> The index of the finger, the number from 0 to the total number of supported fingers. </param> 
+			<returns>true if the touch panel has been released during the current frame, otherwise false.</returns>
 		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_START">
+		<member name="M:Unigine.InputGamePad.getTouchPosition(int,int) const">
 			<summary>
-			Button "Start".
-		</summary>
+			Returns the normalized position of the touch along the axes.
+			</summary> 
+			<param name="touch"> The index of the gamepad touch panel, the number from 0 to the total number of touch panels. </param>
+			<param name="finger"> The index of the finger, the number from 0 to the total number of supported fingers. </param> 
+			<returns>The normalized position of the touch along the axes from (0,0) to (1,1).</returns>
 		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_DPAD_UP">
+		<member name="M:Unigine.InputGamePad.getTouchDelta(int,int) const">
 			<summary>
-			Button "Up".
-		</summary>
+			Returns the delta of the touch position from the previous event.
+			</summary> 
+			<param name="touch"> The index of the gamepad touch panel, the number from 0 to the total number of touch panels. </param>
+			<param name="finger"> The index of the finger, the number from 0 to the total number of supported fingers. </param> 
+			<returns>The delta of the touch position from the previous event.</returns>
 		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_DPAD_DOWN">
+		<member name="M:Unigine.InputGamePad.getTouchPressure(int,int) const">
 			<summary>
-			Button "Down".
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_DPAD_LEFT">
-			<summary>
-			Button "Left".
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_DPAD_RIGHT">
-			<summary>
-			Button "Right".
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_THUMB_LEFT">
-			<summary>
-			Left thumbstick button.
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_THUMB_RIGHT">
-			<summary>
-			Right thumbstick button.
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_SHOULDER_LEFT">
-			<summary>
-			Left shoulder (bumper) button.
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.BUTTON_SHOULDER_RIGHT">
-			<summary>
-			Right shoulder (bumper) button.
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.NUM_BUTTONS">
-			<summary>
-			Number of buttons on a game pad.
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.AXIS_LEFT_X">
-			<summary>
-			X axis of the left stick.
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.AXIS_LEFT_Y">
-			<summary>
-			Y axis of the left stick.
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.AXIS_RIGHT_X">
-			<summary>
-			X axis of the right stick.
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.AXIS_RIGHT_Y">
-			<summary>
-			Y axis of the right stick.
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.AXIS_LEFT_TRIGGER">
-			<summary>
-			Left trigger.
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.AXIS_RIGHT_TRIGGER">
-			<summary>
-			Right trigger.
-		</summary>
-		</member>
-		<member name="F:Unigine.InputGamePad.NUM_AXES">
-			<summary>
-			Number of axes on a game pad.
-		</summary>
+			Returns the pressure with which the finger is currently pressed against the touch panel.
+			</summary> 
+			<param name="touch"> The index of the gamepad touch panel, the number from 0 to the total number of touch panels. </param>
+			<param name="finger"> The index of the finger, the number from 0 to the total number of supported fingers. </param> 
+			<returns>The pressure with which the finger is currently pressed, a value from 0 (not pressed) to 1 (fully pressed).</returns>
 		</member>
 		<member name="F:Unigine.InputGamePad.MODEL_TYPE_UNKNOWN">
 			<summary>
@@ -2642,6 +2988,181 @@
 			<summary>
 			PlayStation 5.
 		</summary>
+		</member>
+		<member name="M:Unigine.InputJoystick.getPlayerIndex const">
+			<summary>
+			Returns the index of player for the joystick. Some devices support connection of multiple players (e.g., XBox 360 supports up to four players connected through XBox 360 gamepads). This method enables you to get this index.
+			</summary>  
+			<returns>Player index for the joystick.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.isAvailable const">
+			<summary>
+			Returns a value indicating if the joystick is available.
+			</summary>  
+			<returns>true if the joystick is available; otherwise, false. </returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getName const">
+			<summary>
+			Returns the name of the joystick.
+			</summary>  
+			<returns>Joystick name.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getNumber const">
+			<summary>
+			Returns the joystick number.
+			</summary>  
+			<returns>Joystick number.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getDeviceType const">
+			<summary>
+			Returns a value indicating the type of the device (wheel, throttle, etc.).
+			</summary>  
+			<returns>Device type. One of the DEVICE_* values of the Input class.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.setFilter(float)">
+			<summary>
+			Sets a filter value used to correct the current state of the joystick axis relative to the previous one.
+			</summary> 
+			<param name="filter"> Filter value for interpolation between axis states. The provided value is clamped to a range [0;1].Filter value of 0 means there is no interpolation and the current value is not corrected.Filter value of 1 means the previous state is used instead of the current one. </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.getFilter const">
+			<summary>
+			Returns a filter value used to correct the current state of the joystick axis relative to the previous one:													Filter value of 0 means there is no interpolation and the current value is not corrected.							Filter value of 1 means the previous state is used instead of the current one.
+			</summary>  
+			<returns>Filter value for interpolation between axis states.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getNumAxes const">
+			<summary>
+			Returns the number of axes supported by the joystick.
+			</summary>  
+			<returns>Number of axes for the joystick.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getAxis(unsignedint) const">
+			<summary>
+			Returns a state value for the axis win the specified number. It includes position of the joystick along the following axes: X, Y (two-axis joystick) and Z (three-axis joystick). When a joystick is in the center position, X and Y axes values are zero. Negative values indicate left or down; positive values indicate right or up.
+			</summary> 
+			<param name="axis"> Axis number. </param> 
+			<returns>Value in range [-1; 1].</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getAxisDelta(unsignedint) const">
+			<summary>
+			</summary> 
+			<param name="axis"> Axis number. </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.getAxisName(unsignedint) const">
+			<summary>
+			Returns the name of a given axis by its number.
+			</summary> 
+			<param name="axis"> Axis number. </param> 
+			<returns>Axis name.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getNumPovs const">
+			<summary>
+			Returns the number of POV hat switches supported by the joystick.
+			</summary>  
+			<returns>Number of POV hats.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getPov(unsignedint) const">
+			<summary>
+			Returns a POV hat switch state. POV hats support the following positions: left, right, up and down.
+			</summary> 
+			<param name="pov"> POV hat number. </param> 
+			<returns>POV hat state. One of the JOYSTICK_POV values of the Input class.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getPovName(unsignedint) const">
+			<summary>
+			Returns the name of a given POV hat switch.
+			</summary> 
+			<param name="pov"> POV hat number. </param> 
+			<returns>POV hat name.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getNumButtons const">
+			<summary>
+			Returns the number of buttons supported by the joystick.
+			</summary>  
+			<returns>Number of buttons.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.isButtonPressed(unsignedint) const">
+			<summary>
+			Returns a value indicating if the button with the specified number is pressed. Check this value to perform continuous actions.
+			</summary> 
+			<param name="key"> Button number. </param> 
+			<returns>true if the button with the specified number is pressed; otherwise - false (pressed).</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.isButtonDown(unsignedint) const">
+			<summary>
+			Returns a value indicating if the button with the specified number was pressed during the current frame.
+			</summary> 
+			<param name="key"> Button number. </param> 
+			<returns>true if the button with the specified number was pressed during the current frame; otherwise - false (pressed).</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.isButtonUp(unsignedint) const">
+			<summary>
+			Returns a value indicating if the button with the specified number was released during the current frame.
+			</summary> 
+			<param name="key"> Button number. </param> 
+			<returns>true if the button with the specified number was released during the current frame; otherwise - false.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getButtonName(unsignedint) const">
+			<summary>
+			Returns the name of the button with the specified number.
+			</summary> 
+			<param name="button"> Button number. </param> 
+			<returns>Button name.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getButtonEvent(int) const">
+			<summary>
+			Returns the currently processed joystick button input event.
+			</summary> 
+			<param name="button"> Button number. </param> 
+			<returns>Joystick button input event, or nullptr if there are no events for the specified joystick button in the current frame.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getButtonEvents(int,Unigine.Vector{Unigine.Ptr{InputEventJoyButton},int,Unigine.VectorAllocator}) const">
+			<summary>
+			Returns the number of input events for the specified joystick button and puts the events to the specified output buffer.
+			</summary> 
+			<param name="button"> Button number. </param>
+			<param name="events"> Buffer with button input events. </param> 
+			<returns>Number of input events for the specified joystick button.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getPovEvent(int) const">
+			<summary>
+			Returns the currently processed joystick POV hat input event.
+			</summary> 
+			<param name="pov"> POV hat number. </param> 
+			<returns>Joystick POV hat input event, or nullptr if there are no events for the specified joystick POV hat in the current frame.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getPovEvents(int,Unigine.Vector{Unigine.Ptr{InputEventJoyPovMotion},int,Unigine.VectorAllocator}) const">
+			<summary>
+			Returns the number of input events for the specified joystick POV hat and puts the events to the specified output buffer.
+			</summary> 
+			<param name="pov"> POV hat number. </param>
+			<param name="events"> Buffer with POV input events. </param> 
+			<returns>Number of input events for the specified joystick POV hat.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getGuid const">
+			<summary>
+			Returns the GUID created on the basis of vendor and product identifiers and product version number. It enables you to identify device model (Controller XBox One, etc.), however, it will be the same for two identical models.
+			</summary>  
+			<returns>Device model GUID.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getVendor const">
+			<summary>
+			Returns a unique identifier of the device manufacturer (vendor). This can be very useful in case your application uses non-standard custom input devices to ensure proper configuration (dead zones, inverse flags, correction curves, etc.).
+			</summary>  
+			<returns>Unique identifier of the device manufacturer (vendor).</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getProduct const">
+			<summary>
+			Returns a unique identifier for the product (GUID). This identifier is established by the manufacturer of the device. This can be very useful in case your application uses non-standard custom input devices to ensure proper configuration (dead zones, inverse flags, correction curves, etc.).
+			</summary>  
+			<returns>Unique identifier for the product (GUID).</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.getProductVersion const">
+			<summary>
+			Returns the version of the product established by the manufacturer of the device. This can be very useful in case your application uses non-standard custom input devices to ensure proper configuration (dead zones, inverse flags, correction curves, etc.).
+			</summary>  
+			<returns>Version of the product established by the manufacturer of the device.</returns>
 		</member>
 	</members>
 </doc>

@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 
 #include <UnigineMemory.h>
@@ -214,10 +213,17 @@ public:
 			api_interface()->setOwner(true);
 		grab();
 	}
+
 	Ptr(const Ptr &pointer)
 		: ptr(pointer.ptr)
 	{
 		grab();
+	}
+
+	Ptr(Ptr &&pointer)
+		: ptr(pointer.ptr)
+	{
+		pointer.ptr = nullptr;
 	}
 
 	template<typename OtherType, class = typename std::enable_if<std::is_convertible<OtherType *, Type *>::value, void>::type>
@@ -227,6 +233,15 @@ public:
 		ptr = new_val;
 		grab();
 	}
+
+	template <typename OtherType, class = typename std::enable_if<std::is_convertible<OtherType *, Type *>::value, void>::type>
+	Ptr(Ptr<OtherType> &&pointer)
+	{
+		Type *new_val = static_cast<OtherType *>(pointer.ptr);
+		ptr = new_val;
+		pointer.ptr = nullptr;
+	}
+
 	explicit Ptr(Type *pointer): ptr(pointer) { grab(); }
 
 	~Ptr() { clear(); }
@@ -242,6 +257,17 @@ public:
 		return *this;
 	}
 
+	Ptr &operator=(Ptr &&pointer)
+	{
+		if (this == &pointer)
+			return *this;
+
+		clear();
+		ptr = pointer.ptr;
+		pointer.ptr = nullptr;
+		return *this;
+	}
+
 	template<typename OtherType, class = typename std::enable_if<std::is_convertible<OtherType *, Type *>::value, void>::type>
 	Ptr<Type> &operator=(const Ptr<OtherType> &pointer)
 	{
@@ -254,6 +280,18 @@ public:
 		grab();
 		return *this;
 	}
+
+	template <typename OtherType, class = typename std::enable_if<std::is_convertible<OtherType *, Type *>::value, void>::type>
+	Ptr<Type> &operator=(Ptr<OtherType> &&pointer)
+	{
+		Type *new_val = static_cast<OtherType *>(pointer.ptr);
+
+		clear();
+		ptr = new_val;
+		pointer.ptr = nullptr;
+		return *this;
+	}
+
 	template<typename OtherType>
 	Ptr<Type> &operator=(const OtherType *pointer)
 	{
@@ -370,12 +408,19 @@ template <typename Type>
 struct PointerWrapper
 {
 	PointerWrapper(Type *ptr_): ptr(ptr_) {}
+	PointerWrapper(Type &ref): ptr(&ref) {}
 
 	operator Type *() const { return ptr; }
 	operator Type &() const { assert(ptr != nullptr); return *ptr; }
 
 	Type *ptr;
 };
+
+template <typename Type>
+PointerWrapper<Type> WrapPointer(Type *ptr) { return PointerWrapper<Type>(ptr); }
+
+template <typename Type>
+PointerWrapper<Type> WrapPointer(Type &ref) { return PointerWrapper<Type>(ref); }
 
 template <typename Type>
 PointerWrapper<Type> GetInternalObject(APIInterface *obj)

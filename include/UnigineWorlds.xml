@@ -612,19 +612,19 @@
 			<param name="mesh"> Target mesh. </param> 
 			<returns>true if the mesh is copied successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.WorldOccluderMesh.setMeshName(char,bool)">
+		<member name="M:Unigine.WorldOccluderMesh.setMeshPath(char,bool)">
 			<summary>
-			Sets a new name for the mesh, on which the occluder mesh is based and forces loading of the mesh with the new name for the current occluder mesh.
+			Sets a new path for the mesh, on which the occluder mesh is based and forces loading of the mesh with the new path for the current occluder mesh.
 			</summary> 
-			<param name="name"> A new name to be set for the mesh. </param>
-			<param name="force_load"> Force flag.If true (1) is specified, the mesh with the new name will be loaded immediately.If false (0) is specified, only the mesh name will be updated. </param> 
-			<returns>true (1) if:The current mesh name coincides the new name.The mesh with the new name has been loaded successfully.The force flag is set to 0.In other cases,false (0).</returns>
+			<param name="name"> A new path to be set for the mesh. </param>
+			<param name="force_load"> Force flag.If true (1) is specified, the mesh with the new path will be loaded immediately.If false (0) is specified, only the mesh path will be updated. </param> 
+			<returns>true (1) if:The current mesh path coincides the new path.The mesh with the new path has been loaded successfully.The force flag is set to 0.In other cases, false (0).</returns>
 		</member>
-		<member name="M:Unigine.WorldOccluderMesh.getMeshName const">
+		<member name="M:Unigine.WorldOccluderMesh.getMeshPath const">
 			<summary>
-			Returns the name of the mesh, on which the occluder mesh is based.
+			Returns the path of the mesh, on which the occluder mesh is based.
 			</summary>  
-			<returns>Mesh name.</returns>
+			<returns>Mesh path.</returns>
 		</member>
 		<member name="M:Unigine.WorldOccluderMesh.loadMesh(char)">
 			<summary>

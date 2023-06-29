@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 
 #pragma once
 
@@ -146,7 +145,7 @@ public:
 	// If editor is loaded, engine calls this function before rendering each render frame.
 	// Similar to editor script's render function.
 	// Returns 1 on success, or 0 if an error occurred.
-	virtual int render(const EngineWindowPtr &window) { UNIGINE_UNUSED(window); return 1; }
+	virtual int render(const EngineWindowViewportPtr &window) { UNIGINE_UNUSED(window); return 1; }
 
 	// If editor is loaded, engine calls this function on world initialization.
 	// Similar to editor script's worldInit function.

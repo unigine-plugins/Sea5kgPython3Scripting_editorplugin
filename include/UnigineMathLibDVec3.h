@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 #include "UnigineMathLibCommon.h"
 #include "UnigineMathLibVec3.h"
@@ -308,6 +307,37 @@ constexpr dvec3 dvec3_left(-1.0f, 0.0f, 0.0f, ConstexprTag{});
 
 UNIGINE_INLINE double length(const dvec3 &v) { return v.length(); }
 UNIGINE_INLINE double length2(const dvec3 &v) { return v.length2(); }
+
+UNIGINE_INLINE double distance2(const dvec3 &v0, const dvec3 &v1)
+{
+	#ifdef USE_SSE
+		double ret;
+		__m128d temp_v0 = _mm_sub_pd(v0.sse.v0, v1.sse.v0);
+		__m128d temp_v1 = _mm_sub_pd(v0.sse.v1, v1.sse.v1);
+		temp_v0 = _mm_dp_pd(temp_v0, temp_v0, 0x7f);
+		temp_v1 = _mm_dp_pd(temp_v1, temp_v1, 0x7f);
+
+		_mm_store_sd(&ret, _mm_add_pd(temp_v0, temp_v1));
+		return ret;
+	#else
+		return length2(v0 - v1);
+	#endif
+}
+UNIGINE_INLINE double distance(const dvec3 &v0, const dvec3 &v1)
+{
+	#ifdef USE_SSE
+		double ret;
+		__m128d temp_v0 = _mm_sub_pd(v0.sse.v0, v1.sse.v0);
+		__m128d temp_v1 = _mm_sub_pd(v0.sse.v1, v1.sse.v1);
+		temp_v0 = _mm_dp_pd(temp_v0, temp_v0, 0x7f);
+		temp_v1 = _mm_dp_pd(temp_v1, temp_v1, 0x7f);
+
+		_mm_store_sd(&ret, _mm_add_pd(temp_v0, temp_v1));
+		return sqrt(ret);
+	#else
+		return length(v0 - v1);
+	#endif
+}
 
 UNIGINE_INLINE dvec3 normalize(const dvec3 &v)
 {

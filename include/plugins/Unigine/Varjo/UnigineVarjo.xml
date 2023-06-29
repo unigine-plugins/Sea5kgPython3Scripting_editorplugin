@@ -451,11 +451,23 @@
 			<param name="index"> Chroma key config index in the range fron 0 toconfig count - 1. </param>
 			<param name="tolerance"> New tolerance values for HSV components of the chroma key target color to be set. The range for each component is [0.0; 1.0]. </param> 
 		</member>
+		<member name="M:Unigine.Plugins.Varjo.setCameraExposureTime(Varjo::CAMERA_EXPOSURE_TIME)">
+			<summary>
+			Sets an exposure time value that is valid for the connected device.
+			</summary> 
+			<param name="value"> The valid exposure time value for the connected device. </param> 
+		</member>
+		<member name="M:Unigine.Plugins.Varjo.getCameraSupportedExposureTimes const">
+			<summary>
+			Returns a vector containing the exposure time values that are set as valid for the connected device.
+			</summary>  
+			<returns>The vector containing the valid exposure time values for the connected device.</returns>
+		</member>
 		<member name="M:Unigine.Plugins.Varjo.setCameraExposureTime(double)">
 			<summary>
 			Sets a new exposure time value for the camera.
 			</summary> 
-			<param name="time"> New exposure time to be set, in frames per second (e.g. 90.0 -&gt; ~11ms). </param> 
+			<param name="time"> New exposure time to be set, in frames per second (e.g. 90.0 -&amp;gt; ~11ms). </param> 
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.getCameraExposureTime const">
 			<summary>
@@ -479,17 +491,23 @@
 			</summary>  
 			<returns>true if automatic exposure adjustment mode for the camera is enabled; otherwise - false.</returns>
 		</member>
+		<member name="M:Unigine.Plugins.Varjo.setCameraWhiteBalance(Varjo::CAMERA_WHITE_BALANCE)">
+			<summary>
+			Sets a white balance correction value that is valid for the connected device.
+			</summary> 
+			<param name="balance"> New color temperature value to be set. One of the CAMERA_WHITE_BALANCE values. </param> 
+		</member>
 		<member name="M:Unigine.Plugins.Varjo.setCameraWhiteBalance(int)">
 			<summary>
-			Sets a new white balance correction value for the camera.
+			Sets a white balance correction value that is valid for the connected device.
 			</summary> 
-			<param name="balance"> New color temperature value to be set, in Kelvin. </param> 
+			<param name="balance"> New color temperature value to be set. </param> 
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.getCameraWhiteBalance const">
 			<summary>
 			Returns the current white balance correction value for the camera.
 			</summary>  
-			<returns>Current color temperature value, in Kelvin.</returns>
+			<returns>Current color temperature value.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.setCameraWhiteBalanceAuto const">
 			<summary>
@@ -507,11 +525,23 @@
 			</summary>  
 			<returns>true if automatic white balance adjustment mode for the camera is enabled; otherwise - false.</returns>
 		</member>
+		<member name="M:Unigine.Plugins.Varjo.getCameraSupportedWhiteBalances const">
+			<summary>
+			Returns a vector containing the white balance values that are set as valid for the connected device.
+			</summary>  
+			<returns>The vector containing the supported white balance values for the connected device.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Varjo.setCameraISO(Varjo::CAMERA_ISO)">
+			<summary>
+			Sets a new ISO value that is valid for the connected device.
+			</summary> 
+			<param name="cameraiso"> New ISO value to be set. One of the CAMERA_ISO_* values. </param> 
+		</member>
 		<member name="M:Unigine.Plugins.Varjo.setCameraISO(int)">
 			<summary>
-			Sets a new ISO value for the camera.
+			Sets a new ISO value that is valid for the connected device.
 			</summary> 
-			<param name="cameraiso"> New ISO value to be set (e.g., "200" -&gt; ISO200). </param> 
+			<param name="cameraiso"> New ISO value to be set (e.g., "200" -&amp;gt; ISO200). </param> 
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.getCameraISO const">
 			<summary>
@@ -535,29 +565,59 @@
 			</summary>  
 			<returns>true if automatic ISO adjustment mode for the camera is enabled; otherwise - false.</returns>
 		</member>
+		<member name="M:Unigine.Plugins.Varjo.getCameraSupportedISO const">
+			<summary>
+			Returns a vector containing the ISO values that are set as valid for the connected device.
+			</summary>  
+			<returns>The vector containing the supported ISO values for the connected device.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Varjo.setCameraFlickerCompensation(Varjo::CAMERA_FLICKER_COMPENSATION)">
+			<summary>
+			Sets a new flicker compensation value for the camera. This is useful when using the HMD indoors with mostly artificial light bulbs, which flicker at the frequency of 50Hz or 60Hz and can cause visual flicker artifacts on the video see through image. The correct setting depends on the underlying power grid's frequency. e.g. In most parts of Africa/Asia/Australia/Europe the frequency is 50 Hz and in most parts of North and South America 60 Hz.
+			</summary> 
+			<param name="compensation"> Flicker compensation, one of the CAMERA_FLICKER_COMPENSATION values. </param> 
+		</member>
 		<member name="M:Unigine.Plugins.Varjo.setCameraFlickerCompensation(int)">
 			<summary>
 			Sets a new flicker compensation value for the camera. This is useful when using the HMD indoors with mostly artificial light bulbs, which flicker at the frequency of 50Hz or 60Hz and can cause visual flicker artifacts on the video see through image. The correct setting depends on the underlying power grid's frequency. e.g. In most parts of Africa/Asia/Australia/Europe the frequency is 50 Hz and in most parts of North and South America 60 Hz.
 			</summary> 
-			<param name="compensation"> Flicker compensation value, in Hz (e.g "50" -&gt; compensation for 50 Hz). </param> 
+			<param name="compensation"> Flicker compensation value, in Hz. </param> 
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.getCameraFlickerCompensation const">
 			<summary>
-			Returns the current flicker compensation value for the camera.
+			Returns the current flicker compensation value for the camera. One of the CAMERA_FLICKER_COMPENSATION values.
 			</summary>  
-			<returns>Current flicker compensation value, in Hz (e.g "50" -&gt; compensation for 50 Hz).</returns>
+			<returns>Current flicker compensation value, in Hz.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Varjo.getCameraSupportedFlickerCompensations const">
+			<summary>
+			Returns a vector containing the flicker compensation values that are set as valid for the connected device.
+			</summary>  
+			<returns>The vector containing the supported flicker compensation values for the connected device.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.setCameraSharpness(int)">
 			<summary>
 			Sets a new sharpness filter power value for the camera.
 			</summary> 
-			<param name="sharpness"> New sharpness filter power value to be set: lowest value (0) corresponds to small amount of filtering and the highest value corresponds to the largest amount of filtering. </param> 
+			<param name="sharpness"> New sharpness filter power value to be set: lowest value corresponds to small amount of filtering and the highest value corresponds to the largest amount of filtering. </param> 
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.getCameraSharpness const">
 			<summary>
 			Returns the current sharpness filter power value for the camera.
 			</summary>  
-			<returns>Current sharpness filter power value: lowest value (0) corresponds to small amount of filtering and the highest value corresponds to the largest amount of filtering.</returns>
+			<returns>Current sharpness filter power value: lowest value corresponds to small amount of filtering and the highest value corresponds to the largest amount of filtering.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Varjo.getCameraMinSharpness const">
+			<summary>
+			Returns the minimum possible value for the camera sharpness.
+			</summary>  
+			<returns>The minimum possible value for the camera sharpness.</returns>
+		</member>
+		<member name="M:Unigine.Plugins.Varjo.getCameraMaxSharpness const">
+			<summary>
+			Returns the maximum possible value for the camera sharpness.
+			</summary>  
+			<returns>The maximum possible value for the camera sharpness.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.setMarkerTrackingEnabled(bool)">
 			<summary>
@@ -602,6 +662,13 @@
 			<summary>
 			Returns the number of visible marker objects.
 			</summary>  
+		</member>
+		<member name="M:Unigine.Plugins.Varjo.getMarkerObject(int) const">
+			<summary>
+			Returns the marker object with the specified marker index.
+			</summary> 
+			<param name="index"> Marker index. </param> 
+			<returns>Marker object.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.setStreamEnvironmentCubemapEnabled(bool)">
 			<summary>
@@ -675,13 +742,6 @@
 			</summary>  
 			<returns>Index of the environment preset.</returns>
 		</member>
-		<member name="M:Unigine.Plugins.Varjo.getMarkerObject(int) const">
-			<summary>
-			Returns the marker object with the specified marker index.
-			</summary> 
-			<param name="index"> Marker index. </param> 
-			<returns>Marker object.</returns>
-		</member>
 		<member name="M:Unigine.Plugins.Varjo.getHMDName const">
 			<summary>
 			Returns the current name of the head-mounted display.
@@ -692,7 +752,7 @@
 			<summary>
 			Returns the type of the head-mounted display.
 			</summary>  
-			<returns>HMD name. One of the HMD_TYPE_* values.</returns>
+			<returns>HMD type name. One of the HMD_TYPE_* values.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.getHandtrackingOffset const">
 			<summary>
@@ -738,19 +798,23 @@
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.render(Unigine.Ptr{Player},Unigine.Math.ivec2,bool)">
 			<summary>
-			</summary>  
+			Calls Varjo rendering logic.
+			</summary> 
+			<param name="player"> The player camera. </param>
+			<param name="size"> The window size, in pixels. </param>
+			<param name="render_window"> true to enable rendering of a copy to the current render target window; false — to disable it. </param> 
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.setFocusViewportSupersamplingFactor(float)">
 			<summary>
 			Sets the additional supersampling factor for the Varjo focus viewport.
 			</summary> 
-			<param name="factor"> Additional supersampling factor, a float value greater than 0. </param> 
+			<param name="factor"> The additional supersampling factor, a float value greater than 0. </param> 
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.getFocusViewportSupersamplingFactor const">
 			<summary>
 			Returns the additional supersampling factor for the Varjo focus viewport.
 			</summary>  
-			<returns>Additional supersampling factor.</returns>
+			<returns>The additional supersampling factor.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.setStreamColorCorrectionWhiteBalanceEnabled(bool)">
 			<summary>
@@ -768,13 +832,13 @@
 			<summary>
 			Sets the mode of the Blend Control Mask that can be used to extend or restrict the chroma-key mask or to control the depth testing against the estimated video depth.
 			</summary> 
-			<param name="mode"> Masking mode. One of the BLEND_MASKING_MODE variables. </param> 
+			<param name="mode"> The masking mode. One of the BLEND_MASKING_MODE variables. </param> 
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.getBlendMaskingMode const">
 			<summary>
 			Returns a value representing the mode of the Blend Control Mask that can be used to extend or restrict the chroma-key mask or to control the depth testing against the estimated video depth.
 			</summary>  
-			<returns>Masking mode. One of the BLEND_MASKING_MODE variables.</returns>
+			<returns>The masking mode. One of the BLEND_MASKING_MODE variables.</returns>
 		</member>
 		<member name="M:Unigine.Plugins.Varjo.setBlendMaskingDebugEnabled(bool)">
 			<summary>
@@ -1125,7 +1189,177 @@
 		</member>
 		<member name="F:Unigine.Plugins.Varjo.BLEND_MASKING_MODE_RESTRICT_VR_TO_CHROMAKEY_REDUCED_BY_MASK">
 			<summary>
-			SShow VR in the mask and chroma elsewhere. Requires chroma key.
+			Show VR in the mask and chroma elsewhere. Requires chroma key.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_FLICKER_COMPENSATION_END">
+			<summary>
+			The last element to be used for iteration.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_FLICKER_COMPENSATION__60_HZ">
+			<summary>
+			The camera flicker compensation value equal to 60 Hz.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_FLICKER_COMPENSATION__50_HZ">
+			<summary>
+			The camera flicker compensation value equal to 50 Hz.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_FLICKER_COMPENSATION_BEGIN">
+			<summary>
+			The first element to be used for iteration.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_ISO_END">
+			<summary>
+			The last element to be used for iteration.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_ISO__6400">
+			<summary>
+			The camera ISO value equal to 6400.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_ISO__3200">
+			<summary>
+			The camera ISO value equal to 3200.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_ISO__1600">
+			<summary>
+			The camera ISO value equal to 1600.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_ISO__800">
+			<summary>
+			The camera ISO value equal to 800.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_ISO__400">
+			<summary>
+			The camera ISO value equal to 400.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_ISO__200">
+			<summary>
+			The camera ISO value equal to 200.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_ISO__100">
+			<summary>
+			The camera ISO value equal to 100.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_ISO_BEGIN">
+			<summary>
+			The first element to be used for iteration.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_WHITE_BALANCE_END">
+			<summary>
+			The last element to be used for iteration.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_WHITE_BALANCE__12000_K">
+			<summary>
+			The camera white balance value equal to 12000 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_WHITE_BALANCE__8000_K">
+			<summary>
+			The camera white balance value equal to 8000 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_WHITE_BALANCE__6500_K">
+			<summary>
+			The camera white balance value equal to 6500 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_WHITE_BALANCE__5400_K">
+			<summary>
+			The camera white balance value equal to 5400 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_WHITE_BALANCE__5000_K">
+			<summary>
+			The camera white balance value equal to 5000 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_WHITE_BALANCE__4200_K">
+			<summary>
+			The camera white balance value equal to 4200 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_WHITE_BALANCE__3500_K">
+			<summary>
+			The camera white balance value equal to 3500 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_WHITE_BALANCE__3000_K">
+			<summary>
+			The camera white balance value equal to 3000 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_WHITE_BALANCE__2000_K">
+			<summary>
+			The camera white balance value equal to 2000 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_WHITE_BALANCE_BEGIN">
+			<summary>
+			The first element to be used for iteration.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_EXPOSURE_TIME_END">
+			<summary>
+			The last element to be used for iteration.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_EXPOSURE_TIME__8000_MS">
+			<summary>
+			The camera exposure time value equal to 8000 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_EXPOSURE_TIME__4000_MS">
+			<summary>
+			The camera exposure time value equal to 4000 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_EXPOSURE_TIME__2000_MS">
+			<summary>
+			The camera exposure time value equal to 2000 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_EXPOSURE_TIME__1000_MS">
+			<summary>
+			The camera exposure time value equal to 1000 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_EXPOSURE_TIME__500_MS">
+			<summary>
+			The camera exposure time value equal to 500 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_EXPOSURE_TIME__250_MS">
+			<summary>
+			The camera exposure time value equal to 250 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_EXPOSURE_TIME__125_MS">
+			<summary>
+			The camera exposure time value equal to 125 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_EXPOSURE_TIME__91_MS">
+			<summary>
+			The camera exposure time value equal to 91 K.
+		</summary>
+		</member>
+		<member name="F:Unigine.Plugins.Varjo.CAMERA_EXPOSURE_TIME_BEGIN">
+			<summary>
+			The first element to be used for iteration.
 		</summary>
 		</member>
 	</members>

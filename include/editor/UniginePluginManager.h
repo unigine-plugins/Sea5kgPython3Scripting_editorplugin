@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 
 
@@ -79,6 +78,9 @@ public:
 	/// selection undo stacks (the same happens on clicking Unload in the Editor's Plugins window).</summary>
 	static bool unloadPlugin(PluginInfo *plugin_info);
 
+	/// <summary> Calls `unloadPlugin` and removes plugin_info from the list of plugins.</summary>
+	static bool removePlugin(PluginInfo *plugin_info);
+
 	/// <summary> Returns information on all plugins currently available
 	/// as a vector of PluginInfo items containing all necessary information on each plugin.</summary>
 	static Unigine::Vector<PluginInfo *> plugins();
@@ -110,6 +112,10 @@ signals:
 	void aboutToBeUnloadedPlugin(PluginInfo *plugin_info);
 	/// <summary> This signal is emitted when a plugin is unloaded.</summary>
 	void unloadedPlugin(PluginInfo *plugin_info);
+	/// <summary> This signal is emitted right before removing a plugin.</summary>
+	void aboutToBeRemovedPlugin(PluginInfo *plugin_info);
+	/// <summary> This signal is emitted when a plugin is removed.</summary>
+	void removedPlugin(const char *abs_file_path);
 
 private:
 	explicit PluginManager(QObject *parent = nullptr);

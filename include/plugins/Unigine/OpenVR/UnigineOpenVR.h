@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
@@ -30,7 +29,7 @@ class OpenVR
 protected:
 	virtual ~OpenVR(){}
 public:
-	UNIGINE_INLINE static OpenVR *get() { return Unigine::Engine::get()->getPlugin<OpenVR>("OpenVR"); }
+	UNIGINE_INLINE static OpenVR *get() { return Unigine::Engine::get()->getPlugin<OpenVR>("UnigineOpenVR"); }
 
 	enum VIEWPORT
 	{
@@ -86,6 +85,13 @@ public:
 		CONTROLLER_ROLE_TREADMILL = 4,
 		CONTROLLER_ROLE_MAX = 5,
 	};
+
+	enum TRACKING_SPACE
+	{
+		TRACKING_SPACE_SEATED,
+		TRACKING_SPACE_STANDING,
+		TRACKING_SPACE_RAW,
+	};
 	virtual void setViewportMode(OpenVR::VIEWPORT mode) = 0;
 	virtual OpenVR::VIEWPORT getViewportMode() const = 0;
 	virtual void setHeadPositionLock(bool lock) = 0;
@@ -112,6 +118,13 @@ public:
 	virtual Math::vec2 getControllerAxis(int device_num, int axis_num) = 0;
 	virtual void setControllerVibration(int device_num, unsigned short duration) = 0;
 	virtual void render(const Ptr<Player> &player, const Math::ivec2 &size, bool render_window) = 0;
+	virtual void fadeToColor(float time, const Math::vec4 &color, bool background = false) = 0;
+	virtual Math::vec4 getCurrentFadeColor(bool background = false) = 0;
+	virtual void fadeToGrid(float time, bool grid) = 0;
+	virtual float getCurrentGridAlpha() = 0;
+	virtual void setTrackingSpace(OpenVR::TRACKING_SPACE space) = 0;
+	virtual OpenVR::TRACKING_SPACE getTrackingSpace() const = 0;
+	virtual void resetZeroPose(OpenVR::TRACKING_SPACE space) = 0;
 };
 
 } // namespace Plugins

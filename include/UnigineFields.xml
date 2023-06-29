@@ -306,11 +306,11 @@
 			</summary>  
 			<returns>Size vector (x,y,z), where:x value is length of the FieldShoreline along X axis (in units),y value is length of the FieldShoreline along Y axis (in units),z value is length of the FieldShoreline along Z axis (in units).</returns>
 		</member>
-		<member name="M:Unigine.FieldShoreline.createShorelineDistanceField(Unigine.Ptr{Unigine.Image},int,int,int)">
+		<member name="M:Unigine.FieldShoreline.createShorelineDistanceField(Unigine.Ptr{Unigine.Texture},int,int,int)">
 			<summary>
 			Creates a shoreline distance field with the specified parameters and puts it to the specified Image.
 			</summary> 
-			<param name="image"> Image to which the shoreline distance field will be put. </param>
+			<param name="texture"> Texture to which the shoreline distance field will be put. </param>
 			<param name="shoreline_radius"> Radius of the shoreline. </param>
 			<param name="blur_radius"> Radius of the blurred area. </param>
 			<param name="downsample_resolution"> Shoreline resolution. </param> 
@@ -330,21 +330,22 @@
 		</member>
 		<member name="M:Unigine.FieldSpacer.setAttenuation(float)">
 			<summary>
+			Sets an attenuation factor value for the field spacer. This factor indicates how much geometry is cut off gradually starting from the center of the spacer field:											By the minimum value of 0, all geometry inside the field spacer will be rendered.						The higher the value, the less geometry will be rendered inside the spacer field.
 			Sets an attenuation factor value for the Field Spacer.
 			</summary> 
 			<param name="attenuation"> A new attenuation factor value. If a too small value is provided, 1E-6 will be used instead. </param> 
 		</member>
 		<member name="M:Unigine.FieldSpacer.getAttenuation const">
 			<summary>
-			Returns the current attenuation factor for the Field Spacer.
+			Returns the current attenuation factor for the Field Spacer. This factor indicates how much geometry is cut off gradually starting from the center of the Field Spacer:											By the minimum value of 0, all geometry inside the Field Spacer will be rendered.						The higher the value, the less geometry will be rendered inside the Field Spacer.
 			</summary>  
-			<returns>The attenuation factor value.</returns>
+			<returns>Attenuation factor value.</returns>
 		</member>
 		<member name="M:Unigine.FieldSpacer.setEllipse(bool)">
 			<summary>
-			Transforms a cube-shaped field spacer into an ellipse-shaped one or vice versa.
+			Transforms a cube-shaped Field Spacer into an ellipse-shaped one or vice versa.
 			</summary> 
-			<param name="ellipse"> true for the ellipse-shaped Field Spacer, false for the field spacer in a form of a cube. </param> 
+			<param name="ellipse"> true for the ellipse-shaped Field Spacer, false for the Field Spacer in a form of a cube. </param> 
 		</member>
 		<member name="M:Unigine.FieldSpacer.isEllipse const">
 			<summary>

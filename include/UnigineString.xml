@@ -1151,23 +1151,34 @@
 		</member>
 		<member name="M:Unigine.StringArray class.#ctor(int)">
 			<summary>
-			</summary>  
+			Constructor. Creates an empty string array of the given size.
+			</summary> 
+			<param name="size"> Array size. </param> 
 		</member>
 		<member name="M:Unigine.StringArray class.#ctor(StringArray{Capacity})">
 			<summary>
-			</summary>  
+			Copy constructor.
+			</summary> 
+			<param name="s"> Array of strings. </param> 
 		</member>
 		<member name="M:Unigine.StringArray class.empty">
 			<summary>
+			Returns a value indicating if the array of strings is empty.
 			</summary>  
+			<returns>1 if the array is empty, otherwise 0.</returns>
 		</member>
 		<member name="M:Unigine.StringArray class.operator[](int)">
 			<summary>
-			</summary>  
+			Array access.
+			</summary> 
+			<param name="index"> The array item index. </param> 
+			<returns>The array item.</returns>
 		</member>
 		<member name="M:Unigine.StringArray class.size">
 			<summary>
+			Returns the size of the array of strings.
 			</summary>  
+			<returns>Array size.</returns>
 		</member>
 		<member name="M:Unigine.StringPtr class.#ctor">
 			<summary>
@@ -1239,43 +1250,61 @@
 		</member>
 		<member name="M:Unigine.StringStack class.#ctor">
 			<summary>
+			Default constructor that creates an empty string stack of the default size (256 characters).
 			</summary>  
 		</member>
 		<member name="M:Unigine.StringStack class.#ctor(String)">
 			<summary>
-			</summary>  
+			Copy constructor. Creates a string stack that stores a given string.
+			</summary> 
+			<param name="s"> String to be copied. </param> 
 		</member>
 		<member name="M:Unigine.StringStack class.#ctor(StringStack{Capacity})">
 			<summary>
-			</summary>  
+			Copy constructor.
+			</summary> 
+			<param name="s"> String stack of a specified size. </param> 
 		</member>
 		<member name="M:Unigine.StringStack class.#ctor(char)">
 			<summary>
-			</summary>  
+			Copy constructor.
+			</summary> 
+			<param name="s"> Pointer to a null-terminated string. </param> 
 		</member>
 		<member name="M:Unigine.StringStack class.destroy">
 			<summary>
+			Destroys the string.
 			</summary>  
 		</member>
 		<member name="M:Unigine.StringStack class.StringStack&lt;Capacity&gt;(StringStack{OtherCapacity})">
 			<summary>
-			</summary>  
+			Copies a given string stack to the current string stack.
+			</summary> 
+			<param name="s"> String stack of a given size to be copied. </param> 
 		</member>
 		<member name="M:Unigine.StringStack class.operator=(StringStack{Capacity})">
 			<summary>
-			</summary>  
+			Assignment operator for the string stack.
+			</summary> 
+			<param name="s"> String stack. </param> 
 		</member>
 		<member name="M:Unigine.StringStack class.operator=(char)">
 			<summary>
-			</summary>  
+			Assignment operator for the string stack.
+			</summary> 
+			<param name="s"> Pointer to a null-terminated string. </param> 
 		</member>
 		<member name="M:Unigine.StringStack class.operator=(StringStack{OtherCapacity})">
 			<summary>
-			</summary>  
+			Assignment operator for the string stack.
+			</summary> 
+			<param name="s"> String stack of the given size. </param> 
 		</member>
 		<member name="M:Unigine.StringStack class.operator=(String)">
 			<summary>
-			</summary>  
+			Assignment operator for the string stack.
+			</summary> 
+			<param name="s"> String. </param> 
 		</member>
 	</members>
 </doc>

@@ -231,7 +231,7 @@
 			</summary>  
 			<returns>Copy of the camera.</returns>
 		</member>
-		<member name="M:Unigine.Camera.setFovMode(int)">
+		<member name="M:Unigine.Camera.setFovMode(Camera::FOV_MODE)">
 			<summary>
 			Sets the value indicating the type of FOV that is used for the camera:											For the classic camera, the vertical FOV should be set. In this case, FOV is directly set in degrees.						For the physically-based camera, the horizontal FOV should be set. In this case, FOV is calculated depending on the film gate and focal length of the camera.
 			</summary> 
@@ -365,6 +365,30 @@
 			</summary> 
 			<param name="camera"> Camera smart pointer. </param> 
 		</member>
+		<member name="M:Unigine.Camera.setProjectionMode(Camera::PROJECTION_MODE)">
+			<summary>
+			Sets the projection mode: orthographic or perspective.
+			</summary> 
+			<param name="mode"> The projection mode, PROJECTION_MODE_ORTHOGRAPHIC for the orthographic mode; PROJECTION_MODE_PERSPECTIVE for the perspective mode. </param> 
+		</member>
+		<member name="M:Unigine.Camera.getProjectionMode const">
+			<summary>
+			Returns the current projection mode: orthographic or perspective.
+			</summary>  
+			<returns>The projection mode, PROJECTION_MODE_ORTHOGRAPHIC for the orthographic mode; PROJECTION_MODE_PERSPECTIVE for the perspective mode.</returns>
+		</member>
+		<member name="M:Unigine.Camera.setOrthoHeight(float)">
+			<summary>
+			Sets the height of the camera with the orthographic projection mode enabled.
+			</summary> 
+			<param name="height"> The orthographic camera height. </param> 
+		</member>
+		<member name="M:Unigine.Camera.getOrthoHeight const">
+			<summary>
+			Returns the current height of the camera with the orthographic projection mode enabled.
+			</summary>  
+			<returns>The orthographic camera height.</returns>
+		</member>
 		<member name="F:Unigine.Camera.FOV_MODE_PHYSICALLY_BASED_CAMERA">
 			<summary>
 								FOV_h = 2 * atan(film_gate / (2 * focal_length)) * RAD2DEG
@@ -383,6 +407,16 @@
 		<member name="F:Unigine.Camera.FOV_FIXED_VERTICAL">
 			<summary>
 			Vertical FOV component is fixed.
+		</summary>
+		</member>
+		<member name="F:Unigine.Camera.PROJECTION_MODE_ORTHOGRAPHIC">
+			<summary>
+			Orthographic projection.
+		</summary>
+		</member>
+		<member name="F:Unigine.Camera.PROJECTION_MODE_PERSPECTIVE">
+			<summary>
+			Perspective projection.
 		</summary>
 		</member>
 		<member name="F:Unigine.EngineExpression.ifps">

@@ -1,16 +1,15 @@
-/* Copyright (C) 2005-2022, UNIGINE. All rights reserved.
- *
- * This file is a part of the UNIGINE 2 SDK.
- *
- * Your use and / or redistribution of this software in source and / or
- * binary form, with or without modification, is subject to: (i) your
- * ongoing acceptance of and compliance with the terms and conditions of
- * the UNIGINE License Agreement; and (ii) your inclusion of this notice
- * in any version of this software that you use or redistribute.
- * A copy of the UNIGINE License Agreement is available by contacting
- * UNIGINE. at http://unigine.com/
- */
-
+/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
 #pragma once
 #include "UnigineMathLibCommon.h"
 #include "UnigineMathLibVec2.h"
@@ -251,6 +250,29 @@ constexpr dvec2 dvec2_inf(Consts::INF, ConstexprTag{});
 
 UNIGINE_INLINE double length(const dvec2 &v) { return v.length(); }
 UNIGINE_INLINE double length2(const dvec2 &v) { return v.length2(); }
+
+UNIGINE_INLINE double distance2(const dvec2 &v0, const dvec2 &v1)
+{
+	#ifdef USE_SSE
+		double ret;
+		__m128d vec = _mm_sub_pd(v0.vec, v1.vec);
+		_mm_store_sd(&ret, _mm_dp_pd(vec, vec, 0x7f));
+		return ret;
+	#else
+		return length2(v0 - v1);
+	#endif
+}
+UNIGINE_INLINE double distance(const dvec2 &v0, const dvec2 &v1)
+{
+	#ifdef USE_SSE
+		double ret;
+		__m128d vec = _mm_sub_pd(v0.vec, v1.vec);
+		_mm_store_sd(&ret, _mm_dp_pd(vec, vec, 0x7f));
+		return sqrt(ret);
+	#else
+		return length(v0 - v1);
+	#endif
+}
 
 UNIGINE_INLINE dvec2 normalize(const dvec2 &v)
 {
