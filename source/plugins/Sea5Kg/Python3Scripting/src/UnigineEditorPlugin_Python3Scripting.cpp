@@ -332,7 +332,7 @@ void UnigineEditorPlugin_Python3Scripting::globalSelectionChanged() {
 	// using namespace std;
 	m_vSelectedGuids.clear();
 	m_vSelectedNodes.clear();
-	if (UnigineEditor::SelectorGUIDs* selector = UnigineEditor::Selection::getSelectorMaterials()) {
+	if (const UnigineEditor::SelectorGUIDs* selector = UnigineEditor::Selection::getSelectorMaterials()) {
 		log_info("Selected materials");
 		switchMenuTo(MenuSelectedType::MST_MATERIALS);
 		Unigine::Vector<Unigine::UGUID> vGuids = selector->guids();

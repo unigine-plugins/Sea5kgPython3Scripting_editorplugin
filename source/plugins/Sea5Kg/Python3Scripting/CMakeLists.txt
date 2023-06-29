@@ -71,15 +71,15 @@ add_subdirectory(QCodeEditor)
 
 
 
-if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/UnigineEditorPlugin_Python3Scripting.json.in)
-	message(FATAL_ERROR "Required file is missed! - ${CMAKE_CURRENT_SOURCE_DIR}/UnigineEditorPlugin_Python3Scripting.json.in")
+if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/Sea5kgPython3Scripting_editorplugin.json.in)
+	message(FATAL_ERROR "Required file is missed! - ${CMAKE_CURRENT_SOURCE_DIR}/Sea5kgPython3Scripting_editorplugin.json.in")
 endif()
 
 set(PLUGIN_VERSION ${PYTHON3SCRIPTING_VERSION})
 set(PLUGIN_COMPAT_VERSION ${PYTHON3SCRIPTING_VERSION})
 configure_file(
-	${CMAKE_CURRENT_SOURCE_DIR}/UnigineEditorPlugin_Python3Scripting.json.in
-	${CMAKE_CURRENT_BINARY_DIR}/UnigineEditorPlugin_Python3Scripting.json
+	${CMAKE_CURRENT_SOURCE_DIR}/Sea5kgPython3Scripting_editorplugin.json.in
+	${CMAKE_CURRENT_BINARY_DIR}/Sea5kgPython3Scripting_editorplugin.json
 	)
 
 # message(FATAL_ERROR ${CMAKE_CURRENT_BINARY_DIR})
@@ -175,14 +175,14 @@ endif()
 
 set_target_properties(${current_target}
 	PROPERTIES
-	RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../../../../bin/editor/
-	LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../../../../bin/editor/
-	# ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../../../../lib/editor/
-	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../../../../bin/editor_debug/
-	LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../../../../bin/editor_debug/
-	RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_SOURCE_DIR}/../../../../bin/editor_debug/
-	LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_SOURCE_DIR}/../../../../bin/editor_debug/
-	# ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../../../../lib/editor_debug/
+	RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../../../../bin/plugins/Sea5kg/Python3Scripting/
+	LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../../../../bin/plugins/Sea5kg/Python3Scripting/
+	# ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../../../../lib/plugins/Sea5kg/Python3Scripting/
+	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../../../../bin/plugins/Sea5kg/Python3Scripting/
+	LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../../../../bin/plugins/Sea5kg/Python3Scripting/
+	RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_SOURCE_DIR}/../../../../bin/plugins/Sea5kg/Python3Scripting/
+	LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_SOURCE_DIR}/../../../../bin/plugins/Sea5kg/Python3Scripting/
+	# ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/../../../../lib/plugins/Sea5kg/Python3Scripting/
 	C_VISIBILITY_PRESET hidden
 	CXX_VISIBILITY_PRESET hidden
 )
