@@ -12,7 +12,7 @@
 #include <QSyntaxStyle>
 #include <QCodeEditor>
 #include "ModelExtension.h"
-#include "IRunPythonScript.h"
+#include "interfaces/IRunPythonScript.h"
 
 class EditExtensionDialog : public QDialog
 {

@@ -32,8 +32,8 @@ bool ModelExtension::loadFromJsonObject(const QJsonObject &jsonExtension) {
 bool ModelExtension::loadFromDirectory() {
     QString sPython3ScriptJsonFilePath = getScriptDir() + "/python3script.json";
 
-	std::cout << "Try opening... " << sPython3ScriptJsonFilePath.toStdString() << std::endl;
-	QFile fileExtensionJson(sPython3ScriptJsonFilePath);
+    std::cout << "Try opening... " << sPython3ScriptJsonFilePath.toStdString() << std::endl;
+    QFile fileExtensionJson(sPython3ScriptJsonFilePath);
     if (!fileExtensionJson.open(QIODevice::ReadOnly)) {
         // log_error(sPython3ScriptJsonFilePath + " - couldn't open file to read.");
         return false;
@@ -51,21 +51,21 @@ bool ModelExtension::loadFromDirectory() {
     }
 
     m_jsonOriginalScriptInfo = jsonDoc.object();
-	if (!loadFromJsonObject(m_jsonOriginalScriptInfo)) {
-	    // log_error(sPython3ScriptJsonFilePath + " - could not load some extension by index");
-		return false;
-	}
-	return true;
+    if (!loadFromJsonObject(m_jsonOriginalScriptInfo)) {
+        // log_error(sPython3ScriptJsonFilePath + " - could not load some extension by index");
+        return false;
+    }
+    return true;
 }
 
 bool ModelExtension::saveJson() {
     QString sPython3ScriptJsonFilePath = getScriptDir() + "/python3script.json";
-	QFile fileExtensionJson(sPython3ScriptJsonFilePath);
+    QFile fileExtensionJson(sPython3ScriptJsonFilePath);
 
     QJsonDocument document(this->toJsonObject());
-	fileExtensionJson.open(QFile::WriteOnly);
-	fileExtensionJson.write(document.toJson(QJsonDocument::Indented));
-	fileExtensionJson.close();
+    fileExtensionJson.open(QFile::WriteOnly);
+    fileExtensionJson.write(document.toJson(QJsonDocument::Indented));
+    fileExtensionJson.close();
     return true;
 }
 

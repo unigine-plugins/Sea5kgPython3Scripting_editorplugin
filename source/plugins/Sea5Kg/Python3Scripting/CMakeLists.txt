@@ -101,12 +101,12 @@ ELSE()
 ENDIF()
 
 set(RESOURCES_FILE
-    resources/UnigineEditorPlugin_Python3Scripting_resources.qrc
+    resources/Sea5kgPython3Scripting_editorplugin.qrc
 )
 
 add_library(${current_target} SHARED
     ${RESOURCES_FILE}
-	${PROJECT_SOURCE_DIR}/src/UnigineEditorPlugin_Python3Scripting.cpp
+	${PROJECT_SOURCE_DIR}/src/Sea5kgPython3Scripting_editorplugin.cpp
 	${PROJECT_SOURCE_DIR}/src/PythonExecutor.cpp
 	${PROJECT_SOURCE_DIR}/src/run_python_in_thread.cpp
     ${PROJECT_SOURCE_DIR}/src/CollectorMenuSelected.cpp

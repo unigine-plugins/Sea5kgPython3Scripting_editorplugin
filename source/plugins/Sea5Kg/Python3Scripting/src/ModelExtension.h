@@ -5,7 +5,7 @@
 #include <QJsonObject>
 
 class ModelExtension {
-    
+
 
 public:
     ModelExtension(const QString &sScriptDir);

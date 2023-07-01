@@ -15,6 +15,7 @@
 #include <QStringListModel>
 
 #include "ModelExtension.h"
+#include "interfaces/IManageScripts.h"
 
 // https://www.walletfox.com/course/qtcheckablelist.php
 
@@ -34,7 +35,7 @@ class CustomListModel : public QStringListModel {
 class ManageScriptsDialog : public QDialog {
     Q_OBJECT
 public:
-    ManageScriptsDialog(QWidget *parent, QVector<ModelExtension *> *vScripts);
+    ManageScriptsDialog(QWidget *parent, QVector<ModelExtension *> *vScripts, IManageScripts *pManageScripts);
 
 signals:
     void findNext(const QString &str, Qt::CaseSensitivity cs);
@@ -42,12 +43,16 @@ signals:
 
 private slots:
     void removeClicked();
+    void createClicked();
 
 private:
+    QWidget *m_pParent;
+    IManageScripts *m_pManageScripts;
     void createListWidget();
     QVector<ModelExtension *> *m_vScripts;
     QLineEdit *m_pLineEditSearch;
     QListWidget *m_pListWidget;
+    QPushButton *m_pCreateButton;
     QPushButton *m_pRemoveButton;
     QPushButton *m_pCloseButton;
 };
