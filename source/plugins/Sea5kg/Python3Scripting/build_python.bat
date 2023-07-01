@@ -31,8 +31,8 @@ XCOPY /K /D /Y /H PCbuild\amd64\* ..\python-bin-windows\
 XCOPY /K /D /Y /H PCbuild\amd64\*.dll ..\..\..\..\..\bin\
 
 
-IF EXIST ..\..\..\..\..\bin\Python3Home RMDIR /S /Q ..\..\..\..\..\bin\Python3Home
+IF EXIST ..\..\..\..\..\bin\plugins\Sea5kg\Python3Scripting\Python3Home RMDIR /S /Q ..\..\..\..\..\bin\plugins\Sea5kg\Python3Scripting\Python3Home
 
-MKDIR ..\..\..\..\..\bin\Python3Home
+MKDIR ..\..\..\..\..\bin\plugins\Sea5kg\Python3Scripting\Python3Home
 
-XCOPY /K /S /D /Y /H .\Lib ..\..\..\..\..\bin\Python3Home\Lib\
+XCOPY /K /S /D /Y /H .\Lib ..\..\..\..\..\bin\plugins\Sea5kg\Python3Scripting\Python3Home\Lib\

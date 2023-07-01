@@ -44,7 +44,7 @@ build_commands = [
     },
 ]
 
-os.chdir("source/plugins/Sea5Kg/Python3Scripting")
+os.chdir("source/plugins/Sea5kg/Python3Scripting")
 
 for _cmd in build_commands:
     print("Starting... " + _cmd["name"])

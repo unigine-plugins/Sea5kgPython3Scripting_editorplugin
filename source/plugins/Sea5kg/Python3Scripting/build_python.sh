@@ -26,6 +26,8 @@ check_ret $? "Configure python"
 
 make install
 check_ret $? "Build python"
-
-mkdir -p `pwd`/../../../../../bin/Python3Home/lib
-cp -rf `pwd`/../python-bin-linux/lib/python3.10 `pwd`/../../../../../bin/Python3Home/lib/python3.10
+if [ -d `pwd`/../../../../../bin/plugins/Sea5kg/Python3Scripting/Python3Home ]; then
+    rm -rf `pwd`/../../../../../bin/plugins/Sea5kg/Python3Scripting/Python3Home
+fi
+mkdir -p `pwd`/../../../../../bin/plugins/Sea5kg/Python3Scripting/Python3Home/lib
+cp -rf `pwd`/../python-bin-linux/lib/python3.10 `pwd`/../../../../../bin/plugins/Sea5kg/Python3Scripting/Python3Home/lib/python3.10

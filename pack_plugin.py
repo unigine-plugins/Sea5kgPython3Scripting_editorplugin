@@ -28,7 +28,7 @@ with open("version") as _file:
     content = _file.read()
     _version = content.strip()
 
-folder_inside = "UnigineEditorPlugin_Python3Scripting_" + _version
+folder_inside = "Sea5kgPython3Scripting_editorplugin_" + _version
 _zip_filename = _platform + "_" + folder_inside + ".zip"
 
 if os.path.isfile(_zip_filename):
@@ -38,18 +38,18 @@ zf = zipfile.ZipFile(_zip_filename, 'w', zipfile.ZIP_DEFLATED)
 
 if is_linux:
     zf.write(
-        "bin/editor/libSea5kgPython3Scripting_editorplugin_x64.so",
-        folder_inside + "/bin/editor/libSea5kgPython3Scripting_editorplugin_x64.so",
+        "bin/plugins/Sea5kg/Python3Scripting/libSea5kgPython3Scripting_editorplugin_x64.so",
+        folder_inside + "/bin/plugins/Sea5kg/Python3Scripting/libSea5kgPython3Scripting_editorplugin_x64.so",
     )
     zf.write(
-        "bin/editor_debug/libSea5kgPython3Scripting_editorplugin_x64d.so",
-        folder_inside + "/bin/editor_debug/libSea5kgPython3Scripting_editorplugin_x64d.so",
+        "bin/plugins/Sea5kg/Python3Scripting/libSea5kgPython3Scripting_editorplugin_x64d.so",
+        folder_inside + "/bin/plugins/Sea5kg/Python3Scripting/libSea5kgPython3Scripting_editorplugin_x64d.so",
     )
 
 if is_windows:
     zf.write(
-        "bin/editor/Sea5kgPython3Scripting_editorplugin_x64.dll",
-        folder_inside + "/bin/editor/Sea5kgPython3Scripting_editorplugin_x64.dll",
+        "bin/plugins/Sea5kg/Python3Scripting/Sea5kgPython3Scripting_editorplugin_x64.dll",
+        folder_inside + "/bin/plugins/Sea5kg/Python3Scripting/Sea5kgPython3Scripting_editorplugin_x64.dll",
     )
     python_libs = [
         "libcrypto-1_1.dll",
@@ -63,23 +63,22 @@ if is_windows:
     ]
     for _pydll in python_libs:
         zf.write(
-            "UnigineEditorPlugin_Python3Scripting/python-bin-windows/" + _pydll,
+            "source/plugins/Sea5kg/Python3Scripting/python-bin-windows/" + _pydll,
             folder_inside + "/bin/" + _pydll,
         )
     zf.write(
-        "bin/editor_debug/Sea5kgPython3Scripting_editorplugin_x64d.dll",
-        folder_inside + "/bin/editor_debug/Sea5kgPython3Scripting_editorplugin_x64d.dll",
+        "bin/plugins/Sea5kg/Python3Scripting/Sea5kgPython3Scripting_editorplugin_x64d.dll",
+        folder_inside + "/bin/plugins/Sea5kg/Python3Scripting/Sea5kgPython3Scripting_editorplugin_x64d.dll",
     )
 
 
 # Python3Home (Lib)
-# rootdir = "UnigineEditorPlugin_Python3Scripting/Python-3.10.1/Lib"
 rootdir = "bin/Python3Home/lib/python3.10"
 for root, subdirs, files in os.walk(rootdir):
     for _file in files:
         _src = os.path.join(root, _file)
         _dst = _src[len(rootdir)+1:]
-        _dst = os.path.join("bin", "Python3Home", "lib", "python3.10", _dst)
+        _dst = os.path.join("bin", "plugins", "Sea5kg", "Python3Scripting", "Python3Home", "lib", "python3.10", _dst)
         _dst = os.path.join(folder_inside, _dst)
         print(_src, "->", _dst)
         zf.write(_src, _dst)
@@ -89,7 +88,7 @@ for root, subdirs, files in os.walk(rootdir):
     for _file in files:
         _src = os.path.join(root, _file)
         _dst = _src[len(rootdir)+1:]
-        _dst = os.path.join("bin", "Python3Scripting", _dst)
+        _dst = os.path.join("bin", "plugins", "Sea5kg", "Python3Scripting", "Scripts", _dst)
         _dst = os.path.join(folder_inside, _dst)
         print(_src, "->", _dst)
         zf.write(_src, _dst)

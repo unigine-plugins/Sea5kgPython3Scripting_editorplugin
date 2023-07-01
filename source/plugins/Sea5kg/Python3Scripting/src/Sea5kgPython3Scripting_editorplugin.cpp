@@ -335,7 +335,7 @@ void Sea5kgPython3Scripting_editorplugin::runPythonScript(ModelExtension *pModel
         delete m_pScriptThread;
     }
 
-    QString sPythonHome = QCoreApplication::applicationDirPath() + "/Python3Home/";
+    QString sPythonHome = QCoreApplication::applicationDirPath() + "/plugins/Sea5kg/Python3Scripting/Python3Home/";
     log_info("PYTHONHOME=" + sPythonHome);
     qputenv("PYTHONHOME", sPythonHome.toLatin1());
 
@@ -394,7 +394,7 @@ void Sea5kgPython3Scripting_editorplugin::switchMenuTo(MenuSelectedType nType) {
 
 bool Sea5kgPython3Scripting_editorplugin::prepareDirectoryWithExtensions() {
     // Prepare directory
-    m_sPython3ScriptingDirPath = m_sRootPath + "/Python3Scripting";
+    m_sPython3ScriptingDirPath = m_sRootPath + "/plugins/Sea5kg/Python3Scripting/Scripts";
     QDir dirPython3Scripting(m_sPython3ScriptingDirPath);
     if (!dirPython3Scripting.exists()) {
         QDir(m_sRootPath).mkdir("Python3Scripting");
