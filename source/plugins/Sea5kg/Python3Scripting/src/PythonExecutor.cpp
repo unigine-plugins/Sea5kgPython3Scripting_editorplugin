@@ -129,6 +129,45 @@ int PythonExecutor::execCode(const std::string &sScriptContent) {
     Py_XDECREF(pResult);
 
     if (PyErr_Occurred()) {
+        // PyErr_Print();
+
+        PyObject *ptype, *pvalue, *ptraceback;
+        PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+        if (ptype == nullptr) {
+            Unigine::Log::error("Unknown type error\n");
+        } else {
+            Unigine::Log::error("Python Error:");
+            PyErr_NormalizeException(&ptype, &pvalue, &ptraceback);
+            if (ptraceback != nullptr) {
+                PyException_SetTraceback(pvalue, ptraceback);
+            }
+            // PyObject* pPyStringExceptionType = PyObject_Str(pyExcType);
+
+            PyObject* str_exc_type = PyObject_Repr(ptype);
+            PyObject* pyStr = PyUnicode_AsEncodedString(str_exc_type, "utf-8", "Error ~");
+            const char *strExcType =  PyBytes_AS_STRING(pyStr);
+            Unigine::Log::error("Python Error Type: %s\n", strExcType);
+            Py_XDECREF(str_exc_type);
+            Py_XDECREF(pyStr);
+
+            PyObject* objectStr = PyObject_Str(pvalue);
+            const char *pStrErrorMessage = PyUnicode_AsUTF8(objectStr);
+            Unigine::Log::error("Python Error Message: %s\n", pStrErrorMessage);
+            Py_XDECREF(objectStr);
+
+            PyObject* str_exc_type2 = PyObject_Repr(ptraceback);
+            PyObject* objectStr2 = PyUnicode_AsEncodedString(str_exc_type2, "utf-8", "Error ~");
+            const char *pStrErrorMessage2 = PyBytes_AS_STRING(objectStr2);
+            Unigine::Log::error("Python Error traceback: %s\n", pStrErrorMessage2);
+            Py_XDECREF(objectStr2);
+        }
+
+        //Get error message
+        // const char * pStrErrorMessage = PyUnicode_AsUTF8(pvalue);
+        // std::cout << pStrErrorMessage << std::endl;
+        // char *pStrErrorMessage = PyString_AsString(pvalue);
+        // Unigine::Log::message(pStrErrorMessage);
+
         // std::string result;
         // PyObject* ptype;
         // PyObject* pvalue;
@@ -146,7 +185,8 @@ int PythonExecutor::execCode(const std::string &sScriptContent) {
         //     result = result + " was raised with error message : " + PyString_AS_STRING(objectStr);
         //     Py_XDECREF(objectStr);
         // }
-        Unigine::Log::message("Python3Scripting: FAILED\n");
+        PyErr_Clear();
+        Unigine::Log::error("\nPython3Scripting: FAILED\n");
         return -1;
     }
     Unigine::Log::message("Python3Scripting: end executing script\n");

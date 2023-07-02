@@ -52,7 +52,7 @@ void RunScriptInThread::run() {
     if (ret == -1) {
         std::string sMessage = "Problem with a extension";
         const char * pMessage = sMessage.c_str();
-        Unigine::Log::error(pMessage);
+        Unigine::Log::error("%s", pMessage);
     }
 }
 
