@@ -29,8 +29,8 @@ PyObject* Stderr_write(PyObject* self, PyObject* args)
         // selfimpl->write(sOutputMessage);
         // written = sOutputMessage.size();
         // TODO extension_id
-        sOutputMessage = "ERROR. Python3Scripting: " + sOutputMessage + "\n";
-        Unigine::Log::error(sOutputMessage.c_str());
+        sOutputMessage = "ERROR. Python3Scripting: " + sOutputMessage;
+        Unigine::Log::error("%s", sOutputMessage.c_str());
     }
     return PyLong_FromSize_t(written);
 }
@@ -130,7 +130,7 @@ void Python3UnigineStderr::Call_PyImport_AppendInittab() {
 
 void Python3UnigineStderr::Call_PyImport_ImportModule() {
     PyImport_ImportModule("unigine_stderr");
-    
+
     std::string buffer;
     stderr_write_type write = [&buffer] (std::string s) { buffer += s; };
 

@@ -18,8 +18,9 @@ class PythonExecutor {
         void addNodes(const QVector<Unigine::NodePtr> &vNodes);
 
         int execCode(const std::string &sScriptContent);
-        int execFile(const std::string &sScriptPath);
+        // int execFile(const std::string &sScriptPath);
     private:
+        std::string readLineCode(const char *filename, int lineNr, const std::string &sScriptContent);
         std::vector<Python3ModuleRegister *> m_vWrappers;
         std::string m_sExtensionId;
         std::string m_sDirPathWithModules;

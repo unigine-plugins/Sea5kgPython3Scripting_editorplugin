@@ -338,6 +338,7 @@ void Sea5kgPython3Scripting_editorplugin::runPythonScript(ModelExtension *pModel
     QString sPythonHome = QCoreApplication::applicationDirPath() + "/plugins/Sea5kg/Python3Scripting/Python3Home/";
     log_info("PYTHONHOME=" + sPythonHome);
     qputenv("PYTHONHOME", sPythonHome.toLatin1());
+    log_info("PYTHONUNBUFFERED=1");
     qputenv("PYTHONUNBUFFERED", "1");
 
     // QProcessEnvironment proc

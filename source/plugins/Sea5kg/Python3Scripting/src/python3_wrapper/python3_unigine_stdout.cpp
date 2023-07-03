@@ -143,8 +143,7 @@ void Python3UnigineStdout::Call_PyImport_ImportModule() {
     }
     Stdout* impl = reinterpret_cast<Stdout*>(g_stdout);
     impl->write = write;
-    PySys_SetObject("stdout", g_stdout);    
-    
+    PySys_SetObject("stdout", g_stdout);
 }
 
 void Python3UnigineStdout::Call_Before_Py_Finalize() {

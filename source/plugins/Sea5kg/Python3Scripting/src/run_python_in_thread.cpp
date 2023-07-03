@@ -50,9 +50,7 @@ void RunScriptInThread::run() {
 
     int ret = m_pExecutor->execCode(m_sExecCode.toStdString());
     if (ret == -1) {
-        std::string sMessage = "Problem with a extension";
-        const char * pMessage = sMessage.c_str();
-        Unigine::Log::error("%s", pMessage);
+        Unigine::Log::error("Problem with a script, exit_code: %d\n", ret);
     }
 }
 

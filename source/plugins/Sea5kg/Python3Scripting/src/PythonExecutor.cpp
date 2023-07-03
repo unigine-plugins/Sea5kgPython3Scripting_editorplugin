@@ -2,7 +2,10 @@
 
 // python headers
 #include <Python.h>
+#include <frameobject.h>
 #include <iostream>
+#include <fstream>
+
 // local
 #include "python3_unigine_stdout.h"
 #include "python3_unigine_stderr.h"
@@ -21,6 +24,8 @@ std::wstring str2wstr(const std::string& str) {
     return converterX.from_bytes(str);
 }
 
+PyThreadState *mainstate;
+
 PythonExecutor::PythonExecutor(
     const std::string &sExtensionId,
     const std::string &sDirPathWithModules
@@ -30,15 +35,12 @@ PythonExecutor::PythonExecutor(
     m_vWrappers.push_back(new Python3UnigineStdout(sExtensionId));
     m_vWrappers.push_back(new Python3UnigineStderr(sExtensionId));
     m_vWrappers.push_back(new Python3UnigineLib(sExtensionId));
-    std::cout << "4" << std::endl;
     for (int i = 0; i < m_vWrappers.size(); i++) {
         m_vWrappers[i]->Call_PyImport_AppendInittab();
     }
     Py_Initialize();
-
-    // m_sDirPathWithModules = "P:\\UnigineEditorPlugin_Python3Scripting\\Python-3.10.1\\";
-    // std::wstring sDir = str2wstr(m_sDirPathWithModules);
-    // PySys_SetPath(sDir.c_str());
+    // mainstate = PyThreadState_Swap(NULL);
+    // Py_SetProgramName(const wchar_t *name)
 
     {
         PyObject* pGlobalDict = PyDict_New();
@@ -49,6 +51,27 @@ PythonExecutor::PythonExecutor(
     for (int i = 0; i < m_vWrappers.size(); i++) {
         m_vWrappers[i]->Call_PyImport_ImportModule();
     }
+}
+
+
+PythonExecutor::~PythonExecutor() {
+    Unigine::Log::message("Python3Scripting: ~PythonExecutor()\n");
+    for (int i = 0; i < m_vWrappers.size(); i++) {
+        m_vWrappers[i]->Call_After_Py_Finalize();
+    }
+    PyObject* pGlobalDict = (PyObject*)m_pGlobalDict;
+    Py_XDECREF(pGlobalDict);
+    Unigine::Log::message("finalize point 3\n");
+
+    Py_Finalize();
+
+    Unigine::Log::message("finalize point 4\n");
+
+    for (int i = 0; i < m_vWrappers.size(); i++) {
+        delete m_vWrappers[i];
+    }
+    m_vWrappers.clear();
+    Unigine::Log::message("Done\n");
 }
 
 void PythonExecutor::addMaterials(const QVector<Unigine::UGUID> &vGuids) {
@@ -130,80 +153,88 @@ int PythonExecutor::execCode(const std::string &sScriptContent) {
 
     if (PyErr_Occurred()) {
         // PyErr_Print();
+        Unigine::Log::error("Python Error in Script: \n>>>>>>>>>>>>\n%s\n<<<<<<<<<<<<\n\n", sScriptContent.c_str());
 
-        PyObject *ptype, *pvalue, *ptraceback;
-        PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+        PyObject *ptype, *pvalue, *pPyErrorTraceback;
+        PyErr_Fetch(&ptype, &pvalue, &pPyErrorTraceback);
         if (ptype == nullptr) {
             Unigine::Log::error("Unknown type error\n");
         } else {
             Unigine::Log::error("Python Error:");
-            PyErr_NormalizeException(&ptype, &pvalue, &ptraceback);
-            if (ptraceback != nullptr) {
-                PyException_SetTraceback(pvalue, ptraceback);
+            PyErr_NormalizeException(&ptype, &pvalue, &pPyErrorTraceback);
+            if (pPyErrorTraceback != nullptr) {
+                PyException_SetTraceback(pvalue, pPyErrorTraceback);
             }
             // PyObject* pPyStringExceptionType = PyObject_Str(pyExcType);
 
             PyObject* str_exc_type = PyObject_Repr(ptype);
             PyObject* pyStr = PyUnicode_AsEncodedString(str_exc_type, "utf-8", "Error ~");
             const char *strExcType =  PyBytes_AS_STRING(pyStr);
-            Unigine::Log::error("Python Error Type: %s\n", strExcType);
+            Unigine::Log::error("Python Error Type: \n    %s\n", strExcType);
             Py_XDECREF(str_exc_type);
             Py_XDECREF(pyStr);
 
             PyObject* objectStr = PyObject_Str(pvalue);
             const char *pStrErrorMessage = PyUnicode_AsUTF8(objectStr);
-            Unigine::Log::error("Python Error Message: %s\n", pStrErrorMessage);
+            Unigine::Log::error("Error Message: \n    %s\n", pStrErrorMessage);
             Py_XDECREF(objectStr);
 
-            PyObject* str_exc_type2 = PyObject_Repr(ptraceback);
-            PyObject* objectStr2 = PyUnicode_AsEncodedString(str_exc_type2, "utf-8", "Error ~");
-            const char *pStrErrorMessage2 = PyBytes_AS_STRING(objectStr2);
-            Unigine::Log::error("Python Error traceback: %s\n", pStrErrorMessage2);
-            Py_XDECREF(objectStr2);
+            Unigine::Log::error("Traceback:\n");
+            PyTracebackObject* traceback = (PyTracebackObject*)pPyErrorTraceback; // get_the_traceback();
+            while (traceback != NULL) {
+                int lineNr = PyFrame_GetLineNumber(traceback->tb_frame);
+                const char* filename = PyUnicode_AsUTF8(traceback->tb_frame->f_code->co_filename);
+                std::string sSourceCodeLine = readLineCode(filename, lineNr, sScriptContent);
+                std::cout << sSourceCodeLine << std::endl;
+
+                PyObject *pSourceCodeLine = Py_BuildValue("s", sSourceCodeLine.c_str());
+                PyObject *pStr = PyUnicode_FromFormat(
+                    "    <frame at %p>, in line %R:%d,\n        code '%S'\n",
+                    traceback->tb_frame,
+                    traceback->tb_frame->f_code->co_filename,
+                    lineNr,
+                    pSourceCodeLine
+                );
+                const char *str = PyUnicode_AsUTF8(pStr);
+                Unigine::Log::error("%s", str);
+                traceback = traceback->tb_next;
+                Py_XDECREF(pSourceCodeLine);
+                Py_XDECREF(pStr);
+            }
         }
-
-        //Get error message
-        // const char * pStrErrorMessage = PyUnicode_AsUTF8(pvalue);
-        // std::cout << pStrErrorMessage << std::endl;
-        // char *pStrErrorMessage = PyString_AsString(pvalue);
-        // Unigine::Log::message(pStrErrorMessage);
-
-        // std::string result;
-        // PyObject* ptype;
-        // PyObject* pvalue;
-        // PyObject* ptraceback;
-        // PyErr_Fetch(&ptype, &pvalue, &ptraceback);
-        // PyErr_NormalizeException(&ptype, &pvalue, &ptraceback); // in order to convert pvalue from tuples to real objects
-
-        //                                                         //Attach exception name first
-        // PyObject* objectStr = PyObject_GetAttrString(ptype, "__name__");
-        // result = PyString_As_String(objectStr);
-        // result = "Exception: " + result;;
-        // Py_XDECREF(objectStr);
-        // objectStr = PyObject_Str(pvalue);
-        // if (objectStr != NULL) {
-        //     result = result + " was raised with error message : " + PyString_AS_STRING(objectStr);
-        //     Py_XDECREF(objectStr);
-        // }
+        // Py_XDECREF(ptype);
+        // Py_XDECREF(pvalue);
+        // Py_XDECREF(pPyErrorTraceback);
         PyErr_Clear();
         Unigine::Log::error("\nPython3Scripting: FAILED\n");
         return -1;
     }
     Unigine::Log::message("Python3Scripting: end executing script\n");
-
     return 0;
 }
 
-PythonExecutor::~PythonExecutor() {
-    for (int i = 0; i < m_vWrappers.size(); i++) {
-        m_vWrappers[i]->Call_After_Py_Finalize();
-    }
-    PyObject* pGlobalDict = (PyObject*)m_pGlobalDict;
-    Py_XDECREF(pGlobalDict);
-    Py_Finalize();
 
-    for (int i = 0; i < m_vWrappers.size(); i++) {
-        delete m_vWrappers[i];
+std::string PythonExecutor::readLineCode(const char *filename, int lineNr, const std::string &sScriptContent) {
+    std::string sLine = "... Not found";
+    int nLineCounter = 0;
+    std::string sFilepath(filename);
+    std::ifstream infile(filename);
+    if (infile.is_open()) {
+        while (std::getline(infile, sLine)) {
+            nLineCounter++;
+            if (nLineCounter == lineNr) {
+                break;
+            }
+        }
+        infile.close();
+    } else if (sFilepath == "<string>") {
+        std::stringstream ss(sScriptContent);
+        while (std::getline(ss, sLine, '\n')) {
+            nLineCounter++;
+            if (nLineCounter == lineNr) {
+                break;
+            }
+        }
     }
-    m_vWrappers.clear();
+    return sLine;
 }
