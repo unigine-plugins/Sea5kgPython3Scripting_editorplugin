@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <Python.h>
-#include "run_python_in_thread.h"
+#include "RunPythonInThread.h"
 
 class Python3PyTypeObjectBase {
     public:

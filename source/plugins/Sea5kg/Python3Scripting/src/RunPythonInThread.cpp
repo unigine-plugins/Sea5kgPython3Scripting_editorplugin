@@ -1,4 +1,4 @@
-#include "run_python_in_thread.h"
+#include "RunPythonInThread.h"
 #include "PythonExecutor.h"
 
 #include <QThread>

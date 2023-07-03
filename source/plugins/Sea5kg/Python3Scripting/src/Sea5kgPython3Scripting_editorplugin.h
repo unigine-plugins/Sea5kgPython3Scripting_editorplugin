@@ -19,7 +19,7 @@
 #include "dialogs/EditExtensionDialog.h"
 #include "interfaces/IRunPythonScript.h"
 #include "interfaces/IManageScripts.h"
-#include "run_python_in_thread.h"
+#include "RunPythonInThread.h"
 
 class Sea5kgPython3Scripting_editorplugin
     :

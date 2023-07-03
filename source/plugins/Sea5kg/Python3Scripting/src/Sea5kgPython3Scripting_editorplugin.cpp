@@ -14,7 +14,6 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QMessageBox>
-#include "run_python_in_thread.h"
 #include <iostream>
 #include <QGuiApplication>
 #include <QScreen>

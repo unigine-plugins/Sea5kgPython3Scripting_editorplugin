@@ -22,7 +22,7 @@ static PyObject* unigine_log_info(PyObject* self, PyObject* args) {
     }
     std::string sLogMessage(message);
     sLogMessage = "FromPython " + sLogMessage + "\n";
-    Unigine::Log::message(sLogMessage.c_str());
+    Unigine::Log::message("%s", sLogMessage.c_str());
     return Py_None;
 }
 
@@ -36,7 +36,7 @@ static PyObject* unigine_log_error(PyObject* self, PyObject* args) {
     }
     std::string sLogMessage(message);
     sLogMessage = "FromPython " + sLogMessage + "\n";
-    Unigine::Log::error(sLogMessage.c_str());
+    Unigine::Log::error("%s", sLogMessage.c_str());
     return Py_None;
 }
 
@@ -72,7 +72,6 @@ PyObject* _PyInit_unigine_lib(void) {
         delete pPyTypes;
         return NULL;
     }
-        
 
     if (!pPyTypes->addClassDefinitionToModule(pModule)) {
         Py_DECREF(pModule);

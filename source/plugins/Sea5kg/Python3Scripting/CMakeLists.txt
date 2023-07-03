@@ -108,7 +108,7 @@ add_library(${current_target} SHARED
     ${RESOURCES_FILE}
 	${PROJECT_SOURCE_DIR}/src/Sea5kgPython3Scripting_editorplugin.cpp
 	${PROJECT_SOURCE_DIR}/src/PythonExecutor.cpp
-	${PROJECT_SOURCE_DIR}/src/run_python_in_thread.cpp
+	${PROJECT_SOURCE_DIR}/src/RunPythonInThread.cpp
     ${PROJECT_SOURCE_DIR}/src/CollectorMenuSelected.cpp
     ${PROJECT_SOURCE_DIR}/src/ModelExtension.cpp
 	${PROJECT_SOURCE_DIR}/src/format_unexpy3/FileUnexpy3.cpp
