@@ -43,7 +43,7 @@ void RunScriptInThread::run() {
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
     while(!pRunner->mutexAsync.tryLock(5)) {
-        Unigine::Log::message("wait");
+        Unigine::Log::message("wait\n");
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
@@ -52,16 +52,13 @@ void RunScriptInThread::run() {
     if (ret == -1) {
         Unigine::Log::error("Problem with a script, exit_code: %d\n", ret);
     }
+    Unigine::Log::message("Script ended\n");
+    delete m_pExecutor;
+    m_pExecutor = nullptr;
+    // Unigine::Log::message("Executor removed\n");
 }
 
 // ------------------------------------------------------------------------------------------
-// Python3Threads
-
-// class Runner : public QObject {
-//     Q_OBJECT
-//     public:
-//         Runner();
-// };
 
 IPython3RunnerMain *g_pPython3RunnerMain = nullptr;
 

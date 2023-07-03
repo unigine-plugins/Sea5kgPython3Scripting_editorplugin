@@ -63,7 +63,7 @@ PythonExecutor::~PythonExecutor() {
     Py_XDECREF(pGlobalDict);
     Unigine::Log::message("finalize point 3\n");
 
-    Py_Finalize();
+    Py_FinalizeEx();
 
     Unigine::Log::message("finalize point 4\n");
 
@@ -71,7 +71,7 @@ PythonExecutor::~PythonExecutor() {
         delete m_vWrappers[i];
     }
     m_vWrappers.clear();
-    Unigine::Log::message("Done\n");
+    Unigine::Log::message("Finalized\n");
 }
 
 void PythonExecutor::addMaterials(const QVector<Unigine::UGUID> &vGuids) {
@@ -141,10 +141,6 @@ int PythonExecutor::execCode(const std::string &sScriptContent) {
     Unigine::Log::message("Python3Scripting: start executing script\n");
     PyErr_Clear();
 
-    // m_sDirPathWithModules = "P:\\UnigineEditorPlugin_Python3Scripting\\Python-3.10.1\\Modules";
-    // std::wstring sDir = str2wstr(m_sDirPathWithModules);
-    // PySys_SetPath(sDir.c_str());
-
     PyObject* pGlobalDict = (PyObject*)m_pGlobalDict;
 
     PyObject *pResult = PyRun_String(sScriptContent.c_str(), Py_file_input, pGlobalDict, NULL);
@@ -188,10 +184,11 @@ int PythonExecutor::execCode(const std::string &sScriptContent) {
                 std::cout << sSourceCodeLine << std::endl;
 
                 PyObject *pSourceCodeLine = Py_BuildValue("s", sSourceCodeLine.c_str());
+                PyObject *pFilename = Py_BuildValue("s", filename);
                 PyObject *pStr = PyUnicode_FromFormat(
-                    "    <frame at %p>, in line %R:%d,\n        code '%S'\n",
+                    "    <frame at %p>, in line %R:%d\n        code: '%S'\n",
                     traceback->tb_frame,
-                    traceback->tb_frame->f_code->co_filename,
+                    pFilename, // traceback->tb_frame->f_code->co_filename,
                     lineNr,
                     pSourceCodeLine
                 );
@@ -199,12 +196,13 @@ int PythonExecutor::execCode(const std::string &sScriptContent) {
                 Unigine::Log::error("%s", str);
                 traceback = traceback->tb_next;
                 Py_XDECREF(pSourceCodeLine);
+                Py_XDECREF(pFilename);
                 Py_XDECREF(pStr);
             }
         }
-        // Py_XDECREF(ptype);
-        // Py_XDECREF(pvalue);
-        // Py_XDECREF(pPyErrorTraceback);
+        Py_XDECREF(ptype);
+        Py_XDECREF(pvalue);
+        Py_XDECREF(pPyErrorTraceback);
         PyErr_Clear();
         Unigine::Log::error("\nPython3Scripting: FAILED\n");
         return -1;
