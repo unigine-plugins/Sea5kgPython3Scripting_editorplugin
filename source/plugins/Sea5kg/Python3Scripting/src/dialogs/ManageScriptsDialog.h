@@ -36,6 +36,9 @@ class ManageScriptsDialog : public QDialog {
     Q_OBJECT
 public:
     ManageScriptsDialog(QWidget *parent, QVector<ModelExtension *> *vScripts, IManageScripts *pManageScripts);
+    QString makeName(ModelExtension *pModel);
+    void reloadList();
+    void selectedItem(ModelExtension *pModel);
 
 signals:
     void findNext(const QString &str, Qt::CaseSensitivity cs);
@@ -44,6 +47,8 @@ signals:
 private slots:
     void removeClicked();
     void createClicked();
+    void enableOrDisableClicked();
+    void selectionChanged();
 
 private:
     QWidget *m_pParent;
@@ -53,6 +58,7 @@ private:
     QLineEdit *m_pLineEditSearch;
     QListWidget *m_pListWidget;
     QPushButton *m_pCreateButton;
+    QPushButton *m_pEnableButton;
     QPushButton *m_pRemoveButton;
     QPushButton *m_pCloseButton;
 };

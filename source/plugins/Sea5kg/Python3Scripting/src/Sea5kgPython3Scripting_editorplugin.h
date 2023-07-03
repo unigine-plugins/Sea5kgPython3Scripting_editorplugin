@@ -44,6 +44,9 @@ public:
 
     // IManageScripts
     virtual void addModelExtension(ModelExtension *pModel) override;
+    virtual void removeModelScriptById(QString sScriptId) override;
+    virtual void enableModelScriptById(QString sScriptId) override;
+    virtual void disableModelScriptById(QString sScriptId) override;
     virtual QString getPython3ScriptingDirPath() override;
 
 Q_SIGNALS:
@@ -58,9 +61,6 @@ private slots:
     void createNewExtension();
     void manageScripts();
     void editExtension();
-    void disableExtension();
-    void enableExtension();
-    void removeExtension();
     void menuClickAbout();
 
     void globalSelectionChanged();

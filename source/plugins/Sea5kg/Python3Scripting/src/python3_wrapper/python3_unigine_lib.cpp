@@ -47,7 +47,7 @@ static struct PyMethodDef methods[] = {
 };
 
 static struct PyModuleDef modDefUnigine = {
-	PyModuleDef_HEAD_INIT, "unigine", NULL, -1, methods, 
+	PyModuleDef_HEAD_INIT, "unigine", NULL, -1, methods,
 	NULL, NULL, NULL, NULL
 };
 
@@ -59,9 +59,6 @@ PyObject* _PyInit_unigine_lib(void) {
 
     auto *pPyTypes = new Python3PyTypeObjectAll();
 
-    // unigine_MaterialType.tp_new = PyType_GenericNew;
-    // if (PyType_Ready(&unigine_MaterialType) < 0)
-    //     return NULL;
     if (!pPyTypes->isReady()) {
         delete pPyTypes;
         return NULL;

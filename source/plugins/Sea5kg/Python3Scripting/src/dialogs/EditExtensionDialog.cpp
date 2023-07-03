@@ -96,6 +96,7 @@ void EditExtensionDialog::saveClicked() {
     fileMainPy.write(m_pCodeEditor->toPlainText().toUtf8());
     m_sCodeInFile = m_pCodeEditor->toPlainText().toUtf8();
     fileMainPy.close();
+    onCodeChanged();
 }
 
 void EditExtensionDialog::runClicked() {

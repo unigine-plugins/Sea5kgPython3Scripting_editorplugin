@@ -96,6 +96,53 @@ void Sea5kgPython3Scripting_editorplugin::addModelExtension(ModelExtension *pMod
     saveAndReloadExtensions();
 }
 
+void Sea5kgPython3Scripting_editorplugin::removeModelScriptById(QString sScriptId) {
+    log_info("removeExtension. sExtensionId == " + sScriptId);
+    ModelExtension *pExt = nullptr;
+    for (int i = 0; i < m_vScripts.size(); i++) {
+        if (m_vScripts[i]->getId() == sScriptId) {
+            pExt = m_vScripts[i];
+            m_vScripts.removeAt(i);
+            break;
+        }
+    }
+
+    // remove all files for extension
+    // TODO ask sure?
+    if (pExt != nullptr) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(
+            m_pMainWindow,
+            "Test",
+            "Are you sure that wanna delete extension?\nDirectory: " + pExt->getScriptDir(),
+            QMessageBox::Yes|QMessageBox::No
+        );
+        if (reply == QMessageBox::Yes) {
+            QDir dir(pExt->getScriptDir());
+            dir.removeRecursively();
+        }
+    }
+    saveAndReloadExtensions(); // here will be removed
+}
+
+void Sea5kgPython3Scripting_editorplugin::enableModelScriptById(QString sScriptId) {
+    for (int i = 0; i < m_vScripts.size(); i++) {
+        if (m_vScripts[i]->getId() == sScriptId) {
+            m_vScripts[i]->setEnabled(true);
+        }
+    }
+    saveAndReloadExtensions();
+}
+
+void Sea5kgPython3Scripting_editorplugin::disableModelScriptById(QString sScriptId) {
+    for (int i = 0; i < m_vScripts.size(); i++) {
+        if (m_vScripts[i]->getId() == sScriptId) {
+            m_vScripts[i]->setEnabled(false);
+        }
+    }
+    saveAndReloadExtensions();
+}
+
 QString Sea5kgPython3Scripting_editorplugin::getPython3ScriptingDirPath() {
     return m_sPython3ScriptingDirPath;
 }
@@ -127,85 +174,6 @@ void Sea5kgPython3Scripting_editorplugin::editExtension() {
     auto *pEdit = getEditDialog();
     pEdit->setModelExtension(pModel);
     pEdit->show();
-    // sd.setModal(true);
-    /*if (sd.exec() == QDialog::Accepted) {
-
-    }*/
-}
-
-void Sea5kgPython3Scripting_editorplugin::disableExtension() {
-    QObject* obj = sender();
-    QAction *pAction = dynamic_cast<QAction *>(obj);
-    if (pAction == nullptr) {
-        log_error("disableExtension. Could not cast to QAction");
-        return;
-    }
-    QVariant userData = pAction->data();
-    QString sExtensionId = userData.toString();
-    log_info("disableExtension. sExtensionId == " + sExtensionId);
-
-    for (int i = 0; i < m_vScripts.size(); i++) {
-        if (m_vScripts[i]->getId() == sExtensionId) {
-            m_vScripts[i]->setEnabled(false);
-        }
-    }
-    saveAndReloadExtensions();
-}
-
-void Sea5kgPython3Scripting_editorplugin::enableExtension() {
-    QObject* obj = sender();
-    QAction *pAction = dynamic_cast<QAction *>(obj);
-    if (pAction == nullptr) {
-        log_error("enableExtension. Could not cast to QAction");
-        return;
-    }
-    QVariant userData = pAction->data();
-    QString sExtensionId = userData.toString();
-    log_info("enableExtension. sExtensionId == " + sExtensionId);
-
-    for (int i = 0; i < m_vScripts.size(); i++) {
-        if (m_vScripts[i]->getId() == sExtensionId) {
-            m_vScripts[i]->setEnabled(true);
-        }
-    }
-    saveAndReloadExtensions();
-}
-
-void Sea5kgPython3Scripting_editorplugin::removeExtension() {
-    QObject* obj = sender();
-    QAction *pAction = dynamic_cast<QAction *>(obj);
-    if (pAction == nullptr) {
-        log_error("removeExtension. Could not cast to QAction");
-        return;
-    }
-    QVariant userData = pAction->data();
-    QString sExtensionId = userData.toString();
-    log_info("removeExtension. sExtensionId == " + sExtensionId);
-    ModelExtension *pExt = nullptr;
-    for (int i = 0; i < m_vScripts.size(); i++) {
-        if (m_vScripts[i]->getId() == sExtensionId) {
-            pExt = m_vScripts[i];
-            m_vScripts.removeAt(i);
-            break;
-        }
-    }
-
-    // remove all files for extension
-    // TODO ask sure?
-    if (pExt != nullptr) {
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(
-            m_pMainWindow,
-            "Test",
-            "Are you sure that wanna delete extension?\nDirectory: " + pExt->getScriptDir(),
-            QMessageBox::Yes|QMessageBox::No
-        );
-        if (reply == QMessageBox::Yes) {
-            QDir dir(pExt->getScriptDir());
-            dir.removeRecursively();
-        }
-    }
-    saveAndReloadExtensions(); // here will be removed
 }
 
 void Sea5kgPython3Scripting_editorplugin::manageScripts() {
@@ -537,24 +505,7 @@ bool Sea5kgPython3Scripting_editorplugin::reloadMenuForExtensions() {
         pActionEdit->setData(QVariant(pModel->getId()));
         connect(pActionEdit, &QAction::triggered, this, &Sea5kgPython3Scripting_editorplugin::editExtension);
 
-        QAction *pActionDisable = new QAction(tr("Disable"), this);
-        pActionDisable->setData(QVariant(pModel->getId()));
-        connect(pActionDisable, &QAction::triggered, this, &Sea5kgPython3Scripting_editorplugin::disableExtension);
-        pActionDisable->setEnabled(pModel->isEnabled());
-
-        QAction *pActionEnable = new QAction(tr("Enable"), this);
-        pActionEnable->setData(QVariant(pModel->getId()));
-        connect(pActionEnable, &QAction::triggered, this, &Sea5kgPython3Scripting_editorplugin::enableExtension);
-        pActionEnable->setEnabled(!pModel->isEnabled());
-
-        QAction *pActionRemove = new QAction(tr("Remove"), this);
-        pActionRemove->setData(QVariant(pModel->getId()));
-        connect(pActionRemove, &QAction::triggered, this, &Sea5kgPython3Scripting_editorplugin::removeExtension);
-
         pExtension->addAction(pActionEdit);
-        pExtension->addAction(pActionDisable);
-        pExtension->addAction(pActionEnable);
-        pExtension->addAction(pActionRemove);
     }
     return true;
 }
@@ -647,5 +598,3 @@ ModelExtension *Sea5kgPython3Scripting_editorplugin::findModelExtensionByAction(
     }
     return nullptr;
 }
-
-    
