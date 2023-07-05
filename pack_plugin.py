@@ -63,7 +63,7 @@ if is_windows:
     ]
     for _pydll in python_libs:
         zf.write(
-            "UnigineEditorPlugin_Python3Scripting/python-bin-windows/" + _pydll,
+            "bin/" + _pydll,
             folder_inside + "/bin/" + _pydll,
         )
     zf.write(
