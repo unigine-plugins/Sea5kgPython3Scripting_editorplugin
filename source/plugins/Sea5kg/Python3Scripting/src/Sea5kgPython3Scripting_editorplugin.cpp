@@ -378,7 +378,7 @@ bool Sea5kgPython3Scripting_editorplugin::prepareDirectoryWithExtensions() {
     m_sPython3ScriptingDirPath = m_sRootPath + "/plugins/Sea5kg/Python3Scripting/Scripts";
     QDir dirPython3Scripting(m_sPython3ScriptingDirPath);
     if (!dirPython3Scripting.exists()) {
-        QDir(m_sRootPath).mkdir("Python3Scripting");
+        dirPython3Scripting.mkpath(".");
     }
     if (!dirPython3Scripting.exists()) {
         log_error(" Could not create directory " + m_sPython3ScriptingDirPath);

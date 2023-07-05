@@ -19,7 +19,7 @@
         "files": [
             {
                 "file": "include/UnigineCustomSystemProxy.xml",
-                "hash": "168857779656433140",
+                "hash": "168857878568233140",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -117,23 +117,16 @@
             },
             {
                 "file": "include/UnigineNodes.h",
-                "hash": "16885777959974648",
+                "hash": "16885787855004648",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineThread.h",
-                "hash": "168857779610217892",
+                "hash": "168857878552717892",
                 "tags": [
                     "unigine_includes"
-                ]
-            },
-            {
-                "file": "bin/EditorCore_x64.dll",
-                "hash": "168857779520918178304",
-                "tags": [
-                    "binaries"
                 ]
             },
             {
@@ -144,8 +137,15 @@
                 ]
             },
             {
+                "file": "bin/EditorCore_x64.dll",
+                "hash": "168857878508618178304",
+                "tags": [
+                    "binaries"
+                ]
+            },
+            {
                 "file": "include/plugins/Unigine/Steam/UnigineSteam.h",
-                "hash": "16885777956556280",
+                "hash": "16885787854176280",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -187,14 +187,14 @@
             },
             {
                 "file": "include/UnigineUlon.xml",
-                "hash": "168857779667411721",
+                "hash": "168857878579011721",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineInterpreter.h",
-                "hash": "168857779580046406",
+                "hash": "168857878545646406",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -228,15 +228,15 @@
                 ]
             },
             {
-                "file": "data/.cache_textures/e5/e5e6a7f436e4b2c39a50b94654303fedfa7fa068.texture",
-                "hash": "1686372426868212",
+                "file": "data/.cache_textures/1d",
+                "hash": "",
                 "tags": [
                     "project_data"
                 ]
             },
             {
-                "file": "data/.cache_textures/1d",
-                "hash": "",
+                "file": "data/.cache_textures/e5/e5e6a7f436e4b2c39a50b94654303fedfa7fa068.texture",
+                "hash": "1686372426868212",
                 "tags": [
                     "project_data"
                 ]
@@ -271,28 +271,28 @@
             },
             {
                 "file": "include/UnigineDir.h",
-                "hash": "16885777957262258",
+                "hash": "16885787854352258",
+                "tags": [
+                    "unigine_includes"
+                ]
+            },
+            {
+                "file": "include/UnigineGUID.h",
+                "hash": "16885787854476674",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "bin/Unigine_x64.dll",
-                "hash": "168857779347330402816",
+                "hash": "168857878448330402816",
                 "tags": [
                     "binaries"
                 ]
             },
             {
-                "file": "include/UnigineGUID.h",
-                "hash": "16885777957636674",
-                "tags": [
-                    "unigine_includes"
-                ]
-            },
-            {
                 "file": "include/UnigineMathLibDVec4.xml",
-                "hash": "168857779661016184",
+                "hash": "168857878572616184",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -306,7 +306,7 @@
             },
             {
                 "file": "include/UnigineMathLibNumerical.h",
-                "hash": "168857779594428220",
+                "hash": "168857878548628220",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -320,7 +320,7 @@
             },
             {
                 "file": "bin/dxil.dll",
-                "hash": "16885777963171370048",
+                "hash": "16885787855761370048",
                 "tags": [
                     "binaries"
                 ]
@@ -392,14 +392,14 @@
             },
             {
                 "file": "include/UnigineRegExp.xml",
-                "hash": "16885777966542879",
+                "hash": "16885787857702879",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "data/editor2.ung",
-                "hash": "16885778086797960557",
+                "hash": "16885787919087960557",
                 "tags": [
                     "unigine_data"
                 ]
@@ -413,7 +413,7 @@
             },
             {
                 "file": "include/UnigineMathLibDVec3.xml",
-                "hash": "168857779660915029",
+                "hash": "168857878572515029",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -427,9 +427,16 @@
             },
             {
                 "file": "bin/ssleay32.dll",
-                "hash": "1688577794994353792",
+                "hash": "1688578784992353792",
                 "tags": [
                     "binaries"
+                ]
+            },
+            {
+                "file": "include/plugins/Unigine/Ultraleap/UnigineUltraleap.h",
+                "hash": "16885787854188356",
+                "tags": [
+                    "unigine_includes"
                 ]
             },
             {
@@ -437,13 +444,6 @@
                 "hash": "",
                 "tags": [
                     "project_sources"
-                ]
-            },
-            {
-                "file": "include/plugins/Unigine/Ultraleap/UnigineUltraleap.h",
-                "hash": "16885777956608356",
-                "tags": [
-                    "unigine_includes"
                 ]
             },
             {
@@ -455,14 +455,14 @@
             },
             {
                 "file": "include/UnigineProfiler.xml",
-                "hash": "16885777966514484",
+                "hash": "16885787857674484",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineMathLibSHBasis.xml",
-                "hash": "16885777966251239",
+                "hash": "16885787857411239",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -539,7 +539,7 @@
             },
             {
                 "file": "include/UnigineMeshDynamic.h",
-                "hash": "16885777959857925",
+                "hash": "16885787854977925",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -567,7 +567,7 @@
             },
             {
                 "file": "include/UnigineCurve2d.xml",
-                "hash": "168857779656317200",
+                "hash": "168857878568117200",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -581,14 +581,14 @@
             },
             {
                 "file": "include/UnigineGeodetics.h",
-                "hash": "16885777957603458",
+                "hash": "16885787854453458",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineRender.xml",
-                "hash": "1688577796655214995",
+                "hash": "1688578785772214995",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -617,7 +617,7 @@
             },
             {
                 "file": "include/UnigineCompress.xml",
-                "hash": "16885777965586133",
+                "hash": "16885787856766133",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -646,14 +646,14 @@
             },
             {
                 "file": "include/UnigineSplineGraph.h",
-                "hash": "16885777960782789",
+                "hash": "16885787855222789",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineStack.h",
-                "hash": "16885777960793732",
+                "hash": "16885787855233732",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -702,7 +702,7 @@
             },
             {
                 "file": "bin/EditorCore_x64d.pdb",
-                "hash": "1688577795576299421696",
+                "hash": "1688578785385299421696",
                 "tags": [
                     "binaries"
                 ]
@@ -716,7 +716,7 @@
             },
             {
                 "file": "include/UnigineMathLibHVec3.h",
-                "hash": "16885777958951947",
+                "hash": "16885787854771947",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -737,7 +737,7 @@
             },
             {
                 "file": "include/editor/UniginePluginInfo.h",
-                "hash": "16885777956064928",
+                "hash": "16885787854024928",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -765,14 +765,14 @@
             },
             {
                 "file": "include/UnigineMathLibConcave.h",
-                "hash": "16885777958649969",
+                "hash": "16885787854699969",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineDisplays.xml",
-                "hash": "16885777965677490",
+                "hash": "16885787856857490",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -800,7 +800,7 @@
             },
             {
                 "file": "include/UnigineMathLibNoise.h",
-                "hash": "16885777959387461",
+                "hash": "16885787854857461",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -849,7 +849,7 @@
             },
             {
                 "file": "include/UnigineMathLibDMat4.xml",
-                "hash": "168857779660724697",
+                "hash": "168857878572324697",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -953,17 +953,17 @@
                 ]
             },
             {
-                "file": "include/UnigineHash.xml",
-                "hash": "16885777965828037",
-                "tags": [
-                    "unigine_utils"
-                ]
-            },
-            {
                 "file": "data/.runtimes/d1/d1fc9b4bb675b82e6449a1b57547479094a0f5af.texture",
                 "hash": "1686372426926937998",
                 "tags": [
                     "project_data"
+                ]
+            },
+            {
+                "file": "include/UnigineHash.xml",
+                "hash": "16885787856988037",
+                "tags": [
+                    "unigine_utils"
                 ]
             },
             {
@@ -989,9 +989,23 @@
             },
             {
                 "file": "include/UnigineSet.h",
-                "hash": "16885777960684227",
+                "hash": "16885787855184227",
                 "tags": [
                     "unigine_includes"
+                ]
+            },
+            {
+                "file": "include/UniginePackageUng.xml",
+                "hash": "16885787857554012",
+                "tags": [
+                    "unigine_utils"
+                ]
+            },
+            {
+                "file": "bin/plugins/Unigine/FbxExporter/UnigineFbxExporter_plugin_x64.dll",
+                "hash": "16885787856337408896",
+                "tags": [
+                    "plugins"
                 ]
             },
             {
@@ -999,20 +1013,6 @@
                 "hash": "1686372426931802887",
                 "tags": [
                     "project_data"
-                ]
-            },
-            {
-                "file": "include/UniginePackageUng.xml",
-                "hash": "16885777966404012",
-                "tags": [
-                    "unigine_utils"
-                ]
-            },
-            {
-                "file": "bin/plugins/Unigine/FbxExporter/UnigineFbxExporter_plugin_x64.dll",
-                "hash": "16885777964877408896",
-                "tags": [
-                    "plugins"
                 ]
             },
             {
@@ -1024,7 +1024,7 @@
             },
             {
                 "file": "bin/plugins/Unigine/FbxImporter/UnigineFbxImporter_plugin_x64.dll",
-                "hash": "16885777963467804160",
+                "hash": "16885787855847804160",
                 "tags": [
                     "plugins"
                 ]
@@ -1059,7 +1059,7 @@
             },
             {
                 "file": "include/UnigineConsole.xml",
-                "hash": "168857779656146237",
+                "hash": "168857878567846237",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -1073,14 +1073,14 @@
             },
             {
                 "file": "bin/vcruntime140.dll",
-                "hash": "168857779620187888",
+                "hash": "168857878554687888",
                 "tags": [
                     "binaries"
                 ]
             },
             {
                 "file": "include/UniginePhysicals.h",
-                "hash": "16885777960225900",
+                "hash": "16885787855075900",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -1108,7 +1108,7 @@
             },
             {
                 "file": "include/UnigineHashSet.h",
-                "hash": "16885777957745806",
+                "hash": "16885787854505806",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -1122,21 +1122,21 @@
             },
             {
                 "file": "include/UnigineLog.xml",
-                "hash": "16885777965942412",
+                "hash": "16885787857122412",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "data/scripts.ung",
-                "hash": "168857780565011751",
+                "hash": "168857879044411751",
                 "tags": [
                     "unigine_data"
                 ]
             },
             {
                 "file": "include/UnigineMathLibDVec3.h",
-                "hash": "168857779588319021",
+                "hash": "168857878547319021",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -1150,7 +1150,7 @@
             },
             {
                 "file": "include/UnigineThread.xml",
-                "hash": "16885777966688864",
+                "hash": "16885787857848864",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -1185,7 +1185,7 @@
             },
             {
                 "file": "include/editor/UnigineEngineGuiWindow.h",
-                "hash": "16885777955994177",
+                "hash": "16885787854004177",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -1248,7 +1248,7 @@
             },
             {
                 "file": "include/UnigineHashSet.xml",
-                "hash": "16885777965845623",
+                "hash": "16885787857005623",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -1276,7 +1276,7 @@
             },
             {
                 "file": "bin/Qt5Widgets.dll",
-                "hash": "16885777949355530624",
+                "hash": "16885787849875530624",
                 "tags": [
                     "binaries"
                 ]
@@ -1297,14 +1297,14 @@
             },
             {
                 "file": "include/UnigineMathLibHVec2.xml",
-                "hash": "16885777966123279",
+                "hash": "16885787857283279",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineUlon.h",
-                "hash": "16885777961252622",
+                "hash": "16885787855332622",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -1318,7 +1318,7 @@
             },
             {
                 "file": "include/UnigineMathLibDVec2.xml",
-                "hash": "168857779660813850",
+                "hash": "168857878572413850",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -1332,7 +1332,7 @@
             },
             {
                 "file": "include/UniginePlayers.xml",
-                "hash": "168857779664874387",
+                "hash": "168857878576474387",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -1367,7 +1367,7 @@
             },
             {
                 "file": "include/UnigineCallback.h",
-                "hash": "168857779569336189",
+                "hash": "168857878542436189",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -1437,14 +1437,14 @@
             },
             {
                 "file": "include/UnigineMathLibHVec2.h",
-                "hash": "16885777958941852",
+                "hash": "16885787854761852",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UniginePlugin.xml",
-                "hash": "16885777966494246",
+                "hash": "16885787857654246",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -1458,7 +1458,7 @@
             },
             {
                 "file": "include/UnigineWorlds.xml",
-                "hash": "168857779668589705",
+                "hash": "168857878580089705",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -1494,7 +1494,7 @@
             },
             {
                 "file": "bin/Editor_x64.exe",
-                "hash": "16885777950524009208",
+                "hash": "16885787850024009208",
                 "tags": [
                     "binaries"
                 ]
@@ -1522,7 +1522,7 @@
             },
             {
                 "file": "include/UnigineMathLibDVec2.h",
-                "hash": "168857779587814369",
+                "hash": "168857878547214369",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -1536,14 +1536,14 @@
             },
             {
                 "file": "include/UnigineMathLibRandom.xml",
-                "hash": "16885777966243321",
+                "hash": "16885787857403321",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/editor/UnigineConstants.h",
-                "hash": "16885777955943343",
+                "hash": "16885787853983343",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -1564,14 +1564,14 @@
             },
             {
                 "file": "bin/styles/qwindowsvistastyle.dll",
-                "hash": "1688577794427136192",
+                "hash": "1688578784962136192",
                 "tags": [
                     "binaries"
                 ]
             },
             {
                 "file": "include/UnigineString.xml",
-                "hash": "168857779666560242",
+                "hash": "168857878578160242",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -1620,7 +1620,7 @@
             },
             {
                 "file": "launch_debug.bat",
-                "hash": "1688577808823534",
+                "hash": "1688578792047534",
                 "tags": [
                     "launcher_console"
                 ]
@@ -1634,7 +1634,7 @@
             },
             {
                 "file": "bin/plugins/Unigine/FbxExporter/UnigineFbxExporter_plugin_x64d.pdb",
-                "hash": "16885777965409908224",
+                "hash": "16885787856589908224",
                 "tags": [
                     "plugins"
                 ]
@@ -1697,21 +1697,21 @@
             },
             {
                 "file": "include/UnigineMesh.h",
-                "hash": "168857779598410081",
+                "hash": "168857878549610081",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineControls.h",
-                "hash": "16885777957183987",
+                "hash": "16885787854313987",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineMathLibVec2.h",
-                "hash": "168857779596613278",
+                "hash": "168857878549313278",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -1732,14 +1732,14 @@
             },
             {
                 "file": "bin/Editor_x64.pdb",
-                "hash": "16885777950624534272",
+                "hash": "16885787850094534272",
                 "tags": [
                     "binaries"
                 ]
             },
             {
                 "file": "include/UniginePair.h",
-                "hash": "16885777960082959",
+                "hash": "16885787855032959",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -1822,15 +1822,15 @@
                 ]
             },
             {
-                "file": "data/.cache_textures/7b/7bf5b94f8875d6620d67e2596995e7e4f8b491f3.texture",
-                "hash": "1686372426586388",
+                "file": "data/.cache_textures/88/8846741d911b66d890e53c57d29cadca545c42a1.texture",
+                "hash": "1686372426636469",
                 "tags": [
                     "project_data"
                 ]
             },
             {
-                "file": "data/.cache_textures/88/8846741d911b66d890e53c57d29cadca545c42a1.texture",
-                "hash": "1686372426636469",
+                "file": "data/.cache_textures/7b/7bf5b94f8875d6620d67e2596995e7e4f8b491f3.texture",
+                "hash": "1686372426586388",
                 "tags": [
                     "project_data"
                 ]
@@ -1872,7 +1872,7 @@
             },
             {
                 "file": "include/UnigineShader.h",
-                "hash": "16885777960698059",
+                "hash": "16885787855198059",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -1886,21 +1886,21 @@
             },
             {
                 "file": "include/plugins/Unigine/Oculus/UnigineOculus.xml",
-                "hash": "168857779654723931",
+                "hash": "168857878566423931",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineMathLibIVec4.xml",
-                "hash": "168857779661715427",
+                "hash": "168857878573215427",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineLog.h",
-                "hash": "16885777958171909",
+                "hash": "16885787854601909",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -1956,7 +1956,7 @@
             },
             {
                 "file": "include/UnigineMathLibGeometry.xml",
-                "hash": "168857779661137552",
+                "hash": "168857878572737552",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2005,7 +2005,7 @@
             },
             {
                 "file": "include/UniginePath.xml",
-                "hash": "16885777966439290",
+                "hash": "16885787857599290",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2019,7 +2019,7 @@
             },
             {
                 "file": "include/plugins/Unigine/LeapMotion/UnigineLeapMotion.xml",
-                "hash": "16885777965459887",
+                "hash": "16885787856629887",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2061,14 +2061,14 @@
             },
             {
                 "file": "include/UnigineBiMap.h",
-                "hash": "168857779568822063",
+                "hash": "168857878542322063",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineUtils.xml",
-                "hash": "16885777966763819",
+                "hash": "16885787857923819",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2082,21 +2082,21 @@
             },
             {
                 "file": "include/UnigineWorld.h",
-                "hash": "168857779615211143",
+                "hash": "168857878554111143",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineResource.xml",
-                "hash": "16885777966561108",
+                "hash": "16885787857731108",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineVector.h",
-                "hash": "168857779613248840",
+                "hash": "168857878553648840",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2109,6 +2109,13 @@
                 ]
             },
             {
+                "file": "bin/imageformats/qgif.dll",
+                "hash": "168857878496032768",
+                "tags": [
+                    "binaries"
+                ]
+            },
+            {
                 "file": "data/.cache_textures/9b/9baa3e95ea88cd4a62620bb25d2a6b08ad8e9655.texture",
                 "hash": "1686372426689158",
                 "tags": [
@@ -2116,15 +2123,8 @@
                 ]
             },
             {
-                "file": "bin/imageformats/qgif.dll",
-                "hash": "168857779441132768",
-                "tags": [
-                    "binaries"
-                ]
-            },
-            {
                 "file": "include/plugins/Unigine/FMOD/UnigineFMOD.xml",
-                "hash": "1688577796543101146",
+                "hash": "1688578785660101146",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2138,7 +2138,7 @@
             },
             {
                 "file": "include/UnigineWorlds.h",
-                "hash": "168857779615715415",
+                "hash": "168857878554215415",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2173,7 +2173,7 @@
             },
             {
                 "file": "include/UnigineXml.h",
-                "hash": "168857779616210144",
+                "hash": "168857878554310144",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2201,14 +2201,14 @@
             },
             {
                 "file": "include/UnigineInput.xml",
-                "hash": "1688577796588121291",
+                "hash": "1688578785704121291",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineChecksum.h",
-                "hash": "168857779570025038",
+                "hash": "168857878542625038",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2229,7 +2229,7 @@
             },
             {
                 "file": "include/UnigineWidgets.xml",
-                "hash": "1688577796681320444",
+                "hash": "1688578785796320444",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2243,7 +2243,7 @@
             },
             {
                 "file": "include/plugins/Unigine/LeapMotion/UnigineLeapMotion.h",
-                "hash": "16885777956454216",
+                "hash": "16885787854134216",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2257,7 +2257,7 @@
             },
             {
                 "file": "include/UnigineRender.h",
-                "hash": "168857779606291876",
+                "hash": "168857878551691876",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2285,14 +2285,14 @@
             },
             {
                 "file": "bin/plugins/Unigine/FbxImporter/UnigineFbxImporter_plugin_x64d.pdb",
-                "hash": "168857779640814299136",
+                "hash": "168857878561414299136",
                 "tags": [
                     "plugins"
                 ]
             },
             {
                 "file": "include/UnigineComponentSystem.h",
-                "hash": "168857779570657638",
+                "hash": "168857878542757638",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2383,7 +2383,7 @@
             },
             {
                 "file": "include/UnigineMathLibMat2.h",
-                "hash": "168857779591510286",
+                "hash": "168857878548210286",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2404,7 +2404,7 @@
             },
             {
                 "file": "include/UnigineCamera.xml",
-                "hash": "168857779655526078",
+                "hash": "168857878567226078",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2418,7 +2418,7 @@
             },
             {
                 "file": "include/UnigineFunction.h",
-                "hash": "168857779575410554",
+                "hash": "168857878544310554",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2453,21 +2453,21 @@
             },
             {
                 "file": "include/UnigineUtils.h",
-                "hash": "16885777961271180",
+                "hash": "16885787855351180",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineInterpreter.xml",
-                "hash": "168857779659095858",
+                "hash": "168857878570695858",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineSystemInfo.h",
-                "hash": "16885777960911794",
+                "hash": "16885787855261794",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2495,7 +2495,7 @@
             },
             {
                 "file": "include/UnigineMathLibConvex.h",
-                "hash": "168857779586916987",
+                "hash": "168857878547016987",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2509,21 +2509,21 @@
             },
             {
                 "file": "bin/openal32.dll",
-                "hash": "1688577796218891904",
+                "hash": "1688578785549891904",
                 "tags": [
                     "binaries"
                 ]
             },
             {
                 "file": "include/UnigineMathLibHVec4.h",
-                "hash": "16885777958962236",
+                "hash": "16885787854782236",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineHashMap.h",
-                "hash": "168857779577312440",
+                "hash": "168857878544912440",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2537,7 +2537,7 @@
             },
             {
                 "file": "include/UnigineType.xml",
-                "hash": "16885777966731119",
+                "hash": "16885787857891119",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2579,28 +2579,28 @@
             },
             {
                 "file": "include/editor/UniginePluginManager.h",
-                "hash": "16885777956075883",
+                "hash": "16885787854035883",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "bin/dxcompiler.dll",
-                "hash": "168857779629317107352",
+                "hash": "168857878557317107352",
                 "tags": [
                     "binaries"
                 ]
             },
             {
                 "file": "include/UnigineDecals.h",
-                "hash": "16885777957254239",
+                "hash": "16885787854344239",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "lib/Unigine_x64.lib",
-                "hash": "16885777943446340086",
+                "hash": "16885787849426340086",
                 "tags": [
                     "binaries"
                 ]
@@ -2614,21 +2614,21 @@
             },
             {
                 "file": "include/UnigineMathLibMat3.xml",
-                "hash": "168857779661913747",
+                "hash": "168857878573413747",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineFileSystem.h",
-                "hash": "168857779574713298",
+                "hash": "168857878544213298",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineLights.h",
-                "hash": "168857779581124515",
+                "hash": "168857878545824515",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2643,14 +2643,14 @@
             },
             {
                 "file": "include/UnigineMap.xml",
-                "hash": "16885777965961161",
+                "hash": "16885787857141161",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineMathLibPolygon.xml",
-                "hash": "16885777966233333",
+                "hash": "16885787857383333",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2671,7 +2671,7 @@
             },
             {
                 "file": "include/UnigineMathLibPolygon.h",
-                "hash": "16885777959465630",
+                "hash": "16885787854875630",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2698,15 +2698,15 @@
                 ]
             },
             {
-                "file": "data/.cache_textures/f3/f3f0c647eb984efa990c921147ee243c4fd2b26b.texture",
-                "hash": "1686372426890794",
+                "file": "data/.cache_textures/a5/a5fbf3dfde2c2fb2c8104b69408f9db42323ad83.texture",
+                "hash": "1686372426725787",
                 "tags": [
                     "project_data"
                 ]
             },
             {
-                "file": "data/.cache_textures/a5/a5fbf3dfde2c2fb2c8104b69408f9db42323ad83.texture",
-                "hash": "1686372426725787",
+                "file": "data/.cache_textures/f3/f3f0c647eb984efa990c921147ee243c4fd2b26b.texture",
+                "hash": "1686372426890794",
                 "tags": [
                     "project_data"
                 ]
@@ -2720,7 +2720,7 @@
             },
             {
                 "file": "include/UnigineTilesetFile.h",
-                "hash": "16885777961082052",
+                "hash": "16885787855292052",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -2762,7 +2762,7 @@
             },
             {
                 "file": "include/UnigineMemory.xml",
-                "hash": "16885777966302179",
+                "hash": "16885787857462179",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2797,7 +2797,7 @@
             },
             {
                 "file": "include/UnigineMesh.xml",
-                "hash": "168857779663267712",
+                "hash": "168857878574867712",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2839,14 +2839,14 @@
             },
             {
                 "file": "bin/platforms/qwindows.dll",
-                "hash": "16885777944511446400",
+                "hash": "16885787849651446400",
                 "tags": [
                     "binaries"
                 ]
             },
             {
                 "file": "include/UniginePalette.xml",
-                "hash": "16885777966424878",
+                "hash": "16885787857574878",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2888,7 +2888,7 @@
             },
             {
                 "file": "bin/d3dcompiler_47.dll",
-                "hash": "16885777962444524480",
+                "hash": "16885787855544524480",
                 "tags": [
                     "binaries"
                 ]
@@ -2902,7 +2902,7 @@
             },
             {
                 "file": "include/UnigineMathLibBVec4.xml",
-                "hash": "16885777966038146",
+                "hash": "16885787857198146",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2923,7 +2923,7 @@
             },
             {
                 "file": "include/UnigineMathLibBounds.xml",
-                "hash": "168857779660297931",
+                "hash": "168857878571997931",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -2966,7 +2966,7 @@
             },
             {
                 "file": "include/UnigineMeshDynamic.xml",
-                "hash": "168857779663343971",
+                "hash": "168857878574943971",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -3002,7 +3002,7 @@
             },
             {
                 "file": "include/UnigineTextures.h",
-                "hash": "168857779609613762",
+                "hash": "168857878552713762",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3023,14 +3023,14 @@
             },
             {
                 "file": "include/UnigineType.h",
-                "hash": "168857779612013533",
+                "hash": "168857878553213533",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UniginePlugin.h",
-                "hash": "16885777960343112",
+                "hash": "16885787855103112",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3058,7 +3058,7 @@
             },
             {
                 "file": "include/UnigineProperties.xml",
-                "hash": "168857779665287184",
+                "hash": "168857878576987184",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -3114,21 +3114,21 @@
             },
             {
                 "file": "include/UnigineJson.h",
-                "hash": "16885777958058908",
+                "hash": "16885787854578908",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineMathLibVec3.xml",
-                "hash": "168857779662816291",
+                "hash": "168857878574416291",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineXml.xml",
-                "hash": "168857779668658879",
+                "hash": "168857878580158879",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -3156,14 +3156,14 @@
             },
             {
                 "file": "bin/ApplicationLauncher_x64.exe",
-                "hash": "16885777943951122304",
+                "hash": "16885787849591122304",
                 "tags": [
                     "binaries"
                 ]
             },
             {
                 "file": "include/UnigineObjects.xml",
-                "hash": "1688577796638694929",
+                "hash": "1688578785753694929",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -3240,14 +3240,14 @@
             },
             {
                 "file": "include/UnigineFfp.h",
-                "hash": "16885777957412851",
+                "hash": "16885787854412851",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineSounds.xml",
-                "hash": "168857779666149704",
+                "hash": "168857878577849704",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -3261,7 +3261,7 @@
             },
             {
                 "file": "include/UnigineCustomSystemProxy.h",
-                "hash": "16885777957248897",
+                "hash": "16885787854338897",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3289,7 +3289,7 @@
             },
             {
                 "file": "include/UnigineMathLibMat3.h",
-                "hash": "168857779592226363",
+                "hash": "168857878548326363",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3303,7 +3303,7 @@
             },
             {
                 "file": "include/UnigineMathLibHVec4.xml",
-                "hash": "16885777966143792",
+                "hash": "16885787857303792",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -3317,7 +3317,7 @@
             },
             {
                 "file": "include/UnigineDecals.xml",
-                "hash": "168857779656522834",
+                "hash": "168857878568322834",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -3331,7 +3331,7 @@
             },
             {
                 "file": "include/UnigineUserInterface.xml",
-                "hash": "168857779667510261",
+                "hash": "168857878579110261",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -3345,7 +3345,7 @@
             },
             {
                 "file": "include/editor/UnigineCollection.h",
-                "hash": "16885777955921904",
+                "hash": "16885787853971904",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3366,16 +3366,9 @@
             },
             {
                 "file": "include/UnigineMaterial.xml",
-                "hash": "168857779659793451",
+                "hash": "168857878571593451",
                 "tags": [
                     "unigine_utils"
-                ]
-            },
-            {
-                "file": "include/UnigineMathLibDMat4.h",
-                "hash": "168857779587443635",
-                "tags": [
-                    "unigine_includes"
                 ]
             },
             {
@@ -3386,8 +3379,15 @@
                 ]
             },
             {
+                "file": "include/UnigineMathLibDMat4.h",
+                "hash": "168857878547143635",
+                "tags": [
+                    "unigine_includes"
+                ]
+            },
+            {
                 "file": "lib/EditorCore_x64.lib",
-                "hash": "16885777943643152378",
+                "hash": "16885787849533152378",
                 "tags": [
                     "binaries"
                 ]
@@ -3408,7 +3408,7 @@
             },
             {
                 "file": "include/UnigineBase.h",
-                "hash": "16885777956826020",
+                "hash": "16885787854226020",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3436,14 +3436,14 @@
             },
             {
                 "file": "include/UnigineSignal.xml",
-                "hash": "16885777966602458",
+                "hash": "16885787857762458",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineControls.xml",
-                "hash": "168857779656224568",
+                "hash": "168857878568024568",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -3478,7 +3478,7 @@
             },
             {
                 "file": "include/UnigineStreams.h",
-                "hash": "16885777960849212",
+                "hash": "16885787855249212",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3499,7 +3499,7 @@
             },
             {
                 "file": "lib/EditorCore_x64d.lib",
-                "hash": "16885777943773159848",
+                "hash": "16885787849573159848",
                 "tags": [
                     "binaries"
                 ]
@@ -3541,7 +3541,7 @@
             },
             {
                 "file": "include/UnigineNodes.xml",
-                "hash": "168857779663612666",
+                "hash": "168857878575112666",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -3569,14 +3569,14 @@
             },
             {
                 "file": "include/UnigineSet.xml",
-                "hash": "16885777966572644",
+                "hash": "16885787857742644",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "bin/plugins/Unigine/FbxImporter/UnigineFbxImporter_plugin_x64d.dll",
-                "hash": "168857779638910892544",
+                "hash": "168857878560110892544",
                 "tags": [
                     "plugins"
                 ]
@@ -3639,7 +3639,7 @@
             },
             {
                 "file": "include/UnigineWindowManager.h",
-                "hash": "168857779614720361",
+                "hash": "168857878554020361",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3674,7 +3674,7 @@
             },
             {
                 "file": "include/UnigineMathLibIVec3.xml",
-                "hash": "168857779661613270",
+                "hash": "168857878573113270",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -3723,7 +3723,7 @@
             },
             {
                 "file": "bin/msvcp140.dll",
-                "hash": "1688577796183633152",
+                "hash": "1688578785545633152",
                 "tags": [
                     "binaries"
                 ]
@@ -3737,7 +3737,7 @@
             },
             {
                 "file": "include/plugins/Unigine/Kinect/UnigineKinect.xml",
-                "hash": "168857779654419222",
+                "hash": "168857878566119222",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -3758,7 +3758,7 @@
             },
             {
                 "file": "include/UniginePackageUng.h",
-                "hash": "16885777960031463",
+                "hash": "16885787855021463",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3779,7 +3779,7 @@
             },
             {
                 "file": "include/UnigineLoadingScreen.h",
-                "hash": "16885777958152364",
+                "hash": "16885787854592364",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3793,21 +3793,21 @@
             },
             {
                 "file": "include/UnigineVisualizer.xml",
-                "hash": "168857779668038886",
+                "hash": "168857878579538886",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineMathLibVec4.h",
-                "hash": "168857779597723028",
+                "hash": "168857878549523028",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineMathLibVec3.h",
-                "hash": "168857779597120310",
+                "hash": "168857878549420310",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3835,7 +3835,7 @@
             },
             {
                 "file": "bin/Qt5Core.dll",
-                "hash": "16885777945046105088",
+                "hash": "16885787849726105088",
                 "tags": [
                     "binaries"
                 ]
@@ -3863,14 +3863,14 @@
             },
             {
                 "file": "bin/plugins/Unigine/GLTFImporter/UnigineGLTFImporter_plugin_x64.dll",
-                "hash": "1688577796426465664",
+                "hash": "1688578785616465664",
                 "tags": [
                     "plugins"
                 ]
             },
             {
                 "file": "include/plugins/Unigine/FMOD/UnigineFMOD.h",
-                "hash": "168857779563520904",
+                "hash": "168857878541120904",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3891,7 +3891,7 @@
             },
             {
                 "file": "include/UnigineGeodeticsTransformer.xml",
-                "hash": "16885777965794648",
+                "hash": "16885787856954648",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -3912,7 +3912,7 @@
             },
             {
                 "file": "include/UnigineEditor.h",
-                "hash": "16885777957292951",
+                "hash": "16885787854362951",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3947,7 +3947,7 @@
             },
             {
                 "file": "include/UnigineMap.h",
-                "hash": "16885777958278849",
+                "hash": "16885787854618849",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -3989,14 +3989,14 @@
             },
             {
                 "file": "include/UnigineMathLibBVec4.h",
-                "hash": "16885777958534453",
+                "hash": "16885787854674453",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineVector.xml",
-                "hash": "168857779667721084",
+                "hash": "168857878579321084",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -4017,7 +4017,7 @@
             },
             {
                 "file": "include/UniginePalette.h",
-                "hash": "16885777960105242",
+                "hash": "16885787855045242",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -4094,7 +4094,7 @@
             },
             {
                 "file": "include/UnigineMathLibRandom.h",
-                "hash": "16885777959544118",
+                "hash": "16885787854894118",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -4115,14 +4115,14 @@
             },
             {
                 "file": "include/UnigineGeodetics.xml",
-                "hash": "168857779657814157",
+                "hash": "168857878569414157",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineImport.xml",
-                "hash": "168857779658781233",
+                "hash": "168857878570381233",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -4142,6 +4142,13 @@
                 ]
             },
             {
+                "file": "include/UnigineFields.xml",
+                "hash": "168857878569128435",
+                "tags": [
+                    "unigine_utils"
+                ]
+            },
+            {
                 "file": "data/.cache_textures/ec/ec562918948699976835ea0add65d1e18b3341cc.texture",
                 "hash": "1686372426880527",
                 "tags": [
@@ -4149,15 +4156,8 @@
                 ]
             },
             {
-                "file": "include/UnigineFields.xml",
-                "hash": "168857779657428435",
-                "tags": [
-                    "unigine_utils"
-                ]
-            },
-            {
                 "file": "include/plugins/Unigine/Varjo/UnigineVarjo.h",
-                "hash": "168857779566513015",
+                "hash": "168857878541913015",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -4171,7 +4171,7 @@
             },
             {
                 "file": "include/UnigineParticlesFields.h",
-                "hash": "16885777960153033",
+                "hash": "16885787855053033",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -4199,7 +4199,7 @@
             },
             {
                 "file": "include/UnigineWorld.xml",
-                "hash": "168857779668471088",
+                "hash": "168857878579871088",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -4240,17 +4240,17 @@
                 ]
             },
             {
-                "file": "include/UnigineCurve2d.h",
-                "hash": "16885777957192415",
+                "file": "include/plugins/Unigine/Steam/UnigineSteam.xml",
+                "hash": "168857878566723234",
                 "tags": [
-                    "unigine_includes"
+                    "unigine_utils"
                 ]
             },
             {
-                "file": "include/plugins/Unigine/Steam/UnigineSteam.xml",
-                "hash": "168857779654923234",
+                "file": "include/UnigineCurve2d.h",
+                "hash": "16885787854322415",
                 "tags": [
-                    "unigine_utils"
+                    "unigine_includes"
                 ]
             },
             {
@@ -4276,7 +4276,7 @@
             },
             {
                 "file": "include/UnigineConfig.h",
-                "hash": "16885777957125422",
+                "hash": "16885787854295422",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -4339,7 +4339,7 @@
             },
             {
                 "file": "include/UnigineParticlesFields.xml",
-                "hash": "168857779664211565",
+                "hash": "168857878575811565",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -4353,7 +4353,7 @@
             },
             {
                 "file": "include/UnigineGUID.xml",
-                "hash": "16885777965818465",
+                "hash": "16885787856978465",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -4402,7 +4402,7 @@
             },
             {
                 "file": "include/UnigineTileset.xml",
-                "hash": "168857779666913815",
+                "hash": "168857878578513815",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -4451,21 +4451,21 @@
             },
             {
                 "file": "include/UniginePrimitives.xml",
-                "hash": "16885777966508070",
+                "hash": "16885787857668070",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineLogic.xml",
-                "hash": "168857779659513899",
+                "hash": "168857878571213899",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineMathLibSHBasis.h",
-                "hash": "16885777959552383",
+                "hash": "16885787854902383",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -4486,7 +4486,7 @@
             },
             {
                 "file": "bin/Unigine_x64.pdb",
-                "hash": "168857779351738219776",
+                "hash": "168857878452738219776",
                 "tags": [
                     "binaries"
                 ]
@@ -4500,7 +4500,7 @@
             },
             {
                 "file": "include/editor/UnigineEditorGlobal.h",
-                "hash": "1688577795598727",
+                "hash": "1688578785399727",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -4508,6 +4508,13 @@
             {
                 "file": "data/.cache_textures/f3/f351279ecbc4ea65eeb01880e9a331dffe5e55b2.texture",
                 "hash": "1686372426889736",
+                "tags": [
+                    "project_data"
+                ]
+            },
+            {
+                "file": "data/.cache_textures/0f",
+                "hash": "",
                 "tags": [
                     "project_data"
                 ]
@@ -4521,13 +4528,6 @@
             },
             {
                 "file": "data/.cache_textures/78",
-                "hash": "",
-                "tags": [
-                    "project_data"
-                ]
-            },
-            {
-                "file": "data/.cache_textures/0f",
                 "hash": "",
                 "tags": [
                     "project_data"
@@ -4556,7 +4556,7 @@
             },
             {
                 "file": "include/UnigineString.h",
-                "hash": "168857779609045036",
+                "hash": "168857878552545036",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -4577,7 +4577,7 @@
             },
             {
                 "file": "include/UnigineObjects.h",
-                "hash": "1688577796002104846",
+                "hash": "1688578785501104846",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -4605,14 +4605,14 @@
             },
             {
                 "file": "include/UnigineMaterial.h",
-                "hash": "168857779583213580",
+                "hash": "168857878546213580",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UniginePtr.h",
-                "hash": "168857779605111367",
+                "hash": "168857878551411367",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -4640,14 +4640,14 @@
             },
             {
                 "file": "include/UnigineMaterials.h",
-                "hash": "16885777958332557",
+                "hash": "16885787854632557",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineMathLib2d.h",
-                "hash": "168857779584310522",
+                "hash": "168857878546510522",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -4675,7 +4675,7 @@
             },
             {
                 "file": "bin/Unigine_x64d.dll",
-                "hash": "168857779395973326336",
+                "hash": "168857878461273326336",
                 "tags": [
                     "binaries"
                 ]
@@ -4759,7 +4759,7 @@
             },
             {
                 "file": "include/UnigineConsole.h",
-                "hash": "168857779571710091",
+                "hash": "168857878543010091",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -4773,7 +4773,7 @@
             },
             {
                 "file": "include/UnigineFunction.xml",
-                "hash": "16885777965761814",
+                "hash": "16885787856931814",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -4871,28 +4871,28 @@
             },
             {
                 "file": "include/UnigineMathLibCommon.h",
-                "hash": "168857779585848412",
+                "hash": "168857878546848412",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/editor/UnigineViewportManager.h",
-                "hash": "168857779562412560",
+                "hash": "168857878540812560",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineCamera.h",
-                "hash": "16885777956943798",
+                "hash": "16885787854253798",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineLoadingScreen.xml",
-                "hash": "168857779659310983",
+                "hash": "168857878571010983",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -4913,7 +4913,7 @@
             },
             {
                 "file": "include/UnigineSplineGraph.xml",
-                "hash": "168857779666212592",
+                "hash": "168857878577812592",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -4927,7 +4927,7 @@
             },
             {
                 "file": "include/UnigineMaterials.xml",
-                "hash": "16885777965989473",
+                "hash": "16885787857159473",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -4941,14 +4941,14 @@
             },
             {
                 "file": "include/UnigineTimer.xml",
-                "hash": "16885777966712282",
+                "hash": "16885787857872282",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/editor/UnigineSelection.h",
-                "hash": "16885777956135170",
+                "hash": "16885787854055170",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -4976,7 +4976,7 @@
             },
             {
                 "file": "include/editor/UnigineAssetManager.h",
-                "hash": "16885777955917765",
+                "hash": "16885787853967765",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5004,7 +5004,7 @@
             },
             {
                 "file": "include/UnigineMemory.h",
-                "hash": "16885777959781875",
+                "hash": "16885787854961875",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5025,23 +5025,16 @@
             },
             {
                 "file": "include/UnigineMathLibCommon.xml",
-                "hash": "16885777966046023",
+                "hash": "16885787857206023",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineGame.h",
-                "hash": "16885777957582664",
+                "hash": "16885787854442664",
                 "tags": [
                     "unigine_includes"
-                ]
-            },
-            {
-                "file": "data/.cache_textures/86/867e9249c84677141c68f763a8fff566c42b0d8d.texture",
-                "hash": "1686372426629690",
-                "tags": [
-                    "project_data"
                 ]
             },
             {
@@ -5049,6 +5042,13 @@
                 "hash": "",
                 "tags": [
                     "plugins"
+                ]
+            },
+            {
+                "file": "data/.cache_textures/86/867e9249c84677141c68f763a8fff566c42b0d8d.texture",
+                "hash": "1686372426629690",
+                "tags": [
+                    "project_data"
                 ]
             },
             {
@@ -5081,7 +5081,7 @@
             },
             {
                 "file": "include/plugins/Unigine/Varjo/UnigineVarjo.xml",
-                "hash": "168857779655259373",
+                "hash": "168857878566959373",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -5095,14 +5095,14 @@
             },
             {
                 "file": "include/UnigineMeshStatic.h",
-                "hash": "16885777959905997",
+                "hash": "16885787854985997",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineExport.h",
-                "hash": "16885777957363327",
+                "hash": "16885787854393327",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5123,7 +5123,7 @@
             },
             {
                 "file": "include/UnigineMathLib.h",
-                "hash": "168857779583864580",
+                "hash": "168857878546464580",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5137,7 +5137,7 @@
             },
             {
                 "file": "include/UniginePhysics.h",
-                "hash": "168857779602742279",
+                "hash": "168857878550842279",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5242,7 +5242,7 @@
             },
             {
                 "file": "include/UnigineEngine.h",
-                "hash": "168857779573533266",
+                "hash": "168857878543833266",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5270,7 +5270,7 @@
             },
             {
                 "file": "include/UnigineResource.h",
-                "hash": "16885777960631585",
+                "hash": "16885787855171585",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5284,14 +5284,14 @@
             },
             {
                 "file": "include/UniginePair.xml",
-                "hash": "16885777966413705",
+                "hash": "16885787857563705",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineShader.xml",
-                "hash": "168857779665937744",
+                "hash": "168857878577537744",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -5319,7 +5319,7 @@
             },
             {
                 "file": "include/UnigineNode.h",
-                "hash": "168857779599613623",
+                "hash": "168857878549913623",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5346,17 +5346,17 @@
                 ]
             },
             {
-                "file": "include/UnigineHashMap.xml",
-                "hash": "168857779658312365",
-                "tags": [
-                    "unigine_utils"
-                ]
-            },
-            {
                 "file": "data/.cache_textures/37/37e2c1474be40dfa51ff4511da933b3cc85edd6b.texture",
                 "hash": "1686372426433866",
                 "tags": [
                     "project_data"
+                ]
+            },
+            {
+                "file": "include/UnigineHashMap.xml",
+                "hash": "168857878569912365",
+                "tags": [
+                    "unigine_utils"
                 ]
             },
             {
@@ -5368,7 +5368,7 @@
             },
             {
                 "file": "bin/Editor_x64d.exe",
-                "hash": "16885777950906661384",
+                "hash": "16885787850196661384",
                 "tags": [
                     "binaries"
                 ]
@@ -5430,17 +5430,17 @@
                 ]
             },
             {
+                "file": "bin/plugins/Unigine/GLTFImporter/UnigineGLTFImporter_plugin_x64.pdb",
+                "hash": "1688578785617765952",
+                "tags": [
+                    "plugins"
+                ]
+            },
+            {
                 "file": "data/.cache_textures/e7",
                 "hash": "",
                 "tags": [
                     "project_data"
-                ]
-            },
-            {
-                "file": "bin/plugins/Unigine/GLTFImporter/UnigineGLTFImporter_plugin_x64.pdb",
-                "hash": "1688577796433765952",
-                "tags": [
-                    "plugins"
                 ]
             },
             {
@@ -5473,14 +5473,14 @@
             },
             {
                 "file": "include/UniginePool.h",
-                "hash": "168857779603915863",
+                "hash": "168857878551115863",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/plugins/Unigine/Kinect/UnigineKinect.h",
-                "hash": "16885777956404214",
+                "hash": "16885787854124214",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5494,7 +5494,7 @@
             },
             {
                 "file": "include/UnigineAsyncQueue.xml",
-                "hash": "168857779655319328",
+                "hash": "168857878567019328",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -5543,28 +5543,28 @@
             },
             {
                 "file": "include/UnigineGui.h",
-                "hash": "16885777957627920",
+                "hash": "16885787854467920",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineWindowManager.xml",
-                "hash": "1688577796682112629",
+                "hash": "1688578785797112629",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineFileSystem.xml",
-                "hash": "168857779657593680",
+                "hash": "168857878569293680",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "lib/Unigine_x64d.lib",
-                "hash": "16885777943556356166",
+                "hash": "16885787849486356166",
                 "tags": [
                     "binaries"
                 ]
@@ -5578,7 +5578,7 @@
             },
             {
                 "file": "include/plugins/Unigine/Oculus/UnigineOculus.h",
-                "hash": "16885777956505283",
+                "hash": "16885787854155283",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5641,7 +5641,7 @@
             },
             {
                 "file": "include/UnigineHash.h",
-                "hash": "168857779576813515",
+                "hash": "168857878544813515",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5669,14 +5669,14 @@
             },
             {
                 "file": "include/editor/UniginePlugin.h",
-                "hash": "16885777956051716",
+                "hash": "16885787854011716",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "bin/Qt5Concurrent.dll",
-                "hash": "168857779497628672",
+                "hash": "168857878499128672",
                 "tags": [
                     "binaries"
                 ]
@@ -5696,15 +5696,15 @@
                 ]
             },
             {
-                "file": "include/UnigineMathLibConcave.xml",
-                "hash": "16885777966052563",
+                "file": "include/UnigineMathLibConvex.xml",
+                "hash": "16885787857224607",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
-                "file": "include/UnigineMathLibConvex.xml",
-                "hash": "16885777966064607",
+                "file": "include/UnigineMathLibConcave.xml",
+                "hash": "16885787857212563",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -5753,14 +5753,14 @@
             },
             {
                 "file": "include/UnigineMathLibIVec3.h",
-                "hash": "168857779590613561",
+                "hash": "168857878548013561",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineLogic.h",
-                "hash": "16885777958228414",
+                "hash": "16885787854608414",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5770,6 +5770,13 @@
                 "hash": "16863724269561772981",
                 "tags": [
                     "project_data"
+                ]
+            },
+            {
+                "file": "bin/plugins/Unigine/GLTFImporter/UnigineGLTFImporter_plugin_x64d.pdb",
+                "hash": "16885787856265918720",
+                "tags": [
+                    "plugins"
                 ]
             },
             {
@@ -5784,13 +5791,6 @@
                 "hash": "",
                 "tags": [
                     "project_data"
-                ]
-            },
-            {
-                "file": "bin/plugins/Unigine/GLTFImporter/UnigineGLTFImporter_plugin_x64d.pdb",
-                "hash": "16885777964635918720",
-                "tags": [
-                    "plugins"
                 ]
             },
             {
@@ -5837,21 +5837,21 @@
             },
             {
                 "file": "bin/plugins/Unigine/FbxExporter/UnigineFbxExporter_plugin_x64d.dll",
-                "hash": "16885777965269937152",
+                "hash": "16885787856499937152",
                 "tags": [
                     "plugins"
                 ]
             },
             {
                 "file": "include/UnigineFfp.xml",
-                "hash": "168857779657310208",
+                "hash": "168857878569010208",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineImage.h",
-                "hash": "168857779577914362",
+                "hash": "168857878545114362",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5893,7 +5893,7 @@
             },
             {
                 "file": "include/UnigineMathLibMat2.xml",
-                "hash": "168857779661810926",
+                "hash": "168857878573310926",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -5963,7 +5963,7 @@
             },
             {
                 "file": "include/UnigineEngine.xml",
-                "hash": "168857779657180590",
+                "hash": "168857878568780590",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -5977,7 +5977,7 @@
             },
             {
                 "file": "include/UniginePath.h",
-                "hash": "16885777960192130",
+                "hash": "16885787855062130",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -5998,28 +5998,28 @@
             },
             {
                 "file": "include/UnigineMathLibIVec4.h",
-                "hash": "168857779591015108",
+                "hash": "168857878548115108",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineMathLibMat4.xml",
-                "hash": "168857779662020210",
+                "hash": "168857878573520210",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UniginePhysicals.xml",
-                "hash": "168857779664528128",
+                "hash": "168857878576128128",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/editor/UnigineUndo.h",
-                "hash": "16885777956194160",
+                "hash": "16885787854074160",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6033,7 +6033,7 @@
             },
             {
                 "file": "include/UnigineWidgets.h",
-                "hash": "168857779614160040",
+                "hash": "168857878553960040",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6047,14 +6047,14 @@
             },
             {
                 "file": "include/UnigineExport.xml",
-                "hash": "16885777965729152",
+                "hash": "16885787856899152",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineLights.xml",
-                "hash": "1688577796592190931",
+                "hash": "1688578785709190931",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6068,21 +6068,21 @@
             },
             {
                 "file": "include/UnigineVisualizer.h",
-                "hash": "16885777961367921",
+                "hash": "16885787855387921",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineImage.xml",
-                "hash": "1688577796586108161",
+                "hash": "1688578785702108161",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UniginePrimitives.h",
-                "hash": "16885777960402603",
+                "hash": "16885787855112603",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6124,7 +6124,7 @@
             },
             {
                 "file": "include/UnigineViewport.xml",
-                "hash": "168857779667926466",
+                "hash": "168857878579426466",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6139,7 +6139,7 @@
             },
             {
                 "file": "bin/Qt5Gui.dll",
-                "hash": "16885777947596464000",
+                "hash": "16885787849806464000",
                 "tags": [
                     "binaries"
                 ]
@@ -6167,14 +6167,14 @@
             },
             {
                 "file": "include/UnigineFields.h",
-                "hash": "16885777957435680",
+                "hash": "16885787854415680",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/editor/UnigineAssetImportParameters.h",
-                "hash": "16885777955867888",
+                "hash": "16885787853957888",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6195,14 +6195,14 @@
             },
             {
                 "file": "include/UnigineTree.xml",
-                "hash": "16885777966729311",
+                "hash": "16885787857889311",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineInterface.xml",
-                "hash": "16885777965893682",
+                "hash": "16885787857053682",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6215,13 +6215,6 @@
                 ]
             },
             {
-                "file": "include/UnigineTree.h",
-                "hash": "168857779611413779",
-                "tags": [
-                    "unigine_includes"
-                ]
-            },
-            {
                 "file": "data/.cache_textures/16/16fde98d6126fd8876b603471aea67fa272dd711.texture",
                 "hash": "1686372426343613",
                 "tags": [
@@ -6229,22 +6222,29 @@
                 ]
             },
             {
+                "file": "include/UnigineTree.h",
+                "hash": "168857878553213779",
+                "tags": [
+                    "unigine_includes"
+                ]
+            },
+            {
                 "file": "include/UnigineSort.h",
-                "hash": "168857779607611612",
+                "hash": "168857878552111612",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineMathLibMat4.h",
-                "hash": "168857779593158496",
+                "hash": "168857878548458496",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineTileset.h",
-                "hash": "16885777961032762",
+                "hash": "16885787855282762",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6286,7 +6286,7 @@
             },
             {
                 "file": "include/editor/UnigineActions.h",
-                "hash": "168857779558310048",
+                "hash": "168857878538710048",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6321,7 +6321,7 @@
             },
             {
                 "file": "include/UnigineMathLibGeometry.h",
-                "hash": "168857779589346296",
+                "hash": "168857878547546296",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6342,7 +6342,7 @@
             },
             {
                 "file": "include/UnigineChecksum.xml",
-                "hash": "168857779655611204",
+                "hash": "168857878567411204",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6363,7 +6363,7 @@
             },
             {
                 "file": "include/UnigineVersion.h",
-                "hash": "1688577796133834",
+                "hash": "1688578785537834",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6377,7 +6377,7 @@
             },
             {
                 "file": "include/UnigineConfig.xml",
-                "hash": "168857779655936056",
+                "hash": "168857878567736056",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6391,7 +6391,7 @@
             },
             {
                 "file": "include/UniginePathFinding.xml",
-                "hash": "168857779664428890",
+                "hash": "168857878576028890",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6405,7 +6405,7 @@
             },
             {
                 "file": "bin/Qt5Network.dll",
-                "hash": "16885777949591301504",
+                "hash": "16885787849901301504",
                 "tags": [
                     "binaries"
                 ]
@@ -6440,7 +6440,7 @@
             },
             {
                 "file": "include/UniginePackage.xml",
-                "hash": "16885777966391539",
+                "hash": "16885787857541539",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6454,7 +6454,7 @@
             },
             {
                 "file": "include/plugins/Unigine/Ultraleap/UnigineUltraleap.xml",
-                "hash": "168857779655140134",
+                "hash": "168857878566840134",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6468,7 +6468,7 @@
             },
             {
                 "file": "include/UnigineMathLibQuat.xml",
-                "hash": "168857779662413413",
+                "hash": "168857878573913413",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6517,23 +6517,23 @@
             },
             {
                 "file": "data/core.ung",
-                "hash": "168857780558968518167",
+                "hash": "168857879041768518167",
                 "tags": [
                     "unigine_data"
                 ]
             },
             {
-                "file": "include/UnigineCompress.h",
-                "hash": "16885777957113266",
+                "file": "bin/plugins/Unigine/FbxImporter/UnigineFbxImporter_plugin_x64.pdb",
+                "hash": "16885787855906033408",
                 "tags": [
-                    "unigine_includes"
+                    "plugins"
                 ]
             },
             {
-                "file": "bin/plugins/Unigine/FbxImporter/UnigineFbxImporter_plugin_x64.pdb",
-                "hash": "16885777963576033408",
+                "file": "include/UnigineCompress.h",
+                "hash": "16885787854283266",
                 "tags": [
-                    "plugins"
+                    "unigine_includes"
                 ]
             },
             {
@@ -6545,7 +6545,7 @@
             },
             {
                 "file": "bin/Unigine_x64d.pdb",
-                "hash": "1688577794333338735104",
+                "hash": "1688578784936338735104",
                 "tags": [
                     "binaries"
                 ]
@@ -6566,14 +6566,14 @@
             },
             {
                 "file": "include/UnigineJson.xml",
-                "hash": "168857779659163626",
+                "hash": "168857878570863626",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "bin/plugins/Unigine/GLTFImporter/UnigineGLTFImporter_plugin_x64d.dll",
-                "hash": "16885777964521053440",
+                "hash": "16885787856191053440",
                 "tags": [
                     "plugins"
                 ]
@@ -6594,7 +6594,7 @@
             },
             {
                 "file": "include/UniginePathFinding.h",
-                "hash": "16885777960206519",
+                "hash": "16885787855066519",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6630,14 +6630,14 @@
             },
             {
                 "file": "include/UnigineMathLibBounds.h",
-                "hash": "168857779584894816",
+                "hash": "168857878546694816",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineGui.xml",
-                "hash": "168857779658050622",
+                "hash": "168857878569650622",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6651,16 +6651,23 @@
             },
             {
                 "file": "include/UnigineMathLibQuat.h",
-                "hash": "168857779595216485",
+                "hash": "168857878548816485",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineTimer.h",
-                "hash": "16885777961092313",
+                "hash": "16885787855312313",
                 "tags": [
                     "unigine_includes"
+                ]
+            },
+            {
+                "file": "include/UnigineEditor.xml",
+                "hash": "168857878568612706",
+                "tags": [
+                    "unigine_utils"
                 ]
             },
             {
@@ -6668,13 +6675,6 @@
                 "hash": "",
                 "tags": [
                     "project_data"
-                ]
-            },
-            {
-                "file": "include/UnigineEditor.xml",
-                "hash": "168857779656812706",
-                "tags": [
-                    "unigine_utils"
                 ]
             },
             {
@@ -6693,7 +6693,7 @@
             },
             {
                 "file": "launch_editor.bat",
-                "hash": "1688577808832539",
+                "hash": "1688578792048539",
                 "tags": [
                     "launcher_console"
                 ]
@@ -6707,14 +6707,14 @@
             },
             {
                 "file": "include/UnigineComponentSystem.xml",
-                "hash": "168857779655720959",
+                "hash": "168857878567520959",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/plugins/Unigine/OpenVR/UnigineOpenVR.h",
-                "hash": "16885777956544094",
+                "hash": "16885787854164094",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6728,7 +6728,7 @@
             },
             {
                 "file": "include/UniginePtr.xml",
-                "hash": "16885777966533218",
+                "hash": "16885787857693218",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6742,14 +6742,14 @@
             },
             {
                 "file": "bin/EditorCore_x64d.dll",
-                "hash": "168857779531735321088",
+                "hash": "168857878514135321088",
                 "tags": [
                     "binaries"
                 ]
             },
             {
                 "file": "include/UniginePhysics.xml",
-                "hash": "1688577796646275046",
+                "hash": "1688578785762275046",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6770,7 +6770,7 @@
             },
             {
                 "file": "include/UnigineImport.h",
-                "hash": "168857779578519905",
+                "hash": "168857878545219905",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6784,7 +6784,7 @@
             },
             {
                 "file": "include/UnigineMathLibSVec4.h",
-                "hash": "16885777959613774",
+                "hash": "16885787854923774",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6805,7 +6805,7 @@
             },
             {
                 "file": "include/UnigineInterface.h",
-                "hash": "1688577795795130439",
+                "hash": "1688578785454130439",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6819,7 +6819,7 @@
             },
             {
                 "file": "include/plugins/Unigine/OpenVR/UnigineOpenVR.xml",
-                "hash": "168857779654815027",
+                "hash": "168857878566515027",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6833,14 +6833,14 @@
             },
             {
                 "file": "include/UnigineSignal.h",
-                "hash": "16885777960715557",
+                "hash": "16885787855205557",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineAsyncQueue.h",
-                "hash": "16885777956762953",
+                "hash": "16885787854212953",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6861,7 +6861,7 @@
             },
             {
                 "file": "include/UnigineBiMap.xml",
-                "hash": "168857779655419380",
+                "hash": "168857878567119380",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6945,7 +6945,7 @@
             },
             {
                 "file": "include/UnigineSystemInfo.xml",
-                "hash": "16885777966657457",
+                "hash": "16885787857827457",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -6973,7 +6973,7 @@
             },
             {
                 "file": "include/UnigineProperties.h",
-                "hash": "168857779604611749",
+                "hash": "168857878551311749",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -6994,14 +6994,14 @@
             },
             {
                 "file": "include/UnigineEllipsoid.h",
-                "hash": "16885777957302710",
+                "hash": "16885787854372710",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/editor/UnigineRenderWindow.h",
-                "hash": "168857779561214296",
+                "hash": "168857878540414296",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -7015,7 +7015,7 @@
             },
             {
                 "file": "include/UnigineTilesetFile.xml",
-                "hash": "168857779667011133",
+                "hash": "168857878578611133",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -7035,15 +7035,15 @@
                 ]
             },
             {
-                "file": "data/.cache_textures/92",
-                "hash": "",
+                "file": "data/.cache_textures/09/09d83adea38c64a54ec6cdc08a41e61ffc7efcf2.texture",
+                "hash": "1686372426316789",
                 "tags": [
                     "project_data"
                 ]
             },
             {
-                "file": "data/.cache_textures/09/09d83adea38c64a54ec6cdc08a41e61ffc7efcf2.texture",
-                "hash": "1686372426316789",
+                "file": "data/.cache_textures/92",
+                "hash": "",
                 "tags": [
                     "project_data"
                 ]
@@ -7085,7 +7085,7 @@
             },
             {
                 "file": "include/UnigineNode.xml",
-                "hash": "168857779663587930",
+                "hash": "168857878575187930",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -7113,14 +7113,14 @@
             },
             {
                 "file": "include/UnigineUserInterface.h",
-                "hash": "16885777961262391",
+                "hash": "16885787855342391",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineMathLibDVec4.h",
-                "hash": "168857779588819460",
+                "hash": "168857878547419460",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -7155,7 +7155,7 @@
             },
             {
                 "file": "launch_release.bat",
-                "hash": "1688577808816533",
+                "hash": "1688578792040533",
                 "tags": [
                     "launcher_console"
                 ]
@@ -7204,21 +7204,21 @@
             },
             {
                 "file": "include/UnigineProfiler.h",
-                "hash": "16885777960412257",
+                "hash": "16885787855122257",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/Unigine.h",
-                "hash": "16885777956714631",
+                "hash": "16885787854204631",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "bin/libeay32.dll",
-                "hash": "16885777950252101248",
+                "hash": "16885787849952101248",
                 "tags": [
                     "binaries"
                 ]
@@ -7268,7 +7268,7 @@
             },
             {
                 "file": "include/editor/UnigineWindowManager.h",
-                "hash": "168857779562911964",
+                "hash": "168857878540911964",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -7283,14 +7283,14 @@
             },
             {
                 "file": "include/UnigineTextures.xml",
-                "hash": "168857779666773972",
+                "hash": "168857878578373972",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineMathLib.xml",
-                "hash": "1688577796600214498",
+                "hash": "1688578785718214498",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -7318,7 +7318,7 @@
             },
             {
                 "file": "bin/EditorCore_x64.pdb",
-                "hash": "168857779523522573056",
+                "hash": "168857878511022573056",
                 "tags": [
                     "binaries"
                 ]
@@ -7332,21 +7332,21 @@
             },
             {
                 "file": "include/UnigineMathLibHVec3.xml",
-                "hash": "16885777966133408",
+                "hash": "16885787857293408",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineMathLibIVec2.xml",
-                "hash": "168857779661512247",
+                "hash": "168857878573112247",
                 "tags": [
                     "unigine_utils"
                 ]
             },
             {
                 "file": "include/UnigineStreams.xml",
-                "hash": "168857779666356337",
+                "hash": "168857878578056337",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -7374,21 +7374,21 @@
             },
             {
                 "file": "include/UnigineSounds.h",
-                "hash": "16885777960777252",
+                "hash": "16885787855227252",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineGeodeticsTransformer.h",
-                "hash": "16885777957611589",
+                "hash": "16885787854461589",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UniginePlayers.h",
-                "hash": "168857779603311208",
+                "hash": "168857878550911208",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -7444,7 +7444,7 @@
             },
             {
                 "file": "include/UnigineMathLibSVec4.xml",
-                "hash": "16885777966266084",
+                "hash": "16885787857426084",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -7537,14 +7537,14 @@
             },
             {
                 "file": "include/UnigineFactory.h",
-                "hash": "16885777957371626",
+                "hash": "16885787854401626",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineMathLibIVec2.h",
-                "hash": "168857779590111797",
+                "hash": "168857878547911797",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -7565,7 +7565,7 @@
             },
             {
                 "file": "include/UnigineMath2d.xml",
-                "hash": "16885777965995834",
+                "hash": "16885787857165834",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -7579,7 +7579,7 @@
             },
             {
                 "file": "include/UnigineDir.xml",
-                "hash": "168857779656610683",
+                "hash": "168857878568410683",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -7607,14 +7607,14 @@
             },
             {
                 "file": "include/UnigineViewport.h",
-                "hash": "16885777961354998",
+                "hash": "16885787855384998",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineMathLibVec2.xml",
-                "hash": "168857779662714141",
+                "hash": "168857878574314141",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -7635,21 +7635,21 @@
             },
             {
                 "file": "bin/plugins/Unigine/FbxExporter/UnigineFbxExporter_plugin_x64.pdb",
-                "hash": "16885777964985779456",
+                "hash": "16885787856395779456",
                 "tags": [
                     "plugins"
                 ]
             },
             {
                 "file": "include/editor/UnigineSelector.h",
-                "hash": "168857779561819754",
+                "hash": "168857878540619754",
                 "tags": [
                     "unigine_includes"
                 ]
             },
             {
                 "file": "include/UnigineMathLibVec4.xml",
-                "hash": "168857779662919976",
+                "hash": "168857878574519976",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -7670,7 +7670,7 @@
             },
             {
                 "file": "include/UnigineDisplays.h",
-                "hash": "16885777957282128",
+                "hash": "16885787854362128",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -7691,7 +7691,7 @@
             },
             {
                 "file": "include/UnigineMathLibNoise.xml",
-                "hash": "16885777966215358",
+                "hash": "16885787857375358",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -7712,7 +7712,7 @@
             },
             {
                 "file": "include/UnigineInput.h",
-                "hash": "168857779578926108",
+                "hash": "168857878545326108",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -7740,7 +7740,7 @@
             },
             {
                 "file": "include/UnigineEllipsoid.xml",
-                "hash": "168857779656912078",
+                "hash": "168857878568612078",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -7768,7 +7768,7 @@
             },
             {
                 "file": "include/editor/UnigineAssetDialogs.h",
-                "hash": "16885777955846091",
+                "hash": "16885787853886091",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -7817,7 +7817,7 @@
             },
             {
                 "file": "include/UnigineMathLibSimd.h",
-                "hash": "168857779596038285",
+                "hash": "168857878549138285",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -7831,7 +7831,7 @@
             },
             {
                 "file": "include/UnigineMeshStatic.xml",
-                "hash": "168857779663436308",
+                "hash": "168857878575036308",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -7852,7 +7852,7 @@
             },
             {
                 "file": "include/UnigineGame.xml",
-                "hash": "168857779657712057",
+                "hash": "168857878569412057",
                 "tags": [
                     "unigine_utils"
                 ]
@@ -7873,7 +7873,7 @@
             },
             {
                 "file": "bin/Editor_x64d.pdb",
-                "hash": "168857779514654767616",
+                "hash": "168857878506954767616",
                 "tags": [
                     "binaries"
                 ]
@@ -7909,7 +7909,7 @@
             },
             {
                 "file": "include/UnigineRegExp.h",
-                "hash": "16885777960571204",
+                "hash": "16885787855151204",
                 "tags": [
                     "unigine_includes"
                 ]
@@ -7949,11 +7949,11 @@
         "plugin_name": "Python3Scripting",
         "plugin_vendor": "Local",
         "plugins": [
-            "UnigineFbxImporter",
-            "UnigineGLTFImporter",
-            "UnigineFbxExporter",
             "UnigineOpenFlight",
-            "UnigineCadImporter"
+            "UnigineFbxImporter",
+            "UnigineCadImporter",
+            "UnigineGLTFImporter",
+            "UnigineFbxExporter"
         ],
         "precision": 0,
         "project_template": [

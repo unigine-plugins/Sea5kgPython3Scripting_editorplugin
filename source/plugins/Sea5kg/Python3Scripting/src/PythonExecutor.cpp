@@ -55,17 +55,17 @@ PythonExecutor::PythonExecutor(
 
 
 PythonExecutor::~PythonExecutor() {
-    Unigine::Log::message("Python3Scripting: ~PythonExecutor()\n");
+    // Unigine::Log::message("Python3Scripting: ~PythonExecutor()\n");
     for (int i = 0; i < m_vWrappers.size(); i++) {
         m_vWrappers[i]->Call_After_Py_Finalize();
     }
     PyObject* pGlobalDict = (PyObject*)m_pGlobalDict;
     Py_XDECREF(pGlobalDict);
-    Unigine::Log::message("finalize point 3\n");
+    // Unigine::Log::message("finalize point 3\n");
 
     Py_FinalizeEx();
 
-    Unigine::Log::message("finalize point 4\n");
+    // Unigine::Log::message("finalize point 4\n");
 
     for (int i = 0; i < m_vWrappers.size(); i++) {
         delete m_vWrappers[i];
@@ -138,7 +138,7 @@ void PythonExecutor::addNodes(const QVector<Unigine::NodePtr> &vNodes) {
 }
 
 int PythonExecutor::execCode(const std::string &sScriptContent) {
-    Unigine::Log::message("Python3Scripting: start executing script\n");
+    // Unigine::Log::message(">>> startPython3Scripting: start executing script\n");
     PyErr_Clear();
 
     PyObject* pGlobalDict = (PyObject*)m_pGlobalDict;
@@ -207,7 +207,7 @@ int PythonExecutor::execCode(const std::string &sScriptContent) {
         Unigine::Log::error("\nPython3Scripting: FAILED\n");
         return -1;
     }
-    Unigine::Log::message("Python3Scripting: end executing script\n");
+    // Unigine::Log::message("Python3Scripting: end executing script\n");
     return 0;
 }
 

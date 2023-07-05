@@ -28,7 +28,7 @@ MKDIR ..\python-bin-windows\
 
 XCOPY /K /D /Y /H PCbuild\amd64\* ..\python-bin-windows\
 
-XCOPY /K /D /Y /H PCbuild\amd64\*.dll ..\..\..\..\..\bin\
+XCOPY /K /D /Y /H PCbuild\amd64\*.dll ..\..\..\..\..\bin\plugins\Sea5kg\Python3Scripting\
 
 
 IF EXIST ..\..\..\..\..\bin\plugins\Sea5kg\Python3Scripting\Python3Home RMDIR /S /Q ..\..\..\..\..\bin\plugins\Sea5kg\Python3Scripting\Python3Home

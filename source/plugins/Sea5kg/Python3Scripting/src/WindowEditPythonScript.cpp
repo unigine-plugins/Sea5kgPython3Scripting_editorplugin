@@ -107,12 +107,12 @@ void WindowEditPythonScript::saveClicked() {
 
 void WindowEditPythonScript::runClicked() {
     // log_info("runPythonScript");
-    Unigine::Log::message("runClicked");
+    // Unigine::Log::message("runClicked");
     QString sScript = m_pCodeEditor->toPlainText().toUtf8();
     try {
         m_pRunPythonScript->runPythonScript(m_pModel, sScript);
     } catch (...) {
-        Unigine::Log::message("Something wrong");
+        Unigine::Log::error("Something wrong\n");
     }
 }
 
