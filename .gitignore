@@ -82,3 +82,5 @@ other/
 junk
 .thumbnails
 __pycache__
+/include/plugins/Unigine/Kinect/
+/include/plugins/Unigine/LeapMotion/

@@ -17,6 +17,6 @@ i = 0
 while i < _max:
     i += 1
     for node in LIST_NODES:
-        node.rotate_by_angels(-angels_cur, -angels_cur, -angels_cur)
+        node.rotate(-angels_cur, -angels_cur, -angels_cur)
     angels_cur -= angels_diff
     time.sleep(sleep_s)
