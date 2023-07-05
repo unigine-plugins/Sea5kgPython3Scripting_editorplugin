@@ -112,9 +112,9 @@ add_library(${current_target} SHARED
     ${PROJECT_SOURCE_DIR}/src/CollectorMenuSelected.cpp
     ${PROJECT_SOURCE_DIR}/src/ModelExtension.cpp
 	${PROJECT_SOURCE_DIR}/src/format_unexpy3/FileUnexpy3.cpp
-	${PROJECT_SOURCE_DIR}/src/dialogs/CreateExtensionDialog.cpp
-	${PROJECT_SOURCE_DIR}/src/dialogs/EditExtensionDialog.cpp
-	${PROJECT_SOURCE_DIR}/src/dialogs/ManageScriptsDialog.cpp
+	${PROJECT_SOURCE_DIR}/src/WindowCreatePythonScript.cpp
+	${PROJECT_SOURCE_DIR}/src/WindowEditPythonScript.cpp
+	${PROJECT_SOURCE_DIR}/src/WindowManagePythonScripts.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/python3_unigine_stdout.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/python3_unigine_stderr.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/python3_unigine_lib.cpp

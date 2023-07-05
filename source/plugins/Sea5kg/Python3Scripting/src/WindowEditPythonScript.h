@@ -11,14 +11,16 @@
 #include <QComboBox>
 #include <QSyntaxStyle>
 #include <QCodeEditor>
+#include <QCloseEvent>
 #include "ModelExtension.h"
 #include "interfaces/IRunPythonScript.h"
+#include "interfaces/IManagePythonScripts.h"
 
-class EditExtensionDialog : public QDialog
+class WindowEditPythonScript : public QDialog
 {
     Q_OBJECT
 public:
-    EditExtensionDialog(QWidget *parent, IRunPythonScript *pRunPythonScript);
+    WindowEditPythonScript(QWidget *parent, IRunPythonScript *pRunPythonScript, IManagePythonScripts *pManagePythonScripts);
 
     void setModelExtension(ModelExtension *pModelExtension);
 
@@ -29,14 +31,16 @@ signals:
 private slots:
     void saveClicked();
     void runClicked();
-    // void saveClicked();
     void onCodeChanged();
+    void closeEvent(QCloseEvent *event);
+
 
 private:
     QSyntaxStyle *loadStyle(QString path);
     QString m_sFilePath;
     ModelExtension *m_pModel;
     IRunPythonScript *m_pRunPythonScript;
+    IManagePythonScripts *m_pManagePythonScripts;
 
     QLabel *m_pLabelName;
     QLabel *m_pLabelFor;

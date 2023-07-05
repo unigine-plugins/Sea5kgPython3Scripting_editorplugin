@@ -3,13 +3,13 @@
 #include <QCodeEditor>
 #include <QMessageBox>
 
-#include "dialogs/CreateExtensionDialog.h"
-#include "ManageScriptsDialog.h"
+#include "WindowCreatePythonScript.h"
+#include "WindowManagePythonScripts.h"
 
-ManageScriptsDialog::ManageScriptsDialog(
+WindowManagePythonScripts::WindowManagePythonScripts(
     QWidget *parent,
     QVector<ModelExtension *> *vScripts,
-    IManageScripts *pManageScripts
+    IManagePythonScripts *pManageScripts
 ) : QDialog(parent) {
     m_pParent = parent;
     m_vScripts = vScripts;
@@ -22,9 +22,12 @@ ManageScriptsDialog::ManageScriptsDialog(
     m_pEnableButton = new QPushButton(tr("Enable"));
     m_pEnableButton->setEnabled(false);
     m_pCreateButton = new QPushButton(tr("Create"));
+    m_pEditButton = new QPushButton(tr("Edit"));
+    m_pEditButton->setEnabled(false);
     m_pCloseButton = new QPushButton(tr("Close"));
 
     connect(m_pCreateButton, SIGNAL(clicked()),this, SLOT(createClicked()));
+    connect(m_pEditButton, SIGNAL(clicked()),this, SLOT(editClicked()));
     connect(m_pEnableButton, SIGNAL(clicked()),this, SLOT(enableOrDisableClicked()));
     connect(m_pRemoveButton, SIGNAL(clicked()),this, SLOT(removeClicked()));
     connect(m_pCloseButton, SIGNAL(clicked()),this, SLOT(close()));
@@ -38,11 +41,12 @@ ManageScriptsDialog::ManageScriptsDialog(
 
     QHBoxLayout *buttonsLayout = new QHBoxLayout;
     buttonsLayout->addWidget(m_pCreateButton);
+    buttonsLayout->addWidget(m_pEditButton);
     buttonsLayout->addWidget(m_pEnableButton);
     buttonsLayout->addWidget(m_pRemoveButton);
     buttonsLayout->addWidget(new QWidget);
-    buttonsLayout->addWidget(m_pCloseButton);
     buttonsLayout->addStretch();
+    buttonsLayout->addWidget(m_pCloseButton);
     leftLayout->addLayout(buttonsLayout);
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
@@ -55,7 +59,7 @@ ManageScriptsDialog::ManageScriptsDialog(
     setFixedHeight(sizeHint().height());
 }
 
-QString ManageScriptsDialog::makeName(ModelExtension *pModel) {
+QString WindowManagePythonScripts::makeName(ModelExtension *pModel) {
     QString sName = pModel->getFor() + ": " + pModel->getName();
     if (pModel->isEnabled()) {
         sName += " (enabled)";
@@ -65,7 +69,7 @@ QString ManageScriptsDialog::makeName(ModelExtension *pModel) {
     return sName;
 }
 
-void ManageScriptsDialog::reloadList() {
+void WindowManagePythonScripts::reloadList() {
     m_pListWidget->clear();
 
     for (int i = 0; i < m_vScripts->size(); i++) {
@@ -79,7 +83,7 @@ void ManageScriptsDialog::reloadList() {
     selectionChanged();
 }
 
-void ManageScriptsDialog::selectedItem(ModelExtension *pModel) {
+void WindowManagePythonScripts::selectedItem(ModelExtension *pModel) {
     QString sName = makeName(pModel);
     QListWidgetItem* item = 0;
     for (int i = 0; i < m_pListWidget->count(); ++i) {
@@ -90,14 +94,14 @@ void ManageScriptsDialog::selectedItem(ModelExtension *pModel) {
     }
 }
 
-void ManageScriptsDialog::createListWidget() {
+void WindowManagePythonScripts::createListWidget() {
     m_pListWidget = new QListWidget;
     m_pListWidget->setSortingEnabled(true);
     QObject::connect(m_pListWidget, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
     reloadList();
 }
 
-void ManageScriptsDialog::removeClicked() {
+void WindowManagePythonScripts::removeClicked() {
     QList<QListWidgetItem *> vItems = m_pListWidget->selectedItems();
     QString sScriptId = "";
     QString sName = "";
@@ -124,11 +128,11 @@ void ManageScriptsDialog::removeClicked() {
     }
 }
 
-void ManageScriptsDialog::createClicked() {
+void WindowManagePythonScripts::createClicked() {
     // QString strPaths = listRemove.join("\n");
     // QWidget *pWin = QApplication::activeWindow();
     QString strPaths = "";
-    CreateExtensionDialog sd(m_pParent, strPaths);
+    WindowCreatePythonScript sd(m_pParent, strPaths);
     sd.setModal(true);
     if (sd.exec() == QDialog::Accepted){
         QString sName = sd.getExtensionName();
@@ -136,27 +140,27 @@ void ManageScriptsDialog::createClicked() {
         // log_info("createNewExtension. Next with " + sFor + ": " + sName);
 
         // normalize extension id
-        QString sExtensionId = sFor + "_";
+        QString sScriptId = sFor + "_";
         for (int i = 0; i < sName.length(); i++) {
             if (sName[i].isNumber()
                 || (sName[i] >= 'a' && sName[i] <= 'z')
                 || (sName[i] >= 'A' && sName[i] <= 'Z')
             ) {
-                sExtensionId += sName[i].toLower();
+                sScriptId += sName[i].toLower();
             } else {
-                sExtensionId += '_';
+                sScriptId += '_';
             }
         }
-        // log_info("createNewExtension. Next sExtensionId == " + sExtensionId);
+        // log_info("createNewExtension. Next sScriptId == " + sScriptId);
 
         // prepare extension folder
-        QDir newExtDir(m_pManageScripts->getPython3ScriptingDirPath() + "/" + sExtensionId);
+        QDir newExtDir(m_pManageScripts->getPython3ScriptingDirPath() + "/" + sScriptId);
         int num = 0;
         while (newExtDir.exists()) {
-            newExtDir = QDir(m_pManageScripts->getPython3ScriptingDirPath() + "/" + sExtensionId + "_" + QString::number(num));
+            newExtDir = QDir(m_pManageScripts->getPython3ScriptingDirPath() + "/" + sScriptId + "_" + QString::number(num));
         }
-        sExtensionId = newExtDir.dirName();
-        QDir(m_pManageScripts->getPython3ScriptingDirPath()).mkdir(sExtensionId);
+        sScriptId = newExtDir.dirName();
+        QDir(m_pManageScripts->getPython3ScriptingDirPath()).mkdir(sScriptId);
 
         QString sPython3ScriptingMainPyPath = newExtDir.absolutePath() + "/main.py";
         QFile fileMainPy(sPython3ScriptingMainPyPath);
@@ -173,7 +177,7 @@ void ManageScriptsDialog::createClicked() {
             fileMainPy.close();
         }
         auto pModel = new ModelExtension(newExtDir.absolutePath());
-        pModel->setId(sExtensionId);
+        pModel->setId(sScriptId);
         pModel->setName(sName);
         pModel->setFor(sFor);
         pModel->setEnabled(true);
@@ -182,14 +186,21 @@ void ManageScriptsDialog::createClicked() {
         reloadList();
         selectedItem(pModel);
 
-        // auto *pEdit = getEditDialog();
-        // pEdit->setModelExtension(pModel);
-        // pEdit->show();
+        m_pManageScripts->openWindowEditPythonScriptById(sScriptId);
 
     }
 }
 
-void ManageScriptsDialog::enableOrDisableClicked() {
+void WindowManagePythonScripts::editClicked() {
+    QList<QListWidgetItem *> vItems = m_pListWidget->selectedItems();
+    QString sScriptId = "";
+    for (int i = 0; i < vItems.count(); ++i) {
+        sScriptId = vItems[i]->data(Qt::UserRole).toString();
+    }
+    m_pManageScripts->openWindowEditPythonScriptById(sScriptId);
+}
+
+void WindowManagePythonScripts::enableOrDisableClicked() {
     QList<QListWidgetItem *> vItems = m_pListWidget->selectedItems();
     QString sScriptId = "";
     for (int i = 0; i < vItems.count(); ++i) {
@@ -209,9 +220,11 @@ void ManageScriptsDialog::enableOrDisableClicked() {
     }
 }
 
-void ManageScriptsDialog::selectionChanged() {
+void WindowManagePythonScripts::selectionChanged() {
     QList<QListWidgetItem *> vItems = m_pListWidget->selectedItems();
     m_pRemoveButton->setEnabled(vItems.count() > 0);
+
+    m_pEditButton->setEnabled(vItems.count() > 0);
 
     m_pEnableButton->setEnabled(vItems.count() > 0);
     QString sScriptId = "";

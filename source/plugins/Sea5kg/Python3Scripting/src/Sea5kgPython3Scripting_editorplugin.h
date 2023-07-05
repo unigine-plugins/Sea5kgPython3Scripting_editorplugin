@@ -16,9 +16,10 @@
 
 #include "CollectorMenuSelected.h"
 #include "ModelExtension.h"
-#include "dialogs/EditExtensionDialog.h"
+#include "WindowEditPythonScript.h"
+#include "WindowManagePythonScripts.h"
 #include "interfaces/IRunPythonScript.h"
-#include "interfaces/IManageScripts.h"
+#include "interfaces/IManagePythonScripts.h"
 #include "RunPythonInThread.h"
 
 class Sea5kgPython3Scripting_editorplugin
@@ -27,7 +28,7 @@ class Sea5kgPython3Scripting_editorplugin
         public UnigineEditor::Plugin,
         public IRunPythonScript,
         public IPython3RunnerMain,
-        public IManageScripts
+        public IManagePythonScripts
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID UNIGINE_EDITOR_PLUGIN_IID FILE "Sea5kgPython3Scripting_editorplugin.json")
@@ -42,11 +43,13 @@ public:
     // Python3Runner
     void executeRunner(Python3Runner *p);
 
-    // IManageScripts
+    // IManagePythonScripts
     virtual void addModelExtension(ModelExtension *pModel) override;
     virtual void removeModelScriptById(QString sScriptId) override;
     virtual void enableModelScriptById(QString sScriptId) override;
     virtual void disableModelScriptById(QString sScriptId) override;
+    virtual void openWindowEditPythonScriptById(QString sScriptId) override;
+    virtual void showWindowManagePythonScripts(QString sScriptId) override;
     virtual QString getPython3ScriptingDirPath() override;
 
 Q_SIGNALS:
@@ -60,7 +63,6 @@ private slots:
     void processSelectedTools();
     void createNewExtension();
     void manageScripts();
-    void editExtension();
     void menuClickAbout();
 
     void globalSelectionChanged();
@@ -76,14 +78,12 @@ private:
     bool rewriteExtensionsJson();
     bool safeCreateMenuPython3Scripting();
     bool reloadMenuForSelected();
-    bool reloadMenuForExtensions();
-    bool initMenuForCreateExtension();
     bool initMenuForManageScripts();
     bool initMenuForAbout();
     bool loadExtensions();
 
     void saveAndReloadExtensions();
-    EditExtensionDialog *getEditDialog();
+    WindowEditPythonScript *getEditDialog();
     ModelExtension *findModelExtensionByAction(QObject* pObject);
 
     MenuSelectedType m_nLatestMenu;
@@ -96,15 +96,13 @@ private:
 
     QVector<ModelExtension *> m_vScripts;
 
-    QMenu *m_pMenuExtensions;
-    QVector<QMenu *> m_vSubMenusExtensions;
-
     QAction *m_pActionManageScripts;
     QAction *m_pActionAbout;
 
     QVector<Unigine::UGUID> m_vSelectedGuids;
     QVector<Unigine::NodePtr> m_vSelectedNodes;
 
-    EditExtensionDialog *m_pEditScriptWindow;
+    WindowEditPythonScript *m_pEditScriptWindow;
+    WindowManagePythonScripts *m_pWindowManagePythonScripts;
     RunScriptInThread *m_pScriptThread;
 };

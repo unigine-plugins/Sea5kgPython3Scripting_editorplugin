@@ -15,7 +15,7 @@
 #include <QStringListModel>
 
 #include "ModelExtension.h"
-#include "interfaces/IManageScripts.h"
+#include "interfaces/IManagePythonScripts.h"
 
 // https://www.walletfox.com/course/qtcheckablelist.php
 
@@ -32,10 +32,10 @@ class CustomListModel : public QStringListModel {
         QSet<QPersistentModelIndex> checkedItems;
 };
 
-class ManageScriptsDialog : public QDialog {
+class WindowManagePythonScripts : public QDialog {
     Q_OBJECT
 public:
-    ManageScriptsDialog(QWidget *parent, QVector<ModelExtension *> *vScripts, IManageScripts *pManageScripts);
+    WindowManagePythonScripts(QWidget *parent, QVector<ModelExtension *> *vScripts, IManagePythonScripts *pManageScripts);
     QString makeName(ModelExtension *pModel);
     void reloadList();
     void selectedItem(ModelExtension *pModel);
@@ -47,17 +47,19 @@ signals:
 private slots:
     void removeClicked();
     void createClicked();
+    void editClicked();
     void enableOrDisableClicked();
     void selectionChanged();
 
 private:
     QWidget *m_pParent;
-    IManageScripts *m_pManageScripts;
+    IManagePythonScripts *m_pManageScripts;
     void createListWidget();
     QVector<ModelExtension *> *m_vScripts;
     QLineEdit *m_pLineEditSearch;
     QListWidget *m_pListWidget;
     QPushButton *m_pCreateButton;
+    QPushButton *m_pEditButton;
     QPushButton *m_pEnableButton;
     QPushButton *m_pRemoveButton;
     QPushButton *m_pCloseButton;

@@ -12,11 +12,11 @@
 #include <QAbstractItemView>
 #include <QComboBox>
 
-class CreateExtensionDialog : public QDialog
+class WindowCreatePythonScript : public QDialog
 {
     Q_OBJECT
 public:
-    CreateExtensionDialog(QWidget *parent, const QString &strPath);
+    WindowCreatePythonScript(QWidget *parent, const QString &strPath);
     QString getExtensionName();
     QString getExtensionFor();
 

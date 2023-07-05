@@ -1,8 +1,6 @@
 #include "Sea5kgPython3Scripting_editorplugin.h"
 #include "PythonExecutor.h"
-#include "dialogs/CreateExtensionDialog.h"
-#include "dialogs/EditExtensionDialog.h"
-#include "dialogs/ManageScriptsDialog.h"
+// #include "WindowCreatePythonScript.h"
 
 #include <UnigineLog.h>
 #include <UnigineEditor.h>
@@ -41,8 +39,8 @@ void log_error(QString message) {
 
 bool Sea5kgPython3Scripting_editorplugin::init() {
     log_info(" Initializing...");
-    m_pMenuExtensions = nullptr;
     m_pEditScriptWindow = nullptr;
+    m_pWindowManagePythonScripts = nullptr;
     m_pScriptThread = nullptr;
     m_pMenuPython3Extensions = nullptr;
     m_pMainWindow = nullptr;
@@ -90,7 +88,7 @@ void Sea5kgPython3Scripting_editorplugin::slot_executeRunner(Python3Runner *pRun
     pRunner->mutexAsync.unlock();
 }
 
-// IManageScripts
+// IManagePythonScripts
 void Sea5kgPython3Scripting_editorplugin::addModelExtension(ModelExtension *pModel) {
     m_vScripts.push_back(pModel);
     saveAndReloadExtensions();
@@ -143,46 +141,56 @@ void Sea5kgPython3Scripting_editorplugin::disableModelScriptById(QString sScript
     saveAndReloadExtensions();
 }
 
+void Sea5kgPython3Scripting_editorplugin::openWindowEditPythonScriptById(QString sScriptId) {
+    ModelExtension *pModel = nullptr;
+    for (int i = 0; i < m_vScripts.size(); i++) {
+        if (m_vScripts[i]->getId() == sScriptId) {
+            pModel = m_vScripts[i];
+        }
+    }
+    if (pModel == nullptr) {
+        Unigine::Log::error("Not found sctipt %s\n", sScriptId.toStdString().c_str());
+        return;
+    }
+     if (m_pEditScriptWindow == nullptr) {
+        m_pEditScriptWindow = new WindowEditPythonScript(m_pMainWindow, this, this);
+        Qt::WindowFlags flags = m_pEditScriptWindow->windowFlags();
+        m_pEditScriptWindow->setWindowFlags(flags | Qt::Tool);
+    }
+
+    m_pEditScriptWindow->setModelExtension(pModel);
+    m_pEditScriptWindow->show();
+    if (m_pWindowManagePythonScripts != nullptr) {
+        m_pWindowManagePythonScripts->hide();
+    }
+}
+
+void Sea5kgPython3Scripting_editorplugin::showWindowManagePythonScripts(QString sScriptId) {
+    if (m_pWindowManagePythonScripts == nullptr) {
+        m_pWindowManagePythonScripts = new WindowManagePythonScripts(m_pMainWindow, &m_vScripts, this);
+    }
+
+    Qt::WindowFlags flags = m_pWindowManagePythonScripts->windowFlags();
+    m_pWindowManagePythonScripts->setWindowFlags(flags | Qt::Tool);
+    m_pWindowManagePythonScripts->show();
+
+    ModelExtension *pModel = nullptr;
+    for (int i = 0; i < m_vScripts.size(); i++) {
+        if (m_vScripts[i]->getId() == sScriptId) {
+            pModel = m_vScripts[i];
+        }
+    }
+    if (pModel != nullptr) {
+        m_pWindowManagePythonScripts->selectedItem(pModel);
+    }
+}
+
 QString Sea5kgPython3Scripting_editorplugin::getPython3ScriptingDirPath() {
     return m_sPython3ScriptingDirPath;
 }
 
-void Sea5kgPython3Scripting_editorplugin::editExtension() {
-    QObject* obj = sender();
-    QAction *pAction = dynamic_cast<QAction *>(obj);
-    if (pAction == nullptr) {
-        log_error("editExtension. Could not cast to QAction");
-        return;
-    }
-    QVariant userData = pAction->data();
-    QString sExtensionId = userData.toString();
-    log_info("editExtension. sExtensionId == " + sExtensionId);
-
-    ModelExtension *pModel = nullptr;
-    for (int i = 0; i < m_vScripts.size(); i++) {
-        if (m_vScripts[i]->getId() == sExtensionId) {
-            pModel = m_vScripts[i];
-            break;
-        }
-    }
-    if (pModel == nullptr) {
-        log_error("Sea5kgPython3Scripting_editorplugin::editExtension(), Not found model");
-        return;
-    }
-
-    QString sPython3ScriptingMainPyPath = m_sPython3ScriptingDirPath + "/" + sExtensionId + "/main.py";
-    auto *pEdit = getEditDialog();
-    pEdit->setModelExtension(pModel);
-    pEdit->show();
-}
-
 void Sea5kgPython3Scripting_editorplugin::manageScripts() {
-    QString strPaths = "";
-    ManageScriptsDialog sd(m_pMainWindow, &m_vScripts, this);
-    sd.setModal(true);
-    if (sd.exec() == QDialog::Accepted) {
-        // saveAndReloadExtensions();
-    }
+    showWindowManagePythonScripts("");
 }
 
 void Sea5kgPython3Scripting_editorplugin::menuClickAbout() {
@@ -486,30 +494,6 @@ bool Sea5kgPython3Scripting_editorplugin::reloadMenuForSelected() {
     return true;
 }
 
-bool Sea5kgPython3Scripting_editorplugin::reloadMenuForExtensions() {
-    if (m_pMenuExtensions == nullptr) {
-        m_pMenuExtensions = m_pMenuPython3Extensions->addMenu(tr("Extensions"));
-    }
-    // remove previous submenus
-    for (int i = 0; i < m_vSubMenusExtensions.size(); i++) {
-        m_pMenuExtensions->removeAction(m_vSubMenusExtensions[i]->menuAction());
-    }
-
-    for (int i = 0; i < m_vScripts.size(); i++) {
-        ModelExtension *pModel = m_vScripts[i];
-
-        QMenu *pExtension = m_pMenuExtensions->addMenu(pModel->getFor() + ": " + pModel->getName());
-        m_vSubMenusExtensions.push_back(pExtension);
-
-        QAction *pActionEdit = new QAction(tr("Edit"), this);
-        pActionEdit->setData(QVariant(pModel->getId()));
-        connect(pActionEdit, &QAction::triggered, this, &Sea5kgPython3Scripting_editorplugin::editExtension);
-
-        pExtension->addAction(pActionEdit);
-    }
-    return true;
-}
-
 bool Sea5kgPython3Scripting_editorplugin::initMenuForManageScripts() {
     m_pActionManageScripts = new QAction(tr("Manage scripts"), this);
     connect(m_pActionManageScripts, &QAction::triggered, this, &Sea5kgPython3Scripting_editorplugin::manageScripts);
@@ -558,9 +542,6 @@ bool Sea5kgPython3Scripting_editorplugin::loadExtensions() {
     if (!reloadMenuForSelected()) {
         return false;
     }
-    if (!reloadMenuForExtensions()) {
-        return false;
-    }
     initMenuForManageScripts();
     initMenuForAbout();
     return true;
@@ -569,16 +550,6 @@ bool Sea5kgPython3Scripting_editorplugin::loadExtensions() {
 void Sea5kgPython3Scripting_editorplugin::saveAndReloadExtensions() {
     this->rewriteExtensionsJson();
     this->reloadMenuForSelected();
-    this->reloadMenuForExtensions();
-}
-
-EditExtensionDialog *Sea5kgPython3Scripting_editorplugin::getEditDialog() {
-    if (m_pEditScriptWindow == nullptr) {
-        m_pEditScriptWindow = new EditExtensionDialog(m_pMainWindow, this);
-        Qt::WindowFlags flags = m_pEditScriptWindow->windowFlags();
-        m_pEditScriptWindow->setWindowFlags(flags | Qt::Tool);
-    }
-    return m_pEditScriptWindow;
 }
 
 ModelExtension *Sea5kgPython3Scripting_editorplugin::findModelExtensionByAction(QObject *pObject) {

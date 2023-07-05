@@ -2,9 +2,9 @@
 #include <iostream>
 #include <QCodeEditor>
 
-#include "CreateExtensionDialog.h"
+#include "WindowCreatePythonScript.h"
 
-CreateExtensionDialog::CreateExtensionDialog(QWidget *parent, const QString &strPaths) : QDialog(parent){
+WindowCreatePythonScript::WindowCreatePythonScript(QWidget *parent, const QString &strPaths) : QDialog(parent){
     m_pLabelSetName = new QLabel(tr("Set name extension:"));
     m_pLineEditExtensionName = new QLineEdit();
     m_pLabelSelectExtensionFor = new QLabel(tr("Extension for:"));
@@ -43,15 +43,15 @@ CreateExtensionDialog::CreateExtensionDialog(QWidget *parent, const QString &str
     setFixedHeight(sizeHint().height());
 }
 
-QString CreateExtensionDialog::getExtensionName() {
+QString WindowCreatePythonScript::getExtensionName() {
     return m_sExtensionName;
 }
 
-QString CreateExtensionDialog::getExtensionFor() {
+QString WindowCreatePythonScript::getExtensionFor() {
     return m_sExtensionFor;
 }
 
-void CreateExtensionDialog::nextClicked() {
+void WindowCreatePythonScript::nextClicked() {
     m_sExtensionName = m_pLineEditExtensionName->text();
     m_sExtensionFor = m_pComboBoxExtensionFor->currentData().toString();
     done(QDialog::Accepted);

@@ -1,4 +1,5 @@
 #include <QtGui>
+#include <QMessageBox>
 #include <iostream>
 #include <QGLSLCompleter>
 #include <QLuaCompleter>
@@ -11,10 +12,15 @@
 #include <QPythonHighlighter>
 #include <Unigine.h>
 
-#include "EditExtensionDialog.h"
+#include "WindowEditPythonScript.h"
 
-EditExtensionDialog::EditExtensionDialog(QWidget *parent, IRunPythonScript *pRunPythonScript) : QDialog(parent) {
+WindowEditPythonScript::WindowEditPythonScript(
+    QWidget *parent,
+    IRunPythonScript *pRunPythonScript,
+    IManagePythonScripts *pManagePythonScripts
+) : QDialog(parent) {
     m_pRunPythonScript = pRunPythonScript;
+    m_pManagePythonScripts = pManagePythonScripts;
     m_pModel = nullptr;
     m_pLabelName = new QLabel(tr("Name: ") + "?");
     m_pLabelFor = new QLabel(tr("For: ") + "?");
@@ -59,7 +65,7 @@ EditExtensionDialog::EditExtensionDialog(QWidget *parent, IRunPythonScript *pRun
     // setFixedHeight(sizeHint().height());
 }
 
-void EditExtensionDialog::setModelExtension(ModelExtension *pModel) {
+void WindowEditPythonScript::setModelExtension(ModelExtension *pModel) {
     m_pModel = pModel;
     m_pLabelName->setText(tr("Name: ") + pModel->getName());
     m_pLabelFor->setText(tr("For: ") + pModel->getFor());
@@ -72,7 +78,7 @@ void EditExtensionDialog::setModelExtension(ModelExtension *pModel) {
     }
 }
 
-QSyntaxStyle *EditExtensionDialog::loadStyle(QString path) {
+QSyntaxStyle *WindowEditPythonScript::loadStyle(QString path) {
     QFile fl(path);
 
     if (!fl.open(QIODevice::ReadOnly)) {
@@ -90,7 +96,7 @@ QSyntaxStyle *EditExtensionDialog::loadStyle(QString path) {
     return style;
 }
 
-void EditExtensionDialog::saveClicked() {
+void WindowEditPythonScript::saveClicked() {
     QFile fileMainPy(m_sFilePath);
     fileMainPy.open(QFile::WriteOnly);
     fileMainPy.write(m_pCodeEditor->toPlainText().toUtf8());
@@ -99,7 +105,7 @@ void EditExtensionDialog::saveClicked() {
     onCodeChanged();
 }
 
-void EditExtensionDialog::runClicked() {
+void WindowEditPythonScript::runClicked() {
     // log_info("runPythonScript");
     Unigine::Log::message("runClicked");
     QString sScript = m_pCodeEditor->toPlainText().toUtf8();
@@ -110,6 +116,21 @@ void EditExtensionDialog::runClicked() {
     }
 }
 
-void EditExtensionDialog::onCodeChanged() {
+void WindowEditPythonScript::onCodeChanged() {
     m_pSaveButton->setEnabled(m_sCodeInFile != m_pCodeEditor->toPlainText().toUtf8());
+}
+
+void WindowEditPythonScript::closeEvent(QCloseEvent *event) {
+    QMessageBox::StandardButton resBtn = QMessageBox::question(
+        this, "Edit Python Script",
+        tr("Are you sure?\n"),
+        QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+        QMessageBox::Yes
+    );
+    if (resBtn != QMessageBox::Yes) {
+        event->ignore();
+    } else {
+        event->accept();
+        m_pManagePythonScripts->showWindowManagePythonScripts(m_pModel->getId());
+    }
 }
