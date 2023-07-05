@@ -137,7 +137,6 @@ void WindowManagePythonScripts::createClicked() {
     if (sd.exec() == QDialog::Accepted){
         QString sName = sd.getExtensionName();
         QString sFor = sd.getExtensionFor();
-        // log_info("createNewExtension. Next with " + sFor + ": " + sName);
 
         // normalize extension id
         QString sScriptId = sFor + "_";
@@ -151,7 +150,6 @@ void WindowManagePythonScripts::createClicked() {
                 sScriptId += '_';
             }
         }
-        // log_info("createNewExtension. Next sScriptId == " + sScriptId);
 
         // prepare extension folder
         QDir newExtDir(m_pManageScripts->getPython3ScriptingDirPath() + "/" + sScriptId);

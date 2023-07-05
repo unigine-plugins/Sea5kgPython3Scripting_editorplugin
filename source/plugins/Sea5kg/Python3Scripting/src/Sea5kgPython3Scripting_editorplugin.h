@@ -63,7 +63,6 @@ private slots:
     void processSelectedProperties();
     void processSelectedRuntimes();
     void processSelectedTools();
-    void createNewExtension();
     void manageScripts();
     void menuClickAbout();
 
