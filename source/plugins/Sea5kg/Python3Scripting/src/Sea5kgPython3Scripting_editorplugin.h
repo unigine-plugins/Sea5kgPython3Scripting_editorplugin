@@ -50,7 +50,7 @@ public:
     virtual QString getPython3ScriptingDirPath() override;
 
     // IPython3RunnerMain
-    void executeRunner(Python3Runner *p);
+    void executeRunner(Python3Runner *p) override;
 
 Q_SIGNALS:
     void signal_executeRunner(Python3Runner *pRunner);
