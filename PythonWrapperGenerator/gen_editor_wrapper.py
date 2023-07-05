@@ -233,12 +233,17 @@ class Python3UnigineWriter:
             else:
                 _args.append(_method['Argument'])
 
+            arg_number = 0
             for _arg in _args:
+                arg_number += 1
                 _type = find_type_by_id(_arg["@type"])
                 # print("arg: ", _arg)
+                arg_name = "arg" + str(arg_number)
+                if "@name" in _arg:
+                    arg_name = _arg["@name"]
                 _method_json["args"].append({
                     "type": _type["define"],
-                    "name": _arg["@name"]
+                    "name": arg_name
                 })
                 # print("arg: ", _arg["@name"])
         if len(_method_json["args"]) == 0:
@@ -718,9 +723,19 @@ make_for_classes = [
     "Material",
     "Materials",
     "Node",
-    "AssetManager",
+    "Mesh",
     "UGUID",
     "mat4",
+    "ObjectMeshDynamic",
+    "vec3",
+    "Vec3",
+    "Player",
+    # editor
+    "AssetManager",
+    "ViewportManager",
+    "SelectorNodes",
+    "Selection",
+    "Vector",
 ]
 
 for _id in cache_classes:

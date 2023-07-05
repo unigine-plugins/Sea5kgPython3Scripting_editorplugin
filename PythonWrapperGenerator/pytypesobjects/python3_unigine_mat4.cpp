@@ -268,12 +268,54 @@ static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const float * m;
+    PyObject *pArg1; // const & m;
+    PyObject *pArg2; // int transposed;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+TODO for const &
+
+
+    // pArg2
+TODO for int
+
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                self->unigine_object_ptr->set(m, transposed);
+            };
+            // args
+            const & m;
+            int transposed;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->m = m;
+    pRunner->transposed = transposed;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
+
+    // end
+    // return: void
+    return ret;
+};
+
+// public : set
+static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // const & m;
     PyObject *pArg2; // int transpose;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for const float *
+TODO for const &
 
 
     // pArg2
@@ -286,7 +328,7 @@ TODO for int
                 self->unigine_object_ptr->set(m, transpose);
             };
             // args
-            const float * m;
+            const & m;
             int transpose;
     };
     auto *pRunner = new LocalRunner();
@@ -394,12 +436,12 @@ static PyObject * unigine_mat4_get(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // float * m;
+    PyObject *pArg1; // & m;
     PyObject *pArg2; // int transpose;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for float *
+TODO for &
 
 
     // pArg2
@@ -412,7 +454,7 @@ TODO for int
                 self->unigine_object_ptr->get(m, transpose);
             };
             // args
-            float * m;
+            & m;
             int transpose;
     };
     auto *pRunner = new LocalRunner();
@@ -444,19 +486,19 @@ static PyObject * unigine_mat4_get(unigine_mat4* self) {
             };
             // args
             // return
-            float * retOriginal;
+            & retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
     while(!pRunner->mutexAsync.tryLock(5)) {
     }
     pRunner->mutexAsync.unlock();
-    float * retOriginal = pRunner->retOriginal;
+    & retOriginal = pRunner->retOriginal;
     delete pRunner;
-    ret = TODO: unknown type 'float *'
+    ret = TODO: unknown type '&'
 
     // end
-    // return: float *
+    // return: &
     return ret;
 };
 
@@ -473,19 +515,19 @@ static PyObject * unigine_mat4_get(unigine_mat4* self) {
             };
             // args
             // return
-            const float * retOriginal;
+            const & retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
     while(!pRunner->mutexAsync.tryLock(5)) {
     }
     pRunner->mutexAsync.unlock();
-    const float * retOriginal = pRunner->retOriginal;
+    const & retOriginal = pRunner->retOriginal;
     delete pRunner;
-    ret = TODO: unknown type 'const float *'
+    ret = TODO: unknown type 'const &'
 
     // end
-    // return: const float *
+    // return: const &
     return ret;
 };
 
@@ -1491,6 +1533,10 @@ static PyObject * unigine_mat4_determinant3(unigine_mat4* self) {
 
 
 static PyMethodDef unigine_mat4_methods[] = {
+    {
+        "set", (PyCFunction)unigine_mat4_set, METH_VARARGS,
+        "public : set"
+    },
     {
         "set", (PyCFunction)unigine_mat4_set, METH_VARARGS,
         "public : set"

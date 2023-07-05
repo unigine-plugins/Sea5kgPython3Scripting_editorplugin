@@ -953,6 +953,41 @@ static PyObject * unigine_AssetManager_get_asset_gui_ds(unigine_AssetManager* se
     return ret;
 };
 
+// public (static): getAssetGUIDs
+static PyObject * unigine_AssetManager_get_asset_gui_ds(unigine_AssetManager* self_static_null, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // Unigine::Vector<Unigine::UGUID> & asset_guids;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+TODO for Unigine::Vector<Unigine::UGUID> &
+
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                Unigine::AssetManager::getAssetGUIDs(asset_guids);
+            };
+            // args
+            Unigine::Vector<Unigine::UGUID> & asset_guids;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->asset_guids = asset_guids;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
+
+    // end
+    // return: void
+    return ret;
+};
+
 // public (static): getAssetPaths
 static PyObject * unigine_AssetManager_get_asset_paths(unigine_AssetManager* self_static_null) {
     PyErr_Clear();
@@ -979,6 +1014,41 @@ static PyObject * unigine_AssetManager_get_asset_paths(unigine_AssetManager* sel
 
     // end
     // return: Unigine::Vector<Unigine::String>
+    return ret;
+};
+
+// public (static): getAssetPaths
+static PyObject * unigine_AssetManager_get_asset_paths(unigine_AssetManager* self_static_null, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // Unigine::Vector<Unigine::String> & asset_paths;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+TODO for Unigine::Vector<Unigine::String> &
+
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                Unigine::AssetManager::getAssetPaths(asset_paths);
+            };
+            // args
+            Unigine::Vector<Unigine::String> & asset_paths;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->asset_paths = asset_paths;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
+
+    // end
+    // return: void
     return ret;
 };
 
@@ -1026,6 +1096,55 @@ static PyObject * unigine_AssetManager_get_asset_gui_ds_for_directory(unigine_As
     return ret;
 };
 
+// public (static): getAssetGUIDsForDirectory
+static PyObject * unigine_AssetManager_get_asset_gui_ds_for_directory(unigine_AssetManager* self_static_null, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg2; // Unigine::Vector<Unigine::UGUID> & asset_guids;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * directory_path = PyUnicode_AsUTF8(pArg1);
+
+
+    // pArg2
+TODO for Unigine::Vector<Unigine::UGUID> &
+
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                Unigine::AssetManager::getAssetGUIDsForDirectory(directory_path, asset_guids);
+            };
+            // args
+            const char * directory_path;
+            Unigine::Vector<Unigine::UGUID> & asset_guids;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->directory_path = directory_path;
+    pRunner->asset_guids = asset_guids;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
+
+    // end
+    // return: void
+    return ret;
+};
+
 // public (static): getAssetPathsForDirectory
 static PyObject * unigine_AssetManager_get_asset_paths_for_directory(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
@@ -1070,6 +1189,55 @@ static PyObject * unigine_AssetManager_get_asset_paths_for_directory(unigine_Ass
     return ret;
 };
 
+// public (static): getAssetPathsForDirectory
+static PyObject * unigine_AssetManager_get_asset_paths_for_directory(unigine_AssetManager* self_static_null, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg2; // Unigine::Vector<Unigine::String> & asset_paths;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * directory_path = PyUnicode_AsUTF8(pArg1);
+
+
+    // pArg2
+TODO for Unigine::Vector<Unigine::String> &
+
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                Unigine::AssetManager::getAssetPathsForDirectory(directory_path, asset_paths);
+            };
+            // args
+            const char * directory_path;
+            Unigine::Vector<Unigine::String> & asset_paths;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->directory_path = directory_path;
+    pRunner->asset_paths = asset_paths;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
+
+    // end
+    // return: void
+    return ret;
+};
+
 // public (static): getRuntimeGUIDs
 static PyObject * unigine_AssetManager_get_runtime_gui_ds(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
@@ -1111,6 +1279,55 @@ static PyObject * unigine_AssetManager_get_runtime_gui_ds(unigine_AssetManager* 
 
     // end
     // return: Unigine::Vector<Unigine::UGUID>
+    return ret;
+};
+
+// public (static): getRuntimeGUIDs
+static PyObject * unigine_AssetManager_get_runtime_gui_ds(unigine_AssetManager* self_static_null, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg2; // Unigine::Vector<Unigine::UGUID> & runtime_guids;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * asset_path = PyUnicode_AsUTF8(pArg1);
+
+
+    // pArg2
+TODO for Unigine::Vector<Unigine::UGUID> &
+
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                Unigine::AssetManager::getRuntimeGUIDs(asset_path, runtime_guids);
+            };
+            // args
+            const char * asset_path;
+            Unigine::Vector<Unigine::UGUID> & runtime_guids;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->asset_path = asset_path;
+    pRunner->runtime_guids = runtime_guids;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
+
+    // end
+    // return: void
     return ret;
 };
 
@@ -1785,6 +2002,41 @@ static PyObject * unigine_AssetManager_get_directory_paths_all(unigine_AssetMana
     return ret;
 };
 
+// public (static): getDirectoryPathsAll
+static PyObject * unigine_AssetManager_get_directory_paths_all(unigine_AssetManager* self_static_null, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // Unigine::Vector<Unigine::String> & directory_paths;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+TODO for Unigine::Vector<Unigine::String> &
+
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                Unigine::AssetManager::getDirectoryPathsAll(directory_paths);
+            };
+            // args
+            Unigine::Vector<Unigine::String> & directory_paths;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->directory_paths = directory_paths;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
+
+    // end
+    // return: void
+    return ret;
+};
+
 // public (static): getDirectoryPaths
 static PyObject * unigine_AssetManager_get_directory_paths(unigine_AssetManager* self_static_null, PyObject *args) {
     PyErr_Clear();
@@ -1826,6 +2078,55 @@ static PyObject * unigine_AssetManager_get_directory_paths(unigine_AssetManager*
 
     // end
     // return: Unigine::Vector<Unigine::String>
+    return ret;
+};
+
+// public (static): getDirectoryPaths
+static PyObject * unigine_AssetManager_get_directory_paths(unigine_AssetManager* self_static_null, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg2; // Unigine::Vector<Unigine::String> & directory_paths;
+    PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
+
+    // pArg1
+    if (!PyUnicode_Check(pArg1)) {
+        // TODO - error
+        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
+        Py_INCREF(Py_None);
+        ret = Py_None;
+        return ret;
+    }
+    const char * directory_path = PyUnicode_AsUTF8(pArg1);
+
+
+    // pArg2
+TODO for Unigine::Vector<Unigine::String> &
+
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                Unigine::AssetManager::getDirectoryPaths(directory_path, directory_paths);
+            };
+            // args
+            const char * directory_path;
+            Unigine::Vector<Unigine::String> & directory_paths;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->directory_path = directory_path;
+    pRunner->directory_paths = directory_paths;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
+
+    // end
+    // return: void
     return ret;
 };
 
@@ -2311,8 +2612,20 @@ static PyMethodDef unigine_AssetManager_methods[] = {
         "public (static): getAssetGUIDs"
     },
     {
+        "get_asset_gui_ds", (PyCFunction)unigine_AssetManager_get_asset_gui_ds, METH_STATIC|METH_VARARGS,
+        "public (static): getAssetGUIDs"
+    },
+    {
         "get_asset_paths", (PyCFunction)unigine_AssetManager_get_asset_paths, METH_STATIC|METH_NOARGS,
         "public (static): getAssetPaths"
+    },
+    {
+        "get_asset_paths", (PyCFunction)unigine_AssetManager_get_asset_paths, METH_STATIC|METH_VARARGS,
+        "public (static): getAssetPaths"
+    },
+    {
+        "get_asset_gui_ds_for_directory", (PyCFunction)unigine_AssetManager_get_asset_gui_ds_for_directory, METH_STATIC|METH_VARARGS,
+        "public (static): getAssetGUIDsForDirectory"
     },
     {
         "get_asset_gui_ds_for_directory", (PyCFunction)unigine_AssetManager_get_asset_gui_ds_for_directory, METH_STATIC|METH_VARARGS,
@@ -2321,6 +2634,14 @@ static PyMethodDef unigine_AssetManager_methods[] = {
     {
         "get_asset_paths_for_directory", (PyCFunction)unigine_AssetManager_get_asset_paths_for_directory, METH_STATIC|METH_VARARGS,
         "public (static): getAssetPathsForDirectory"
+    },
+    {
+        "get_asset_paths_for_directory", (PyCFunction)unigine_AssetManager_get_asset_paths_for_directory, METH_STATIC|METH_VARARGS,
+        "public (static): getAssetPathsForDirectory"
+    },
+    {
+        "get_runtime_gui_ds", (PyCFunction)unigine_AssetManager_get_runtime_gui_ds, METH_STATIC|METH_VARARGS,
+        "public (static): getRuntimeGUIDs"
     },
     {
         "get_runtime_gui_ds", (PyCFunction)unigine_AssetManager_get_runtime_gui_ds, METH_STATIC|METH_VARARGS,
@@ -2381,6 +2702,14 @@ static PyMethodDef unigine_AssetManager_methods[] = {
     {
         "get_directory_paths_all", (PyCFunction)unigine_AssetManager_get_directory_paths_all, METH_STATIC|METH_NOARGS,
         "public (static): getDirectoryPathsAll"
+    },
+    {
+        "get_directory_paths_all", (PyCFunction)unigine_AssetManager_get_directory_paths_all, METH_STATIC|METH_VARARGS,
+        "public (static): getDirectoryPathsAll"
+    },
+    {
+        "get_directory_paths", (PyCFunction)unigine_AssetManager_get_directory_paths, METH_STATIC|METH_VARARGS,
+        "public (static): getDirectoryPaths"
     },
     {
         "get_directory_paths", (PyCFunction)unigine_AssetManager_get_directory_paths, METH_STATIC|METH_VARARGS,

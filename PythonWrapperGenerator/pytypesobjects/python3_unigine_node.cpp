@@ -896,6 +896,35 @@ static PyObject * unigine_Node_is_field(unigine_Node* self) {
     return ret;
 };
 
+// public : isParticlesField
+static PyObject * unigine_Node_is_particles_field(unigine_Node* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isParticlesField();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
+    return ret;
+};
+
 // public : isExtern
 static PyObject * unigine_Node_is_extern(unigine_Node* self) {
     PyErr_Clear();
@@ -1175,6 +1204,35 @@ static PyObject * unigine_Node_is_immovable(unigine_Node* self) {
     return ret;
 };
 
+// public : isImmovableSupported
+static PyObject * unigine_Node_is_immovable_supported(unigine_Node* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isImmovableSupported();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
+    return ret;
+};
+
 // public : setTriggerInteractionEnabled
 static PyObject * unigine_Node_set_trigger_interaction_enabled(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
@@ -1412,6 +1470,64 @@ static PyObject * unigine_Node_is_query(unigine_Node* self) {
         public:
             virtual void run() override {
                 retOriginal = self->unigine_object_ptr->isQuery();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
+    return ret;
+};
+
+// public : isSurfacesIntersectionSupported
+static PyObject * unigine_Node_is_surfaces_intersection_supported(unigine_Node* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isSurfacesIntersectionSupported();
+            };
+            // args
+            // return
+            bool retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    bool retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = PyBool_FromLong(retOriginal);
+
+    // end
+    // return: bool
+    return ret;
+};
+
+// public : isSurfacesCollisionSupported
+static PyObject * unigine_Node_is_surfaces_collision_supported(unigine_Node* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = self->unigine_object_ptr->isSurfacesCollisionSupported();
             };
             // args
             // return
@@ -4368,21 +4484,29 @@ static PyObject * unigine_Node_get_spatial_bound_sphere(unigine_Node* self) {
 };
 
 // public : getHierarchyBoundBox
-static PyObject * unigine_Node_get_hierarchy_bound_box(unigine_Node* self) {
+static PyObject * unigine_Node_get_hierarchy_bound_box(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
+    PyObject *pArg1; // bool only_enabled_nodes;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+TODO for bool
+
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getHierarchyBoundBox();
+                retOriginal = self->unigine_object_ptr->getHierarchyBoundBox(only_enabled_nodes);
             };
             // args
+            bool only_enabled_nodes;
             // return
             Unigine::Math::BoundBox retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->only_enabled_nodes = only_enabled_nodes;
     Python3Runner::runInMainThread(pRunner);
     while(!pRunner->mutexAsync.tryLock(5)) {
     }
@@ -4397,21 +4521,29 @@ static PyObject * unigine_Node_get_hierarchy_bound_box(unigine_Node* self) {
 };
 
 // public : getHierarchyBoundSphere
-static PyObject * unigine_Node_get_hierarchy_bound_sphere(unigine_Node* self) {
+static PyObject * unigine_Node_get_hierarchy_bound_sphere(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
+    PyObject *pArg1; // bool only_enabled_nodes;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+TODO for bool
+
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getHierarchyBoundSphere();
+                retOriginal = self->unigine_object_ptr->getHierarchyBoundSphere(only_enabled_nodes);
             };
             // args
+            bool only_enabled_nodes;
             // return
             Unigine::Math::BoundSphere retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->only_enabled_nodes = only_enabled_nodes;
     Python3Runner::runInMainThread(pRunner);
     while(!pRunner->mutexAsync.tryLock(5)) {
     }
@@ -4426,21 +4558,29 @@ static PyObject * unigine_Node_get_hierarchy_bound_sphere(unigine_Node* self) {
 };
 
 // public : getHierarchyWorldBoundBox
-static PyObject * unigine_Node_get_hierarchy_world_bound_box(unigine_Node* self) {
+static PyObject * unigine_Node_get_hierarchy_world_bound_box(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
+    PyObject *pArg1; // bool only_enabled_nodes;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+TODO for bool
+
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getHierarchyWorldBoundBox();
+                retOriginal = self->unigine_object_ptr->getHierarchyWorldBoundBox(only_enabled_nodes);
             };
             // args
+            bool only_enabled_nodes;
             // return
             Unigine::Math::BoundBox retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->only_enabled_nodes = only_enabled_nodes;
     Python3Runner::runInMainThread(pRunner);
     while(!pRunner->mutexAsync.tryLock(5)) {
     }
@@ -4455,21 +4595,29 @@ static PyObject * unigine_Node_get_hierarchy_world_bound_box(unigine_Node* self)
 };
 
 // public : getHierarchyWorldBoundSphere
-static PyObject * unigine_Node_get_hierarchy_world_bound_sphere(unigine_Node* self) {
+static PyObject * unigine_Node_get_hierarchy_world_bound_sphere(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
+    PyObject *pArg1; // bool only_enabled_nodes;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+TODO for bool
+
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getHierarchyWorldBoundSphere();
+                retOriginal = self->unigine_object_ptr->getHierarchyWorldBoundSphere(only_enabled_nodes);
             };
             // args
+            bool only_enabled_nodes;
             // return
             Unigine::Math::BoundSphere retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->only_enabled_nodes = only_enabled_nodes;
     Python3Runner::runInMainThread(pRunner);
     while(!pRunner->mutexAsync.tryLock(5)) {
     }
@@ -4484,21 +4632,29 @@ static PyObject * unigine_Node_get_hierarchy_world_bound_sphere(unigine_Node* se
 };
 
 // public : getHierarchySpatialBoundBox
-static PyObject * unigine_Node_get_hierarchy_spatial_bound_box(unigine_Node* self) {
+static PyObject * unigine_Node_get_hierarchy_spatial_bound_box(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
+    PyObject *pArg1; // bool only_enabled_nodes;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+TODO for bool
+
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getHierarchySpatialBoundBox();
+                retOriginal = self->unigine_object_ptr->getHierarchySpatialBoundBox(only_enabled_nodes);
             };
             // args
+            bool only_enabled_nodes;
             // return
             Unigine::Math::BoundBox retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->only_enabled_nodes = only_enabled_nodes;
     Python3Runner::runInMainThread(pRunner);
     while(!pRunner->mutexAsync.tryLock(5)) {
     }
@@ -4513,21 +4669,29 @@ static PyObject * unigine_Node_get_hierarchy_spatial_bound_box(unigine_Node* sel
 };
 
 // public : getHierarchySpatialBoundSphere
-static PyObject * unigine_Node_get_hierarchy_spatial_bound_sphere(unigine_Node* self) {
+static PyObject * unigine_Node_get_hierarchy_spatial_bound_sphere(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
+    PyObject *pArg1; // bool only_enabled_nodes;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+TODO for bool
+
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getHierarchySpatialBoundSphere();
+                retOriginal = self->unigine_object_ptr->getHierarchySpatialBoundSphere(only_enabled_nodes);
             };
             // args
+            bool only_enabled_nodes;
             // return
             Unigine::Math::BoundSphere retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->only_enabled_nodes = only_enabled_nodes;
     Python3Runner::runInMainThread(pRunner);
     while(!pRunner->mutexAsync.tryLock(5)) {
     }
@@ -6480,6 +6644,10 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : isField"
     },
     {
+        "is_particles_field", (PyCFunction)unigine_Node_is_particles_field, METH_NOARGS,
+        "public : isParticlesField"
+    },
+    {
         "is_extern", (PyCFunction)unigine_Node_is_extern, METH_NOARGS,
         "public : isExtern"
     },
@@ -6516,6 +6684,10 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : isImmovable"
     },
     {
+        "is_immovable_supported", (PyCFunction)unigine_Node_is_immovable_supported, METH_NOARGS,
+        "public : isImmovableSupported"
+    },
+    {
         "set_trigger_interaction_enabled", (PyCFunction)unigine_Node_set_trigger_interaction_enabled, METH_VARARGS,
         "public : setTriggerInteractionEnabled"
     },
@@ -6546,6 +6718,14 @@ static PyMethodDef unigine_Node_methods[] = {
     {
         "is_query", (PyCFunction)unigine_Node_is_query, METH_NOARGS,
         "public : isQuery"
+    },
+    {
+        "is_surfaces_intersection_supported", (PyCFunction)unigine_Node_is_surfaces_intersection_supported, METH_NOARGS,
+        "public : isSurfacesIntersectionSupported"
+    },
+    {
+        "is_surfaces_collision_supported", (PyCFunction)unigine_Node_is_surfaces_collision_supported, METH_NOARGS,
+        "public : isSurfacesCollisionSupported"
     },
     {
         "has_query_force", (PyCFunction)unigine_Node_has_query_force, METH_NOARGS,
@@ -6872,27 +7052,27 @@ static PyMethodDef unigine_Node_methods[] = {
         "public : getSpatialBoundSphere"
     },
     {
-        "get_hierarchy_bound_box", (PyCFunction)unigine_Node_get_hierarchy_bound_box, METH_NOARGS,
+        "get_hierarchy_bound_box", (PyCFunction)unigine_Node_get_hierarchy_bound_box, METH_VARARGS,
         "public : getHierarchyBoundBox"
     },
     {
-        "get_hierarchy_bound_sphere", (PyCFunction)unigine_Node_get_hierarchy_bound_sphere, METH_NOARGS,
+        "get_hierarchy_bound_sphere", (PyCFunction)unigine_Node_get_hierarchy_bound_sphere, METH_VARARGS,
         "public : getHierarchyBoundSphere"
     },
     {
-        "get_hierarchy_world_bound_box", (PyCFunction)unigine_Node_get_hierarchy_world_bound_box, METH_NOARGS,
+        "get_hierarchy_world_bound_box", (PyCFunction)unigine_Node_get_hierarchy_world_bound_box, METH_VARARGS,
         "public : getHierarchyWorldBoundBox"
     },
     {
-        "get_hierarchy_world_bound_sphere", (PyCFunction)unigine_Node_get_hierarchy_world_bound_sphere, METH_NOARGS,
+        "get_hierarchy_world_bound_sphere", (PyCFunction)unigine_Node_get_hierarchy_world_bound_sphere, METH_VARARGS,
         "public : getHierarchyWorldBoundSphere"
     },
     {
-        "get_hierarchy_spatial_bound_box", (PyCFunction)unigine_Node_get_hierarchy_spatial_bound_box, METH_NOARGS,
+        "get_hierarchy_spatial_bound_box", (PyCFunction)unigine_Node_get_hierarchy_spatial_bound_box, METH_VARARGS,
         "public : getHierarchySpatialBoundBox"
     },
     {
-        "get_hierarchy_spatial_bound_sphere", (PyCFunction)unigine_Node_get_hierarchy_spatial_bound_sphere, METH_NOARGS,
+        "get_hierarchy_spatial_bound_sphere", (PyCFunction)unigine_Node_get_hierarchy_spatial_bound_sphere, METH_VARARGS,
         "public : getHierarchySpatialBoundSphere"
     },
     {
@@ -7301,6 +7481,26 @@ bool Python3UnigineNode::isReady() {
         );
         // enum_typename: TYPE
         PyDict_SetItemString(
+            unigine_NodeType.tp_dict, "PARTICLES_FIELD_BEGIN",
+            Py_BuildValue("i", Unigine::Node::PARTICLES_FIELD_BEGIN)
+        );
+        // enum_typename: TYPE
+        PyDict_SetItemString(
+            unigine_NodeType.tp_dict, "PARTICLES_FIELD_SPACER",
+            Py_BuildValue("i", Unigine::Node::PARTICLES_FIELD_SPACER)
+        );
+        // enum_typename: TYPE
+        PyDict_SetItemString(
+            unigine_NodeType.tp_dict, "PARTICLES_FIELD_DEFLECTOR",
+            Py_BuildValue("i", Unigine::Node::PARTICLES_FIELD_DEFLECTOR)
+        );
+        // enum_typename: TYPE
+        PyDict_SetItemString(
+            unigine_NodeType.tp_dict, "PARTICLES_FIELD_END",
+            Py_BuildValue("i", Unigine::Node::PARTICLES_FIELD_END)
+        );
+        // enum_typename: TYPE
+        PyDict_SetItemString(
             unigine_NodeType.tp_dict, "LIGHT_BEGIN",
             Py_BuildValue("i", Unigine::Node::LIGHT_BEGIN)
         );
@@ -7663,6 +7863,11 @@ bool Python3UnigineNode::isReady() {
         PyDict_SetItemString(
             unigine_NodeType.tp_dict, "NUM_FIELDS",
             Py_BuildValue("i", Unigine::Node::NUM_FIELDS)
+        );
+        // enum_typename: TYPE
+        PyDict_SetItemString(
+            unigine_NodeType.tp_dict, "NUM_PARTICLES_FIELDS",
+            Py_BuildValue("i", Unigine::Node::NUM_PARTICLES_FIELDS)
         );
         // enum_typename: TYPE
         PyDict_SetItemString(
