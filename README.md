@@ -46,3 +46,10 @@ Build on linux
 ```
 $ docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:v2.16.1 ./build_plugin.py
 ```
+
+
+## Useful
+
+### Mp4 to gif
+
+https://ezgif.com/video-to-gif/

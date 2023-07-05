@@ -40,9 +40,6 @@ public:
     bool init() override;
     void shutdown() override;
 
-    // Python3Runner
-    void executeRunner(Python3Runner *p);
-
     // IManagePythonScripts
     virtual void addModelExtension(ModelExtension *pModel) override;
     virtual void removeModelScriptById(QString sScriptId) override;
@@ -52,10 +49,15 @@ public:
     virtual void showWindowManagePythonScripts(QString sScriptId) override;
     virtual QString getPython3ScriptingDirPath() override;
 
+    // IPython3RunnerMain
+    void executeRunner(Python3Runner *p);
+
 Q_SIGNALS:
     void signal_executeRunner(Python3Runner *pRunner);
 
 private slots:
+    void slot_executeRunner(Python3Runner *pRunner);
+
     void processSelectedMaterials();
     void processSelectedNodes();
     void processSelectedProperties();
@@ -66,8 +68,6 @@ private slots:
     void menuClickAbout();
 
     void globalSelectionChanged();
-
-    void slot_executeRunner(Python3Runner *pRunner);
 
 private:
     // IRunPythonScript

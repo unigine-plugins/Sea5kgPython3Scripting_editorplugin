@@ -58,9 +58,12 @@ bool Sea5kgPython3Scripting_editorplugin::init() {
     }
 
     connect(UnigineEditor::Selection::instance(), &UnigineEditor::Selection::changed, this, &Sea5kgPython3Scripting_editorplugin::globalSelectionChanged);
-    connect(this, &Sea5kgPython3Scripting_editorplugin::signal_executeRunner, this, &Sea5kgPython3Scripting_editorplugin::slot_executeRunner);
-
+    connect(
+        this, &Sea5kgPython3Scripting_editorplugin::signal_executeRunner,
+        this, &Sea5kgPython3Scripting_editorplugin::slot_executeRunner
+    );
     g_pPython3RunnerMain = this;
+
     log_info("Initialiazed");
 
     return true;
@@ -73,20 +76,7 @@ void Sea5kgPython3Scripting_editorplugin::shutdown() {
     }
 }
 
-void Sea5kgPython3Scripting_editorplugin::executeRunner(Python3Runner *p) {
-    p->mutexAsync.lock();
-    emit signal_executeRunner(p);
-}
 
-void Sea5kgPython3Scripting_editorplugin::slot_executeRunner(Python3Runner *pRunner) {
-    // std::cout << "slot_executeRunner, QThread::currentThreadId(): " << QThread::currentThread() << std::endl;
-    // std::cout << "slot_executeRunner, QCoreApplication::instance()->thread(): " << QCoreApplication::instance()->thread() << std::endl;
-    if (QThread::currentThread() != QCoreApplication::instance()->thread()) {
-        log_error("Sea5kgPython3Scripting_editorplugin::slot_executeRunner Not main thread!!!");
-    }
-    pRunner->run();
-    pRunner->mutexAsync.unlock();
-}
 
 // IManagePythonScripts
 void Sea5kgPython3Scripting_editorplugin::addModelExtension(ModelExtension *pModel) {
@@ -187,6 +177,20 @@ void Sea5kgPython3Scripting_editorplugin::showWindowManagePythonScripts(QString 
 
 QString Sea5kgPython3Scripting_editorplugin::getPython3ScriptingDirPath() {
     return m_sPython3ScriptingDirPath;
+}
+
+// IPython3RunnerMain
+void Sea5kgPython3Scripting_editorplugin::executeRunner(Python3Runner *p) {
+    p->mutexAsync.lock();
+    emit signal_executeRunner(p);
+}
+
+void Sea5kgPython3Scripting_editorplugin::slot_executeRunner(Python3Runner *pRunner) {
+    if (QThread::currentThread() != QCoreApplication::instance()->thread()) {
+        log_error("Sea5kgPython3Scripting_editorplugin::slot_executeRunner Not main thread!!!");
+    }
+    pRunner->run();
+    pRunner->mutexAsync.unlock();
 }
 
 void Sea5kgPython3Scripting_editorplugin::manageScripts() {

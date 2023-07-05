@@ -71,7 +71,7 @@ static PyObject *unigine_Node_rotate(unigine_Node* self, PyObject *args)
     pRunner->angle_y = angle_y;
     pRunner->angle_z = angle_z;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while(!pRunner->mutexAsync.tryLock(5)) { // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
@@ -149,18 +149,14 @@ static PyTypeObject unigine_NodeType = {
 };
 
 PyObject * Node::NewObject(Unigine::Ptr<Unigine::Node> unigine_object_ptr) {
-
-    std::cout << "sizeof(unigine_Node) = " << sizeof(unigine_Node) << std::endl;
-
     unigine_Node *pInst = PyObject_New(unigine_Node, &unigine_NodeType);
     pInst->unigine_object_ptr = unigine_object_ptr;
-    // Py_INCREF(pInst);
     return (PyObject *)pInst;
 }
 
 Unigine::Ptr<Unigine::Node> Node::Convert(PyObject *pObject) {
     if (Py_IS_TYPE(pObject, &unigine_NodeType) == 0) {
-        // TODO error
+        Unigine::Log::error("Invalid type, expected Unigine::Ptr<Unigine::Node>, but got some another");
     }
     unigine_Node *pInst = (unigine_Node *)pObject;
     return pInst->unigine_object_ptr;

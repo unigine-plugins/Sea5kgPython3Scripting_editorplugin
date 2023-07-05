@@ -1,0 +1,6 @@
+{
+    "enabled": true,
+    "for": "nodes",
+    "id": "nodes_assetmanager_is_asset",
+    "name": "Find no assets in data"
+}

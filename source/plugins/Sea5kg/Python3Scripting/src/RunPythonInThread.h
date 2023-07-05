@@ -12,7 +12,7 @@ class RunScriptInThread : public QThread {
         QString m_sExecCode;
     public:
         RunScriptInThread(
-            const QString &sExtensionId,
+            const QString &sScriptId,
             const QString &sPython3ScriptingDirPath
         );
         ~RunScriptInThread();

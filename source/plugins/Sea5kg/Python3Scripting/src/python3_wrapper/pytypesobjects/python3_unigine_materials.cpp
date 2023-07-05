@@ -288,8 +288,6 @@ static PyMethodDef unigine_Materials_methods[] = {
 };
 
 static PyTypeObject unigine_MaterialsType = {
-
-
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Materials",             // tp_name
     sizeof(unigine_Materials) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
