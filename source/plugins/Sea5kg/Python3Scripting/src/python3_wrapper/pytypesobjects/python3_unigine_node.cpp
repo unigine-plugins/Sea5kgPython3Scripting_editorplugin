@@ -29,6 +29,7 @@ static PyObject *unigine_Node_new(PyTypeObject *type, PyObject *args, PyObject *
     // Unigine::Log::message("unigine_Node_new\n");
     unigine_Node *self;
     self = (unigine_Node *)type->tp_alloc(type, 0);
+    self->unigine_object_ptr = nullptr;
     return (PyObject *)self;
 }
 

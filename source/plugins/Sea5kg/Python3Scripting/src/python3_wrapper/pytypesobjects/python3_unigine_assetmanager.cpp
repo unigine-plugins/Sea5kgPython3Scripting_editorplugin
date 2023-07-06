@@ -54,7 +54,7 @@ static PyObject * unigine_AssetManager_is_initialized(unigine_AssetManager* self
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -98,7 +98,7 @@ static PyObject * unigine_AssetManager_is_asset(unigine_AssetManager* self_stati
     auto *pRunner = new LocalRunner();
     pRunner->asset_path = asset_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -123,8 +123,6 @@ static PyMethodDef unigine_AssetManager_methods[] = {
 };
 
 static PyTypeObject unigine_AssetManagerType = {
-
-
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.AssetManager",             // tp_name
     sizeof(unigine_AssetManager) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
@@ -190,9 +188,7 @@ bool Python3UnigineAssetManager::addClassDefinitionToModule(PyObject* pModule) {
 }
 
 PyObject * AssetManager::NewObject() {
-
-    std::cout << "sizeof(unigine_AssetManager) = " << sizeof(unigine_AssetManager) << std::endl;
-
+    // std::cout << "sizeof(unigine_AssetManager) = " << sizeof(unigine_AssetManager) << std::endl;
     unigine_AssetManager *pInst = PyObject_New(unigine_AssetManager, &unigine_AssetManagerType);
     // Py_INCREF(pInst);
     return (PyObject *)pInst;

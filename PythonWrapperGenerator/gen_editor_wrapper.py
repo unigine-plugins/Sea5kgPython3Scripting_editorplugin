@@ -167,13 +167,14 @@ def init_namespaces(process_namespaces):
     return ret
 
 class Python3UnigineWriter:
-    def __init__(self, classname, _include_filename, can_ptr):
+    def __init__(self, classname, _namespace, _include_filename, can_ptr):
         self.__classname = classname
+        self.__namespace = _namespace
         self.__can_ptr = can_ptr
         if self.__can_ptr:
             self.__member_type = "Unigine::Ptr<Unigine::" + self.__classname + ">"
         else:
-            self.__member_type = "Unigine::" + self.__classname + " *"
+            self.__member_type = _namespace + "::" + self.__classname + " *"
         self.__include_filename = _include_filename
         self.__filepath = classname.lower()
         self.__filepath = "python3_unigine_" + self.__filepath
@@ -455,7 +456,7 @@ class Python3UnigineWriter:
         if not method_info["static"]:
             ret += "unigine_object_ptr->"
         else:
-            ret += "Unigine::" + method_info["classname"] + "::"
+            ret += self.__namespace + "::" + method_info["classname"] + "::"
         ret += method_info["name"] + "(" + args_to_call + ");\n"
         ret += "            };\n"
         ret += "            // args\n"
@@ -749,15 +750,15 @@ for _id in cache_classes:
     _namespace = _class["class_namespace"]
     _filepath = get_filepath_by_id(_class['@file'])
     if _name in make_for_classes:
-        # print("_id " + _id)
-        # print(_namespace, _name, _filepath)
+        print("_id " + _id)
+        print(_namespace, _name, _filepath)
         _include_filename = _filepath.split("/include/")[1]
         # print(_class)
         can_ptr = False
         if "public Unigine::APIInterface" in _class["bases_fullnames"]:
             can_ptr = True
 
-        _writer = Python3UnigineWriter(_name, _include_filename, can_ptr)
+        _writer = Python3UnigineWriter(_name, _namespace, _include_filename, can_ptr)
         _members = _class['@members'].split(' ')
         for _mem in _members:
             if _mem in cache_function:
