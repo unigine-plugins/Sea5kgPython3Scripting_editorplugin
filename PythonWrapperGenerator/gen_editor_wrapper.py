@@ -341,8 +341,6 @@ class Python3UnigineWriter:
         # self.__file_source.write("    // .tp_dict = 0,\n")
         # self.__file_source.write("    // .tp_init = (initproc)unigine_" + self.__classname + "_init,\n")
         # self.__file_source.write("    // .tp_new = unigine_" + self.__classname + "_new,\n")
-        self.__file_source.write("\n")
-        self.__file_source.write("\n")
         self.__file_source.write("    PyVarObject_HEAD_INIT(NULL, 0)\n")
         self.__file_source.write("    \"unigine." + self.__classname + "\",             // tp_name\n")
         self.__file_source.write("    sizeof(unigine_" + self.__classname + ") + 256, // tp_basicsize  (TODO magic 256 bytes!!!)\n")
@@ -417,7 +415,6 @@ class Python3UnigineWriter:
         counter = 0
         parse_tuple_o = ""
         parse_tuple_args = ""
-        convert_objects = ""
         for _arg in _args:
             counter += 1
             var_name = "pArg" + str(counter)
@@ -456,7 +453,7 @@ class Python3UnigineWriter:
         if return_type != "void":
             ret += "retOriginal = "
         if not method_info["static"]:
-            ret += "self->unigine_object_ptr->"
+            ret += "unigine_object_ptr->"
         else:
             ret += "Unigine::" + method_info["classname"] + "::"
         ret += method_info["name"] + "(" + args_to_call + ");\n"
@@ -472,7 +469,7 @@ class Python3UnigineWriter:
         for _arg in _args:
             ret += "    pRunner->" + _arg["name"] + " = " + _arg["name"] + ";\n"
         ret += "    Python3Runner::runInMainThread(pRunner);\n"
-        ret += "    while(!pRunner->mutexAsync.tryLock(5)) {\n"
+        ret += "    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds\n"
         ret += "    }\n"
         ret += "    pRunner->mutexAsync.unlock();\n"
         if return_type != "void":
@@ -495,6 +492,15 @@ class Python3UnigineWriter:
         elif return_type == "void":
             ret += "    Py_INCREF(Py_None);\n"
             ret += "    ret = Py_None;\n"
+            ret += "    assert(!PyErr_Occurred());\n"
+            ret += "    assert(ret);\n"
+            ret += "    goto finally;\n"
+            ret += "except:\n"
+            ret += "    Py_XDECREF(ret);\n"
+            ret += "    ret = NULL;\n"
+            ret += "finally:\n"
+            ret += "    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we\n"
+            ret += "     * should do this. See below. */\n"
         else:
             ret += "    ret = TODO: unknown type '" + return_type + "'\n"
         return ret
@@ -601,9 +607,7 @@ class Python3UnigineWriter:
         if not self.__is_all_methods_static():
             self.__file_source.write(self.__member_type + " unigine_object_ptr")
         self.__file_source.write(") {\n")
-        self.__file_source.write("\n")
-        self.__file_source.write("    std::cout << \"sizeof(unigine_" + self.__classname + ") = \" << sizeof(unigine_" + self.__classname + ") << std::endl;\n")
-        self.__file_source.write("\n")
+        self.__file_source.write("    // std::cout << \"sizeof(unigine_" + self.__classname + ") = \" << sizeof(unigine_" + self.__classname + ") << std::endl;\n")
         self.__file_source.write("    unigine_" + self.__classname + " *pInst = PyObject_New(unigine_" + self.__classname + ", &unigine_" + self.__classname + "Type);\n")
         if not self.__is_all_methods_static():
             self.__file_source.write("    pInst->unigine_object_ptr = unigine_object_ptr;\n")
@@ -614,7 +618,7 @@ class Python3UnigineWriter:
             self.__file_source.write("\n")
             self.__file_source.write(self.__member_type + " " + self.__classname + "::Convert(PyObject *pObject) {\n")
             self.__file_source.write("    if (Py_IS_TYPE(pObject, &unigine_" + self.__classname + "Type) == 0) {\n")
-            self.__file_source.write("        // TODO error\n")
+            self.__file_source.write("        Unigine::Log::error(\"Invalid type, expected '" + self.__member_type + "', but got some another\");\n")
             self.__file_source.write("    }\n")
             self.__file_source.write("    unigine_" + self.__classname + " *pInst = (unigine_" + self.__classname + " *)pObject;\n")
             self.__file_source.write("    return pInst->unigine_object_ptr;\n")

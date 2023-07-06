@@ -45,7 +45,23 @@ static PyObject * unigine_UGUID_generate(unigine_UGUID* self) {
     PyObject *ret = NULL;
     // parse args:
 
-    self->unigine_object_ptr->generate();
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                unigine_object_ptr->generate();
+            };
+            Unigine::UGUID * unigine_object_ptr;
+            // args
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
+    Python3Runner::runInMainThread(pRunner);
+    while(!pRunner->mutexAsync.tryLock(5)) {
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
 
     Py_INCREF(Py_None);
     ret = Py_None;
@@ -268,8 +284,6 @@ static PyMethodDef unigine_UGUID_methods[] = {
 };
 
 static PyTypeObject unigine_UGUIDType = {
-
-
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.UGUID",             // tp_name
     sizeof(unigine_UGUID) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
@@ -335,9 +349,7 @@ bool Python3UnigineUGUID::addClassDefinitionToModule(PyObject* pModule) {
 }
 
 PyObject * UGUID::NewObject(Unigine::UGUID * unigine_object_ptr) {
-
-    std::cout << "sizeof(unigine_UGUID) = " << sizeof(unigine_UGUID) << std::endl;
-
+    // std::cout << "sizeof(unigine_UGUID) = " << sizeof(unigine_UGUID) << std::endl;
     unigine_UGUID *pInst = PyObject_New(unigine_UGUID, &unigine_UGUIDType);
     pInst->unigine_object_ptr = unigine_object_ptr;
     // Py_INCREF(pInst);
@@ -346,7 +358,7 @@ PyObject * UGUID::NewObject(Unigine::UGUID * unigine_object_ptr) {
 
 Unigine::UGUID * UGUID::Convert(PyObject *pObject) {
     if (Py_IS_TYPE(pObject, &unigine_UGUIDType) == 0) {
-        // TODO error
+        Unigine::Log::error("Invalid type, expected 'Unigine::UGUID *', but got some another");
     }
     unigine_UGUID *pInst = (unigine_UGUID *)pObject;
     return pInst->unigine_object_ptr;

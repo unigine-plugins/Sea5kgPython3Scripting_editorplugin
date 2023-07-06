@@ -45,13 +45,20 @@ static PyObject * unigine_Material_create(unigine_Material* self_static_null) {
     PyObject *ret = NULL;
     // parse args:
 
-    Unigine::Ptr<Unigine::Material> pMat = Unigine::Material::create();
+    Unigine::Ptr<Unigine::Material> retOriginal = Unigine::Material::create();
 
-    ret = PyUnigine::Material::NewObject(pMat);
+    if (retOriginal == nullptr) {
+        Py_INCREF(Py_None);
+        ret = Py_None;
+    } else {
+        ret = PyUnigine::Material::NewObject(retOriginal);
+    }
+
     // end
     // return: Unigine::Ptr<Unigine::Material>
     return ret;
-}
+};
+
 // public : setParent
 // public : getParent
 // public : isParent
@@ -184,13 +191,16 @@ static PyObject * unigine_Material_set_shadow_mask(unigine_Material* self, PyObj
 
     Py_INCREF(Py_None);
     ret = Py_None;
-    assert(! PyErr_Occurred());
+    assert(!PyErr_Occurred());
     assert(ret);
     goto finally;
 except:
     Py_XDECREF(ret);
     ret = NULL;
 finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
+
     // end
     // return: void
     return ret;
@@ -539,8 +549,6 @@ static PyMethodDef unigine_Material_methods[] = {
 };
 
 static PyTypeObject unigine_MaterialType = {
-
-
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Material",             // tp_name
     sizeof(unigine_Material) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
@@ -1101,9 +1109,7 @@ bool Python3UnigineMaterial::addClassDefinitionToModule(PyObject* pModule) {
 }
 
 PyObject * Material::NewObject(Unigine::Ptr<Unigine::Material> unigine_object_ptr) {
-
-    std::cout << "sizeof(unigine_Material) = " << sizeof(unigine_Material) << std::endl;
-
+    // std::cout << "sizeof(unigine_Material) = " << sizeof(unigine_Material) << std::endl;
     unigine_Material *pInst = PyObject_New(unigine_Material, &unigine_MaterialType);
     pInst->unigine_object_ptr = unigine_object_ptr;
     // Py_INCREF(pInst);
@@ -1112,7 +1118,7 @@ PyObject * Material::NewObject(Unigine::Ptr<Unigine::Material> unigine_object_pt
 
 Unigine::Ptr<Unigine::Material> Material::Convert(PyObject *pObject) {
     if (Py_IS_TYPE(pObject, &unigine_MaterialType) == 0) {
-        // TODO error
+        Unigine::Log::error("Invalid type, expected 'Unigine::Ptr<Unigine::Material>', but got some another");
     }
     unigine_Material *pInst = (unigine_Material *)pObject;
     return pInst->unigine_object_ptr;

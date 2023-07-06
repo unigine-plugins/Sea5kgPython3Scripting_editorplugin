@@ -37,21 +37,43 @@ static int unigine_Node_init(unigine_Node *self, PyObject *args, PyObject *kwds)
     return 0;
 }
 
-static PyObject *unigine_Node_get_name(unigine_Node* self)
-{
+// public : getName
+static PyObject * unigine_Node_get_name(unigine_Node* self) {
     PyErr_Clear();
-    PyObject *pName = Py_BuildValue("s", self->unigine_object_ptr->getName());
+    PyObject *ret = NULL;
+    // parse args:
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = unigine_object_ptr->getName();
+            };
+            Unigine::Ptr<Unigine::Node> unigine_object_ptr;
+            // args
+            // return
+            const char * retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
+    Python3Runner::runInMainThread(pRunner);
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
+    }
+    pRunner->mutexAsync.unlock();
+    const char * retOriginal = pRunner->retOriginal;
+    delete pRunner;
+
+    PyObject *pName = Py_BuildValue("s", retOriginal);
     return PyUnicode_FromFormat("%S", pName);
 }
 
-static PyObject *unigine_Node_rotate(unigine_Node* self, PyObject *args)
-{
+// public : rotate
+static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
-
-    PyObject *pArg1;
-    PyObject *pArg2;
-    PyObject *pArg3;
+    // parse args:
+    PyObject *pArg1; // float angle_x;
+    PyObject *pArg2; // float angle_y;
+    PyObject *pArg3; // float angle_z;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
     float angle_x = PyFloat_AsDouble(pArg1);
     float angle_y = PyFloat_AsDouble(pArg2);
@@ -62,8 +84,11 @@ static PyObject *unigine_Node_rotate(unigine_Node* self, PyObject *args)
             virtual void run() override {
                 unigine_object_ptr->rotate(angle_x, angle_y, angle_z);
             };
+            // args
             Unigine::Ptr<Unigine::Node> unigine_object_ptr;
-            float angle_x, angle_y, angle_z;
+            float angle_x;
+            float angle_y;
+            float angle_z;
     };
     auto *pRunner = new LocalRunner();
     pRunner->unigine_object_ptr = self->unigine_object_ptr;
@@ -71,14 +96,13 @@ static PyObject *unigine_Node_rotate(unigine_Node* self, PyObject *args)
     pRunner->angle_y = angle_y;
     pRunner->angle_z = angle_z;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) { // milliseconds
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
-
     Py_INCREF(Py_None);
     ret = Py_None;
-    assert(! PyErr_Occurred());
+    assert(!PyErr_Occurred());
     assert(ret);
     goto finally;
 except:
@@ -87,29 +111,28 @@ except:
 finally:
     /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
      * should do this. See below. */
-    // Py_DECREF(arg);
+
+    // end
+    // return: void
     return ret;
-}
+};
 
 static PyMethodDef unigine_Node_methods[] = {
     {
         "get_name", (PyCFunction)unigine_Node_get_name, METH_NOARGS,
-        "Return the name of material"
+        "public : getName"
     },
     {
         "rotate", (PyCFunction)unigine_Node_rotate, METH_VARARGS,
-        "Return the name of material"
+        "public : rotate"
     },
     {NULL}  /* Sentinel */
 };
 
 static PyTypeObject unigine_NodeType = {
-
-
-    // PyVarObject_HEAD_INIT(&PyType_Type, 0)
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Node",             // tp_name
-    sizeof(unigine_Node) + 16, // tp_basicsize  (magic 16 bytes!!!)
+    sizeof(unigine_Node) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
     0,                         // tp_itemsize
     (destructor)unigine_Node_dealloc,   // tp_dealloc
     0,                         // tp_vectorcall_offset
@@ -126,7 +149,6 @@ static PyTypeObject unigine_NodeType = {
     0,                         // tp_getattro
     0,                         // tp_setattro
     0,                         // tp_as_buffer
-    // Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,        // tp_flags
     Py_TPFLAGS_DEFAULT,        // tp_flags
     "Node Object",         // tp_doc
     0,                         // traverseproc tp_traverse
@@ -148,19 +170,6 @@ static PyTypeObject unigine_NodeType = {
     unigine_Node_new, // tp_new
 };
 
-PyObject * Node::NewObject(Unigine::Ptr<Unigine::Node> unigine_object_ptr) {
-    unigine_Node *pInst = PyObject_New(unigine_Node, &unigine_NodeType);
-    pInst->unigine_object_ptr = unigine_object_ptr;
-    return (PyObject *)pInst;
-}
-
-Unigine::Ptr<Unigine::Node> Node::Convert(PyObject *pObject) {
-    if (Py_IS_TYPE(pObject, &unigine_NodeType) == 0) {
-        Unigine::Log::error("Invalid type, expected Unigine::Ptr<Unigine::Node>, but got some another");
-    }
-    unigine_Node *pInst = (unigine_Node *)pObject;
-    return pInst->unigine_object_ptr;
-}
 
 // UniginePyTypeObjectNode
 
@@ -318,6 +327,26 @@ bool Python3UnigineNode::isReady() {
         PyDict_SetItemString(
             unigine_NodeType.tp_dict, "FIELD_END",
             Py_BuildValue("i", Unigine::Node::FIELD_END)
+        );
+        // enum_typename: TYPE
+        PyDict_SetItemString(
+            unigine_NodeType.tp_dict, "PARTICLES_FIELD_BEGIN",
+            Py_BuildValue("i", Unigine::Node::PARTICLES_FIELD_BEGIN)
+        );
+        // enum_typename: TYPE
+        PyDict_SetItemString(
+            unigine_NodeType.tp_dict, "PARTICLES_FIELD_SPACER",
+            Py_BuildValue("i", Unigine::Node::PARTICLES_FIELD_SPACER)
+        );
+        // enum_typename: TYPE
+        PyDict_SetItemString(
+            unigine_NodeType.tp_dict, "PARTICLES_FIELD_DEFLECTOR",
+            Py_BuildValue("i", Unigine::Node::PARTICLES_FIELD_DEFLECTOR)
+        );
+        // enum_typename: TYPE
+        PyDict_SetItemString(
+            unigine_NodeType.tp_dict, "PARTICLES_FIELD_END",
+            Py_BuildValue("i", Unigine::Node::PARTICLES_FIELD_END)
         );
         // enum_typename: TYPE
         PyDict_SetItemString(
@@ -686,6 +715,11 @@ bool Python3UnigineNode::isReady() {
         );
         // enum_typename: TYPE
         PyDict_SetItemString(
+            unigine_NodeType.tp_dict, "NUM_PARTICLES_FIELDS",
+            Py_BuildValue("i", Unigine::Node::NUM_PARTICLES_FIELDS)
+        );
+        // enum_typename: TYPE
+        PyDict_SetItemString(
             unigine_NodeType.tp_dict, "NUM_LIGHTS",
             Py_BuildValue("i", Unigine::Node::NUM_LIGHTS)
         );
@@ -845,5 +879,20 @@ bool Python3UnigineNode::addClassDefinitionToModule(PyObject* pModule) {
     return true;
 }
 
+PyObject * Node::NewObject(Unigine::Ptr<Unigine::Node> unigine_object_ptr) {
+    // std::cout << "sizeof(unigine_Node) = " << sizeof(unigine_Node) << std::endl;
+    unigine_Node *pInst = PyObject_New(unigine_Node, &unigine_NodeType);
+    pInst->unigine_object_ptr = unigine_object_ptr;
+    // Py_INCREF(pInst);
+    return (PyObject *)pInst;
+}
+
+Unigine::Ptr<Unigine::Node> Node::Convert(PyObject *pObject) {
+    if (Py_IS_TYPE(pObject, &unigine_NodeType) == 0) {
+        Unigine::Log::error("Invalid type, expected 'Unigine::Ptr<Unigine::Node>', but got some another");
+    }
+    unigine_Node *pInst = (unigine_Node *)pObject;
+    return pInst->unigine_object_ptr;
+}
 
 }; // namespace PyUnigine
