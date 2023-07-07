@@ -459,14 +459,19 @@ class Python3UnigineWriter:
             ret += self.__namespace + "::" + method_info["classname"] + "::"
         ret += method_info["name"] + "(" + args_to_call + ");\n"
         ret += "            };\n"
-        ret += "            // args\n"
-        for _arg in _args:
-            ret += "            " + _arg["type"] + " " + _arg["name"] + ";\n"
+        if not method_info["static"]:
+            ret += "            " + self.__member_type + " unigine_object_ptr;\n"
+        if len(_args) > 0:
+            ret += "            // args\n"
+            for _arg in _args:
+                ret += "            " + _arg["type"] + " " + _arg["name"] + ";\n"
         if return_type != "void":
             ret += "            // return\n"
             ret += "            " + return_type + " retOriginal;\n"
         ret += "    };\n"
         ret += "    auto *pRunner = new LocalRunner();\n"
+        if not method_info["static"]:
+            ret += "    pRunner->unigine_object_ptr = self->unigine_object_ptr;\n"
         for _arg in _args:
             ret += "    pRunner->" + _arg["name"] + " = " + _arg["name"] + ";\n"
         ret += "    Python3Runner::runInMainThread(pRunner);\n"

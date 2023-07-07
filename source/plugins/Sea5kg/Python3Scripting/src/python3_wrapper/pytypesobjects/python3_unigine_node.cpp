@@ -85,8 +85,8 @@ static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *args) {
             virtual void run() override {
                 unigine_object_ptr->rotate(angle_x, angle_y, angle_z);
             };
-            // args
             Unigine::Ptr<Unigine::Node> unigine_object_ptr;
+            // args
             float angle_x;
             float angle_y;
             float angle_z;

@@ -50,7 +50,6 @@ static PyObject * unigine_Materials_is_initialized(unigine_Materials* self_stati
             virtual void run() override {
                 retOriginal = Unigine::Materials::isInitialized();
             };
-            // args
             // return
             int retOriginal;
     };
@@ -79,7 +78,6 @@ static PyObject * unigine_Materials_get_loading_mode(unigine_Materials* self_sta
             virtual void run() override {
                 retOriginal = Unigine::Materials::getLoadingMode();
             };
-            // args
             // return
             Unigine::Materials::LOADING_MODE retOriginal;
     };
@@ -192,7 +190,6 @@ static PyObject * unigine_Materials_get_num_materials(unigine_Materials* self_st
             virtual void run() override {
                 retOriginal = Unigine::Materials::getNumMaterials();
             };
-            // args
             // return
             int retOriginal;
     };
@@ -234,6 +231,50 @@ static PyObject * unigine_Materials_compile_shaders(unigine_Materials* self_stat
             // args
     };
     auto *pRunner = new LocalRunner();
+    Python3Runner::runInMainThread(pRunner);
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
+
+    // end
+    // return: void
+    return ret;
+};
+
+// public (static): setPrecompileAllShaders
+static PyObject * unigine_Materials_set_precompile_all_shaders(unigine_Materials* self_static_null, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // bool shaders;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+TODO for bool
+
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                Unigine::Materials::setPrecompileAllShaders(shaders);
+            };
+            // args
+            bool shaders;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->shaders = shaders;
     Python3Runner::runInMainThread(pRunner);
     while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
