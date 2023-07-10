@@ -7,7 +7,6 @@ castxml \
     -Wno-gnu-anonymous-struct -Wno-extra-semi -Wno-nested-anon-types \
     -Wno-misleading-indentation -Wno-unused-parameter \
     -U__PIE__ \
-    -stdlib=libc++ \
     -O3 -DNDEBUG -fPIC -fvisibility=hidden -m64 -msse4.2 -ffast-math -fno-strict-aliasing -fPIC -MD \
     -I ../include -I ../include/editor \
     -isystem /usr/include/x86_64-linux-gnu/qt5 \
