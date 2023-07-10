@@ -17,6 +17,3 @@ castxml \
     ./include_all.h \
     -v \
     -o unigine-castxml-api.xml
-
-# -std=c++14
-# -D Q_CC_CLANG
