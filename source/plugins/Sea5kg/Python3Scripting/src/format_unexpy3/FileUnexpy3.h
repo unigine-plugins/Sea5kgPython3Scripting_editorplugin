@@ -27,7 +27,7 @@ class FileUnexpy3 {
         QVector<QString> getListOfFiles();
 
         // QVector<QString> getDependencies();
-        
+
         QString getId();
         QString getName();
         QString getFor();

@@ -261,25 +261,25 @@ static PyObject * unigine_Materials_set_precompile_all_shaders(unigine_Materials
     PyObject *pArg1; // bool shaders;
     PyArg_ParseTuple(args, "O", &pArg1);
 
-    // pArg1
-TODO for bool
+//     // pArg1
+// TODO for bool
 
 
-    class LocalRunner : public Python3Runner {
-        public:
-            virtual void run() override {
-                Unigine::Materials::setPrecompileAllShaders(shaders);
-            };
-            // args
-            bool shaders;
-    };
-    auto *pRunner = new LocalRunner();
-    pRunner->shaders = shaders;
-    Python3Runner::runInMainThread(pRunner);
-    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
-    }
-    pRunner->mutexAsync.unlock();
-    delete pRunner;
+//     class LocalRunner : public Python3Runner {
+//         public:
+//             virtual void run() override {
+//                 Unigine::Materials::setPrecompileAllShaders(shaders);
+//             };
+//             // args
+//             bool shaders;
+//     };
+//     auto *pRunner = new LocalRunner();
+//     pRunner->shaders = shaders;
+//     Python3Runner::runInMainThread(pRunner);
+//     while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
+//     }
+//     pRunner->mutexAsync.unlock();
+//     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
     assert(!PyErr_Occurred());

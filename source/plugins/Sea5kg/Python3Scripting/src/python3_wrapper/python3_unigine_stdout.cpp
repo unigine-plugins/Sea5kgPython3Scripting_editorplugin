@@ -10,14 +10,12 @@
 typedef std::function<void(std::string)> stdout_write_type;
 
 // Stdout
-struct Stdout
-{
+struct Stdout {
     PyObject_HEAD
     stdout_write_type write;
 };
 
-PyObject* Stdout_write(PyObject* self, PyObject* args)
-{
+PyObject* Stdout_write(PyObject* self, PyObject* args) {
     std::size_t written(0);
     Stdout* selfimpl = reinterpret_cast<Stdout*>(self);
     if (selfimpl->write)
@@ -27,23 +25,18 @@ PyObject* Stdout_write(PyObject* self, PyObject* args)
             return 0;
         }
         std::string sOutputMessage(data);
-        // selfimpl->write(sOutputMessage);
-        // written = sOutputMessage.size();
-        // TODO extension_id
         sOutputMessage = "Python3Scripting: " + sOutputMessage + "\n";
         Unigine::Log::message(sOutputMessage.c_str());
     }
     return PyLong_FromSize_t(written);
 }
 
-PyObject* Stdout_flush(PyObject* self, PyObject* args)
-{
+PyObject* Stdout_flush(PyObject* self, PyObject* args) {
     // no-op
     return Py_BuildValue("");
 }
 
-PyMethodDef Stdout_methods[] =
-{
+PyMethodDef Stdout_methods[] = {
     {"write", Stdout_write, METH_VARARGS, "sys.stdout.write"},
     {"flush", Stdout_flush, METH_VARARGS, "sys.stdout.flush"},
     {0, 0, 0, 0} // sentinel
@@ -131,13 +124,11 @@ void Python3UnigineStdout::Call_PyImport_AppendInittab() {
 
 void Python3UnigineStdout::Call_PyImport_ImportModule() {
     PyImport_ImportModule("unigine_stdout");
-    
+
     std::string buffer;
     stdout_write_type write = [&buffer] (std::string s) { buffer += s; };
 
-    // set_stdout(write);
-    if (!g_stdout)
-    {
+    if (!g_stdout) {
         g_stdout_saved = PySys_GetObject("stdout"); // borrowed
         g_stdout = StdoutType.tp_new(&StdoutType, 0, 0);
     }

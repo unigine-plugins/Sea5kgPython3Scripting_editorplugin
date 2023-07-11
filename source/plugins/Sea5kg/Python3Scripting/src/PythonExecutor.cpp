@@ -24,8 +24,6 @@ std::wstring str2wstr(const std::string& str) {
     return converterX.from_bytes(str);
 }
 
-PyThreadState *mainstate;
-
 PythonExecutor::PythonExecutor(
     const std::string &sExtensionId,
     const std::string &sDirPathWithModules
@@ -38,9 +36,11 @@ PythonExecutor::PythonExecutor(
     for (int i = 0; i < m_vWrappers.size(); i++) {
         m_vWrappers[i]->Call_PyImport_AppendInittab();
     }
+
     Py_Initialize();
+    // Py_SetPythonHome
     // mainstate = PyThreadState_Swap(NULL);
-    // Py_SetProgramName(const wchar_t *name)
+    Py_SetProgramName(L"main.py");
 
     {
         PyObject* pGlobalDict = PyDict_New();
@@ -161,7 +161,6 @@ int PythonExecutor::execCode(const std::string &sScriptContent) {
             if (pPyErrorTraceback != nullptr) {
                 PyException_SetTraceback(pvalue, pPyErrorTraceback);
             }
-            // PyObject* pPyStringExceptionType = PyObject_Str(pyExcType);
 
             PyObject* str_exc_type = PyObject_Repr(ptype);
             PyObject* pyStr = PyUnicode_AsEncodedString(str_exc_type, "utf-8", "Error ~");

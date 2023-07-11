@@ -15,34 +15,27 @@ struct Stderr
     stderr_write_type write;
 };
 
-PyObject* Stderr_write(PyObject* self, PyObject* args)
-{
+PyObject* Stderr_write(PyObject* self, PyObject* args) {
     std::size_t written(0);
     Stderr* selfimpl = reinterpret_cast<Stderr*>(self);
-    if (selfimpl->write)
-    {
+    if (selfimpl->write) {
         char* data;
         if (!PyArg_ParseTuple(args, "s", &data)) {
             return 0;
         }
         std::string sOutputMessage(data);
-        // selfimpl->write(sOutputMessage);
-        // written = sOutputMessage.size();
-        // TODO extension_id
         sOutputMessage = "ERROR. Python3Scripting: " + sOutputMessage;
         Unigine::Log::error("%s", sOutputMessage.c_str());
     }
     return PyLong_FromSize_t(written);
 }
 
-PyObject* Stderr_flush(PyObject* self, PyObject* args)
-{
+PyObject* Stderr_flush(PyObject* self, PyObject* args) {
     // no-op
     return Py_BuildValue("");
 }
 
-PyMethodDef Stderr_methods[] =
-{
+PyMethodDef Stderr_methods[] = {
     {"write", Stderr_write, METH_VARARGS, "sys.stderr.write"},
     {"flush", Stderr_flush, METH_VARARGS, "sys.stderr.flush"},
     {0, 0, 0, 0} // sentinel
