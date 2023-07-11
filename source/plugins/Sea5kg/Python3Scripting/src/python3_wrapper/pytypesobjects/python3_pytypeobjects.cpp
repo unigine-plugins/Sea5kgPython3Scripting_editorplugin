@@ -4,6 +4,7 @@
 #include "python3_unigine_materials.h"
 #include "python3_unigine_material.h"
 #include "python3_unigine_node.h"
+#include "python3_unigine_objectmeshdynamic.h"
 #include "python3_unigine_uguid.h"
 
 Python3PyTypeObjectAll::Python3PyTypeObjectAll() {
@@ -12,6 +13,7 @@ Python3PyTypeObjectAll::Python3PyTypeObjectAll() {
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineMaterial());
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineNode());
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineAssetManager());
+    m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineObjectMeshDynamic());
 }
 
 bool Python3PyTypeObjectAll::isReady() {
