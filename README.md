@@ -53,3 +53,10 @@ $ docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:v2.16.
 ### Mp4 to gif
 
 https://ezgif.com/video-to-gif/
+
+
+```bash
+$ docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:v2.16.1 ./build_plugin.py
+```
+
+
