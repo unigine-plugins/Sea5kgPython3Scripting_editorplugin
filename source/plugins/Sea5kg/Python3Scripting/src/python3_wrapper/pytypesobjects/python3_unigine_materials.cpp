@@ -105,11 +105,10 @@ static PyObject * unigine_Materials_load_material(unigine_Materials* self_static
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * path = PyUnicode_AsUTF8(pArg1);
 
@@ -228,7 +227,6 @@ static PyObject * unigine_Materials_compile_shaders(unigine_Materials* self_stat
             virtual void run() override {
                 Unigine::Materials::compileShaders();
             };
-            // args
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
@@ -261,25 +259,31 @@ static PyObject * unigine_Materials_set_precompile_all_shaders(unigine_Materials
     PyObject *pArg1; // bool shaders;
     PyArg_ParseTuple(args, "O", &pArg1);
 
-//     // pArg1
-// TODO for bool
+    // pArg1
+    if (!PyBool_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"shaders\" to %s must be a bool object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    bool shaders = pArg1 == Py_True;
 
 
-//     class LocalRunner : public Python3Runner {
-//         public:
-//             virtual void run() override {
-//                 Unigine::Materials::setPrecompileAllShaders(shaders);
-//             };
-//             // args
-//             bool shaders;
-//     };
-//     auto *pRunner = new LocalRunner();
-//     pRunner->shaders = shaders;
-//     Python3Runner::runInMainThread(pRunner);
-//     while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
-//     }
-//     pRunner->mutexAsync.unlock();
-//     delete pRunner;
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                Unigine::Materials::setPrecompileAllShaders(shaders);
+            };
+            // args
+            bool shaders;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->shaders = shaders;
+    Python3Runner::runInMainThread(pRunner);
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
     assert(!PyErr_Occurred());
@@ -308,7 +312,6 @@ static PyObject * unigine_Materials_create_shaders(unigine_Materials* self_stati
             virtual void run() override {
                 Unigine::Materials::createShaders();
             };
-            // args
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);

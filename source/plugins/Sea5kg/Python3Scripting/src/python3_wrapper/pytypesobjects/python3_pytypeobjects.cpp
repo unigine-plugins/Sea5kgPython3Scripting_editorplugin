@@ -3,17 +3,23 @@
 #include "python3_unigine_assetmanager.h"
 #include "python3_unigine_materials.h"
 #include "python3_unigine_material.h"
+#include "python3_unigine_mesh.h"
 #include "python3_unigine_node.h"
 #include "python3_unigine_objectmeshdynamic.h"
 #include "python3_unigine_uguid.h"
+#include "python3_unigine_vec3.h"
+#include "python3_unigine_vec2.h"
 
 Python3PyTypeObjectAll::Python3PyTypeObjectAll() {
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineUGUID());
+    m_vPyTypesObjects.push_back(new PyUnigine::Python3Uniginevec3());
+    m_vPyTypesObjects.push_back(new PyUnigine::Python3Uniginevec2());
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineMaterials());
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineMaterial());
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineNode());
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineAssetManager());
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineObjectMeshDynamic());
+    m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineMesh());
 }
 
 bool Python3PyTypeObjectAll::isReady() {

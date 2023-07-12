@@ -44,7 +44,7 @@ void RunScriptInThread::run() {
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
     while(!pRunner->mutexAsync.tryLock(5)) {
-        Unigine::Log::message("wait\n");
+        // Unigine::Log::message("waiting...\n");
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;

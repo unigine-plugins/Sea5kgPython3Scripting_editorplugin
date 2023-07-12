@@ -123,8 +123,11 @@ add_library(${current_target} SHARED
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_uguid.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_material.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_materials.cpp
+	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_mesh.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_node.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_objectmeshdynamic.cpp
+	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_vec2.cpp
+	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_vec3.cpp
 	)
 
 IF (WIN32)

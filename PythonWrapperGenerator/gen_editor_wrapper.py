@@ -397,13 +397,45 @@ class Python3UnigineWriter:
     def prepare_parse_tuple_args_const_char_pointer(self, _arg, var_name):
         ret = ""
         ret += "    if (!PyUnicode_Check(" + var_name + ")) {\n"
-        ret += "        // TODO - error\n"
-        ret += "        std::cout << \"ERROR: " + var_name + " No unicoode \" << std::endl;\n"
-        ret += "        Py_INCREF(Py_None);\n"
-        ret += "        ret = Py_None;\n"
-        ret += "        return ret;\n"
+        ret += "        PyErr_Format(PyExc_TypeError,\n"
+        ret += "            \"Argument \\\"" + _arg["name"] + "\\\" to %s must be a strint object not a \\\"%s\\\"\",\n"
+        ret += "            __FUNCTION__, Py_TYPE(" + var_name + ")->tp_name);\n"
+        ret += "        return NULL;\n"
         ret += "    }\n"
         ret += "    " + _arg["type"] + " " + _arg["name"] + " = PyUnicode_AsUTF8(" + var_name + ");\n"
+        return ret
+
+    def prepare_parse_tuple_args_int(self, _arg, var_name):
+        ret = ""
+        ret += "    if (!PyLong_Check(" + var_name + ")) {\n"
+        ret += "        PyErr_Format(PyExc_TypeError,\n"
+        ret += "            \"Argument \\\"" + _arg["name"] + "\\\" to %s must be a int object not a \\\"%s\\\"\",\n"
+        ret += "            __FUNCTION__, Py_TYPE(" + var_name + ")->tp_name);\n"
+        ret += "        return NULL;\n"
+        ret += "    }\n"
+        ret += "    " + _arg["type"] + " " + _arg["name"] + " = PyLong_AsLong(" + var_name + ");\n"
+        return ret
+
+    def prepare_parse_tuple_args_bool(self, _arg, var_name):
+        ret = ""
+        ret += "    if (!PyBool_Check(" + var_name + ")) {\n"
+        ret += "        PyErr_Format(PyExc_TypeError,\n"
+        ret += "            \"Argument \\\"" + _arg["name"] + "\\\" to %s must be a bool object not a \\\"%s\\\"\",\n"
+        ret += "            __FUNCTION__, Py_TYPE(" + var_name + ")->tp_name);\n"
+        ret += "        return NULL;\n"
+        ret += "    }\n"
+        ret += "    " + _arg["type"] + " " + _arg["name"] + " = " + var_name + " == Py_True;\n"
+        return ret
+
+    def prepare_parse_tuple_args_float(self, _arg, var_name):
+        ret = ""
+        ret += "    if (!PyFloat_Check(" + var_name + ")) {\n"
+        ret += "        PyErr_Format(PyExc_TypeError,\n"
+        ret += "            \"Argument \\\"" + _arg["name"] + "\\\" to %s must be a float object not a \\\"%s\\\"\",\n"
+        ret += "            __FUNCTION__, Py_TYPE(" + var_name + ")->tp_name);\n"
+        ret += "        return NULL;\n"
+        ret += "    }\n"
+        ret += "    " + _arg["type"] + " " + _arg["name"] + " = PyFloat_AsDouble(" + var_name + ");\n"
         return ret
 
     def prepare_parse_tuple_args(self, _args):
@@ -419,7 +451,7 @@ class Python3UnigineWriter:
         for _arg in _args:
             counter += 1
             var_name = "pArg" + str(counter)
-            ret["parse"] += "    PyObject *" + var_name + "; // " + _arg["type"] + " " + _arg["name"] + ";\n"
+            ret["parse"] += "    PyObject *" + var_name + " = NULL; // " + _arg["type"] + " " + _arg["name"] + ";\n"
             parse_tuple_o += "O"
             parse_tuple_args += ", &" + var_name
 
@@ -434,6 +466,12 @@ class Python3UnigineWriter:
             ret["parse"] += "    // " + var_name + "\n"
             if _arg["type"] == "const char *":
                 ret["parse"] += self.prepare_parse_tuple_args_const_char_pointer(_arg, var_name)
+            elif _arg["type"] == "int":
+                ret["parse"] += self.prepare_parse_tuple_args_int(_arg, var_name)
+            elif _arg["type"] == "bool":
+                ret["parse"] += self.prepare_parse_tuple_args_bool(_arg, var_name)
+            elif _arg["type"] == "float":
+                ret["parse"] += self.prepare_parse_tuple_args_float(_arg, var_name)
             else:
                 ret["parse"] += "TODO for " + _arg["type"] + "\n"
             ret["parse"] += "\n"
@@ -738,7 +776,7 @@ make_for_classes = [
     "mat4",
     "ObjectMeshDynamic",
     "vec3",
-    "Vec3",
+    "vec2",
     "Player",
     # editor
     "AssetManager",

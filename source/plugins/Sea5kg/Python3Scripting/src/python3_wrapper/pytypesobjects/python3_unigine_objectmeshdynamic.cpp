@@ -9,6 +9,9 @@
 
 #include <iostream>
 
+#include "python3_unigine_material.h"
+#include "python3_unigine_mesh.h"
+
 namespace PyUnigine {
 
 // ------------------------------------------------------------------------------------------
@@ -76,7 +79,12 @@ static PyObject * unigine_ObjectMeshDynamic_create(unigine_ObjectMeshDynamic* se
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-    // PyInt_Check(pArg1);
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"flags\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
     int flags = PyLong_AsLong(pArg1);
 
     class LocalRunner : public Python3Runner {
@@ -167,6 +175,44 @@ static PyObject * unigine_ObjectMeshDynamic_update_indices(unigine_ObjectMeshDyn
 
     // end
     // return: bool
+    return ret;
+};
+
+// public : setMesh
+static PyObject * unigine_ObjectMeshDynamic_set_mesh(unigine_ObjectMeshDynamic* self, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // const Unigine::Ptr<Unigine::Mesh> & mesh;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    Unigine::Ptr<Unigine::Mesh> mesh = PyUnigine::Mesh::Convert(pArg1);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = unigine_object_ptr->setMesh(mesh);
+            };
+            Unigine::Ptr<Unigine::ObjectMeshDynamic> unigine_object_ptr;
+            // args
+            Unigine::Ptr<Unigine::Mesh> mesh;
+            // return
+            int retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
+    pRunner->mesh = mesh;
+    Python3Runner::runInMainThread(pRunner);
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
+    }
+    pRunner->mutexAsync.unlock();
+    int retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = PyLong_FromLong(retOriginal);
+
+    // end
+    // return: int
     return ret;
 };
 
@@ -301,6 +347,50 @@ static PyObject * unigine_ObjectMeshDynamic_is_flushed(unigine_ObjectMeshDynamic
 
     // end
     // return: bool
+    return ret;
+};
+
+
+// public (inherit from Object) : getMaterial
+static PyObject * unigine_ObjectMeshDynamic_get_material(unigine_ObjectMeshDynamic* self, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // int surface;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = unigine_object_ptr->getMaterial(surface);
+            };
+            Unigine::Ptr<Unigine::ObjectMeshDynamic> unigine_object_ptr;
+            int surface;
+            // return
+            Unigine::Ptr<Unigine::Material> retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
+    pRunner->surface = surface;
+    Python3Runner::runInMainThread(pRunner);
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Ptr<Unigine::Material> retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    ret = PyUnigine::Material::NewObject(retOriginal);
+
+    // end
+    // return: Unigine::Ptr<Unigine::Material>
     return ret;
 };
 
@@ -464,6 +554,10 @@ static PyMethodDef unigine_ObjectMeshDynamic_methods[] = {
         "public (static): create"
     },
     {
+        "set_mesh", (PyCFunction)unigine_ObjectMeshDynamic_set_mesh, METH_VARARGS,
+        "public : setMesh"
+    },
+    {
         "update_bounds", (PyCFunction)unigine_ObjectMeshDynamic_update_bounds, METH_NOARGS,
         "public : updateBounds"
     },
@@ -498,6 +592,10 @@ static PyMethodDef unigine_ObjectMeshDynamic_methods[] = {
     {
         "set_name", (PyCFunction)unigine_ObjectMeshDynamic_set_name, METH_VARARGS,
         "public (inherit from Node) : setName"
+    },
+    {
+        "get_material", (PyCFunction)unigine_ObjectMeshDynamic_get_material, METH_VARARGS,
+        "public (inherit from Object) : getMaterial"
     },
     {NULL}  /* Sentinel */
 };
