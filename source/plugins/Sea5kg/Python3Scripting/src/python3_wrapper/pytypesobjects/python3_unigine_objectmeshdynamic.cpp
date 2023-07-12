@@ -304,7 +304,7 @@ static PyObject * unigine_ObjectMeshDynamic_is_flushed(unigine_ObjectMeshDynamic
     return ret;
 };
 
-// public : flushIndices
+// public (inherit from Node): setShowInEditorEnabledRecursive
 static PyObject * unigine_ObjectMeshDynamic_set_show_in_editor_enabled_recursive(unigine_ObjectMeshDynamic* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
@@ -354,9 +354,105 @@ finally:
     return ret;
 };
 
-// void setSaveToWorldEnabledRecursive(bool enable);
-// void setName(const char *name);
+// public (inherit from Node): setSaveToWorldEnabledRecursive
+static PyObject * unigine_ObjectMeshDynamic_set_save_to_world_enabled_recursive(unigine_ObjectMeshDynamic* self, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // bool enable;
+    PyArg_ParseTuple(args, "O", &pArg1);
 
+    // pArg1
+    if (!PyBool_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"enable\" to %s must be a bool object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    bool enable = pArg1 == Py_True;
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                unigine_object_ptr->setSaveToWorldEnabledRecursive(enable);
+            };
+            bool enable;
+            Unigine::Ptr<Unigine::ObjectMeshDynamic> unigine_object_ptr;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->enable = enable;
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
+    Python3Runner::runInMainThread(pRunner);
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
+
+    // end
+    // return: void
+    return ret;
+};
+
+// public (inherit from Node): setName
+static PyObject * unigine_ObjectMeshDynamic_set_name(unigine_ObjectMeshDynamic* self, PyObject *args) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+    PyObject *pArg1; // bool enable;
+    PyArg_ParseTuple(args, "O", &pArg1);
+
+    // pArg1
+    if (!PyUnicode_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a string object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    const char * name = PyUnicode_AsUTF8(pArg1);
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                unigine_object_ptr->setName(name);
+            };
+            const char * name;
+            Unigine::Ptr<Unigine::ObjectMeshDynamic> unigine_object_ptr;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->name = name;
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
+    Python3Runner::runInMainThread(pRunner);
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
+    }
+    pRunner->mutexAsync.unlock();
+    delete pRunner;
+    Py_INCREF(Py_None);
+    ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
+
+    // end
+    // return: void
+    return ret;
+};
 
 static PyMethodDef unigine_ObjectMeshDynamic_methods[] = {
     {
@@ -395,14 +491,14 @@ static PyMethodDef unigine_ObjectMeshDynamic_methods[] = {
         "set_show_in_editor_enabled_recursive", (PyCFunction)unigine_ObjectMeshDynamic_set_show_in_editor_enabled_recursive, METH_VARARGS,
         "public (inherit from Node) : setShowInEditorEnabledRecursive"
     },
-    // {
-    //     "set_save_to_world_enabled_recursive", (PyCFunction)unigine_ObjectMeshDynamic_set_save_to_world_enabled_recursive, METH_VARARGS,
-    //     "public (inherit from Node) : setSaveToWorldEnabledRecursive"
-    // },
-    // {
-    //     "set_name", (PyCFunction)unigine_ObjectMeshDynamic_set_name, METH_VARARGS,
-    //     "public (inherit from Node) : setName"
-    // },
+    {
+        "set_save_to_world_enabled_recursive", (PyCFunction)unigine_ObjectMeshDynamic_set_save_to_world_enabled_recursive, METH_VARARGS,
+        "public (inherit from Node) : setSaveToWorldEnabledRecursive"
+    },
+    {
+        "set_name", (PyCFunction)unigine_ObjectMeshDynamic_set_name, METH_VARARGS,
+        "public (inherit from Node) : setName"
+    },
     {NULL}  /* Sentinel */
 };
 
