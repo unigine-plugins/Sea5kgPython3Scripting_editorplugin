@@ -9,6 +9,9 @@
 #include "python3_unigine_uguid.h"
 #include "python3_unigine_vec3.h"
 #include "python3_unigine_vec2.h"
+#include "python3_unigine_viewportmanager.h"
+#include "python3_unigine_player.h"
+#include "python3_unigine_viewportwindow.h"
 
 Python3PyTypeObjectAll::Python3PyTypeObjectAll() {
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineUGUID());
@@ -20,6 +23,9 @@ Python3PyTypeObjectAll::Python3PyTypeObjectAll() {
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineAssetManager());
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineObjectMeshDynamic());
     m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineMesh());
+    m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineViewportManager());
+    m_vPyTypesObjects.push_back(new PyUnigine::Python3UniginePlayer());
+    m_vPyTypesObjects.push_back(new PyUnigine::Python3UnigineViewportWindow());
 }
 
 bool Python3PyTypeObjectAll::isReady() {

@@ -128,6 +128,9 @@ add_library(${current_target} SHARED
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_objectmeshdynamic.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_vec2.cpp
 	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_vec3.cpp
+	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_viewportmanager.cpp
+	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_player.cpp
+	${PROJECT_SOURCE_DIR}/src/python3_wrapper/pytypesobjects/python3_unigine_viewportwindow.cpp
 	)
 
 IF (WIN32)

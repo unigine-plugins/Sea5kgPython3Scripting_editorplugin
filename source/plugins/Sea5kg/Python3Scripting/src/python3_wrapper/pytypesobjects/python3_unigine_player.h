@@ -14,8 +14,8 @@ class Python3UniginePlayer : public Python3PyTypeObjectBase {
 
 class Player {
     public:
-        static PyObject * NewObject(Unigine::Player * unigine_object_ptr);
-        static Unigine::Player * Convert(PyObject *pObject);
+        static PyObject * NewObject(Unigine::Ptr<Unigine::Player> unigine_object_ptr);
+        static Unigine::Ptr<Unigine::Player> Convert(PyObject *pObject);
 };
 
 }; // namespace PyUnigine

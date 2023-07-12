@@ -9,6 +9,8 @@
 
 #include <iostream>
 
+#include "python3_unigine_vec3.h"
+
 namespace PyUnigine {
 
 // ------------------------------------------------------------------------------------------
@@ -67,6 +69,67 @@ static PyObject * unigine_Node_get_name(unigine_Node* self) {
     return PyUnicode_FromFormat("%S", pName);
 }
 
+// public : getWorldPosition
+static PyObject * unigine_Node_get_world_position(unigine_Node* self) {
+    PyErr_Clear();
+    PyObject *ret = NULL;
+    // parse args:
+
+    class LocalRunner : public Python3Runner {
+        public:
+            virtual void run() override {
+                retOriginal = unigine_object_ptr->getWorldPosition();
+            };
+            Unigine::Ptr<Unigine::Node> unigine_object_ptr;
+            // return
+            Unigine::Math::Vec3 retOriginal;
+    };
+    auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
+    Python3Runner::runInMainThread(pRunner);
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
+    }
+    pRunner->mutexAsync.unlock();
+    Unigine::Math::Vec3 retOriginal = pRunner->retOriginal;
+    delete pRunner;
+    Unigine::Math::vec3 *retOriginal2 = new Unigine::Math::vec3(retOriginal);
+    ret = PyUnigine::vec3::NewObject(retOriginal2);
+
+    // end
+    // return: Unigine::Math::Vec3
+    return ret;
+};
+
+// // public : getWorldRotation
+// static PyObject * unigine_Node_get_world_rotation(unigine_Node* self) {
+//     PyErr_Clear();
+//     PyObject *ret = NULL;
+//     // parse args:
+
+//     class LocalRunner : public Python3Runner {
+//         public:
+//             virtual void run() override {
+//                 retOriginal = unigine_object_ptr->getWorldRotation();
+//             };
+//             Unigine::Ptr<Unigine::Node> unigine_object_ptr;
+//             // return
+//             Unigine::Math::quat retOriginal;
+//     };
+//     auto *pRunner = new LocalRunner();
+//     pRunner->unigine_object_ptr = self->unigine_object_ptr;
+//     Python3Runner::runInMainThread(pRunner);
+//     while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
+//     }
+//     pRunner->mutexAsync.unlock();
+//     Unigine::Math::quat retOriginal = pRunner->retOriginal;
+//     delete pRunner;
+//     ret = PyLong_FromLong(retOriginal);
+
+//     // end
+//     // return: Unigine::Math::quat
+//     return ret;
+// };
+
 // public : rotate
 static PyObject * unigine_Node_rotate(unigine_Node* self, PyObject *args) {
     PyErr_Clear();
@@ -123,6 +186,14 @@ static PyMethodDef unigine_Node_methods[] = {
         "get_name", (PyCFunction)unigine_Node_get_name, METH_NOARGS,
         "public : getName"
     },
+    {
+        "get_world_position", (PyCFunction)unigine_Node_get_world_position, METH_NOARGS,
+        "public : getWorldPosition"
+    },
+    // {
+    //     "get_world_rotation", (PyCFunction)unigine_Node_get_world_rotation, METH_NOARGS,
+    //     "public : getWorldRotation"
+    // },
     {
         "rotate", (PyCFunction)unigine_Node_rotate, METH_VARARGS,
         "public : rotate"
