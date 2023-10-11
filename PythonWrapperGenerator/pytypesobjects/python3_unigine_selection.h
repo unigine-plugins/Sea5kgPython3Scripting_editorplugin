@@ -14,8 +14,8 @@ class Python3UnigineSelection : public Python3PyTypeObjectBase {
 
 class Selection {
     public:
-        static PyObject * NewObject(Unigine::Selection * unigine_object_ptr);
-        static Unigine::Selection * Convert(PyObject *pObject);
+        static PyObject * NewObject(UnigineEditor::Selection * unigine_object_ptr);
+        static UnigineEditor::Selection * Convert(PyObject *pObject);
 };
 
 }; // namespace PyUnigine

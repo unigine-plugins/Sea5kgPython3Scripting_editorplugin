@@ -48,18 +48,28 @@ static PyObject * unigine_UGUID_generate(unigine_UGUID* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->generate();
+                unigine_object_ptr->generate();
             };
-            // args
+            Unigine::UGUID * unigine_object_ptr;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -71,16 +81,15 @@ static PyObject * unigine_UGUID_generate(unigine_UGUID* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * str_;
+    PyObject *pArg1 = NULL; // const char * str_;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"str_\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * str_ = PyUnicode_AsUTF8(pArg1);
 
@@ -88,20 +97,31 @@ static PyObject * unigine_UGUID_generate(unigine_UGUID* self, PyObject *args) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->generate(str_);
+                unigine_object_ptr->generate(str_);
             };
+            Unigine::UGUID * unigine_object_ptr;
             // args
             const char * str_;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->str_ = str_;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -113,7 +133,7 @@ static PyObject * unigine_UGUID_generate(unigine_UGUID* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int & seed_;
+    PyObject *pArg1 = NULL; // int & seed_;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -123,20 +143,31 @@ TODO for int &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->generate(seed_);
+                unigine_object_ptr->generate(seed_);
             };
+            Unigine::UGUID * unigine_object_ptr;
             // args
             int & seed_;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->seed_ = seed_;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -148,8 +179,8 @@ static PyObject * unigine_UGUID_generate(unigine_UGUID* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const void * data;
-    PyObject *pArg2; // int size;
+    PyObject *pArg1 = NULL; // const void * data;
+    PyObject *pArg2 = NULL; // int size;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -157,28 +188,45 @@ TODO for const void *
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"size\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int size = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->generate(data, size);
+                unigine_object_ptr->generate(data, size);
             };
+            Unigine::UGUID * unigine_object_ptr;
             // args
             const void * data;
             int size;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->data = data;
     pRunner->size = size;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -194,15 +242,16 @@ static PyObject * unigine_UGUID_get_file_system_string(unigine_UGUID* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getFileSystemString();
+                retOriginal = unigine_object_ptr->getFileSystemString();
             };
-            // args
+            Unigine::UGUID * unigine_object_ptr;
             // return
             const char * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const char * retOriginal = pRunner->retOriginal;
@@ -219,16 +268,15 @@ static PyObject * unigine_UGUID_set_file_system_string(unigine_UGUID* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * str_;
+    PyObject *pArg1 = NULL; // const char * str_;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"str_\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * str_ = PyUnicode_AsUTF8(pArg1);
 
@@ -236,20 +284,31 @@ static PyObject * unigine_UGUID_set_file_system_string(unigine_UGUID* self, PyOb
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setFileSystemString(str_);
+                unigine_object_ptr->setFileSystemString(str_);
             };
+            Unigine::UGUID * unigine_object_ptr;
             // args
             const char * str_;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->str_ = str_;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -265,15 +324,16 @@ static PyObject * unigine_UGUID_get_value(unigine_UGUID* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getValue();
+                retOriginal = unigine_object_ptr->getValue();
             };
-            // args
+            Unigine::UGUID * unigine_object_ptr;
             // return
             const unsigned char * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const unsigned char * retOriginal = pRunner->retOriginal;
@@ -294,15 +354,16 @@ static PyObject * unigine_UGUID_get_string(unigine_UGUID* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getString();
+                retOriginal = unigine_object_ptr->getString();
             };
-            // args
+            Unigine::UGUID * unigine_object_ptr;
             // return
             const char * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const char * retOriginal = pRunner->retOriginal;
@@ -319,16 +380,15 @@ static PyObject * unigine_UGUID_set_string(unigine_UGUID* self, PyObject *args) 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * str_;
+    PyObject *pArg1 = NULL; // const char * str_;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"str_\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * str_ = PyUnicode_AsUTF8(pArg1);
 
@@ -336,20 +396,31 @@ static PyObject * unigine_UGUID_set_string(unigine_UGUID* self, PyObject *args) 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setString(str_);
+                unigine_object_ptr->setString(str_);
             };
+            Unigine::UGUID * unigine_object_ptr;
             // args
             const char * str_;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->str_ = str_;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -365,18 +436,28 @@ static PyObject * unigine_UGUID_clear(unigine_UGUID* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->clear();
+                unigine_object_ptr->clear();
             };
-            // args
+            Unigine::UGUID * unigine_object_ptr;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -392,15 +473,16 @@ static PyObject * unigine_UGUID_is_empty(unigine_UGUID* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->isEmpty();
+                retOriginal = unigine_object_ptr->isEmpty();
             };
-            // args
+            Unigine::UGUID * unigine_object_ptr;
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -421,15 +503,16 @@ static PyObject * unigine_UGUID_is_valid(unigine_UGUID* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->isValid();
+                retOriginal = unigine_object_ptr->isValid();
             };
-            // args
+            Unigine::UGUID * unigine_object_ptr;
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -450,15 +533,16 @@ static PyObject * unigine_UGUID_get(unigine_UGUID* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->get();
+                retOriginal = unigine_object_ptr->get();
             };
-            // args
+            Unigine::UGUID * unigine_object_ptr;
             // return
             const char * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const char * retOriginal = pRunner->retOriginal;
@@ -475,27 +559,35 @@ static PyObject * unigine_UGUID_get(unigine_UGUID* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int index;
+    PyObject *pArg1 = NULL; // int index;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"index\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int index = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->get(index);
+                retOriginal = unigine_object_ptr->get(index);
             };
+            Unigine::UGUID * unigine_object_ptr;
             // args
             int index;
             // return
             char & retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->index = index;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     char & retOriginal = pRunner->retOriginal;
@@ -512,27 +604,35 @@ static PyObject * unigine_UGUID_get(unigine_UGUID* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int index;
+    PyObject *pArg1 = NULL; // int index;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"index\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int index = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->get(index);
+                retOriginal = unigine_object_ptr->get(index);
             };
+            Unigine::UGUID * unigine_object_ptr;
             // args
             int index;
             // return
             char retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->index = index;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     char retOriginal = pRunner->retOriginal;
@@ -553,15 +653,16 @@ static PyObject * unigine_UGUID_hash(unigine_UGUID* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->hash();
+                retOriginal = unigine_object_ptr->hash();
             };
-            // args
+            Unigine::UGUID * unigine_object_ptr;
             // return
             unsigned int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     unsigned int retOriginal = pRunner->retOriginal;
@@ -582,15 +683,16 @@ static PyObject * unigine_UGUID_hash_long(unigine_UGUID* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->hashLong();
+                retOriginal = unigine_object_ptr->hashLong();
             };
-            // args
+            Unigine::UGUID * unigine_object_ptr;
             // return
             long long unsigned int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     long long unsigned int retOriginal = pRunner->retOriginal;
@@ -676,8 +778,6 @@ static PyMethodDef unigine_UGUID_methods[] = {
 };
 
 static PyTypeObject unigine_UGUIDType = {
-
-
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.UGUID",             // tp_name
     sizeof(unigine_UGUID) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
@@ -743,9 +843,7 @@ bool Python3UnigineUGUID::addClassDefinitionToModule(PyObject* pModule) {
 }
 
 PyObject * UGUID::NewObject(Unigine::UGUID * unigine_object_ptr) {
-
-    std::cout << "sizeof(unigine_UGUID) = " << sizeof(unigine_UGUID) << std::endl;
-
+    // std::cout << "sizeof(unigine_UGUID) = " << sizeof(unigine_UGUID) << std::endl;
     unigine_UGUID *pInst = PyObject_New(unigine_UGUID, &unigine_UGUIDType);
     pInst->unigine_object_ptr = unigine_object_ptr;
     // Py_INCREF(pInst);
@@ -754,7 +852,7 @@ PyObject * UGUID::NewObject(Unigine::UGUID * unigine_object_ptr) {
 
 Unigine::UGUID * UGUID::Convert(PyObject *pObject) {
     if (Py_IS_TYPE(pObject, &unigine_UGUIDType) == 0) {
-        // TODO error
+        Unigine::Log::error("Invalid type, expected 'Unigine::UGUID *', but got some another");
     }
     unigine_UGUID *pInst = (unigine_UGUID *)pObject;
     return pInst->unigine_object_ptr;

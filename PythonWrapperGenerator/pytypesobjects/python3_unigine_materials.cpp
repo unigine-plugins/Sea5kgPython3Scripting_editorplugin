@@ -48,13 +48,12 @@ static PyObject * unigine_Materials_is_initialized(unigine_Materials* self_stati
             virtual void run() override {
                 retOriginal = Unigine::Materials::isInitialized();
             };
-            // args
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -71,7 +70,7 @@ static PyObject * unigine_Materials_set_loading_mode(unigine_Materials* self_sta
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // Unigine::Materials::LOADING_MODE mode;
+    PyObject *pArg1 = NULL; // Unigine::Materials::LOADING_MODE mode;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -89,12 +88,21 @@ TODO for Unigine::Materials::LOADING_MODE
     auto *pRunner = new LocalRunner();
     pRunner->mode = mode;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -112,13 +120,12 @@ static PyObject * unigine_Materials_get_loading_mode(unigine_Materials* self_sta
             virtual void run() override {
                 retOriginal = Unigine::Materials::getLoadingMode();
             };
-            // args
             // return
             Unigine::Materials::LOADING_MODE retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Materials::LOADING_MODE retOriginal = pRunner->retOriginal;
@@ -135,16 +142,15 @@ static PyObject * unigine_Materials_load_material(unigine_Materials* self_static
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * path;
+    PyObject *pArg1 = NULL; // const char * path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * path = PyUnicode_AsUTF8(pArg1);
 
@@ -162,7 +168,7 @@ static PyObject * unigine_Materials_load_material(unigine_Materials* self_static
     auto *pRunner = new LocalRunner();
     pRunner->path = path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<Unigine::Material> retOriginal = pRunner->retOriginal;
@@ -184,7 +190,7 @@ static PyObject * unigine_Materials_is_material_guid(unigine_Materials* self_sta
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::UGUID & guid;
+    PyObject *pArg1 = NULL; // const Unigine::UGUID & guid;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -204,7 +210,7 @@ TODO for const Unigine::UGUID &
     auto *pRunner = new LocalRunner();
     pRunner->guid = guid;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -227,13 +233,12 @@ static PyObject * unigine_Materials_get_num_materials(unigine_Materials* self_st
             virtual void run() override {
                 retOriginal = Unigine::Materials::getNumMaterials();
             };
-            // args
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -250,11 +255,17 @@ static PyObject * unigine_Materials_get_material(unigine_Materials* self_static_
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
+    PyObject *pArg1 = NULL; // int num;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
@@ -270,7 +281,7 @@ TODO for int
     auto *pRunner = new LocalRunner();
     pRunner->num = num;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<Unigine::Material> retOriginal = pRunner->retOriginal;
@@ -292,16 +303,15 @@ static PyObject * unigine_Materials_find_manual_material(unigine_Materials* self
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
+    PyObject *pArg1 = NULL; // const char * name;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -319,7 +329,7 @@ static PyObject * unigine_Materials_find_manual_material(unigine_Materials* self
     auto *pRunner = new LocalRunner();
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<Unigine::Material> retOriginal = pRunner->retOriginal;
@@ -341,7 +351,7 @@ static PyObject * unigine_Materials_find_material_by_guid(unigine_Materials* sel
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::UGUID & guid;
+    PyObject *pArg1 = NULL; // const Unigine::UGUID & guid;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -361,7 +371,7 @@ TODO for const Unigine::UGUID &
     auto *pRunner = new LocalRunner();
     pRunner->guid = guid;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<Unigine::Material> retOriginal = pRunner->retOriginal;
@@ -383,7 +393,7 @@ static PyObject * unigine_Materials_find_material_by_file_guid(unigine_Materials
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::UGUID & guid;
+    PyObject *pArg1 = NULL; // const Unigine::UGUID & guid;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -403,7 +413,7 @@ TODO for const Unigine::UGUID &
     auto *pRunner = new LocalRunner();
     pRunner->guid = guid;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<Unigine::Material> retOriginal = pRunner->retOriginal;
@@ -425,16 +435,15 @@ static PyObject * unigine_Materials_find_material_by_path(unigine_Materials* sel
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * path;
+    PyObject *pArg1 = NULL; // const char * path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * path = PyUnicode_AsUTF8(pArg1);
 
@@ -452,7 +461,7 @@ static PyObject * unigine_Materials_find_material_by_path(unigine_Materials* sel
     auto *pRunner = new LocalRunner();
     pRunner->path = path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<Unigine::Material> retOriginal = pRunner->retOriginal;
@@ -474,7 +483,7 @@ static PyObject * unigine_Materials_set_cached_material(unigine_Materials* self_
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Ptr<Unigine::Material> & mat;
+    PyObject *pArg1 = NULL; // const Unigine::Ptr<Unigine::Material> & mat;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -492,12 +501,21 @@ TODO for const Unigine::Ptr<Unigine::Material> &
     auto *pRunner = new LocalRunner();
     pRunner->mat = mat;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -515,13 +533,12 @@ static PyObject * unigine_Materials_get_cached_material(unigine_Materials* self_
             virtual void run() override {
                 retOriginal = Unigine::Materials::getCachedMaterial();
             };
-            // args
             // return
             Unigine::Ptr<Unigine::Material> retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<Unigine::Material> retOriginal = pRunner->retOriginal;
@@ -543,23 +560,28 @@ static PyObject * unigine_Materials_set_cached_state(unigine_Materials* self_sta
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
-    PyObject *pArg2; // int value;
+    PyObject *pArg1 = NULL; // const char * name;
+    PyObject *pArg2 = NULL; // int value;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"value\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int value = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
@@ -575,12 +597,21 @@ TODO for int
     pRunner->name = name;
     pRunner->value = value;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -592,9 +623,9 @@ static PyObject * unigine_Materials_remove_material(unigine_Materials* self_stat
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::UGUID & guid;
-    PyObject *pArg2; // bool remove_file;
-    PyObject *pArg3; // bool remove_children;
+    PyObject *pArg1 = NULL; // const Unigine::UGUID & guid;
+    PyObject *pArg2 = NULL; // bool remove_file;
+    PyObject *pArg3 = NULL; // bool remove_children;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -602,11 +633,23 @@ TODO for const Unigine::UGUID &
 
 
     // pArg2
-TODO for bool
+    if (!PyBool_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"remove_file\" to %s must be a bool object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    bool remove_file = pArg2 == Py_True;
 
 
     // pArg3
-TODO for bool
+    if (!PyBool_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"remove_children\" to %s must be a bool object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    bool remove_children = pArg3 == Py_True;
 
 
     class LocalRunner : public Python3Runner {
@@ -626,7 +669,7 @@ TODO for bool
     pRunner->remove_file = remove_file;
     pRunner->remove_children = remove_children;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -643,8 +686,8 @@ static PyObject * unigine_Materials_replace_material(unigine_Materials* self_sta
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Ptr<Unigine::Material> & material;
-    PyObject *pArg2; // const Unigine::Ptr<Unigine::Material> & new_material;
+    PyObject *pArg1 = NULL; // const Unigine::Ptr<Unigine::Material> & material;
+    PyObject *pArg2 = NULL; // const Unigine::Ptr<Unigine::Material> & new_material;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -670,7 +713,7 @@ TODO for const Unigine::Ptr<Unigine::Material> &
     pRunner->material = material;
     pRunner->new_material = new_material;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -693,13 +736,12 @@ static PyObject * unigine_Materials_save_materials(unigine_Materials* self_stati
             virtual void run() override {
                 retOriginal = Unigine::Materials::saveMaterials();
             };
-            // args
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -716,7 +758,7 @@ static PyObject * unigine_Materials_compile_shaders(unigine_Materials* self_stat
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<Unigine::Ptr<Unigine::Material>> & materials;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<Unigine::Ptr<Unigine::Material>> & materials;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -734,12 +776,21 @@ TODO for const Unigine::Vector<Unigine::Ptr<Unigine::Material>> &
     auto *pRunner = new LocalRunner();
     pRunner->materials = materials;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -757,16 +808,24 @@ static PyObject * unigine_Materials_compile_shaders(unigine_Materials* self_stat
             virtual void run() override {
                 Unigine::Materials::compileShaders();
             };
-            // args
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -778,11 +837,17 @@ static PyObject * unigine_Materials_set_precompile_all_shaders(unigine_Materials
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // bool shaders;
+    PyObject *pArg1 = NULL; // bool shaders;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for bool
+    if (!PyBool_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"shaders\" to %s must be a bool object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    bool shaders = pArg1 == Py_True;
 
 
     class LocalRunner : public Python3Runner {
@@ -796,12 +861,21 @@ TODO for bool
     auto *pRunner = new LocalRunner();
     pRunner->shaders = shaders;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -819,13 +893,12 @@ static PyObject * unigine_Materials_is_precompile_all_shaders(unigine_Materials*
             virtual void run() override {
                 retOriginal = Unigine::Materials::isPrecompileAllShaders();
             };
-            // args
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -848,16 +921,24 @@ static PyObject * unigine_Materials_reload_materials(unigine_Materials* self_sta
             virtual void run() override {
                 Unigine::Materials::reloadMaterials();
             };
-            // args
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -875,16 +956,24 @@ static PyObject * unigine_Materials_destroy_shaders(unigine_Materials* self_stat
             virtual void run() override {
                 Unigine::Materials::destroyShaders();
             };
-            // args
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -902,16 +991,24 @@ static PyObject * unigine_Materials_destroy_textures(unigine_Materials* self_sta
             virtual void run() override {
                 Unigine::Materials::destroyTextures();
             };
-            // args
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -929,16 +1026,24 @@ static PyObject * unigine_Materials_create_shaders(unigine_Materials* self_stati
             virtual void run() override {
                 Unigine::Materials::createShaders();
             };
-            // args
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1051,8 +1156,6 @@ static PyMethodDef unigine_Materials_methods[] = {
 };
 
 static PyTypeObject unigine_MaterialsType = {
-
-
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Materials",             // tp_name
     sizeof(unigine_Materials) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
@@ -1133,9 +1236,7 @@ bool Python3UnigineMaterials::addClassDefinitionToModule(PyObject* pModule) {
 }
 
 PyObject * Materials::NewObject() {
-
-    std::cout << "sizeof(unigine_Materials) = " << sizeof(unigine_Materials) << std::endl;
-
+    // std::cout << "sizeof(unigine_Materials) = " << sizeof(unigine_Materials) << std::endl;
     unigine_Materials *pInst = PyObject_New(unigine_Materials, &unigine_MaterialsType);
     // Py_INCREF(pInst);
     return (PyObject *)pInst;

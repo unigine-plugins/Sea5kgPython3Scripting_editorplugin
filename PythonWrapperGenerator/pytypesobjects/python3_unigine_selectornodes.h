@@ -14,8 +14,8 @@ class Python3UnigineSelectorNodes : public Python3PyTypeObjectBase {
 
 class SelectorNodes {
     public:
-        static PyObject * NewObject(Unigine::SelectorNodes * unigine_object_ptr);
-        static Unigine::SelectorNodes * Convert(PyObject *pObject);
+        static PyObject * NewObject(UnigineEditor::SelectorNodes * unigine_object_ptr);
+        static UnigineEditor::SelectorNodes * Convert(PyObject *pObject);
 };
 
 }; // namespace PyUnigine

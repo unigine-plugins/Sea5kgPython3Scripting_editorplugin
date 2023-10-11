@@ -14,8 +14,8 @@ class Python3Uniginevec3 : public Python3PyTypeObjectBase {
 
 class vec3 {
     public:
-        static PyObject * NewObject(Unigine::vec3 * unigine_object_ptr);
-        static Unigine::vec3 * Convert(PyObject *pObject);
+        static PyObject * NewObject(Unigine::Math::vec3 * unigine_object_ptr);
+        static Unigine::Math::vec3 * Convert(PyObject *pObject);
 };
 
 }; // namespace PyUnigine

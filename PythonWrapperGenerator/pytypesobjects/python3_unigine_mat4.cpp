@@ -17,7 +17,7 @@ namespace PyUnigine {
 typedef struct {
     PyObject_HEAD
     // Type-specific fields go here.
-    Unigine::mat4 * unigine_object_ptr;
+    Unigine::Math::mat4 * unigine_object_ptr;
 } unigine_mat4;
 
 static void unigine_mat4_dealloc(unigine_mat4* self) {
@@ -44,44 +44,73 @@ static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int row;
-    PyObject *pArg2; // int column;
-    PyObject *pArg3; // float v;
+    PyObject *pArg1 = NULL; // int row;
+    PyObject *pArg2 = NULL; // int column;
+    PyObject *pArg3 = NULL; // float v;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"row\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int row = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"column\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int column = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for float
+    if (!PyFloat_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"v\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    float v = PyFloat_AsDouble(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->set(row, column, v);
+                unigine_object_ptr->set(row, column, v);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             int row;
             int column;
             float v;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->row = row;
     pRunner->column = column;
     pRunner->v = v;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -93,7 +122,7 @@ static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::mat2 & m;
+    PyObject *pArg1 = NULL; // const Unigine::Math::mat2 & m;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -103,20 +132,31 @@ TODO for const Unigine::Math::mat2 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->set(m);
+                unigine_object_ptr->set(m);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             const Unigine::Math::mat2 & m;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->m = m;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -128,7 +168,7 @@ static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::mat3 & m;
+    PyObject *pArg1 = NULL; // const Unigine::Math::mat3 & m;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -138,20 +178,31 @@ TODO for const Unigine::Math::mat3 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->set(m);
+                unigine_object_ptr->set(m);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             const Unigine::Math::mat3 & m;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->m = m;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -163,7 +214,7 @@ static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::mat4 & m;
+    PyObject *pArg1 = NULL; // const Unigine::Math::mat4 & m;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -173,20 +224,31 @@ TODO for const Unigine::Math::mat4 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->set(m);
+                unigine_object_ptr->set(m);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             const Unigine::Math::mat4 & m;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->m = m;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -198,7 +260,7 @@ static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::dmat4 & m;
+    PyObject *pArg1 = NULL; // const Unigine::Math::dmat4 & m;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -208,20 +270,31 @@ TODO for const Unigine::Math::dmat4 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->set(m);
+                unigine_object_ptr->set(m);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             const Unigine::Math::dmat4 & m;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->m = m;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -233,7 +306,7 @@ static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::quat & q;
+    PyObject *pArg1 = NULL; // const Unigine::Math::quat & q;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -243,20 +316,31 @@ TODO for const Unigine::Math::quat &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->set(q);
+                unigine_object_ptr->set(q);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             const Unigine::Math::quat & q;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->q = q;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -268,8 +352,8 @@ static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const & m;
-    PyObject *pArg2; // int transposed;
+    PyObject *pArg1 = NULL; // const & m;
+    PyObject *pArg2 = NULL; // int transposed;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -277,28 +361,45 @@ TODO for const &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"transposed\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int transposed = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->set(m, transposed);
+                unigine_object_ptr->set(m, transposed);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             const & m;
             int transposed;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->m = m;
     pRunner->transposed = transposed;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -310,8 +411,8 @@ static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const & m;
-    PyObject *pArg2; // int transpose;
+    PyObject *pArg1 = NULL; // const & m;
+    PyObject *pArg2 = NULL; // int transpose;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -319,28 +420,45 @@ TODO for const &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"transpose\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int transpose = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->set(m, transpose);
+                unigine_object_ptr->set(m, transpose);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             const & m;
             int transpose;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->m = m;
     pRunner->transpose = transpose;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -352,8 +470,8 @@ static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::mat3 & m;
-    PyObject *pArg2; // const Unigine::Math::vec3 & v;
+    PyObject *pArg1 = NULL; // const Unigine::Math::mat3 & m;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec3 & v;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -367,22 +485,33 @@ TODO for const Unigine::Math::vec3 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->set(m, v);
+                unigine_object_ptr->set(m, v);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             const Unigine::Math::mat3 & m;
             const Unigine::Math::vec3 & v;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->m = m;
     pRunner->v = v;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -394,8 +523,8 @@ static PyObject * unigine_mat4_set(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::quat & q;
-    PyObject *pArg2; // const Unigine::Math::vec3 & v;
+    PyObject *pArg1 = NULL; // const Unigine::Math::quat & q;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec3 & v;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -409,22 +538,33 @@ TODO for const Unigine::Math::vec3 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->set(q, v);
+                unigine_object_ptr->set(q, v);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             const Unigine::Math::quat & q;
             const Unigine::Math::vec3 & v;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->q = q;
     pRunner->v = v;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -436,8 +576,8 @@ static PyObject * unigine_mat4_get(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // & m;
-    PyObject *pArg2; // int transpose;
+    PyObject *pArg1 = NULL; // & m;
+    PyObject *pArg2 = NULL; // int transpose;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -445,28 +585,45 @@ TODO for &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"transpose\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int transpose = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->get(m, transpose);
+                unigine_object_ptr->get(m, transpose);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             & m;
             int transpose;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->m = m;
     pRunner->transpose = transpose;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -482,15 +639,16 @@ static PyObject * unigine_mat4_get(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->get();
+                retOriginal = unigine_object_ptr->get();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
             // return
             & retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     & retOriginal = pRunner->retOriginal;
@@ -511,15 +669,16 @@ static PyObject * unigine_mat4_get(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->get();
+                retOriginal = unigine_object_ptr->get();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
             // return
             const & retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const & retOriginal = pRunner->retOriginal;
@@ -536,23 +695,36 @@ static PyObject * unigine_mat4_get(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int row;
-    PyObject *pArg2; // int column;
+    PyObject *pArg1 = NULL; // int row;
+    PyObject *pArg2 = NULL; // int column;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"row\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int row = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"column\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int column = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->get(row, column);
+                retOriginal = unigine_object_ptr->get(row, column);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             int row;
             int column;
@@ -560,10 +732,11 @@ TODO for int
             float & retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->row = row;
     pRunner->column = column;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     float & retOriginal = pRunner->retOriginal;
@@ -580,23 +753,36 @@ static PyObject * unigine_mat4_get(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int row;
-    PyObject *pArg2; // int column;
+    PyObject *pArg1 = NULL; // int row;
+    PyObject *pArg2 = NULL; // int column;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"row\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int row = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"column\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int column = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->get(row, column);
+                retOriginal = unigine_object_ptr->get(row, column);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             int row;
             int column;
@@ -604,10 +790,11 @@ TODO for int
             float retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->row = row;
     pRunner->column = column;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     float retOriginal = pRunner->retOriginal;
@@ -624,12 +811,18 @@ static PyObject * unigine_mat4_set_row(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int row;
-    PyObject *pArg2; // const Unigine::Math::vec4 & v;
+    PyObject *pArg1 = NULL; // int row;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec4 & v;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"row\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int row = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -639,22 +832,33 @@ TODO for const Unigine::Math::vec4 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setRow(row, v);
+                unigine_object_ptr->setRow(row, v);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             int row;
             const Unigine::Math::vec4 & v;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->row = row;
     pRunner->v = v;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -666,12 +870,18 @@ static PyObject * unigine_mat4_set_row3(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int row;
-    PyObject *pArg2; // const Unigine::Math::vec3 & v;
+    PyObject *pArg1 = NULL; // int row;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec3 & v;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"row\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int row = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -681,22 +891,33 @@ TODO for const Unigine::Math::vec3 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setRow3(row, v);
+                unigine_object_ptr->setRow3(row, v);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             int row;
             const Unigine::Math::vec3 & v;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->row = row;
     pRunner->v = v;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -708,27 +929,35 @@ static PyObject * unigine_mat4_get_row(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int row;
+    PyObject *pArg1 = NULL; // int row;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"row\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int row = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getRow(row);
+                retOriginal = unigine_object_ptr->getRow(row);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             int row;
             // return
             Unigine::Math::vec4 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->row = row;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec4 retOriginal = pRunner->retOriginal;
@@ -745,27 +974,35 @@ static PyObject * unigine_mat4_get_row3(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int row;
+    PyObject *pArg1 = NULL; // int row;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"row\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int row = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getRow3(row);
+                retOriginal = unigine_object_ptr->getRow3(row);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             int row;
             // return
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->row = row;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -782,12 +1019,18 @@ static PyObject * unigine_mat4_set_column(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int column;
-    PyObject *pArg2; // const Unigine::Math::vec4 & v;
+    PyObject *pArg1 = NULL; // int column;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec4 & v;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"column\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int column = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -797,22 +1040,33 @@ TODO for const Unigine::Math::vec4 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setColumn(column, v);
+                unigine_object_ptr->setColumn(column, v);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             int column;
             const Unigine::Math::vec4 & v;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->column = column;
     pRunner->v = v;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -824,12 +1078,18 @@ static PyObject * unigine_mat4_set_column3(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int column;
-    PyObject *pArg2; // const Unigine::Math::vec3 & v;
+    PyObject *pArg1 = NULL; // int column;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec3 & v;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"column\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int column = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -839,22 +1099,33 @@ TODO for const Unigine::Math::vec3 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setColumn3(column, v);
+                unigine_object_ptr->setColumn3(column, v);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             int column;
             const Unigine::Math::vec3 & v;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->column = column;
     pRunner->v = v;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -866,27 +1137,35 @@ static PyObject * unigine_mat4_get_column(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int column;
+    PyObject *pArg1 = NULL; // int column;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"column\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int column = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getColumn(column);
+                retOriginal = unigine_object_ptr->getColumn(column);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             int column;
             // return
             Unigine::Math::vec4 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->column = column;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec4 retOriginal = pRunner->retOriginal;
@@ -903,27 +1182,35 @@ static PyObject * unigine_mat4_get_column3(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int column;
+    PyObject *pArg1 = NULL; // int column;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"column\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int column = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getColumn3(column);
+                retOriginal = unigine_object_ptr->getColumn3(column);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             int column;
             // return
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->column = column;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -944,15 +1231,16 @@ static PyObject * unigine_mat4_get_axis_x(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getAxisX();
+                retOriginal = unigine_object_ptr->getAxisX();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
             // return
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -973,15 +1261,16 @@ static PyObject * unigine_mat4_get_axis_y(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getAxisY();
+                retOriginal = unigine_object_ptr->getAxisY();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
             // return
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -1002,15 +1291,16 @@ static PyObject * unigine_mat4_get_axis_z(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getAxisZ();
+                retOriginal = unigine_object_ptr->getAxisZ();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
             // return
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -1027,7 +1317,7 @@ static PyObject * unigine_mat4_set_diagonal(unigine_mat4* self, PyObject *args) 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::vec4 & v;
+    PyObject *pArg1 = NULL; // const Unigine::Math::vec4 & v;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1037,20 +1327,31 @@ TODO for const Unigine::Math::vec4 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setDiagonal(v);
+                unigine_object_ptr->setDiagonal(v);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             const Unigine::Math::vec4 & v;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->v = v;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1066,15 +1367,16 @@ static PyObject * unigine_mat4_get_diagonal(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getDiagonal();
+                retOriginal = unigine_object_ptr->getDiagonal();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
             // return
             Unigine::Math::vec4 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec4 retOriginal = pRunner->retOriginal;
@@ -1095,18 +1397,28 @@ static PyObject * unigine_mat4_set_zero(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setZero();
+                unigine_object_ptr->setZero();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1122,18 +1434,28 @@ static PyObject * unigine_mat4_set_identity(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setIdentity();
+                unigine_object_ptr->setIdentity();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1145,7 +1467,7 @@ static PyObject * unigine_mat4_set_translate(unigine_mat4* self, PyObject *args)
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::vec3 & v;
+    PyObject *pArg1 = NULL; // const Unigine::Math::vec3 & v;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1155,20 +1477,31 @@ TODO for const Unigine::Math::vec3 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setTranslate(v);
+                unigine_object_ptr->setTranslate(v);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             const Unigine::Math::vec3 & v;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->v = v;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1184,15 +1517,16 @@ static PyObject * unigine_mat4_get_translate(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getTranslate();
+                retOriginal = unigine_object_ptr->getTranslate();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
             // return
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -1209,8 +1543,8 @@ static PyObject * unigine_mat4_set_rotate(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::vec3 & axis;
-    PyObject *pArg2; // float angle;
+    PyObject *pArg1 = NULL; // const Unigine::Math::vec3 & axis;
+    PyObject *pArg2 = NULL; // float angle;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -1218,28 +1552,45 @@ TODO for const Unigine::Math::vec3 &
 
 
     // pArg2
-TODO for float
+    if (!PyFloat_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"angle\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    float angle = PyFloat_AsDouble(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setRotate(axis, angle);
+                unigine_object_ptr->setRotate(axis, angle);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             const Unigine::Math::vec3 & axis;
             float angle;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->axis = axis;
     pRunner->angle = angle;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1255,15 +1606,16 @@ static PyObject * unigine_mat4_get_rotate(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getRotate();
+                retOriginal = unigine_object_ptr->getRotate();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
             // return
             Unigine::Math::quat retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::quat retOriginal = pRunner->retOriginal;
@@ -1280,30 +1632,47 @@ static PyObject * unigine_mat4_set_rotate_x(unigine_mat4* self, PyObject *args) 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // float angle;
+    PyObject *pArg1 = NULL; // float angle;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for float
+    if (!PyFloat_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"angle\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    float angle = PyFloat_AsDouble(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setRotateX(angle);
+                unigine_object_ptr->setRotateX(angle);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             float angle;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->angle = angle;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1315,30 +1684,47 @@ static PyObject * unigine_mat4_set_rotate_y(unigine_mat4* self, PyObject *args) 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // float angle;
+    PyObject *pArg1 = NULL; // float angle;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for float
+    if (!PyFloat_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"angle\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    float angle = PyFloat_AsDouble(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setRotateY(angle);
+                unigine_object_ptr->setRotateY(angle);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             float angle;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->angle = angle;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1350,30 +1736,47 @@ static PyObject * unigine_mat4_set_rotate_z(unigine_mat4* self, PyObject *args) 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // float angle;
+    PyObject *pArg1 = NULL; // float angle;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for float
+    if (!PyFloat_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"angle\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    float angle = PyFloat_AsDouble(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setRotateZ(angle);
+                unigine_object_ptr->setRotateZ(angle);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             float angle;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->angle = angle;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1385,7 +1788,7 @@ static PyObject * unigine_mat4_set_scale(unigine_mat4* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::vec3 & v;
+    PyObject *pArg1 = NULL; // const Unigine::Math::vec3 & v;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1395,20 +1798,31 @@ TODO for const Unigine::Math::vec3 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setScale(v);
+                unigine_object_ptr->setScale(v);
             };
+            Unigine::Math::mat4 * unigine_object_ptr;
             // args
             const Unigine::Math::vec3 & v;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->v = v;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1424,15 +1838,16 @@ static PyObject * unigine_mat4_get_scale(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getScale();
+                retOriginal = unigine_object_ptr->getScale();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
             // return
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -1453,15 +1868,16 @@ static PyObject * unigine_mat4_trace(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->trace();
+                retOriginal = unigine_object_ptr->trace();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
             // return
             float retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     float retOriginal = pRunner->retOriginal;
@@ -1482,15 +1898,16 @@ static PyObject * unigine_mat4_determinant(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->determinant();
+                retOriginal = unigine_object_ptr->determinant();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
             // return
             float retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     float retOriginal = pRunner->retOriginal;
@@ -1511,15 +1928,16 @@ static PyObject * unigine_mat4_determinant3(unigine_mat4* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->determinant3();
+                retOriginal = unigine_object_ptr->determinant3();
             };
-            // args
+            Unigine::Math::mat4 * unigine_object_ptr;
             // return
             float retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     float retOriginal = pRunner->retOriginal;
@@ -1705,8 +2123,6 @@ static PyMethodDef unigine_mat4_methods[] = {
 };
 
 static PyTypeObject unigine_mat4Type = {
-
-
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.mat4",             // tp_name
     sizeof(unigine_mat4) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
@@ -1771,19 +2187,17 @@ bool Python3Uniginemat4::addClassDefinitionToModule(PyObject* pModule) {
     return true;
 }
 
-PyObject * mat4::NewObject(Unigine::mat4 * unigine_object_ptr) {
-
-    std::cout << "sizeof(unigine_mat4) = " << sizeof(unigine_mat4) << std::endl;
-
+PyObject * mat4::NewObject(Unigine::Math::mat4 * unigine_object_ptr) {
+    // std::cout << "sizeof(unigine_mat4) = " << sizeof(unigine_mat4) << std::endl;
     unigine_mat4 *pInst = PyObject_New(unigine_mat4, &unigine_mat4Type);
     pInst->unigine_object_ptr = unigine_object_ptr;
     // Py_INCREF(pInst);
     return (PyObject *)pInst;
 }
 
-Unigine::mat4 * mat4::Convert(PyObject *pObject) {
+Unigine::Math::mat4 * mat4::Convert(PyObject *pObject) {
     if (Py_IS_TYPE(pObject, &unigine_mat4Type) == 0) {
-        // TODO error
+        Unigine::Log::error("Invalid type, expected 'Unigine::Math::mat4 *', but got some another");
     }
     unigine_mat4 *pInst = (unigine_mat4 *)pObject;
     return pInst->unigine_object_ptr;

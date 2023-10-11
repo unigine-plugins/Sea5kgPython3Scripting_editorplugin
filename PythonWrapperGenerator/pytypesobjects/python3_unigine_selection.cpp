@@ -17,7 +17,7 @@ namespace PyUnigine {
 typedef struct {
     PyObject_HEAD
     // Type-specific fields go here.
-    Unigine::Selection * unigine_object_ptr;
+    UnigineEditor::Selection * unigine_object_ptr;
 } unigine_Selection;
 
 static void unigine_Selection_dealloc(unigine_Selection* self) {
@@ -48,15 +48,16 @@ static PyObject * unigine_Selection_meta_object(unigine_Selection* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->metaObject();
+                retOriginal = unigine_object_ptr->metaObject();
             };
-            // args
+            UnigineEditor::Selection * unigine_object_ptr;
             // return
             const * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const * retOriginal = pRunner->retOriginal;
@@ -73,16 +74,15 @@ static PyObject * unigine_Selection_qt_metacast(unigine_Selection* self, PyObjec
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * arg1;
+    PyObject *pArg1 = NULL; // const char * arg1;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"arg1\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * arg1 = PyUnicode_AsUTF8(pArg1);
 
@@ -90,17 +90,19 @@ static PyObject * unigine_Selection_qt_metacast(unigine_Selection* self, PyObjec
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->qt_metacast(arg1);
+                retOriginal = unigine_object_ptr->qt_metacast(arg1);
             };
+            UnigineEditor::Selection * unigine_object_ptr;
             // args
             const char * arg1;
             // return
             void * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->arg1 = arg1;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     void * retOriginal = pRunner->retOriginal;
@@ -117,9 +119,9 @@ static PyObject * unigine_Selection_qt_metacall(unigine_Selection* self, PyObjec
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // Call arg1;
-    PyObject *pArg2; // int arg2;
-    PyObject *pArg3; // * void * arg3;
+    PyObject *pArg1 = NULL; // Call arg1;
+    PyObject *pArg2 = NULL; // int arg2;
+    PyObject *pArg3 = NULL; // * void * arg3;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -127,7 +129,13 @@ TODO for Call
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"arg2\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int arg2 = PyLong_AsLong(pArg2);
 
 
     // pArg3
@@ -137,8 +145,9 @@ TODO for * void *
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->qt_metacall(arg1, arg2, arg3);
+                retOriginal = unigine_object_ptr->qt_metacall(arg1, arg2, arg3);
             };
+            UnigineEditor::Selection * unigine_object_ptr;
             // args
             Call arg1;
             int arg2;
@@ -147,11 +156,12 @@ TODO for * void *
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->arg1 = arg1;
     pRunner->arg2 = arg2;
     pRunner->arg3 = arg3;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -168,41 +178,45 @@ static PyObject * unigine_Selection_tr(unigine_Selection* self_static_null, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * s;
-    PyObject *pArg2; // const char * c;
-    PyObject *pArg3; // int n;
+    PyObject *pArg1 = NULL; // const char * s;
+    PyObject *pArg2 = NULL; // const char * c;
+    PyObject *pArg3 = NULL; // int n;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"s\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * s = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"c\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * c = PyUnicode_AsUTF8(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"n\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int n = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::Selection::tr(s, c, n);
+                retOriginal = UnigineEditor::Selection::tr(s, c, n);
             };
             // args
             const char * s;
@@ -216,7 +230,7 @@ TODO for int
     pRunner->c = c;
     pRunner->n = n;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
      retOriginal = pRunner->retOriginal;
@@ -233,41 +247,45 @@ static PyObject * unigine_Selection_tr_utf8(unigine_Selection* self_static_null,
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * s;
-    PyObject *pArg2; // const char * c;
-    PyObject *pArg3; // int n;
+    PyObject *pArg1 = NULL; // const char * s;
+    PyObject *pArg2 = NULL; // const char * c;
+    PyObject *pArg3 = NULL; // int n;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"s\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * s = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"c\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * c = PyUnicode_AsUTF8(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"n\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int n = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::Selection::trUtf8(s, c, n);
+                retOriginal = UnigineEditor::Selection::trUtf8(s, c, n);
             };
             // args
             const char * s;
@@ -281,7 +299,7 @@ TODO for int
     pRunner->c = c;
     pRunner->n = n;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
      retOriginal = pRunner->retOriginal;
@@ -302,15 +320,14 @@ static PyObject * unigine_Selection_instance(unigine_Selection* self_static_null
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::Selection::instance();
+                retOriginal = UnigineEditor::Selection::instance();
             };
-            // args
             // return
             UnigineEditor::Selection * retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     UnigineEditor::Selection * retOriginal = pRunner->retOriginal;
@@ -331,18 +348,26 @@ static PyObject * unigine_Selection_clear(unigine_Selection* self_static_null) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::Selection::clear();
+                UnigineEditor::Selection::clear();
             };
-            // args
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -358,15 +383,14 @@ static PyObject * unigine_Selection_get_selector(unigine_Selection* self_static_
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::Selection::getSelector();
+                retOriginal = UnigineEditor::Selection::getSelector();
             };
-            // args
             // return
             const UnigineEditor::Selector * retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const UnigineEditor::Selector * retOriginal = pRunner->retOriginal;
@@ -383,7 +407,7 @@ static PyObject * unigine_Selection_set_selector(unigine_Selection* self_static_
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // UnigineEditor::Selector * selector;
+    PyObject *pArg1 = NULL; // UnigineEditor::Selector * selector;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -393,7 +417,7 @@ TODO for UnigineEditor::Selector *
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::Selection::setSelector(selector);
+                UnigineEditor::Selection::setSelector(selector);
             };
             // args
             UnigineEditor::Selector * selector;
@@ -401,12 +425,21 @@ TODO for UnigineEditor::Selector *
     auto *pRunner = new LocalRunner();
     pRunner->selector = selector;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -422,15 +455,14 @@ static PyObject * unigine_Selection_copy_selector(unigine_Selection* self_static
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::Selection::copySelector();
+                retOriginal = UnigineEditor::Selection::copySelector();
             };
-            // args
             // return
             UnigineEditor::Selector * retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     UnigineEditor::Selector * retOriginal = pRunner->retOriginal;
@@ -451,15 +483,14 @@ static PyObject * unigine_Selection_get_selector_nodes(unigine_Selection* self_s
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::Selection::getSelectorNodes();
+                retOriginal = UnigineEditor::Selection::getSelectorNodes();
             };
-            // args
             // return
             const UnigineEditor::SelectorNodes * retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const UnigineEditor::SelectorNodes * retOriginal = pRunner->retOriginal;
@@ -480,15 +511,14 @@ static PyObject * unigine_Selection_get_selector_runtimes(unigine_Selection* sel
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::Selection::getSelectorRuntimes();
+                retOriginal = UnigineEditor::Selection::getSelectorRuntimes();
             };
-            // args
             // return
             const UnigineEditor::SelectorGUIDs * retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const UnigineEditor::SelectorGUIDs * retOriginal = pRunner->retOriginal;
@@ -509,15 +539,14 @@ static PyObject * unigine_Selection_get_selector_materials(unigine_Selection* se
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::Selection::getSelectorMaterials();
+                retOriginal = UnigineEditor::Selection::getSelectorMaterials();
             };
-            // args
             // return
             const UnigineEditor::SelectorGUIDs * retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const UnigineEditor::SelectorGUIDs * retOriginal = pRunner->retOriginal;
@@ -538,15 +567,14 @@ static PyObject * unigine_Selection_get_selector_properties(unigine_Selection* s
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::Selection::getSelectorProperties();
+                retOriginal = UnigineEditor::Selection::getSelectorProperties();
             };
-            // args
             // return
             const UnigineEditor::SelectorGUIDs * retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const UnigineEditor::SelectorGUIDs * retOriginal = pRunner->retOriginal;
@@ -567,15 +595,14 @@ static PyObject * unigine_Selection_copy_selector_nodes(unigine_Selection* self_
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::Selection::copySelectorNodes();
+                retOriginal = UnigineEditor::Selection::copySelectorNodes();
             };
-            // args
             // return
             UnigineEditor::SelectorNodes * retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     UnigineEditor::SelectorNodes * retOriginal = pRunner->retOriginal;
@@ -596,15 +623,14 @@ static PyObject * unigine_Selection_copy_selector_runtimes(unigine_Selection* se
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::Selection::copySelectorRuntimes();
+                retOriginal = UnigineEditor::Selection::copySelectorRuntimes();
             };
-            // args
             // return
             UnigineEditor::SelectorGUIDs * retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     UnigineEditor::SelectorGUIDs * retOriginal = pRunner->retOriginal;
@@ -625,15 +651,14 @@ static PyObject * unigine_Selection_copy_selector_materials(unigine_Selection* s
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::Selection::copySelectorMaterials();
+                retOriginal = UnigineEditor::Selection::copySelectorMaterials();
             };
-            // args
             // return
             UnigineEditor::SelectorGUIDs * retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     UnigineEditor::SelectorGUIDs * retOriginal = pRunner->retOriginal;
@@ -654,15 +679,14 @@ static PyObject * unigine_Selection_copy_selector_properties(unigine_Selection* 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::Selection::copySelectorProperties();
+                retOriginal = UnigineEditor::Selection::copySelectorProperties();
             };
-            // args
             // return
             UnigineEditor::SelectorGUIDs * retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     UnigineEditor::SelectorGUIDs * retOriginal = pRunner->retOriginal;
@@ -683,18 +707,28 @@ static PyObject * unigine_Selection_changed(unigine_Selection* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->changed();
+                unigine_object_ptr->changed();
             };
-            // args
+            UnigineEditor::Selection * unigine_object_ptr;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -783,8 +817,6 @@ static PyMethodDef unigine_Selection_methods[] = {
 };
 
 static PyTypeObject unigine_SelectionType = {
-
-
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Selection",             // tp_name
     sizeof(unigine_Selection) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
@@ -849,19 +881,17 @@ bool Python3UnigineSelection::addClassDefinitionToModule(PyObject* pModule) {
     return true;
 }
 
-PyObject * Selection::NewObject(Unigine::Selection * unigine_object_ptr) {
-
-    std::cout << "sizeof(unigine_Selection) = " << sizeof(unigine_Selection) << std::endl;
-
+PyObject * Selection::NewObject(UnigineEditor::Selection * unigine_object_ptr) {
+    // std::cout << "sizeof(unigine_Selection) = " << sizeof(unigine_Selection) << std::endl;
     unigine_Selection *pInst = PyObject_New(unigine_Selection, &unigine_SelectionType);
     pInst->unigine_object_ptr = unigine_object_ptr;
     // Py_INCREF(pInst);
     return (PyObject *)pInst;
 }
 
-Unigine::Selection * Selection::Convert(PyObject *pObject) {
+UnigineEditor::Selection * Selection::Convert(PyObject *pObject) {
     if (Py_IS_TYPE(pObject, &unigine_SelectionType) == 0) {
-        // TODO error
+        Unigine::Log::error("Invalid type, expected 'UnigineEditor::Selection *', but got some another");
     }
     unigine_Selection *pInst = (unigine_Selection *)pObject;
     return pInst->unigine_object_ptr;

@@ -44,7 +44,7 @@ static PyObject * unigine_Player_convertible(unigine_Player* self_static_null, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // Unigine::Node * node;
+    PyObject *pArg1 = NULL; // Unigine::Node * node;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -64,7 +64,7 @@ TODO for Unigine::Node *
     auto *pRunner = new LocalRunner();
     pRunner->node = node;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -81,7 +81,7 @@ static PyObject * unigine_Player_set_projection(unigine_Player* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::mat4 & projection;
+    PyObject *pArg1 = NULL; // const Unigine::Math::mat4 & projection;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -91,20 +91,31 @@ TODO for const Unigine::Math::mat4 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setProjection(projection);
+                unigine_object_ptr->setProjection(projection);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             const Unigine::Math::mat4 & projection;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->projection = projection;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -120,15 +131,16 @@ static PyObject * unigine_Player_get_projection(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getProjection();
+                retOriginal = unigine_object_ptr->getProjection();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             Unigine::Math::mat4 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::mat4 retOriginal = pRunner->retOriginal;
@@ -145,23 +157,36 @@ static PyObject * unigine_Player_get_aspect_corrected_projection(unigine_Player*
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int width;
-    PyObject *pArg2; // int height;
+    PyObject *pArg1 = NULL; // int width;
+    PyObject *pArg2 = NULL; // int height;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"width\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int width = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"height\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int height = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getAspectCorrectedProjection(width, height);
+                retOriginal = unigine_object_ptr->getAspectCorrectedProjection(width, height);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int width;
             int height;
@@ -169,10 +194,11 @@ TODO for int
             Unigine::Math::mat4 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->width = width;
     pRunner->height = height;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::mat4 retOriginal = pRunner->retOriginal;
@@ -189,7 +215,7 @@ static PyObject * unigine_Player_set_projection_mode(unigine_Player* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // Unigine::Camera::PROJECTION_MODE mode;
+    PyObject *pArg1 = NULL; // Unigine::Camera::PROJECTION_MODE mode;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -199,20 +225,31 @@ TODO for Unigine::Camera::PROJECTION_MODE
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setProjectionMode(mode);
+                unigine_object_ptr->setProjectionMode(mode);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             Unigine::Camera::PROJECTION_MODE mode;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->mode = mode;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -228,15 +265,16 @@ static PyObject * unigine_Player_get_projection_mode(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getProjectionMode();
+                retOriginal = unigine_object_ptr->getProjectionMode();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             Unigine::Camera::PROJECTION_MODE retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Camera::PROJECTION_MODE retOriginal = pRunner->retOriginal;
@@ -253,7 +291,7 @@ static PyObject * unigine_Player_set_fov_mode(unigine_Player* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // Unigine::Camera::FOV_MODE mode;
+    PyObject *pArg1 = NULL; // Unigine::Camera::FOV_MODE mode;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -263,20 +301,31 @@ TODO for Unigine::Camera::FOV_MODE
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setFovMode(mode);
+                unigine_object_ptr->setFovMode(mode);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             Unigine::Camera::FOV_MODE mode;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->mode = mode;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -292,15 +341,16 @@ static PyObject * unigine_Player_get_fov_mode(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getFovMode();
+                retOriginal = unigine_object_ptr->getFovMode();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             Unigine::Camera::FOV_MODE retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Camera::FOV_MODE retOriginal = pRunner->retOriginal;
@@ -321,15 +371,16 @@ static PyObject * unigine_Player_get_fov_fixed(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getFovFixed();
+                retOriginal = unigine_object_ptr->getFovFixed();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             Unigine::Camera::FOV_FIXED retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Camera::FOV_FIXED retOriginal = pRunner->retOriginal;
@@ -346,30 +397,47 @@ static PyObject * unigine_Player_set_fov(unigine_Player* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // float fov;
+    PyObject *pArg1 = NULL; // float fov;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for float
+    if (!PyFloat_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"fov\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    float fov = PyFloat_AsDouble(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setFov(fov);
+                unigine_object_ptr->setFov(fov);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             float fov;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->fov = fov;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -385,15 +453,16 @@ static PyObject * unigine_Player_get_fov(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getFov();
+                retOriginal = unigine_object_ptr->getFov();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             float retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     float retOriginal = pRunner->retOriginal;
@@ -410,30 +479,47 @@ static PyObject * unigine_Player_set_film_gate(unigine_Player* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // float gate;
+    PyObject *pArg1 = NULL; // float gate;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for float
+    if (!PyFloat_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"gate\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    float gate = PyFloat_AsDouble(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setFilmGate(gate);
+                unigine_object_ptr->setFilmGate(gate);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             float gate;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->gate = gate;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -449,15 +535,16 @@ static PyObject * unigine_Player_get_film_gate(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getFilmGate();
+                retOriginal = unigine_object_ptr->getFilmGate();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             float retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     float retOriginal = pRunner->retOriginal;
@@ -474,30 +561,47 @@ static PyObject * unigine_Player_set_focal_length(unigine_Player* self, PyObject
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // float length;
+    PyObject *pArg1 = NULL; // float length;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for float
+    if (!PyFloat_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"length\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    float length = PyFloat_AsDouble(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setFocalLength(length);
+                unigine_object_ptr->setFocalLength(length);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             float length;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->length = length;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -513,15 +617,16 @@ static PyObject * unigine_Player_get_focal_length(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getFocalLength();
+                retOriginal = unigine_object_ptr->getFocalLength();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             float retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     float retOriginal = pRunner->retOriginal;
@@ -538,30 +643,47 @@ static PyObject * unigine_Player_set_z_near(unigine_Player* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // float znear;
+    PyObject *pArg1 = NULL; // float znear;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for float
+    if (!PyFloat_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"znear\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    float znear = PyFloat_AsDouble(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setZNear(znear);
+                unigine_object_ptr->setZNear(znear);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             float znear;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->znear = znear;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -577,15 +699,16 @@ static PyObject * unigine_Player_get_z_near(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getZNear();
+                retOriginal = unigine_object_ptr->getZNear();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             float retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     float retOriginal = pRunner->retOriginal;
@@ -602,30 +725,47 @@ static PyObject * unigine_Player_set_z_far(unigine_Player* self, PyObject *args)
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // float zfar;
+    PyObject *pArg1 = NULL; // float zfar;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for float
+    if (!PyFloat_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"zfar\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    float zfar = PyFloat_AsDouble(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setZFar(zfar);
+                unigine_object_ptr->setZFar(zfar);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             float zfar;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->zfar = zfar;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -641,15 +781,16 @@ static PyObject * unigine_Player_get_z_far(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getZFar();
+                retOriginal = unigine_object_ptr->getZFar();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             float retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     float retOriginal = pRunner->retOriginal;
@@ -666,30 +807,47 @@ static PyObject * unigine_Player_set_ortho_height(unigine_Player* self, PyObject
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // float height;
+    PyObject *pArg1 = NULL; // float height;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for float
+    if (!PyFloat_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"height\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    float height = PyFloat_AsDouble(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setOrthoHeight(height);
+                unigine_object_ptr->setOrthoHeight(height);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             float height;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->height = height;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -705,15 +863,16 @@ static PyObject * unigine_Player_get_ortho_height(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getOrthoHeight();
+                retOriginal = unigine_object_ptr->getOrthoHeight();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             float retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     float retOriginal = pRunner->retOriginal;
@@ -730,7 +889,7 @@ static PyObject * unigine_Player_set_up(unigine_Player* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::vec3 & up;
+    PyObject *pArg1 = NULL; // const Unigine::Math::vec3 & up;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -740,20 +899,31 @@ TODO for const Unigine::Math::vec3 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setUp(up);
+                unigine_object_ptr->setUp(up);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             const Unigine::Math::vec3 & up;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->up = up;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -769,15 +939,16 @@ static PyObject * unigine_Player_get_up(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getUp();
+                retOriginal = unigine_object_ptr->getUp();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -794,7 +965,7 @@ static PyObject * unigine_Player_set_oblique_frustum_plane(unigine_Player* self,
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const & plane;
+    PyObject *pArg1 = NULL; // const & plane;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -804,20 +975,31 @@ TODO for const &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setObliqueFrustumPlane(plane);
+                unigine_object_ptr->setObliqueFrustumPlane(plane);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             const & plane;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->plane = plane;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -833,15 +1015,16 @@ static PyObject * unigine_Player_get_oblique_frustum_plane(unigine_Player* self)
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getObliqueFrustumPlane();
+                retOriginal = unigine_object_ptr->getObliqueFrustumPlane();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
              retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
      retOriginal = pRunner->retOriginal;
@@ -858,30 +1041,47 @@ static PyObject * unigine_Player_set_oblique_frustum(unigine_Player* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // bool frustum;
+    PyObject *pArg1 = NULL; // bool frustum;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for bool
+    if (!PyBool_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"frustum\" to %s must be a bool object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    bool frustum = pArg1 == Py_True;
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setObliqueFrustum(frustum);
+                unigine_object_ptr->setObliqueFrustum(frustum);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             bool frustum;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->frustum = frustum;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -897,15 +1097,16 @@ static PyObject * unigine_Player_is_oblique_frustum(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->isObliqueFrustum();
+                retOriginal = unigine_object_ptr->isObliqueFrustum();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -922,30 +1123,47 @@ static PyObject * unigine_Player_set_viewport_mask(unigine_Player* self, PyObjec
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int mask;
+    PyObject *pArg1 = NULL; // int mask;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mask\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int mask = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setViewportMask(mask);
+                unigine_object_ptr->setViewportMask(mask);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int mask;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->mask = mask;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -961,15 +1179,16 @@ static PyObject * unigine_Player_get_viewport_mask(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getViewportMask();
+                retOriginal = unigine_object_ptr->getViewportMask();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -986,30 +1205,47 @@ static PyObject * unigine_Player_set_reflection_viewport_mask(unigine_Player* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int mask;
+    PyObject *pArg1 = NULL; // int mask;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mask\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int mask = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setReflectionViewportMask(mask);
+                unigine_object_ptr->setReflectionViewportMask(mask);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int mask;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->mask = mask;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1025,15 +1261,16 @@ static PyObject * unigine_Player_get_reflection_viewport_mask(unigine_Player* se
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getReflectionViewportMask();
+                retOriginal = unigine_object_ptr->getReflectionViewportMask();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1050,30 +1287,47 @@ static PyObject * unigine_Player_set_source_mask(unigine_Player* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int mask;
+    PyObject *pArg1 = NULL; // int mask;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mask\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int mask = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setSourceMask(mask);
+                unigine_object_ptr->setSourceMask(mask);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int mask;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->mask = mask;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1089,15 +1343,16 @@ static PyObject * unigine_Player_get_source_mask(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getSourceMask();
+                retOriginal = unigine_object_ptr->getSourceMask();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1114,30 +1369,47 @@ static PyObject * unigine_Player_set_reverb_mask(unigine_Player* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int mask;
+    PyObject *pArg1 = NULL; // int mask;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mask\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int mask = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setReverbMask(mask);
+                unigine_object_ptr->setReverbMask(mask);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int mask;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->mask = mask;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1153,15 +1425,16 @@ static PyObject * unigine_Player_get_reverb_mask(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getReverbMask();
+                retOriginal = unigine_object_ptr->getReverbMask();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1178,7 +1451,7 @@ static PyObject * unigine_Player_set_view_direction(unigine_Player* self, PyObje
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::vec3 & direction;
+    PyObject *pArg1 = NULL; // const Unigine::Math::vec3 & direction;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1188,20 +1461,31 @@ TODO for const Unigine::Math::vec3 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setViewDirection(direction);
+                unigine_object_ptr->setViewDirection(direction);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             const Unigine::Math::vec3 & direction;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->direction = direction;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1217,15 +1501,16 @@ static PyObject * unigine_Player_get_view_direction(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getViewDirection();
+                retOriginal = unigine_object_ptr->getViewDirection();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -1242,7 +1527,7 @@ static PyObject * unigine_Player_set_velocity(unigine_Player* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::vec3 & velocity;
+    PyObject *pArg1 = NULL; // const Unigine::Math::vec3 & velocity;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1252,20 +1537,31 @@ TODO for const Unigine::Math::vec3 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setVelocity(velocity);
+                unigine_object_ptr->setVelocity(velocity);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             const Unigine::Math::vec3 & velocity;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->velocity = velocity;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1281,15 +1577,16 @@ static PyObject * unigine_Player_get_velocity(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getVelocity();
+                retOriginal = unigine_object_ptr->getVelocity();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -1306,30 +1603,47 @@ static PyObject * unigine_Player_set_controlled(unigine_Player* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // bool controlled;
+    PyObject *pArg1 = NULL; // bool controlled;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for bool
+    if (!PyBool_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"controlled\" to %s must be a bool object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    bool controlled = pArg1 == Py_True;
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setControlled(controlled);
+                unigine_object_ptr->setControlled(controlled);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             bool controlled;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->controlled = controlled;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1345,15 +1659,16 @@ static PyObject * unigine_Player_is_controlled(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->isControlled();
+                retOriginal = unigine_object_ptr->isControlled();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1370,7 +1685,7 @@ static PyObject * unigine_Player_set_controls(unigine_Player* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Ptr<Unigine::Controls> & controls;
+    PyObject *pArg1 = NULL; // const Unigine::Ptr<Unigine::Controls> & controls;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1380,20 +1695,31 @@ TODO for const Unigine::Ptr<Unigine::Controls> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setControls(controls);
+                unigine_object_ptr->setControls(controls);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             const Unigine::Ptr<Unigine::Controls> & controls;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->controls = controls;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1409,15 +1735,16 @@ static PyObject * unigine_Player_get_controls(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getControls();
+                retOriginal = unigine_object_ptr->getControls();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             Unigine::Ptr<Unigine::Controls> retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<Unigine::Controls> retOriginal = pRunner->retOriginal;
@@ -1439,30 +1766,47 @@ static PyObject * unigine_Player_set_main_player(unigine_Player* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // bool player;
+    PyObject *pArg1 = NULL; // bool player;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for bool
+    if (!PyBool_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"player\" to %s must be a bool object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    bool player = pArg1 == Py_True;
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setMainPlayer(player);
+                unigine_object_ptr->setMainPlayer(player);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             bool player;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->player = player;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1478,15 +1822,16 @@ static PyObject * unigine_Player_is_main_player(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->isMainPlayer();
+                retOriginal = unigine_object_ptr->isMainPlayer();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1503,30 +1848,47 @@ static PyObject * unigine_Player_set_listener(unigine_Player* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // bool listener;
+    PyObject *pArg1 = NULL; // bool listener;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for bool
+    if (!PyBool_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"listener\" to %s must be a bool object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    bool listener = pArg1 == Py_True;
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setListener(listener);
+                unigine_object_ptr->setListener(listener);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             bool listener;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->listener = listener;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1542,15 +1904,16 @@ static PyObject * unigine_Player_is_listener(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->isListener();
+                retOriginal = unigine_object_ptr->isListener();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1571,18 +1934,28 @@ static PyObject * unigine_Player_clear_scriptable_materials(unigine_Player* self
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->clearScriptableMaterials();
+                unigine_object_ptr->clearScriptableMaterials();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1598,15 +1971,16 @@ static PyObject * unigine_Player_get_num_scriptable_materials(unigine_Player* se
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumScriptableMaterials();
+                retOriginal = unigine_object_ptr->getNumScriptableMaterials();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1623,27 +1997,35 @@ static PyObject * unigine_Player_get_scriptable_material(unigine_Player* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
+    PyObject *pArg1 = NULL; // int num;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getScriptableMaterial(num);
+                retOriginal = unigine_object_ptr->getScriptableMaterial(num);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int num;
             // return
             Unigine::Ptr<Unigine::Material> retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<Unigine::Material> retOriginal = pRunner->retOriginal;
@@ -1665,12 +2047,18 @@ static PyObject * unigine_Player_set_scriptable_material(unigine_Player* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // const Unigine::Ptr<Unigine::Material> & material;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // const Unigine::Ptr<Unigine::Material> & material;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -1680,22 +2068,33 @@ TODO for const Unigine::Ptr<Unigine::Material> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setScriptableMaterial(num, material);
+                unigine_object_ptr->setScriptableMaterial(num, material);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int num;
             const Unigine::Ptr<Unigine::Material> & material;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->material = material;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1707,12 +2106,18 @@ static PyObject * unigine_Player_insert_scriptable_material(unigine_Player* self
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // const Unigine::Ptr<Unigine::Material> & material;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // const Unigine::Ptr<Unigine::Material> & material;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -1722,22 +2127,33 @@ TODO for const Unigine::Ptr<Unigine::Material> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->insertScriptableMaterial(num, material);
+                unigine_object_ptr->insertScriptableMaterial(num, material);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int num;
             const Unigine::Ptr<Unigine::Material> & material;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->material = material;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1749,7 +2165,7 @@ static PyObject * unigine_Player_find_scriptable_material(unigine_Player* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Ptr<Unigine::Material> & material;
+    PyObject *pArg1 = NULL; // const Unigine::Ptr<Unigine::Material> & material;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1759,17 +2175,19 @@ TODO for const Unigine::Ptr<Unigine::Material> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->findScriptableMaterial(material);
+                retOriginal = unigine_object_ptr->findScriptableMaterial(material);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             const Unigine::Ptr<Unigine::Material> & material;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->material = material;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1786,7 +2204,7 @@ static PyObject * unigine_Player_add_scriptable_material(unigine_Player* self, P
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Ptr<Unigine::Material> & material;
+    PyObject *pArg1 = NULL; // const Unigine::Ptr<Unigine::Material> & material;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1796,20 +2214,31 @@ TODO for const Unigine::Ptr<Unigine::Material> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addScriptableMaterial(material);
+                unigine_object_ptr->addScriptableMaterial(material);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             const Unigine::Ptr<Unigine::Material> & material;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->material = material;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1821,30 +2250,47 @@ static PyObject * unigine_Player_remove_scriptable_material(unigine_Player* self
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
+    PyObject *pArg1 = NULL; // int num;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->removeScriptableMaterial(num);
+                unigine_object_ptr->removeScriptableMaterial(num);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int num;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1856,37 +2302,60 @@ static PyObject * unigine_Player_swap_scriptable_materials(unigine_Player* self,
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num_0;
-    PyObject *pArg2; // int num_1;
+    PyObject *pArg1 = NULL; // int num_0;
+    PyObject *pArg2 = NULL; // int num_1;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num_0\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num_0 = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num_1\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int num_1 = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->swapScriptableMaterials(num_0, num_1);
+                unigine_object_ptr->swapScriptableMaterials(num_0, num_1);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int num_0;
             int num_1;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num_0 = num_0;
     pRunner->num_1 = num_1;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1898,37 +2367,60 @@ static PyObject * unigine_Player_set_scriptable_material_enabled(unigine_Player*
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // bool enabled;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // bool enabled;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for bool
+    if (!PyBool_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"enabled\" to %s must be a bool object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    bool enabled = pArg2 == Py_True;
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setScriptableMaterialEnabled(num, enabled);
+                unigine_object_ptr->setScriptableMaterialEnabled(num, enabled);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int num;
             bool enabled;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->enabled = enabled;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1940,27 +2432,35 @@ static PyObject * unigine_Player_get_scriptable_material_enabled(unigine_Player*
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
+    PyObject *pArg1 = NULL; // int num;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getScriptableMaterialEnabled(num);
+                retOriginal = unigine_object_ptr->getScriptableMaterialEnabled(num);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int num;
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1977,7 +2477,7 @@ static PyObject * unigine_Player_set_camera(unigine_Player* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Ptr<Unigine::Camera> & camera;
+    PyObject *pArg1 = NULL; // const Unigine::Ptr<Unigine::Camera> & camera;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1987,20 +2487,31 @@ TODO for const Unigine::Ptr<Unigine::Camera> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setCamera(camera);
+                unigine_object_ptr->setCamera(camera);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             const Unigine::Ptr<Unigine::Camera> & camera;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->camera = camera;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2016,15 +2527,16 @@ static PyObject * unigine_Player_get_camera(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getCamera();
+                retOriginal = unigine_object_ptr->getCamera();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
             // return
             Unigine::Ptr<Unigine::Camera> retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<Unigine::Camera> retOriginal = pRunner->retOriginal;
@@ -2046,30 +2558,47 @@ static PyObject * unigine_Player_update_controls(unigine_Player* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // float ifps;
+    PyObject *pArg1 = NULL; // float ifps;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for float
+    if (!PyFloat_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"ifps\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    float ifps = PyFloat_AsDouble(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->updateControls(ifps);
+                unigine_object_ptr->updateControls(ifps);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             float ifps;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->ifps = ifps;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2085,18 +2614,28 @@ static PyObject * unigine_Player_flush_transform(unigine_Player* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->flushTransform();
+                unigine_object_ptr->flushTransform();
             };
-            // args
+            Unigine::Player * unigine_object_ptr;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2108,10 +2647,10 @@ static PyObject * unigine_Player_get_direction_from_main_window(unigine_Player* 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // & p0;
-    PyObject *pArg2; // & p1;
-    PyObject *pArg3; // int mouse_x;
-    PyObject *pArg4; // int mouse_y;
+    PyObject *pArg1 = NULL; // & p0;
+    PyObject *pArg2 = NULL; // & p1;
+    PyObject *pArg3 = NULL; // int mouse_x;
+    PyObject *pArg4 = NULL; // int mouse_y;
     PyArg_ParseTuple(args, "OOOO", &pArg1, &pArg2, &pArg3, &pArg4);
 
     // pArg1
@@ -2123,18 +2662,31 @@ TODO for &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mouse_x\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int mouse_x = PyLong_AsLong(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mouse_y\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int mouse_y = PyLong_AsLong(pArg4);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->getDirectionFromMainWindow(p0, p1, mouse_x, mouse_y);
+                unigine_object_ptr->getDirectionFromMainWindow(p0, p1, mouse_x, mouse_y);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             & p0;
             & p1;
@@ -2142,17 +2694,27 @@ TODO for int
             int mouse_y;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->p0 = p0;
     pRunner->p1 = p1;
     pRunner->mouse_x = mouse_x;
     pRunner->mouse_y = mouse_y;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2164,23 +2726,36 @@ static PyObject * unigine_Player_get_direction_from_main_window(unigine_Player* 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int mouse_x;
-    PyObject *pArg2; // int mouse_y;
+    PyObject *pArg1 = NULL; // int mouse_x;
+    PyObject *pArg2 = NULL; // int mouse_y;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mouse_x\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int mouse_x = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mouse_y\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int mouse_y = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getDirectionFromMainWindow(mouse_x, mouse_y);
+                retOriginal = unigine_object_ptr->getDirectionFromMainWindow(mouse_x, mouse_y);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int mouse_x;
             int mouse_y;
@@ -2188,10 +2763,11 @@ TODO for int
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->mouse_x = mouse_x;
     pRunner->mouse_y = mouse_y;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -2208,11 +2784,11 @@ static PyObject * unigine_Player_get_direction_from_window(unigine_Player* self,
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // & p0;
-    PyObject *pArg2; // & p1;
-    PyObject *pArg3; // int mouse_x;
-    PyObject *pArg4; // int mouse_y;
-    PyObject *pArg5; // const Unigine::Ptr<Unigine::EngineWindowViewport> & window;
+    PyObject *pArg1 = NULL; // & p0;
+    PyObject *pArg2 = NULL; // & p1;
+    PyObject *pArg3 = NULL; // int mouse_x;
+    PyObject *pArg4 = NULL; // int mouse_y;
+    PyObject *pArg5 = NULL; // const Unigine::Ptr<Unigine::EngineWindowViewport> & window;
     PyArg_ParseTuple(args, "OOOOO", &pArg1, &pArg2, &pArg3, &pArg4, &pArg5);
 
     // pArg1
@@ -2224,11 +2800,23 @@ TODO for &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mouse_x\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int mouse_x = PyLong_AsLong(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mouse_y\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int mouse_y = PyLong_AsLong(pArg4);
 
 
     // pArg5
@@ -2238,8 +2826,9 @@ TODO for const Unigine::Ptr<Unigine::EngineWindowViewport> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->getDirectionFromWindow(p0, p1, mouse_x, mouse_y, window);
+                unigine_object_ptr->getDirectionFromWindow(p0, p1, mouse_x, mouse_y, window);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             & p0;
             & p1;
@@ -2248,18 +2837,28 @@ TODO for const Unigine::Ptr<Unigine::EngineWindowViewport> &
             const Unigine::Ptr<Unigine::EngineWindowViewport> & window;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->p0 = p0;
     pRunner->p1 = p1;
     pRunner->mouse_x = mouse_x;
     pRunner->mouse_y = mouse_y;
     pRunner->window = window;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2271,17 +2870,29 @@ static PyObject * unigine_Player_get_direction_from_window(unigine_Player* self,
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int mouse_x;
-    PyObject *pArg2; // int mouse_y;
-    PyObject *pArg3; // const Unigine::Ptr<Unigine::EngineWindowViewport> & window;
+    PyObject *pArg1 = NULL; // int mouse_x;
+    PyObject *pArg2 = NULL; // int mouse_y;
+    PyObject *pArg3 = NULL; // const Unigine::Ptr<Unigine::EngineWindowViewport> & window;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mouse_x\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int mouse_x = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mouse_y\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int mouse_y = PyLong_AsLong(pArg2);
 
 
     // pArg3
@@ -2291,8 +2902,9 @@ TODO for const Unigine::Ptr<Unigine::EngineWindowViewport> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getDirectionFromWindow(mouse_x, mouse_y, window);
+                retOriginal = unigine_object_ptr->getDirectionFromWindow(mouse_x, mouse_y, window);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int mouse_x;
             int mouse_y;
@@ -2301,11 +2913,12 @@ TODO for const Unigine::Ptr<Unigine::EngineWindowViewport> &
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->mouse_x = mouse_x;
     pRunner->mouse_y = mouse_y;
     pRunner->window = window;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -2322,14 +2935,14 @@ static PyObject * unigine_Player_get_direction_from_screen(unigine_Player* self,
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // & p0;
-    PyObject *pArg2; // & p1;
-    PyObject *pArg3; // int mouse_x;
-    PyObject *pArg4; // int mouse_y;
-    PyObject *pArg5; // int screen_x;
-    PyObject *pArg6; // int screen_y;
-    PyObject *pArg7; // int screen_width;
-    PyObject *pArg8; // int screen_height;
+    PyObject *pArg1 = NULL; // & p0;
+    PyObject *pArg2 = NULL; // & p1;
+    PyObject *pArg3 = NULL; // int mouse_x;
+    PyObject *pArg4 = NULL; // int mouse_y;
+    PyObject *pArg5 = NULL; // int screen_x;
+    PyObject *pArg6 = NULL; // int screen_y;
+    PyObject *pArg7 = NULL; // int screen_width;
+    PyObject *pArg8 = NULL; // int screen_height;
     PyArg_ParseTuple(args, "OOOOOOOO", &pArg1, &pArg2, &pArg3, &pArg4, &pArg5, &pArg6, &pArg7, &pArg8);
 
     // pArg1
@@ -2341,34 +2954,71 @@ TODO for &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mouse_x\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int mouse_x = PyLong_AsLong(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mouse_y\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int mouse_y = PyLong_AsLong(pArg4);
 
 
     // pArg5
-TODO for int
+    if (!PyLong_Check(pArg5)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"screen_x\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg5)->tp_name);
+        return NULL;
+    }
+    int screen_x = PyLong_AsLong(pArg5);
 
 
     // pArg6
-TODO for int
+    if (!PyLong_Check(pArg6)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"screen_y\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg6)->tp_name);
+        return NULL;
+    }
+    int screen_y = PyLong_AsLong(pArg6);
 
 
     // pArg7
-TODO for int
+    if (!PyLong_Check(pArg7)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"screen_width\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg7)->tp_name);
+        return NULL;
+    }
+    int screen_width = PyLong_AsLong(pArg7);
 
 
     // pArg8
-TODO for int
+    if (!PyLong_Check(pArg8)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"screen_height\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg8)->tp_name);
+        return NULL;
+    }
+    int screen_height = PyLong_AsLong(pArg8);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->getDirectionFromScreen(p0, p1, mouse_x, mouse_y, screen_x, screen_y, screen_width, screen_height);
+                unigine_object_ptr->getDirectionFromScreen(p0, p1, mouse_x, mouse_y, screen_x, screen_y, screen_width, screen_height);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             & p0;
             & p1;
@@ -2380,6 +3030,7 @@ TODO for int
             int screen_height;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->p0 = p0;
     pRunner->p1 = p1;
     pRunner->mouse_x = mouse_x;
@@ -2389,12 +3040,21 @@ TODO for int
     pRunner->screen_width = screen_width;
     pRunner->screen_height = screen_height;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2406,43 +3066,80 @@ static PyObject * unigine_Player_get_direction_from_screen(unigine_Player* self,
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int mouse_x;
-    PyObject *pArg2; // int mouse_y;
-    PyObject *pArg3; // int screen_x;
-    PyObject *pArg4; // int screen_y;
-    PyObject *pArg5; // int screen_width;
-    PyObject *pArg6; // int screen_height;
+    PyObject *pArg1 = NULL; // int mouse_x;
+    PyObject *pArg2 = NULL; // int mouse_y;
+    PyObject *pArg3 = NULL; // int screen_x;
+    PyObject *pArg4 = NULL; // int screen_y;
+    PyObject *pArg5 = NULL; // int screen_width;
+    PyObject *pArg6 = NULL; // int screen_height;
     PyArg_ParseTuple(args, "OOOOOO", &pArg1, &pArg2, &pArg3, &pArg4, &pArg5, &pArg6);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mouse_x\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int mouse_x = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"mouse_y\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int mouse_y = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"screen_x\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int screen_x = PyLong_AsLong(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"screen_y\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int screen_y = PyLong_AsLong(pArg4);
 
 
     // pArg5
-TODO for int
+    if (!PyLong_Check(pArg5)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"screen_width\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg5)->tp_name);
+        return NULL;
+    }
+    int screen_width = PyLong_AsLong(pArg5);
 
 
     // pArg6
-TODO for int
+    if (!PyLong_Check(pArg6)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"screen_height\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg6)->tp_name);
+        return NULL;
+    }
+    int screen_height = PyLong_AsLong(pArg6);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getDirectionFromScreen(mouse_x, mouse_y, screen_x, screen_y, screen_width, screen_height);
+                retOriginal = unigine_object_ptr->getDirectionFromScreen(mouse_x, mouse_y, screen_x, screen_y, screen_width, screen_height);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int mouse_x;
             int mouse_y;
@@ -2454,6 +3151,7 @@ TODO for int
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->mouse_x = mouse_x;
     pRunner->mouse_y = mouse_y;
     pRunner->screen_x = screen_x;
@@ -2461,7 +3159,7 @@ TODO for int
     pRunner->screen_width = screen_width;
     pRunner->screen_height = screen_height;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -2478,33 +3176,58 @@ static PyObject * unigine_Player_get_projection_from_main_window(unigine_Player*
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int x0;
-    PyObject *pArg2; // int y0;
-    PyObject *pArg3; // int x1;
-    PyObject *pArg4; // int y1;
+    PyObject *pArg1 = NULL; // int x0;
+    PyObject *pArg2 = NULL; // int y0;
+    PyObject *pArg3 = NULL; // int x1;
+    PyObject *pArg4 = NULL; // int y1;
     PyArg_ParseTuple(args, "OOOO", &pArg1, &pArg2, &pArg3, &pArg4);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"x0\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int x0 = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"y0\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int y0 = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"x1\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int x1 = PyLong_AsLong(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"y1\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int y1 = PyLong_AsLong(pArg4);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getProjectionFromMainWindow(x0, y0, x1, y1);
+                retOriginal = unigine_object_ptr->getProjectionFromMainWindow(x0, y0, x1, y1);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int x0;
             int y0;
@@ -2514,12 +3237,13 @@ TODO for int
             Unigine::Math::mat4 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->x0 = x0;
     pRunner->y0 = y0;
     pRunner->x1 = x1;
     pRunner->y1 = y1;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::mat4 retOriginal = pRunner->retOriginal;
@@ -2536,27 +3260,51 @@ static PyObject * unigine_Player_get_projection_from_window(unigine_Player* self
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int x0;
-    PyObject *pArg2; // int y0;
-    PyObject *pArg3; // int x1;
-    PyObject *pArg4; // int y1;
-    PyObject *pArg5; // const Unigine::Ptr<Unigine::EngineWindowViewport> & window;
+    PyObject *pArg1 = NULL; // int x0;
+    PyObject *pArg2 = NULL; // int y0;
+    PyObject *pArg3 = NULL; // int x1;
+    PyObject *pArg4 = NULL; // int y1;
+    PyObject *pArg5 = NULL; // const Unigine::Ptr<Unigine::EngineWindowViewport> & window;
     PyArg_ParseTuple(args, "OOOOO", &pArg1, &pArg2, &pArg3, &pArg4, &pArg5);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"x0\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int x0 = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"y0\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int y0 = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"x1\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int x1 = PyLong_AsLong(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"y1\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int y1 = PyLong_AsLong(pArg4);
 
 
     // pArg5
@@ -2566,8 +3314,9 @@ TODO for const Unigine::Ptr<Unigine::EngineWindowViewport> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getProjectionFromWindow(x0, y0, x1, y1, window);
+                retOriginal = unigine_object_ptr->getProjectionFromWindow(x0, y0, x1, y1, window);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int x0;
             int y0;
@@ -2578,13 +3327,14 @@ TODO for const Unigine::Ptr<Unigine::EngineWindowViewport> &
             Unigine::Math::mat4 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->x0 = x0;
     pRunner->y0 = y0;
     pRunner->x1 = x1;
     pRunner->y1 = y1;
     pRunner->window = window;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::mat4 retOriginal = pRunner->retOriginal;
@@ -2601,43 +3351,80 @@ static PyObject * unigine_Player_get_projection_from_screen(unigine_Player* self
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int x0;
-    PyObject *pArg2; // int y0;
-    PyObject *pArg3; // int x1;
-    PyObject *pArg4; // int y1;
-    PyObject *pArg5; // int screen_width;
-    PyObject *pArg6; // int screen_height;
+    PyObject *pArg1 = NULL; // int x0;
+    PyObject *pArg2 = NULL; // int y0;
+    PyObject *pArg3 = NULL; // int x1;
+    PyObject *pArg4 = NULL; // int y1;
+    PyObject *pArg5 = NULL; // int screen_width;
+    PyObject *pArg6 = NULL; // int screen_height;
     PyArg_ParseTuple(args, "OOOOOO", &pArg1, &pArg2, &pArg3, &pArg4, &pArg5, &pArg6);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"x0\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int x0 = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"y0\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int y0 = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"x1\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int x1 = PyLong_AsLong(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"y1\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int y1 = PyLong_AsLong(pArg4);
 
 
     // pArg5
-TODO for int
+    if (!PyLong_Check(pArg5)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"screen_width\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg5)->tp_name);
+        return NULL;
+    }
+    int screen_width = PyLong_AsLong(pArg5);
 
 
     // pArg6
-TODO for int
+    if (!PyLong_Check(pArg6)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"screen_height\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg6)->tp_name);
+        return NULL;
+    }
+    int screen_height = PyLong_AsLong(pArg6);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getProjectionFromScreen(x0, y0, x1, y1, screen_width, screen_height);
+                retOriginal = unigine_object_ptr->getProjectionFromScreen(x0, y0, x1, y1, screen_width, screen_height);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int x0;
             int y0;
@@ -2649,6 +3436,7 @@ TODO for int
             Unigine::Math::mat4 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->x0 = x0;
     pRunner->y0 = y0;
     pRunner->x1 = x1;
@@ -2656,7 +3444,7 @@ TODO for int
     pRunner->screen_width = screen_width;
     pRunner->screen_height = screen_height;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::mat4 retOriginal = pRunner->retOriginal;
@@ -2673,9 +3461,9 @@ static PyObject * unigine_Player_get_main_window_position(unigine_Player* self, 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int & x;
-    PyObject *pArg2; // int & y;
-    PyObject *pArg3; // const & point;
+    PyObject *pArg1 = NULL; // int & x;
+    PyObject *pArg2 = NULL; // int & y;
+    PyObject *pArg3 = NULL; // const & point;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -2693,8 +3481,9 @@ TODO for const &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getMainWindowPosition(x, y, point);
+                retOriginal = unigine_object_ptr->getMainWindowPosition(x, y, point);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int & x;
             int & y;
@@ -2703,11 +3492,12 @@ TODO for const &
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->x = x;
     pRunner->y = y;
     pRunner->point = point;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2724,10 +3514,10 @@ static PyObject * unigine_Player_get_window_position(unigine_Player* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int & x;
-    PyObject *pArg2; // int & y;
-    PyObject *pArg3; // const & point;
-    PyObject *pArg4; // const Unigine::Ptr<Unigine::EngineWindowViewport> & window;
+    PyObject *pArg1 = NULL; // int & x;
+    PyObject *pArg2 = NULL; // int & y;
+    PyObject *pArg3 = NULL; // const & point;
+    PyObject *pArg4 = NULL; // const Unigine::Ptr<Unigine::EngineWindowViewport> & window;
     PyArg_ParseTuple(args, "OOOO", &pArg1, &pArg2, &pArg3, &pArg4);
 
     // pArg1
@@ -2749,8 +3539,9 @@ TODO for const Unigine::Ptr<Unigine::EngineWindowViewport> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getWindowPosition(x, y, point, window);
+                retOriginal = unigine_object_ptr->getWindowPosition(x, y, point, window);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int & x;
             int & y;
@@ -2760,12 +3551,13 @@ TODO for const Unigine::Ptr<Unigine::EngineWindowViewport> &
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->x = x;
     pRunner->y = y;
     pRunner->point = point;
     pRunner->window = window;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2782,11 +3574,11 @@ static PyObject * unigine_Player_get_screen_position(unigine_Player* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int & x;
-    PyObject *pArg2; // int & y;
-    PyObject *pArg3; // const & point;
-    PyObject *pArg4; // int screen_width;
-    PyObject *pArg5; // int screen_height;
+    PyObject *pArg1 = NULL; // int & x;
+    PyObject *pArg2 = NULL; // int & y;
+    PyObject *pArg3 = NULL; // const & point;
+    PyObject *pArg4 = NULL; // int screen_width;
+    PyObject *pArg5 = NULL; // int screen_height;
     PyArg_ParseTuple(args, "OOOOO", &pArg1, &pArg2, &pArg3, &pArg4, &pArg5);
 
     // pArg1
@@ -2802,18 +3594,31 @@ TODO for const &
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"screen_width\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int screen_width = PyLong_AsLong(pArg4);
 
 
     // pArg5
-TODO for int
+    if (!PyLong_Check(pArg5)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"screen_height\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg5)->tp_name);
+        return NULL;
+    }
+    int screen_height = PyLong_AsLong(pArg5);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getScreenPosition(x, y, point, screen_width, screen_height);
+                retOriginal = unigine_object_ptr->getScreenPosition(x, y, point, screen_width, screen_height);
             };
+            Unigine::Player * unigine_object_ptr;
             // args
             int & x;
             int & y;
@@ -2824,13 +3629,14 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->x = x;
     pRunner->y = y;
     pRunner->point = point;
     pRunner->screen_width = screen_width;
     pRunner->screen_height = screen_height;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -3144,8 +3950,6 @@ static PyMethodDef unigine_Player_methods[] = {
 };
 
 static PyTypeObject unigine_PlayerType = {
-
-
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Player",             // tp_name
     sizeof(unigine_Player) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
@@ -3211,9 +4015,7 @@ bool Python3UniginePlayer::addClassDefinitionToModule(PyObject* pModule) {
 }
 
 PyObject * Player::NewObject(Unigine::Player * unigine_object_ptr) {
-
-    std::cout << "sizeof(unigine_Player) = " << sizeof(unigine_Player) << std::endl;
-
+    // std::cout << "sizeof(unigine_Player) = " << sizeof(unigine_Player) << std::endl;
     unigine_Player *pInst = PyObject_New(unigine_Player, &unigine_PlayerType);
     pInst->unigine_object_ptr = unigine_object_ptr;
     // Py_INCREF(pInst);
@@ -3222,7 +4024,7 @@ PyObject * Player::NewObject(Unigine::Player * unigine_object_ptr) {
 
 Unigine::Player * Player::Convert(PyObject *pObject) {
     if (Py_IS_TYPE(pObject, &unigine_PlayerType) == 0) {
-        // TODO error
+        Unigine::Log::error("Invalid type, expected 'Unigine::Player *', but got some another");
     }
     unigine_Player *pInst = (unigine_Player *)pObject;
     return pInst->unigine_object_ptr;

@@ -46,15 +46,14 @@ static PyObject * unigine_AssetManager_is_initialized(unigine_AssetManager* self
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::isInitialized();
+                retOriginal = UnigineEditor::AssetManager::isInitialized();
             };
-            // args
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -71,16 +70,15 @@ static PyObject * unigine_AssetManager_get_asset_guid_from_path(unigine_AssetMan
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg1 = NULL; // const char * asset_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
@@ -88,7 +86,7 @@ static PyObject * unigine_AssetManager_get_asset_guid_from_path(unigine_AssetMan
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::getAssetGUIDFromPath(asset_path);
+                retOriginal = UnigineEditor::AssetManager::getAssetGUIDFromPath(asset_path);
             };
             // args
             const char * asset_path;
@@ -98,7 +96,7 @@ static PyObject * unigine_AssetManager_get_asset_guid_from_path(unigine_AssetMan
     auto *pRunner = new LocalRunner();
     pRunner->asset_path = asset_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::UGUID retOriginal = pRunner->retOriginal;
@@ -115,7 +113,7 @@ static PyObject * unigine_AssetManager_get_asset_path_from_guid(unigine_AssetMan
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::UGUID & asset_guid;
+    PyObject *pArg1 = NULL; // const Unigine::UGUID & asset_guid;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -125,7 +123,7 @@ TODO for const Unigine::UGUID &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::getAssetPathFromGUID(asset_guid);
+                retOriginal = UnigineEditor::AssetManager::getAssetPathFromGUID(asset_guid);
             };
             // args
             const Unigine::UGUID & asset_guid;
@@ -135,7 +133,7 @@ TODO for const Unigine::UGUID &
     auto *pRunner = new LocalRunner();
     pRunner->asset_guid = asset_guid;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::String retOriginal = pRunner->retOriginal;
@@ -152,17 +150,16 @@ static PyObject * unigine_AssetManager_import_asset_sync(unigine_AssetManager* s
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
-    PyObject *pArg2; // const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
+    PyObject *pArg1 = NULL; // const char * asset_path;
+    PyObject *pArg2 = NULL; // const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
@@ -174,7 +171,7 @@ TODO for const Unigine::Ptr<UnigineEditor::Collection> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::importAssetSync(asset_path, import_parameters);
+                retOriginal = UnigineEditor::AssetManager::importAssetSync(asset_path, import_parameters);
             };
             // args
             const char * asset_path;
@@ -186,7 +183,7 @@ TODO for const Unigine::Ptr<UnigineEditor::Collection> &
     pRunner->asset_path = asset_path;
     pRunner->import_parameters = import_parameters;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -203,17 +200,16 @@ static PyObject * unigine_AssetManager_import_asset_async(unigine_AssetManager* 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
-    PyObject *pArg2; // const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
+    PyObject *pArg1 = NULL; // const char * asset_path;
+    PyObject *pArg2 = NULL; // const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
@@ -225,7 +221,7 @@ TODO for const Unigine::Ptr<UnigineEditor::Collection> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::importAssetAsync(asset_path, import_parameters);
+                retOriginal = UnigineEditor::AssetManager::importAssetAsync(asset_path, import_parameters);
             };
             // args
             const char * asset_path;
@@ -237,7 +233,7 @@ TODO for const Unigine::Ptr<UnigineEditor::Collection> &
     pRunner->asset_path = asset_path;
     pRunner->import_parameters = import_parameters;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -254,17 +250,16 @@ static PyObject * unigine_AssetManager_reimport_asset_sync(unigine_AssetManager*
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
-    PyObject *pArg2; // const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
+    PyObject *pArg1 = NULL; // const char * asset_path;
+    PyObject *pArg2 = NULL; // const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
@@ -276,7 +271,7 @@ TODO for const Unigine::Ptr<UnigineEditor::Collection> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::reimportAssetSync(asset_path, import_parameters);
+                retOriginal = UnigineEditor::AssetManager::reimportAssetSync(asset_path, import_parameters);
             };
             // args
             const char * asset_path;
@@ -288,7 +283,7 @@ TODO for const Unigine::Ptr<UnigineEditor::Collection> &
     pRunner->asset_path = asset_path;
     pRunner->import_parameters = import_parameters;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -305,17 +300,16 @@ static PyObject * unigine_AssetManager_reimport_asset_async(unigine_AssetManager
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
-    PyObject *pArg2; // const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
+    PyObject *pArg1 = NULL; // const char * asset_path;
+    PyObject *pArg2 = NULL; // const Unigine::Ptr<UnigineEditor::Collection> & import_parameters;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
@@ -327,7 +321,7 @@ TODO for const Unigine::Ptr<UnigineEditor::Collection> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::reimportAssetAsync(asset_path, import_parameters);
+                retOriginal = UnigineEditor::AssetManager::reimportAssetAsync(asset_path, import_parameters);
             };
             // args
             const char * asset_path;
@@ -339,7 +333,7 @@ TODO for const Unigine::Ptr<UnigineEditor::Collection> &
     pRunner->asset_path = asset_path;
     pRunner->import_parameters = import_parameters;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -356,16 +350,15 @@ static PyObject * unigine_AssetManager_remove_asset_sync(unigine_AssetManager* s
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg1 = NULL; // const char * asset_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
@@ -373,7 +366,7 @@ static PyObject * unigine_AssetManager_remove_asset_sync(unigine_AssetManager* s
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::removeAssetSync(asset_path);
+                retOriginal = UnigineEditor::AssetManager::removeAssetSync(asset_path);
             };
             // args
             const char * asset_path;
@@ -383,7 +376,7 @@ static PyObject * unigine_AssetManager_remove_asset_sync(unigine_AssetManager* s
     auto *pRunner = new LocalRunner();
     pRunner->asset_path = asset_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -400,16 +393,15 @@ static PyObject * unigine_AssetManager_remove_asset_async(unigine_AssetManager* 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg1 = NULL; // const char * asset_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
@@ -417,7 +409,7 @@ static PyObject * unigine_AssetManager_remove_asset_async(unigine_AssetManager* 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::removeAssetAsync(asset_path);
+                retOriginal = UnigineEditor::AssetManager::removeAssetAsync(asset_path);
             };
             // args
             const char * asset_path;
@@ -427,7 +419,7 @@ static PyObject * unigine_AssetManager_remove_asset_async(unigine_AssetManager* 
     auto *pRunner = new LocalRunner();
     pRunner->asset_path = asset_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -444,28 +436,26 @@ static PyObject * unigine_AssetManager_move_asset_sync(unigine_AssetManager* sel
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * old_asset_path;
-    PyObject *pArg2; // const char * new_asset_path;
+    PyObject *pArg1 = NULL; // const char * old_asset_path;
+    PyObject *pArg2 = NULL; // const char * new_asset_path;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"old_asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * old_asset_path = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"new_asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * new_asset_path = PyUnicode_AsUTF8(pArg2);
 
@@ -473,7 +463,7 @@ static PyObject * unigine_AssetManager_move_asset_sync(unigine_AssetManager* sel
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::moveAssetSync(old_asset_path, new_asset_path);
+                retOriginal = UnigineEditor::AssetManager::moveAssetSync(old_asset_path, new_asset_path);
             };
             // args
             const char * old_asset_path;
@@ -485,7 +475,7 @@ static PyObject * unigine_AssetManager_move_asset_sync(unigine_AssetManager* sel
     pRunner->old_asset_path = old_asset_path;
     pRunner->new_asset_path = new_asset_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -502,28 +492,26 @@ static PyObject * unigine_AssetManager_move_asset_async(unigine_AssetManager* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * old_asset_path;
-    PyObject *pArg2; // const char * new_asset_path;
+    PyObject *pArg1 = NULL; // const char * old_asset_path;
+    PyObject *pArg2 = NULL; // const char * new_asset_path;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"old_asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * old_asset_path = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"new_asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * new_asset_path = PyUnicode_AsUTF8(pArg2);
 
@@ -531,7 +519,7 @@ static PyObject * unigine_AssetManager_move_asset_async(unigine_AssetManager* se
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::moveAssetAsync(old_asset_path, new_asset_path);
+                retOriginal = UnigineEditor::AssetManager::moveAssetAsync(old_asset_path, new_asset_path);
             };
             // args
             const char * old_asset_path;
@@ -543,7 +531,7 @@ static PyObject * unigine_AssetManager_move_asset_async(unigine_AssetManager* se
     pRunner->old_asset_path = old_asset_path;
     pRunner->new_asset_path = new_asset_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -560,28 +548,26 @@ static PyObject * unigine_AssetManager_rename_asset_sync(unigine_AssetManager* s
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
-    PyObject *pArg2; // const char * new_asset_name;
+    PyObject *pArg1 = NULL; // const char * asset_path;
+    PyObject *pArg2 = NULL; // const char * new_asset_name;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"new_asset_name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * new_asset_name = PyUnicode_AsUTF8(pArg2);
 
@@ -589,7 +575,7 @@ static PyObject * unigine_AssetManager_rename_asset_sync(unigine_AssetManager* s
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::renameAssetSync(asset_path, new_asset_name);
+                retOriginal = UnigineEditor::AssetManager::renameAssetSync(asset_path, new_asset_name);
             };
             // args
             const char * asset_path;
@@ -601,7 +587,7 @@ static PyObject * unigine_AssetManager_rename_asset_sync(unigine_AssetManager* s
     pRunner->asset_path = asset_path;
     pRunner->new_asset_name = new_asset_name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -618,28 +604,26 @@ static PyObject * unigine_AssetManager_rename_asset_async(unigine_AssetManager* 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
-    PyObject *pArg2; // const char * new_asset_name;
+    PyObject *pArg1 = NULL; // const char * asset_path;
+    PyObject *pArg2 = NULL; // const char * new_asset_name;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"new_asset_name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * new_asset_name = PyUnicode_AsUTF8(pArg2);
 
@@ -647,7 +631,7 @@ static PyObject * unigine_AssetManager_rename_asset_async(unigine_AssetManager* 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::renameAssetAsync(asset_path, new_asset_name);
+                retOriginal = UnigineEditor::AssetManager::renameAssetAsync(asset_path, new_asset_name);
             };
             // args
             const char * asset_path;
@@ -659,7 +643,7 @@ static PyObject * unigine_AssetManager_rename_asset_async(unigine_AssetManager* 
     pRunner->asset_path = asset_path;
     pRunner->new_asset_name = new_asset_name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -676,28 +660,26 @@ static PyObject * unigine_AssetManager_copy_asset_sync(unigine_AssetManager* sel
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
-    PyObject *pArg2; // const char * new_asset_path;
+    PyObject *pArg1 = NULL; // const char * asset_path;
+    PyObject *pArg2 = NULL; // const char * new_asset_path;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"new_asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * new_asset_path = PyUnicode_AsUTF8(pArg2);
 
@@ -705,7 +687,7 @@ static PyObject * unigine_AssetManager_copy_asset_sync(unigine_AssetManager* sel
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::copyAssetSync(asset_path, new_asset_path);
+                retOriginal = UnigineEditor::AssetManager::copyAssetSync(asset_path, new_asset_path);
             };
             // args
             const char * asset_path;
@@ -717,7 +699,7 @@ static PyObject * unigine_AssetManager_copy_asset_sync(unigine_AssetManager* sel
     pRunner->asset_path = asset_path;
     pRunner->new_asset_path = new_asset_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -734,28 +716,26 @@ static PyObject * unigine_AssetManager_copy_asset_async(unigine_AssetManager* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
-    PyObject *pArg2; // const char * new_asset_path;
+    PyObject *pArg1 = NULL; // const char * asset_path;
+    PyObject *pArg2 = NULL; // const char * new_asset_path;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"new_asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * new_asset_path = PyUnicode_AsUTF8(pArg2);
 
@@ -763,7 +743,7 @@ static PyObject * unigine_AssetManager_copy_asset_async(unigine_AssetManager* se
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::copyAssetAsync(asset_path, new_asset_path);
+                retOriginal = UnigineEditor::AssetManager::copyAssetAsync(asset_path, new_asset_path);
             };
             // args
             const char * asset_path;
@@ -775,7 +755,7 @@ static PyObject * unigine_AssetManager_copy_asset_async(unigine_AssetManager* se
     pRunner->asset_path = asset_path;
     pRunner->new_asset_path = new_asset_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -792,16 +772,15 @@ static PyObject * unigine_AssetManager_is_asset(unigine_AssetManager* self_stati
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg1 = NULL; // const char * asset_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
@@ -809,7 +788,7 @@ static PyObject * unigine_AssetManager_is_asset(unigine_AssetManager* self_stati
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::isAsset(asset_path);
+                retOriginal = UnigineEditor::AssetManager::isAsset(asset_path);
             };
             // args
             const char * asset_path;
@@ -819,7 +798,7 @@ static PyObject * unigine_AssetManager_is_asset(unigine_AssetManager* self_stati
     auto *pRunner = new LocalRunner();
     pRunner->asset_path = asset_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -836,16 +815,15 @@ static PyObject * unigine_AssetManager_get_asset_import_parameters(unigine_Asset
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg1 = NULL; // const char * asset_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
@@ -853,7 +831,7 @@ static PyObject * unigine_AssetManager_get_asset_import_parameters(unigine_Asset
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::getAssetImportParameters(asset_path);
+                retOriginal = UnigineEditor::AssetManager::getAssetImportParameters(asset_path);
             };
             // args
             const char * asset_path;
@@ -863,7 +841,7 @@ static PyObject * unigine_AssetManager_get_asset_import_parameters(unigine_Asset
     auto *pRunner = new LocalRunner();
     pRunner->asset_path = asset_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<UnigineEditor::Collection> retOriginal = pRunner->retOriginal;
@@ -885,16 +863,15 @@ static PyObject * unigine_AssetManager_is_asset_writable(unigine_AssetManager* s
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg1 = NULL; // const char * asset_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
@@ -902,7 +879,7 @@ static PyObject * unigine_AssetManager_is_asset_writable(unigine_AssetManager* s
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::isAssetWritable(asset_path);
+                retOriginal = UnigineEditor::AssetManager::isAssetWritable(asset_path);
             };
             // args
             const char * asset_path;
@@ -912,7 +889,7 @@ static PyObject * unigine_AssetManager_is_asset_writable(unigine_AssetManager* s
     auto *pRunner = new LocalRunner();
     pRunner->asset_path = asset_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -933,15 +910,14 @@ static PyObject * unigine_AssetManager_get_asset_gui_ds(unigine_AssetManager* se
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::getAssetGUIDs();
+                retOriginal = UnigineEditor::AssetManager::getAssetGUIDs();
             };
-            // args
             // return
             Unigine::Vector<Unigine::UGUID> retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::UGUID> retOriginal = pRunner->retOriginal;
@@ -958,7 +934,7 @@ static PyObject * unigine_AssetManager_get_asset_gui_ds(unigine_AssetManager* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // Unigine::Vector<Unigine::UGUID> & asset_guids;
+    PyObject *pArg1 = NULL; // Unigine::Vector<Unigine::UGUID> & asset_guids;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -968,7 +944,7 @@ TODO for Unigine::Vector<Unigine::UGUID> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::AssetManager::getAssetGUIDs(asset_guids);
+                UnigineEditor::AssetManager::getAssetGUIDs(asset_guids);
             };
             // args
             Unigine::Vector<Unigine::UGUID> & asset_guids;
@@ -976,12 +952,21 @@ TODO for Unigine::Vector<Unigine::UGUID> &
     auto *pRunner = new LocalRunner();
     pRunner->asset_guids = asset_guids;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -997,15 +982,14 @@ static PyObject * unigine_AssetManager_get_asset_paths(unigine_AssetManager* sel
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::getAssetPaths();
+                retOriginal = UnigineEditor::AssetManager::getAssetPaths();
             };
-            // args
             // return
             Unigine::Vector<Unigine::String> retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::String> retOriginal = pRunner->retOriginal;
@@ -1022,7 +1006,7 @@ static PyObject * unigine_AssetManager_get_asset_paths(unigine_AssetManager* sel
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // Unigine::Vector<Unigine::String> & asset_paths;
+    PyObject *pArg1 = NULL; // Unigine::Vector<Unigine::String> & asset_paths;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1032,7 +1016,7 @@ TODO for Unigine::Vector<Unigine::String> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::AssetManager::getAssetPaths(asset_paths);
+                UnigineEditor::AssetManager::getAssetPaths(asset_paths);
             };
             // args
             Unigine::Vector<Unigine::String> & asset_paths;
@@ -1040,12 +1024,21 @@ TODO for Unigine::Vector<Unigine::String> &
     auto *pRunner = new LocalRunner();
     pRunner->asset_paths = asset_paths;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1057,16 +1050,15 @@ static PyObject * unigine_AssetManager_get_asset_gui_ds_for_directory(unigine_As
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -1074,7 +1066,7 @@ static PyObject * unigine_AssetManager_get_asset_gui_ds_for_directory(unigine_As
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::getAssetGUIDsForDirectory(directory_path);
+                retOriginal = UnigineEditor::AssetManager::getAssetGUIDsForDirectory(directory_path);
             };
             // args
             const char * directory_path;
@@ -1084,7 +1076,7 @@ static PyObject * unigine_AssetManager_get_asset_gui_ds_for_directory(unigine_As
     auto *pRunner = new LocalRunner();
     pRunner->directory_path = directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::UGUID> retOriginal = pRunner->retOriginal;
@@ -1101,17 +1093,16 @@ static PyObject * unigine_AssetManager_get_asset_gui_ds_for_directory(unigine_As
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
-    PyObject *pArg2; // Unigine::Vector<Unigine::UGUID> & asset_guids;
+    PyObject *pArg1 = NULL; // const char * directory_path;
+    PyObject *pArg2 = NULL; // Unigine::Vector<Unigine::UGUID> & asset_guids;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -1123,7 +1114,7 @@ TODO for Unigine::Vector<Unigine::UGUID> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::AssetManager::getAssetGUIDsForDirectory(directory_path, asset_guids);
+                UnigineEditor::AssetManager::getAssetGUIDsForDirectory(directory_path, asset_guids);
             };
             // args
             const char * directory_path;
@@ -1133,12 +1124,21 @@ TODO for Unigine::Vector<Unigine::UGUID> &
     pRunner->directory_path = directory_path;
     pRunner->asset_guids = asset_guids;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1150,16 +1150,15 @@ static PyObject * unigine_AssetManager_get_asset_paths_for_directory(unigine_Ass
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -1167,7 +1166,7 @@ static PyObject * unigine_AssetManager_get_asset_paths_for_directory(unigine_Ass
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::getAssetPathsForDirectory(directory_path);
+                retOriginal = UnigineEditor::AssetManager::getAssetPathsForDirectory(directory_path);
             };
             // args
             const char * directory_path;
@@ -1177,7 +1176,7 @@ static PyObject * unigine_AssetManager_get_asset_paths_for_directory(unigine_Ass
     auto *pRunner = new LocalRunner();
     pRunner->directory_path = directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::String> retOriginal = pRunner->retOriginal;
@@ -1194,17 +1193,16 @@ static PyObject * unigine_AssetManager_get_asset_paths_for_directory(unigine_Ass
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
-    PyObject *pArg2; // Unigine::Vector<Unigine::String> & asset_paths;
+    PyObject *pArg1 = NULL; // const char * directory_path;
+    PyObject *pArg2 = NULL; // Unigine::Vector<Unigine::String> & asset_paths;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -1216,7 +1214,7 @@ TODO for Unigine::Vector<Unigine::String> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::AssetManager::getAssetPathsForDirectory(directory_path, asset_paths);
+                UnigineEditor::AssetManager::getAssetPathsForDirectory(directory_path, asset_paths);
             };
             // args
             const char * directory_path;
@@ -1226,12 +1224,21 @@ TODO for Unigine::Vector<Unigine::String> &
     pRunner->directory_path = directory_path;
     pRunner->asset_paths = asset_paths;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1243,16 +1250,15 @@ static PyObject * unigine_AssetManager_get_runtime_gui_ds(unigine_AssetManager* 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
+    PyObject *pArg1 = NULL; // const char * asset_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
@@ -1260,7 +1266,7 @@ static PyObject * unigine_AssetManager_get_runtime_gui_ds(unigine_AssetManager* 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::getRuntimeGUIDs(asset_path);
+                retOriginal = UnigineEditor::AssetManager::getRuntimeGUIDs(asset_path);
             };
             // args
             const char * asset_path;
@@ -1270,7 +1276,7 @@ static PyObject * unigine_AssetManager_get_runtime_gui_ds(unigine_AssetManager* 
     auto *pRunner = new LocalRunner();
     pRunner->asset_path = asset_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::UGUID> retOriginal = pRunner->retOriginal;
@@ -1287,17 +1293,16 @@ static PyObject * unigine_AssetManager_get_runtime_gui_ds(unigine_AssetManager* 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * asset_path;
-    PyObject *pArg2; // Unigine::Vector<Unigine::UGUID> & runtime_guids;
+    PyObject *pArg1 = NULL; // const char * asset_path;
+    PyObject *pArg2 = NULL; // Unigine::Vector<Unigine::UGUID> & runtime_guids;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"asset_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * asset_path = PyUnicode_AsUTF8(pArg1);
 
@@ -1309,7 +1314,7 @@ TODO for Unigine::Vector<Unigine::UGUID> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::AssetManager::getRuntimeGUIDs(asset_path, runtime_guids);
+                UnigineEditor::AssetManager::getRuntimeGUIDs(asset_path, runtime_guids);
             };
             // args
             const char * asset_path;
@@ -1319,12 +1324,21 @@ TODO for Unigine::Vector<Unigine::UGUID> &
     pRunner->asset_path = asset_path;
     pRunner->runtime_guids = runtime_guids;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1336,7 +1350,7 @@ static PyObject * unigine_AssetManager_get_runtime_alias(unigine_AssetManager* s
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::UGUID & runtime_guid;
+    PyObject *pArg1 = NULL; // const Unigine::UGUID & runtime_guid;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1346,7 +1360,7 @@ TODO for const Unigine::UGUID &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::getRuntimeAlias(runtime_guid);
+                retOriginal = UnigineEditor::AssetManager::getRuntimeAlias(runtime_guid);
             };
             // args
             const Unigine::UGUID & runtime_guid;
@@ -1356,7 +1370,7 @@ TODO for const Unigine::UGUID &
     auto *pRunner = new LocalRunner();
     pRunner->runtime_guid = runtime_guid;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::String retOriginal = pRunner->retOriginal;
@@ -1373,7 +1387,7 @@ static PyObject * unigine_AssetManager_is_runtime_primary(unigine_AssetManager* 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::UGUID & runtime_guid;
+    PyObject *pArg1 = NULL; // const Unigine::UGUID & runtime_guid;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1383,7 +1397,7 @@ TODO for const Unigine::UGUID &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::isRuntimePrimary(runtime_guid);
+                retOriginal = UnigineEditor::AssetManager::isRuntimePrimary(runtime_guid);
             };
             // args
             const Unigine::UGUID & runtime_guid;
@@ -1393,7 +1407,7 @@ TODO for const Unigine::UGUID &
     auto *pRunner = new LocalRunner();
     pRunner->runtime_guid = runtime_guid;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1410,16 +1424,15 @@ static PyObject * unigine_AssetManager_create_directory(unigine_AssetManager* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -1427,7 +1440,7 @@ static PyObject * unigine_AssetManager_create_directory(unigine_AssetManager* se
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::createDirectory(directory_path);
+                retOriginal = UnigineEditor::AssetManager::createDirectory(directory_path);
             };
             // args
             const char * directory_path;
@@ -1437,7 +1450,7 @@ static PyObject * unigine_AssetManager_create_directory(unigine_AssetManager* se
     auto *pRunner = new LocalRunner();
     pRunner->directory_path = directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1454,16 +1467,15 @@ static PyObject * unigine_AssetManager_remove_directory_sync(unigine_AssetManage
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -1471,7 +1483,7 @@ static PyObject * unigine_AssetManager_remove_directory_sync(unigine_AssetManage
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::removeDirectorySync(directory_path);
+                retOriginal = UnigineEditor::AssetManager::removeDirectorySync(directory_path);
             };
             // args
             const char * directory_path;
@@ -1481,7 +1493,7 @@ static PyObject * unigine_AssetManager_remove_directory_sync(unigine_AssetManage
     auto *pRunner = new LocalRunner();
     pRunner->directory_path = directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1498,16 +1510,15 @@ static PyObject * unigine_AssetManager_remove_directory_async(unigine_AssetManag
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -1515,7 +1526,7 @@ static PyObject * unigine_AssetManager_remove_directory_async(unigine_AssetManag
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::removeDirectoryAsync(directory_path);
+                retOriginal = UnigineEditor::AssetManager::removeDirectoryAsync(directory_path);
             };
             // args
             const char * directory_path;
@@ -1525,7 +1536,7 @@ static PyObject * unigine_AssetManager_remove_directory_async(unigine_AssetManag
     auto *pRunner = new LocalRunner();
     pRunner->directory_path = directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1542,28 +1553,26 @@ static PyObject * unigine_AssetManager_move_directory_sync(unigine_AssetManager*
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * old_directory_path;
-    PyObject *pArg2; // const char * new_directory_path;
+    PyObject *pArg1 = NULL; // const char * old_directory_path;
+    PyObject *pArg2 = NULL; // const char * new_directory_path;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"old_directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * old_directory_path = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"new_directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * new_directory_path = PyUnicode_AsUTF8(pArg2);
 
@@ -1571,7 +1580,7 @@ static PyObject * unigine_AssetManager_move_directory_sync(unigine_AssetManager*
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::moveDirectorySync(old_directory_path, new_directory_path);
+                retOriginal = UnigineEditor::AssetManager::moveDirectorySync(old_directory_path, new_directory_path);
             };
             // args
             const char * old_directory_path;
@@ -1583,7 +1592,7 @@ static PyObject * unigine_AssetManager_move_directory_sync(unigine_AssetManager*
     pRunner->old_directory_path = old_directory_path;
     pRunner->new_directory_path = new_directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1600,28 +1609,26 @@ static PyObject * unigine_AssetManager_move_directory_async(unigine_AssetManager
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * old_directory_path;
-    PyObject *pArg2; // const char * new_directory_path;
+    PyObject *pArg1 = NULL; // const char * old_directory_path;
+    PyObject *pArg2 = NULL; // const char * new_directory_path;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"old_directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * old_directory_path = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"new_directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * new_directory_path = PyUnicode_AsUTF8(pArg2);
 
@@ -1629,7 +1636,7 @@ static PyObject * unigine_AssetManager_move_directory_async(unigine_AssetManager
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::moveDirectoryAsync(old_directory_path, new_directory_path);
+                retOriginal = UnigineEditor::AssetManager::moveDirectoryAsync(old_directory_path, new_directory_path);
             };
             // args
             const char * old_directory_path;
@@ -1641,7 +1648,7 @@ static PyObject * unigine_AssetManager_move_directory_async(unigine_AssetManager
     pRunner->old_directory_path = old_directory_path;
     pRunner->new_directory_path = new_directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1658,28 +1665,26 @@ static PyObject * unigine_AssetManager_rename_directory_sync(unigine_AssetManage
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
-    PyObject *pArg2; // const char * new_directory_name;
+    PyObject *pArg1 = NULL; // const char * directory_path;
+    PyObject *pArg2 = NULL; // const char * new_directory_name;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"new_directory_name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * new_directory_name = PyUnicode_AsUTF8(pArg2);
 
@@ -1687,7 +1692,7 @@ static PyObject * unigine_AssetManager_rename_directory_sync(unigine_AssetManage
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::renameDirectorySync(directory_path, new_directory_name);
+                retOriginal = UnigineEditor::AssetManager::renameDirectorySync(directory_path, new_directory_name);
             };
             // args
             const char * directory_path;
@@ -1699,7 +1704,7 @@ static PyObject * unigine_AssetManager_rename_directory_sync(unigine_AssetManage
     pRunner->directory_path = directory_path;
     pRunner->new_directory_name = new_directory_name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1716,28 +1721,26 @@ static PyObject * unigine_AssetManager_rename_directory_async(unigine_AssetManag
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
-    PyObject *pArg2; // const char * new_directory_name;
+    PyObject *pArg1 = NULL; // const char * directory_path;
+    PyObject *pArg2 = NULL; // const char * new_directory_name;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"new_directory_name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * new_directory_name = PyUnicode_AsUTF8(pArg2);
 
@@ -1745,7 +1748,7 @@ static PyObject * unigine_AssetManager_rename_directory_async(unigine_AssetManag
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::renameDirectoryAsync(directory_path, new_directory_name);
+                retOriginal = UnigineEditor::AssetManager::renameDirectoryAsync(directory_path, new_directory_name);
             };
             // args
             const char * directory_path;
@@ -1757,7 +1760,7 @@ static PyObject * unigine_AssetManager_rename_directory_async(unigine_AssetManag
     pRunner->directory_path = directory_path;
     pRunner->new_directory_name = new_directory_name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1774,28 +1777,26 @@ static PyObject * unigine_AssetManager_copy_directory_sync(unigine_AssetManager*
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
-    PyObject *pArg2; // const char * new_directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
+    PyObject *pArg2 = NULL; // const char * new_directory_path;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"new_directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * new_directory_path = PyUnicode_AsUTF8(pArg2);
 
@@ -1803,7 +1804,7 @@ static PyObject * unigine_AssetManager_copy_directory_sync(unigine_AssetManager*
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::copyDirectorySync(directory_path, new_directory_path);
+                retOriginal = UnigineEditor::AssetManager::copyDirectorySync(directory_path, new_directory_path);
             };
             // args
             const char * directory_path;
@@ -1815,7 +1816,7 @@ static PyObject * unigine_AssetManager_copy_directory_sync(unigine_AssetManager*
     pRunner->directory_path = directory_path;
     pRunner->new_directory_path = new_directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1832,28 +1833,26 @@ static PyObject * unigine_AssetManager_copy_directory_async(unigine_AssetManager
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
-    PyObject *pArg2; // const char * new_directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
+    PyObject *pArg2 = NULL; // const char * new_directory_path;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"new_directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * new_directory_path = PyUnicode_AsUTF8(pArg2);
 
@@ -1861,7 +1860,7 @@ static PyObject * unigine_AssetManager_copy_directory_async(unigine_AssetManager
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::copyDirectoryAsync(directory_path, new_directory_path);
+                retOriginal = UnigineEditor::AssetManager::copyDirectoryAsync(directory_path, new_directory_path);
             };
             // args
             const char * directory_path;
@@ -1873,7 +1872,7 @@ static PyObject * unigine_AssetManager_copy_directory_async(unigine_AssetManager
     pRunner->directory_path = directory_path;
     pRunner->new_directory_path = new_directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1890,16 +1889,15 @@ static PyObject * unigine_AssetManager_is_directory(unigine_AssetManager* self_s
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -1907,7 +1905,7 @@ static PyObject * unigine_AssetManager_is_directory(unigine_AssetManager* self_s
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::isDirectory(directory_path);
+                retOriginal = UnigineEditor::AssetManager::isDirectory(directory_path);
             };
             // args
             const char * directory_path;
@@ -1917,7 +1915,7 @@ static PyObject * unigine_AssetManager_is_directory(unigine_AssetManager* self_s
     auto *pRunner = new LocalRunner();
     pRunner->directory_path = directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1934,16 +1932,15 @@ static PyObject * unigine_AssetManager_is_directory_writable(unigine_AssetManage
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -1951,7 +1948,7 @@ static PyObject * unigine_AssetManager_is_directory_writable(unigine_AssetManage
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::isDirectoryWritable(directory_path);
+                retOriginal = UnigineEditor::AssetManager::isDirectoryWritable(directory_path);
             };
             // args
             const char * directory_path;
@@ -1961,7 +1958,7 @@ static PyObject * unigine_AssetManager_is_directory_writable(unigine_AssetManage
     auto *pRunner = new LocalRunner();
     pRunner->directory_path = directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -1982,15 +1979,14 @@ static PyObject * unigine_AssetManager_get_directory_paths_all(unigine_AssetMana
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::getDirectoryPathsAll();
+                retOriginal = UnigineEditor::AssetManager::getDirectoryPathsAll();
             };
-            // args
             // return
             Unigine::Vector<Unigine::String> retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::String> retOriginal = pRunner->retOriginal;
@@ -2007,7 +2003,7 @@ static PyObject * unigine_AssetManager_get_directory_paths_all(unigine_AssetMana
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // Unigine::Vector<Unigine::String> & directory_paths;
+    PyObject *pArg1 = NULL; // Unigine::Vector<Unigine::String> & directory_paths;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -2017,7 +2013,7 @@ TODO for Unigine::Vector<Unigine::String> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::AssetManager::getDirectoryPathsAll(directory_paths);
+                UnigineEditor::AssetManager::getDirectoryPathsAll(directory_paths);
             };
             // args
             Unigine::Vector<Unigine::String> & directory_paths;
@@ -2025,12 +2021,21 @@ TODO for Unigine::Vector<Unigine::String> &
     auto *pRunner = new LocalRunner();
     pRunner->directory_paths = directory_paths;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2042,16 +2047,15 @@ static PyObject * unigine_AssetManager_get_directory_paths(unigine_AssetManager*
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -2059,7 +2063,7 @@ static PyObject * unigine_AssetManager_get_directory_paths(unigine_AssetManager*
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::getDirectoryPaths(directory_path);
+                retOriginal = UnigineEditor::AssetManager::getDirectoryPaths(directory_path);
             };
             // args
             const char * directory_path;
@@ -2069,7 +2073,7 @@ static PyObject * unigine_AssetManager_get_directory_paths(unigine_AssetManager*
     auto *pRunner = new LocalRunner();
     pRunner->directory_path = directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::String> retOriginal = pRunner->retOriginal;
@@ -2086,17 +2090,16 @@ static PyObject * unigine_AssetManager_get_directory_paths(unigine_AssetManager*
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
-    PyObject *pArg2; // Unigine::Vector<Unigine::String> & directory_paths;
+    PyObject *pArg1 = NULL; // const char * directory_path;
+    PyObject *pArg2 = NULL; // Unigine::Vector<Unigine::String> & directory_paths;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -2108,7 +2111,7 @@ TODO for Unigine::Vector<Unigine::String> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::AssetManager::getDirectoryPaths(directory_path, directory_paths);
+                UnigineEditor::AssetManager::getDirectoryPaths(directory_path, directory_paths);
             };
             // args
             const char * directory_path;
@@ -2118,12 +2121,21 @@ TODO for Unigine::Vector<Unigine::String> &
     pRunner->directory_path = directory_path;
     pRunner->directory_paths = directory_paths;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2135,17 +2147,16 @@ static PyObject * unigine_AssetManager_create_mount_point(unigine_AssetManager* 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
-    PyObject *pArg2; // const Unigine::Ptr<UnigineEditor::MountPointParameters> & mount_creation_parameters;
+    PyObject *pArg1 = NULL; // const char * directory_path;
+    PyObject *pArg2 = NULL; // const Unigine::Ptr<UnigineEditor::MountPointParameters> & mount_creation_parameters;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -2157,7 +2168,7 @@ TODO for const Unigine::Ptr<UnigineEditor::MountPointParameters> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::createMountPoint(directory_path, mount_creation_parameters);
+                retOriginal = UnigineEditor::AssetManager::createMountPoint(directory_path, mount_creation_parameters);
             };
             // args
             const char * directory_path;
@@ -2169,7 +2180,7 @@ TODO for const Unigine::Ptr<UnigineEditor::MountPointParameters> &
     pRunner->directory_path = directory_path;
     pRunner->mount_creation_parameters = mount_creation_parameters;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -2186,16 +2197,15 @@ static PyObject * unigine_AssetManager_remove_mount_point(unigine_AssetManager* 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -2203,7 +2213,7 @@ static PyObject * unigine_AssetManager_remove_mount_point(unigine_AssetManager* 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::removeMountPoint(directory_path);
+                retOriginal = UnigineEditor::AssetManager::removeMountPoint(directory_path);
             };
             // args
             const char * directory_path;
@@ -2213,7 +2223,7 @@ static PyObject * unigine_AssetManager_remove_mount_point(unigine_AssetManager* 
     auto *pRunner = new LocalRunner();
     pRunner->directory_path = directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -2230,16 +2240,15 @@ static PyObject * unigine_AssetManager_is_mount_point(unigine_AssetManager* self
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -2247,7 +2256,7 @@ static PyObject * unigine_AssetManager_is_mount_point(unigine_AssetManager* self
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::isMountPoint(directory_path);
+                retOriginal = UnigineEditor::AssetManager::isMountPoint(directory_path);
             };
             // args
             const char * directory_path;
@@ -2257,7 +2266,7 @@ static PyObject * unigine_AssetManager_is_mount_point(unigine_AssetManager* self
     auto *pRunner = new LocalRunner();
     pRunner->directory_path = directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -2274,16 +2283,15 @@ static PyObject * unigine_AssetManager_get_mount_point_parameters(unigine_AssetM
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -2291,7 +2299,7 @@ static PyObject * unigine_AssetManager_get_mount_point_parameters(unigine_AssetM
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::getMountPointParameters(directory_path);
+                retOriginal = UnigineEditor::AssetManager::getMountPointParameters(directory_path);
             };
             // args
             const char * directory_path;
@@ -2301,7 +2309,7 @@ static PyObject * unigine_AssetManager_get_mount_point_parameters(unigine_AssetM
     auto *pRunner = new LocalRunner();
     pRunner->directory_path = directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<UnigineEditor::MountPointParameters> retOriginal = pRunner->retOriginal;
@@ -2323,16 +2331,15 @@ static PyObject * unigine_AssetManager_refresh_mount_point_async(unigine_AssetMa
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * directory_path;
+    PyObject *pArg1 = NULL; // const char * directory_path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"directory_path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * directory_path = PyUnicode_AsUTF8(pArg1);
 
@@ -2340,7 +2347,7 @@ static PyObject * unigine_AssetManager_refresh_mount_point_async(unigine_AssetMa
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::refreshMountPointAsync(directory_path);
+                retOriginal = UnigineEditor::AssetManager::refreshMountPointAsync(directory_path);
             };
             // args
             const char * directory_path;
@@ -2350,7 +2357,7 @@ static PyObject * unigine_AssetManager_refresh_mount_point_async(unigine_AssetMa
     auto *pRunner = new LocalRunner();
     pRunner->directory_path = directory_path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -2371,18 +2378,26 @@ static PyObject * unigine_AssetManager_block_auto_refresh(unigine_AssetManager* 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::AssetManager::blockAutoRefresh();
+                UnigineEditor::AssetManager::blockAutoRefresh();
             };
-            // args
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2398,18 +2413,26 @@ static PyObject * unigine_AssetManager_unblock_auto_refresh(unigine_AssetManager
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::AssetManager::unblockAutoRefresh();
+                UnigineEditor::AssetManager::unblockAutoRefresh();
             };
-            // args
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2425,15 +2448,14 @@ static PyObject * unigine_AssetManager_is_auto_refresh_blocked(unigine_AssetMana
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::isAutoRefreshBlocked();
+                retOriginal = UnigineEditor::AssetManager::isAutoRefreshBlocked();
             };
-            // args
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -2450,16 +2472,15 @@ static PyObject * unigine_AssetManager_generate_unique_path(unigine_AssetManager
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * path;
+    PyObject *pArg1 = NULL; // const char * path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * path = PyUnicode_AsUTF8(pArg1);
 
@@ -2467,7 +2488,7 @@ static PyObject * unigine_AssetManager_generate_unique_path(unigine_AssetManager
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::generateUniquePath(path);
+                retOriginal = UnigineEditor::AssetManager::generateUniquePath(path);
             };
             // args
             const char * path;
@@ -2477,7 +2498,7 @@ static PyObject * unigine_AssetManager_generate_unique_path(unigine_AssetManager
     auto *pRunner = new LocalRunner();
     pRunner->path = path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::String retOriginal = pRunner->retOriginal;
@@ -2494,16 +2515,15 @@ static PyObject * unigine_AssetManager_is_exist(unigine_AssetManager* self_stati
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * path;
+    PyObject *pArg1 = NULL; // const char * path;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"path\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * path = PyUnicode_AsUTF8(pArg1);
 
@@ -2511,7 +2531,7 @@ static PyObject * unigine_AssetManager_is_exist(unigine_AssetManager* self_stati
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::AssetManager::isExist(path);
+                retOriginal = UnigineEditor::AssetManager::isExist(path);
             };
             // args
             const char * path;
@@ -2521,7 +2541,7 @@ static PyObject * unigine_AssetManager_is_exist(unigine_AssetManager* self_stati
     auto *pRunner = new LocalRunner();
     pRunner->path = path;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -2759,8 +2779,6 @@ static PyMethodDef unigine_AssetManager_methods[] = {
 };
 
 static PyTypeObject unigine_AssetManagerType = {
-
-
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.AssetManager",             // tp_name
     sizeof(unigine_AssetManager) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
@@ -2826,9 +2844,7 @@ bool Python3UnigineAssetManager::addClassDefinitionToModule(PyObject* pModule) {
 }
 
 PyObject * AssetManager::NewObject() {
-
-    std::cout << "sizeof(unigine_AssetManager) = " << sizeof(unigine_AssetManager) << std::endl;
-
+    // std::cout << "sizeof(unigine_AssetManager) = " << sizeof(unigine_AssetManager) << std::endl;
     unigine_AssetManager *pInst = PyObject_New(unigine_AssetManager, &unigine_AssetManagerType);
     // Py_INCREF(pInst);
     return (PyObject *)pInst;

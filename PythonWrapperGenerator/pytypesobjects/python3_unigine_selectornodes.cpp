@@ -17,7 +17,7 @@ namespace PyUnigine {
 typedef struct {
     PyObject_HEAD
     // Type-specific fields go here.
-    Unigine::SelectorNodes * unigine_object_ptr;
+    UnigineEditor::SelectorNodes * unigine_object_ptr;
 } unigine_SelectorNodes;
 
 static void unigine_SelectorNodes_dealloc(unigine_SelectorNodes* self) {
@@ -44,7 +44,7 @@ static PyObject * unigine_SelectorNodes_create_objects_selector(unigine_Selector
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -54,7 +54,7 @@ TODO for const Unigine::Vector<Unigine::Ptr<Unigine::Node>> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::SelectorNodes::createObjectsSelector(nodes);
+                retOriginal = UnigineEditor::SelectorNodes::createObjectsSelector(nodes);
             };
             // args
             const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
@@ -64,7 +64,7 @@ TODO for const Unigine::Vector<Unigine::Ptr<Unigine::Node>> &
     auto *pRunner = new LocalRunner();
     pRunner->nodes = nodes;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     UnigineEditor::SelectorNodes * retOriginal = pRunner->retOriginal;
@@ -85,15 +85,16 @@ static PyObject * unigine_SelectorNodes_type(unigine_SelectorNodes* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->type();
+                retOriginal = unigine_object_ptr->type();
             };
-            // args
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -110,7 +111,7 @@ static PyObject * unigine_SelectorNodes_equal(unigine_SelectorNodes* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const UnigineEditor::Selector * selector;
+    PyObject *pArg1 = NULL; // const UnigineEditor::Selector * selector;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -120,17 +121,19 @@ TODO for const UnigineEditor::Selector *
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->equal(selector);
+                retOriginal = unigine_object_ptr->equal(selector);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             const UnigineEditor::Selector * selector;
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->selector = selector;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -151,15 +154,16 @@ static PyObject * unigine_SelectorNodes_clone(unigine_SelectorNodes* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->clone();
+                retOriginal = unigine_object_ptr->clone();
             };
-            // args
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // return
             UnigineEditor::SelectorNodes * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     UnigineEditor::SelectorNodes * retOriginal = pRunner->retOriginal;
@@ -180,15 +184,16 @@ static PyObject * unigine_SelectorNodes_get_nodes(unigine_SelectorNodes* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNodes();
+                retOriginal = unigine_object_ptr->getNodes();
             };
-            // args
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // return
             Unigine::Vector<Unigine::Ptr<Unigine::Node>> retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::Ptr<Unigine::Node>> retOriginal = pRunner->retOriginal;
@@ -209,15 +214,16 @@ static PyObject * unigine_SelectorNodes_size(unigine_SelectorNodes* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->size();
+                retOriginal = unigine_object_ptr->size();
             };
-            // args
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -238,15 +244,16 @@ static PyObject * unigine_SelectorNodes_empty(unigine_SelectorNodes* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->empty();
+                retOriginal = unigine_object_ptr->empty();
             };
-            // args
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -263,7 +270,7 @@ static PyObject * unigine_SelectorNodes_extend(unigine_SelectorNodes* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const & node;
+    PyObject *pArg1 = NULL; // const & node;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -273,20 +280,31 @@ TODO for const &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->extend(node);
+                unigine_object_ptr->extend(node);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             const & node;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->node = node;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -298,7 +316,7 @@ static PyObject * unigine_SelectorNodes_extend(unigine_SelectorNodes* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -308,20 +326,31 @@ TODO for const Unigine::Vector<Unigine::Ptr<Unigine::Node>> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->extend(nodes);
+                unigine_object_ptr->extend(nodes);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->nodes = nodes;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -333,8 +362,8 @@ static PyObject * unigine_SelectorNodes_extend(unigine_SelectorNodes* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const & node;
-    PyObject *pArg2; // * subs;
+    PyObject *pArg1 = NULL; // const & node;
+    PyObject *pArg2 = NULL; // * subs;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -348,22 +377,33 @@ TODO for *
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->extend(node, subs);
+                unigine_object_ptr->extend(node, subs);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             const & node;
             * subs;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->node = node;
     pRunner->subs = subs;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -375,7 +415,7 @@ static PyObject * unigine_SelectorNodes_exclude(unigine_SelectorNodes* self, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const & node;
+    PyObject *pArg1 = NULL; // const & node;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -385,20 +425,31 @@ TODO for const &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->exclude(node);
+                unigine_object_ptr->exclude(node);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             const & node;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->node = node;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -410,7 +461,7 @@ static PyObject * unigine_SelectorNodes_exclude(unigine_SelectorNodes* self, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -420,20 +471,31 @@ TODO for const Unigine::Vector<Unigine::Ptr<Unigine::Node>> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->exclude(nodes);
+                unigine_object_ptr->exclude(nodes);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->nodes = nodes;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -445,7 +507,7 @@ static PyObject * unigine_SelectorNodes_exclude(unigine_SelectorNodes* self, PyO
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // SubObjectType stype;
+    PyObject *pArg1 = NULL; // SubObjectType stype;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -455,20 +517,31 @@ TODO for SubObjectType
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->exclude(stype);
+                unigine_object_ptr->exclude(stype);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             SubObjectType stype;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->stype = stype;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -480,7 +553,7 @@ static PyObject * unigine_SelectorNodes_contains(unigine_SelectorNodes* self, Py
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const & node;
+    PyObject *pArg1 = NULL; // const & node;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -490,17 +563,19 @@ TODO for const &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->contains(node);
+                retOriginal = unigine_object_ptr->contains(node);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             const & node;
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->node = node;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -517,27 +592,35 @@ static PyObject * unigine_SelectorNodes_get_sub_item_list(unigine_SelectorNodes*
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int node_id;
+    PyObject *pArg1 = NULL; // int node_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"node_id\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int node_id = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getSubItemList(node_id);
+                retOriginal = unigine_object_ptr->getSubItemList(node_id);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             int node_id;
             // return
             * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->node_id = node_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     * retOriginal = pRunner->retOriginal;
@@ -554,7 +637,7 @@ static PyObject * unigine_SelectorNodes_get_sub_item_list(unigine_SelectorNodes*
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const & node;
+    PyObject *pArg1 = NULL; // const & node;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -564,17 +647,19 @@ TODO for const &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getSubItemList(node);
+                retOriginal = unigine_object_ptr->getSubItemList(node);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             const & node;
             // return
             * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->node = node;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     * retOriginal = pRunner->retOriginal;
@@ -591,27 +676,35 @@ static PyObject * unigine_SelectorNodes_get_index_list(unigine_SelectorNodes* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int node_id;
+    PyObject *pArg1 = NULL; // int node_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"node_id\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int node_id = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getIndexList(node_id);
+                retOriginal = unigine_object_ptr->getIndexList(node_id);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             int node_id;
             // return
             UnigineEditor::IndexList * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->node_id = node_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     UnigineEditor::IndexList * retOriginal = pRunner->retOriginal;
@@ -628,7 +721,7 @@ static PyObject * unigine_SelectorNodes_get_index_list(unigine_SelectorNodes* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const & node;
+    PyObject *pArg1 = NULL; // const & node;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -638,17 +731,19 @@ TODO for const &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getIndexList(node);
+                retOriginal = unigine_object_ptr->getIndexList(node);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             const & node;
             // return
             UnigineEditor::IndexList * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->node = node;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     UnigineEditor::IndexList * retOriginal = pRunner->retOriginal;
@@ -665,7 +760,7 @@ static PyObject * unigine_SelectorNodes_get_intersected_indexes(unigine_Selector
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // SubObjectType stype;
+    PyObject *pArg1 = NULL; // SubObjectType stype;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -675,17 +770,19 @@ TODO for SubObjectType
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getIntersectedIndexes(stype);
+                retOriginal = unigine_object_ptr->getIntersectedIndexes(stype);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             SubObjectType stype;
             // return
             Unigine::HashSet<int> retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->stype = stype;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::HashSet<int> retOriginal = pRunner->retOriginal;
@@ -706,18 +803,28 @@ static PyObject * unigine_SelectorNodes_reset_cache(unigine_SelectorNodes* self)
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->resetCache();
+                unigine_object_ptr->resetCache();
             };
-            // args
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -729,17 +836,16 @@ static PyObject * unigine_SelectorNodes_set_user_data(unigine_SelectorNodes* sel
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
-    PyObject *pArg2; //  value;
+    PyObject *pArg1 = NULL; // const char * name;
+    PyObject *pArg2 = NULL; //  value;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -751,22 +857,33 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setUserData(name, value);
+                unigine_object_ptr->setUserData(name, value);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             const char * name;
              value;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     pRunner->value = value;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -778,16 +895,15 @@ static PyObject * unigine_SelectorNodes_get_user_data(unigine_SelectorNodes* sel
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
+    PyObject *pArg1 = NULL; // const char * name;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -795,17 +911,19 @@ static PyObject * unigine_SelectorNodes_get_user_data(unigine_SelectorNodes* sel
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getUserData(name);
+                retOriginal = unigine_object_ptr->getUserData(name);
             };
+            UnigineEditor::SelectorNodes * unigine_object_ptr;
             // args
             const char * name;
             // return
              retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
      retOriginal = pRunner->retOriginal;
@@ -911,8 +1029,6 @@ static PyMethodDef unigine_SelectorNodes_methods[] = {
 };
 
 static PyTypeObject unigine_SelectorNodesType = {
-
-
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.SelectorNodes",             // tp_name
     sizeof(unigine_SelectorNodes) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
@@ -987,19 +1103,17 @@ bool Python3UnigineSelectorNodes::addClassDefinitionToModule(PyObject* pModule) 
     return true;
 }
 
-PyObject * SelectorNodes::NewObject(Unigine::SelectorNodes * unigine_object_ptr) {
-
-    std::cout << "sizeof(unigine_SelectorNodes) = " << sizeof(unigine_SelectorNodes) << std::endl;
-
+PyObject * SelectorNodes::NewObject(UnigineEditor::SelectorNodes * unigine_object_ptr) {
+    // std::cout << "sizeof(unigine_SelectorNodes) = " << sizeof(unigine_SelectorNodes) << std::endl;
     unigine_SelectorNodes *pInst = PyObject_New(unigine_SelectorNodes, &unigine_SelectorNodesType);
     pInst->unigine_object_ptr = unigine_object_ptr;
     // Py_INCREF(pInst);
     return (PyObject *)pInst;
 }
 
-Unigine::SelectorNodes * SelectorNodes::Convert(PyObject *pObject) {
+UnigineEditor::SelectorNodes * SelectorNodes::Convert(PyObject *pObject) {
     if (Py_IS_TYPE(pObject, &unigine_SelectorNodesType) == 0) {
-        // TODO error
+        Unigine::Log::error("Invalid type, expected 'UnigineEditor::SelectorNodes *', but got some another");
     }
     unigine_SelectorNodes *pInst = (unigine_SelectorNodes *)pObject;
     return pInst->unigine_object_ptr;

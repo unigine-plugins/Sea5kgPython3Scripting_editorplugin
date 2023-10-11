@@ -42,16 +42,15 @@ static PyObject * unigine_ViewportManager_create_viewport_window(unigine_Viewpor
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
+    PyObject *pArg1 = NULL; // const char * name;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -59,7 +58,7 @@ static PyObject * unigine_ViewportManager_create_viewport_window(unigine_Viewpor
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::createViewportWindow(name);
+                retOriginal = UnigineEditor::ViewportManager::createViewportWindow(name);
             };
             // args
             const char * name;
@@ -69,7 +68,7 @@ static PyObject * unigine_ViewportManager_create_viewport_window(unigine_Viewpor
     auto *pRunner = new LocalRunner();
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
      retOriginal = pRunner->retOriginal;
@@ -86,7 +85,7 @@ static PyObject * unigine_ViewportManager_remove_viewport_window(unigine_Viewpor
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
+    PyObject *pArg1 = NULL; //  viewport_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -96,7 +95,7 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::removeViewportWindow(viewport_id);
+                retOriginal = UnigineEditor::ViewportManager::removeViewportWindow(viewport_id);
             };
             // args
              viewport_id;
@@ -106,7 +105,7 @@ TODO for
     auto *pRunner = new LocalRunner();
     pRunner->viewport_id = viewport_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -123,7 +122,7 @@ static PyObject * unigine_ViewportManager_show_viewport_window(unigine_ViewportM
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
+    PyObject *pArg1 = NULL; //  viewport_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -133,7 +132,7 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::showViewportWindow(viewport_id);
+                retOriginal = UnigineEditor::ViewportManager::showViewportWindow(viewport_id);
             };
             // args
              viewport_id;
@@ -143,7 +142,7 @@ TODO for
     auto *pRunner = new LocalRunner();
     pRunner->viewport_id = viewport_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -160,7 +159,7 @@ static PyObject * unigine_ViewportManager_hide_viewport_window(unigine_ViewportM
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
+    PyObject *pArg1 = NULL; //  viewport_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -170,7 +169,7 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::hideViewportWindow(viewport_id);
+                retOriginal = UnigineEditor::ViewportManager::hideViewportWindow(viewport_id);
             };
             // args
              viewport_id;
@@ -180,7 +179,7 @@ TODO for
     auto *pRunner = new LocalRunner();
     pRunner->viewport_id = viewport_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -201,15 +200,14 @@ static PyObject * unigine_ViewportManager_get_num_viewport_windows(unigine_Viewp
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getNumViewportWindows();
+                retOriginal = UnigineEditor::ViewportManager::getNumViewportWindows();
             };
-            // args
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -226,17 +224,23 @@ static PyObject * unigine_ViewportManager_get_viewport_window_id(unigine_Viewpor
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int index;
+    PyObject *pArg1 = NULL; // int index;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"index\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int index = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getViewportWindowId(index);
+                retOriginal = UnigineEditor::ViewportManager::getViewportWindowId(index);
             };
             // args
             int index;
@@ -246,7 +250,7 @@ TODO for int
     auto *pRunner = new LocalRunner();
     pRunner->index = index;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
      retOriginal = pRunner->retOriginal;
@@ -267,15 +271,14 @@ static PyObject * unigine_ViewportManager_get_last_hovered_viewport_window(unigi
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getLastHoveredViewportWindow();
+                retOriginal = UnigineEditor::ViewportManager::getLastHoveredViewportWindow();
             };
-            // args
             // return
              retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
      retOriginal = pRunner->retOriginal;
@@ -296,15 +299,14 @@ static PyObject * unigine_ViewportManager_get_active_viewport_window(unigine_Vie
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getActiveViewportWindow();
+                retOriginal = UnigineEditor::ViewportManager::getActiveViewportWindow();
             };
-            // args
             // return
              retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
      retOriginal = pRunner->retOriginal;
@@ -321,7 +323,7 @@ static PyObject * unigine_ViewportManager_get_viewport_window_name(unigine_Viewp
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
+    PyObject *pArg1 = NULL; //  viewport_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -331,7 +333,7 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getViewportWindowName(viewport_id);
+                retOriginal = UnigineEditor::ViewportManager::getViewportWindowName(viewport_id);
             };
             // args
              viewport_id;
@@ -341,7 +343,7 @@ TODO for
     auto *pRunner = new LocalRunner();
     pRunner->viewport_id = viewport_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const char * retOriginal = pRunner->retOriginal;
@@ -358,16 +360,15 @@ static PyObject * unigine_ViewportManager_get_viewport_window_id(unigine_Viewpor
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
+    PyObject *pArg1 = NULL; // const char * name;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -375,7 +376,7 @@ static PyObject * unigine_ViewportManager_get_viewport_window_id(unigine_Viewpor
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getViewportWindowId(name);
+                retOriginal = UnigineEditor::ViewportManager::getViewportWindowId(name);
             };
             // args
             const char * name;
@@ -385,7 +386,7 @@ static PyObject * unigine_ViewportManager_get_viewport_window_id(unigine_Viewpor
     auto *pRunner = new LocalRunner();
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
      retOriginal = pRunner->retOriginal;
@@ -402,7 +403,7 @@ static PyObject * unigine_ViewportManager_get_viewport_window_player(unigine_Vie
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
+    PyObject *pArg1 = NULL; //  viewport_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -412,7 +413,7 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getViewportWindowPlayer(viewport_id);
+                retOriginal = UnigineEditor::ViewportManager::getViewportWindowPlayer(viewport_id);
             };
             // args
              viewport_id;
@@ -422,7 +423,7 @@ TODO for
     auto *pRunner = new LocalRunner();
     pRunner->viewport_id = viewport_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
      retOriginal = pRunner->retOriginal;
@@ -439,8 +440,8 @@ static PyObject * unigine_ViewportManager_set_viewport_window_player(unigine_Vie
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
-    PyObject *pArg2; // const & player;
+    PyObject *pArg1 = NULL; //  viewport_id;
+    PyObject *pArg2 = NULL; // const & player;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -454,7 +455,7 @@ TODO for const &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::ViewportManager::setViewportWindowPlayer(viewport_id, player);
+                UnigineEditor::ViewportManager::setViewportWindowPlayer(viewport_id, player);
             };
             // args
              viewport_id;
@@ -464,12 +465,21 @@ TODO for const &
     pRunner->viewport_id = viewport_id;
     pRunner->player = player;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -481,7 +491,7 @@ static PyObject * unigine_ViewportManager_get_viewport_window_viewport(unigine_V
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
+    PyObject *pArg1 = NULL; //  viewport_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -491,7 +501,7 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getViewportWindowViewport(viewport_id);
+                retOriginal = UnigineEditor::ViewportManager::getViewportWindowViewport(viewport_id);
             };
             // args
              viewport_id;
@@ -501,7 +511,7 @@ TODO for
     auto *pRunner = new LocalRunner();
     pRunner->viewport_id = viewport_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
      retOriginal = pRunner->retOriginal;
@@ -518,7 +528,7 @@ static PyObject * unigine_ViewportManager_get_viewport_window_gui(unigine_Viewpo
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
+    PyObject *pArg1 = NULL; //  viewport_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -528,7 +538,7 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getViewportWindowGui(viewport_id);
+                retOriginal = UnigineEditor::ViewportManager::getViewportWindowGui(viewport_id);
             };
             // args
              viewport_id;
@@ -538,7 +548,7 @@ TODO for
     auto *pRunner = new LocalRunner();
     pRunner->viewport_id = viewport_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
      retOriginal = pRunner->retOriginal;
@@ -555,7 +565,7 @@ static PyObject * unigine_ViewportManager_get_viewport_window_mouse_x(unigine_Vi
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
+    PyObject *pArg1 = NULL; //  viewport_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -565,7 +575,7 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getViewportWindowMouseX(viewport_id);
+                retOriginal = UnigineEditor::ViewportManager::getViewportWindowMouseX(viewport_id);
             };
             // args
              viewport_id;
@@ -575,7 +585,7 @@ TODO for
     auto *pRunner = new LocalRunner();
     pRunner->viewport_id = viewport_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -592,7 +602,7 @@ static PyObject * unigine_ViewportManager_get_viewport_window_mouse_y(unigine_Vi
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
+    PyObject *pArg1 = NULL; //  viewport_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -602,7 +612,7 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getViewportWindowMouseY(viewport_id);
+                retOriginal = UnigineEditor::ViewportManager::getViewportWindowMouseY(viewport_id);
             };
             // args
              viewport_id;
@@ -612,7 +622,7 @@ TODO for
     auto *pRunner = new LocalRunner();
     pRunner->viewport_id = viewport_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -629,7 +639,7 @@ static PyObject * unigine_ViewportManager_get_viewport_window_mouse_pos(unigine_
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
+    PyObject *pArg1 = NULL; //  viewport_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -639,7 +649,7 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getViewportWindowMousePos(viewport_id);
+                retOriginal = UnigineEditor::ViewportManager::getViewportWindowMousePos(viewport_id);
             };
             // args
              viewport_id;
@@ -649,7 +659,7 @@ TODO for
     auto *pRunner = new LocalRunner();
     pRunner->viewport_id = viewport_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::ivec2 retOriginal = pRunner->retOriginal;
@@ -666,7 +676,7 @@ static PyObject * unigine_ViewportManager_get_viewport_window_width(unigine_View
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
+    PyObject *pArg1 = NULL; //  viewport_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -676,7 +686,7 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getViewportWindowWidth(viewport_id);
+                retOriginal = UnigineEditor::ViewportManager::getViewportWindowWidth(viewport_id);
             };
             // args
              viewport_id;
@@ -686,7 +696,7 @@ TODO for
     auto *pRunner = new LocalRunner();
     pRunner->viewport_id = viewport_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -703,7 +713,7 @@ static PyObject * unigine_ViewportManager_get_viewport_window_height(unigine_Vie
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
+    PyObject *pArg1 = NULL; //  viewport_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -713,7 +723,7 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getViewportWindowHeight(viewport_id);
+                retOriginal = UnigineEditor::ViewportManager::getViewportWindowHeight(viewport_id);
             };
             // args
              viewport_id;
@@ -723,7 +733,7 @@ TODO for
     auto *pRunner = new LocalRunner();
     pRunner->viewport_id = viewport_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -740,7 +750,7 @@ static PyObject * unigine_ViewportManager_get_viewport_window_size(unigine_Viewp
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
+    PyObject *pArg1 = NULL; //  viewport_id;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -750,7 +760,7 @@ TODO for
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::getViewportWindowSize(viewport_id);
+                retOriginal = UnigineEditor::ViewportManager::getViewportWindowSize(viewport_id);
             };
             // args
              viewport_id;
@@ -760,7 +770,7 @@ TODO for
     auto *pRunner = new LocalRunner();
     pRunner->viewport_id = viewport_id;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::ivec2 retOriginal = pRunner->retOriginal;
@@ -777,17 +787,23 @@ static PyObject * unigine_ViewportManager_set_enabled_rectangle_selection(unigin
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // bool enable;
+    PyObject *pArg1 = NULL; // bool enable;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for bool
+    if (!PyBool_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"enable\" to %s must be a bool object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    bool enable = pArg1 == Py_True;
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::ViewportManager::setEnabledRectangleSelection(enable);
+                UnigineEditor::ViewportManager::setEnabledRectangleSelection(enable);
             };
             // args
             bool enable;
@@ -795,12 +811,21 @@ TODO for bool
     auto *pRunner = new LocalRunner();
     pRunner->enable = enable;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -816,15 +841,14 @@ static PyObject * unigine_ViewportManager_is_enabled_rectangle_selection(unigine
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = Unigine::ViewportManager::isEnabledRectangleSelection();
+                retOriginal = UnigineEditor::ViewportManager::isEnabledRectangleSelection();
             };
-            // args
             // return
             bool retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     bool retOriginal = pRunner->retOriginal;
@@ -841,8 +865,8 @@ static PyObject * unigine_ViewportManager_focus_on_node(unigine_ViewportManager*
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
-    PyObject *pArg2; // const & node;
+    PyObject *pArg1 = NULL; //  viewport_id;
+    PyObject *pArg2 = NULL; // const & node;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -856,7 +880,7 @@ TODO for const &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::ViewportManager::focusOnNode(viewport_id, node);
+                UnigineEditor::ViewportManager::focusOnNode(viewport_id, node);
             };
             // args
              viewport_id;
@@ -866,12 +890,21 @@ TODO for const &
     pRunner->viewport_id = viewport_id;
     pRunner->node = node;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -883,8 +916,8 @@ static PyObject * unigine_ViewportManager_focus_on_node_list(unigine_ViewportMan
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
-    PyObject *pArg2; // const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
+    PyObject *pArg1 = NULL; //  viewport_id;
+    PyObject *pArg2 = NULL; // const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -898,7 +931,7 @@ TODO for const Unigine::Vector<Unigine::Ptr<Unigine::Node>> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::ViewportManager::focusOnNodeList(viewport_id, nodes);
+                UnigineEditor::ViewportManager::focusOnNodeList(viewport_id, nodes);
             };
             // args
              viewport_id;
@@ -908,12 +941,21 @@ TODO for const Unigine::Vector<Unigine::Ptr<Unigine::Node>> &
     pRunner->viewport_id = viewport_id;
     pRunner->nodes = nodes;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -925,8 +967,8 @@ static PyObject * unigine_ViewportManager_focus_on_node_bound_based(unigine_View
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
-    PyObject *pArg2; // const & node;
+    PyObject *pArg1 = NULL; //  viewport_id;
+    PyObject *pArg2 = NULL; // const & node;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -940,7 +982,7 @@ TODO for const &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::ViewportManager::focusOnNodeBoundBased(viewport_id, node);
+                UnigineEditor::ViewportManager::focusOnNodeBoundBased(viewport_id, node);
             };
             // args
              viewport_id;
@@ -950,12 +992,21 @@ TODO for const &
     pRunner->viewport_id = viewport_id;
     pRunner->node = node;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -967,8 +1018,8 @@ static PyObject * unigine_ViewportManager_focus_on_node_list_bound_based(unigine
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
-    PyObject *pArg2; // const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
+    PyObject *pArg1 = NULL; //  viewport_id;
+    PyObject *pArg2 = NULL; // const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -982,7 +1033,7 @@ TODO for const Unigine::Vector<Unigine::Ptr<Unigine::Node>> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::ViewportManager::focusOnNodeListBoundBased(viewport_id, nodes);
+                UnigineEditor::ViewportManager::focusOnNodeListBoundBased(viewport_id, nodes);
             };
             // args
              viewport_id;
@@ -992,12 +1043,21 @@ TODO for const Unigine::Vector<Unigine::Ptr<Unigine::Node>> &
     pRunner->viewport_id = viewport_id;
     pRunner->nodes = nodes;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1009,9 +1069,9 @@ static PyObject * unigine_ViewportManager_focus_on_surface(unigine_ViewportManag
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
-    PyObject *pArg2; // const & object;
-    PyObject *pArg3; // int surface;
+    PyObject *pArg1 = NULL; //  viewport_id;
+    PyObject *pArg2 = NULL; // const & object;
+    PyObject *pArg3 = NULL; // int surface;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -1023,13 +1083,19 @@ TODO for const &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::ViewportManager::focusOnSurface(viewport_id, object, surface);
+                UnigineEditor::ViewportManager::focusOnSurface(viewport_id, object, surface);
             };
             // args
              viewport_id;
@@ -1041,12 +1107,21 @@ TODO for int
     pRunner->object = object;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1058,9 +1133,9 @@ static PyObject * unigine_ViewportManager_focus_on_surface_list(unigine_Viewport
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
-    PyObject *pArg2; // const & object;
-    PyObject *pArg3; // const Unigine::Vector<int> & surfaces;
+    PyObject *pArg1 = NULL; //  viewport_id;
+    PyObject *pArg2 = NULL; // const & object;
+    PyObject *pArg3 = NULL; // const Unigine::Vector<int> & surfaces;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -1078,7 +1153,7 @@ TODO for const Unigine::Vector<int> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::ViewportManager::focusOnSurfaceList(viewport_id, object, surfaces);
+                UnigineEditor::ViewportManager::focusOnSurfaceList(viewport_id, object, surfaces);
             };
             // args
              viewport_id;
@@ -1090,12 +1165,21 @@ TODO for const Unigine::Vector<int> &
     pRunner->object = object;
     pRunner->surfaces = surfaces;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1107,9 +1191,9 @@ static PyObject * unigine_ViewportManager_focus_on_center(unigine_ViewportManage
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; //  viewport_id;
-    PyObject *pArg2; // const & center;
-    PyObject *pArg3; // float radius;
+    PyObject *pArg1 = NULL; //  viewport_id;
+    PyObject *pArg2 = NULL; // const & center;
+    PyObject *pArg3 = NULL; // float radius;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -1121,13 +1205,19 @@ TODO for const &
 
 
     // pArg3
-TODO for float
+    if (!PyFloat_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"radius\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    float radius = PyFloat_AsDouble(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::ViewportManager::focusOnCenter(viewport_id, center, radius);
+                UnigineEditor::ViewportManager::focusOnCenter(viewport_id, center, radius);
             };
             // args
              viewport_id;
@@ -1139,12 +1229,21 @@ TODO for float
     pRunner->center = center;
     pRunner->radius = radius;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1160,18 +1259,26 @@ static PyObject * unigine_ViewportManager_force_wireframe_warming(unigine_Viewpo
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::ViewportManager::forceWireframeWarming();
+                UnigineEditor::ViewportManager::forceWireframeWarming();
             };
-            // args
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1183,7 +1290,7 @@ static PyObject * unigine_ViewportManager_place_node(unigine_ViewportManager* se
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const & node;
+    PyObject *pArg1 = NULL; // const & node;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1193,7 +1300,7 @@ TODO for const &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::ViewportManager::placeNode(node);
+                UnigineEditor::ViewportManager::placeNode(node);
             };
             // args
             const & node;
@@ -1201,12 +1308,21 @@ TODO for const &
     auto *pRunner = new LocalRunner();
     pRunner->node = node;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1218,7 +1334,7 @@ static PyObject * unigine_ViewportManager_place_node_list(unigine_ViewportManage
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -1228,7 +1344,7 @@ TODO for const Unigine::Vector<Unigine::Ptr<Unigine::Node>> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                Unigine::ViewportManager::placeNodeList(nodes);
+                UnigineEditor::ViewportManager::placeNodeList(nodes);
             };
             // args
             const Unigine::Vector<Unigine::Ptr<Unigine::Node>> & nodes;
@@ -1236,12 +1352,21 @@ TODO for const Unigine::Vector<Unigine::Ptr<Unigine::Node>> &
     auto *pRunner = new LocalRunner();
     pRunner->nodes = nodes;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1382,8 +1507,6 @@ static PyMethodDef unigine_ViewportManager_methods[] = {
 };
 
 static PyTypeObject unigine_ViewportManagerType = {
-
-
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.ViewportManager",             // tp_name
     sizeof(unigine_ViewportManager) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
@@ -1449,9 +1572,7 @@ bool Python3UnigineViewportManager::addClassDefinitionToModule(PyObject* pModule
 }
 
 PyObject * ViewportManager::NewObject() {
-
-    std::cout << "sizeof(unigine_ViewportManager) = " << sizeof(unigine_ViewportManager) << std::endl;
-
+    // std::cout << "sizeof(unigine_ViewportManager) = " << sizeof(unigine_ViewportManager) << std::endl;
     unigine_ViewportManager *pInst = PyObject_New(unigine_ViewportManager, &unigine_ViewportManagerType);
     // Py_INCREF(pInst);
     return (PyObject *)pInst;

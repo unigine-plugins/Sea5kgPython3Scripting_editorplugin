@@ -14,8 +14,8 @@ class Python3Uniginemat4 : public Python3PyTypeObjectBase {
 
 class mat4 {
     public:
-        static PyObject * NewObject(Unigine::mat4 * unigine_object_ptr);
-        static Unigine::mat4 * Convert(PyObject *pObject);
+        static PyObject * NewObject(Unigine::Math::mat4 * unigine_object_ptr);
+        static Unigine::Math::mat4 * Convert(PyObject *pObject);
 };
 
 }; // namespace PyUnigine

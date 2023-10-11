@@ -50,13 +50,12 @@ static PyObject * unigine_Mesh_create(unigine_Mesh* self_static_null) {
             virtual void run() override {
                 retOriginal = Unigine::Mesh::create();
             };
-            // args
             // return
             Unigine::Ptr<Unigine::Mesh> retOriginal;
     };
     auto *pRunner = new LocalRunner();
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<Unigine::Mesh> retOriginal = pRunner->retOriginal;
@@ -78,16 +77,15 @@ static PyObject * unigine_Mesh_create(unigine_Mesh* self_static_null, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
+    PyObject *pArg1 = NULL; // const char * name;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -105,7 +103,7 @@ static PyObject * unigine_Mesh_create(unigine_Mesh* self_static_null, PyObject *
     auto *pRunner = new LocalRunner();
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<Unigine::Mesh> retOriginal = pRunner->retOriginal;
@@ -127,7 +125,7 @@ static PyObject * unigine_Mesh_create(unigine_Mesh* self_static_null, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Ptr<Unigine::Mesh> & mesh;
+    PyObject *pArg1 = NULL; // const Unigine::Ptr<Unigine::Mesh> & mesh;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -147,7 +145,7 @@ TODO for const Unigine::Ptr<Unigine::Mesh> &
     auto *pRunner = new LocalRunner();
     pRunner->mesh = mesh;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Ptr<Unigine::Mesh> retOriginal = pRunner->retOriginal;
@@ -169,7 +167,7 @@ static PyObject * unigine_Mesh_assign_from(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Ptr<Unigine::Mesh> & mesh;
+    PyObject *pArg1 = NULL; // const Unigine::Ptr<Unigine::Mesh> & mesh;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -179,20 +177,31 @@ TODO for const Unigine::Ptr<Unigine::Mesh> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->assignFrom(mesh);
+                unigine_object_ptr->assignFrom(mesh);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Ptr<Unigine::Mesh> & mesh;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->mesh = mesh;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -204,16 +213,15 @@ static PyObject * unigine_Mesh_info(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
+    PyObject *pArg1 = NULL; // const char * name;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -221,17 +229,19 @@ static PyObject * unigine_Mesh_info(unigine_Mesh* self, PyObject *args) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->info(name);
+                retOriginal = unigine_object_ptr->info(name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -248,16 +258,15 @@ static PyObject * unigine_Mesh_load(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
+    PyObject *pArg1 = NULL; // const char * name;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -265,17 +274,19 @@ static PyObject * unigine_Mesh_load(unigine_Mesh* self, PyObject *args) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->load(name);
+                retOriginal = unigine_object_ptr->load(name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -292,16 +303,15 @@ static PyObject * unigine_Mesh_save(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
+    PyObject *pArg1 = NULL; // const char * name;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -309,17 +319,19 @@ static PyObject * unigine_Mesh_save(unigine_Mesh* self, PyObject *args) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->save(name);
+                retOriginal = unigine_object_ptr->save(name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -340,18 +352,28 @@ static PyObject * unigine_Mesh_clear(unigine_Mesh* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->clear();
+                unigine_object_ptr->clear();
             };
-            // args
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -363,27 +385,35 @@ static PyObject * unigine_Mesh_flip_yz(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->flipYZ(surface);
+                retOriginal = unigine_object_ptr->flipYZ(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -400,27 +430,35 @@ static PyObject * unigine_Mesh_flip_tangent(unigine_Mesh* self, PyObject *args) 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->flipTangent(surface);
+                retOriginal = unigine_object_ptr->flipTangent(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -437,27 +475,35 @@ static PyObject * unigine_Mesh_create_bounds(unigine_Mesh* self, PyObject *args)
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->createBounds(surface);
+                retOriginal = unigine_object_ptr->createBounds(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -474,27 +520,35 @@ static PyObject * unigine_Mesh_remove_indices(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->removeIndices(surface);
+                retOriginal = unigine_object_ptr->removeIndices(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -511,27 +565,35 @@ static PyObject * unigine_Mesh_create_indices(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->createIndices(surface);
+                retOriginal = unigine_object_ptr->createIndices(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -548,23 +610,36 @@ static PyObject * unigine_Mesh_optimize_indices(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int flags;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int flags;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"flags\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int flags = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->optimizeIndices(flags, surface);
+                retOriginal = unigine_object_ptr->optimizeIndices(flags, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int flags;
             int surface;
@@ -572,10 +647,11 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->flags = flags;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -592,23 +668,36 @@ static PyObject * unigine_Mesh_create_tangents(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // int target;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // int target;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->createTangents(surface, target);
+                retOriginal = unigine_object_ptr->createTangents(surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             int target;
@@ -616,10 +705,11 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -636,12 +726,18 @@ static PyObject * unigine_Mesh_create_tangents(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // float angle;
-    PyObject *pArg2; // const Unigine::Vector<int> & surfaces;
+    PyObject *pArg1 = NULL; // float angle;
+    PyObject *pArg2 = NULL; // const Unigine::Vector<int> & surfaces;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for float
+    if (!PyFloat_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"angle\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    float angle = PyFloat_AsDouble(pArg1);
 
 
     // pArg2
@@ -651,8 +747,9 @@ TODO for const Unigine::Vector<int> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->createTangents(angle, surfaces);
+                retOriginal = unigine_object_ptr->createTangents(angle, surfaces);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             float angle;
             const Unigine::Vector<int> & surfaces;
@@ -660,10 +757,11 @@ TODO for const Unigine::Vector<int> &
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->angle = angle;
     pRunner->surfaces = surfaces;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -680,23 +778,36 @@ static PyObject * unigine_Mesh_create_normals(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // int target;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // int target;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->createNormals(surface, target);
+                retOriginal = unigine_object_ptr->createNormals(surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             int target;
@@ -704,10 +815,11 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -724,28 +836,47 @@ static PyObject * unigine_Mesh_create_normals(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // float angle;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // float angle;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for float
+    if (!PyFloat_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"angle\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    float angle = PyFloat_AsDouble(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->createNormals(angle, surface, target);
+                retOriginal = unigine_object_ptr->createNormals(angle, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             float angle;
             int surface;
@@ -754,11 +885,12 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->angle = angle;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -779,15 +911,16 @@ static PyObject * unigine_Mesh_get_num_bones(unigine_Mesh* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumBones();
+                retOriginal = unigine_object_ptr->getNumBones();
             };
-            // args
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -804,16 +937,15 @@ static PyObject * unigine_Mesh_find_bone(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
+    PyObject *pArg1 = NULL; // const char * name;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -821,17 +953,19 @@ static PyObject * unigine_Mesh_find_bone(unigine_Mesh* self, PyObject *args) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->findBone(name);
+                retOriginal = unigine_object_ptr->findBone(name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -848,30 +982,36 @@ static PyObject * unigine_Mesh_add_bone(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
-    PyObject *pArg2; // int parent;
+    PyObject *pArg1 = NULL; // const char * name;
+    PyObject *pArg2 = NULL; // int parent;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"parent\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int parent = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addBone(name, parent);
+                retOriginal = unigine_object_ptr->addBone(name, parent);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             int parent;
@@ -879,10 +1019,11 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     pRunner->parent = parent;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -899,21 +1040,26 @@ static PyObject * unigine_Mesh_set_bone_name(unigine_Mesh* self, PyObject *args)
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int bone;
-    PyObject *pArg2; // const char * name;
+    PyObject *pArg1 = NULL; // int bone;
+    PyObject *pArg2 = NULL; // const char * name;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"bone\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int bone = PyLong_AsLong(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg2);
 
@@ -921,22 +1067,33 @@ TODO for int
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setBoneName(bone, name);
+                unigine_object_ptr->setBoneName(bone, name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int bone;
             const char * name;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->bone = bone;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -948,27 +1105,35 @@ static PyObject * unigine_Mesh_get_bone_name(unigine_Mesh* self, PyObject *args)
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int bone;
+    PyObject *pArg1 = NULL; // int bone;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"bone\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int bone = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getBoneName(bone);
+                retOriginal = unigine_object_ptr->getBoneName(bone);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int bone;
             // return
             const char * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->bone = bone;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const char * retOriginal = pRunner->retOriginal;
@@ -985,37 +1150,60 @@ static PyObject * unigine_Mesh_set_bone_parent(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int bone;
-    PyObject *pArg2; // int parent;
+    PyObject *pArg1 = NULL; // int bone;
+    PyObject *pArg2 = NULL; // int parent;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"bone\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int bone = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"parent\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int parent = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setBoneParent(bone, parent);
+                unigine_object_ptr->setBoneParent(bone, parent);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int bone;
             int parent;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->bone = bone;
     pRunner->parent = parent;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1027,27 +1215,35 @@ static PyObject * unigine_Mesh_get_bone_parent(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int bone;
+    PyObject *pArg1 = NULL; // int bone;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"bone\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int bone = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getBoneParent(bone);
+                retOriginal = unigine_object_ptr->getBoneParent(bone);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int bone;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->bone = bone;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1064,12 +1260,18 @@ static PyObject * unigine_Mesh_set_bone_transform(unigine_Mesh* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int bone;
-    PyObject *pArg2; // const Unigine::Math::mat4 & transform;
+    PyObject *pArg1 = NULL; // int bone;
+    PyObject *pArg2 = NULL; // const Unigine::Math::mat4 & transform;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"bone\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int bone = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -1079,22 +1281,33 @@ TODO for const Unigine::Math::mat4 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setBoneTransform(bone, transform);
+                unigine_object_ptr->setBoneTransform(bone, transform);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int bone;
             const Unigine::Math::mat4 & transform;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->bone = bone;
     pRunner->transform = transform;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1106,27 +1319,35 @@ static PyObject * unigine_Mesh_get_bone_transform(unigine_Mesh* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int bone;
+    PyObject *pArg1 = NULL; // int bone;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"bone\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int bone = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getBoneTransform(bone);
+                retOriginal = unigine_object_ptr->getBoneTransform(bone);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int bone;
             // return
             Unigine::Math::mat4 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->bone = bone;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::mat4 retOriginal = pRunner->retOriginal;
@@ -1143,9 +1364,9 @@ static PyObject * unigine_Mesh_set_bone_transforms(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<Unigine::Math::mat4> & transforms;
-    PyObject *pArg2; // int animation;
-    PyObject *pArg3; // int frame;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<Unigine::Math::mat4> & transforms;
+    PyObject *pArg2 = NULL; // int animation;
+    PyObject *pArg3 = NULL; // int frame;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -1153,18 +1374,31 @@ TODO for const Unigine::Vector<Unigine::Math::mat4> &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"animation\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int animation = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"frame\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int frame = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->setBoneTransforms(transforms, animation, frame);
+                retOriginal = unigine_object_ptr->setBoneTransforms(transforms, animation, frame);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Vector<Unigine::Math::mat4> & transforms;
             int animation;
@@ -1173,11 +1407,12 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->transforms = transforms;
     pRunner->animation = animation;
     pRunner->frame = frame;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1194,9 +1429,9 @@ static PyObject * unigine_Mesh_get_bone_transforms(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // Unigine::Vector<Unigine::Math::mat4> & transforms;
-    PyObject *pArg2; // int animation;
-    PyObject *pArg3; // int frame;
+    PyObject *pArg1 = NULL; // Unigine::Vector<Unigine::Math::mat4> & transforms;
+    PyObject *pArg2 = NULL; // int animation;
+    PyObject *pArg3 = NULL; // int frame;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -1204,18 +1439,31 @@ TODO for Unigine::Vector<Unigine::Math::mat4> &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"animation\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int animation = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"frame\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int frame = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getBoneTransforms(transforms, animation, frame);
+                retOriginal = unigine_object_ptr->getBoneTransforms(transforms, animation, frame);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             Unigine::Vector<Unigine::Math::mat4> & transforms;
             int animation;
@@ -1224,11 +1472,12 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->transforms = transforms;
     pRunner->animation = animation;
     pRunner->frame = frame;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1249,15 +1498,16 @@ static PyObject * unigine_Mesh_get_num_animations(unigine_Mesh* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumAnimations();
+                retOriginal = unigine_object_ptr->getNumAnimations();
             };
-            // args
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1274,16 +1524,15 @@ static PyObject * unigine_Mesh_find_animation(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
+    PyObject *pArg1 = NULL; // const char * name;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -1291,17 +1540,19 @@ static PyObject * unigine_Mesh_find_animation(unigine_Mesh* self, PyObject *args
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->findAnimation(name);
+                retOriginal = unigine_object_ptr->findAnimation(name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1322,18 +1573,28 @@ static PyObject * unigine_Mesh_sort_animations(unigine_Mesh* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->sortAnimations();
+                unigine_object_ptr->sortAnimations();
             };
-            // args
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1345,16 +1606,15 @@ static PyObject * unigine_Mesh_add_animation(unigine_Mesh* self, PyObject *args)
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
+    PyObject *pArg1 = NULL; // const char * name;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -1362,17 +1622,19 @@ static PyObject * unigine_Mesh_add_animation(unigine_Mesh* self, PyObject *args)
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addAnimation(name);
+                retOriginal = unigine_object_ptr->addAnimation(name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1389,21 +1651,26 @@ static PyObject * unigine_Mesh_set_animation_name(unigine_Mesh* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int animation;
-    PyObject *pArg2; // const char * name;
+    PyObject *pArg1 = NULL; // int animation;
+    PyObject *pArg2 = NULL; // const char * name;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"animation\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int animation = PyLong_AsLong(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg2);
 
@@ -1411,22 +1678,33 @@ TODO for int
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setAnimationName(animation, name);
+                unigine_object_ptr->setAnimationName(animation, name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int animation;
             const char * name;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->animation = animation;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1438,27 +1716,35 @@ static PyObject * unigine_Mesh_get_animation_name(unigine_Mesh* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int animation;
+    PyObject *pArg1 = NULL; // int animation;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"animation\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int animation = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getAnimationName(animation);
+                retOriginal = unigine_object_ptr->getAnimationName(animation);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int animation;
             // return
             const char * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->animation = animation;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const char * retOriginal = pRunner->retOriginal;
@@ -1475,12 +1761,18 @@ static PyObject * unigine_Mesh_set_animation_bones(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int animation;
-    PyObject *pArg2; // const Unigine::Vector<short> & bones;
+    PyObject *pArg1 = NULL; // int animation;
+    PyObject *pArg2 = NULL; // const Unigine::Vector<short> & bones;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"animation\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int animation = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -1490,22 +1782,33 @@ TODO for const Unigine::Vector<short> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setAnimationBones(animation, bones);
+                unigine_object_ptr->setAnimationBones(animation, bones);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int animation;
             const Unigine::Vector<short> & bones;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->animation = animation;
     pRunner->bones = bones;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1517,12 +1820,18 @@ static PyObject * unigine_Mesh_get_animation_bones(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int animation;
-    PyObject *pArg2; // Unigine::Vector<short> & bones;
+    PyObject *pArg1 = NULL; // int animation;
+    PyObject *pArg2 = NULL; // Unigine::Vector<short> & bones;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"animation\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int animation = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -1532,22 +1841,33 @@ TODO for Unigine::Vector<short> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->getAnimationBones(animation, bones);
+                unigine_object_ptr->getAnimationBones(animation, bones);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int animation;
             Unigine::Vector<short> & bones;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->animation = animation;
     pRunner->bones = bones;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1559,37 +1879,60 @@ static PyObject * unigine_Mesh_set_num_animation_frames(unigine_Mesh* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int animation;
-    PyObject *pArg2; // int num;
+    PyObject *pArg1 = NULL; // int animation;
+    PyObject *pArg2 = NULL; // int num;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"animation\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int animation = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setNumAnimationFrames(animation, num);
+                unigine_object_ptr->setNumAnimationFrames(animation, num);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int animation;
             int num;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->animation = animation;
     pRunner->num = num;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1601,27 +1944,35 @@ static PyObject * unigine_Mesh_get_num_animation_frames(unigine_Mesh* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int animation;
+    PyObject *pArg1 = NULL; // int animation;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"animation\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int animation = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumAnimationFrames(animation);
+                retOriginal = unigine_object_ptr->getNumAnimationFrames(animation);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int animation;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->animation = animation;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1638,17 +1989,29 @@ static PyObject * unigine_Mesh_set_animation_frame(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int animation;
-    PyObject *pArg2; // int num;
-    PyObject *pArg3; // const Unigine::Vector<Unigine::Math::mat4> & frames;
+    PyObject *pArg1 = NULL; // int animation;
+    PyObject *pArg2 = NULL; // int num;
+    PyObject *pArg3 = NULL; // const Unigine::Vector<Unigine::Math::mat4> & frames;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"animation\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int animation = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg2);
 
 
     // pArg3
@@ -1658,24 +2021,35 @@ TODO for const Unigine::Vector<Unigine::Math::mat4> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setAnimationFrame(animation, num, frames);
+                unigine_object_ptr->setAnimationFrame(animation, num, frames);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int animation;
             int num;
             const Unigine::Vector<Unigine::Math::mat4> & frames;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->animation = animation;
     pRunner->num = num;
     pRunner->frames = frames;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1687,17 +2061,29 @@ static PyObject * unigine_Mesh_get_animation_frame(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int animation;
-    PyObject *pArg2; // int num;
-    PyObject *pArg3; // Unigine::Vector<Unigine::Math::mat4> & frames;
+    PyObject *pArg1 = NULL; // int animation;
+    PyObject *pArg2 = NULL; // int num;
+    PyObject *pArg3 = NULL; // Unigine::Vector<Unigine::Math::mat4> & frames;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"animation\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int animation = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg2);
 
 
     // pArg3
@@ -1707,24 +2093,35 @@ TODO for Unigine::Vector<Unigine::Math::mat4> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->getAnimationFrame(animation, num, frames);
+                unigine_object_ptr->getAnimationFrame(animation, num, frames);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int animation;
             int num;
             Unigine::Vector<Unigine::Math::mat4> & frames;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->animation = animation;
     pRunner->num = num;
     pRunner->frames = frames;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1736,19 +2133,31 @@ static PyObject * unigine_Mesh_set_animation_frame(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int animation;
-    PyObject *pArg2; // int num;
-    PyObject *pArg3; // const Unigine::Vector<Unigine::Math::vec3> & xyz;
-    PyObject *pArg4; // const Unigine::Vector<Unigine::Math::quat> & rot;
-    PyObject *pArg5; // const Unigine::Vector<Unigine::Math::vec3> & scale;
+    PyObject *pArg1 = NULL; // int animation;
+    PyObject *pArg2 = NULL; // int num;
+    PyObject *pArg3 = NULL; // const Unigine::Vector<Unigine::Math::vec3> & xyz;
+    PyObject *pArg4 = NULL; // const Unigine::Vector<Unigine::Math::quat> & rot;
+    PyObject *pArg5 = NULL; // const Unigine::Vector<Unigine::Math::vec3> & scale;
     PyArg_ParseTuple(args, "OOOOO", &pArg1, &pArg2, &pArg3, &pArg4, &pArg5);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"animation\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int animation = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg2);
 
 
     // pArg3
@@ -1766,8 +2175,9 @@ TODO for const Unigine::Vector<Unigine::Math::vec3> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setAnimationFrame(animation, num, xyz, rot, scale);
+                unigine_object_ptr->setAnimationFrame(animation, num, xyz, rot, scale);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int animation;
             int num;
@@ -1776,18 +2186,28 @@ TODO for const Unigine::Vector<Unigine::Math::vec3> &
             const Unigine::Vector<Unigine::Math::vec3> & scale;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->animation = animation;
     pRunner->num = num;
     pRunner->xyz = xyz;
     pRunner->rot = rot;
     pRunner->scale = scale;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1799,19 +2219,31 @@ static PyObject * unigine_Mesh_get_animation_frame(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int animation;
-    PyObject *pArg2; // int num;
-    PyObject *pArg3; // Unigine::Vector<Unigine::Math::vec3> & xyz;
-    PyObject *pArg4; // Unigine::Vector<Unigine::Math::quat> & rot;
-    PyObject *pArg5; // Unigine::Vector<Unigine::Math::vec3> & scale;
+    PyObject *pArg1 = NULL; // int animation;
+    PyObject *pArg2 = NULL; // int num;
+    PyObject *pArg3 = NULL; // Unigine::Vector<Unigine::Math::vec3> & xyz;
+    PyObject *pArg4 = NULL; // Unigine::Vector<Unigine::Math::quat> & rot;
+    PyObject *pArg5 = NULL; // Unigine::Vector<Unigine::Math::vec3> & scale;
     PyArg_ParseTuple(args, "OOOOO", &pArg1, &pArg2, &pArg3, &pArg4, &pArg5);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"animation\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int animation = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg2);
 
 
     // pArg3
@@ -1829,8 +2261,9 @@ TODO for Unigine::Vector<Unigine::Math::vec3> &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->getAnimationFrame(animation, num, xyz, rot, scale);
+                unigine_object_ptr->getAnimationFrame(animation, num, xyz, rot, scale);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int animation;
             int num;
@@ -1839,18 +2272,28 @@ TODO for Unigine::Vector<Unigine::Math::vec3> &
             Unigine::Vector<Unigine::Math::vec3> & scale;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->animation = animation;
     pRunner->num = num;
     pRunner->xyz = xyz;
     pRunner->rot = rot;
     pRunner->scale = scale;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1866,15 +2309,16 @@ static PyObject * unigine_Mesh_get_num_surfaces(unigine_Mesh* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumSurfaces();
+                retOriginal = unigine_object_ptr->getNumSurfaces();
             };
-            // args
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1891,16 +2335,15 @@ static PyObject * unigine_Mesh_find_surface(unigine_Mesh* self, PyObject *args) 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
+    PyObject *pArg1 = NULL; // const char * name;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -1908,17 +2351,19 @@ static PyObject * unigine_Mesh_find_surface(unigine_Mesh* self, PyObject *args) 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->findSurface(name);
+                retOriginal = unigine_object_ptr->findSurface(name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -1939,18 +2384,28 @@ static PyObject * unigine_Mesh_sort_surfaces(unigine_Mesh* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->sortSurfaces();
+                unigine_object_ptr->sortSurfaces();
             };
-            // args
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -1962,16 +2417,15 @@ static PyObject * unigine_Mesh_add_surface(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
+    PyObject *pArg1 = NULL; // const char * name;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -1979,17 +2433,19 @@ static PyObject * unigine_Mesh_add_surface(unigine_Mesh* self, PyObject *args) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addSurface(name);
+                retOriginal = unigine_object_ptr->addSurface(name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2006,21 +2462,26 @@ static PyObject * unigine_Mesh_set_surface_name(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // const char * name;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // const char * name;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg2);
 
@@ -2028,22 +2489,33 @@ TODO for int
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setSurfaceName(surface, name);
+                unigine_object_ptr->setSurfaceName(surface, name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             const char * name;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2055,27 +2527,35 @@ static PyObject * unigine_Mesh_get_surface_name(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getSurfaceName(surface);
+                retOriginal = unigine_object_ptr->getSurfaceName(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             const char * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const char * retOriginal = pRunner->retOriginal;
@@ -2092,12 +2572,18 @@ static PyObject * unigine_Mesh_set_surface_lightmap_uv_channel(unigine_Mesh* sel
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // char uv_channel;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // char uv_channel;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -2107,22 +2593,33 @@ TODO for char
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setSurfaceLightmapUVChannel(surface, uv_channel);
+                unigine_object_ptr->setSurfaceLightmapUVChannel(surface, uv_channel);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             char uv_channel;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->uv_channel = uv_channel;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2134,27 +2631,35 @@ static PyObject * unigine_Mesh_get_surface_lightmap_uv_channel(unigine_Mesh* sel
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getSurfaceLightmapUVChannel(surface);
+                retOriginal = unigine_object_ptr->getSurfaceLightmapUVChannel(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             char retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     char retOriginal = pRunner->retOriginal;
@@ -2171,12 +2676,18 @@ static PyObject * unigine_Mesh_set_surface_lightmap_resolution(unigine_Mesh* sel
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // Unigine::Mesh::LIGHTMAP_RESOLUTION resolution;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // Unigine::Mesh::LIGHTMAP_RESOLUTION resolution;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -2186,22 +2697,33 @@ TODO for Unigine::Mesh::LIGHTMAP_RESOLUTION
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setSurfaceLightmapResolution(surface, resolution);
+                unigine_object_ptr->setSurfaceLightmapResolution(surface, resolution);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             Unigine::Mesh::LIGHTMAP_RESOLUTION resolution;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->resolution = resolution;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2213,27 +2735,35 @@ static PyObject * unigine_Mesh_get_surface_lightmap_resolution(unigine_Mesh* sel
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getSurfaceLightmapResolution(surface);
+                retOriginal = unigine_object_ptr->getSurfaceLightmapResolution(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             Unigine::Mesh::LIGHTMAP_RESOLUTION retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Mesh::LIGHTMAP_RESOLUTION retOriginal = pRunner->retOriginal;
@@ -2250,37 +2780,60 @@ static PyObject * unigine_Mesh_set_num_surface_targets(unigine_Mesh* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // int num;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // int num;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setNumSurfaceTargets(surface, num);
+                unigine_object_ptr->setNumSurfaceTargets(surface, num);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             int num;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->num = num;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2292,27 +2845,35 @@ static PyObject * unigine_Mesh_get_num_surface_targets(unigine_Mesh* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumSurfaceTargets(surface);
+                retOriginal = unigine_object_ptr->getNumSurfaceTargets(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2329,26 +2890,37 @@ static PyObject * unigine_Mesh_set_surface_target_name(unigine_Mesh* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // int target;
-    PyObject *pArg3; // const char * name;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // int target;
+    PyObject *pArg3 = NULL; // const char * name;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg2);
 
 
     // pArg3
     if (!PyUnicode_Check(pArg3)) {
-        // TODO - error
-        std::cout << "ERROR: pArg3 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg3);
 
@@ -2356,24 +2928,35 @@ TODO for int
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setSurfaceTargetName(surface, target, name);
+                unigine_object_ptr->setSurfaceTargetName(surface, target, name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             int target;
             const char * name;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->target = target;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -2385,23 +2968,36 @@ static PyObject * unigine_Mesh_get_surface_target_name(unigine_Mesh* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // int target;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // int target;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getSurfaceTargetName(surface, target);
+                retOriginal = unigine_object_ptr->getSurfaceTargetName(surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             int target;
@@ -2409,10 +3005,11 @@ TODO for int
             const char * retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     const char * retOriginal = pRunner->retOriginal;
@@ -2429,21 +3026,26 @@ static PyObject * unigine_Mesh_find_surface_target(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // const char * name;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // const char * name;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg2);
 
@@ -2451,8 +3053,9 @@ TODO for int
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->findSurfaceTarget(surface, name);
+                retOriginal = unigine_object_ptr->findSurfaceTarget(surface, name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             const char * name;
@@ -2460,10 +3063,11 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2480,27 +3084,35 @@ static PyObject * unigine_Mesh_create_intersection(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->createIntersection(surface);
+                retOriginal = unigine_object_ptr->createIntersection(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2517,13 +3129,13 @@ static PyObject * unigine_Mesh_get_intersection(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::vec3 & p0;
-    PyObject *pArg2; // const Unigine::Math::vec3 & p1;
-    PyObject *pArg3; // Unigine::Math::vec3 * ret_point;
-    PyObject *pArg4; // Unigine::Math::vec3 * ret_normal;
-    PyObject *pArg5; // int * ret_index;
-    PyObject *pArg6; // int surface;
-    PyObject *pArg7; // int target;
+    PyObject *pArg1 = NULL; // const Unigine::Math::vec3 & p0;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec3 & p1;
+    PyObject *pArg3 = NULL; // Unigine::Math::vec3 * ret_point;
+    PyObject *pArg4 = NULL; // Unigine::Math::vec3 * ret_normal;
+    PyObject *pArg5 = NULL; // int * ret_index;
+    PyObject *pArg6 = NULL; // int surface;
+    PyObject *pArg7 = NULL; // int target;
     PyArg_ParseTuple(args, "OOOOOOO", &pArg1, &pArg2, &pArg3, &pArg4, &pArg5, &pArg6, &pArg7);
 
     // pArg1
@@ -2547,18 +3159,31 @@ TODO for int *
 
 
     // pArg6
-TODO for int
+    if (!PyLong_Check(pArg6)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg6)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg6);
 
 
     // pArg7
-TODO for int
+    if (!PyLong_Check(pArg7)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg7)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg7);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getIntersection(p0, p1, ret_point, ret_normal, ret_index, surface, target);
+                retOriginal = unigine_object_ptr->getIntersection(p0, p1, ret_point, ret_normal, ret_index, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Math::vec3 & p0;
             const Unigine::Math::vec3 & p1;
@@ -2571,6 +3196,7 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->p0 = p0;
     pRunner->p1 = p1;
     pRunner->ret_point = ret_point;
@@ -2579,7 +3205,7 @@ TODO for int
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2596,9 +3222,9 @@ static PyObject * unigine_Mesh_set_surface_transform(unigine_Mesh* self, PyObjec
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::mat4 & transform;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // const Unigine::Math::mat4 & transform;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -2606,18 +3232,31 @@ TODO for const Unigine::Math::mat4 &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->setSurfaceTransform(transform, surface, target);
+                retOriginal = unigine_object_ptr->setSurfaceTransform(transform, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Math::mat4 & transform;
             int surface;
@@ -2626,11 +3265,12 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->transform = transform;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2647,19 +3287,18 @@ static PyObject * unigine_Mesh_add_mesh_surface(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * v;
-    PyObject *pArg2; // const Unigine::Ptr<Unigine::Mesh> & mesh;
-    PyObject *pArg3; // int surface;
-    PyObject *pArg4; // int target;
+    PyObject *pArg1 = NULL; // const char * v;
+    PyObject *pArg2 = NULL; // const Unigine::Ptr<Unigine::Mesh> & mesh;
+    PyObject *pArg3 = NULL; // int surface;
+    PyObject *pArg4 = NULL; // int target;
     PyArg_ParseTuple(args, "OOOO", &pArg1, &pArg2, &pArg3, &pArg4);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"v\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * v = PyUnicode_AsUTF8(pArg1);
 
@@ -2669,18 +3308,31 @@ TODO for const Unigine::Ptr<Unigine::Mesh> &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg4);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addMeshSurface(v, mesh, surface, target);
+                retOriginal = unigine_object_ptr->addMeshSurface(v, mesh, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * v;
             const Unigine::Ptr<Unigine::Mesh> & mesh;
@@ -2690,12 +3342,13 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->v = v;
     pRunner->mesh = mesh;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2712,14 +3365,20 @@ static PyObject * unigine_Mesh_add_mesh_surface(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int v;
-    PyObject *pArg2; // const Unigine::Ptr<Unigine::Mesh> & mesh;
-    PyObject *pArg3; // int surface;
-    PyObject *pArg4; // int target;
+    PyObject *pArg1 = NULL; // int v;
+    PyObject *pArg2 = NULL; // const Unigine::Ptr<Unigine::Mesh> & mesh;
+    PyObject *pArg3 = NULL; // int surface;
+    PyObject *pArg4 = NULL; // int target;
     PyArg_ParseTuple(args, "OOOO", &pArg1, &pArg2, &pArg3, &pArg4);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"v\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int v = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -2727,18 +3386,31 @@ TODO for const Unigine::Ptr<Unigine::Mesh> &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg4);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addMeshSurface(v, mesh, surface, target);
+                retOriginal = unigine_object_ptr->addMeshSurface(v, mesh, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int v;
             const Unigine::Ptr<Unigine::Mesh> & mesh;
@@ -2748,12 +3420,13 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->v = v;
     pRunner->mesh = mesh;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2770,35 +3443,47 @@ static PyObject * unigine_Mesh_add_empty_surface(unigine_Mesh* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
-    PyObject *pArg2; // int num_vertex;
-    PyObject *pArg3; // int num_indices;
+    PyObject *pArg1 = NULL; // const char * name;
+    PyObject *pArg2 = NULL; // int num_vertex;
+    PyObject *pArg3 = NULL; // int num_indices;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num_vertex\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int num_vertex = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num_indices\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int num_indices = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addEmptySurface(name, num_vertex, num_indices);
+                retOriginal = unigine_object_ptr->addEmptySurface(name, num_vertex, num_indices);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             int num_vertex;
@@ -2807,11 +3492,12 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     pRunner->num_vertex = num_vertex;
     pRunner->num_indices = num_indices;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2828,21 +3514,26 @@ static PyObject * unigine_Mesh_add_surface_target(unigine_Mesh* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // const char * name;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // const char * name;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
     if (!PyUnicode_Check(pArg2)) {
-        // TODO - error
-        std::cout << "ERROR: pArg2 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg2);
 
@@ -2850,8 +3541,9 @@ TODO for int
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addSurfaceTarget(surface, name);
+                retOriginal = unigine_object_ptr->addSurfaceTarget(surface, name);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             const char * name;
@@ -2859,10 +3551,11 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->name = name;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2879,17 +3572,16 @@ static PyObject * unigine_Mesh_add_box_surface(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
-    PyObject *pArg2; // const Unigine::Math::vec3 & size;
+    PyObject *pArg1 = NULL; // const char * name;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec3 & size;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
@@ -2901,8 +3593,9 @@ TODO for const Unigine::Math::vec3 &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addBoxSurface(name, size);
+                retOriginal = unigine_object_ptr->addBoxSurface(name, size);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             const Unigine::Math::vec3 & size;
@@ -2910,10 +3603,11 @@ TODO for const Unigine::Math::vec3 &
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     pRunner->size = size;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2930,40 +3624,58 @@ static PyObject * unigine_Mesh_add_plane_surface(unigine_Mesh* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
-    PyObject *pArg2; // float width;
-    PyObject *pArg3; // float height;
-    PyObject *pArg4; // float step;
+    PyObject *pArg1 = NULL; // const char * name;
+    PyObject *pArg2 = NULL; // float width;
+    PyObject *pArg3 = NULL; // float height;
+    PyObject *pArg4 = NULL; // float step;
     PyArg_ParseTuple(args, "OOOO", &pArg1, &pArg2, &pArg3, &pArg4);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
-TODO for float
+    if (!PyFloat_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"width\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    float width = PyFloat_AsDouble(pArg2);
 
 
     // pArg3
-TODO for float
+    if (!PyFloat_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"height\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    float height = PyFloat_AsDouble(pArg3);
 
 
     // pArg4
-TODO for float
+    if (!PyFloat_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"step\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    float step = PyFloat_AsDouble(pArg4);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addPlaneSurface(name, width, height, step);
+                retOriginal = unigine_object_ptr->addPlaneSurface(name, width, height, step);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             float width;
@@ -2973,12 +3685,13 @@ TODO for float
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     pRunner->width = width;
     pRunner->height = height;
     pRunner->step = step;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -2995,40 +3708,58 @@ static PyObject * unigine_Mesh_add_sphere_surface(unigine_Mesh* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
-    PyObject *pArg2; // float radius;
-    PyObject *pArg3; // int stacks;
-    PyObject *pArg4; // int slices;
+    PyObject *pArg1 = NULL; // const char * name;
+    PyObject *pArg2 = NULL; // float radius;
+    PyObject *pArg3 = NULL; // int stacks;
+    PyObject *pArg4 = NULL; // int slices;
     PyArg_ParseTuple(args, "OOOO", &pArg1, &pArg2, &pArg3, &pArg4);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
-TODO for float
+    if (!PyFloat_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"radius\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    float radius = PyFloat_AsDouble(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"stacks\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int stacks = PyLong_AsLong(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"slices\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int slices = PyLong_AsLong(pArg4);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addSphereSurface(name, radius, stacks, slices);
+                retOriginal = unigine_object_ptr->addSphereSurface(name, radius, stacks, slices);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             float radius;
@@ -3038,12 +3769,13 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     pRunner->radius = radius;
     pRunner->stacks = stacks;
     pRunner->slices = slices;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -3060,45 +3792,69 @@ static PyObject * unigine_Mesh_add_capsule_surface(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
-    PyObject *pArg2; // float radius;
-    PyObject *pArg3; // float height;
-    PyObject *pArg4; // int stacks;
-    PyObject *pArg5; // int slices;
+    PyObject *pArg1 = NULL; // const char * name;
+    PyObject *pArg2 = NULL; // float radius;
+    PyObject *pArg3 = NULL; // float height;
+    PyObject *pArg4 = NULL; // int stacks;
+    PyObject *pArg5 = NULL; // int slices;
     PyArg_ParseTuple(args, "OOOOO", &pArg1, &pArg2, &pArg3, &pArg4, &pArg5);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
-TODO for float
+    if (!PyFloat_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"radius\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    float radius = PyFloat_AsDouble(pArg2);
 
 
     // pArg3
-TODO for float
+    if (!PyFloat_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"height\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    float height = PyFloat_AsDouble(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"stacks\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int stacks = PyLong_AsLong(pArg4);
 
 
     // pArg5
-TODO for int
+    if (!PyLong_Check(pArg5)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"slices\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg5)->tp_name);
+        return NULL;
+    }
+    int slices = PyLong_AsLong(pArg5);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addCapsuleSurface(name, radius, height, stacks, slices);
+                retOriginal = unigine_object_ptr->addCapsuleSurface(name, radius, height, stacks, slices);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             float radius;
@@ -3109,13 +3865,14 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     pRunner->radius = radius;
     pRunner->height = height;
     pRunner->stacks = stacks;
     pRunner->slices = slices;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -3132,45 +3889,69 @@ static PyObject * unigine_Mesh_add_cylinder_surface(unigine_Mesh* self, PyObject
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
-    PyObject *pArg2; // float radius;
-    PyObject *pArg3; // float height;
-    PyObject *pArg4; // int stacks;
-    PyObject *pArg5; // int slices;
+    PyObject *pArg1 = NULL; // const char * name;
+    PyObject *pArg2 = NULL; // float radius;
+    PyObject *pArg3 = NULL; // float height;
+    PyObject *pArg4 = NULL; // int stacks;
+    PyObject *pArg5 = NULL; // int slices;
     PyArg_ParseTuple(args, "OOOOO", &pArg1, &pArg2, &pArg3, &pArg4, &pArg5);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
-TODO for float
+    if (!PyFloat_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"radius\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    float radius = PyFloat_AsDouble(pArg2);
 
 
     // pArg3
-TODO for float
+    if (!PyFloat_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"height\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    float height = PyFloat_AsDouble(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"stacks\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int stacks = PyLong_AsLong(pArg4);
 
 
     // pArg5
-TODO for int
+    if (!PyLong_Check(pArg5)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"slices\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg5)->tp_name);
+        return NULL;
+    }
+    int slices = PyLong_AsLong(pArg5);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addCylinderSurface(name, radius, height, stacks, slices);
+                retOriginal = unigine_object_ptr->addCylinderSurface(name, radius, height, stacks, slices);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             float radius;
@@ -3181,13 +3962,14 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     pRunner->radius = radius;
     pRunner->height = height;
     pRunner->stacks = stacks;
     pRunner->slices = slices;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -3204,45 +3986,69 @@ static PyObject * unigine_Mesh_add_prism_surface(unigine_Mesh* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
-    PyObject *pArg2; // float size_0;
-    PyObject *pArg3; // float size_1;
-    PyObject *pArg4; // float height;
-    PyObject *pArg5; // int sides;
+    PyObject *pArg1 = NULL; // const char * name;
+    PyObject *pArg2 = NULL; // float size_0;
+    PyObject *pArg3 = NULL; // float size_1;
+    PyObject *pArg4 = NULL; // float height;
+    PyObject *pArg5 = NULL; // int sides;
     PyArg_ParseTuple(args, "OOOOO", &pArg1, &pArg2, &pArg3, &pArg4, &pArg5);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
-TODO for float
+    if (!PyFloat_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"size_0\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    float size_0 = PyFloat_AsDouble(pArg2);
 
 
     // pArg3
-TODO for float
+    if (!PyFloat_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"size_1\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    float size_1 = PyFloat_AsDouble(pArg3);
 
 
     // pArg4
-TODO for float
+    if (!PyFloat_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"height\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    float height = PyFloat_AsDouble(pArg4);
 
 
     // pArg5
-TODO for int
+    if (!PyLong_Check(pArg5)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"sides\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg5)->tp_name);
+        return NULL;
+    }
+    int sides = PyLong_AsLong(pArg5);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addPrismSurface(name, size_0, size_1, height, sides);
+                retOriginal = unigine_object_ptr->addPrismSurface(name, size_0, size_1, height, sides);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             float size_0;
@@ -3253,13 +4059,14 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     pRunner->size_0 = size_0;
     pRunner->size_1 = size_1;
     pRunner->height = height;
     pRunner->sides = sides;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -3276,30 +4083,36 @@ static PyObject * unigine_Mesh_add_icosahedron_surface(unigine_Mesh* self, PyObj
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
-    PyObject *pArg2; // float radius;
+    PyObject *pArg1 = NULL; // const char * name;
+    PyObject *pArg2 = NULL; // float radius;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
-TODO for float
+    if (!PyFloat_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"radius\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    float radius = PyFloat_AsDouble(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addIcosahedronSurface(name, radius);
+                retOriginal = unigine_object_ptr->addIcosahedronSurface(name, radius);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             float radius;
@@ -3307,10 +4120,11 @@ TODO for float
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     pRunner->radius = radius;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -3327,30 +4141,36 @@ static PyObject * unigine_Mesh_add_dodecahedron_surface(unigine_Mesh* self, PyOb
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const char * name;
-    PyObject *pArg2; // float radius;
+    PyObject *pArg1 = NULL; // const char * name;
+    PyObject *pArg2 = NULL; // float radius;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
     if (!PyUnicode_Check(pArg1)) {
-        // TODO - error
-        std::cout << "ERROR: pArg1 No unicoode " << std::endl;
-        Py_INCREF(Py_None);
-        ret = Py_None;
-        return ret;
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"name\" to %s must be a strint object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
     }
     const char * name = PyUnicode_AsUTF8(pArg1);
 
 
     // pArg2
-TODO for float
+    if (!PyFloat_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"radius\" to %s must be a float object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    float radius = PyFloat_AsDouble(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->addDodecahedronSurface(name, radius);
+                retOriginal = unigine_object_ptr->addDodecahedronSurface(name, radius);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const char * name;
             float radius;
@@ -3358,10 +4178,11 @@ TODO for float
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->name = name;
     pRunner->radius = radius;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -3378,27 +4199,35 @@ static PyObject * unigine_Mesh_get_num_c_vertex(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumCVertex(surface);
+                retOriginal = unigine_object_ptr->getNumCVertex(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -3415,27 +4244,35 @@ static PyObject * unigine_Mesh_get_num_t_vertex(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumTVertex(surface);
+                retOriginal = unigine_object_ptr->getNumTVertex(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -3452,27 +4289,35 @@ static PyObject * unigine_Mesh_remap_c_vertex(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->remapCVertex(surface);
+                retOriginal = unigine_object_ptr->remapCVertex(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -3489,37 +4334,60 @@ static PyObject * unigine_Mesh_set_num_weights(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int size;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int size;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"size\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int size = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setNumWeights(size, surface);
+                unigine_object_ptr->setNumWeights(size, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int size;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->size = size;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -3531,27 +4399,35 @@ static PyObject * unigine_Mesh_get_num_weights(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumWeights(surface);
+                retOriginal = unigine_object_ptr->getNumWeights(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -3568,44 +4444,73 @@ static PyObject * unigine_Mesh_set_weight_count(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int count;
-    PyObject *pArg3; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int count;
+    PyObject *pArg3 = NULL; // int surface;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"count\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int count = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setWeightCount(num, count, surface);
+                unigine_object_ptr->setWeightCount(num, count, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int count;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->count = count;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -3617,23 +4522,36 @@ static PyObject * unigine_Mesh_get_weight_count(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getWeightCount(num, surface);
+                retOriginal = unigine_object_ptr->getWeightCount(num, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int surface;
@@ -3641,10 +4559,11 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -3661,13 +4580,19 @@ static PyObject * unigine_Mesh_set_weight_bones(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // const Unigine::Math::ivec4 & bones;
-    PyObject *pArg3; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // const Unigine::Math::ivec4 & bones;
+    PyObject *pArg3 = NULL; // int surface;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -3675,30 +4600,47 @@ TODO for const Unigine::Math::ivec4 &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setWeightBones(num, bones, surface);
+                unigine_object_ptr->setWeightBones(num, bones, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             const Unigine::Math::ivec4 & bones;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->bones = bones;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -3710,23 +4652,36 @@ static PyObject * unigine_Mesh_get_weight_bones(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getWeightBones(num, surface);
+                retOriginal = unigine_object_ptr->getWeightBones(num, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int surface;
@@ -3734,10 +4689,11 @@ TODO for int
             Unigine::Math::ivec4 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::ivec4 retOriginal = pRunner->retOriginal;
@@ -3754,13 +4710,19 @@ static PyObject * unigine_Mesh_set_weight_weights(unigine_Mesh* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // const Unigine::Math::vec4 & weights;
-    PyObject *pArg3; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec4 & weights;
+    PyObject *pArg3 = NULL; // int surface;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -3768,30 +4730,47 @@ TODO for const Unigine::Math::vec4 &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setWeightWeights(num, weights, surface);
+                unigine_object_ptr->setWeightWeights(num, weights, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             const Unigine::Math::vec4 & weights;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->weights = weights;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -3803,23 +4782,36 @@ static PyObject * unigine_Mesh_get_weight_weights(unigine_Mesh* self, PyObject *
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getWeightWeights(num, surface);
+                retOriginal = unigine_object_ptr->getWeightWeights(num, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int surface;
@@ -3827,10 +4819,11 @@ TODO for int
             Unigine::Math::vec4 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec4 retOriginal = pRunner->retOriginal;
@@ -3847,44 +4840,73 @@ static PyObject * unigine_Mesh_set_num_vertex(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int size;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // int size;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"size\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int size = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setNumVertex(size, surface, target);
+                unigine_object_ptr->setNumVertex(size, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int size;
             int surface;
             int target;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->size = size;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -3896,23 +4918,36 @@ static PyObject * unigine_Mesh_get_num_vertex(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // int target;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // int target;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumVertex(surface, target);
+                retOriginal = unigine_object_ptr->getNumVertex(surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             int target;
@@ -3920,10 +4955,11 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -3940,9 +4976,9 @@ static PyObject * unigine_Mesh_add_vertex(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<Unigine::Math::vec3> & vertices;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<Unigine::Math::vec3> & vertices;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -3950,34 +4986,57 @@ TODO for const Unigine::Vector<Unigine::Math::vec3> &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addVertex(vertices, surface, target);
+                unigine_object_ptr->addVertex(vertices, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Vector<Unigine::Math::vec3> & vertices;
             int surface;
             int target;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->vertices = vertices;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -3989,9 +5048,9 @@ static PyObject * unigine_Mesh_add_vertex(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::vec3 & vertex;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // const Unigine::Math::vec3 & vertex;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -3999,34 +5058,57 @@ TODO for const Unigine::Math::vec3 &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addVertex(vertex, surface, target);
+                unigine_object_ptr->addVertex(vertex, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Math::vec3 & vertex;
             int surface;
             int target;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->vertex = vertex;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4038,14 +5120,20 @@ static PyObject * unigine_Mesh_set_vertex(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // const Unigine::Math::vec3 & vertex;
-    PyObject *pArg3; // int surface;
-    PyObject *pArg4; // int target;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec3 & vertex;
+    PyObject *pArg3 = NULL; // int surface;
+    PyObject *pArg4 = NULL; // int target;
     PyArg_ParseTuple(args, "OOOO", &pArg1, &pArg2, &pArg3, &pArg4);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -4053,18 +5141,31 @@ TODO for const Unigine::Math::vec3 &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg4);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setVertex(num, vertex, surface, target);
+                unigine_object_ptr->setVertex(num, vertex, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             const Unigine::Math::vec3 & vertex;
@@ -4072,17 +5173,27 @@ TODO for int
             int target;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->vertex = vertex;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4094,28 +5205,47 @@ static PyObject * unigine_Mesh_get_vertex(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getVertex(num, surface, target);
+                retOriginal = unigine_object_ptr->getVertex(num, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int surface;
@@ -4124,11 +5254,12 @@ TODO for int
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -4145,37 +5276,60 @@ static PyObject * unigine_Mesh_set_num_tex_coords0(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int size;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int size;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"size\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int size = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setNumTexCoords0(size, surface);
+                unigine_object_ptr->setNumTexCoords0(size, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int size;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->size = size;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4187,27 +5341,35 @@ static PyObject * unigine_Mesh_get_num_tex_coords0(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumTexCoords0(surface);
+                retOriginal = unigine_object_ptr->getNumTexCoords0(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -4224,8 +5386,8 @@ static PyObject * unigine_Mesh_add_tex_coords0(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<Unigine::Math::vec2> & texcoords;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<Unigine::Math::vec2> & texcoords;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -4233,28 +5395,45 @@ TODO for const Unigine::Vector<Unigine::Math::vec2> &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addTexCoords0(texcoords, surface);
+                unigine_object_ptr->addTexCoords0(texcoords, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Vector<Unigine::Math::vec2> & texcoords;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->texcoords = texcoords;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4266,8 +5445,8 @@ static PyObject * unigine_Mesh_add_tex_coord0(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::vec2 & texcoord;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // const Unigine::Math::vec2 & texcoord;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -4275,28 +5454,45 @@ TODO for const Unigine::Math::vec2 &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addTexCoord0(texcoord, surface);
+                unigine_object_ptr->addTexCoord0(texcoord, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Math::vec2 & texcoord;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->texcoord = texcoord;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4308,13 +5504,19 @@ static PyObject * unigine_Mesh_set_tex_coord0(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // const Unigine::Math::vec2 & texcoord;
-    PyObject *pArg3; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec2 & texcoord;
+    PyObject *pArg3 = NULL; // int surface;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -4322,30 +5524,47 @@ TODO for const Unigine::Math::vec2 &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setTexCoord0(num, texcoord, surface);
+                unigine_object_ptr->setTexCoord0(num, texcoord, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             const Unigine::Math::vec2 & texcoord;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->texcoord = texcoord;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4357,23 +5576,36 @@ static PyObject * unigine_Mesh_get_tex_coord0(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getTexCoord0(num, surface);
+                retOriginal = unigine_object_ptr->getTexCoord0(num, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int surface;
@@ -4381,10 +5613,11 @@ TODO for int
             Unigine::Math::vec2 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec2 retOriginal = pRunner->retOriginal;
@@ -4401,37 +5634,60 @@ static PyObject * unigine_Mesh_set_num_tex_coords1(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int size;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int size;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"size\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int size = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setNumTexCoords1(size, surface);
+                unigine_object_ptr->setNumTexCoords1(size, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int size;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->size = size;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4443,27 +5699,35 @@ static PyObject * unigine_Mesh_get_num_tex_coords1(unigine_Mesh* self, PyObject 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumTexCoords1(surface);
+                retOriginal = unigine_object_ptr->getNumTexCoords1(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -4480,8 +5744,8 @@ static PyObject * unigine_Mesh_add_tex_coords1(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<Unigine::Math::vec2> & texcoords;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<Unigine::Math::vec2> & texcoords;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -4489,28 +5753,45 @@ TODO for const Unigine::Vector<Unigine::Math::vec2> &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addTexCoords1(texcoords, surface);
+                unigine_object_ptr->addTexCoords1(texcoords, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Vector<Unigine::Math::vec2> & texcoords;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->texcoords = texcoords;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4522,8 +5803,8 @@ static PyObject * unigine_Mesh_add_tex_coord1(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::vec2 & texcoord;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // const Unigine::Math::vec2 & texcoord;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -4531,28 +5812,45 @@ TODO for const Unigine::Math::vec2 &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addTexCoord1(texcoord, surface);
+                unigine_object_ptr->addTexCoord1(texcoord, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Math::vec2 & texcoord;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->texcoord = texcoord;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4564,13 +5862,19 @@ static PyObject * unigine_Mesh_set_tex_coord1(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // const Unigine::Math::vec2 & texcoord;
-    PyObject *pArg3; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec2 & texcoord;
+    PyObject *pArg3 = NULL; // int surface;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -4578,30 +5882,47 @@ TODO for const Unigine::Math::vec2 &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setTexCoord1(num, texcoord, surface);
+                unigine_object_ptr->setTexCoord1(num, texcoord, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             const Unigine::Math::vec2 & texcoord;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->texcoord = texcoord;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4613,23 +5934,36 @@ static PyObject * unigine_Mesh_get_tex_coord1(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getTexCoord1(num, surface);
+                retOriginal = unigine_object_ptr->getTexCoord1(num, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int surface;
@@ -4637,10 +5971,11 @@ TODO for int
             Unigine::Math::vec2 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec2 retOriginal = pRunner->retOriginal;
@@ -4657,44 +5992,73 @@ static PyObject * unigine_Mesh_set_num_normals(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int size;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // int size;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"size\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int size = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setNumNormals(size, surface, target);
+                unigine_object_ptr->setNumNormals(size, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int size;
             int surface;
             int target;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->size = size;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4706,23 +6070,36 @@ static PyObject * unigine_Mesh_get_num_normals(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // int target;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // int target;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumNormals(surface, target);
+                retOriginal = unigine_object_ptr->getNumNormals(surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             int target;
@@ -4730,10 +6107,11 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -4750,9 +6128,9 @@ static PyObject * unigine_Mesh_add_normals(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<Unigine::Math::vec3> & normals;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<Unigine::Math::vec3> & normals;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -4760,34 +6138,57 @@ TODO for const Unigine::Vector<Unigine::Math::vec3> &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addNormals(normals, surface, target);
+                unigine_object_ptr->addNormals(normals, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Vector<Unigine::Math::vec3> & normals;
             int surface;
             int target;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->normals = normals;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4799,9 +6200,9 @@ static PyObject * unigine_Mesh_add_normal(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::vec3 & normal;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // const Unigine::Math::vec3 & normal;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -4809,34 +6210,57 @@ TODO for const Unigine::Math::vec3 &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addNormal(normal, surface, target);
+                unigine_object_ptr->addNormal(normal, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Math::vec3 & normal;
             int surface;
             int target;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->normal = normal;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4848,14 +6272,20 @@ static PyObject * unigine_Mesh_set_normal(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // const Unigine::Math::vec3 & normal;
-    PyObject *pArg3; // int surface;
-    PyObject *pArg4; // int target;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec3 & normal;
+    PyObject *pArg3 = NULL; // int surface;
+    PyObject *pArg4 = NULL; // int target;
     PyArg_ParseTuple(args, "OOOO", &pArg1, &pArg2, &pArg3, &pArg4);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -4863,18 +6293,31 @@ TODO for const Unigine::Math::vec3 &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg4);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setNormal(num, normal, surface, target);
+                unigine_object_ptr->setNormal(num, normal, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             const Unigine::Math::vec3 & normal;
@@ -4882,17 +6325,27 @@ TODO for int
             int target;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->normal = normal;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -4904,28 +6357,47 @@ static PyObject * unigine_Mesh_get_normal(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNormal(num, surface, target);
+                retOriginal = unigine_object_ptr->getNormal(num, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int surface;
@@ -4934,11 +6406,12 @@ TODO for int
             Unigine::Math::vec3 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec3 retOriginal = pRunner->retOriginal;
@@ -4955,44 +6428,73 @@ static PyObject * unigine_Mesh_set_num_tangents(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int size;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // int size;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"size\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int size = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setNumTangents(size, surface, target);
+                unigine_object_ptr->setNumTangents(size, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int size;
             int surface;
             int target;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->size = size;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5004,23 +6506,36 @@ static PyObject * unigine_Mesh_get_num_tangents(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // int tangent;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // int tangent;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"tangent\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int tangent = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumTangents(surface, tangent);
+                retOriginal = unigine_object_ptr->getNumTangents(surface, tangent);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             int tangent;
@@ -5028,10 +6543,11 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->tangent = tangent;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -5048,9 +6564,9 @@ static PyObject * unigine_Mesh_add_tangents(unigine_Mesh* self, PyObject *args) 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<Unigine::Math::quat> & tangents;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<Unigine::Math::quat> & tangents;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -5058,34 +6574,57 @@ TODO for const Unigine::Vector<Unigine::Math::quat> &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addTangents(tangents, surface, target);
+                unigine_object_ptr->addTangents(tangents, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Vector<Unigine::Math::quat> & tangents;
             int surface;
             int target;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->tangents = tangents;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5097,9 +6636,9 @@ static PyObject * unigine_Mesh_add_tangent(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::quat & tangent;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // const Unigine::Math::quat & tangent;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
@@ -5107,34 +6646,57 @@ TODO for const Unigine::Math::quat &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addTangent(tangent, surface, target);
+                unigine_object_ptr->addTangent(tangent, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Math::quat & tangent;
             int surface;
             int target;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->tangent = tangent;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5146,14 +6708,20 @@ static PyObject * unigine_Mesh_set_tangent(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // const Unigine::Math::quat & tangent;
-    PyObject *pArg3; // int surface;
-    PyObject *pArg4; // int target;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // const Unigine::Math::quat & tangent;
+    PyObject *pArg3 = NULL; // int surface;
+    PyObject *pArg4 = NULL; // int target;
     PyArg_ParseTuple(args, "OOOO", &pArg1, &pArg2, &pArg3, &pArg4);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -5161,18 +6729,31 @@ TODO for const Unigine::Math::quat &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     // pArg4
-TODO for int
+    if (!PyLong_Check(pArg4)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg4)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg4);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setTangent(num, tangent, surface, target);
+                unigine_object_ptr->setTangent(num, tangent, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             const Unigine::Math::quat & tangent;
@@ -5180,17 +6761,27 @@ TODO for int
             int target;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->tangent = tangent;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5202,28 +6793,47 @@ static PyObject * unigine_Mesh_get_tangent(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int surface;
-    PyObject *pArg3; // int target;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int surface;
+    PyObject *pArg3 = NULL; // int target;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getTangent(num, surface, target);
+                retOriginal = unigine_object_ptr->getTangent(num, surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int surface;
@@ -5232,11 +6842,12 @@ TODO for int
             Unigine::Math::quat retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::quat retOriginal = pRunner->retOriginal;
@@ -5253,37 +6864,60 @@ static PyObject * unigine_Mesh_set_num_colors(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int size;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int size;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"size\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int size = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setNumColors(size, surface);
+                unigine_object_ptr->setNumColors(size, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int size;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->size = size;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5295,27 +6929,35 @@ static PyObject * unigine_Mesh_get_num_colors(unigine_Mesh* self, PyObject *args
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumColors(surface);
+                retOriginal = unigine_object_ptr->getNumColors(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -5332,8 +6974,8 @@ static PyObject * unigine_Mesh_add_colors(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<Unigine::Math::vec4> & colors;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<Unigine::Math::vec4> & colors;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -5341,28 +6983,45 @@ TODO for const Unigine::Vector<Unigine::Math::vec4> &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addColors(colors, surface);
+                unigine_object_ptr->addColors(colors, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Vector<Unigine::Math::vec4> & colors;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->colors = colors;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5374,8 +7033,8 @@ static PyObject * unigine_Mesh_add_color(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::vec4 & color;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // const Unigine::Math::vec4 & color;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -5383,28 +7042,45 @@ TODO for const Unigine::Math::vec4 &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addColor(color, surface);
+                unigine_object_ptr->addColor(color, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Math::vec4 & color;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->color = color;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5416,13 +7092,19 @@ static PyObject * unigine_Mesh_set_color(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // const Unigine::Math::vec4 & color;
-    PyObject *pArg3; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // const Unigine::Math::vec4 & color;
+    PyObject *pArg3 = NULL; // int surface;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
@@ -5430,30 +7112,47 @@ TODO for const Unigine::Math::vec4 &
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setColor(num, color, surface);
+                unigine_object_ptr->setColor(num, color, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             const Unigine::Math::vec4 & color;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->color = color;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5465,23 +7164,36 @@ static PyObject * unigine_Mesh_get_color(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getColor(num, surface);
+                retOriginal = unigine_object_ptr->getColor(num, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int surface;
@@ -5489,10 +7201,11 @@ TODO for int
             Unigine::Math::vec4 retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::vec4 retOriginal = pRunner->retOriginal;
@@ -5509,37 +7222,60 @@ static PyObject * unigine_Mesh_set_num_c_indices(unigine_Mesh* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int size;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int size;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"size\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int size = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setNumCIndices(size, surface);
+                unigine_object_ptr->setNumCIndices(size, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int size;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->size = size;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5551,27 +7287,35 @@ static PyObject * unigine_Mesh_get_num_c_indices(unigine_Mesh* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumCIndices(surface);
+                retOriginal = unigine_object_ptr->getNumCIndices(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -5588,8 +7332,8 @@ static PyObject * unigine_Mesh_add_c_indices(unigine_Mesh* self, PyObject *args)
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<int> & indices;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<int> & indices;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -5597,28 +7341,45 @@ TODO for const Unigine::Vector<int> &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addCIndices(indices, surface);
+                unigine_object_ptr->addCIndices(indices, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Vector<int> & indices;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->indices = indices;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5630,37 +7391,60 @@ static PyObject * unigine_Mesh_add_c_index(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int index;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int index;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"index\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int index = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addCIndex(index, surface);
+                unigine_object_ptr->addCIndex(index, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int index;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->index = index;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5672,44 +7456,73 @@ static PyObject * unigine_Mesh_set_c_index(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int index;
-    PyObject *pArg3; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int index;
+    PyObject *pArg3 = NULL; // int surface;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"index\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int index = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setCIndex(num, index, surface);
+                unigine_object_ptr->setCIndex(num, index, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int index;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->index = index;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5721,23 +7534,36 @@ static PyObject * unigine_Mesh_get_c_index(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getCIndex(num, surface);
+                retOriginal = unigine_object_ptr->getCIndex(num, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int surface;
@@ -5745,10 +7571,11 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -5765,37 +7592,60 @@ static PyObject * unigine_Mesh_set_num_t_indices(unigine_Mesh* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int size;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int size;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"size\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int size = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setNumTIndices(size, surface);
+                unigine_object_ptr->setNumTIndices(size, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int size;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->size = size;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5807,27 +7657,35 @@ static PyObject * unigine_Mesh_get_num_t_indices(unigine_Mesh* self, PyObject *a
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumTIndices(surface);
+                retOriginal = unigine_object_ptr->getNumTIndices(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -5844,8 +7702,8 @@ static PyObject * unigine_Mesh_add_t_indices(unigine_Mesh* self, PyObject *args)
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<int> & indices;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<int> & indices;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -5853,28 +7711,45 @@ TODO for const Unigine::Vector<int> &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addTIndices(indices, surface);
+                unigine_object_ptr->addTIndices(indices, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Vector<int> & indices;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->indices = indices;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5886,37 +7761,60 @@ static PyObject * unigine_Mesh_add_t_index(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int index;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int index;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"index\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int index = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addTIndex(index, surface);
+                unigine_object_ptr->addTIndex(index, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int index;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->index = index;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5928,44 +7826,73 @@ static PyObject * unigine_Mesh_set_t_index(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int index;
-    PyObject *pArg3; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int index;
+    PyObject *pArg3 = NULL; // int surface;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"index\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int index = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setTIndex(num, index, surface);
+                unigine_object_ptr->setTIndex(num, index, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int index;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->index = index;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -5977,23 +7904,36 @@ static PyObject * unigine_Mesh_get_t_index(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getTIndex(num, surface);
+                retOriginal = unigine_object_ptr->getTIndex(num, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int surface;
@@ -6001,10 +7941,11 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -6021,37 +7962,60 @@ static PyObject * unigine_Mesh_set_num_indices(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int size;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int size;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"size\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int size = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setNumIndices(size, surface);
+                unigine_object_ptr->setNumIndices(size, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int size;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->size = size;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -6063,27 +8027,35 @@ static PyObject * unigine_Mesh_get_num_indices(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNumIndices(surface);
+                retOriginal = unigine_object_ptr->getNumIndices(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -6100,8 +8072,8 @@ static PyObject * unigine_Mesh_add_indices(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Vector<int> & indices;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // const Unigine::Vector<int> & indices;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -6109,28 +8081,45 @@ TODO for const Unigine::Vector<int> &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addIndices(indices, surface);
+                unigine_object_ptr->addIndices(indices, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Vector<int> & indices;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->indices = indices;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -6142,37 +8131,60 @@ static PyObject * unigine_Mesh_add_index(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int index;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int index;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"index\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int index = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->addIndex(index, surface);
+                unigine_object_ptr->addIndex(index, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int index;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->index = index;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -6184,44 +8196,73 @@ static PyObject * unigine_Mesh_set_index(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int index;
-    PyObject *pArg3; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int index;
+    PyObject *pArg3 = NULL; // int surface;
     PyArg_ParseTuple(args, "OOO", &pArg1, &pArg2, &pArg3);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"index\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int index = PyLong_AsLong(pArg2);
 
 
     // pArg3
-TODO for int
+    if (!PyLong_Check(pArg3)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg3)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg3);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setIndex(num, index, surface);
+                unigine_object_ptr->setIndex(num, index, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int index;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->index = index;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -6233,23 +8274,36 @@ static PyObject * unigine_Mesh_get_index(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int num;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // int num;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"num\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int num = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getIndex(num, surface);
+                retOriginal = unigine_object_ptr->getIndex(num, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int num;
             int surface;
@@ -6257,10 +8311,11 @@ TODO for int
             int retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->num = num;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     int retOriginal = pRunner->retOriginal;
@@ -6277,23 +8332,36 @@ static PyObject * unigine_Mesh_get_vertices(unigine_Mesh* self, PyObject *args) 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // int target;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // int target;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getVertices(surface, target);
+                retOriginal = unigine_object_ptr->getVertices(surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             int target;
@@ -6301,10 +8369,11 @@ TODO for int
             Unigine::Vector<Unigine::Math::vec3> & retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::Math::vec3> & retOriginal = pRunner->retOriginal;
@@ -6321,23 +8390,36 @@ static PyObject * unigine_Mesh_get_normals(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // int target;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // int target;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getNormals(surface, target);
+                retOriginal = unigine_object_ptr->getNormals(surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             int target;
@@ -6345,10 +8427,11 @@ TODO for int
             Unigine::Vector<Unigine::Math::vec3> & retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::Math::vec3> & retOriginal = pRunner->retOriginal;
@@ -6365,23 +8448,36 @@ static PyObject * unigine_Mesh_get_tangents(unigine_Mesh* self, PyObject *args) 
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
-    PyObject *pArg2; // int target;
+    PyObject *pArg1 = NULL; // int surface;
+    PyObject *pArg2 = NULL; // int target;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"target\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int target = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getTangents(surface, target);
+                retOriginal = unigine_object_ptr->getTangents(surface, target);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             int target;
@@ -6389,10 +8485,11 @@ TODO for int
             Unigine::Vector<Unigine::Math::quat> & retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     pRunner->target = target;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::Math::quat> & retOriginal = pRunner->retOriginal;
@@ -6409,27 +8506,35 @@ static PyObject * unigine_Mesh_get_tex_coords0(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getTexCoords0(surface);
+                retOriginal = unigine_object_ptr->getTexCoords0(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             Unigine::Vector<Unigine::Math::vec2> & retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::Math::vec2> & retOriginal = pRunner->retOriginal;
@@ -6446,27 +8551,35 @@ static PyObject * unigine_Mesh_get_tex_coords1(unigine_Mesh* self, PyObject *arg
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getTexCoords1(surface);
+                retOriginal = unigine_object_ptr->getTexCoords1(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             Unigine::Vector<Unigine::Math::vec2> & retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::Math::vec2> & retOriginal = pRunner->retOriginal;
@@ -6483,27 +8596,35 @@ static PyObject * unigine_Mesh_get_colors(unigine_Mesh* self, PyObject *args) {
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getColors(surface);
+                retOriginal = unigine_object_ptr->getColors(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             Unigine::Vector<Unigine::Math::bvec4> & retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<Unigine::Math::bvec4> & retOriginal = pRunner->retOriginal;
@@ -6520,27 +8641,35 @@ static PyObject * unigine_Mesh_get_c_indices(unigine_Mesh* self, PyObject *args)
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getCIndices(surface);
+                retOriginal = unigine_object_ptr->getCIndices(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             Unigine::Vector<int> & retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<int> & retOriginal = pRunner->retOriginal;
@@ -6557,27 +8686,35 @@ static PyObject * unigine_Mesh_get_t_indices(unigine_Mesh* self, PyObject *args)
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getTIndices(surface);
+                retOriginal = unigine_object_ptr->getTIndices(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             Unigine::Vector<int> & retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Vector<int> & retOriginal = pRunner->retOriginal;
@@ -6598,15 +8735,16 @@ static PyObject * unigine_Mesh_get_bound_box(unigine_Mesh* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getBoundBox();
+                retOriginal = unigine_object_ptr->getBoundBox();
             };
-            // args
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // return
             Unigine::Math::BoundBox retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::BoundBox retOriginal = pRunner->retOriginal;
@@ -6623,27 +8761,35 @@ static PyObject * unigine_Mesh_get_bound_box(unigine_Mesh* self, PyObject *args)
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getBoundBox(surface);
+                retOriginal = unigine_object_ptr->getBoundBox(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             Unigine::Math::BoundBox retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::BoundBox retOriginal = pRunner->retOriginal;
@@ -6664,15 +8810,16 @@ static PyObject * unigine_Mesh_get_bound_sphere(unigine_Mesh* self) {
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getBoundSphere();
+                retOriginal = unigine_object_ptr->getBoundSphere();
             };
-            // args
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // return
             Unigine::Math::BoundSphere retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::BoundSphere retOriginal = pRunner->retOriginal;
@@ -6689,27 +8836,35 @@ static PyObject * unigine_Mesh_get_bound_sphere(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // int surface;
+    PyObject *pArg1 = NULL; // int surface;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
-TODO for int
+    if (!PyLong_Check(pArg1)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg1)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg1);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                retOriginal = self->unigine_object_ptr->getBoundSphere(surface);
+                retOriginal = unigine_object_ptr->getBoundSphere(surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             int surface;
             // return
             Unigine::Math::BoundSphere retOriginal;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     Unigine::Math::BoundSphere retOriginal = pRunner->retOriginal;
@@ -6726,8 +8881,8 @@ static PyObject * unigine_Mesh_set_bound_box(unigine_Mesh* self, PyObject *args)
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::BoundBox & bb;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // const Unigine::Math::BoundBox & bb;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -6735,28 +8890,45 @@ TODO for const Unigine::Math::BoundBox &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setBoundBox(bb, surface);
+                unigine_object_ptr->setBoundBox(bb, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Math::BoundBox & bb;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->bb = bb;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -6768,7 +8940,7 @@ static PyObject * unigine_Mesh_set_bound_box(unigine_Mesh* self, PyObject *args)
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::BoundBox & bb;
+    PyObject *pArg1 = NULL; // const Unigine::Math::BoundBox & bb;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -6778,20 +8950,31 @@ TODO for const Unigine::Math::BoundBox &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setBoundBox(bb);
+                unigine_object_ptr->setBoundBox(bb);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Math::BoundBox & bb;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->bb = bb;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -6803,8 +8986,8 @@ static PyObject * unigine_Mesh_set_bound_sphere(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::BoundSphere & bs;
-    PyObject *pArg2; // int surface;
+    PyObject *pArg1 = NULL; // const Unigine::Math::BoundSphere & bs;
+    PyObject *pArg2 = NULL; // int surface;
     PyArg_ParseTuple(args, "OO", &pArg1, &pArg2);
 
     // pArg1
@@ -6812,28 +8995,45 @@ TODO for const Unigine::Math::BoundSphere &
 
 
     // pArg2
-TODO for int
+    if (!PyLong_Check(pArg2)) {
+        PyErr_Format(PyExc_TypeError,
+            "Argument \"surface\" to %s must be a int object not a \"%s\"",
+            __FUNCTION__, Py_TYPE(pArg2)->tp_name);
+        return NULL;
+    }
+    int surface = PyLong_AsLong(pArg2);
 
 
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setBoundSphere(bs, surface);
+                unigine_object_ptr->setBoundSphere(bs, surface);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Math::BoundSphere & bs;
             int surface;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->bs = bs;
     pRunner->surface = surface;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -6845,7 +9045,7 @@ static PyObject * unigine_Mesh_set_bound_sphere(unigine_Mesh* self, PyObject *ar
     PyErr_Clear();
     PyObject *ret = NULL;
     // parse args:
-    PyObject *pArg1; // const Unigine::Math::BoundSphere & bs;
+    PyObject *pArg1 = NULL; // const Unigine::Math::BoundSphere & bs;
     PyArg_ParseTuple(args, "O", &pArg1);
 
     // pArg1
@@ -6855,20 +9055,31 @@ TODO for const Unigine::Math::BoundSphere &
     class LocalRunner : public Python3Runner {
         public:
             virtual void run() override {
-                self->unigine_object_ptr->setBoundSphere(bs);
+                unigine_object_ptr->setBoundSphere(bs);
             };
+            Unigine::Ptr<Unigine::Mesh> unigine_object_ptr;
             // args
             const Unigine::Math::BoundSphere & bs;
     };
     auto *pRunner = new LocalRunner();
+    pRunner->unigine_object_ptr = self->unigine_object_ptr;
     pRunner->bs = bs;
     Python3Runner::runInMainThread(pRunner);
-    while(!pRunner->mutexAsync.tryLock(5)) {
+    while (!pRunner->mutexAsync.tryLock(5)) {  // milliseconds
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
     Py_INCREF(Py_None);
     ret = Py_None;
+    assert(!PyErr_Occurred());
+    assert(ret);
+    goto finally;
+except:
+    Py_XDECREF(ret);
+    ret = NULL;
+finally:
+    /* If we were to treat arg as a borrowed reference and had Py_INCREF'd above we
+     * should do this. See below. */
 
     // end
     // return: void
@@ -7497,8 +9708,6 @@ static PyMethodDef unigine_Mesh_methods[] = {
 };
 
 static PyTypeObject unigine_MeshType = {
-
-
     PyVarObject_HEAD_INIT(NULL, 0)
     "unigine.Mesh",             // tp_name
     sizeof(unigine_Mesh) + 256, // tp_basicsize  (TODO magic 256 bytes!!!)
@@ -7616,9 +9825,7 @@ bool Python3UnigineMesh::addClassDefinitionToModule(PyObject* pModule) {
 }
 
 PyObject * Mesh::NewObject(Unigine::Ptr<Unigine::Mesh> unigine_object_ptr) {
-
-    std::cout << "sizeof(unigine_Mesh) = " << sizeof(unigine_Mesh) << std::endl;
-
+    // std::cout << "sizeof(unigine_Mesh) = " << sizeof(unigine_Mesh) << std::endl;
     unigine_Mesh *pInst = PyObject_New(unigine_Mesh, &unigine_MeshType);
     pInst->unigine_object_ptr = unigine_object_ptr;
     // Py_INCREF(pInst);
@@ -7627,7 +9834,7 @@ PyObject * Mesh::NewObject(Unigine::Ptr<Unigine::Mesh> unigine_object_ptr) {
 
 Unigine::Ptr<Unigine::Mesh> Mesh::Convert(PyObject *pObject) {
     if (Py_IS_TYPE(pObject, &unigine_MeshType) == 0) {
-        // TODO error
+        Unigine::Log::error("Invalid type, expected 'Unigine::Ptr<Unigine::Mesh>', but got some another");
     }
     unigine_Mesh *pInst = (unigine_Mesh *)pObject;
     return pInst->unigine_object_ptr;
