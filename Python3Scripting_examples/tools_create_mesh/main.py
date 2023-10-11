@@ -3,18 +3,20 @@ import unigine
 dyn_mesh = unigine.ObjectMeshDynamic.create(unigine.ObjectMeshDynamic.DYNAMIC_ALL);
 
 # TODO find position by a camera
-# viewport_window_id = unigineeditor.ViewportManager.get_active_viewport_window()
-# player = unigineeditor.ViewportManager.get_viewport_window_player(viewport_window_id)
+# viewport_window_id = unigine.ViewportManager.get_active_viewport_window()
+# player = unigine.ViewportManager.get_viewport_window_player(viewport_window_id)
+# 
 # pos = player.get_world_position()
 # rot = player.get_world_rotation()
+# 
+# view_direction = player.get_view_direction()
+# mesh_position = unigine.vec3()
+# direction.set(
+#     direction.x * 10.0 + pos.x,
+#     direction.y * 10.0 + pos.y,
+#     direction.z * 10.0 + pos.z,
+# )
 
-# direction = player.get_view_direction()
-# Unigine::Math::Vec3 direction = {
-#     floatDirection.x,
-#     floatDirection.y,
-#     floatDirection.z
-# };
-# direction *= 10.0f;
 # dyn_mesh.set_world_position(pos + direction);
 # dyn_mesh.set_world_rotation(rot);
 

@@ -37,7 +37,24 @@ PythonExecutor::PythonExecutor(
         m_vWrappers[i]->Call_PyImport_AppendInittab();
     }
 
+    // /// PyByteArray_Type p;
+    // PyObject *o;
+    // PyByteArray_Check(o);
+
+    // PyStatus status;
+
+    // PyConfig config;
+    // PyConfig_InitPythonConfig(&config);
+    // // config.isolated = 1;
+
+    // status = Py_InitializeFromConfig(&config);
+    // if (PyStatus_Exception(status)) {
+    //     // goto exception;
+    // }
+    // PyConfig_Clear(&config);
+
     Py_Initialize();
+
     // Py_SetPythonHome
     // mainstate = PyThreadState_Swap(NULL);
     Py_SetProgramName(L"main.py");

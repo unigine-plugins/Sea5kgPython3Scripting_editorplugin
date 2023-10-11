@@ -61,8 +61,6 @@ set(CMAKE_MAP_IMPORTED_CONFIG_DEBUG ${temp_map_imported})
 unset(temp_map_imported)
 cmake_policy(POP)
 
-
-
 # set(PYTHON3SCRIPTING_VERSION "0.0.2")
 file (STRINGS "${PROJECT_SOURCE_DIR}/../../../../version" PYTHON3SCRIPTING_VERSION)
 
@@ -178,6 +176,7 @@ else()
 	)
 endif()
 
+# SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -rdynamic")
 
 set_target_properties(${current_target}
 	PROPERTIES
@@ -201,6 +200,7 @@ target_link_libraries(${current_target}
 	Qt5::Gui
 	Qt5::Widgets
     QCodeEditor
+	"-Wl,--whole-archive ${PYTHON3_LIB} -Wl,--no-whole-archive"
 	${PYTHON3_LIB}
 	)
 
