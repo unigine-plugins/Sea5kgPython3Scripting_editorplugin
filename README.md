@@ -41,10 +41,18 @@ Required:
 2. Python 3+
 3. on windows: Visual Studio 17 2022
 
+
+
 Build on linux
 
+Python:
+```sh
+$ docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:v2.17 bash -c "cd source/plugins/Sea5kg/Python3Scripting && ./build_python.sh"
 ```
-$ docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:v2.16.1 ./build_plugin.py
+
+Plugin:
+```sh
+$ docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:v2.17 ./build_plugin.py
 ```
 
 
@@ -53,4 +61,11 @@ $ docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:v2.16.
 ### Mp4 to gif
 
 https://ezgif.com/video-to-gif/
+
+or
+
+```
+ffmpeg -ss 4 -t 50 -i create_node.mp4 -vf "fps=5,scale=1600:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 create_node.gif
+```
+
 
