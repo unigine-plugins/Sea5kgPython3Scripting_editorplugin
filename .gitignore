@@ -5,6 +5,7 @@ include/plugins/UnigineUltraleap.h
 include/plugins/UnigineVarjo.h
 
 **/python-bin*
+*.log
 linux_UnigineEditorPlugin_Python3Scripting*
 windows_UnigineEditorPlugin_Python3Scripting*
 lib/
@@ -40,6 +41,8 @@ other/
 **/Python-3.10.1/python-config.py
 **/Python-3.10.1/python-gdb.py
 **/Python-3.10.1/python.bat
+**/Python-3.10.1/**/*.gcda
+**/Python-3.10.1/profile-run-stamp
 
 # Prerequisites
 *.d
