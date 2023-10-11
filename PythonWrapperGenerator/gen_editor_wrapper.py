@@ -781,6 +781,7 @@ make_for_classes = [
     # editor
     "AssetManager",
     "ViewportManager",
+    "ViewportWindow",
     "SelectorNodes",
     "Selection",
     "Vector",
@@ -802,7 +803,9 @@ for _id in cache_classes:
             can_ptr = True
 
         _writer = Python3UnigineWriter(_name, _namespace, _include_filename, can_ptr)
-        _members = _class['@members'].split(' ')
+        _members = []
+        if '@members' in _class:
+            _members = _class['@members'].split(' ')
         for _mem in _members:
             if _mem in cache_function:
                 pass
