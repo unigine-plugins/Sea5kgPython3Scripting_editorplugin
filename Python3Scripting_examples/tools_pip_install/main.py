@@ -7,3 +7,5 @@ def install(package):
         pip._internal.main(['install', package])
 
 install('requests')
+
+pip.main(['list'])
