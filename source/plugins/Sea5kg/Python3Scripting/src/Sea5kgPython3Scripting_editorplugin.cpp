@@ -317,8 +317,20 @@ void Sea5kgPython3Scripting_editorplugin::runPythonScript(ModelExtension *pModel
     QString sPythonHome = QCoreApplication::applicationDirPath() + "/plugins/Sea5kg/Python3Scripting/Python3Home/";
     log_info("PYTHONHOME=" + sPythonHome);
     qputenv("PYTHONHOME", sPythonHome.toLatin1());
+
+    // https://docs.python.org/3/using/cmdline.html
+
     log_info("PYTHONUNBUFFERED=1");
     qputenv("PYTHONUNBUFFERED", "1");
+    log_info("PYTHONUSERBASE=1");
+    qputenv("PYTHONUSERBASE", "1");
+
+
+    // QString sLdLibraryPath = QString(qgetenv("LD_LIBRARY_PATH"));
+    QString sPythonPath = "";
+    sPythonPath += QCoreApplication::applicationDirPath() + "/plugins/Sea5kg/Python3Scripting/Python3Home/lib/python3.10/lib-dynload/" + ":";
+    sPythonPath += QCoreApplication::applicationDirPath() + "/plugins/Sea5kg/Python3Scripting/Python3Home/" + ":";
+    qputenv("PYTHONPATH", sPythonPath.toLatin1());
 
     // QProcessEnvironment proc
 
