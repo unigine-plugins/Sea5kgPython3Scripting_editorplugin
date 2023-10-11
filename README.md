@@ -17,7 +17,7 @@ Pluging for scripting by python3 in Unigine Editor https://unigine.com/get-unigi
 
 [here](https://sea-kg.com/files/unigine-plugins/UnigineEditorPlugin_Python3Scripting/v2.17/)
 
-## Plugins system of Unigine
+## Plugins system of Unigine Editor
 
 ![schema0](docs/plugins/Sea5kg/Python3Scripting/schema0.png)
 
