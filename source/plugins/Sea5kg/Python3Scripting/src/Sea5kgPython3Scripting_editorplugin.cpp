@@ -15,6 +15,7 @@
 #include <iostream>
 #include <QGuiApplication>
 #include <QScreen>
+// #include <dlfcn.h>
 
 // ------------------------------------------------------------------------------------------
 // Sea5kgPython3Scripting_editorplugin
@@ -65,7 +66,6 @@ bool Sea5kgPython3Scripting_editorplugin::init() {
     g_pPython3RunnerMain = this;
 
     log_info("Initialiazed");
-
     return true;
 }
 
@@ -323,7 +323,7 @@ void Sea5kgPython3Scripting_editorplugin::runPythonScript(ModelExtension *pModel
     log_info("PYTHONUNBUFFERED=1");
     qputenv("PYTHONUNBUFFERED", "1");
     log_info("PYTHONUSERBASE=1");
-    qputenv("PYTHONUSERBASE", "1");
+    qputenv("PYTHONUSERBASE", QString(QCoreApplication::applicationDirPath() + "/plugins/Sea5kg/Python3Scripting/Python3Home/").toLatin1());
 
 
     // QString sLdLibraryPath = QString(qgetenv("LD_LIBRARY_PATH"));

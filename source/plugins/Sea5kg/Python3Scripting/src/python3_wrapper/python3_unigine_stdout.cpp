@@ -36,9 +36,15 @@ PyObject* Stdout_flush(PyObject* self, PyObject* args) {
     return Py_BuildValue("");
 }
 
+PyObject* Stdout_isatty(PyObject* self, PyObject* args) {
+    // no-op
+    return PyBool_FromLong(0);
+}
+
 PyMethodDef Stdout_methods[] = {
     {"write", Stdout_write, METH_VARARGS, "sys.stdout.write"},
     {"flush", Stdout_flush, METH_VARARGS, "sys.stdout.flush"},
+    {"isatty", Stdout_isatty, METH_VARARGS, "sys.stdout.isatty"},
     {0, 0, 0, 0} // sentinel
 };
 
