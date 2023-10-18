@@ -1,10 +1,10 @@
 #pragma once
 
-#include "ModelExtension.h"
+#include "Python3ScriptInfo.h"
 
 class IManagePythonScripts {
     public:
-        virtual void addModelExtension(ModelExtension *pModel) = 0;
+        virtual void addModelExtension(Python3ScriptInfo *pModel) = 0;
         virtual void removeModelScriptById(QString sScriptId) = 0;
         virtual void enableModelScriptById(QString sScriptId) = 0;
         virtual void disableModelScriptById(QString sScriptId) = 0;

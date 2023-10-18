@@ -8,7 +8,7 @@
 
 WindowManagePythonScripts::WindowManagePythonScripts(
     QWidget *parent,
-    QVector<ModelExtension *> *vScripts,
+    QVector<Python3ScriptInfo *> *vScripts,
     IManagePythonScripts *pManageScripts
 ) : QDialog(parent) {
     m_pParent = parent;
@@ -59,7 +59,7 @@ WindowManagePythonScripts::WindowManagePythonScripts(
     setFixedHeight(sizeHint().height());
 }
 
-QString WindowManagePythonScripts::makeName(ModelExtension *pModel) {
+QString WindowManagePythonScripts::makeName(Python3ScriptInfo *pModel) {
     QString sName = pModel->getFor() + ": " + pModel->getName();
     if (pModel->isEnabled()) {
         sName += " (enabled)";
@@ -74,7 +74,7 @@ void WindowManagePythonScripts::reloadList() {
 
     for (int i = 0; i < m_vScripts->size(); i++) {
         QListWidgetItem *pItem = new QListWidgetItem(m_pListWidget);
-        ModelExtension *pModel = m_vScripts->at(i);
+        Python3ScriptInfo *pModel = m_vScripts->at(i);
         pItem->setData(Qt::UserRole, QVariant(pModel->getId()));
         pItem->setText(makeName(pModel));
         m_pListWidget->addItem(pItem);
@@ -83,7 +83,7 @@ void WindowManagePythonScripts::reloadList() {
     selectionChanged();
 }
 
-void WindowManagePythonScripts::selectedItem(ModelExtension *pModel) {
+void WindowManagePythonScripts::selectedItem(Python3ScriptInfo *pModel) {
     QString sName = makeName(pModel);
     QListWidgetItem* item = 0;
     for (int i = 0; i < m_pListWidget->count(); ++i) {
@@ -174,7 +174,7 @@ void WindowManagePythonScripts::createClicked() {
             );
             fileMainPy.close();
         }
-        auto pModel = new ModelExtension(newExtDir.absolutePath());
+        auto pModel = new Python3ScriptInfo(newExtDir.absolutePath());
         pModel->setId(sScriptId);
         pModel->setName(sName);
         pModel->setFor(sFor);
@@ -205,7 +205,7 @@ void WindowManagePythonScripts::enableOrDisableClicked() {
         sScriptId = vItems[i]->data(Qt::UserRole).toString();
     }
     for (int i = 0; i < m_vScripts->size(); ++i) {
-        ModelExtension *pModel = m_vScripts->at(i);
+        Python3ScriptInfo *pModel = m_vScripts->at(i);
         if (pModel->getId() == sScriptId) {
             if (pModel->isEnabled()) {
                 m_pManageScripts->disableModelScriptById(sScriptId);
@@ -230,7 +230,7 @@ void WindowManagePythonScripts::selectionChanged() {
         sScriptId = vItems[i]->data(Qt::UserRole).toString();
     }
     for (int i = 0; i < m_vScripts->size(); ++i) {
-        ModelExtension *pModel = m_vScripts->at(i);
+        Python3ScriptInfo *pModel = m_vScripts->at(i);
         if (pModel->getId() == sScriptId) {
             if (pModel->isEnabled()) {
                 m_pEnableButton->setText(tr("Disable"));

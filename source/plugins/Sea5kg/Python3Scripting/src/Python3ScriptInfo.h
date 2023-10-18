@@ -4,12 +4,12 @@
 #include <QMenuBar>
 #include <QJsonObject>
 
-class ModelExtension {
+class Python3ScriptInfo {
 
 
 public:
-    ModelExtension(const QString &sScriptDir);
-    ~ModelExtension();
+    Python3ScriptInfo(const QString &sScriptDir);
+    ~Python3ScriptInfo();
     bool loadFromJsonObject(const QJsonObject &jsonExt);
     bool loadFromDirectory();
     bool saveJson();

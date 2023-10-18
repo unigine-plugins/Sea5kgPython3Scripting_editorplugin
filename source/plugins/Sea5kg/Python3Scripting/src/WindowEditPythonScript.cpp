@@ -65,7 +65,7 @@ WindowEditPythonScript::WindowEditPythonScript(
     // setFixedHeight(sizeHint().height());
 }
 
-void WindowEditPythonScript::setModelExtension(ModelExtension *pModel) {
+void WindowEditPythonScript::setModelExtension(Python3ScriptInfo *pModel) {
     m_pModel = pModel;
     m_pLabelName->setText(tr("Name: ") + pModel->getName());
     m_pLabelFor->setText(tr("For: ") + pModel->getFor());

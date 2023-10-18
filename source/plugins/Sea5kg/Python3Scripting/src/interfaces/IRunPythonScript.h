@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ModelExtension.h"
+#include "Python3ScriptInfo.h"
 
 class IRunPythonScript {
     public:
-        virtual void runPythonScript(ModelExtension *pModel, QString sAlternativeCode = "") = 0;
+        virtual void runPythonScript(Python3ScriptInfo *pModel, QString sAlternativeCode = "") = 0;
 };

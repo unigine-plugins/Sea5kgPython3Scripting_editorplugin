@@ -12,7 +12,7 @@
 #include <QSyntaxStyle>
 #include <QCodeEditor>
 #include <QCloseEvent>
-#include "ModelExtension.h"
+#include "Python3ScriptInfo.h"
 #include "interfaces/IRunPythonScript.h"
 #include "interfaces/IManagePythonScripts.h"
 
@@ -22,7 +22,7 @@ class WindowEditPythonScript : public QDialog
 public:
     WindowEditPythonScript(QWidget *parent, IRunPythonScript *pRunPythonScript, IManagePythonScripts *pManagePythonScripts);
 
-    void setModelExtension(ModelExtension *pModelExtension);
+    void setModelExtension(Python3ScriptInfo *pModelExtension);
 
 signals:
     void findNext(const QString &str, Qt::CaseSensitivity cs);
@@ -38,7 +38,7 @@ private slots:
 private:
     QSyntaxStyle *loadStyle(QString path);
     QString m_sFilePath;
-    ModelExtension *m_pModel;
+    Python3ScriptInfo *m_pModel;
     IRunPythonScript *m_pRunPythonScript;
     IManagePythonScripts *m_pManagePythonScripts;
 

@@ -1,20 +1,20 @@
 
-#include "ModelExtension.h"
+#include "Python3ScriptInfo.h"
 
 #include <QFile>
 #include <QJsonDocument>
 #include <iostream>
 
-ModelExtension::ModelExtension(const QString &sScriptDir) {
+Python3ScriptInfo::Python3ScriptInfo(const QString &sScriptDir) {
     m_sScriptDir = sScriptDir;
     m_bInMainThread = false;
 }
 
-ModelExtension::~ModelExtension() {
+Python3ScriptInfo::~Python3ScriptInfo() {
 
 }
 
-bool ModelExtension::loadFromJsonObject(const QJsonObject &jsonExtension) {
+bool Python3ScriptInfo::loadFromJsonObject(const QJsonObject &jsonExtension) {
     if (
         !jsonExtension.contains("id")
         || !jsonExtension.contains("name")
@@ -33,7 +33,7 @@ bool ModelExtension::loadFromJsonObject(const QJsonObject &jsonExtension) {
     return true;
 }
 
-bool ModelExtension::loadFromDirectory() {
+bool Python3ScriptInfo::loadFromDirectory() {
     QString sPython3ScriptJsonFilePath = getScriptDir() + "/python3script.json";
 
     std::cout << "Try opening... " << sPython3ScriptJsonFilePath.toStdString() << std::endl;
@@ -62,7 +62,7 @@ bool ModelExtension::loadFromDirectory() {
     return true;
 }
 
-bool ModelExtension::saveJson() {
+bool Python3ScriptInfo::saveJson() {
     QString sPython3ScriptJsonFilePath = getScriptDir() + "/python3script.json";
     QFile fileExtensionJson(sPython3ScriptJsonFilePath);
 
@@ -73,7 +73,7 @@ bool ModelExtension::saveJson() {
     return true;
 }
 
-QJsonObject ModelExtension::toJsonObject() {
+QJsonObject Python3ScriptInfo::toJsonObject() {
     QJsonObject obj;
     obj["id"] = m_sExtensionId;
     obj["name"] = m_sExtensionName;
@@ -83,46 +83,46 @@ QJsonObject ModelExtension::toJsonObject() {
     return obj;
 }
 
-void ModelExtension::setId(const QString &sId) {
+void Python3ScriptInfo::setId(const QString &sId) {
     m_sExtensionId = sId;
 }
 
-void ModelExtension::setName(const QString &sName) {
+void Python3ScriptInfo::setName(const QString &sName) {
     m_sExtensionName = sName;
 }
 
-void ModelExtension::setFor(const QString &sFor) {
+void Python3ScriptInfo::setFor(const QString &sFor) {
     m_sExtensionFor = sFor;
 }
 
-void ModelExtension::setEnabled(bool bEnabled) {
+void Python3ScriptInfo::setEnabled(bool bEnabled) {
     m_bEnabled = bEnabled;
 }
 
-QString ModelExtension::getId() {
+QString Python3ScriptInfo::getId() {
     return m_sExtensionId;
 }
 
-QString ModelExtension::getName() {
+QString Python3ScriptInfo::getName() {
     return m_sExtensionName;
 }
 
-QString ModelExtension::getFor() {
+QString Python3ScriptInfo::getFor() {
     return m_sExtensionFor;
 }
 
-bool ModelExtension::isEnabled() {
+bool Python3ScriptInfo::isEnabled() {
     return m_bEnabled;
 }
 
-bool ModelExtension::isInMainThread() {
+bool Python3ScriptInfo::isInMainThread() {
     return m_bInMainThread;
 }
 
-QString ModelExtension::getMainPyPath() {
+QString Python3ScriptInfo::getMainPyPath() {
     return getScriptDir() + "/main.py";
 }
 
-QString ModelExtension::getScriptDir() {
+QString Python3ScriptInfo::getScriptDir() {
     return m_sScriptDir;
 }

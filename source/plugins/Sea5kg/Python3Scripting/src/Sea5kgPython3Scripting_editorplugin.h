@@ -15,7 +15,7 @@
 #include <QThread>
 
 #include "CollectorMenuSelected.h"
-#include "ModelExtension.h"
+#include "Python3ScriptInfo.h"
 #include "WindowEditPythonScript.h"
 #include "WindowManagePythonScripts.h"
 #include "interfaces/IRunPythonScript.h"
@@ -41,7 +41,7 @@ public:
     void shutdown() override;
 
     // IManagePythonScripts
-    virtual void addModelExtension(ModelExtension *pModel) override;
+    virtual void addModelExtension(Python3ScriptInfo *pModel) override;
     virtual void removeModelScriptById(QString sScriptId) override;
     virtual void enableModelScriptById(QString sScriptId) override;
     virtual void disableModelScriptById(QString sScriptId) override;
@@ -70,7 +70,7 @@ private slots:
 
 private:
     // IRunPythonScript
-    virtual void runPythonScript(ModelExtension *pModel, QString sAlternativeCode = "") override;
+    virtual void runPythonScript(Python3ScriptInfo *pModel, QString sAlternativeCode = "") override;
 
     void switchMenuTo(MenuSelectedType nType);
     bool prepareDirectoryWithExtensions();
@@ -83,7 +83,7 @@ private:
 
     void saveAndReloadExtensions();
     WindowEditPythonScript *getEditDialog();
-    ModelExtension *findModelExtensionByAction(QObject* pObject);
+    Python3ScriptInfo *findModelExtensionByAction(QObject* pObject);
 
     MenuSelectedType m_nLatestMenu;
     QString m_sRootPath;
@@ -93,7 +93,7 @@ private:
     QMenu *m_pMenuPython3Extensions;
     QMap<MenuSelectedType, CollectorMenuSelected *> m_mapCollectorMenuSelected;
 
-    QVector<ModelExtension *> m_vScripts;
+    QVector<Python3ScriptInfo *> m_vScripts;
 
     QAction *m_pActionManageScripts;
     QAction *m_pActionAbout;

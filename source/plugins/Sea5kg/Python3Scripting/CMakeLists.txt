@@ -108,7 +108,7 @@ add_library(${current_target} SHARED
 	${PROJECT_SOURCE_DIR}/src/PythonExecutor.cpp
 	${PROJECT_SOURCE_DIR}/src/RunPythonInThread.cpp
     ${PROJECT_SOURCE_DIR}/src/CollectorMenuSelected.cpp
-    ${PROJECT_SOURCE_DIR}/src/ModelExtension.cpp
+    ${PROJECT_SOURCE_DIR}/src/Python3ScriptInfo.cpp
 	${PROJECT_SOURCE_DIR}/src/format_unexpy3/FileUnexpy3.cpp
 	${PROJECT_SOURCE_DIR}/src/WindowCreatePythonScript.cpp
 	${PROJECT_SOURCE_DIR}/src/WindowEditPythonScript.cpp

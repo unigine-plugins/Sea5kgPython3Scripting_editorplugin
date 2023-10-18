@@ -79,14 +79,14 @@ void Sea5kgPython3Scripting_editorplugin::shutdown() {
 
 
 // IManagePythonScripts
-void Sea5kgPython3Scripting_editorplugin::addModelExtension(ModelExtension *pModel) {
+void Sea5kgPython3Scripting_editorplugin::addModelExtension(Python3ScriptInfo *pModel) {
     m_vScripts.push_back(pModel);
     saveAndReloadExtensions();
 }
 
 void Sea5kgPython3Scripting_editorplugin::removeModelScriptById(QString sScriptId) {
     log_info("removeExtension. sExtensionId == " + sScriptId);
-    ModelExtension *pExt = nullptr;
+    Python3ScriptInfo *pExt = nullptr;
     for (int i = 0; i < m_vScripts.size(); i++) {
         if (m_vScripts[i]->getId() == sScriptId) {
             pExt = m_vScripts[i];
@@ -132,7 +132,7 @@ void Sea5kgPython3Scripting_editorplugin::disableModelScriptById(QString sScript
 }
 
 void Sea5kgPython3Scripting_editorplugin::openWindowEditPythonScriptById(QString sScriptId) {
-    ModelExtension *pModel = nullptr;
+    Python3ScriptInfo *pModel = nullptr;
     for (int i = 0; i < m_vScripts.size(); i++) {
         if (m_vScripts[i]->getId() == sScriptId) {
             pModel = m_vScripts[i];
@@ -164,7 +164,7 @@ void Sea5kgPython3Scripting_editorplugin::showWindowManagePythonScripts(QString 
     m_pWindowManagePythonScripts->setWindowFlags(flags | Qt::Tool);
     m_pWindowManagePythonScripts->show();
 
-    ModelExtension *pModel = nullptr;
+    Python3ScriptInfo *pModel = nullptr;
     for (int i = 0; i < m_vScripts.size(); i++) {
         if (m_vScripts[i]->getId() == sScriptId) {
             pModel = m_vScripts[i];
@@ -219,7 +219,7 @@ void Sea5kgPython3Scripting_editorplugin::menuClickAbout() {
 }
 
 void Sea5kgPython3Scripting_editorplugin::processSelectedMaterials() {
-    ModelExtension *pModel = findModelExtensionByAction(sender());
+    Python3ScriptInfo *pModel = findModelExtensionByAction(sender());
     if (pModel == nullptr) {
         log_error("processSelectedMaterials Could not find model for this action");
         return;
@@ -229,7 +229,7 @@ void Sea5kgPython3Scripting_editorplugin::processSelectedMaterials() {
 }
 
 void Sea5kgPython3Scripting_editorplugin::processSelectedNodes() {
-    ModelExtension *pModel = findModelExtensionByAction(sender());
+    Python3ScriptInfo *pModel = findModelExtensionByAction(sender());
     if (pModel == nullptr) {
         log_error("processSelectedNodes Could not find model for this action");
         return;
@@ -238,7 +238,7 @@ void Sea5kgPython3Scripting_editorplugin::processSelectedNodes() {
 }
 
 void Sea5kgPython3Scripting_editorplugin::processSelectedProperties() {
-    ModelExtension *pModel = findModelExtensionByAction(sender());
+    Python3ScriptInfo *pModel = findModelExtensionByAction(sender());
     if (pModel == nullptr) {
         log_error("processSelectedProperties Could not find model for this action");
         return;
@@ -247,7 +247,7 @@ void Sea5kgPython3Scripting_editorplugin::processSelectedProperties() {
 }
 
 void Sea5kgPython3Scripting_editorplugin::processSelectedRuntimes() {
-    ModelExtension *pModel = findModelExtensionByAction(sender());
+    Python3ScriptInfo *pModel = findModelExtensionByAction(sender());
     if (pModel == nullptr) {
         log_error("processSelectedRuntimes Could not find model for this action");
         return;
@@ -256,7 +256,7 @@ void Sea5kgPython3Scripting_editorplugin::processSelectedRuntimes() {
 }
 
 void Sea5kgPython3Scripting_editorplugin::processSelectedTools() {
-    ModelExtension *pModel = findModelExtensionByAction(sender());
+    Python3ScriptInfo *pModel = findModelExtensionByAction(sender());
     if (pModel == nullptr) {
         log_error("processSelectedTools Could not find model for this action");
         return;
@@ -303,7 +303,7 @@ void Sea5kgPython3Scripting_editorplugin::globalSelectionChanged() {
     }
 }
 
-void Sea5kgPython3Scripting_editorplugin::runPythonScript(ModelExtension *pModel, QString sAlternativeCode) {
+void Sea5kgPython3Scripting_editorplugin::runPythonScript(Python3ScriptInfo *pModel, QString sAlternativeCode) {
     log_info("Start run python script...");
     if (m_pScriptThread != nullptr && !m_pScriptThread->isFinished()) {
         log_info("Another script working...");
@@ -438,7 +438,7 @@ bool Sea5kgPython3Scripting_editorplugin::prepareExtensionsJson() {
 
 bool Sea5kgPython3Scripting_editorplugin::rewriteExtensionsJson() {
     for (int i = 0; i < m_vScripts.size(); i++) {
-        ModelExtension *pModel = m_vScripts[i];
+        Python3ScriptInfo *pModel = m_vScripts[i];
         pModel->saveJson();
     }
     return true;
@@ -480,7 +480,7 @@ bool Sea5kgPython3Scripting_editorplugin::reloadMenuForSelected() {
     }
 
     for (int i = 0; i < m_vScripts.size(); i++) {
-        ModelExtension *pModel = m_vScripts[i];
+        Python3ScriptInfo *pModel = m_vScripts[i];
         if (!pModel->isEnabled()) {
             continue;
         }
@@ -539,7 +539,7 @@ bool Sea5kgPython3Scripting_editorplugin::loadExtensions() {
     QStringList allDirs = mainDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs);
     for(int i = 0; i < allDirs.size(); i++) {
         QString sPython3ScriptJsonFilePath = m_sPython3ScriptingDirPath + "/" + allDirs[i];
-        ModelExtension *pModel = new ModelExtension(sPython3ScriptJsonFilePath);
+        Python3ScriptInfo *pModel = new Python3ScriptInfo(sPython3ScriptJsonFilePath);
         if (pModel->loadFromDirectory()) {
             m_vScripts.push_back(pModel);
         } else {
@@ -568,7 +568,7 @@ void Sea5kgPython3Scripting_editorplugin::saveAndReloadExtensions() {
     this->reloadMenuForSelected();
 }
 
-ModelExtension *Sea5kgPython3Scripting_editorplugin::findModelExtensionByAction(QObject *pObject) {
+Python3ScriptInfo *Sea5kgPython3Scripting_editorplugin::findModelExtensionByAction(QObject *pObject) {
     QAction *pAction = dynamic_cast<QAction *>(pObject);
     if (pAction == nullptr) {
         log_error("findModelExtensionByAction. Could not cast to QAction");
@@ -577,7 +577,7 @@ ModelExtension *Sea5kgPython3Scripting_editorplugin::findModelExtensionByAction(
     QVariant userData = pAction->data();
     QString sExtensionId = userData.toString();
     log_info("processSelectedActions. sExtensionId == " + sExtensionId);
-    ModelExtension *pExt = nullptr;
+    Python3ScriptInfo *pExt = nullptr;
     for (int i = 0; i < m_vScripts.size(); i++) {
         if (m_vScripts[i]->getId() == sExtensionId) {
             return m_vScripts[i];

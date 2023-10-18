@@ -14,7 +14,7 @@
 #include <QListWidget>
 #include <QStringListModel>
 
-#include "ModelExtension.h"
+#include "Python3ScriptInfo.h"
 #include "interfaces/IManagePythonScripts.h"
 
 // https://www.walletfox.com/course/qtcheckablelist.php
@@ -35,10 +35,10 @@ class CustomListModel : public QStringListModel {
 class WindowManagePythonScripts : public QDialog {
     Q_OBJECT
 public:
-    WindowManagePythonScripts(QWidget *parent, QVector<ModelExtension *> *vScripts, IManagePythonScripts *pManageScripts);
-    QString makeName(ModelExtension *pModel);
+    WindowManagePythonScripts(QWidget *parent, QVector<Python3ScriptInfo *> *vScripts, IManagePythonScripts *pManageScripts);
+    QString makeName(Python3ScriptInfo *pModel);
     void reloadList();
-    void selectedItem(ModelExtension *pModel);
+    void selectedItem(Python3ScriptInfo *pModel);
 
 signals:
     void findNext(const QString &str, Qt::CaseSensitivity cs);
@@ -55,7 +55,7 @@ private:
     QWidget *m_pParent;
     IManagePythonScripts *m_pManageScripts;
     void createListWidget();
-    QVector<ModelExtension *> *m_vScripts;
+    QVector<Python3ScriptInfo *> *m_vScripts;
     QLineEdit *m_pLineEditSearch;
     QListWidget *m_pListWidget;
     QPushButton *m_pCreateButton;
