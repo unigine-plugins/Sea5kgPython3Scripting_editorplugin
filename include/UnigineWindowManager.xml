@@ -209,7 +209,7 @@
 		</member>
 		<member name="M:Unigine.EngineWindow.getClientSize const">
 			<summary>
-			Returns the size of the window lient (content) area.
+			Returns the size of the window client (content) area.
 			</summary>  
 			<returns>The size of the client area.</returns>
 		</member>

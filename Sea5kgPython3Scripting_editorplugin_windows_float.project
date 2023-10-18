@@ -12,7 +12,7 @@
         ],
         "build_tool": false,
         "component_system": false,
-        "default_world": "unigine-editor-python3scripting_windows_float",
+        "default_world": "Sea5kgPython3Scripting_editorplugin",
         "demo": "",
         "editor_plugin": true,
         "engine_binaries": "release",
@@ -7945,7 +7945,7 @@
         ],
         "launcher_console": true,
         "launcher_gui": false,
-        "name": "unigine-editor-python3scripting_windows_float",
+        "name": "Sea5kgPython3Scripting_editorplugin_windows_float",
         "plugin_name": "Python3Scripting",
         "plugin_vendor": "Local",
         "plugins": [
@@ -7974,11 +7974,11 @@
     "sdk": {
         "edition": "community",
         "internal_version": 54,
-        "key": "tier0_bin_windows-2.17",
+        "key": "tier0_bin_windows-2.17.0.1",
         "name": "UNIGINE 2 Community",
-        "path": "C:/Users/mrsea/AppData/Local/unigine/browser/sdks/community_windows_2.17_bin",
+        "path": "C:/Users/mrsea/AppData/Local/unigine/browser/sdks/community_windows_2.17.0.1_bin",
         "type": "bin",
-        "version": "2.17"
+        "version": "2.17.0.1"
     },
     "version": "2"
 }

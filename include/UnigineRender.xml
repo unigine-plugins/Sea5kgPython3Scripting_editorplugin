@@ -2938,6 +2938,13 @@
 			<param name="flags"> Skip flag. </param> 
 			<returns>1 if the specified skip flag is set; otherwise, 0.</returns>
 		</member>
+		<member name="M:Unigine.Renderer.getAllSurfaces(Unigine.Vector{Renderer::RenderSurface,int,Unigine.VectorAllocator})">
+			<summary>
+			Retrieves all RenderSurfaces visible via the current viewport/camera and puts them to the specified output vector.					The RenderSurface structure contains information about an object to which the surface belongs as well as the index of this surface and is defined as follows:.
+			
+			</summary> 
+			<param name="surfaces"> Vector to which all rendered surfaces are to be put. </param> 
+		</member>
 		<member name="M:Unigine.Renderer.getSkipFlags const">
 			<summary>
 			Returns the skip flag set for the rendering viewport.

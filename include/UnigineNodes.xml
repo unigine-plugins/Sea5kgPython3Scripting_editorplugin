@@ -118,7 +118,7 @@
 			Saves a node state into the Xml.
 			</summary> 
 			<param name="xml"> Xml smart pointer. </param> 
-			<returns>Returns 1 if the node state was successfully saved; otherwise, 0 is returned.</returns>
+			<returns>1 if the node state was successfully saved; otherwise, 0 is returned.</returns>
 		</member>
 		<member name="M:Unigine.NodeExternBase.swap(NodeExternBase)">
 			<summary>

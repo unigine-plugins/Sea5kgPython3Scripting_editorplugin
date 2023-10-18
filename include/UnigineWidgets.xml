@@ -5046,14 +5046,14 @@
 		</member>
 		<member name="M:Unigine.WidgetSprite.setImage(Unigine.Ptr{Unigine.Image},int)">
 			<summary>
-			Sets a loaded into memory image for the first (bottom) layer of the sprite. This layer always exists in the sprite. An additional flag can be set in case the sprite image is going to be updated often or even each frame (for optimized memory management).
+			Sets a loaded into memory image for the first (bottom) layer of the sprite. This layer always exists in the sprite. An additional flag can be set in case the sprite image is going to be updated often or even each frame (for optimized memory management).Not available for the WidgetSpriteViewport !
 			</summary> 
 			<param name="image"> Pointer to the image. </param>
 			<param name="dynamic"> Positive number if the image will be updated each frame; otherwise, 0. </param> 
 		</member>
 		<member name="M:Unigine.WidgetSprite.getImage const">
 			<summary>
-			Returns the loaded into memory image that is currently set for the first (bottom) layer of the sprite.
+			Returns the loaded into memory image that is currently set for the first (bottom) layer of the sprite.Not available for the WidgetSpriteViewport !
 			</summary>  
 			<returns>Pointer to the image.</returns>
 		</member>
@@ -5209,7 +5209,7 @@
 		</member>
 		<member name="M:Unigine.WidgetSprite.setLayerWrapRepeat(int,int)">
 			<summary>
-			Sets texture tiling for a given layer of the sprite. To see tiling in effect, you need to transform sprite texture coordinates via setLayerTexCoord().
+			Sets texture tiling for a given layer of the sprite.To see tiling in effect, you need to transform sprite texture coordinates via .
 			</summary> 
 			<param name="layer"> Layer number in range from 0 to the total number of sprite layers. </param>
 			<param name="repeat"> Positive number to enable texture tiling; 0 to disable it. </param> 
@@ -5219,7 +5219,7 @@
 			Returns a value indicating if texture tiling is enabled for a given layer of the sprite.
 			</summary> 
 			<param name="layer"> Layer number in range from 0 to the total number of sprite layers. </param> 
-			<returns>Returns 1 if texture tiling is enabled; 0 if disabled.</returns>
+			<returns>true if texture tiling is enabled; false if disabled.</returns>
 		</member>
 		<member name="M:Unigine.WidgetSprite.getNumLayers const">
 			<summary>
@@ -5229,14 +5229,14 @@
 		</member>
 		<member name="M:Unigine.WidgetSprite.setRender(Unigine.Ptr{Unigine.Texture},int)">
 			<summary>
-			Sets a texture to be rendered for the first (bottom) layer of the sprite.
+			Sets a texture to be rendered for the first (bottom) layer of the sprite.Not available for the WidgetSpriteViewport !
 			</summary> 
 			<param name="texture"> Pointer to the texture. </param>
 			<param name="flipped"> Flipped flag. </param> 
 		</member>
 		<member name="M:Unigine.WidgetSprite.getRender const">
 			<summary>
-			Returns the pointer to the texture that is currently set for the first (bottom) layer of the sprite.
+			Returns the pointer to the texture that is currently set for the first (bottom) layer of the sprite.Not available for the WidgetSpriteViewport !
 			</summary>  
 			<returns>Pointer to the texture.</returns>
 		</member>
@@ -5556,11 +5556,11 @@
 			</summary> 
 			<param name="flags"> A skip flag to be removed. Available flags:SKIP_SHADOWSSKIP_VISUALIZERSKIP_POSTEFFECTSSKIP_DYNAMIC_REFLECTIONSSKIP_VELOCITY_BUFFERSKIP_SRGB </param> 
 		</member>
-		<member name="M:Unigine.WidgetSpriteNode.renderImage(Unigine.Ptr{Unigine.Image})">
+		<member name="M:Unigine.WidgetSpriteNode.renderTexture(Unigine.Ptr{Unigine.Texture})">
 			<summary>
-			Renders the viewport into an image.
+			Renders the sprite node into the specified target texture.
 			</summary> 
-			<param name="image"> Reference to a target image. </param> 
+			<param name="texture"> Target texture. </param> 
 		</member>
 		<member name="M:Unigine.WidgetSpriteShader.#ctor(Unigine.Ptr{Gui},char)">
 			<summary>
@@ -5838,37 +5838,11 @@
 			</summary> 
 			<param name="flags"> A skip flag to be removed. Available flags:SKIP_SHADOWSSKIP_VISUALIZERSKIP_POSTEFFECTSSKIP_DYNAMIC_REFLECTIONSSKIP_VELOCITY_BUFFERSKIP_SRGB </param> 
 		</member>
-		<member name="M:Unigine.WidgetSpriteViewport.renderImage(Unigine.Ptr{Unigine.Image})">
+		<member name="M:Unigine.WidgetSpriteViewport.renderTexture(Unigine.Ptr{Unigine.Texture})">
 			<summary>
-			Renders the sprite viewport into the image.
+			Renders the sprite viewport into the specified target texture.
 			</summary> 
-			<param name="image"> Source image. </param> 
-		</member>
-		<member name="M:Unigine.WidgetSpriteViewport.setImage(Unigine.Ptr{Unigine.Image},int)">
-			<summary>
-			Sets a loaded into memory image for the first (bottom) layer of the sprite. This layer always exists in the sprite. An additional flag can be set in case the sprite image is going to be updated often or even each frame (for optimized memory management).					This method is intended for changing the sprite's background texture and is valid only for the base WidgetSprite class. It cannot be used for the WidgetSpriteViewport!
-			</summary> 
-			<param name="image"> Pointer to the image. </param>
-			<param name="dynamic"> Positive number if the image will be updated each frame; otherwise, 0. </param> 
-		</member>
-		<member name="M:Unigine.WidgetSpriteViewport.getImage const">
-			<summary>
-			Returns the loaded into memory image that is currently set for the first (bottom) layer of the sprite.					This method is valid only for the base WidgetSprite class. It cannot be used for the WidgetSpriteViewport!
-			</summary>  
-			<returns>Pointer to the image.</returns>
-		</member>
-		<member name="M:Unigine.WidgetSpriteViewport.setRender(Unigine.Ptr{Unigine.Texture},int)">
-			<summary>
-			Sets a texture to be rendered for the first (bottom) layer of the sprite.					This method is intended for changing the sprite's background texture and is valid only for the base WidgetSprite class. It cannot be used for the WidgetSpriteViewport!
-			</summary> 
-			<param name="texture"> Pointer to the texture. </param>
-			<param name="flipped"> Flipped flag. </param> 
-		</member>
-		<member name="M:Unigine.WidgetSpriteViewport.getRender const">
-			<summary>
-			Returns the pointer to the texture that is currently set for the first (bottom) layer of the sprite.					This method is valid only for the base WidgetSprite class. It cannot be used for the WidgetSpriteViewport!
-			</summary>  
-			<returns>Pointer to the texture.</returns>
+			<param name="texture"> Target texture. </param> 
 		</member>
 		<member name="M:Unigine.WidgetSpriteViewport.setUseTAAOffset(bool)">
 			<summary>

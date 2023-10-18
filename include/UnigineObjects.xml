@@ -5417,13 +5417,13 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.#ctor(char)">
 			<summary>
-			ObjectMeshCluster constructor. Creates a Static Mesh object with mesh loaded from the specified file.
+			ObjectMeshStatic constructor. Creates a Static Mesh object with mesh loaded from the specified file.
 			</summary> 
 			<param name="path"> Path to the base .mesh-file. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.#ctor">
 			<summary>
-			ObjectMeshCluster constructor. Creates an empty Static Mesh object.
+			ObjectMeshStatic constructor. Creates an empty Static Mesh object.
 			</summary>  
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.setMeshPath(char)">
@@ -7360,7 +7360,7 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getBoneTransform(int) const">
 			<summary>
-			Returns a transformation matrix of a given bone relatively to the parent object (not considering transformations of the node itself).
+			Returns a transformation matrix of a given bone relatively to the parent object (not considering transformations of the Mesh Skinned node itself).
 			</summary> 
 			<param name="bone"> Bone number. </param> 
 			<returns>Transformation matrix.</returns>
@@ -8272,18 +8272,24 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getBoneNotAdditionalBindLocalTransform(int) const">
 			<summary>
+			Returns the bone transformation relative to the parent bone without taking into account the bound node transformation.
 			</summary> 
 			<param name="bone"> Number of the bone, in the range from 0 to the total number of bones. </param> 
+			<returns>Transformation matrix in the local space.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getBoneNotAdditionalBindObjectTransform(int) const">
 			<summary>
+			Returns the bone transformation relative to the parent object without taking into account the bound node transformation.
 			</summary> 
 			<param name="bone"> Number of the bone, in the range from 0 to the total number of bones. </param> 
+			<returns>Transformation matrix in the object space.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getBoneNotAdditionalBindWorldTransform(int) const">
 			<summary>
+			Returns the bone transformation relative to the world origin.
 			</summary> 
 			<param name="bone"> Number of the bone, in the range from 0 to the total number of bones. </param> 
+			<returns>Transformation matrix in the world space without taking into account the bound node transformation.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.setBindNode(int,Unigine.Ptr{Unigine.Node})">
 			<summary>

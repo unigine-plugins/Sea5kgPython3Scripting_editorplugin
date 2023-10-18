@@ -36,7 +36,7 @@
 			</summary> 
 			<param name="absolute_path"> Absolute path to the mounted folder/package. </param>
 			<param name="virtual_path"> Virtual path to the folder to which the contents of the external folder/package is to be mounted. </param>
-			<param name="access"> Mount point access mode, one of the FileSystemMount::ACCESS_* values. </param> 
+			<param name="access"> Mount point access mode, one of the  values. </param> 
 			<returns>FileSystemMount class smart pointer, if it was created successfully; otherwise, nullptr.</returns>
 		</member>
 		<member name="M:Unigine.FileSystem.addMount(char)">
