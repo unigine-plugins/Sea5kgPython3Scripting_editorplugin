@@ -7,6 +7,7 @@
 
 ModelExtension::ModelExtension(const QString &sScriptDir) {
     m_sScriptDir = sScriptDir;
+    m_bInMainThread = false;
 }
 
 ModelExtension::~ModelExtension() {
@@ -26,6 +27,9 @@ bool ModelExtension::loadFromJsonObject(const QJsonObject &jsonExtension) {
     m_sExtensionName = jsonExtension["name"].toString();
     m_sExtensionFor = jsonExtension["for"].toString();
     m_bEnabled = jsonExtension["enabled"].toBool();
+    if (jsonExtension.contains("in_main_tread")) {
+        m_bInMainThread = jsonExtension["in_main_tread"].toBool();
+    }
     return true;
 }
 
@@ -75,6 +79,7 @@ QJsonObject ModelExtension::toJsonObject() {
     obj["name"] = m_sExtensionName;
     obj["for"] = m_sExtensionFor;
     obj["enabled"] = m_bEnabled;
+    obj["in_main_tread"] = m_bInMainThread;
     return obj;
 }
 
@@ -108,6 +113,10 @@ QString ModelExtension::getFor() {
 
 bool ModelExtension::isEnabled() {
     return m_bEnabled;
+}
+
+bool ModelExtension::isInMainThread() {
+    return m_bInMainThread;
 }
 
 QString ModelExtension::getMainPyPath() {

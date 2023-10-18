@@ -26,7 +26,7 @@ PyObject* Stdout_write(PyObject* self, PyObject* args) {
         }
         std::string sOutputMessage(data);
         sOutputMessage = "Python3Scripting: " + sOutputMessage + "\n";
-        Unigine::Log::message(sOutputMessage.c_str());
+        Unigine::Log::message("%s", sOutputMessage.c_str());
     }
     return PyLong_FromSize_t(written);
 }

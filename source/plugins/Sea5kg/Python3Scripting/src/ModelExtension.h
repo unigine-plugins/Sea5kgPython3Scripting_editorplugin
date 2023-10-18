@@ -24,6 +24,7 @@ public:
     QString getName();
     QString getFor();
     bool isEnabled();
+    bool isInMainThread();
 
     QString getMainPyPath();
     QString getScriptDir();
@@ -34,5 +35,6 @@ private:
     QString m_sExtensionName;
     QString m_sExtensionFor;
     bool m_bEnabled;
+    bool m_bInMainThread;
     QJsonObject m_jsonOriginalScriptInfo;
 };

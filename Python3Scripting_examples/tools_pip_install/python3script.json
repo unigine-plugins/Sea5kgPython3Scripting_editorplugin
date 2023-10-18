@@ -2,5 +2,6 @@
     "enabled": true,
     "for": "tools",
     "id": "tools_pip_install",
-    "name": "pip_install"
+    "name": "pip_install",
+    "in_main_tread": true
 }
