@@ -48,14 +48,7 @@ void RunScriptInThread::run() {
     }
     pRunner->mutexAsync.unlock();
     delete pRunner;
-
-    QTime t;
-    t.start();
     int ret = m_pExecutor->execCode(m_sExecCode.toStdString());
-    if (ret == -1) {
-        Unigine::Log::error("Problem with a script, exit_code: %d\n", ret);
-    }
-    Unigine::Log::message("Script ended (%d ms)\n", t.elapsed());
     delete m_pExecutor;
     m_pExecutor = nullptr;
     // Unigine::Log::message("Executor removed\n");

@@ -15,6 +15,8 @@
 #include <iostream>
 #include <QGuiApplication>
 #include <QScreen>
+
+#include <PythonExecutor.h>
 // #include <dlfcn.h>
 
 // ------------------------------------------------------------------------------------------
@@ -343,26 +345,34 @@ void Sea5kgPython3Scripting_editorplugin::runPythonScript(Python3ScriptInfo *pMo
         }
     }
 
-    log_info("Run script in thread");
-    m_pScriptThread = new RunScriptInThread(
-        pModel->getId(),
-        m_sPython3ScriptingDirPath
-    );
-    log_info("Prepare environment for python script...");
-    if (m_nLatestMenu == MenuSelectedType::MST_MATERIALS) {
-        m_pScriptThread->executor()->addMaterials(m_vSelectedGuids);
-    } else if(m_nLatestMenu == MenuSelectedType::MST_RUNTIMES) {
-        m_pScriptThread->executor()->addRuntimes(m_vSelectedGuids);
-    } else if(m_nLatestMenu == MenuSelectedType::MST_PROPERTIES) {
-        m_pScriptThread->executor()->addRuntimes(m_vSelectedGuids);
-    } else if(m_nLatestMenu == MenuSelectedType::MST_NODES) {
-        m_pScriptThread->executor()->addNodes(m_vSelectedNodes);
+    if (!pModel->isInMainThread()) {
+        log_info("Run script in thread");
+        m_pScriptThread = new RunScriptInThread(
+            pModel->getId(),
+            m_sPython3ScriptingDirPath
+        );
+        log_info("Prepare environment for python script...");
+        if (m_nLatestMenu == MenuSelectedType::MST_MATERIALS) {
+            m_pScriptThread->executor()->addMaterials(m_vSelectedGuids);
+        } else if(m_nLatestMenu == MenuSelectedType::MST_RUNTIMES) {
+            m_pScriptThread->executor()->addRuntimes(m_vSelectedGuids);
+        } else if(m_nLatestMenu == MenuSelectedType::MST_PROPERTIES) {
+            m_pScriptThread->executor()->addRuntimes(m_vSelectedGuids);
+        } else if(m_nLatestMenu == MenuSelectedType::MST_NODES) {
+            m_pScriptThread->executor()->addNodes(m_vSelectedNodes);
+        }
+        log_info("Add code to execution...");
+        m_pScriptThread->setExecCode(sAlternativeCode);
+        log_info("Start...");
+        m_pScriptThread->start();
+        log_info("Done...");
+    } else {
+        PythonExecutor executor(
+            pModel->getId().toStdString(),
+            m_sPython3ScriptingDirPath.toStdString()
+        );
+        executor.execCode(sAlternativeCode.toStdString());
     }
-    log_info("Add code to execution...");
-    m_pScriptThread->setExecCode(sAlternativeCode);
-    log_info("Start...");
-    m_pScriptThread->start();
-    log_info("Done...");
 
     connect(UnigineEditor::Selection::instance(), &UnigineEditor::Selection::changed, this, &Sea5kgPython3Scripting_editorplugin::globalSelectionChanged);
 

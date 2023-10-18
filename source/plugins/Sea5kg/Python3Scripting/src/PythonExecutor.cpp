@@ -18,6 +18,8 @@
 #include <sstream>
 #include <locale>
 
+#include <QTime>
+
 std::wstring str2wstr(const std::string& str) {
     using convert_typeX = std::codecvt_utf8<wchar_t>;
     std::wstring_convert<convert_typeX, wchar_t> converterX;
@@ -72,7 +74,7 @@ PythonExecutor::PythonExecutor(
 
 
 PythonExecutor::~PythonExecutor() {
-    // Unigine::Log::message("Python3Scripting: ~PythonExecutor()\n");
+    Unigine::Log::message("Python3Scripting: ~PythonExecutor()\n");
     for (int i = 0; i < m_vWrappers.size(); i++) {
         m_vWrappers[i]->Call_After_Py_Finalize();
     }
@@ -81,6 +83,7 @@ PythonExecutor::~PythonExecutor() {
     // Unigine::Log::message("finalize point 3\n");
 
     Py_FinalizeEx();
+    // Py_Finalize();
 
     // Unigine::Log::message("finalize point 4\n");
 
@@ -155,6 +158,9 @@ void PythonExecutor::addNodes(const QVector<Unigine::NodePtr> &vNodes) {
 }
 
 int PythonExecutor::execCode(const std::string &sScriptContent) {
+    QTime t;
+    t.start();
+
     // Unigine::Log::message(">>> startPython3Scripting: start executing script\n");
     PyErr_Clear();
 
@@ -162,7 +168,7 @@ int PythonExecutor::execCode(const std::string &sScriptContent) {
 
     PyObject *pResult = PyRun_String(sScriptContent.c_str(), Py_file_input, pGlobalDict, NULL);
     // pResult return result from script - ignore
-    Py_XDECREF(pResult);
+    // Py_XDECREF(pResult);
 
     if (PyErr_Occurred()) {
         // PyErr_Print();
@@ -220,10 +226,10 @@ int PythonExecutor::execCode(const std::string &sScriptContent) {
         Py_XDECREF(pvalue);
         Py_XDECREF(pPyErrorTraceback);
         PyErr_Clear();
-        Unigine::Log::error("\nPython3Scripting: FAILED\n");
+        Unigine::Log::error("Problem with a script, exit_code: %d\n", -1);
         return -1;
     }
-    // Unigine::Log::message("Python3Scripting: end executing script\n");
+    Unigine::Log::message("Script ended (%d ms)\n", t.elapsed());
     return 0;
 }
 
